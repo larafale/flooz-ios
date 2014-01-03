@@ -24,15 +24,25 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>ProximaNova-Light.otf</string>
+		<string>ProximaNova-Semibold.otf</string>
+		<string>ProximaNova-Regular.otf</string>
+		<string>Rene Bieder - Gentona Thin.otf</string>
+		<string>Rene Bieder - Gentona Book.otf</string>
+		<string>Rene Bieder - Gentona ExtraLight.otf</string>
+		<string>Rene Bieder - Gentona Light.otf</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

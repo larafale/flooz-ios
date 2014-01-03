@@ -19,6 +19,31 @@
 		AB3D08AD186CA11A00CF8380 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0895186CA11A00CF8380 /* UIKit.framework */; };
 		AB3D08B5186CA11A00CF8380 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB3D08B3186CA11A00CF8380 /* InfoPlist.strings */; };
 		AB3D08B7186CA11A00CF8380 /* FloozTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08B6186CA11A00CF8380 /* FloozTests.m */; };
+		AB3D08C3186CA17A00CF8380 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08C1186CA17A00CF8380 /* HomeViewController.m */; };
+		AB3D08C4186CA17A00CF8380 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB3D08C2186CA17A00CF8380 /* HomeViewController.xib */; };
+		AB3D08C9186CA2E900CF8380 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08C7186CA2E900CF8380 /* SettingsViewController.m */; };
+		AB3D08CA186CA2E900CF8380 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB3D08C8186CA2E900CF8380 /* SettingsViewController.xib */; };
+		AB3D08CE186CA2FC00CF8380 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08CC186CA2FC00CF8380 /* TimelineViewController.m */; };
+		AB3D08CF186CA2FC00CF8380 /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB3D08CD186CA2FC00CF8380 /* TimelineViewController.xib */; };
+		AB3D08D3186CA31000CF8380 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08D1186CA31000CF8380 /* SocialViewController.m */; };
+		AB3D08D4186CA31000CF8380 /* SocialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB3D08D2186CA31000CF8380 /* SocialViewController.xib */; };
+		AB3D08D8186CABDB00CF8380 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08D7186CABDB00CF8380 /* TransactionCell.m */; };
+		AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08DF1871AAB400CF8380 /* Flooz.m */; };
+		AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */; };
+		AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
+		AB3D08ED187205F600CF8380 /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08EC187205F600CF8380 /* FLTableView.m */; };
+		AB3D08F01872C6C900CF8380 /* FLTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08EF1872C6C900CF8380 /* FLTransaction.m */; };
+		ABF46A10187575C600E92A77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
+		ABF46A181875AC9200E92A77 /* UILabel+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A171875AC9200E92A77 /* UILabel+custom.m */; };
+		ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A1E1875B54600E92A77 /* JTImageLabel.m */; };
+		ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */; };
+		ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2A1875C0B100E92A77 /* ProximaNova-Regular.otf */; };
+		ABF46A321875C1B400E92A77 /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2B1875C0B100E92A77 /* ProximaNova-Semibold.otf */; };
+		ABF46A331875C1B400E92A77 /* Rene Bieder - Gentona Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2C1875C0B100E92A77 /* Rene Bieder - Gentona Book.otf */; };
+		ABF46A341875C1B400E92A77 /* Rene Bieder - Gentona ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2D1875C0B100E92A77 /* Rene Bieder - Gentona ExtraLight.otf */; };
+		ABF46A351875C1B400E92A77 /* Rene Bieder - Gentona Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2E1875C0B100E92A77 /* Rene Bieder - Gentona Light.otf */; };
+		ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2F1875C0B100E92A77 /* Rene Bieder - Gentona Thin.otf */; };
+		ABF46A39187641BC00E92A77 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A38187641BC00E92A77 /* Util.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +73,47 @@
 		AB3D08B2186CA11A00CF8380 /* FloozTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FloozTests-Info.plist"; sourceTree = "<group>"; };
 		AB3D08B4186CA11A00CF8380 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AB3D08B6186CA11A00CF8380 /* FloozTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloozTests.m; sourceTree = "<group>"; };
+		AB3D08C0186CA17A00CF8380 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeViewController.h; path = Controller/HomeViewController.h; sourceTree = "<group>"; };
+		AB3D08C1186CA17A00CF8380 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeViewController.m; path = Controller/HomeViewController.m; sourceTree = "<group>"; };
+		AB3D08C2186CA17A00CF8380 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HomeViewController.xib; path = Controller/HomeViewController.xib; sourceTree = "<group>"; };
+		AB3D08C6186CA2E900CF8380 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Controller/SettingsViewController.h; sourceTree = "<group>"; };
+		AB3D08C7186CA2E900CF8380 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Controller/SettingsViewController.m; sourceTree = "<group>"; };
+		AB3D08C8186CA2E900CF8380 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = Controller/SettingsViewController.xib; sourceTree = "<group>"; };
+		AB3D08CB186CA2FC00CF8380 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineViewController.h; path = Controller/TimelineViewController.h; sourceTree = "<group>"; };
+		AB3D08CC186CA2FC00CF8380 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineViewController.m; path = Controller/TimelineViewController.m; sourceTree = "<group>"; };
+		AB3D08CD186CA2FC00CF8380 /* TimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TimelineViewController.xib; path = Controller/TimelineViewController.xib; sourceTree = "<group>"; };
+		AB3D08D0186CA31000CF8380 /* SocialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialViewController.h; sourceTree = "<group>"; };
+		AB3D08D1186CA31000CF8380 /* SocialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialViewController.m; sourceTree = "<group>"; };
+		AB3D08D2186CA31000CF8380 /* SocialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SocialViewController.xib; sourceTree = "<group>"; };
+		AB3D08D6186CABDB00CF8380 /* TransactionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionCell.h; path = View/TransactionCell.h; sourceTree = "<group>"; };
+		AB3D08D7186CABDB00CF8380 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionCell.m; path = View/TransactionCell.m; sourceTree = "<group>"; };
+		AB3D08DE1871AAB400CF8380 /* Flooz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flooz.h; path = Flooz/Flooz.h; sourceTree = "<group>"; };
+		AB3D08DF1871AAB400CF8380 /* Flooz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Flooz.m; path = Flooz/Flooz.m; sourceTree = "<group>"; };
+		AB3D08E21871BEEE00CF8380 /* UIColor+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+custom.h"; path = "Util/UIColor+custom.h"; sourceTree = "<group>"; };
+		AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+custom.m"; path = "Util/UIColor+custom.m"; sourceTree = "<group>"; };
+		AB3D08E51871C0CC00CF8380 /* UIFont+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIFont+custom.h"; path = "Util/UIFont+custom.h"; sourceTree = "<group>"; };
+		AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIFont+custom.m"; path = "Util/UIFont+custom.m"; sourceTree = "<group>"; };
+		AB3D08EB187205F600CF8380 /* FLTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTableView.h; path = View/FLTableView.h; sourceTree = "<group>"; };
+		AB3D08EC187205F600CF8380 /* FLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTableView.m; path = View/FLTableView.m; sourceTree = "<group>"; };
+		AB3D08EE1872C6C900CF8380 /* FLTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTransaction.h; path = Flooz/Model/FLTransaction.h; sourceTree = "<group>"; };
+		AB3D08EF1872C6C900CF8380 /* FLTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTransaction.m; path = Flooz/Model/FLTransaction.m; sourceTree = "<group>"; };
+		ABF46A11187575C600E92A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ABF46A131875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		ABF46A141875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ABF46A151875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		ABF46A161875AC9200E92A77 /* UILabel+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+custom.h"; path = "Util/UILabel+custom.h"; sourceTree = "<group>"; };
+		ABF46A171875AC9200E92A77 /* UILabel+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+custom.m"; path = "Util/UILabel+custom.m"; sourceTree = "<group>"; };
+		ABF46A1D1875B54600E92A77 /* JTImageLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTImageLabel.h; sourceTree = "<group>"; };
+		ABF46A1E1875B54600E92A77 /* JTImageLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTImageLabel.m; sourceTree = "<group>"; };
+		ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Light.otf"; path = "Resources/Fonts/ProximaNova-Light.otf"; sourceTree = "<group>"; };
+		ABF46A2A1875C0B100E92A77 /* ProximaNova-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Regular.otf"; path = "Resources/Fonts/ProximaNova-Regular.otf"; sourceTree = "<group>"; };
+		ABF46A2B1875C0B100E92A77 /* ProximaNova-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Semibold.otf"; path = "Resources/Fonts/ProximaNova-Semibold.otf"; sourceTree = "<group>"; };
+		ABF46A2C1875C0B100E92A77 /* Rene Bieder - Gentona Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona Book.otf"; path = "Resources/Fonts/Rene Bieder - Gentona Book.otf"; sourceTree = "<group>"; };
+		ABF46A2D1875C0B100E92A77 /* Rene Bieder - Gentona ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona ExtraLight.otf"; path = "Resources/Fonts/Rene Bieder - Gentona ExtraLight.otf"; sourceTree = "<group>"; };
+		ABF46A2E1875C0B100E92A77 /* Rene Bieder - Gentona Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona Light.otf"; path = "Resources/Fonts/Rene Bieder - Gentona Light.otf"; sourceTree = "<group>"; };
+		ABF46A2F1875C0B100E92A77 /* Rene Bieder - Gentona Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona Thin.otf"; path = "Resources/Fonts/Rene Bieder - Gentona Thin.otf"; sourceTree = "<group>"; };
+		ABF46A37187641BC00E92A77 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = Util/Util.h; sourceTree = "<group>"; };
+		ABF46A38187641BC00E92A77 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Util.m; path = Util/Util.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +173,11 @@
 		AB3D0897186CA11A00CF8380 /* Flooz */ = {
 			isa = PBXGroup;
 			children = (
+				ABF46A201875BE9100E92A77 /* Resources */,
+				AB3D08E11871BEC300CF8380 /* Util */,
+				AB3D08DB1871A5BE00CF8380 /* Library */,
+				AB3D08D5186CA6F800CF8380 /* View */,
+				AB3D08C5186CA17F00CF8380 /* Controller */,
 				AB3D08A0186CA11A00CF8380 /* AppDelegate.h */,
 				AB3D08A1186CA11A00CF8380 /* AppDelegate.m */,
 				AB3D08A3186CA11A00CF8380 /* Images.xcassets */,
@@ -122,6 +193,7 @@
 				AB3D089A186CA11A00CF8380 /* InfoPlist.strings */,
 				AB3D089D186CA11A00CF8380 /* main.m */,
 				AB3D089F186CA11A00CF8380 /* Flooz-Prefix.pch */,
+				ABF46A12187575C600E92A77 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -142,6 +214,111 @@
 				AB3D08B3186CA11A00CF8380 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AB3D08C5186CA17F00CF8380 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AB3D08C0186CA17A00CF8380 /* HomeViewController.h */,
+				AB3D08C1186CA17A00CF8380 /* HomeViewController.m */,
+				AB3D08C2186CA17A00CF8380 /* HomeViewController.xib */,
+				AB3D08C6186CA2E900CF8380 /* SettingsViewController.h */,
+				AB3D08C7186CA2E900CF8380 /* SettingsViewController.m */,
+				AB3D08C8186CA2E900CF8380 /* SettingsViewController.xib */,
+				AB3D08CB186CA2FC00CF8380 /* TimelineViewController.h */,
+				AB3D08CC186CA2FC00CF8380 /* TimelineViewController.m */,
+				AB3D08CD186CA2FC00CF8380 /* TimelineViewController.xib */,
+				AB3D08D0186CA31000CF8380 /* SocialViewController.h */,
+				AB3D08D1186CA31000CF8380 /* SocialViewController.m */,
+				AB3D08D2186CA31000CF8380 /* SocialViewController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		AB3D08D5186CA6F800CF8380 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AB3D08D6186CABDB00CF8380 /* TransactionCell.h */,
+				AB3D08D7186CABDB00CF8380 /* TransactionCell.m */,
+				AB3D08EB187205F600CF8380 /* FLTableView.h */,
+				AB3D08EC187205F600CF8380 /* FLTableView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		AB3D08DB1871A5BE00CF8380 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
+				AB3D08DC1871A5CB00CF8380 /* Flooz */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		AB3D08DC1871A5CB00CF8380 /* Flooz */ = {
+			isa = PBXGroup;
+			children = (
+				AB3D08DD1871A5D100CF8380 /* Model */,
+				AB3D08DE1871AAB400CF8380 /* Flooz.h */,
+				AB3D08DF1871AAB400CF8380 /* Flooz.m */,
+			);
+			name = Flooz;
+			sourceTree = "<group>";
+		};
+		AB3D08DD1871A5D100CF8380 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AB3D08EE1872C6C900CF8380 /* FLTransaction.h */,
+				AB3D08EF1872C6C900CF8380 /* FLTransaction.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		AB3D08E11871BEC300CF8380 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				AB3D08E21871BEEE00CF8380 /* UIColor+custom.h */,
+				AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */,
+				AB3D08E51871C0CC00CF8380 /* UIFont+custom.h */,
+				AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */,
+				ABF46A161875AC9200E92A77 /* UILabel+custom.h */,
+				ABF46A171875AC9200E92A77 /* UILabel+custom.m */,
+				ABF46A37187641BC00E92A77 /* Util.h */,
+				ABF46A38187641BC00E92A77 /* Util.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		ABF46A1C1875B54600E92A77 /* JTImageLabel */ = {
+			isa = PBXGroup;
+			children = (
+				ABF46A1D1875B54600E92A77 /* JTImageLabel.h */,
+				ABF46A1E1875B54600E92A77 /* JTImageLabel.m */,
+			);
+			name = JTImageLabel;
+			path = Library/JTImageLabel;
+			sourceTree = "<group>";
+		};
+		ABF46A201875BE9100E92A77 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				ABF46A211875BE9E00E92A77 /* Fonts */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		ABF46A211875BE9E00E92A77 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */,
+				ABF46A2A1875C0B100E92A77 /* ProximaNova-Regular.otf */,
+				ABF46A2B1875C0B100E92A77 /* ProximaNova-Semibold.otf */,
+				ABF46A2C1875C0B100E92A77 /* Rene Bieder - Gentona Book.otf */,
+				ABF46A2D1875C0B100E92A77 /* Rene Bieder - Gentona ExtraLight.otf */,
+				ABF46A2E1875C0B100E92A77 /* Rene Bieder - Gentona Light.otf */,
+				ABF46A2F1875C0B100E92A77 /* Rene Bieder - Gentona Thin.otf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +368,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Jonathan Tribouharet";
 				TargetAttributes = {
+					AB3D088D186CA11A00CF8380 = {
+						DevelopmentTeam = 239CFKQ3YB;
+					};
 					AB3D08A8186CA11A00CF8380 = {
 						TestTargetID = AB3D088D186CA11A00CF8380;
 					};
@@ -202,6 +382,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
 			);
 			mainGroup = AB3D0885186CA11A00CF8380;
 			productRefGroup = AB3D088F186CA11A00CF8380 /* Products */;
@@ -219,8 +400,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */,
+				ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */,
+				ABF46A321875C1B400E92A77 /* ProximaNova-Semibold.otf in Resources */,
+				ABF46A331875C1B400E92A77 /* Rene Bieder - Gentona Book.otf in Resources */,
+				ABF46A341875C1B400E92A77 /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
+				ABF46A351875C1B400E92A77 /* Rene Bieder - Gentona Light.otf in Resources */,
+				ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */,
 				AB3D089C186CA11A00CF8380 /* InfoPlist.strings in Resources */,
 				AB3D08A4186CA11A00CF8380 /* Images.xcassets in Resources */,
+				AB3D08CF186CA2FC00CF8380 /* TimelineViewController.xib in Resources */,
+				ABF46A10187575C600E92A77 /* Localizable.strings in Resources */,
+				AB3D08D4186CA31000CF8380 /* SocialViewController.xib in Resources */,
+				AB3D08C4186CA17A00CF8380 /* HomeViewController.xib in Resources */,
+				AB3D08CA186CA2E900CF8380 /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +433,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB3D08A2186CA11A00CF8380 /* AppDelegate.m in Sources */,
+				AB3D08ED187205F600CF8380 /* FLTableView.m in Sources */,
+				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
+				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
+				ABF46A39187641BC00E92A77 /* Util.m in Sources */,
+				AB3D08C3186CA17A00CF8380 /* HomeViewController.m in Sources */,
+				AB3D08D8186CABDB00CF8380 /* TransactionCell.m in Sources */,
+				AB3D08F01872C6C900CF8380 /* FLTransaction.m in Sources */,
+				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
+				AB3D08D3186CA31000CF8380 /* SocialViewController.m in Sources */,
+				AB3D08C9186CA2E900CF8380 /* SettingsViewController.m in Sources */,
+				ABF46A181875AC9200E92A77 /* UILabel+custom.m in Sources */,
+				AB3D08CE186CA2FC00CF8380 /* TimelineViewController.m in Sources */,
+				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +473,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB3D089B186CA11A00CF8380 /* en */,
+				ABF46A131875775200E92A77 /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -275,8 +482,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				AB3D08B4186CA11A00CF8380 /* en */,
+				ABF46A151875775200E92A77 /* fr */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		ABF46A12187575C600E92A77 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ABF46A11187575C600E92A77 /* en */,
+				ABF46A141875775200E92A77 /* fr */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -359,6 +576,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
@@ -372,6 +590,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
@@ -441,6 +660,7 @@
 				AB3D08BC186CA11A00CF8380 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AB3D08BD186CA11A00CF8380 /* Build configuration list for PBXNativeTarget "FloozTests" */ = {
 			isa = XCConfigurationList;
@@ -449,6 +669,7 @@
 				AB3D08BF186CA11A00CF8380 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

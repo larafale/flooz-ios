@@ -7,15 +7,21 @@
 //
 
 #import "AppDelegate.h"
+#import "TimelineViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+
+    self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
+    
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[TimelineViewController new]];
+    
+    self.window.rootViewController = controller;
+
     return YES;
 }
 

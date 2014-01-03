@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings
+  Flooz
+
+  Created by jonathan on 1/2/2014.
+  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
+*/
+
+"TRANSACTION_COMMENT" = "Comment";
+"TRANSACTION_LIKE" = "Like";
+
+"TRANSACTION_STATUS_ACCEPTED" = "Accepted";
+"TRANSACTION_STATUS_REFUSED" = "Refused";
+"TRANSACTION_STATUS_WAITING" = "Waiting";
+
+"TRANSACTION_TYPE_PAYMENT" = "PAYMENT";
+"TRANSACTION_TYPE_COLLECTION" = "COLLECTION";
+
+"TRANSACTION_TEXT_PAYMENT_ACCEPTED_FROM_TO" = "%@ a flooz avec %@";
+"TRANSACTION_TEXT_PAYMENT_ACCEPTED_FROM" = "%@ flooz avec moi";
+"TRANSACTION_TEXT_PAYMENT_ACCEPTED_TO" = "j ai flooz avec %@";
+
+"TRANSACTION_TEXT_PAYMENT_REFUSED_FROM_TO" = "%@ a refusé un flooz avec %@";
+"TRANSACTION_TEXT_PAYMENT_REFUSED_FROM" = "%@ a refusé un flooz avec moi";
+"TRANSACTION_TEXT_PAYMENT_REFUSED_TO" = "j ai refusé un flooz avec %@";
+
+"TRANSACTION_TEXT_PAYMENT_WAITING_FROM_TO" = "%@ a demandé un flooz avec %@";
+"TRANSACTION_TEXT_PAYMENT_WAITING_FROM" = "%@ demande un flooz avec moi";
+"TRANSACTION_TEXT_PAYMENT_WAITING_TO" = "j ai demandé un flooz avec %@";
+
+"TRANSACTION_TEXT_COLLECTION_ACCEPTED_FROM_TO" = "%@ a flooz avec %@";
+"TRANSACTION_TEXT_COLLECTION_ACCEPTED_FROM" = "%@ flooz avec moi";
+"TRANSACTION_TEXT_COLLECTION_ACCEPTED_TO" = "j ai flooz avec %@";
+
+"TRANSACTION_TEXT_COLLECTION_REFUSED_FROM_TO" = "%@ a refusé un flooz avec %@";
+"TRANSACTION_TEXT_COLLECTION_REFUSED_FROM" = "%@ a refusé un flooz avec moi";
+"TRANSACTION_TEXT_COLLECTION_REFUSED_TO" = "j ai refusé un flooz avec %@";
+
+"TRANSACTION_TEXT_COLLECTION_WAITING_FROM_TO" = "%@ a demandé un flooz avec %@";
+"TRANSACTION_TEXT_COLLECTION_WAITING_FROM" = "%@ demande un flooz avec moi";
+"TRANSACTION_TEXT_COLLECTION_WAITING_TO" = "j ai demandé un flooz avec %@";
