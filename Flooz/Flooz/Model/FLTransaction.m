@@ -64,7 +64,7 @@
     return text;
 }
 
-+ (NSArray *)testTransactions{
++ (NSArray *)testData{
     NSMutableArray *transactions = [NSMutableArray new];
     
     FLTransaction *transaction = nil;

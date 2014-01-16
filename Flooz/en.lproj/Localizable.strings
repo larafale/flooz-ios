@@ -6,8 +6,29 @@
   Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
 */
 
-"TRANSACTION_COMMENT" = "Comment";
-"TRANSACTION_LIKE" = "Like";
+"NAV_LOGIN" = "Log in";
+"NAV_SIGNUP" = "Sign up";
+"NAV_SETTINGS" = "Account";
+"NAV_SOCIAL" = "Social";
+
+"HOME_LOGIN" = "Log in";
+"HOME_SIGNUP" = "Sign up";
+"HOME_PREVIEW" = "Take a tour";
+
+"FIELD_USERNAME" = "Username";
+"FIELD_FIRSTNAME" = "First Name";
+"FIELD_LASTNAME" = "Last Name";
+"FIELD_PHONE" = "Phone";
+"FIELD_EMAIL" = "Email";
+"FIELD_PASSWORD" = "Password";
+"FIELD_CODE" = "Codea 4 chiffres";
+
+"SIGNUP_FACEBOOK" = "Register with Facebook";
+"SIGNUP_SECURITY_INFO" = "Security informations";
+"SIGNUP_CODE_INFO" = "Ce code secret vous permettra de sécuriser votre application en cas de vol ou perte de votre mobile";
+
+"CELL_SOCIAL_COMMENT" = "Comment";
+"CELL_SOCIAL_LIKE" = "Like";
 
 "TRANSACTION_STATUS_ACCEPTED" = "Accepted";
 "TRANSACTION_STATUS_REFUSED" = "Refused";
@@ -39,3 +60,7 @@
 "TRANSACTION_TEXT_COLLECTION_WAITING_FROM_TO" = "%@ a demandé un flooz avec %@";
 "TRANSACTION_TEXT_COLLECTION_WAITING_FROM" = "%@ demande un flooz avec moi";
 "TRANSACTION_TEXT_COLLECTION_WAITING_TO" = "j ai demandé un flooz avec %@";
+
+"EVENT_STATUS_ACCEPTED" = "J'y participe";
+"EVENT_STATUS_REFUSED" = "Je n'y participe pas";
+"EVENT_STATUS_WAITING" = "Invité";

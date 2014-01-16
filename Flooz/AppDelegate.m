@@ -7,22 +7,44 @@
 //
 
 #import "AppDelegate.h"
+
+#import "JTContainerViewController.h"
+
+#import "HomeViewController.h"
+
+#import "SocialViewController.h"
 #import "TimelineViewController.h"
+#import "SettingsViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
+    
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
-    
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[TimelineViewController new]];
-    
+        
+    JTNavigationController *controller = [[JTNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
     return YES;
+}
+
+- (void)didConnected
+{
+    JTContainerViewController *controller = [[JTContainerViewController alloc] initWithControllers:@[
+        [SocialViewController new], [TimelineViewController new], [SettingsViewController new]
+    ]];
+
+    [UIView transitionWithView:self.window
+                      duration:0.7
+                       options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
+                    animations:^{
+                        self.window.rootViewController = controller;
+                    }
+                    completion:nil
+     ];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

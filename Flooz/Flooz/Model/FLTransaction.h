@@ -41,6 +41,6 @@ typedef NS_ENUM(NSInteger, TransactionStatus) {
 - (NSString *)amountText;
 - (NSString *)text;
 
-+ (NSArray *)testTransactions;
++ (NSArray *)testData;
 
 @end
