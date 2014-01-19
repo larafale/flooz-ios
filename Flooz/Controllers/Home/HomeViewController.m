@@ -30,9 +30,9 @@
     return self;
 }
 
-- (void)viewDidLoad
+- (void)loadView
 {
-    [super viewDidLoad];
+    [super loadView];
     
     preview = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - 29, CGRectGetWidth(self.view.frame), 29)];
     login = [[UIButton alloc] initWithFrame:CGRectMake(23, preview.frame.origin.y - 13 - 35, 134, 35)];

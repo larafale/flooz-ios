@@ -18,8 +18,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"Flooz";
-        transactions = [FLTransaction testData];
+        self.title = NSLocalizedString(@"NAV_TIMELINE", nil);
+        transactions = @[];
     }
     return self;
 }
@@ -41,6 +41,19 @@
     [self.view addSubview:crossButton];
     
     [crossButton addTarget:self action:@selector(presentMenuTransactionController) forControlEvents:UIControlEventTouchDown];
+    
+    
+    {
+        [_filterView addFilter:@"TIMELINE_FILTER_PUBLIC" target:self action:@selector(didFilterPublicTouch)];
+        [_filterView addFilter:@"TIMELINE_FILTER_FRIEND" target:self action:@selector(didFilterFriendTouch)];
+        [_filterView addFilter:@"TIMELINE_FILTER_PERSO" target:self action:@selector(didFilterPersoTouch:) colors:@[
+                                                                                        [UIColor customBlue],
+                                                                                        [UIColor customYellow],
+                                                                                        [UIColor customGreen]
+                                                                                        ]];
+    }
+    
+    [self didFilterPublicTouch];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -86,11 +99,37 @@
     crossButton.hidden = YES;
  
     UIViewController *controller = [MenuNewTransactionViewController new];
-    controller.view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    
     [self presentViewController:controller animated:YES completion:^{
         self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     }];
+}
+
+#pragma mark - Filters
+
+- (void)didFilterPublicTouch
+{    
+    transactions = [FLTransaction testData];
+    [self didFilterChange];
+}
+
+- (void)didFilterFriendTouch
+{
+    transactions = [FLTransaction testData];
+    [self didFilterChange];
+}
+
+- (void)didFilterPersoTouch:(NSNumber *)index
+{
+    transactions = [FLTransaction testData];
+    [self didFilterChange];
+}
+
+- (void)didFilterChange
+{
+    [_tableView reloadData];
+    [_tableView setContentOffset:CGPointZero animated:YES];
 }
 
 @end

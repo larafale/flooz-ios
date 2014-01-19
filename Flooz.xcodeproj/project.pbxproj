@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
 		AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0891186CA11A00CF8380 /* Foundation.framework */; };
 		AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */; };
 		AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0895186CA11A00CF8380 /* UIKit.framework */; };
@@ -36,6 +37,7 @@
 		AB4CB6F91886C1C600D1C573 /* SignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */; };
 		AB4CB6FC1886C67F00D1C573 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6FB1886C67F00D1C573 /* FLTextField.m */; };
 		AB4CB6FF1886CB6800D1C573 /* UIImageView+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6FE1886CB6800D1C573 /* UIImageView+custom.m */; };
+		AB4CB706188829EF00D1C573 /* JTLoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB705188829EF00D1C573 /* JTLoadView.m */; };
 		AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6D9188214F000D81AF6 /* HomeViewController.m */; };
 		AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */; };
 		AB5EB6ED188214F000D81AF6 /* MenuNewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6DD188214F000D81AF6 /* MenuNewTransactionViewController.m */; };
@@ -51,6 +53,10 @@
 		AB5EB7061882157300D81AF6 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6FF1882157300D81AF6 /* TransactionCell.m */; };
 		AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
 		AB5EB7081882157300D81AF6 /* RoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7031882157300D81AF6 /* RoundButton.m */; };
+		ABE9142018894385003AC722 /* NewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9141E18894385003AC722 /* NewTransactionViewController.m */; };
+		ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9141F18894385003AC722 /* NewTransactionViewController.xib */; };
+		ABE91424188944D5003AC722 /* FLValidNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91423188944D5003AC722 /* FLValidNavBar.m */; };
+		ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91426188C5D1A003AC722 /* FLFilterView.m */; };
 		ABF46A10187575C600E92A77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
 		ABF46A181875AC9200E92A77 /* UILabel+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A171875AC9200E92A77 /* UILabel+custom.m */; };
 		ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A1E1875B54600E92A77 /* JTImageLabel.m */; };
@@ -75,6 +81,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1686D3DC8F1E47F8A8972682 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		AB3D088E186CA11A00CF8380 /* Flooz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flooz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3D0891186CA11A00CF8380 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -122,6 +130,8 @@
 		AB4CB6FB1886C67F00D1C573 /* FLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextField.m; path = Views/FLTextField.m; sourceTree = "<group>"; };
 		AB4CB6FD1886CB6800D1C573 /* UIImageView+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+custom.h"; path = "Util/UIImageView+custom.h"; sourceTree = "<group>"; };
 		AB4CB6FE1886CB6800D1C573 /* UIImageView+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+custom.m"; path = "Util/UIImageView+custom.m"; sourceTree = "<group>"; };
+		AB4CB704188829EF00D1C573 /* JTLoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTLoadView.h; path = Library/JTLoadView/JTLoadView.h; sourceTree = "<group>"; };
+		AB4CB705188829EF00D1C573 /* JTLoadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTLoadView.m; path = Library/JTLoadView/JTLoadView.m; sourceTree = "<group>"; };
 		AB5EB6D8188214F000D81AF6 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		AB5EB6D9188214F000D81AF6 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -147,6 +157,13 @@
 		AB5EB7011882157300D81AF6 /* FLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTableView.m; path = Views/FLTableView.m; sourceTree = "<group>"; };
 		AB5EB7021882157300D81AF6 /* RoundButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundButton.h; path = Views/RoundButton.h; sourceTree = "<group>"; };
 		AB5EB7031882157300D81AF6 /* RoundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundButton.m; path = Views/RoundButton.m; sourceTree = "<group>"; };
+		ABE9141D18894385003AC722 /* NewTransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionViewController.h; path = Controllers/NewTransaction/NewTransactionViewController.h; sourceTree = "<group>"; };
+		ABE9141E18894385003AC722 /* NewTransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionViewController.m; path = Controllers/NewTransaction/NewTransactionViewController.m; sourceTree = "<group>"; };
+		ABE9141F18894385003AC722 /* NewTransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewTransactionViewController.xib; path = Controllers/NewTransaction/NewTransactionViewController.xib; sourceTree = "<group>"; };
+		ABE91422188944D5003AC722 /* FLValidNavBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLValidNavBar.h; path = Views/FLValidNavBar/FLValidNavBar.h; sourceTree = "<group>"; };
+		ABE91423188944D5003AC722 /* FLValidNavBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLValidNavBar.m; path = Views/FLValidNavBar/FLValidNavBar.m; sourceTree = "<group>"; };
+		ABE91425188C5D1A003AC722 /* FLFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLFilterView.h; path = Views/FLFilterView/FLFilterView.h; sourceTree = "<group>"; };
+		ABE91426188C5D1A003AC722 /* FLFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLFilterView.m; path = Views/FLFilterView/FLFilterView.m; sourceTree = "<group>"; };
 		ABF46A11187575C600E92A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABF46A131875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ABF46A141875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -174,6 +191,7 @@
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
 				AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */,
+				20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +215,7 @@
 				AB3D08B0186CA11A00CF8380 /* FloozTests */,
 				AB3D0890186CA11A00CF8380 /* Frameworks */,
 				AB3D088F186CA11A00CF8380 /* Products */,
+				A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,6 +235,7 @@
 				AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */,
 				AB3D0895186CA11A00CF8380 /* UIKit.framework */,
 				AB3D08AA186CA11A00CF8380 /* XCTest.framework */,
+				1686D3DC8F1E47F8A8972682 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -269,6 +289,7 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				ABE9141C1889436B003AC722 /* NewTransaction */,
 				AB4CB6F41886C1B000D1C573 /* Signup */,
 				AB4CB6DD1886AE1E00D1C573 /* Login */,
 				AB4CB6D71886A24B00D1C573 /* Preview */,
@@ -284,6 +305,7 @@
 		AB3D08D5186CA6F800CF8380 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				ABE91428188C5D20003AC722 /* FLFilterView */,
 				AB4CB6E71886BCE900D1C573 /* Buttons */,
 				AB5EB6F91882157300D81AF6 /* Cells */,
 				AB5EB7001882157300D81AF6 /* FLTableView.h */,
@@ -292,6 +314,8 @@
 				AB5EB7031882157300D81AF6 /* RoundButton.m */,
 				AB4CB6FA1886C67F00D1C573 /* FLTextField.h */,
 				AB4CB6FB1886C67F00D1C573 /* FLTextField.m */,
+				ABE91422188944D5003AC722 /* FLValidNavBar.h */,
+				ABE91423188944D5003AC722 /* FLValidNavBar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -299,6 +323,7 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				AB4CB703188829DA00D1C573 /* JTLoadView */,
 				AB4CB6E31886B22100D1C573 /* JTNavigationController */,
 				AB46C66E18803421006C8334 /* JTContainerViewController */,
 				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
@@ -404,6 +429,15 @@
 			name = Signup;
 			sourceTree = "<group>";
 		};
+		AB4CB703188829DA00D1C573 /* JTLoadView */ = {
+			isa = PBXGroup;
+			children = (
+				AB4CB704188829EF00D1C573 /* JTLoadView.h */,
+				AB4CB705188829EF00D1C573 /* JTLoadView.m */,
+			);
+			name = JTLoadView;
+			sourceTree = "<group>";
+		};
 		AB5EB6D7188214F000D81AF6 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -473,6 +507,25 @@
 			path = Views/Cells;
 			sourceTree = "<group>";
 		};
+		ABE9141C1889436B003AC722 /* NewTransaction */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9141D18894385003AC722 /* NewTransactionViewController.h */,
+				ABE9141E18894385003AC722 /* NewTransactionViewController.m */,
+				ABE9141F18894385003AC722 /* NewTransactionViewController.xib */,
+			);
+			name = NewTransaction;
+			sourceTree = "<group>";
+		};
+		ABE91428188C5D20003AC722 /* FLFilterView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE91425188C5D1A003AC722 /* FLFilterView.h */,
+				ABE91426188C5D1A003AC722 /* FLFilterView.m */,
+			);
+			name = FLFilterView;
+			sourceTree = "<group>";
+		};
 		ABF46A1C1875B54600E92A77 /* JTImageLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,9 +565,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB3D08BA186CA11A00CF8380 /* Build configuration list for PBXNativeTarget "Flooz" */;
 			buildPhases = (
+				AF57465754E04C508181C0F2 /* Check Pods Manifest.lock */,
 				AB3D088A186CA11A00CF8380 /* Sources */,
 				AB3D088B186CA11A00CF8380 /* Frameworks */,
 				AB3D088C186CA11A00CF8380 /* Resources */,
+				836A9764AB864657A1C519EB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -596,6 +651,7 @@
 				AB4CB6E21886AE2D00D1C573 /* LoginViewController.xib in Resources */,
 				ABF46A351875C1B400E92A77 /* Rene Bieder - Gentona Light.otf in Resources */,
 				ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */,
+				ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */,
 				AB3D089C186CA11A00CF8380 /* InfoPlist.strings in Resources */,
 				AB4CB6DC1886A26400D1C573 /* PreviewViewController.xib in Resources */,
 				AB3D08A4186CA11A00CF8380 /* Images.xcassets in Resources */,
@@ -615,6 +671,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		836A9764AB864657A1C519EB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF57465754E04C508181C0F2 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AB3D088A186CA11A00CF8380 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -626,6 +715,7 @@
 				AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */,
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
 				AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */,
+				ABE91424188944D5003AC722 /* FLValidNavBar.m in Sources */,
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
 				AB4CB6DB1886A26400D1C573 /* PreviewViewController.m in Sources */,
 				AB4CB6FF1886CB6800D1C573 /* UIImageView+custom.m in Sources */,
@@ -640,11 +730,14 @@
 				AB46C6C71881D462006C8334 /* FLEvent.m in Sources */,
 				AB3D08F01872C6C900CF8380 /* FLTransaction.m in Sources */,
 				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
+				ABE9142018894385003AC722 /* NewTransactionViewController.m in Sources */,
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
 				AB5EB7051882157300D81AF6 /* EventCell.m in Sources */,
+				AB4CB706188829EF00D1C573 /* JTLoadView.m in Sources */,
 				ABF46A181875AC9200E92A77 /* UILabel+custom.m in Sources */,
 				AB5EB6F1188214F000D81AF6 /* SocialViewController.m in Sources */,
 				AB46C6741880393A006C8334 /* JTNavbarView.m in Sources */,
+				ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */,
 				AB5EB7081882157300D81AF6 /* RoundButton.m in Sources */,
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
@@ -775,6 +868,7 @@
 		};
 		AB3D08BB186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -782,6 +876,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -789,6 +884,7 @@
 		};
 		AB3D08BC186CA11A00CF8380 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -796,6 +892,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

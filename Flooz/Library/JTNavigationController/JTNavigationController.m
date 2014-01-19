@@ -28,15 +28,28 @@
 
 - (void)customAppearence
 {
-    NSDictionary *attributes = @{
-                                 NSForegroundColorAttributeName: [UIColor customBlue],
-                                 NSFontAttributeName: [UIFont customTitleExtraLight:28]
-                                 };
-    
-    [[UINavigationBar appearance] setTitleTextAttributes:attributes];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor customBackgroundHeader]];
-
-    self.navigationBar.translucent = NO;
+    if(IS_IOS7){
+        [[UINavigationBar appearance] setBarTintColor:[UIColor customBackgroundHeader]];
+        self.navigationBar.translucent = NO;
+        
+        NSDictionary *attributes = @{
+                                     NSForegroundColorAttributeName: [UIColor customBlue],
+                                     NSFontAttributeName: [UIFont customTitleExtraLight:28]
+                                     };
+        
+        [[UINavigationBar appearance] setTitleTextAttributes:attributes];
+    }
+    else{
+//        [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//        [[UINavigationBar appearance] setBackgroundColor:[UIColor customBackgroundHeader]];
+//        
+//        NSDictionary *attributes = @{
+//                                     UITextAttributeTextColor: [UIColor customBlue],
+//                                     UITextAttributeFont: [UIFont customTitleExtraLight:28]
+//                                     };
+//        
+//        [[UINavigationBar appearance] setTitleTextAttributes:attributes];
+    }
     
     backItem = [UIBarButtonItem createBackButtonWithTarget:self action:@selector(popVC)];
 }

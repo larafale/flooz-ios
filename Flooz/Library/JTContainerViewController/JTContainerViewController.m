@@ -33,7 +33,6 @@
     [self prepareViewControllers];
 }
 
-
 - (void)prepareViewControllers
 {
     NSInteger index = 0;

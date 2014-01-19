@@ -81,7 +81,15 @@
 
 - (void)reloadImageView
 {
-    CGSize textSize = [self.text sizeWithAttributes:@{NSFontAttributeName:self.font}];
+    CGSize textSize = CGSizeZero;
+    
+    if(IS_IOS7){
+        textSize = [self.text sizeWithAttributes:@{NSFontAttributeName:self.font}];
+    }
+    else{
+//        textSize = [self.text sizeWithFont:self.font];
+    }
+    
     CGFloat x = 0;
     CGFloat y = (self.frame.size.height - _imageView.image.size.height) / 2.0 + _imageOffset.y;
     

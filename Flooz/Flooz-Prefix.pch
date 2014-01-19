@@ -25,9 +25,15 @@
 #import "Util.h"
 
 #import "JTImageLabel.h"
+#import "JTLoadView.h"
 #import "JTNavigationController.h"
 #import "FLTableView.h"
 #import "FLTextField.h"
+#import "FLValidNavBar.h"
+
+#import "Flooz.h"
+
+#define IS_IOS7 [[UIDevice currentDevice].systemVersion hasPrefix:@"7"]
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -38,9 +44,10 @@
 #define CGRectMakeSetWidth(frame, width) CGRectMake(frame.origin.x, frame.origin.y, width, frame.size.height)
 #define CGRectMakeSetHeight(frame, height) CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, height)
 #define CGRectMakeSetWidthHeight(frame, width, height) CGRectMake(frame.origin.x, frame.origin.y, width, height)
+#define CGRectGetCenter(frame) CGPointMake(frame.size.width / 2., frame.size.height / 2.)
 
 #define NSLogFrame(frame) NSLog(@"%f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height)
 
 #define appDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
 
-#define SCREEN_WIDTH 320.
+#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width

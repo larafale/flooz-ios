@@ -1,0 +1,23 @@
+//
+//  FLFilterView.h
+//  Flooz
+//
+//  Created by jonathan on 1/19/2014.
+//  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface FLFilterView : UIView{
+    NSMutableArray *buttonColors;
+    NSMutableArray *filterViews;
+    NSMutableArray *actions;
+    
+    NSInteger currentFilterIndex;
+    NSInteger currentFilterColorIndex;
+}
+
+- (void)addFilter:(NSString *)title target:(id)target action:(SEL)action;
+- (void)addFilter:(NSString *)title target:(id)target action:(SEL)action colors:(NSArray *)colors;
+
+@end

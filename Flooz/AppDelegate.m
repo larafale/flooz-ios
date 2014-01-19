@@ -24,10 +24,12 @@
     
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
-        
+    
     JTNavigationController *controller = [[JTNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
+    [self didConnected];
+    
     return YES;
 }
 
@@ -43,7 +45,7 @@
                     animations:^{
                         self.window.rootViewController = controller;
                     }
-                    completion:nil
+                    completion:NULL
      ];
 }
 

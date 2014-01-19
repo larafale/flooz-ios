@@ -8,9 +8,9 @@
 
 "NAV_LOGIN" = "Log in";
 "NAV_SIGNUP" = "Sign up";
-
 "NAV_SETTINGS" = "Account";
 "NAV_SOCIAL" = "Social";
+"NAV_TIMELINE" = "Flooz";
 
 "HOME_LOGIN" = "Log in";
 "HOME_SIGNUP" = "Sign up";
@@ -25,11 +25,23 @@
 "FIELD_CODE" = "Codea 4 chiffres";
 
 "SIGNUP_FACEBOOK" = "Register with Facebook";
+"SIGN_OR" = "or";
 "SIGNUP_SECURITY_INFO" = "Security informations";
 "SIGNUP_CODE_INFO" = "Ce code secret vous permettra de sécuriser votre application en cas de vol ou perte de votre mobile";
 
+"LOGIN_FACEBOOK" = "Login with Facebook";
+"LOGIN_OR" = "or";
+"LOGIN_PASSWORD_FORGOT" = "Mot de passw oublié?";
+
+"MENU_NEW_TRANSACTION_EVENT" = "Cagnotte";
+"MENU_NEW_TRANSACTION_PAYMENT" = "Encaissement";
+"MENU_NEW_TRANSACTION_COLLECT" = "Récalmer";
+
 "CELL_SOCIAL_COMMENT" = "Comment";
 "CELL_SOCIAL_LIKE" = "Like";
+
+"TRANSACTION_CELL_ACCEPT" = "ACCEPT";
+"TRANSACTION_CELL_REFUSE" = "REFUSED";
 
 "TRANSACTION_STATUS_ACCEPTED" = "Accepted";
 "TRANSACTION_STATUS_REFUSED" = "Refused";

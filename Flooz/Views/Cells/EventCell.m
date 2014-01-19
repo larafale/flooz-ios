@@ -14,7 +14,6 @@
 
 @implementation EventCell
 
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -79,13 +78,13 @@
 - (void)createSlideView{
     slideView = [[UIView alloc] initWithFrame:CGRectMakeSize(2, 0)];
     slideView.backgroundColor = [UIColor customYellow];
-    [self addSubview:slideView];
+    [self.contentView addSubview:slideView];
 }
 
 - (void)createRightViews{
     rightView = [[UIView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, MARGE_TOP, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 0)];
         
-    [self addSubview:rightView];
+    [self.contentView addSubview:rightView];
     
     [self createHeaderView];
     [self createDetailView];

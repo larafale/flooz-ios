@@ -28,13 +28,17 @@
     self.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.layer.borderWidth = 1.;
     
+    UIImageView *image = [UIImageView imageNamed:imageName];
+    image.center = CGRectGetCenter(self.frame);
+    [self addSubview:image];
+    
     UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     
     textView.textColor = [UIColor whiteColor];
     textView.textAlignment = NSTextAlignmentCenter;
     textView.font = [UIFont customContentLight:13];
     
-    textView.text = text;
+    textView.text = NSLocalizedString(text, nil);
     
     [self addSubview:textView];
 }
@@ -42,14 +46,14 @@
 - (void)startAnimationWithDelay:(NSTimeInterval)delay
 {
     self.hidden = NO;
-    self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.1, 0.1);
+    self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0., 0.);
     
     [UIView animateWithDuration:0.2
                           delay:delay
                         options:0
                      animations:^{
-        self.transform =  CGAffineTransformIdentity;
-    } completion:nil];
+                        self.transform =  CGAffineTransformIdentity;
+    } completion:NULL];
 }
 
 @end

@@ -32,9 +32,7 @@
 {
     // Evite creation de cellule vide
     self.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
-    self.separatorInset = UIEdgeInsetsZero;
-    
+        
     self.backgroundColor = [UIColor customBackground];
     self.separatorColor = [UIColor customSeparator];
     self.showsVerticalScrollIndicator = NO;

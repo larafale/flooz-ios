@@ -84,16 +84,17 @@
     [self createLeftViews];
     [self createSlideView];
     [self createRightViews];
+    [self createValidViews];
     
-    panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToPanGesture:)];
-    panGesture.delegate = self;
-    [self addGestureRecognizer:panGesture];
+    gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipe:)];
+    gesture.delegate = self;
+    [self addGestureRecognizer:gesture];
 }
 
 - (void)createLeftViews{
     leftView = [[UIView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, MARGE_TOP, 60, 0)];
     
-    [self addSubview:leftView];
+    [self.contentView addSubview:leftView];
     
     [self createAvatarView];
 }
@@ -101,18 +102,34 @@
 - (void)createSlideView{
     slideView = [[UIView alloc] initWithFrame:CGRectMakeSize(2, 0)];
     slideView.backgroundColor = [UIColor customYellow];
-    [self addSubview:slideView];
+    
+    [self.contentView addSubview:slideView];
 }
 
 - (void)createRightViews{
     rightView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(leftView.frame), MARGE_TOP, CGRectGetWidth(self.frame) - CGRectGetMaxX(leftView.frame) - MARGE_LEFT_RIGHT, 0)];
     
-    [self addSubview:rightView];
+    [self.contentView addSubview:rightView];
     
     [self createHeaderView];
     [self createDetailView];
     [self createAttachmentView];
     [self createSocialView];
+}
+
+- (void)createValidViews{
+    validView = [[UIView alloc] initWithFrame:CGRectMake(- CGRectGetWidth(self.frame), 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    
+    validView.backgroundColor = [UIColor customBackgroundHeader];
+    
+    [self.contentView addSubview:validView];
+    
+    JTImageLabel *text = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(validView.frame) - 30, CGRectGetHeight(validView.frame))];
+    
+    [text setImageOffset:CGPointMake(-10, 0)];
+    text.textAlignment = NSTextAlignmentRight;
+    
+    [validView addSubview:text];
 }
 
 - (void)createAvatarView{
@@ -204,6 +221,7 @@
     height += MARGE_TOP + MARGE_BOTTOM;
     
     slideView.frame = CGRectMakeSetHeight(slideView.frame, height);
+    validView.frame = CGRectMakeSetHeight(validView.frame, height);
     self.frame = CGRectMakeSetHeight(self.frame, height);
 }
 
@@ -291,6 +309,10 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
 {
+    if(_transaction.status != TransactionStatusWaiting){
+        return NO;
+    }
+    
     CGPoint translation = [gestureRecognizer translationInView:self];
     if(translation.x > 0.){
         return YES;
@@ -299,9 +321,10 @@
     return NO;
 }
 
-- (void)respondToPanGesture:(UIPanGestureRecognizer *)recognizer
+- (void)respondToSwipe:(UIPanGestureRecognizer *)recognizer
 {
     CGPoint translation = [recognizer translationInView:self];
+    CGFloat progress = fabs(translation.x / CGRectGetWidth(self.frame));
     
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:
@@ -316,7 +339,8 @@
             diffTranslation.x -= lastTranslation.x;
             lastTranslation = translation;
             
-            [self moveViews:diffTranslation];
+            [self moveViews:diffTranslation.x];
+            [self updateValidView:progress];
             break;
         }
         case UIGestureRecognizerStateEnded:
@@ -327,10 +351,10 @@
     }
 }
 
-- (void)moveViews:(CGPoint)offset
+- (void)moveViews:(CGFloat)offsetX
 {
-    for(UIView *view in [self subviews]){
-        view.frame = CGRectOffset(view.frame, offset.x, 0);
+    for(UIView *view in self.contentView.subviews){
+        view.frame = CGRectOffset(view.frame, offsetX, 0);
     }
 }
 
@@ -339,8 +363,31 @@
     translation.x = - translation.x;
     
     [UIView animateWithDuration:.3 animations:^{
-        [self moveViews:translation];
+        [self moveViews:translation.x];
     }];
+}
+
+- (void)updateValidView:(CGFloat)progress
+{
+    JTImageLabel *text = [[validView subviews] objectAtIndex:0];
+    
+    if(progress < 0.33){
+        text.text = NSLocalizedString(@"TRANSACTION_CELL_ACCEPT", nil);
+        text.textColor = [UIColor whiteColor];
+        [text setImage:[UIImage imageNamed:@"transaction-cell-v-green"]];
+    }
+    else if(progress < 0.66){
+        text.text = NSLocalizedString(@"TRANSACTION_CELL_ACCEPT", nil);
+        text.textColor = [UIColor customGreen];
+        [text setImage:[UIImage imageNamed:@"transaction-cell-v-green"]];
+    }
+    else{
+        text.text = NSLocalizedString(@"TRANSACTION_CELL_REFUSE", nil);
+        text.textColor = [UIColor customRed];
+        [text setImage:[UIImage imageNamed:@"transaction-cell-cross"]];
+    }
+    
+    text.center = CGPointMake(text.center.x, validView.center.y);
 }
 
 @end

@@ -15,11 +15,12 @@
 @interface TransactionCell : UITableViewCell{
     CGFloat height;
     
+    UIView *validView;
     UIView *leftView;
     UIView *rightView;
     UIView *slideView;
     
-    UIPanGestureRecognizer *panGesture;
+    UIPanGestureRecognizer *gesture;
     CGPoint lastTranslation;
 }
 

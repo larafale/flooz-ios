@@ -43,6 +43,8 @@
         registerFacebook.backgroundColor = [UIColor customBlue];
         [registerFacebook setTitle:NSLocalizedString(@"SIGNUP_FACEBOOK", nil) forState:UIControlStateNormal];
         registerFacebook.titleLabel.font = [UIFont customContentRegular:13];
+        [registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateNormal];
+        [registerFacebook setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 12)];
         
         [self.view addSubview:registerFacebook];
     }
@@ -57,7 +59,7 @@
         [self.view addSubview:right];
         
         UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(left.frame), 70, CGRectGetWidth(self.view.frame) - 2 * (CGRectGetWidth(left.frame) + MARGE), 15)];
-        text.text = @"or";
+        text.text = NSLocalizedString(@"SIGN_OR", nil);
         text.textColor = [UIColor whiteColor];
         text.textAlignment = NSTextAlignmentCenter;
         [self.view addSubview:text];
@@ -70,8 +72,8 @@
     }
     
     {
-        FLTextField *username = [[FLTextField alloc] initWithIcon:@"field-name" placeholder:@"FIELD_USERNAME" for:user key:@"username" position:CGPointMake(MARGE, 209)];
-        FLTextField *name = [[FLTextField alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:user key:@"firstname" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame)) placeholder2:@"FIELD_LASTNAME" key2:@"lastname"];
+        FLTextField *username = [[FLTextField alloc] initWithIcon:@"field-name" placeholder:@"FIELD_USERNAME" for:user key:@"nick" position:CGPointMake(MARGE, 209)];
+        FLTextField *name = [[FLTextField alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:user key:@"firstName" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame)) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
         FLTextField *phone = [[FLTextField alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:user key:@"phone" position:CGPointMake(MARGE, CGRectGetMaxY(name.frame))];
         FLTextField *email = [[FLTextField alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:user key:@"email" position:CGPointMake(MARGE, CGRectGetMaxY(phone.frame))];
         
@@ -116,7 +118,12 @@
 
 - (void)presentTimelineController
 {
-    [appDelegate didConnected];
+    [[Flooz sharedInstance] signup:user
+                            success:^(id result){
+                                [appDelegate didConnected];
+                            }failure:^(NSError *error){
+                               
+                            }];
 }
 
 @end

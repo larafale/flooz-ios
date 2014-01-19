@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FLFilterView.h"
+
 @interface TimelineViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
     NSArray *transactions;
     UIButton *crossButton;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
+@property (weak, nonatomic) IBOutlet FLFilterView *filterView;
 
 @end

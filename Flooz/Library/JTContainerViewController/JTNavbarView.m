@@ -8,7 +8,7 @@
 
 #import "JTNavbarView.h"
 
-#define STATUSBAR_HEIGHT 20.
+#define STATUSBAR_HEIGHT (IS_IOS7 ? 20.: 0.)
 #define NAVBAR_HEIGHT 44.
 #define HEIGHT (STATUSBAR_HEIGHT + NAVBAR_HEIGHT)
 
@@ -19,7 +19,7 @@
 
 - (id)initWithViewControllers:(NSArray *)viewControllers
 {
-    self = [super initWithFrame:CGRectMakeSize([[UIScreen mainScreen] bounds].size.width, HEIGHT)];
+    self = [super initWithFrame:CGRectMakeSize(SCREEN_WIDTH, HEIGHT)];
     if (self) {
         self.backgroundColor = [UIColor customBackgroundHeader];
         
@@ -60,9 +60,13 @@
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:
             lastTranslation = CGPointZero;
+            for(UIViewController *controller in _viewControllers){
+                [controller beginAppearanceTransition:YES animated:YES];
+            }
             break;
         case UIGestureRecognizerStateChanged:{
             CGPoint translation = [recognizer translationInView:_titlesView];
+            
             CGPoint diffTranslation = translation;
             diffTranslation.x -= lastTranslation.x;
             lastTranslation = translation;
@@ -114,6 +118,10 @@
     
     [UIView animateWithDuration:.3 animations:^{
         [self updateViewsPositions];
+        
+        for(UIViewController *controller in _viewControllers){
+            [controller endAppearanceTransition];
+        }
     }];
 }
 

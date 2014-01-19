@@ -10,13 +10,33 @@
 
 @implementation UILabel (custom)
 
+// ios6
+//- (id)initWithFrame:(CGRect)frame
+//{
+//    self = [super initWithFrame:frame];
+//    if(self){
+//        if(!IS_IOS7){
+//            self.backgroundColor = [UIColor clearColor];
+//        }
+//    }
+//    return self;
+//}
+
 - (void)setWidth{
     if(self.text == nil){
         self.frame = CGRectMakeSetWidth(self.frame, 0);
         return;
     }
+
+    CGSize size = CGSizeZero;
     
-    CGSize size = [self.text sizeWithAttributes:@{NSFontAttributeName:self.font}];
+    if(IS_IOS7){
+        size = [self.text sizeWithAttributes:@{NSFontAttributeName:self.font}];
+    }
+    else{
+//        size = [self.text sizeWithFont:self.font];
+    }
+    
     self.frame = CGRectMakeSetWidth(self.frame, size.width);
 }
 

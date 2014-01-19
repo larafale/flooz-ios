@@ -22,6 +22,16 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    {
+//        [_filterView addFilter:@"TIMELINE_FILTER_PUBLIC" target:self action:nil];
+//        [_filterView addFilter:@"TIMELINE_FILTER_FRIEND" target:self action:nil];
+    }
+}
+
 #pragma mark - TableView
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
