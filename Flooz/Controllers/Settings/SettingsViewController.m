@@ -28,11 +28,6 @@
     return [transactions count];
 }
 
-- (CGFloat)tableView:(FLTableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [TransactionCell getEstimatedHeight];
-}
-
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
     return [TransactionCell getHeightForTransaction:transaction];

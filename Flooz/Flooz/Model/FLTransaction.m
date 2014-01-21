@@ -10,6 +10,44 @@
 
 @implementation FLTransaction
 
+- (id)initWithJSON:(NSDictionary *)json
+{
+    self = [super init];
+    if(self){
+        [self setJSON:json];
+    }
+    return self;
+}
+
+- (void)setJSON:(NSDictionary *)json
+{
+    _amount = [json objectForKey:@"amount"];
+    _text = [json objectForKey:@"text"];
+    _content = [json objectForKey:@"why"];
+
+    _attachment_url = [json objectForKey:@"pic"];
+    _attachment_thumb_url = [json objectForKey:@"picMini"];
+        
+    NSString *method = [json objectForKey:@"method"];
+    if([method isEqualToString:@"pay"]){
+        _type = TransactionTypePayment;
+    }
+    else{
+        _type = TransactionTypeCollection;
+    }
+    
+    NSNumber *state = [json objectForKey:@"state"];
+    if([state integerValue] == 0){
+        _status = TransactionStatusPending;
+    }
+    else if([state integerValue] == 1){
+        _status = TransactionStatusAccepted;
+    }
+    else{
+        _status = TransactionStatusRefused;
+    }
+}
+
 - (NSString *)typeText{
     if([self type] == TransactionTypePayment){
         return NSLocalizedString(@"TRANSACTION_TYPE_PAYMENT", nil);
@@ -28,40 +66,13 @@
     }
 }
 
-- (NSString *)amountText{
-    return @"+ $3500";
-}
-
-- (NSString *)text{
-    NSString *key = @"TRANSACTION_TEXT_";
-    NSString *text = nil;
-    
-    if([self type] == TransactionTypePayment){
-        key = [key stringByAppendingString:@"PAYMENT_"];
-    }else{
-        key = [key stringByAppendingString:@"COLLECTION_"];
+- (NSString *)amountFormated{
+    if(_amount){
+        return [NSString stringWithFormat:@"+ $%@", _amount];
     }
-    
-    if([self status] == TransactionStatusAccepted){
-        key = [key stringByAppendingString:@"ACCEPTED_"];
-    }else if([self status] == TransactionStatusRefused){
-        key = [key stringByAppendingString:@"REFUSED_"];
-    }else{
-        key = [key stringByAppendingString:@"WAITING_"];
+    else{
+        return nil;
     }
-    
-    if([self from] != nil && [self to] != nil){
-        key = [key stringByAppendingString:@"FROM_TO"];
-        text = [NSString stringWithFormat:NSLocalizedString(key, nil), [self from], [self to]];
-    }else if([self from] != nil){
-        key = [key stringByAppendingString:@"FROM"];
-        text = [NSString stringWithFormat:NSLocalizedString(key, nil), [self from]];
-    }else{
-        key = [key stringByAppendingString:@"TO"];
-        text = [NSString stringWithFormat:NSLocalizedString(key, nil), [self to]];
-    }
-        
-    return text;
 }
 
 + (NSArray *)testData{
@@ -72,27 +83,24 @@
     int i = 0;
     
     for(NSInteger type = TransactionTypePayment; type <= TransactionTypeCollection; ++type){
-        for(NSInteger status = TransactionStatusAccepted; status <= TransactionStatusWaiting; ++status){
+        for(NSInteger status = TransactionStatusAccepted; status <= TransactionStatusPending; ++status){
                         
             transaction = [FLTransaction new];
             transaction.type = type;
             transaction.status = status;
-            transaction.from = @"John Tribouharet";
-            transaction.to = @"Barth Chalvet";
+            transaction.text = @"koko a flooz avec kik";
             transaction.content = [NSString stringWithFormat:@"%d Merci pour le café ;)", ++i];
             [transactions addObject:transaction];
             
             transaction = [FLTransaction new];
             transaction.type = type;
             transaction.status = status;
-            transaction.from = @"John";
-             transaction.content = [NSString stringWithFormat:@"%d Ca roxe", ++i];
+             transaction.text = [NSString stringWithFormat:@"%d Ca roxe", ++i];
             [transactions addObject:transaction];
             
             transaction = [FLTransaction new];
             transaction.type = type;
             transaction.status = status;
-            transaction.to = @"Barth";
              transaction.content = [NSString stringWithFormat:@"%d Plop plop plop", ++i];
             [transactions addObject:transaction];
             

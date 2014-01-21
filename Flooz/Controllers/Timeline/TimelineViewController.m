@@ -31,10 +31,7 @@
     UIImageView *shadow = [UIImageView imageNamed:@"shadow"];
     shadow.frame = CGRectMakeSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
     [self.view addSubview:shadow];
-    
-    UIImageView *header_shadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header_shadow"]];
-    [self.view addSubview:header_shadow];
-    
+        
     UIImage *buttonImage = [UIImage imageNamed:@"button"];
     crossButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - buttonImage.size.width) / 2., self.view.frame.size.height - buttonImage.size.height - 20, buttonImage.size.width, buttonImage.size.height)];
     [crossButton setImage:buttonImage forState:UIControlStateNormal];
@@ -66,11 +63,6 @@
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [transactions count];
-}
-
-- (CGFloat)tableView:(FLTableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [TransactionCell getEstimatedHeight];
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -109,27 +101,33 @@
 #pragma mark - Filters
 
 - (void)didFilterPublicTouch
-{    
-    transactions = [FLTransaction testData];
-    [self didFilterChange];
+{
+    [[Flooz sharedInstance] timeline:@"public" success:^(id result) {
+        transactions = result;
+        [self didFilterChange];
+    } failure:NULL];
 }
 
 - (void)didFilterFriendTouch
 {
-    transactions = [FLTransaction testData];
-    [self didFilterChange];
+    [[Flooz sharedInstance] timeline:@"friend" success:^(id result) {
+        transactions = result;
+        [self didFilterChange];
+    } failure:NULL];
 }
 
 - (void)didFilterPersoTouch:(NSNumber *)index
 {
-    transactions = [FLTransaction testData];
-    [self didFilterChange];
+    [[Flooz sharedInstance] timeline:@"perso" success:^(id result) {
+        transactions = result;
+        [self didFilterChange];
+    } failure:NULL];
 }
 
 - (void)didFilterChange
 {
     [_tableView reloadData];
-    [_tableView setContentOffset:CGPointZero animated:YES];
+    [_tableView setContentOffset:CGPointZero animated:YES]; // WARNING Bug graphique quand scroll
 }
 
 @end

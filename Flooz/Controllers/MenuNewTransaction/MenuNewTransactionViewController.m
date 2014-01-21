@@ -13,9 +13,9 @@
 @interface MenuNewTransactionViewController (){
     UIButton *crossButton;
     
-    RoundButton *eventButton;
-    RoundButton *collectionButton;
-    RoundButton *paymentButton;
+    FLRoundButton *eventButton;
+    FLRoundButton *collectionButton;
+    FLRoundButton *paymentButton;
     
     BOOL firstView;
 }
@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+    self.view.backgroundColor = [UIColor customBackgroundHeader:0.8];
     
     UIImage *buttonImage = [UIImage imageNamed:@"button"];
     crossButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - buttonImage.size.width) / 2., self.view.frame.size.height - buttonImage.size.height - 20, buttonImage.size.width, buttonImage.size.height)];
@@ -46,17 +46,17 @@
     
     [crossButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchDown];
     
-    eventButton = [[RoundButton alloc] initWithPosition:50 imageName:@"menu-new-transaction-event" text:@"MENU_NEW_TRANSACTION_EVENT"];
+    eventButton = [[FLRoundButton alloc] initWithPosition:90 imageName:@"menu-new-transaction-event" text:@"MENU_NEW_TRANSACTION_EVENT"];
     [self.view addSubview:eventButton];
-    [eventButton addTarget:self action:@selector(presentNewTransactionControllerForEvent) forControlEvents:UIControlEventTouchDown];
+    [eventButton addTarget:self action:@selector(presentNewTransactionControllerForEvent) forControlEvents:UIControlEventTouchUpInside];
     
-    collectionButton = [[RoundButton alloc] initWithPosition:175 imageName:@"menu-new-transaction-collect" text:@"MENU_NEW_TRANSACTION_COLLECT"];
+    collectionButton = [[FLRoundButton alloc] initWithPosition:215 imageName:@"menu-new-transaction-collect" text:@"MENU_NEW_TRANSACTION_COLLECT"];
     [self.view addSubview:collectionButton];
-    [collectionButton addTarget:self action:@selector(presentNewTransactionControllerForCollect) forControlEvents:UIControlEventTouchDown];
+    [collectionButton addTarget:self action:@selector(presentNewTransactionControllerForCollect) forControlEvents:UIControlEventTouchUpInside];
     
-    paymentButton = [[RoundButton alloc] initWithPosition:300 imageName:@"menu-new-transaction-payment" text:@"MENU_NEW_TRANSACTION_PAYMENT"];
+    paymentButton = [[FLRoundButton alloc] initWithPosition:340 imageName:@"menu-new-transaction-payment" text:@"MENU_NEW_TRANSACTION_PAYMENT"];
     [self.view addSubview:paymentButton];
-    [paymentButton addTarget:self action:@selector(presentNewTransactionControllerForPayment) forControlEvents:UIControlEventTouchDown];
+    [paymentButton addTarget:self action:@selector(presentNewTransactionControllerForPayment) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -64,15 +64,24 @@
     [super viewDidAppear:animated];
     
     if(firstView){
-        [UIView animateWithDuration:1.0
-                         animations:^{
-                             crossButton.transform = CGAffineTransformMakeRotation(2.8);
-                         }
-                         completion:NULL];
         
-        [eventButton startAnimationWithDelay:0.15];
-        [collectionButton startAnimationWithDelay:0.3];
-        [paymentButton startAnimationWithDelay:0.45];
+        [UIView animateWithDuration:.3
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                            crossButton.transform = CGAffineTransformMakeRotation(M_PI / 4. + (M_PI / 8.));
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:.4
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
+                                 crossButton.transform = CGAffineTransformMakeRotation(M_PI / 4.);
+                             } completion:NULL];
+        }];
+        
+        [eventButton startAnimationWithDelay:0.1];
+        [collectionButton startAnimationWithDelay:0.2];
+        [paymentButton startAnimationWithDelay:0.3];
         
         firstView = NO;
     }
@@ -80,9 +89,10 @@
 
 - (void)dismiss
 {
-    [UIView animateWithDuration:1.0
+    [UIView animateWithDuration:.2
                      animations:^{
                          crossButton.transform = CGAffineTransformIdentity;
+                         self.view.layer.opacity = 0.5;
                      }
                      completion:^(BOOL finished) {
                          [self dismissViewControllerAnimated:NO completion:NULL];

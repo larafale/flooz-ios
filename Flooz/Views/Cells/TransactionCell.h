@@ -24,7 +24,6 @@
     CGPoint lastTranslation;
 }
 
-+ (CGFloat)getEstimatedHeight;
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction;
 
 @property (strong, nonatomic) FLTransaction *transaction;

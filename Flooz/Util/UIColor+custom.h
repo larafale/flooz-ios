@@ -30,5 +30,9 @@
 + (UIColor *)customBlue:(CGFloat)alpha;
 + (UIColor *)customBlueLight;
 + (UIColor *)customBlueLight:(CGFloat)alpha;
++ (UIColor *)customBlueHover;
++ (UIColor *)customBlueHover:(CGFloat)alpha;
+
++ (UIColor *)customPlaceholder;
 
 @end

@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
 //
 
-#import "RoundButton.h"
+#import "FLRoundButton.h"
 
-@implementation RoundButton
+@implementation FLRoundButton
 
 - (id)initWithPosition:(CGFloat)positionY imageName:(NSString *)imageName text:(NSString *)text;
 {
@@ -22,17 +22,19 @@
 - (void)createViewWithImageName:(NSString *)imageName text:(NSString *)text
 {
     self.hidden = YES;
+        
+    self.backgroundColor = [UIColor customBackgroundHeader];
     
-    self.backgroundColor = [UIColor clearColor];
     self.layer.cornerRadius = 50.;
     self.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.layer.borderWidth = 1.;
     
     UIImageView *image = [UIImageView imageNamed:imageName];
     image.center = CGRectGetCenter(self.frame);
+    image.frame = CGRectOffset(image.frame, 0, - 10);
     [self addSubview:image];
     
-    UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 13, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     
     textView.textColor = [UIColor whiteColor];
     textView.textAlignment = NSTextAlignmentCenter;
@@ -46,14 +48,38 @@
 - (void)startAnimationWithDelay:(NSTimeInterval)delay
 {
     self.hidden = NO;
+
+    CGPoint originalCenter = self.center;
+    self.center = CGPointMake(self.center.x, self.center.y + 200);
+    
     self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0., 0.);
     
     [UIView animateWithDuration:0.2
                           delay:delay
-                        options:0
+                        options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                        self.transform =  CGAffineTransformIdentity;
-    } completion:NULL];
+                         self.center = originalCenter;
+                        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.2
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             self.transform =  CGAffineTransformIdentity;
+                         } completion:NULL];
+    }];
+}
+
+- (void)setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    
+    if(highlighted){
+        self.backgroundColor = [UIColor customBlueHover];
+    }
+    else{
+        self.backgroundColor = [UIColor customBackgroundHeader];
+    }
 }
 
 @end

@@ -50,30 +50,6 @@
 "TRANSACTION_TYPE_PAYMENT" = "PAYMENT";
 "TRANSACTION_TYPE_COLLECTION" = "COLLECTION";
 
-"TRANSACTION_TEXT_PAYMENT_ACCEPTED_FROM_TO" = "%@ a flooz avec %@";
-"TRANSACTION_TEXT_PAYMENT_ACCEPTED_FROM" = "%@ flooz avec moi";
-"TRANSACTION_TEXT_PAYMENT_ACCEPTED_TO" = "j ai flooz avec %@";
-
-"TRANSACTION_TEXT_PAYMENT_REFUSED_FROM_TO" = "%@ a refusé un flooz avec %@";
-"TRANSACTION_TEXT_PAYMENT_REFUSED_FROM" = "%@ a refusé un flooz avec moi";
-"TRANSACTION_TEXT_PAYMENT_REFUSED_TO" = "j ai refusé un flooz avec %@";
-
-"TRANSACTION_TEXT_PAYMENT_WAITING_FROM_TO" = "%@ a demandé un flooz avec %@";
-"TRANSACTION_TEXT_PAYMENT_WAITING_FROM" = "%@ demande un flooz avec moi";
-"TRANSACTION_TEXT_PAYMENT_WAITING_TO" = "j ai demandé un flooz avec %@";
-
-"TRANSACTION_TEXT_COLLECTION_ACCEPTED_FROM_TO" = "%@ a flooz avec %@";
-"TRANSACTION_TEXT_COLLECTION_ACCEPTED_FROM" = "%@ flooz avec moi";
-"TRANSACTION_TEXT_COLLECTION_ACCEPTED_TO" = "j ai flooz avec %@";
-
-"TRANSACTION_TEXT_COLLECTION_REFUSED_FROM_TO" = "%@ a refusé un flooz avec %@";
-"TRANSACTION_TEXT_COLLECTION_REFUSED_FROM" = "%@ a refusé un flooz avec moi";
-"TRANSACTION_TEXT_COLLECTION_REFUSED_TO" = "j ai refusé un flooz avec %@";
-
-"TRANSACTION_TEXT_COLLECTION_WAITING_FROM_TO" = "%@ a demandé un flooz avec %@";
-"TRANSACTION_TEXT_COLLECTION_WAITING_FROM" = "%@ demande un flooz avec moi";
-"TRANSACTION_TEXT_COLLECTION_WAITING_TO" = "j ai demandé un flooz avec %@";
-
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_REFUSED" = "Je n'y participe pas";
 "EVENT_STATUS_WAITING" = "Invité";

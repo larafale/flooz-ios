@@ -36,6 +36,19 @@
     buttonColors = [NSMutableArray new];
     filterViews = [NSMutableArray new];
     actions = [NSMutableArray new];
+    
+    contentView = [[UIView alloc] initWithFrame:self.frame];
+    [self addSubview:contentView];
+    
+    {
+        UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 1)];
+        borderView.backgroundColor = [UIColor colorWithRed:0. green:0. blue:0. alpha:.2];
+        [self addSubview:borderView];
+        
+        self.layer.shadowOffset = CGSizeMake(0, 3.5);
+        self.layer.shadowOpacity = .2;
+        self.layer.shadowRadius = 1;
+    }
 }
 
 - (void)addFilter:(NSString *)title target:(id)target action:(SEL)action
@@ -50,9 +63,10 @@
     {
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(filterView.frame) - 1)];
         [button setTitle:NSLocalizedString(title, nil) forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont customContentLight:11];
         
         if([filterViews count] > 0){
-            [button setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
         }
         else{
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -87,16 +101,16 @@
         [filterView addSubview:arrow_selected];
     }
     
-    if([[self subviews] count] > 0){
+    if([[contentView subviews] count] > 0){
         UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, ((CGRectGetHeight(self.frame) - 15) / 2.), 1, 15)];
         separator.backgroundColor = [UIColor customSeparator];
 
-        [self addSubview:separator];
+        [contentView addSubview:separator];
     }
     
     [actions addObject:@{ @"target":target, @"action": NSStringFromSelector(action) }];
     
-    [self addSubview:filterView];
+    [contentView addSubview:filterView];
     [filterViews addObject:filterView];
     [self updateFilterViews];
 }
@@ -151,13 +165,13 @@
 
 - (void)updateFilterViews
 {
-    NSInteger numberOfSeparators = ([[self subviews] count] - 1) / 2;
-    NSInteger numberOfFilters = ([[self subviews] count] + 1) / 2;
+    NSInteger numberOfSeparators = ([[contentView subviews] count] - 1) / 2;
+    NSInteger numberOfFilters = ([[contentView subviews] count] + 1) / 2;
     CGFloat widthForFilterView = (CGRectGetWidth(self.frame) / numberOfFilters) - numberOfSeparators;
     
     NSInteger index = 0;
     CGFloat offset = 0;
-    for(UIView *view in [self subviews]){
+    for(UIView *view in [contentView subviews]){
         
         // Si FilterView
         if(index % 2 == 0){

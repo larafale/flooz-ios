@@ -52,11 +52,13 @@
 		AB5EB7051882157300D81AF6 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6FD1882157300D81AF6 /* EventCell.m */; };
 		AB5EB7061882157300D81AF6 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6FF1882157300D81AF6 /* TransactionCell.m */; };
 		AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
-		AB5EB7081882157300D81AF6 /* RoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7031882157300D81AF6 /* RoundButton.m */; };
+		AB5EB7081882157300D81AF6 /* FLRoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7031882157300D81AF6 /* FLRoundButton.m */; };
 		ABE9142018894385003AC722 /* NewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9141E18894385003AC722 /* NewTransactionViewController.m */; };
 		ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9141F18894385003AC722 /* NewTransactionViewController.xib */; };
 		ABE91424188944D5003AC722 /* FLValidNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91423188944D5003AC722 /* FLValidNavBar.m */; };
 		ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91426188C5D1A003AC722 /* FLFilterView.m */; };
+		ABE9142B188D30D6003AC722 /* FLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9142A188D30D6003AC722 /* FLUser.m */; };
+		ABE9142E188ED08D003AC722 /* NSString+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9142D188ED08D003AC722 /* NSString+custom.m */; };
 		ABF46A10187575C600E92A77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
 		ABF46A181875AC9200E92A77 /* UILabel+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A171875AC9200E92A77 /* UILabel+custom.m */; };
 		ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A1E1875B54600E92A77 /* JTImageLabel.m */; };
@@ -155,8 +157,8 @@
 		AB5EB6FF1882157300D81AF6 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionCell.m; sourceTree = "<group>"; };
 		AB5EB7001882157300D81AF6 /* FLTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTableView.h; path = Views/FLTableView.h; sourceTree = "<group>"; };
 		AB5EB7011882157300D81AF6 /* FLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTableView.m; path = Views/FLTableView.m; sourceTree = "<group>"; };
-		AB5EB7021882157300D81AF6 /* RoundButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundButton.h; path = Views/RoundButton.h; sourceTree = "<group>"; };
-		AB5EB7031882157300D81AF6 /* RoundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundButton.m; path = Views/RoundButton.m; sourceTree = "<group>"; };
+		AB5EB7021882157300D81AF6 /* FLRoundButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLRoundButton.h; path = Views/FLRoundButton.h; sourceTree = "<group>"; };
+		AB5EB7031882157300D81AF6 /* FLRoundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLRoundButton.m; path = Views/FLRoundButton.m; sourceTree = "<group>"; };
 		ABE9141D18894385003AC722 /* NewTransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionViewController.h; path = Controllers/NewTransaction/NewTransactionViewController.h; sourceTree = "<group>"; };
 		ABE9141E18894385003AC722 /* NewTransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionViewController.m; path = Controllers/NewTransaction/NewTransactionViewController.m; sourceTree = "<group>"; };
 		ABE9141F18894385003AC722 /* NewTransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewTransactionViewController.xib; path = Controllers/NewTransaction/NewTransactionViewController.xib; sourceTree = "<group>"; };
@@ -164,6 +166,10 @@
 		ABE91423188944D5003AC722 /* FLValidNavBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLValidNavBar.m; path = Views/FLValidNavBar/FLValidNavBar.m; sourceTree = "<group>"; };
 		ABE91425188C5D1A003AC722 /* FLFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLFilterView.h; path = Views/FLFilterView/FLFilterView.h; sourceTree = "<group>"; };
 		ABE91426188C5D1A003AC722 /* FLFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLFilterView.m; path = Views/FLFilterView/FLFilterView.m; sourceTree = "<group>"; };
+		ABE91429188D30D6003AC722 /* FLUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLUser.h; path = Flooz/Model/FLUser.h; sourceTree = "<group>"; };
+		ABE9142A188D30D6003AC722 /* FLUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLUser.m; path = Flooz/Model/FLUser.m; sourceTree = "<group>"; };
+		ABE9142C188ED08D003AC722 /* NSString+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+custom.h"; path = "Util/NSString+custom.h"; sourceTree = "<group>"; };
+		ABE9142D188ED08D003AC722 /* NSString+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+custom.m"; path = "Util/NSString+custom.m"; sourceTree = "<group>"; };
 		ABF46A11187575C600E92A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABF46A131875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ABF46A141875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -310,8 +316,8 @@
 				AB5EB6F91882157300D81AF6 /* Cells */,
 				AB5EB7001882157300D81AF6 /* FLTableView.h */,
 				AB5EB7011882157300D81AF6 /* FLTableView.m */,
-				AB5EB7021882157300D81AF6 /* RoundButton.h */,
-				AB5EB7031882157300D81AF6 /* RoundButton.m */,
+				AB5EB7021882157300D81AF6 /* FLRoundButton.h */,
+				AB5EB7031882157300D81AF6 /* FLRoundButton.m */,
 				AB4CB6FA1886C67F00D1C573 /* FLTextField.h */,
 				AB4CB6FB1886C67F00D1C573 /* FLTextField.m */,
 				ABE91422188944D5003AC722 /* FLValidNavBar.h */,
@@ -349,6 +355,8 @@
 				AB3D08EF1872C6C900CF8380 /* FLTransaction.m */,
 				AB46C6C51881D462006C8334 /* FLEvent.h */,
 				AB46C6C61881D462006C8334 /* FLEvent.m */,
+				ABE91429188D30D6003AC722 /* FLUser.h */,
+				ABE9142A188D30D6003AC722 /* FLUser.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -366,6 +374,8 @@
 				ABF46A38187641BC00E92A77 /* Util.m */,
 				AB4CB6FD1886CB6800D1C573 /* UIImageView+custom.h */,
 				AB4CB6FE1886CB6800D1C573 /* UIImageView+custom.m */,
+				ABE9142C188ED08D003AC722 /* NSString+custom.h */,
+				ABE9142D188ED08D003AC722 /* NSString+custom.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -721,10 +731,12 @@
 				AB4CB6FF1886CB6800D1C573 /* UIImageView+custom.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
 				AB4CB6E11886AE2D00D1C573 /* LoginViewController.m in Sources */,
+				ABE9142B188D30D6003AC722 /* FLUser.m in Sources */,
 				AB5EB7041882157300D81AF6 /* CellSocialView.m in Sources */,
 				ABF46A39187641BC00E92A77 /* Util.m in Sources */,
 				AB4CB6E61886B24100D1C573 /* JTNavigationController.m in Sources */,
 				AB4CB6F31886C07300D1C573 /* UIBarButtonItem+Custom.m in Sources */,
+				ABE9142E188ED08D003AC722 /* NSString+custom.m in Sources */,
 				AB46C67118803493006C8334 /* JTContainerViewController.m in Sources */,
 				AB4CB6FC1886C67F00D1C573 /* FLTextField.m in Sources */,
 				AB46C6C71881D462006C8334 /* FLEvent.m in Sources */,
@@ -738,7 +750,7 @@
 				AB5EB6F1188214F000D81AF6 /* SocialViewController.m in Sources */,
 				AB46C6741880393A006C8334 /* JTNavbarView.m in Sources */,
 				ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */,
-				AB5EB7081882157300D81AF6 /* RoundButton.m in Sources */,
+				AB5EB7081882157300D81AF6 /* FLRoundButton.m in Sources */,
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,

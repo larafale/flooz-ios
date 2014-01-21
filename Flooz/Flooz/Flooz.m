@@ -12,6 +12,8 @@
 #import <AFURLResponseSerialization.h>
 #import <AFHTTPRequestOperation.h>
 
+#import "AppDelegate.h"
+
 @implementation Flooz
 
 + (Flooz *)sharedInstance
@@ -35,31 +37,63 @@
     return self;
 }
 
+#pragma mark -
+
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
-    user = @{
-             @"email": @"jojo2@yopmail.com",
-             @"phone": @"0123456783",
-             @"lastName": @"jojo",
-             @"firstName": @"jojo",
-             @"nick": @"jojo2",
-             @"password": @"jojo"
-             };
+    id successBlock = ^(id result) {
+        _currentUser = [[FLUser alloc] initWithJSON:result];
+        access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
+        [appDelegate didConnected];
+        
+        if(success){
+            success(result);
+        }
+    };
     
-    [self requestPath:@"signup" method:@"POST" params:user success:success failure:failure];
+    [self requestPath:@"signup" method:@"POST" params:user success:successBlock failure:failure];
 }
 
 - (void)login:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
-
-    
     user = @{
              @"login": @"louis.grellet@gmail.com",
              @"password": @"bob"
              };
     
-    [self requestPath:@"login/basic" method:@"POST" params:user success:success failure:failure];
+    id successBlock = ^(id result) {
+        _currentUser = [[FLUser alloc] initWithJSON:result];
+        access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
+        [appDelegate didConnected];
+        
+        if(success){
+            success(result);
+        }
+    };
+    
+    [self requestPath:@"login/basic" method:@"POST" params:user success:successBlock failure:failure];
 }
+
+- (void)timeline:(NSString *)scope success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    id successBlock = ^(id result) {
+        NSMutableArray *transactions = [NSMutableArray new];
+        NSArray *transactionsJSON = [result objectForKey:@"items"];
+        
+        for(NSDictionary *json in transactionsJSON){
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
+            [transactions addObject:transaction];
+        }
+        
+        if(success){
+            success(transactions);
+        }
+    };
+    
+    [self requestPath:@"flooz" method:@"GET" params:@{@"scope": scope} success:successBlock failure:failure];
+}
+
+#pragma mark -
 
 -(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
@@ -70,15 +104,21 @@
     }
 
     id successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
+//        NSLog(@"JSON: %@", responseObject);
         [loadView hide];
-        success(responseObject);
+        
+        if(success){
+            success(responseObject);
+        }
     };
     
     id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", operation.responseString);
         [loadView hide];
-        failure(error);
+        
+        if(failure){
+            failure(error);
+        }
     };
     
     if([method isEqualToString:@"GET"]){

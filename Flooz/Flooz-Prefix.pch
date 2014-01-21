@@ -18,9 +18,12 @@
 #import "UIColor+custom.h"
 #import "UIFont+custom.h"
 #import "UILabel+custom.h"
+#import "NSString+custom.h"
 #import "UIImageView+custom.h"
 
 #import "UIBarButtonItem+Custom.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #import "Util.h"
 

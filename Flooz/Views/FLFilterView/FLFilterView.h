@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface FLFilterView : UIView{
+    UIView *contentView;
     NSMutableArray *buttonColors;
     NSMutableArray *filterViews;
     NSMutableArray *actions;

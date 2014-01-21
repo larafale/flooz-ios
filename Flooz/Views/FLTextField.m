@@ -43,6 +43,7 @@
     
     _textfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _textfield.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    _textfield.returnKeyType = UIReturnKeyNext;
         
     _textfield.delegate = self;
     
@@ -54,8 +55,8 @@
     NSAttributedString *attributedText = [[NSAttributedString alloc]
                       initWithString:NSLocalizedString(placeholder, nil)
                       attributes:@{
-                                   NSFontAttributeName: [UIFont customContentLight:12],
-                                   NSForegroundColorAttributeName: [UIColor whiteColor]
+                                   NSFontAttributeName: [UIFont customContentLight:14],
+                                   NSForegroundColorAttributeName: [UIColor customPlaceholder]
                                    }];
     
     _textfield.attributedPlaceholder = attributedText;
@@ -81,7 +82,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if([textField.text isEqualToString:@""]){
+    if([textField.text isBlank]){
         [_dictionnary setValue:nil forKey:_dictionnaryKey];
     }else{
         [_dictionnary setValue:textField.text forKey:_dictionnaryKey];

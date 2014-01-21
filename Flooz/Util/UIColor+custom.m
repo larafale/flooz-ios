@@ -31,7 +31,7 @@
 }
 
 + (UIColor *)customBackgroundHeader:(CGFloat)alpha{
-    return [UIColor colorWithRed:28./256. green:38./256. blue:47./256. alpha:alpha];
+    return [UIColor colorWithRed:24./256. green:33./256. blue:43./256. alpha:alpha];
 }
 
 + (UIColor *)customGreen{
@@ -89,5 +89,18 @@
 + (UIColor *)customBlueLight:(CGFloat)alpha{
     return [UIColor colorWithRed:96./256. green:146./256. blue:172./256. alpha:alpha];
 }
+
++ (UIColor *)customBlueHover{
+    return [self customBlueHover:1.0];
+}
+
++ (UIColor *)customBlueHover:(CGFloat)alpha{
+    return [UIColor colorWithRed:38./256. green:59./256. blue:75./256. alpha:alpha];
+}
+
++ (UIColor *)customPlaceholder{
+    return [UIColor colorWithRed:135./256. green:147./256. blue:157./256. alpha:1.];
+}
+
 
 @end

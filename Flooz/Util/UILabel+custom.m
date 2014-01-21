@@ -23,7 +23,7 @@
 //}
 
 - (void)setWidth{
-    if(self.text == nil){
+    if(!self.text){
         self.frame = CGRectMakeSetWidth(self.frame, 0);
         return;
     }
@@ -41,7 +41,7 @@
 }
 
 - (void)setHeight{
-    if(self.text == nil){
+    if(!self.text || [self.text isBlank]){
         self.frame = CGRectMakeSetHeight(self.frame, 0);
         return;
     }

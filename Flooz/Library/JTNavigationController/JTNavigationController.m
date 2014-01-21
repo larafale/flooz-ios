@@ -52,6 +52,13 @@
     }
     
     backItem = [UIBarButtonItem createBackButtonWithTarget:self action:@selector(popVC)];
+    
+    UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navigationBar.frame), SCREEN_WIDTH, 1)];
+    borderView.backgroundColor = [UIColor colorWithRed:0. green:0. blue:0. alpha:.1];
+    [self.navigationBar addSubview:borderView];
+    
+    self.navigationBar.layer.shadowOffset = CGSizeMake(0, 0.5);
+    self.navigationBar.layer.shadowOpacity = .5;
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated

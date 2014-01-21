@@ -21,7 +21,7 @@
 
 + (id)createCheckButtonWithTarget:(id)target action:(SEL)action
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMakeSize(20, 17)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMakeSize(25, 17)];
     [button setImage:[UIImage imageNamed:@"navbar-check"]  forState:UIControlStateNormal];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchDown];
     

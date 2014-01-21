@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RoundButton : UIButton
+@interface FLRoundButton : UIButton
 
 - (id)initWithPosition:(CGFloat)positionY imageName:(NSString *)imageName text:(NSString *)text;
 

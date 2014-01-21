@@ -28,7 +28,9 @@
     JTNavigationController *controller = [[JTNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
-    [self didConnected];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
     return YES;
 }

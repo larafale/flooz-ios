@@ -18,28 +18,29 @@ typedef NS_ENUM(NSInteger, TransactionType) {
 typedef NS_ENUM(NSInteger, TransactionStatus) {
     TransactionStatusAccepted,
     TransactionStatusRefused,
-    TransactionStatusWaiting
+    TransactionStatusPending
 };
 
-@property (nonatomic) TransactionType type;
-@property (nonatomic) TransactionStatus status;
+@property TransactionType type;
+@property TransactionStatus status;
 
-@property (strong, nonatomic) NSString *from;
-@property (strong, nonatomic) NSString *to;
-@property (strong, nonatomic) NSNumber *amount;
+@property NSNumber *amount;
 
-@property (strong, nonatomic) NSString *content;
-@property (strong, nonatomic) NSString *attachment_url;
+@property NSString *text;
+@property NSString *content;
+@property NSString *attachment_url;
+@property NSString *attachment_thumb_url;
 
-@property (strong, nonatomic) NSNumber *commentsCount;
-@property (strong, nonatomic) NSNumber *likesCount;
-@property (strong, nonatomic) NSNumber *isCommented;
-@property (strong, nonatomic) NSNumber *isLiked;
+@property NSNumber *commentsCount;
+@property NSNumber *likesCount;
+@property NSNumber *isCommented;
+@property NSNumber *isLiked;
+
+- (id)initWithJSON:(NSDictionary *)json;
 
 - (NSString *)typeText;
 - (NSString *)statusText;
-- (NSString *)amountText;
-- (NSString *)text;
+- (NSString *)amountFormated;
 
 + (NSArray *)testData;
 

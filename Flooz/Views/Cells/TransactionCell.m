@@ -35,26 +35,34 @@
     // Details
     current_height += 9;
     
-    attributedText = [[NSAttributedString alloc]
-                                          initWithString:[transaction text]
-                                          attributes:@{NSFontAttributeName: [UIFont customContentRegular:13]}];
-    rect = [attributedText boundingRectWithSize:(CGSize){rightViewWidth, CGFLOAT_MAX}
-                                               options:NSStringDrawingUsesLineFragmentOrigin
-                                               context:nil];
-    current_height += rect.size.height;
-
-    current_height += 4;
+    if([transaction text]){
+        attributedText = [[NSAttributedString alloc]
+                          initWithString:[transaction text]
+                          attributes:@{NSFontAttributeName: [UIFont customContentRegular:13]}];
+        rect = [attributedText boundingRectWithSize:(CGSize){rightViewWidth, CGFLOAT_MAX}
+                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                            context:nil];
+        current_height += rect.size.height;
+    }
     
-    attributedText = [[NSAttributedString alloc]
-                      initWithString:[transaction content]
-                      attributes:@{NSFontAttributeName: [UIFont customContentLight:12]}];
-    rect = [attributedText boundingRectWithSize:(CGSize){rightViewWidth, CGFLOAT_MAX}
-                                        options:NSStringDrawingUsesLineFragmentOrigin
-                                        context:nil];
-    current_height += rect.size.height;
-
+    if([transaction content] && ![[transaction content] isBlank]){
+        if([transaction text]){
+            current_height += 4;
+        }
+        
+        attributedText = [[NSAttributedString alloc]
+                          initWithString:[transaction content]
+                          attributes:@{NSFontAttributeName: [UIFont customContentLight:12]}];
+        rect = [attributedText boundingRectWithSize:(CGSize){rightViewWidth, CGFLOAT_MAX}
+                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                            context:nil];
+        current_height += rect.size.height;
+    }
+    
     // Attachment
-    current_height += 13 + 80;
+    if([transaction attachment_thumb_url]){
+        current_height += 13 + 80;
+    }
     
     // Social
     current_height += 14 + 15;
@@ -62,10 +70,6 @@
     current_height += MARGE_BOTTOM;
     
     return current_height;
-}
-
-+ (CGFloat)getEstimatedHeight{
-    return 220;
 }
 
 - (void)setTransaction:(FLTransaction *)transaction{
@@ -233,7 +237,7 @@
 }
 
 - (void)prepareSlideView{
-    if([[self transaction] status] == TransactionStatusWaiting){
+    if([[self transaction] status] == TransactionStatusPending){
         slideView.hidden = NO;
     }else{
         slideView.hidden = YES;
@@ -254,7 +258,7 @@
     [status setWidth];
     status.frame = CGRectMakeSetWidth(status.frame, CGRectGetWidth(status.frame) + 25);
     
-    amount.text = [[self transaction] amountText];
+    amount.text = [[self transaction] amountFormated];
     amount.frame = CGRectMakeSetX(amount.frame, CGRectGetMaxX(status.frame));
     amount.frame = CGRectMakeSetWidth(amount.frame, CGRectGetWidth(view.frame) - CGRectGetMaxX(status.frame));
     
@@ -269,33 +273,46 @@
     status.textColor = textColor;
     amount.textColor = textColor;
     
+    amount.hidden = (amount.text == nil);
+    
     height = CGRectGetMaxY(view.frame);
 }
 
 - (void)prepareDetailView{
     UIView *view = [[rightView subviews] objectAtIndex:1];
+
     UILabel *text = [[view subviews] objectAtIndex:0];
     UILabel *content = [[view subviews] objectAtIndex:1];
     
     text.text = [[self transaction] text];
     [text setHeight];
+
+    CGFloat offset = 0.;
+    if([[self transaction] text] && [[self transaction] content]){
+        offset = 4.;
+    }
     
     content.text = [[self transaction] content];
-    content.frame = CGRectMakeSetY(content.frame, CGRectGetMaxY(text.frame) + 4);
+    content.frame = CGRectMakeSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
     [content setHeight];
     
-    view.frame = CGRectMakeSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + 4);
+    view.frame = CGRectMakeSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + offset);
     height = CGRectGetMaxY(view.frame);
 }
 
 - (void)prepareAttachmentView{
     UIImageView *view = [[rightView subviews] objectAtIndex:2];
-    [view setImage:[UIImage imageNamed:@"test_attachment"]];
     
-    view.frame = CGRectMakeSetY(view.frame, height + 13);
-    view.frame = CGRectMakeSetHeight(view.frame, 80);
-    
-    height = CGRectGetMaxY(view.frame);
+    if([_transaction attachment_thumb_url]){
+        [view setImageWithURL:[NSURL URLWithString:[_transaction attachment_thumb_url]]];
+        
+        view.frame = CGRectMakeSetY(view.frame, height + 13);
+        view.frame = CGRectMakeSetHeight(view.frame, 80);
+        height = CGRectGetMaxY(view.frame);
+    }
+    else{
+        view.frame = CGRectMakeSetHeight(view.frame, 0);
+    }
 }
 
 - (void)prepareSocialView{
@@ -309,7 +326,7 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
 {
-    if(_transaction.status != TransactionStatusWaiting){
+    if(_transaction.status != TransactionStatusPending){
         return NO;
     }
     

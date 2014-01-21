@@ -32,7 +32,9 @@
 {
     // Evite creation de cellule vide
     self.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        
+    
+    self.separatorInset = UIEdgeInsetsZero; // Permet d avoir le separateur qui fait toute la ligne de large
+    
     self.backgroundColor = [UIColor customBackground];
     self.separatorColor = [UIColor customSeparator];
     self.showsVerticalScrollIndicator = NO;

@@ -34,12 +34,11 @@
 
 - (void)prepareTitleViews
 {
-    [_titlesView removeFromSuperview];
     _titlesView = [[UIView alloc] initWithFrame:self.frame];
     [self addSubview:_titlesView];
     
     for(UIViewController *controller in _viewControllers){
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.frame), NAVBAR_HEIGHT)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, STATUSBAR_HEIGHT - 4, CGRectGetWidth(self.frame), NAVBAR_HEIGHT)];
         
         label.font = [UIFont customTitleExtraLight:28];
         label.textColor = [UIColor customBlue];
@@ -53,6 +52,12 @@
     
     selectedTitleIndex = 1;
     [self updateViewsPositions];
+    
+    {
+        UIImageView *shadow = [UIImageView imageNamed:@"navbar-shadow"];
+        shadow.frame = CGRectMakeSetY(shadow.frame, STATUSBAR_HEIGHT);
+        [self addSubview:shadow];
+    }
 }
 
 - (void)respondToPanGesture:(UIPanGestureRecognizer *)recognizer
@@ -89,6 +94,9 @@
     }
     for(UIViewController *controller in _viewControllers){
         controller.view.frame = CGRectOffset(controller.view.frame, offset.x * RATIO_TITLE_CONTENT, 0);
+        
+        CGFloat progress = fabs(controller.view.frame.origin.x / CGRectGetWidth(self.frame));
+        controller.view.layer.opacity = 1. - (progress * 1.2);
     }
 }
 
@@ -104,7 +112,17 @@
     for(UIViewController *controller in _viewControllers){
         controller.view.frame = CGRectMakeSetX(controller.view.frame, CGRectGetWidth(self.frame) * (index - selectedTitleIndex));
         index++;
+        
+        CGFloat progress = fabs(controller.view.frame.origin.x / CGRectGetWidth(self.frame));
+        controller.view.layer.opacity = 1. - (progress * 1.2);
     }
+    
+    for(UILabel *titleView in [_titlesView subviews]){
+        titleView.textColor = [UIColor customBlueLight];
+    }
+    
+    UILabel *selectedTitleView = [[_titlesView subviews] objectAtIndex:selectedTitleIndex];
+    selectedTitleView.textColor = [UIColor customBlue];
 }
 
 - (void)completeTranslation
@@ -115,14 +133,18 @@
     selectedTitleIndex = roundf(((positionFirstTitle.x * -1.0) / (screenWidth / RATIO_TITLE_CONTENT)));
     selectedTitleIndex = MAX(selectedTitleIndex, 0);
     selectedTitleIndex = MIN(selectedTitleIndex, [[_titlesView subviews] count] - 1);
+
     
-    [UIView animateWithDuration:.3 animations:^{
-        [self updateViewsPositions];
-        
-        for(UIViewController *controller in _viewControllers){
-            [controller endAppearanceTransition];
-        }
-    }];
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         [self updateViewsPositions];
+                         
+                         for(UIViewController *controller in _viewControllers){
+                             [controller endAppearanceTransition];
+                         }
+                     } completion:NULL];
 }
 
 @end
