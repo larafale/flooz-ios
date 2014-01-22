@@ -14,7 +14,7 @@
     NSMutableDictionary *user;
     UIButton *registerFacebook;
     
-    UIScrollView *contentView;
+    UIScrollView *_contentView;
 }
 
 @end
@@ -35,7 +35,7 @@
 {
     [super loadView];
     
-    contentView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
     
     self.view.backgroundColor = [UIColor customBackground];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(presentTimelineController)];
@@ -49,7 +49,7 @@
         [registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateNormal];
         [registerFacebook setImageEdgeInsets:UIEdgeInsetsMake(-1, 0, 0, 12)];
         
-        [contentView addSubview:registerFacebook];
+        [_contentView addSubview:registerFacebook];
     }
         
     {
@@ -62,12 +62,12 @@
         [view addSubview:avatar];
         [view addSubview:filter];
         
-        [contentView addSubview:view];
+        [_contentView addSubview:view];
     }
     
     {
         //WARNING quand appuie sur suivant dois changer d input
-        FLTextField *username = [[FLTextField alloc] initWithIcon:@"field-email" placeholder:@"FIELD_USERNAME" for:user key:@"nick" position:CGPointMake(MARGE, 222)];
+        FLTextField *username = [[FLTextField alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"nick" position:CGPointMake(MARGE, 222)];
         FLTextField *name = [[FLTextField alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:user key:@"firstName" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame)) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
         FLTextField *phone = [[FLTextField alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:user key:@"phone" position:CGPointMake(MARGE, CGRectGetMaxY(name.frame))];
         FLTextField *email = [[FLTextField alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:user key:@"email" position:CGPointMake(MARGE, CGRectGetMaxY(phone.frame))];
@@ -92,21 +92,19 @@
         
         textFooter.text = NSLocalizedString(@"SIGNUP_CODE_INFO", nil);
         
-        [contentView addSubview:username];
-        [contentView addSubview:name];
-        [contentView addSubview:phone];
-        [contentView addSubview:email];
-        [contentView addSubview:textSecurity];
-        [contentView addSubview:password];
-        [contentView addSubview:code];
-        [contentView addSubview:textFooter];
+        [_contentView addSubview:username];
+        [_contentView addSubview:name];
+        [_contentView addSubview:phone];
+        [_contentView addSubview:email];
+        [_contentView addSubview:textSecurity];
+        [_contentView addSubview:password];
+        [_contentView addSubview:code];
+        [_contentView addSubview:textFooter];
         
-        // WARNING hauteur
-        contentView.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(textFooter.frame) + 100);
-        NSLog(@"%f", contentView.contentSize.height);
+        _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetMaxY(textFooter.frame));
     }
     
-    [self.view addSubview:contentView];
+    [self.view addSubview:_contentView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -114,7 +112,13 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
+    _contentView.frame = CGRectMakeSize(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
 }
 
 - (void)presentTimelineController
