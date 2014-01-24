@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
-    NSArray *transactions;
-}
+#import "FLFilterView.h"
+
+@interface SettingsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
 

@@ -23,21 +23,13 @@
 		AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08DF1871AAB400CF8380 /* Flooz.m */; };
 		AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */; };
 		AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
-		AB3D08F01872C6C900CF8380 /* FLTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08EF1872C6C900CF8380 /* FLTransaction.m */; };
-		AB46C67118803493006C8334 /* JTContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB46C67018803493006C8334 /* JTContainerViewController.m */; };
-		AB46C6741880393A006C8334 /* JTNavbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB46C6731880393A006C8334 /* JTNavbarView.m */; };
-		AB46C6C71881D462006C8334 /* FLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = AB46C6C61881D462006C8334 /* FLEvent.m */; };
 		AB4CB6DB1886A26400D1C573 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6D91886A26400D1C573 /* PreviewViewController.m */; };
 		AB4CB6DC1886A26400D1C573 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6DA1886A26400D1C573 /* PreviewViewController.xib */; };
 		AB4CB6E11886AE2D00D1C573 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6DF1886AE2D00D1C573 /* LoginViewController.m */; };
 		AB4CB6E21886AE2D00D1C573 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6E01886AE2D00D1C573 /* LoginViewController.xib */; };
-		AB4CB6E61886B24100D1C573 /* JTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6E51886B24100D1C573 /* JTNavigationController.m */; };
-		AB4CB6F31886C07300D1C573 /* UIBarButtonItem+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6F21886C07300D1C573 /* UIBarButtonItem+Custom.m */; };
 		AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6F61886C1C600D1C573 /* SignupViewController.m */; };
 		AB4CB6F91886C1C600D1C573 /* SignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */; };
 		AB4CB6FC1886C67F00D1C573 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6FB1886C67F00D1C573 /* FLTextField.m */; };
-		AB4CB6FF1886CB6800D1C573 /* UIImageView+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6FE1886CB6800D1C573 /* UIImageView+custom.m */; };
-		AB4CB706188829EF00D1C573 /* JTLoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB705188829EF00D1C573 /* JTLoadView.m */; };
 		AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6D9188214F000D81AF6 /* HomeViewController.m */; };
 		AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */; };
 		AB5EB6ED188214F000D81AF6 /* MenuNewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6DD188214F000D81AF6 /* MenuNewTransactionViewController.m */; };
@@ -48,19 +40,36 @@
 		AB5EB6F2188214F000D81AF6 /* SocialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6E6188214F000D81AF6 /* SocialViewController.xib */; };
 		AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6F51882151000D81AF6 /* TimelineViewController.m */; };
 		AB5EB6F81882151000D81AF6 /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */; };
-		AB5EB7041882157300D81AF6 /* CellSocialView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6FB1882157300D81AF6 /* CellSocialView.m */; };
 		AB5EB7051882157300D81AF6 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6FD1882157300D81AF6 /* EventCell.m */; };
 		AB5EB7061882157300D81AF6 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6FF1882157300D81AF6 /* TransactionCell.m */; };
 		AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
-		AB5EB7081882157300D81AF6 /* FLRoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7031882157300D81AF6 /* FLRoundButton.m */; };
 		ABE9142018894385003AC722 /* NewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9141E18894385003AC722 /* NewTransactionViewController.m */; };
 		ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9141F18894385003AC722 /* NewTransactionViewController.xib */; };
 		ABE91424188944D5003AC722 /* FLValidNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91423188944D5003AC722 /* FLValidNavBar.m */; };
 		ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91426188C5D1A003AC722 /* FLFilterView.m */; };
-		ABE9142B188D30D6003AC722 /* FLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9142A188D30D6003AC722 /* FLUser.m */; };
-		ABE9142E188ED08D003AC722 /* NSString+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9142D188ED08D003AC722 /* NSString+custom.m */; };
+		ABE914331890A01F003AC722 /* FLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914301890A01F003AC722 /* FLContainerViewController.m */; };
+		ABE914341890A01F003AC722 /* FLNavbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914321890A01F003AC722 /* FLNavbarView.m */; };
+		ABE914371890A029003AC722 /* FLLoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914361890A029003AC722 /* FLLoadView.m */; };
+		ABE9143A1890A034003AC722 /* FLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914391890A034003AC722 /* FLNavigationController.m */; };
+		ABE9143D1890A08A003AC722 /* UIBarButtonItem+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9143C1890A08A003AC722 /* UIBarButtonItem+custom.m */; };
+		ABE914441890A12C003AC722 /* FLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9143F1890A12C003AC722 /* FLEvent.m */; };
+		ABE914451890A12C003AC722 /* FLTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914411890A12C003AC722 /* FLTransaction.m */; };
+		ABE914461890A12C003AC722 /* FLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914431890A12C003AC722 /* FLUser.m */; };
+		ABE9144E18915E9F003AC722 /* FLUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9144D18915E9F003AC722 /* FLUserView.m */; };
+		ABE9145518927CE0003AC722 /* FLSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9145418927CE0003AC722 /* FLSocial.m */; };
+		ABE9145D18928AA3003AC722 /* FLSocialView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9145C18928AA3003AC722 /* FLSocialView.m */; };
+		ABE9146218929168003AC722 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9146018929168003AC722 /* AccountViewController.m */; };
+		ABE9146318929168003AC722 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9146118929168003AC722 /* AccountViewController.xib */; };
+		ABE9146618929402003AC722 /* FLAccountButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9146518929402003AC722 /* FLAccountButton.m */; };
+		ABE914691892940A003AC722 /* FLAccountUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914681892940A003AC722 /* FLAccountUserView.m */; };
+		ABE9146E189294A0003AC722 /* FLMenuNewTransactionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9146D189294A0003AC722 /* FLMenuNewTransactionButton.m */; };
+		ABE9147318929A5C003AC722 /* InformationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9147118929A5C003AC722 /* InformationsViewController.m */; };
+		ABE9147418929A5C003AC722 /* InformationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9147218929A5C003AC722 /* InformationsViewController.xib */; };
+		ABE9147918929AC8003AC722 /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9147718929AC8003AC722 /* NotificationsViewController.m */; };
+		ABE9147A18929AC8003AC722 /* NotificationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9147818929AC8003AC722 /* NotificationsViewController.xib */; };
+		ABE9147F18929B7D003AC722 /* EditAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9147D18929B7D003AC722 /* EditAccountViewController.m */; };
+		ABE9148018929B7D003AC722 /* EditAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9147E18929B7D003AC722 /* EditAccountViewController.xib */; };
 		ABF46A10187575C600E92A77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
-		ABF46A181875AC9200E92A77 /* UILabel+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A171875AC9200E92A77 /* UILabel+custom.m */; };
 		ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A1E1875B54600E92A77 /* JTImageLabel.m */; };
 		ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */; };
 		ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2A1875C0B100E92A77 /* ProximaNova-Regular.otf */; };
@@ -69,7 +78,6 @@
 		ABF46A341875C1B400E92A77 /* Rene Bieder - Gentona ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2D1875C0B100E92A77 /* Rene Bieder - Gentona ExtraLight.otf */; };
 		ABF46A351875C1B400E92A77 /* Rene Bieder - Gentona Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2E1875C0B100E92A77 /* Rene Bieder - Gentona Light.otf */; };
 		ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2F1875C0B100E92A77 /* Rene Bieder - Gentona Thin.otf */; };
-		ABF46A39187641BC00E92A77 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A38187641BC00E92A77 /* Util.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,33 +115,17 @@
 		AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+custom.m"; path = "Util/UIColor+custom.m"; sourceTree = "<group>"; };
 		AB3D08E51871C0CC00CF8380 /* UIFont+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIFont+custom.h"; path = "Util/UIFont+custom.h"; sourceTree = "<group>"; };
 		AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIFont+custom.m"; path = "Util/UIFont+custom.m"; sourceTree = "<group>"; };
-		AB3D08EE1872C6C900CF8380 /* FLTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTransaction.h; path = Flooz/Model/FLTransaction.h; sourceTree = "<group>"; };
-		AB3D08EF1872C6C900CF8380 /* FLTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTransaction.m; path = Flooz/Model/FLTransaction.m; sourceTree = "<group>"; };
-		AB46C66F18803493006C8334 /* JTContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTContainerViewController.h; path = Library/JTContainerViewController/JTContainerViewController.h; sourceTree = "<group>"; };
-		AB46C67018803493006C8334 /* JTContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTContainerViewController.m; path = Library/JTContainerViewController/JTContainerViewController.m; sourceTree = "<group>"; };
-		AB46C6721880393A006C8334 /* JTNavbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTNavbarView.h; path = Library/JTContainerViewController/JTNavbarView.h; sourceTree = "<group>"; };
-		AB46C6731880393A006C8334 /* JTNavbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTNavbarView.m; path = Library/JTContainerViewController/JTNavbarView.m; sourceTree = "<group>"; };
-		AB46C6C51881D462006C8334 /* FLEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLEvent.h; path = Flooz/Model/FLEvent.h; sourceTree = "<group>"; };
-		AB46C6C61881D462006C8334 /* FLEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLEvent.m; path = Flooz/Model/FLEvent.m; sourceTree = "<group>"; };
 		AB4CB6D81886A26400D1C573 /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewViewController.h; path = Controllers/Preview/PreviewViewController.h; sourceTree = "<group>"; };
 		AB4CB6D91886A26400D1C573 /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreviewViewController.m; path = Controllers/Preview/PreviewViewController.m; sourceTree = "<group>"; };
 		AB4CB6DA1886A26400D1C573 /* PreviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PreviewViewController.xib; path = Controllers/Preview/PreviewViewController.xib; sourceTree = "<group>"; };
 		AB4CB6DE1886AE2D00D1C573 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Controllers/Login/LoginViewController.h; sourceTree = "<group>"; };
 		AB4CB6DF1886AE2D00D1C573 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Controllers/Login/LoginViewController.m; sourceTree = "<group>"; };
 		AB4CB6E01886AE2D00D1C573 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Controllers/Login/LoginViewController.xib; sourceTree = "<group>"; };
-		AB4CB6E41886B24100D1C573 /* JTNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTNavigationController.h; path = Library/JTNavigationController/JTNavigationController.h; sourceTree = "<group>"; };
-		AB4CB6E51886B24100D1C573 /* JTNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTNavigationController.m; path = Library/JTNavigationController/JTNavigationController.m; sourceTree = "<group>"; };
-		AB4CB6F11886C07300D1C573 /* UIBarButtonItem+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+Custom.h"; path = "Views/Buttons/UIBarButtonItem+Custom.h"; sourceTree = "<group>"; };
-		AB4CB6F21886C07300D1C573 /* UIBarButtonItem+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+Custom.m"; path = "Views/Buttons/UIBarButtonItem+Custom.m"; sourceTree = "<group>"; };
 		AB4CB6F51886C1C600D1C573 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupViewController.h; path = Controllers/Signup/SignupViewController.h; sourceTree = "<group>"; };
 		AB4CB6F61886C1C600D1C573 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupViewController.m; path = Controllers/Signup/SignupViewController.m; sourceTree = "<group>"; };
 		AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignupViewController.xib; path = Controllers/Signup/SignupViewController.xib; sourceTree = "<group>"; };
 		AB4CB6FA1886C67F00D1C573 /* FLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextField.h; path = Views/FLTextField.h; sourceTree = "<group>"; };
 		AB4CB6FB1886C67F00D1C573 /* FLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextField.m; path = Views/FLTextField.m; sourceTree = "<group>"; };
-		AB4CB6FD1886CB6800D1C573 /* UIImageView+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+custom.h"; path = "Util/UIImageView+custom.h"; sourceTree = "<group>"; };
-		AB4CB6FE1886CB6800D1C573 /* UIImageView+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+custom.m"; path = "Util/UIImageView+custom.m"; sourceTree = "<group>"; };
-		AB4CB704188829EF00D1C573 /* JTLoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTLoadView.h; path = Library/JTLoadView/JTLoadView.h; sourceTree = "<group>"; };
-		AB4CB705188829EF00D1C573 /* JTLoadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTLoadView.m; path = Library/JTLoadView/JTLoadView.m; sourceTree = "<group>"; };
 		AB5EB6D8188214F000D81AF6 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		AB5EB6D9188214F000D81AF6 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -149,16 +141,12 @@
 		AB5EB6EA188214F000D81AF6 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineViewController.h; sourceTree = "<group>"; };
 		AB5EB6F51882151000D81AF6 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
 		AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineViewController.xib; sourceTree = "<group>"; };
-		AB5EB6FA1882157300D81AF6 /* CellSocialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellSocialView.h; sourceTree = "<group>"; };
-		AB5EB6FB1882157300D81AF6 /* CellSocialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellSocialView.m; sourceTree = "<group>"; };
 		AB5EB6FC1882157300D81AF6 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		AB5EB6FD1882157300D81AF6 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		AB5EB6FE1882157300D81AF6 /* TransactionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionCell.h; sourceTree = "<group>"; };
 		AB5EB6FF1882157300D81AF6 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionCell.m; sourceTree = "<group>"; };
 		AB5EB7001882157300D81AF6 /* FLTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTableView.h; path = Views/FLTableView.h; sourceTree = "<group>"; };
 		AB5EB7011882157300D81AF6 /* FLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTableView.m; path = Views/FLTableView.m; sourceTree = "<group>"; };
-		AB5EB7021882157300D81AF6 /* FLRoundButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLRoundButton.h; path = Views/FLRoundButton.h; sourceTree = "<group>"; };
-		AB5EB7031882157300D81AF6 /* FLRoundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLRoundButton.m; path = Views/FLRoundButton.m; sourceTree = "<group>"; };
 		ABE9141D18894385003AC722 /* NewTransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionViewController.h; path = Controllers/NewTransaction/NewTransactionViewController.h; sourceTree = "<group>"; };
 		ABE9141E18894385003AC722 /* NewTransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionViewController.m; path = Controllers/NewTransaction/NewTransactionViewController.m; sourceTree = "<group>"; };
 		ABE9141F18894385003AC722 /* NewTransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewTransactionViewController.xib; path = Controllers/NewTransaction/NewTransactionViewController.xib; sourceTree = "<group>"; };
@@ -166,16 +154,50 @@
 		ABE91423188944D5003AC722 /* FLValidNavBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLValidNavBar.m; path = Views/FLValidNavBar/FLValidNavBar.m; sourceTree = "<group>"; };
 		ABE91425188C5D1A003AC722 /* FLFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLFilterView.h; path = Views/FLFilterView/FLFilterView.h; sourceTree = "<group>"; };
 		ABE91426188C5D1A003AC722 /* FLFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLFilterView.m; path = Views/FLFilterView/FLFilterView.m; sourceTree = "<group>"; };
-		ABE91429188D30D6003AC722 /* FLUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLUser.h; path = Flooz/Model/FLUser.h; sourceTree = "<group>"; };
-		ABE9142A188D30D6003AC722 /* FLUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLUser.m; path = Flooz/Model/FLUser.m; sourceTree = "<group>"; };
-		ABE9142C188ED08D003AC722 /* NSString+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+custom.h"; path = "Util/NSString+custom.h"; sourceTree = "<group>"; };
-		ABE9142D188ED08D003AC722 /* NSString+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+custom.m"; path = "Util/NSString+custom.m"; sourceTree = "<group>"; };
+		ABE9142F1890A01F003AC722 /* FLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLContainerViewController.h; path = Views/FLContainerViewController/FLContainerViewController.h; sourceTree = "<group>"; };
+		ABE914301890A01F003AC722 /* FLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLContainerViewController.m; path = Views/FLContainerViewController/FLContainerViewController.m; sourceTree = "<group>"; };
+		ABE914311890A01F003AC722 /* FLNavbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNavbarView.h; path = Views/FLContainerViewController/FLNavbarView.h; sourceTree = "<group>"; };
+		ABE914321890A01F003AC722 /* FLNavbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNavbarView.m; path = Views/FLContainerViewController/FLNavbarView.m; sourceTree = "<group>"; };
+		ABE914351890A029003AC722 /* FLLoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLLoadView.h; path = Views/FLLoadView/FLLoadView.h; sourceTree = "<group>"; };
+		ABE914361890A029003AC722 /* FLLoadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLLoadView.m; path = Views/FLLoadView/FLLoadView.m; sourceTree = "<group>"; };
+		ABE914381890A034003AC722 /* FLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNavigationController.h; path = Views/FLNavigationController/FLNavigationController.h; sourceTree = "<group>"; };
+		ABE914391890A034003AC722 /* FLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNavigationController.m; path = Views/FLNavigationController/FLNavigationController.m; sourceTree = "<group>"; };
+		ABE9143B1890A08A003AC722 /* UIBarButtonItem+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+custom.h"; path = "Util/UIBarButtonItem+custom.h"; sourceTree = "<group>"; };
+		ABE9143C1890A08A003AC722 /* UIBarButtonItem+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+custom.m"; path = "Util/UIBarButtonItem+custom.m"; sourceTree = "<group>"; };
+		ABE9143E1890A12C003AC722 /* FLEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLEvent.h; path = Models/FLEvent.h; sourceTree = "<group>"; };
+		ABE9143F1890A12C003AC722 /* FLEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLEvent.m; path = Models/FLEvent.m; sourceTree = "<group>"; };
+		ABE914401890A12C003AC722 /* FLTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTransaction.h; path = Models/FLTransaction.h; sourceTree = "<group>"; };
+		ABE914411890A12C003AC722 /* FLTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTransaction.m; path = Models/FLTransaction.m; sourceTree = "<group>"; };
+		ABE914421890A12C003AC722 /* FLUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLUser.h; path = Models/FLUser.h; sourceTree = "<group>"; };
+		ABE914431890A12C003AC722 /* FLUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLUser.m; path = Models/FLUser.m; sourceTree = "<group>"; };
+		ABE9144C18915E9F003AC722 /* FLUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLUserView.h; path = Views/FLUserView/FLUserView.h; sourceTree = "<group>"; };
+		ABE9144D18915E9F003AC722 /* FLUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLUserView.m; path = Views/FLUserView/FLUserView.m; sourceTree = "<group>"; };
+		ABE9145318927CE0003AC722 /* FLSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSocial.h; path = Models/FLSocial.h; sourceTree = "<group>"; };
+		ABE9145418927CE0003AC722 /* FLSocial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSocial.m; path = Models/FLSocial.m; sourceTree = "<group>"; };
+		ABE9145B18928AA3003AC722 /* FLSocialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSocialView.h; path = Views/FLSocialView/FLSocialView.h; sourceTree = "<group>"; };
+		ABE9145C18928AA3003AC722 /* FLSocialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSocialView.m; path = Views/FLSocialView/FLSocialView.m; sourceTree = "<group>"; };
+		ABE9145F18929168003AC722 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountViewController.h; path = Controllers/Account/AccountViewController.h; sourceTree = "<group>"; };
+		ABE9146018929168003AC722 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountViewController.m; path = Controllers/Account/AccountViewController.m; sourceTree = "<group>"; };
+		ABE9146118929168003AC722 /* AccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AccountViewController.xib; path = Controllers/Account/AccountViewController.xib; sourceTree = "<group>"; };
+		ABE9146418929402003AC722 /* FLAccountButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAccountButton.h; path = Views/FLAccountButton/FLAccountButton.h; sourceTree = "<group>"; };
+		ABE9146518929402003AC722 /* FLAccountButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAccountButton.m; path = Views/FLAccountButton/FLAccountButton.m; sourceTree = "<group>"; };
+		ABE914671892940A003AC722 /* FLAccountUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAccountUserView.h; path = Views/FLAccountUserView/FLAccountUserView.h; sourceTree = "<group>"; };
+		ABE914681892940A003AC722 /* FLAccountUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAccountUserView.m; path = Views/FLAccountUserView/FLAccountUserView.m; sourceTree = "<group>"; };
+		ABE9146C189294A0003AC722 /* FLMenuNewTransactionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLMenuNewTransactionButton.h; path = Views/FLMenuNewTransactionButton/FLMenuNewTransactionButton.h; sourceTree = "<group>"; };
+		ABE9146D189294A0003AC722 /* FLMenuNewTransactionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLMenuNewTransactionButton.m; path = Views/FLMenuNewTransactionButton/FLMenuNewTransactionButton.m; sourceTree = "<group>"; };
+		ABE9147018929A5C003AC722 /* InformationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InformationsViewController.h; path = Controllers/Informations/InformationsViewController.h; sourceTree = "<group>"; };
+		ABE9147118929A5C003AC722 /* InformationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InformationsViewController.m; path = Controllers/Informations/InformationsViewController.m; sourceTree = "<group>"; };
+		ABE9147218929A5C003AC722 /* InformationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InformationsViewController.xib; path = Controllers/Informations/InformationsViewController.xib; sourceTree = "<group>"; };
+		ABE9147618929AC8003AC722 /* NotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationsViewController.h; path = Controllers/Notifications/NotificationsViewController.h; sourceTree = "<group>"; };
+		ABE9147718929AC8003AC722 /* NotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationsViewController.m; path = Controllers/Notifications/NotificationsViewController.m; sourceTree = "<group>"; };
+		ABE9147818929AC8003AC722 /* NotificationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NotificationsViewController.xib; path = Controllers/Notifications/NotificationsViewController.xib; sourceTree = "<group>"; };
+		ABE9147C18929B7D003AC722 /* EditAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditAccountViewController.h; path = Controllers/EditAccount/EditAccountViewController.h; sourceTree = "<group>"; };
+		ABE9147D18929B7D003AC722 /* EditAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditAccountViewController.m; path = Controllers/EditAccount/EditAccountViewController.m; sourceTree = "<group>"; };
+		ABE9147E18929B7D003AC722 /* EditAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditAccountViewController.xib; path = Controllers/EditAccount/EditAccountViewController.xib; sourceTree = "<group>"; };
 		ABF46A11187575C600E92A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABF46A131875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ABF46A141875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABF46A151875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		ABF46A161875AC9200E92A77 /* UILabel+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+custom.h"; path = "Util/UILabel+custom.h"; sourceTree = "<group>"; };
-		ABF46A171875AC9200E92A77 /* UILabel+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+custom.m"; path = "Util/UILabel+custom.m"; sourceTree = "<group>"; };
 		ABF46A1D1875B54600E92A77 /* JTImageLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTImageLabel.h; sourceTree = "<group>"; };
 		ABF46A1E1875B54600E92A77 /* JTImageLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTImageLabel.m; sourceTree = "<group>"; };
 		ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ProximaNova-Light.otf"; path = "Resources/Fonts/ProximaNova-Light.otf"; sourceTree = "<group>"; };
@@ -185,8 +207,6 @@
 		ABF46A2D1875C0B100E92A77 /* Rene Bieder - Gentona ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona ExtraLight.otf"; path = "Resources/Fonts/Rene Bieder - Gentona ExtraLight.otf"; sourceTree = "<group>"; };
 		ABF46A2E1875C0B100E92A77 /* Rene Bieder - Gentona Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona Light.otf"; path = "Resources/Fonts/Rene Bieder - Gentona Light.otf"; sourceTree = "<group>"; };
 		ABF46A2F1875C0B100E92A77 /* Rene Bieder - Gentona Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona Thin.otf"; path = "Resources/Fonts/Rene Bieder - Gentona Thin.otf"; sourceTree = "<group>"; };
-		ABF46A37187641BC00E92A77 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = Util/Util.h; sourceTree = "<group>"; };
-		ABF46A38187641BC00E92A77 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Util.m; path = Util/Util.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +272,7 @@
 				ABF46A201875BE9100E92A77 /* Resources */,
 				AB3D08E11871BEC300CF8380 /* Util */,
 				AB3D08DB1871A5BE00CF8380 /* Library */,
+				AB3D08DD1871A5D100CF8380 /* Models */,
 				AB3D08D5186CA6F800CF8380 /* Views */,
 				AB3D08C5186CA17F00CF8380 /* Controllers */,
 				AB3D08A0186CA11A00CF8380 /* AppDelegate.h */,
@@ -295,6 +316,10 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				ABE9147B18929B6D003AC722 /* EditAccount */,
+				ABE9147518929A61003AC722 /* Notifications */,
+				ABE9146F18929A49003AC722 /* Informations */,
+				ABE9145E18929150003AC722 /* Account */,
 				ABE9141C1889436B003AC722 /* NewTransaction */,
 				AB4CB6F41886C1B000D1C573 /* Signup */,
 				AB4CB6DD1886AE1E00D1C573 /* Login */,
@@ -311,17 +336,21 @@
 		AB3D08D5186CA6F800CF8380 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				ABE9146B1892948F003AC722 /* FLMenuNewTransactionButton */,
+				ABE9146A18929445003AC722 /* FLValidNavBar */,
+				ABE9145A18928A75003AC722 /* FLSocialView */,
+				ABE9145618927EDD003AC722 /* FLAccountButton */,
+				ABE9144F189165BA003AC722 /* FLAccountUserView */,
+				ABE9144B18915E8F003AC722 /* FLUserView */,
+				AB4CB703188829DA00D1C573 /* FLLoadView */,
+				AB4CB6E31886B22100D1C573 /* FLNavigationController */,
+				AB46C66E18803421006C8334 /* FLContainerViewController */,
 				ABE91428188C5D20003AC722 /* FLFilterView */,
-				AB4CB6E71886BCE900D1C573 /* Buttons */,
 				AB5EB6F91882157300D81AF6 /* Cells */,
 				AB5EB7001882157300D81AF6 /* FLTableView.h */,
 				AB5EB7011882157300D81AF6 /* FLTableView.m */,
-				AB5EB7021882157300D81AF6 /* FLRoundButton.h */,
-				AB5EB7031882157300D81AF6 /* FLRoundButton.m */,
 				AB4CB6FA1886C67F00D1C573 /* FLTextField.h */,
 				AB4CB6FB1886C67F00D1C573 /* FLTextField.m */,
-				ABE91422188944D5003AC722 /* FLValidNavBar.h */,
-				ABE91423188944D5003AC722 /* FLValidNavBar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -329,9 +358,6 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				AB4CB703188829DA00D1C573 /* JTLoadView */,
-				AB4CB6E31886B22100D1C573 /* JTNavigationController */,
-				AB46C66E18803421006C8334 /* JTContainerViewController */,
 				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
 				AB3D08DC1871A5CB00CF8380 /* Flooz */,
 			);
@@ -341,54 +367,49 @@
 		AB3D08DC1871A5CB00CF8380 /* Flooz */ = {
 			isa = PBXGroup;
 			children = (
-				AB3D08DD1871A5D100CF8380 /* Model */,
 				AB3D08DE1871AAB400CF8380 /* Flooz.h */,
 				AB3D08DF1871AAB400CF8380 /* Flooz.m */,
 			);
 			name = Flooz;
 			sourceTree = "<group>";
 		};
-		AB3D08DD1871A5D100CF8380 /* Model */ = {
+		AB3D08DD1871A5D100CF8380 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AB3D08EE1872C6C900CF8380 /* FLTransaction.h */,
-				AB3D08EF1872C6C900CF8380 /* FLTransaction.m */,
-				AB46C6C51881D462006C8334 /* FLEvent.h */,
-				AB46C6C61881D462006C8334 /* FLEvent.m */,
-				ABE91429188D30D6003AC722 /* FLUser.h */,
-				ABE9142A188D30D6003AC722 /* FLUser.m */,
+				ABE9143E1890A12C003AC722 /* FLEvent.h */,
+				ABE9143F1890A12C003AC722 /* FLEvent.m */,
+				ABE914401890A12C003AC722 /* FLTransaction.h */,
+				ABE914411890A12C003AC722 /* FLTransaction.m */,
+				ABE914421890A12C003AC722 /* FLUser.h */,
+				ABE914431890A12C003AC722 /* FLUser.m */,
+				ABE9145318927CE0003AC722 /* FLSocial.h */,
+				ABE9145418927CE0003AC722 /* FLSocial.m */,
 			);
-			name = Model;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		AB3D08E11871BEC300CF8380 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				ABE9143B1890A08A003AC722 /* UIBarButtonItem+custom.h */,
+				ABE9143C1890A08A003AC722 /* UIBarButtonItem+custom.m */,
 				AB3D08E21871BEEE00CF8380 /* UIColor+custom.h */,
 				AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */,
 				AB3D08E51871C0CC00CF8380 /* UIFont+custom.h */,
 				AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */,
-				ABF46A161875AC9200E92A77 /* UILabel+custom.h */,
-				ABF46A171875AC9200E92A77 /* UILabel+custom.m */,
-				ABF46A37187641BC00E92A77 /* Util.h */,
-				ABF46A38187641BC00E92A77 /* Util.m */,
-				AB4CB6FD1886CB6800D1C573 /* UIImageView+custom.h */,
-				AB4CB6FE1886CB6800D1C573 /* UIImageView+custom.m */,
-				ABE9142C188ED08D003AC722 /* NSString+custom.h */,
-				ABE9142D188ED08D003AC722 /* NSString+custom.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
 		};
-		AB46C66E18803421006C8334 /* JTContainerViewController */ = {
+		AB46C66E18803421006C8334 /* FLContainerViewController */ = {
 			isa = PBXGroup;
 			children = (
-				AB46C66F18803493006C8334 /* JTContainerViewController.h */,
-				AB46C67018803493006C8334 /* JTContainerViewController.m */,
-				AB46C6721880393A006C8334 /* JTNavbarView.h */,
-				AB46C6731880393A006C8334 /* JTNavbarView.m */,
+				ABE9142F1890A01F003AC722 /* FLContainerViewController.h */,
+				ABE914301890A01F003AC722 /* FLContainerViewController.m */,
+				ABE914311890A01F003AC722 /* FLNavbarView.h */,
+				ABE914321890A01F003AC722 /* FLNavbarView.m */,
 			);
-			name = JTContainerViewController;
+			name = FLContainerViewController;
 			sourceTree = "<group>";
 		};
 		AB4CB6D71886A24B00D1C573 /* Preview */ = {
@@ -411,22 +432,13 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
-		AB4CB6E31886B22100D1C573 /* JTNavigationController */ = {
+		AB4CB6E31886B22100D1C573 /* FLNavigationController */ = {
 			isa = PBXGroup;
 			children = (
-				AB4CB6E41886B24100D1C573 /* JTNavigationController.h */,
-				AB4CB6E51886B24100D1C573 /* JTNavigationController.m */,
+				ABE914381890A034003AC722 /* FLNavigationController.h */,
+				ABE914391890A034003AC722 /* FLNavigationController.m */,
 			);
-			name = JTNavigationController;
-			sourceTree = "<group>";
-		};
-		AB4CB6E71886BCE900D1C573 /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
-				AB4CB6F11886C07300D1C573 /* UIBarButtonItem+Custom.h */,
-				AB4CB6F21886C07300D1C573 /* UIBarButtonItem+Custom.m */,
-			);
-			name = Buttons;
+			name = FLNavigationController;
 			sourceTree = "<group>";
 		};
 		AB4CB6F41886C1B000D1C573 /* Signup */ = {
@@ -439,13 +451,13 @@
 			name = Signup;
 			sourceTree = "<group>";
 		};
-		AB4CB703188829DA00D1C573 /* JTLoadView */ = {
+		AB4CB703188829DA00D1C573 /* FLLoadView */ = {
 			isa = PBXGroup;
 			children = (
-				AB4CB704188829EF00D1C573 /* JTLoadView.h */,
-				AB4CB705188829EF00D1C573 /* JTLoadView.m */,
+				ABE914351890A029003AC722 /* FLLoadView.h */,
+				ABE914361890A029003AC722 /* FLLoadView.m */,
 			);
-			name = JTLoadView;
+			name = FLLoadView;
 			sourceTree = "<group>";
 		};
 		AB5EB6D7188214F000D81AF6 /* Home */ = {
@@ -506,8 +518,6 @@
 		AB5EB6F91882157300D81AF6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				AB5EB6FA1882157300D81AF6 /* CellSocialView.h */,
-				AB5EB6FB1882157300D81AF6 /* CellSocialView.m */,
 				AB5EB6FC1882157300D81AF6 /* EventCell.h */,
 				AB5EB6FD1882157300D81AF6 /* EventCell.m */,
 				AB5EB6FE1882157300D81AF6 /* TransactionCell.h */,
@@ -534,6 +544,100 @@
 				ABE91426188C5D1A003AC722 /* FLFilterView.m */,
 			);
 			name = FLFilterView;
+			sourceTree = "<group>";
+		};
+		ABE9144B18915E8F003AC722 /* FLUserView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9144C18915E9F003AC722 /* FLUserView.h */,
+				ABE9144D18915E9F003AC722 /* FLUserView.m */,
+			);
+			name = FLUserView;
+			sourceTree = "<group>";
+		};
+		ABE9144F189165BA003AC722 /* FLAccountUserView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE914671892940A003AC722 /* FLAccountUserView.h */,
+				ABE914681892940A003AC722 /* FLAccountUserView.m */,
+			);
+			name = FLAccountUserView;
+			sourceTree = "<group>";
+		};
+		ABE9145618927EDD003AC722 /* FLAccountButton */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9146418929402003AC722 /* FLAccountButton.h */,
+				ABE9146518929402003AC722 /* FLAccountButton.m */,
+			);
+			name = FLAccountButton;
+			sourceTree = "<group>";
+		};
+		ABE9145A18928A75003AC722 /* FLSocialView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9145B18928AA3003AC722 /* FLSocialView.h */,
+				ABE9145C18928AA3003AC722 /* FLSocialView.m */,
+			);
+			name = FLSocialView;
+			sourceTree = "<group>";
+		};
+		ABE9145E18929150003AC722 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9145F18929168003AC722 /* AccountViewController.h */,
+				ABE9146018929168003AC722 /* AccountViewController.m */,
+				ABE9146118929168003AC722 /* AccountViewController.xib */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		ABE9146A18929445003AC722 /* FLValidNavBar */ = {
+			isa = PBXGroup;
+			children = (
+				ABE91422188944D5003AC722 /* FLValidNavBar.h */,
+				ABE91423188944D5003AC722 /* FLValidNavBar.m */,
+			);
+			name = FLValidNavBar;
+			sourceTree = "<group>";
+		};
+		ABE9146B1892948F003AC722 /* FLMenuNewTransactionButton */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9146C189294A0003AC722 /* FLMenuNewTransactionButton.h */,
+				ABE9146D189294A0003AC722 /* FLMenuNewTransactionButton.m */,
+			);
+			name = FLMenuNewTransactionButton;
+			sourceTree = "<group>";
+		};
+		ABE9146F18929A49003AC722 /* Informations */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9147018929A5C003AC722 /* InformationsViewController.h */,
+				ABE9147118929A5C003AC722 /* InformationsViewController.m */,
+				ABE9147218929A5C003AC722 /* InformationsViewController.xib */,
+			);
+			name = Informations;
+			sourceTree = "<group>";
+		};
+		ABE9147518929A61003AC722 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9147618929AC8003AC722 /* NotificationsViewController.h */,
+				ABE9147718929AC8003AC722 /* NotificationsViewController.m */,
+				ABE9147818929AC8003AC722 /* NotificationsViewController.xib */,
+			);
+			name = Notifications;
+			sourceTree = "<group>";
+		};
+		ABE9147B18929B6D003AC722 /* EditAccount */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9147C18929B7D003AC722 /* EditAccountViewController.h */,
+				ABE9147D18929B7D003AC722 /* EditAccountViewController.m */,
+				ABE9147E18929B7D003AC722 /* EditAccountViewController.xib */,
+			);
+			name = EditAccount;
 			sourceTree = "<group>";
 		};
 		ABF46A1C1875B54600E92A77 /* JTImageLabel */ = {
@@ -653,8 +757,11 @@
 				AB5EB6F81882151000D81AF6 /* TimelineViewController.xib in Resources */,
 				ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */,
 				ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */,
+				ABE9147418929A5C003AC722 /* InformationsViewController.xib in Resources */,
 				ABF46A321875C1B400E92A77 /* ProximaNova-Semibold.otf in Resources */,
 				ABF46A331875C1B400E92A77 /* Rene Bieder - Gentona Book.otf in Resources */,
+				ABE9148018929B7D003AC722 /* EditAccountViewController.xib in Resources */,
+				ABE9147A18929AC8003AC722 /* NotificationsViewController.xib in Resources */,
 				AB4CB6F91886C1C600D1C573 /* SignupViewController.xib in Resources */,
 				ABF46A341875C1B400E92A77 /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
 				AB5EB6EE188214F000D81AF6 /* MenuNewTransactionViewController.xib in Resources */,
@@ -663,6 +770,7 @@
 				ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */,
 				ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */,
 				AB3D089C186CA11A00CF8380 /* InfoPlist.strings in Resources */,
+				ABE9146318929168003AC722 /* AccountViewController.xib in Resources */,
 				AB4CB6DC1886A26400D1C573 /* PreviewViewController.xib in Resources */,
 				AB3D08A4186CA11A00CF8380 /* Images.xcassets in Resources */,
 				ABF46A10187575C600E92A77 /* Localizable.strings in Resources */,
@@ -720,37 +828,41 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB3D08A2186CA11A00CF8380 /* AppDelegate.m in Sources */,
+				ABE9145D18928AA3003AC722 /* FLSocialView.m in Sources */,
+				ABE9146E189294A0003AC722 /* FLMenuNewTransactionButton.m in Sources */,
 				AB5EB6ED188214F000D81AF6 /* MenuNewTransactionViewController.m in Sources */,
 				AB5EB7061882157300D81AF6 /* TransactionCell.m in Sources */,
+				ABE9146618929402003AC722 /* FLAccountButton.m in Sources */,
 				AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */,
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
 				AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */,
+				ABE9147318929A5C003AC722 /* InformationsViewController.m in Sources */,
 				ABE91424188944D5003AC722 /* FLValidNavBar.m in Sources */,
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
+				ABE9143A1890A034003AC722 /* FLNavigationController.m in Sources */,
 				AB4CB6DB1886A26400D1C573 /* PreviewViewController.m in Sources */,
-				AB4CB6FF1886CB6800D1C573 /* UIImageView+custom.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
 				AB4CB6E11886AE2D00D1C573 /* LoginViewController.m in Sources */,
-				ABE9142B188D30D6003AC722 /* FLUser.m in Sources */,
-				AB5EB7041882157300D81AF6 /* CellSocialView.m in Sources */,
-				ABF46A39187641BC00E92A77 /* Util.m in Sources */,
-				AB4CB6E61886B24100D1C573 /* JTNavigationController.m in Sources */,
-				AB4CB6F31886C07300D1C573 /* UIBarButtonItem+Custom.m in Sources */,
-				ABE9142E188ED08D003AC722 /* NSString+custom.m in Sources */,
-				AB46C67118803493006C8334 /* JTContainerViewController.m in Sources */,
+				ABE914461890A12C003AC722 /* FLUser.m in Sources */,
+				ABE914371890A029003AC722 /* FLLoadView.m in Sources */,
+				ABE914331890A01F003AC722 /* FLContainerViewController.m in Sources */,
 				AB4CB6FC1886C67F00D1C573 /* FLTextField.m in Sources */,
-				AB46C6C71881D462006C8334 /* FLEvent.m in Sources */,
-				AB3D08F01872C6C900CF8380 /* FLTransaction.m in Sources */,
+				ABE914451890A12C003AC722 /* FLTransaction.m in Sources */,
+				ABE9143D1890A08A003AC722 /* UIBarButtonItem+custom.m in Sources */,
 				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
+				ABE9147918929AC8003AC722 /* NotificationsViewController.m in Sources */,
 				ABE9142018894385003AC722 /* NewTransactionViewController.m in Sources */,
+				ABE9146218929168003AC722 /* AccountViewController.m in Sources */,
+				ABE914691892940A003AC722 /* FLAccountUserView.m in Sources */,
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
+				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
+				ABE9147F18929B7D003AC722 /* EditAccountViewController.m in Sources */,
 				AB5EB7051882157300D81AF6 /* EventCell.m in Sources */,
-				AB4CB706188829EF00D1C573 /* JTLoadView.m in Sources */,
-				ABF46A181875AC9200E92A77 /* UILabel+custom.m in Sources */,
+				ABE914441890A12C003AC722 /* FLEvent.m in Sources */,
+				ABE914341890A01F003AC722 /* FLNavbarView.m in Sources */,
 				AB5EB6F1188214F000D81AF6 /* SocialViewController.m in Sources */,
-				AB46C6741880393A006C8334 /* JTNavbarView.m in Sources */,
+				ABE9144E18915E9F003AC722 /* FLUserView.m in Sources */,
 				ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */,
-				AB5EB7081882157300D81AF6 /* FLRoundButton.m in Sources */,
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,

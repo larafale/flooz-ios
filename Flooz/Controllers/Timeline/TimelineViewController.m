@@ -28,11 +28,11 @@
 {
     [super viewDidLoad];
         
-    UIImageView *shadow = [UIImageView imageNamed:@"shadow"];
-    shadow.frame = CGRectMakeSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
+    UIImageView *shadow = [UIImageView imageNamed:@"tableview-shadow"];
+    shadow.frame = CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
     [self.view addSubview:shadow];
         
-    UIImage *buttonImage = [UIImage imageNamed:@"button"];
+    UIImage *buttonImage = [UIImage imageNamed:@"menu-new-transaction"];
     crossButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - buttonImage.size.width) / 2., self.view.frame.size.height - buttonImage.size.height - 20, buttonImage.size.width, buttonImage.size.height)];
     [crossButton setImage:buttonImage forState:UIControlStateNormal];
     [self.view addSubview:crossButton];

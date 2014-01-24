@@ -13,9 +13,9 @@
 @interface MenuNewTransactionViewController (){
     UIButton *crossButton;
     
-    FLRoundButton *eventButton;
-    FLRoundButton *collectionButton;
-    FLRoundButton *paymentButton;
+    FLMenuNewTransactionButton *eventButton;
+    FLMenuNewTransactionButton *collectionButton;
+    FLMenuNewTransactionButton *paymentButton;
     
     BOOL firstView;
 }
@@ -39,22 +39,22 @@
     
     self.view.backgroundColor = [UIColor customBackgroundHeader:0.8];
     
-    UIImage *buttonImage = [UIImage imageNamed:@"button"];
+    UIImage *buttonImage = [UIImage imageNamed:@"menu-new-transaction"];
     crossButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - buttonImage.size.width) / 2., self.view.frame.size.height - buttonImage.size.height - 20, buttonImage.size.width, buttonImage.size.height)];
     [crossButton setImage:buttonImage forState:UIControlStateNormal];
     [self.view addSubview:crossButton];
     
     [crossButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchDown];
     
-    eventButton = [[FLRoundButton alloc] initWithPosition:90 imageName:@"menu-new-transaction-event" text:@"MENU_NEW_TRANSACTION_EVENT"];
+    eventButton = [[FLMenuNewTransactionButton alloc] initWithPosition:90 imageNamed:@"menu-new-transaction-event" title:@"MENU_NEW_TRANSACTION_EVENT"];
     [self.view addSubview:eventButton];
     [eventButton addTarget:self action:@selector(presentNewTransactionControllerForEvent) forControlEvents:UIControlEventTouchUpInside];
     
-    collectionButton = [[FLRoundButton alloc] initWithPosition:215 imageName:@"menu-new-transaction-collect" text:@"MENU_NEW_TRANSACTION_COLLECT"];
+    collectionButton = [[FLMenuNewTransactionButton alloc] initWithPosition:215 imageNamed:@"menu-new-transaction-collect" title:@"MENU_NEW_TRANSACTION_COLLECT"];
     [self.view addSubview:collectionButton];
     [collectionButton addTarget:self action:@selector(presentNewTransactionControllerForCollect) forControlEvents:UIControlEventTouchUpInside];
     
-    paymentButton = [[FLRoundButton alloc] initWithPosition:340 imageName:@"menu-new-transaction-payment" text:@"MENU_NEW_TRANSACTION_PAYMENT"];
+    paymentButton = [[FLMenuNewTransactionButton alloc] initWithPosition:340 imageNamed:@"menu-new-transaction-payment" title:@"MENU_NEW_TRANSACTION_PAYMENT"];
     [self.view addSubview:paymentButton];
     [paymentButton addTarget:self action:@selector(presentNewTransactionControllerForPayment) forControlEvents:UIControlEventTouchUpInside];
 }

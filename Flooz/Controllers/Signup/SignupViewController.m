@@ -35,14 +35,15 @@
 {
     [super loadView];
     
-    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
-    
     self.view.backgroundColor = [UIColor customBackground];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(presentTimelineController)];
     
+    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMakeWithSize(self.view.frame.size)];
+    [self.view addSubview:_contentView];
+    
     {
         registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(MARGE, 27, SCREEN_WIDTH - (2 * MARGE), 45)];
-        registerFacebook.backgroundColor = [UIColor colorWithRed:59./256. green:87./256 blue:157./256 alpha:.5];
+        registerFacebook.backgroundColor = [UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5];
         
         [registerFacebook setTitle:NSLocalizedString(@"SIGNUP_FACEBOOK", nil) forState:UIControlStateNormal];
         registerFacebook.titleLabel.font = [UIFont customContentRegular:13];
@@ -53,15 +54,7 @@
     }
         
     {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) / 2.) - (97. / 2.), 120, 97, 96.5)];
-        
-        UIImageView *filter = [UIImageView imageNamed:@"avatar-filter"];
-        UIButton *avatar = [[UIButton alloc] initWithFrame:filter.frame];
-        [avatar setImage:[UIImage imageNamed:@"test_user1"] forState:UIControlStateNormal];
-        
-        [view addSubview:avatar];
-        [view addSubview:filter];
-        
+        FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) / 2.) - (97. / 2.), 120, 97, 96.5)];
         [_contentView addSubview:view];
     }
     
@@ -103,8 +96,6 @@
         
         _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetMaxY(textFooter.frame));
     }
-    
-    [self.view addSubview:_contentView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -118,7 +109,7 @@
 {
     [super viewDidAppear:animated];
     
-    _contentView.frame = CGRectMakeSize(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+    _contentView.frame = CGRectMakeWithSize(self.view.frame.size);
 }
 
 - (void)presentTimelineController

@@ -15,7 +15,7 @@
 }
 
 + (UIColor *)customBackground:(CGFloat)alpha{
-    return [UIColor colorWithRed:36./256. green:47./256. blue:58./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:36 green:47 blue:58 alpha:alpha];
 }
 
 + (UIColor *)customBackgroundStatus{
@@ -23,7 +23,7 @@
 }
 
 + (UIColor *)customBackgroundStatus:(CGFloat)alpha{
-    return [UIColor colorWithRed:45./256. green:58./256. blue:70./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:45 green:58 blue:70 alpha:alpha];
 }
 
 + (UIColor *)customBackgroundHeader{
@@ -31,7 +31,7 @@
 }
 
 + (UIColor *)customBackgroundHeader:(CGFloat)alpha{
-    return [UIColor colorWithRed:24./256. green:33./256. blue:43./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:24 green:33 blue:43 alpha:alpha];
 }
 
 + (UIColor *)customGreen{
@@ -39,7 +39,7 @@
 }
 
 + (UIColor *)customGreen:(CGFloat)alpha{
-    return [UIColor colorWithRed:122./256. green:194./256. blue:131./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:122 green:194 blue:131 alpha:alpha];
 }
 
 + (UIColor *)customRed{
@@ -47,7 +47,7 @@
 }
 
 + (UIColor *)customRed:(CGFloat)alpha{
-    return [UIColor colorWithRed:225./256. green:114./256. blue:114./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:225 green:114 blue:114 alpha:alpha];
 }
 
 + (UIColor *)customYellow{
@@ -55,7 +55,7 @@
 }
 
 + (UIColor *)customYellow:(CGFloat)alpha{
-    return [UIColor colorWithRed:213./256. green:209./256. blue:122./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:213 green:209 blue:122 alpha:alpha];
 }
 
 + (UIColor *)customWhite{
@@ -63,7 +63,7 @@
 }
 
 + (UIColor *)customWhite:(CGFloat)alpha{
-    return [UIColor colorWithRed:84./256. green:99./256. blue:109./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:84 green:99 blue:109 alpha:alpha];
 }
 
 + (UIColor *)customSeparator{
@@ -71,7 +71,7 @@
 }
 
 + (UIColor *)customSeparator:(CGFloat)alpha{
-    return [UIColor colorWithRed:51./256. green:62./256. blue:74./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:51 green:62 blue:74 alpha:alpha];
 }
 
 + (UIColor *)customBlue{
@@ -79,7 +79,7 @@
 }
 
 + (UIColor *)customBlue:(CGFloat)alpha{
-    return [UIColor colorWithRed:58./256. green:169./256. blue:227./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:58 green:169 blue:227 alpha:alpha];
 }
 
 + (UIColor *)customBlueLight{
@@ -87,7 +87,7 @@
 }
 
 + (UIColor *)customBlueLight:(CGFloat)alpha{
-    return [UIColor colorWithRed:96./256. green:146./256. blue:172./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:96 green:146 blue:172 alpha:alpha];
 }
 
 + (UIColor *)customBlueHover{
@@ -95,12 +95,11 @@
 }
 
 + (UIColor *)customBlueHover:(CGFloat)alpha{
-    return [UIColor colorWithRed:38./256. green:59./256. blue:75./256. alpha:alpha];
+    return [UIColor colorWithIntegerRed:38 green:59 blue:75 alpha:alpha];
 }
 
 + (UIColor *)customPlaceholder{
-    return [UIColor colorWithRed:135./256. green:147./256. blue:157./256. alpha:1.];
+    return [UIColor colorWithIntegerRed:135 green:147 blue:157 alpha:1.];
 }
-
 
 @end

@@ -45,13 +45,13 @@
         current_height += rect.size.height;
     }
     
-    if([transaction content] && ![[transaction content] isBlank]){
+    if([transaction why] && ![[transaction why] isBlank]){
         if([transaction text]){
             current_height += 4;
         }
         
         attributedText = [[NSAttributedString alloc]
-                          initWithString:[transaction content]
+                          initWithString:[transaction why]
                           attributes:@{NSFontAttributeName: [UIFont customContentLight:12]}];
         rect = [attributedText boundingRectWithSize:(CGSize){rightViewWidth, CGFLOAT_MAX}
                                             options:NSStringDrawingUsesLineFragmentOrigin
@@ -60,7 +60,7 @@
     }
     
     // Attachment
-    if([transaction attachment_thumb_url]){
+    if([transaction attachmentThumbURL]){
         current_height += 13 + 80;
     }
     
@@ -128,7 +128,7 @@
     
     [self.contentView addSubview:validView];
     
-    JTImageLabel *text = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(validView.frame) - 30, CGRectGetHeight(validView.frame))];
+    JTImageLabel *text = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(validView.frame) - 30, CGRectGetHeight(validView.frame))];
     
     [text setImageOffset:CGPointMake(-10, 0)];
     text.textAlignment = NSTextAlignmentRight;
@@ -137,15 +137,7 @@
 }
 
 - (void)createAvatarView{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(leftView.frame), 0)];
-    
-    UIImageView *filter = [UIImageView imageNamed:@"avatar_filter"];
-    filter.frame = CGRectMakeSetXY(filter.frame, 0, 15);
-    
-    UIImageView *avatar = [[UIImageView alloc] initWithFrame:filter.frame];
-    
-    [view addSubview:avatar];
-    [view addSubview:filter];
+    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(0, 15, 37.5, 37.5)];
     [leftView addSubview:view];
 }
 
@@ -201,7 +193,7 @@
 }
 
 - (void)createSocialView{
-    CellSocialView *view = [[CellSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 15)];
+    FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 15)];
     [rightView addSubview:view];
     height = CGRectGetMaxY(view.frame);
 }
@@ -219,21 +211,19 @@
     [self prepareAttachmentView];
     [self prepareSocialView];
     
-    leftView.frame = CGRectMakeSetHeight(leftView.frame, height);
-    rightView.frame = CGRectMakeSetHeight(rightView.frame, height);
+    leftView.frame = CGRectSetHeight(leftView.frame, height);
+    rightView.frame = CGRectSetHeight(rightView.frame, height);
     
     height += MARGE_TOP + MARGE_BOTTOM;
     
-    slideView.frame = CGRectMakeSetHeight(slideView.frame, height);
-    validView.frame = CGRectMakeSetHeight(validView.frame, height);
-    self.frame = CGRectMakeSetHeight(self.frame, height);
+    slideView.frame = CGRectSetHeight(slideView.frame, height);
+    validView.frame = CGRectSetHeight(validView.frame, height);
+    self.frame = CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareAvatarView{
-    UIView *view = [[leftView subviews] objectAtIndex:0];
-    UIImageView *avatar = [[view subviews] objectAtIndex:0];
-    
-    avatar.image = [UIImage imageNamed:@"test_user1"];
+    FLUserView *view = [[leftView subviews] objectAtIndex:0];
+    [view setImageFromURL:_transaction.avatarURL];
 }
 
 - (void)prepareSlideView{
@@ -251,25 +241,33 @@
     UILabel *amount = [[view subviews] objectAtIndex:0];
     
     type.text = [[self transaction] typeText];
-    [type setWidth];
+    [type setWidthToFit];
     
     status.text = [[self transaction] statusText];
-    status.frame = CGRectMakeSetX(status.frame, CGRectGetMaxX(type.frame) + 10);
-    [status setWidth];
-    status.frame = CGRectMakeSetWidth(status.frame, CGRectGetWidth(status.frame) + 25);
+    status.frame = CGRectSetX(status.frame, CGRectGetMaxX(type.frame) + 10);
+    [status setWidthToFit];
+    status.frame = CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 25);
     
     amount.text = [[self transaction] amountFormated];
-    amount.frame = CGRectMakeSetX(amount.frame, CGRectGetMaxX(status.frame));
-    amount.frame = CGRectMakeSetWidth(amount.frame, CGRectGetWidth(view.frame) - CGRectGetMaxX(status.frame));
+    amount.frame = CGRectSetX(amount.frame, CGRectGetMaxX(status.frame));
+    amount.frame = CGRectSetWidth(amount.frame, CGRectGetWidth(view.frame) - CGRectGetMaxX(status.frame));
     
     UIColor *textColor = [UIColor whiteColor];
-    if([[self transaction] status] == TransactionStatusAccepted){
-        textColor = [UIColor customGreen];
-    }else if([[self transaction] status] == TransactionStatusRefused){
-        textColor = [UIColor whiteColor];
-    }else{
-        textColor = [UIColor customYellow];
+    
+    switch ([[self transaction] status]) {
+        case TransactionStatusAccepted:
+            textColor = [UIColor customGreen];
+            break;
+        case TransactionStatusPending:
+            textColor = [UIColor customYellow];
+            break;
+        case TransactionStatusRefused:
+        case TransactionStatusCanceled:
+        case TransactionStatusExpired:
+            textColor = [UIColor whiteColor];
+            break;
     }
+    
     status.textColor = textColor;
     amount.textColor = textColor;
     
@@ -285,40 +283,40 @@
     UILabel *content = [[view subviews] objectAtIndex:1];
     
     text.text = [[self transaction] text];
-    [text setHeight];
+    [text setHeightToFit];
 
     CGFloat offset = 0.;
-    if([[self transaction] text] && [[self transaction] content]){
+    if([[self transaction] text] && [[self transaction] why]){
         offset = 4.;
     }
     
-    content.text = [[self transaction] content];
-    content.frame = CGRectMakeSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
-    [content setHeight];
+    content.text = [[self transaction] why];
+    content.frame = CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
+    [content setHeightToFit];
     
-    view.frame = CGRectMakeSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + offset);
+    view.frame = CGRectSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + offset);
     height = CGRectGetMaxY(view.frame);
 }
 
 - (void)prepareAttachmentView{
     UIImageView *view = [[rightView subviews] objectAtIndex:2];
     
-    if([_transaction attachment_thumb_url]){
-        [view setImageWithURL:[NSURL URLWithString:[_transaction attachment_thumb_url]]];
+    if([_transaction attachmentThumbURL]){
+        [view setImageWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]]];
         
-        view.frame = CGRectMakeSetY(view.frame, height + 13);
-        view.frame = CGRectMakeSetHeight(view.frame, 80);
+        view.frame = CGRectSetY(view.frame, height + 13);
+        view.frame = CGRectSetHeight(view.frame, 80);
         height = CGRectGetMaxY(view.frame);
     }
     else{
-        view.frame = CGRectMakeSetHeight(view.frame, 0);
+        view.frame = CGRectSetHeight(view.frame, 0);
     }
 }
 
 - (void)prepareSocialView{
-    CellSocialView *view = [[rightView subviews] objectAtIndex:3];
-    [view prepareView];
-    view.frame = CGRectMakeSetY(view.frame, height + 14);
+    FLSocialView *view = [[rightView subviews] objectAtIndex:3];
+    [view prepareView:_transaction.social];
+    view.frame = CGRectSetY(view.frame, height + 14);
     height = CGRectGetMaxY(view.frame);
 }
 
@@ -326,6 +324,12 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
 {
+    // WARNING
+    if([gestureRecognizer class] != [UIPanGestureRecognizer class]){
+        NSLog(@"class respond to swipe invalid");
+        return NO;
+    }
+    
     if(_transaction.status != TransactionStatusPending){
         return NO;
     }
@@ -391,12 +395,12 @@
     if(progress < 0.33){
         text.text = NSLocalizedString(@"TRANSACTION_CELL_ACCEPT", nil);
         text.textColor = [UIColor whiteColor];
-        [text setImage:[UIImage imageNamed:@"transaction-cell-v-green"]];
+        [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
     }
     else if(progress < 0.66){
         text.text = NSLocalizedString(@"TRANSACTION_CELL_ACCEPT", nil);
         text.textColor = [UIColor customGreen];
-        [text setImage:[UIImage imageNamed:@"transaction-cell-v-green"]];
+        [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
     }
     else{
         text.text = NSLocalizedString(@"TRANSACTION_CELL_REFUSE", nil);

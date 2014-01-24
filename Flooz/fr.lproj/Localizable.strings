@@ -1,16 +1,20 @@
-/* 
-  Localizable.strings
-  Flooz
-
-  Created by jonathan on 1/2/2014.
-  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
-*/
+/*
+ Localizable.strings
+ Flooz
+ 
+ Created by jonathan on 1/2/2014.
+ Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
+ */
 
 "NAV_LOGIN" = "Log in";
 "NAV_SIGNUP" = "Sign up";
-"NAV_SETTINGS" = "Account";
+"NAV_ACCOUNT" = "Account";
+"NAV_SETTINGS" = "Settings";
 "NAV_SOCIAL" = "Social";
 "NAV_TIMELINE" = "Flooz";
+"NAV_EDIT_ACCOUNT" = "Edit";
+"NAV_INFORMATIONS" = "Informations";
+"NAV_NOTIFICATIONS" = "Notifications";
 
 "HOME_LOGIN" = "Log in";
 "HOME_SIGNUP" = "Sign up";
@@ -31,11 +35,34 @@
 
 "LOGIN_FACEBOOK" = "Login with Facebook";
 "LOGIN_OR" = "or";
-"LOGIN_PASSWORD_FORGOT" = "Mot de passw oublié?";
+"LOGIN_PASSWORD_FORGOT" = "Mot de passe oublié?";
+
+"TIMELINE_FILTER_PUBLIC" = "PUBLIC";
+"TIMELINE_FILTER_FRIEND" = "FRIEND";
+"TIMELINE_FILTER_PERSO" = "PERSO";
 
 "MENU_NEW_TRANSACTION_EVENT" = "Cagnotte";
 "MENU_NEW_TRANSACTION_PAYMENT" = "Encaissement";
 "MENU_NEW_TRANSACTION_COLLECT" = "Récalmer";
+
+"ACCOUNT_FRIENDS" = " friends";
+"ACCOUNT_TRANSACTIONS" = " flooz";
+"ACCOUNT_PROFIL_COMPLETION" = " completed";
+
+"ACCOUNT_BALANCE" = "Balance";
+
+"ACCOUNT_BUTTON_PROFIL" = "PROFIL";
+"ACCOUNT_BUTTON_CASH_OUT" = "CASH OUT";
+"ACCOUNT_BUTTON_SETTINGS" = "SETTINGS";
+"ACCOUNT_BUTTON_INFORMATIONS" = "INFORMATIONS";
+
+"SETTINGS_NOTIFICATIONS" = "NOTIFICATIONS";
+"SETTINGS_CODE" = "SECURE CODE";
+"SETTINGS_CARD" = "CARTE BANCAIRE";
+"SETTINGS_RIB" = "RIB";
+"SETTINGS_PRIVACY" = "SHARE & PRIVACY";
+"SETTINGS_DOCUMENTS" = "DOCUMENTS";
+"SETTINGS_PASSWORD" = "PASSWORD";
 
 "CELL_SOCIAL_COMMENT" = "Comment";
 "CELL_SOCIAL_LIKE" = "Like";
@@ -45,7 +72,9 @@
 
 "TRANSACTION_STATUS_ACCEPTED" = "Accepted";
 "TRANSACTION_STATUS_REFUSED" = "Refused";
-"TRANSACTION_STATUS_WAITING" = "Waiting";
+"TRANSACTION_STATUS_PENDING" = "Waiting";
+"TRANSACTION_STATUS_CANCELED" = "Canceled";
+"TRANSACTION_STATUS_EXPIRED" = "Expired";
 
 "TRANSACTION_TYPE_PAYMENT" = "PAYMENT";
 "TRANSACTION_TYPE_COLLECTION" = "COLLECTION";

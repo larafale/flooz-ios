@@ -8,13 +8,13 @@
 
 #import "AppDelegate.h"
 
-#import "JTContainerViewController.h"
+#import "FLContainerViewController.h"
 
 #import "HomeViewController.h"
 
 #import "SocialViewController.h"
 #import "TimelineViewController.h"
-#import "SettingsViewController.h"
+#import "AccountViewController.h"
 
 @implementation AppDelegate
 
@@ -25,20 +25,20 @@
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
     
-    JTNavigationController *controller = [[JTNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
-
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
+    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
     return YES;
 }
 
 - (void)didConnected
 {
-    JTContainerViewController *controller = [[JTContainerViewController alloc] initWithControllers:@[
-        [SocialViewController new], [TimelineViewController new], [SettingsViewController new]
+    FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[
+        [SocialViewController new], [TimelineViewController new], [AccountViewController new]
     ]];
 
     [UIView transitionWithView:self.window

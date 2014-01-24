@@ -10,7 +10,7 @@
 
 #import "FLTransaction.h"
 
-#import "CellSocialView.h"
+#import "FLSocialView.h"
 
 @interface TransactionCell : UITableViewCell{
     CGFloat height;

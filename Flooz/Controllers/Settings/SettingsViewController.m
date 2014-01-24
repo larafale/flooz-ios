@@ -8,7 +8,11 @@
 
 #import "SettingsViewController.h"
 
-#import "TransactionCell.h"
+@interface SettingsViewController (){
+    NSArray *links;
+}
+
+@end
 
 @implementation SettingsViewController
 
@@ -17,7 +21,17 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"NAV_SETTINGS", nil);
-        transactions = [FLTransaction testData];
+        
+        links = @[
+                 @"notifications",
+                 @"code",
+                 @"card",
+                 @"rib",
+                 @"privacy",
+                 @"documents",
+                 @"password"
+                 ];
+        
     }
     return self;
 }
@@ -25,27 +39,31 @@
 #pragma mark - TableView
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [transactions count];
+    return [links count];
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-    return [TransactionCell getHeightForTransaction:transaction];
+    return 69.;
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellIdentifier = @"TransactionCell";
-    TransactionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    static NSString *cellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if(!cell){
-        cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        
+        cell.backgroundColor = [UIColor customBackground];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryView = [UIImageView imageNamed:@"arrow-white-right"];
     }
     
-    FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-    [cell setTransaction:transaction];
+    NSString *link = [links objectAtIndex:indexPath.row];
+    cell.textLabel.text = NSLocalizedString([@"SETTINGS_" stringByAppendingString:[link uppercaseString]], nil);
+    cell.imageView.image = [UIImage imageNamed:[@"settings-" stringByAppendingString:link]];
     
     return cell;
 }
-
 
 @end

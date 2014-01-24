@@ -63,7 +63,7 @@
 {
     _imageHidden = imageHidden;
     _imageView.hidden = _imageHidden;
-    
+        
     [self setNeedsDisplay];
 }
 

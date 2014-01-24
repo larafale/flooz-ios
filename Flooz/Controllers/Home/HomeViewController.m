@@ -26,6 +26,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
     }
     return self;
 }
@@ -54,7 +55,7 @@
     [signup setTitle:NSLocalizedString(@"HOME_SIGNUP", nil) forState:UIControlStateNormal];
     [signup addTarget:self action:@selector(presentSignupController) forControlEvents:UIControlEventTouchDown];
     
-    preview.backgroundColor = [UIColor colorWithRed:30./256. green:41./256. blue:52./256. alpha:1.];
+    preview.backgroundColor = [UIColor colorWithIntegerRed:30 green:41 blue:52 alpha:1.];
     preview.titleLabel.font = [UIFont customContentRegular:12];
     
     [preview setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];

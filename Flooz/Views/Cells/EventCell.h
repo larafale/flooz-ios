@@ -10,7 +10,7 @@
 
 #import "FLEvent.h"
 
-#import "CellSocialView.h"
+#import "FLSocialView.h"
 
 @interface EventCell : UITableViewCell{
     CGFloat height;

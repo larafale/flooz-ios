@@ -15,7 +15,7 @@
 @interface Flooz : NSObject{
     AFHTTPRequestOperationManager *manager;
     NSString *access_token;
-    JTLoadView *loadView;
+    FLLoadView *loadView;
 }
 
 @property (strong, readonly) FLUser *currentUser;

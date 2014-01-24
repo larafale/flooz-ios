@@ -38,7 +38,7 @@
     
     {
         registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(MARGE, 27, SCREEN_WIDTH - (2 * MARGE), 45)];
-        registerFacebook.backgroundColor = [UIColor colorWithRed:59./256. green:87./256 blue:157./256 alpha:.5];
+        registerFacebook.backgroundColor = [UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5];
         
         [registerFacebook setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
         registerFacebook.titleLabel.font = [UIFont customContentRegular:13];

@@ -32,7 +32,7 @@
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         
-        loadView = [JTLoadView new];
+        loadView = [FLLoadView new];
     }
     return self;
 }
@@ -42,7 +42,7 @@
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
-        _currentUser = [[FLUser alloc] initWithJSON:result];
+        _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
         access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
         [appDelegate didConnected];
         
@@ -62,7 +62,7 @@
              };
     
     id successBlock = ^(id result) {
-        _currentUser = [[FLUser alloc] initWithJSON:result];
+        _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
         access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
         [appDelegate didConnected];
         

@@ -44,7 +44,7 @@
     current_height += rect.size.height;
     
     // Attachment
-    current_height += 13 + 80;
+//    current_height += 13 + 80;
     
     // Social
     current_height += 14 + 15;
@@ -132,7 +132,7 @@
 }
 
 - (void)createSocialView{
-    CellSocialView *view = [[CellSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 15)];
+    FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 15)];
     [rightView addSubview:view];
     height = CGRectGetMaxY(view.frame);
 }
@@ -149,12 +149,12 @@
     [self prepareAttachmentView];
     [self prepareSocialView];
     
-    rightView.frame = CGRectMakeSetHeight(rightView.frame, height);
+    rightView.frame = CGRectSetHeight(rightView.frame, height);
     
     height += MARGE_TOP + MARGE_BOTTOM;
     
-    slideView.frame = CGRectMakeSetHeight(slideView.frame, height);
-    self.frame = CGRectMakeSetHeight(self.frame, height);
+    slideView.frame = CGRectSetHeight(slideView.frame, height);
+    self.frame = CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareSlideView{
@@ -171,12 +171,12 @@
     UILabel *status = [[view subviews] objectAtIndex:1];
     
     title.text = [[[self event] title] uppercaseString];
-    [title setWidth];
+    [title setWidthToFit];
     
     status.text = [[self event] statusText];
-    status.frame = CGRectMakeSetX(status.frame, CGRectGetMaxX(title.frame) + 10);
-    [status setWidth];
-    status.frame = CGRectMakeSetWidth(status.frame, CGRectGetWidth(status.frame) + 25);
+    status.frame = CGRectSetX(status.frame, CGRectGetMaxX(title.frame) + 10);
+    [status setWidthToFit];
+    status.frame = CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 25);
     
     UIColor *textColor = [UIColor whiteColor];
     if([[self event] status] == EventStatusAccepted){
@@ -196,26 +196,26 @@
     UILabel *content = [[view subviews] objectAtIndex:0];
     
     content.text = [[self event] content];
-    [content setHeight];
+    [content setHeightToFit];
     
-    view.frame = CGRectMakeSetHeight(view.frame, CGRectGetHeight(content.frame));
+    view.frame = CGRectSetHeight(view.frame, CGRectGetHeight(content.frame));
     height = CGRectGetMaxY(view.frame);
 }
 
 - (void)prepareAttachmentView{
-    UIImageView *view = [[rightView subviews] objectAtIndex:2];
-    [view setImage:[UIImage imageNamed:@"test_attachment"]];
+//    UIImageView *view = [[rightView subviews] objectAtIndex:2];
+//    [view setImage:[UIImage imageNamed:@"test_attachment"]];
     
-    view.frame = CGRectMakeSetY(view.frame, height + 13);
-    view.frame = CGRectMakeSetHeight(view.frame, 80);
+//    view.frame = CGRectSetY(view.frame, height + 13);
+//    view.frame = CGRectSetHeight(view.frame, 80);
     
-    height = CGRectGetMaxY(view.frame);
+//    height = CGRectGetMaxY(view.frame);
 }
 
 - (void)prepareSocialView{    
-    CellSocialView *view = [[rightView subviews] objectAtIndex:3];
-    [view prepareView];
-    view.frame = CGRectMakeSetY(view.frame, height + 14);
+    FLSocialView *view = [[rightView subviews] objectAtIndex:3];
+//    [view prepareView:_e];
+    view.frame = CGRectSetY(view.frame, height + 14);
     height = CGRectGetMaxY(view.frame);
 }
 
