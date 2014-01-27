@@ -248,7 +248,7 @@
     [status setWidthToFit];
     status.frame = CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 25);
     
-    amount.text = [[self transaction] amountFormated];
+    amount.text = [FLHelper formatedAmount:[[self transaction] amount]];
     amount.frame = CGRectSetX(amount.frame, CGRectGetMaxX(status.frame));
     amount.frame = CGRectSetWidth(amount.frame, CGRectGetWidth(view.frame) - CGRectGetMaxX(status.frame));
     

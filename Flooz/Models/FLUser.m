@@ -39,9 +39,4 @@
     _transactionsCount = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"total"];
 }
 
-- (NSString *)amountFormated
-{
-    return [NSString stringWithFormat:@"+ %@€", _amount];
-}
-
 @end

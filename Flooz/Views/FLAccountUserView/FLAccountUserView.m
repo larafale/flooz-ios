@@ -12,7 +12,7 @@
 
 - (id)init
 {
-    self = [super initWithFrame:CGRectMakeSize(SCREEN_WIDTH, 170)];
+    self = [super initWithFrame:CGRectMakeSize(SCREEN_WIDTH, 180)];
     if (self) {
         [self commonInit];
     }
@@ -21,7 +21,7 @@
 
 - (void)commonInit
 {
-    self.backgroundColor = [UIColor customBackgroundHeader];
+    self.backgroundColor = [UIColor colorWithIntegerRed:30. green:41. blue:52.];
     
     {
         userView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) - 97.) / 2., 13, 97, 96.5)];
@@ -29,8 +29,21 @@
     }
     
     {
-        username = [[UILabel alloc] initWithFrame:CGRectMake(0, 116, CGRectGetWidth(self.frame), 17)];
+        UILabel *usernameText = [[UILabel alloc] initWithFrame:CGRectMake(0, 105, CGRectGetWidth(self.frame), 30)];
         
+        usernameText.text = @"username";
+        
+        usernameText.font = [UIFont customContentRegular:10];
+        usernameText.textAlignment = NSTextAlignmentCenter;
+        usernameText.textColor = [UIColor customBlueLight];
+        
+        [self addSubview:usernameText];
+    }
+    
+    {
+        username = [[UILabel alloc] initWithFrame:CGRectMake(0, 125, CGRectGetWidth(self.frame), 17)];
+        
+        username.font = [UIFont customTitleExtraLight:21];
         username.textAlignment = NSTextAlignmentCenter;
         username.textColor = [UIColor whiteColor];
         
@@ -41,12 +54,12 @@
         CGFloat WIDTH = 90.;
         CGFloat HEIGHT = 17.;
         CGFloat MARGE = (CGRectGetWidth(self.frame) - (3 * WIDTH)) / 2.;
-        CGFloat Y = 140.;
+        CGFloat Y = 150.;
         
         friends = [[UILabel alloc] initWithFrame:CGRectMake(MARGE, Y, WIDTH, HEIGHT)];
         flooz = [[UILabel alloc] initWithFrame:CGRectMake(MARGE + WIDTH, Y, WIDTH, HEIGHT)];
-        profilCompletion = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - MARGE - WIDTH, Y, WIDTH, HEIGHT)];
-        
+        profilCompletion = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - MARGE - WIDTH, Y, WIDTH + MARGE, HEIGHT)];
+                
         UIView *separator_1 = [[UIView alloc] initWithFrame:CGRectMake(MARGE + WIDTH, Y, 1, HEIGHT)];
         UIView *separator_2 = [[UIView alloc] initWithFrame:CGRectMake(MARGE + WIDTH + WIDTH, Y, 1, HEIGHT)];
         
@@ -64,20 +77,29 @@
         friendsTextStatic = [[NSAttributedString alloc]
                                      initWithString:NSLocalizedString(@"ACCOUNT_FRIENDS", nil)
                                      attributes:@{
-                                                  NSForegroundColorAttributeName: [UIColor customBlueLight]
+                                                  NSForegroundColorAttributeName: [UIColor customPlaceholder],
+                                                  NSFontAttributeName: [UIFont customContentRegular:12]
                                                   }];
         
         floozTextStatic = [[NSAttributedString alloc]
                                      initWithString:NSLocalizedString(@"ACCOUNT_TRANSACTIONS", nil)
                                      attributes:@{
-                                                  NSForegroundColorAttributeName: [UIColor customBlueLight]
+                                                  NSForegroundColorAttributeName: [UIColor customPlaceholder],
+                                                  NSFontAttributeName: [UIFont customContentRegular:12]
                                                   }];
         
         profilCompletionTextStatic = [[NSAttributedString alloc]
                                      initWithString:NSLocalizedString(@"ACCOUNT_PROFIL_COMPLETION", nil)
                                      attributes:@{
-                                                  NSForegroundColorAttributeName: [UIColor customBlueLight]
+                                                  NSForegroundColorAttributeName: [UIColor customPlaceholder],
+                                                  NSFontAttributeName: [UIFont customContentRegular:12]
                                                   }];
+    }
+    
+    {
+        UIImageView *arrow = [UIImageView imageNamed:@"arrow-right"];
+        arrow.frame = CGRectSetXY(arrow.frame, CGRectGetWidth(self.frame) - 10, (CGRectGetHeight(self.frame) - arrow.image.size.height) / 2.);
+        [self addSubview:arrow];
     }
 }
 
@@ -85,14 +107,15 @@
 {
     user = [[Flooz sharedInstance] currentUser];
     
-    username.text = user.username;
+    username.text = [user.username uppercaseString];
     [userView setImageFromURL:user.avatarURL];
     
     {
         NSMutableAttributedString *text = [[NSMutableAttributedString alloc]
                                            initWithString:[[user friendsCount] stringValue]
                                            attributes:@{
-                                                        NSForegroundColorAttributeName: [UIColor whiteColor]
+                                                        NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                        NSFontAttributeName: [UIFont customTitleExtraLight:14]
                                                         }];
         
         [text appendAttributedString:friendsTextStatic];
@@ -103,7 +126,8 @@
         NSMutableAttributedString *text = [[NSMutableAttributedString alloc]
                                            initWithString:[[user transactionsCount] stringValue]
                                            attributes:@{
-                                                        NSForegroundColorAttributeName: [UIColor whiteColor]
+                                                        NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                        NSFontAttributeName: [UIFont customTitleExtraLight:14]
                                                         }];
         
         [text appendAttributedString:floozTextStatic];
@@ -114,12 +138,20 @@
         NSMutableAttributedString *text = [[NSMutableAttributedString alloc]
                                            initWithString:[user profileCompletion]
                                            attributes:@{
-                                                        NSForegroundColorAttributeName: [UIColor whiteColor]
+                                                        NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                        NSFontAttributeName: [UIFont customTitleExtraLight:14]
                                                         }];
         
         [text appendAttributedString:profilCompletionTextStatic];
         profilCompletion.attributedText = text;
     }
+}
+
+- (void)addTarget:(id)target action:(SEL)action
+{
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
+    gesture.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:gesture];
 }
 
 @end

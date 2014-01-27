@@ -60,10 +60,10 @@
     
     {
         //WARNING quand appuie sur suivant dois changer d input
-        FLTextField *username = [[FLTextField alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"nick" position:CGPointMake(MARGE, 222)];
-        FLTextField *name = [[FLTextField alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:user key:@"firstName" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame)) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
-        FLTextField *phone = [[FLTextField alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:user key:@"phone" position:CGPointMake(MARGE, CGRectGetMaxY(name.frame))];
-        FLTextField *email = [[FLTextField alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:user key:@"email" position:CGPointMake(MARGE, CGRectGetMaxY(phone.frame))];
+        FLTextFieldIcon *username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"nick" position:CGPointMake(MARGE, 222)];
+        FLTextFieldIcon *name = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:user key:@"firstName" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame)) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
+        FLTextFieldIcon *phone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:user key:@"phone" position:CGPointMake(MARGE, CGRectGetMaxY(name.frame))];
+        FLTextFieldIcon *email = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:user key:@"email" position:CGPointMake(MARGE, CGRectGetMaxY(phone.frame))];
         
         
         UILabel *textSecurity = [[UILabel alloc] initWithFrame:CGRectMake(MARGE, CGRectGetMaxY(email.frame) + 25, CGRectGetWidth(self.view.frame) - MARGE, 15)];
@@ -74,8 +74,8 @@
         textSecurity.text = NSLocalizedString(@"SIGNUP_SECURITY_INFO", nil);
         
         
-        FLTextField *password = [[FLTextField alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(textSecurity.frame))];
-        FLTextField *code = [[FLTextField alloc] initWithIcon:@"field-code" placeholder:@"FIELD_CODE" for:user key:@"code" position:CGPointMake(MARGE, CGRectGetMaxY(password.frame))];
+        FLTextFieldIcon *password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(textSecurity.frame))];
+        FLTextFieldIcon *code = [[FLTextFieldIcon alloc] initWithIcon:@"field-code" placeholder:@"FIELD_CODE" for:user key:@"code" position:CGPointMake(MARGE, CGRectGetMaxY(password.frame))];
         
         UILabel *textFooter = [[UILabel alloc] initWithFrame:CGRectMake(MARGE + 36, CGRectGetMaxY(code.frame), 244, 50)];
         

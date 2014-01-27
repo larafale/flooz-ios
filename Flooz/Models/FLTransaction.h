@@ -43,7 +43,6 @@ typedef NS_ENUM(NSInteger, TransactionStatus) {
 
 - (NSString *)typeText;
 - (NSString *)statusText;
-- (NSString *)amountFormated;
 
 + (NSArray *)testData;
 

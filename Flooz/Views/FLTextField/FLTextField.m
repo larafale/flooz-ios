@@ -10,54 +10,38 @@
 
 @implementation FLTextField
 
-- (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionnary key:(NSString *)dictionnaryKey position:(CGPoint)position
+- (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionnary key:(NSString *)dictionnaryKey position:(CGPoint)position
 {
-    return [self initWithIcon:iconName placeholder:placeholder for:dictionnary key:dictionnaryKey position:position placeholder2:nil key2:nil];
-}
-
-- (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionnary key:(NSString *)dictionnaryKey position:(CGPoint)position placeholder2:(NSString *)placeholder2 key2:(NSString *)dictionnaryKey2
-{
-    self = [super initWithFrame:CGRectMake(position.x, position.y, SCREEN_WIDTH - (2 * position.x), 37)];
+    self = [super initWithFrame:CGRectMake(position.x, position.y, SCREEN_WIDTH - position.x, 39)];
     if (self) {
         _dictionnary = dictionnary;
         _dictionnaryKey = dictionnaryKey;
         
-        [self createIcon:iconName];
         [self createTextField:placeholder];
         [self createBottomBar];
     }
     return self;
 }
 
-- (void)createIcon:(NSString *)iconName
-{
-    icon = [UIImageView imageNamed:iconName];
-    icon.frame = CGRectSetXY(icon.frame, 6, 17);
-    
-    [self addSubview:icon];
-}
-
 - (void)createTextField:(NSString *)placeholder
 {
-    _textfield = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(icon.frame) + 18, 8, CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18, 30)];
+    _textfield = [[UITextField alloc] initWithFrame:CGRectMake(14, 0, CGRectGetWidth(self.frame) - 14, CGRectGetHeight(self.frame))];
     
     _textfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _textfield.autocapitalizationType = UITextAutocapitalizationTypeNone;
     _textfield.returnKeyType = UIReturnKeyNext;
-        
+    
     _textfield.delegate = self;
     
-    _textfield.font = [UIFont customContentLight:12];
+    _textfield.font = [UIFont customContentLight:14];
     _textfield.textColor = [UIColor whiteColor];
-    
-    _textfield.placeholder = placeholder;
-    
+        
     NSAttributedString *attributedText = [[NSAttributedString alloc]
-                      initWithString:NSLocalizedString(placeholder, nil)
-                      attributes:@{
-                                   NSFontAttributeName: [UIFont customContentLight:14],
-                                   NSForegroundColorAttributeName: [UIColor customPlaceholder]
-                                   }];
+                                          initWithString:NSLocalizedString(placeholder, nil)
+                                          attributes:@{
+                                                       NSFontAttributeName: [UIFont customContentLight:14],
+                                                       NSForegroundColorAttributeName: [UIColor customPlaceholder]
+                                                       }];
     
     _textfield.attributedPlaceholder = attributedText;
     

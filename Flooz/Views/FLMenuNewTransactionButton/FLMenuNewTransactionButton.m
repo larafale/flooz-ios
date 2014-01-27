@@ -24,7 +24,7 @@
     self.hidden = YES;
         
     self.backgroundColor = [UIColor customBackgroundHeader];
-    
+        
     self.layer.cornerRadius = 50.;
     self.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.layer.borderWidth = 1.;

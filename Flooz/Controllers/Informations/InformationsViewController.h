@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InformationsViewController : UIViewController
+@interface InformationsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet FLTableView *tableView;
 
 @end

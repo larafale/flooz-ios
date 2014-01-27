@@ -12,7 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title imageNamed:(NSString *)imageNamed
 {
-    frame = CGRectSetWidthHeight(frame, SCREEN_WIDTH / 2., 130);
+    frame = CGRectSetWidthHeight(frame, (SCREEN_WIDTH / 2.) + 2, 130);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViewWithTitle:title imageNamed:imageNamed];
@@ -22,35 +22,27 @@
 
 - (void)createViewWithTitle:(NSString *)title imageNamed:(NSString *)imageNamed
 {
-    self.backgroundColor = [UIColor customBackground];
     self.layer.borderWidth = 1;
     self.layer.borderColor = [UIColor customSeparator].CGColor;
+
+    [self setBackgroundImage:[UIImage imageWithColor:[UIColor customBackground]] forState:UIControlStateNormal];
+    [self setBackgroundImage:[UIImage imageWithColor:[UIColor customBlueHover]] forState:UIControlStateHighlighted];
     
     [self setImage:[UIImage imageNamed:imageNamed] forState:UIControlStateNormal];
     [self setImage:[UIImage imageNamed:imageNamed] forState:UIControlStateHighlighted];
     
+    self.imageEdgeInsets = UIEdgeInsetsMake(- 17, 0, 0, 0);
+    
     {
-        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
         
         textView.textColor = [UIColor whiteColor];
         textView.textAlignment = NSTextAlignmentCenter;
-        textView.font = [UIFont customContentLight:13];
+        textView.font = [UIFont customTitleExtraLight:14];
         
         textView.text = title;
         
         [self addSubview:textView];
-    }
-}
-
-- (void)setHighlighted:(BOOL)highlighted
-{
-    [super setHighlighted:highlighted];
-    
-    if(highlighted){
-        self.backgroundColor = [UIColor customBlueHover];
-    }
-    else{
-        self.backgroundColor = [UIColor customBackground];
     }
 }
 

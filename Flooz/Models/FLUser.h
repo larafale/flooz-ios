@@ -23,6 +23,5 @@
 @property NSNumber *transactionsCount;
 
 - (id)initWithJSON:(NSDictionary *)json;
-- (NSString *)amountFormated;
 
 @end

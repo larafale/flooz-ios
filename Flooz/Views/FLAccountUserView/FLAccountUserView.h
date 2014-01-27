@@ -23,5 +23,6 @@
 }
 
 - (void)reloadData;
+- (void)addTarget:(id)target action:(SEL)action;
 
 @end

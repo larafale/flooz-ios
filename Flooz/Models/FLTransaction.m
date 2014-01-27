@@ -47,6 +47,9 @@
     }
     
     _amount = [json objectForKey:@"amount"];
+    if(_amount && _type == TransactionTypePayment){
+        _amount = [NSNumber numberWithFloat:([_amount floatValue] * -1.)];
+    }
     
     if([[[json objectForKey:@"starter"] objectForKey:@"field"] isEqualToString:@"from"]){
         _avatarURL = [[json objectForKey:@"from"] objectForKey:@"pic"];
@@ -89,21 +92,6 @@
     }
     else{ // if([self status] == TransactionStatusExpired){
         return NSLocalizedString(@"TRANSACTION_STATUS_EXPIRED", nil);
-    }
-}
-
-- (NSString *)amountFormated
-{
-    if(_amount){
-        if(_type == TransactionTypePayment){
-            return [NSString stringWithFormat:@"- %@€", _amount];
-        }
-        else{
-            return [NSString stringWithFormat:@"+ %@€", _amount];
-        }
-    }
-    else{
-        return nil;
     }
 }
 

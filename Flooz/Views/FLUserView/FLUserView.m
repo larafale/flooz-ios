@@ -30,7 +30,7 @@
 
 - (void)commonInit
 {    
-    UIImageView *filter = [UIImageView imageNamed:@"avatar-filter"];
+    UIImageView *filter = [UIImageView imageNamed:@"avatar-filter2"];
     avatar = [[UIImageView alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
 
     filter.frame = CGRectMakeWithSize(self.frame.size);

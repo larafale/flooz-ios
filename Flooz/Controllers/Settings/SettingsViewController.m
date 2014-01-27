@@ -54,6 +54,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         
         cell.backgroundColor = [UIColor customBackground];
+        cell.textLabel.font = [UIFont customTitleExtraLight:16];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryView = [UIImageView imageNamed:@"arrow-white-right"];

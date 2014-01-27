@@ -29,7 +29,6 @@
 		AB4CB6E21886AE2D00D1C573 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6E01886AE2D00D1C573 /* LoginViewController.xib */; };
 		AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6F61886C1C600D1C573 /* SignupViewController.m */; };
 		AB4CB6F91886C1C600D1C573 /* SignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */; };
-		AB4CB6FC1886C67F00D1C573 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6FB1886C67F00D1C573 /* FLTextField.m */; };
 		AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6D9188214F000D81AF6 /* HomeViewController.m */; };
 		AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */; };
 		AB5EB6ED188214F000D81AF6 /* MenuNewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6DD188214F000D81AF6 /* MenuNewTransactionViewController.m */; };
@@ -69,6 +68,14 @@
 		ABE9147A18929AC8003AC722 /* NotificationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9147818929AC8003AC722 /* NotificationsViewController.xib */; };
 		ABE9147F18929B7D003AC722 /* EditAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9147D18929B7D003AC722 /* EditAccountViewController.m */; };
 		ABE9148018929B7D003AC722 /* EditAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9147E18929B7D003AC722 /* EditAccountViewController.xib */; };
+		ABE914871892AE59003AC722 /* FLNewTransactionAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914861892AE59003AC722 /* FLNewTransactionAmount.m */; };
+		ABE9148B1892C734003AC722 /* FLKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9148A1892C734003AC722 /* FLKeyboardView.m */; };
+		ABE9148F189337E4003AC722 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9148E189337E4003AC722 /* FLTextField.m */; };
+		ABE9149818967670003AC722 /* FLTextFieldIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149718967670003AC722 /* FLTextFieldIcon.m */; };
+		ABE9149C18968C30003AC722 /* FLTextFieldTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149B18968C30003AC722 /* FLTextFieldTitle.m */; };
+		ABE914A018968E52003AC722 /* FLPaymentField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149F18968E52003AC722 /* FLPaymentField.m */; };
+		ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A31896D2D9003AC722 /* FLHelper.m */; };
+		ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */; };
 		ABF46A10187575C600E92A77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
 		ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A1E1875B54600E92A77 /* JTImageLabel.m */; };
 		ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */; };
@@ -124,8 +131,6 @@
 		AB4CB6F51886C1C600D1C573 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupViewController.h; path = Controllers/Signup/SignupViewController.h; sourceTree = "<group>"; };
 		AB4CB6F61886C1C600D1C573 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupViewController.m; path = Controllers/Signup/SignupViewController.m; sourceTree = "<group>"; };
 		AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignupViewController.xib; path = Controllers/Signup/SignupViewController.xib; sourceTree = "<group>"; };
-		AB4CB6FA1886C67F00D1C573 /* FLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextField.h; path = Views/FLTextField.h; sourceTree = "<group>"; };
-		AB4CB6FB1886C67F00D1C573 /* FLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextField.m; path = Views/FLTextField.m; sourceTree = "<group>"; };
 		AB5EB6D8188214F000D81AF6 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		AB5EB6D9188214F000D81AF6 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -145,7 +150,6 @@
 		AB5EB6FD1882157300D81AF6 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		AB5EB6FE1882157300D81AF6 /* TransactionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionCell.h; sourceTree = "<group>"; };
 		AB5EB6FF1882157300D81AF6 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionCell.m; sourceTree = "<group>"; };
-		AB5EB7001882157300D81AF6 /* FLTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTableView.h; path = Views/FLTableView.h; sourceTree = "<group>"; };
 		AB5EB7011882157300D81AF6 /* FLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTableView.m; path = Views/FLTableView.m; sourceTree = "<group>"; };
 		ABE9141D18894385003AC722 /* NewTransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionViewController.h; path = Controllers/NewTransaction/NewTransactionViewController.h; sourceTree = "<group>"; };
 		ABE9141E18894385003AC722 /* NewTransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionViewController.m; path = Controllers/NewTransaction/NewTransactionViewController.m; sourceTree = "<group>"; };
@@ -194,6 +198,23 @@
 		ABE9147C18929B7D003AC722 /* EditAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditAccountViewController.h; path = Controllers/EditAccount/EditAccountViewController.h; sourceTree = "<group>"; };
 		ABE9147D18929B7D003AC722 /* EditAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditAccountViewController.m; path = Controllers/EditAccount/EditAccountViewController.m; sourceTree = "<group>"; };
 		ABE9147E18929B7D003AC722 /* EditAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditAccountViewController.xib; path = Controllers/EditAccount/EditAccountViewController.xib; sourceTree = "<group>"; };
+		ABE914851892AE59003AC722 /* FLNewTransactionAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNewTransactionAmount.h; path = Views/FLNewTransactionAmount/FLNewTransactionAmount.h; sourceTree = "<group>"; };
+		ABE914861892AE59003AC722 /* FLNewTransactionAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionAmount.m; path = Views/FLNewTransactionAmount/FLNewTransactionAmount.m; sourceTree = "<group>"; };
+		ABE914891892C734003AC722 /* FLKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLKeyboardView.h; path = Views/FLKeyboardView/FLKeyboardView.h; sourceTree = "<group>"; };
+		ABE9148A1892C734003AC722 /* FLKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLKeyboardView.m; path = Views/FLKeyboardView/FLKeyboardView.m; sourceTree = "<group>"; };
+		ABE9148D189337E4003AC722 /* FLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextField.h; path = Views/FLTextField/FLTextField.h; sourceTree = "<group>"; };
+		ABE9148E189337E4003AC722 /* FLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextField.m; path = Views/FLTextField/FLTextField.m; sourceTree = "<group>"; };
+		ABE9149418933900003AC722 /* FLTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLTableView.h; path = Flooz/Views/FLTableView.h; sourceTree = SOURCE_ROOT; };
+		ABE9149618967670003AC722 /* FLTextFieldIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextFieldIcon.h; path = Views/FLTextFieldIcon/FLTextFieldIcon.h; sourceTree = "<group>"; };
+		ABE9149718967670003AC722 /* FLTextFieldIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextFieldIcon.m; path = Views/FLTextFieldIcon/FLTextFieldIcon.m; sourceTree = "<group>"; };
+		ABE9149A18968C30003AC722 /* FLTextFieldTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextFieldTitle.h; path = Views/FLTextFieldTitle/FLTextFieldTitle.h; sourceTree = "<group>"; };
+		ABE9149B18968C30003AC722 /* FLTextFieldTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextFieldTitle.m; path = Views/FLTextFieldTitle/FLTextFieldTitle.m; sourceTree = "<group>"; };
+		ABE9149E18968E52003AC722 /* FLPaymentField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPaymentField.h; path = Views/FLPaymentField/FLPaymentField.h; sourceTree = "<group>"; };
+		ABE9149F18968E52003AC722 /* FLPaymentField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPaymentField.m; path = Views/FLPaymentField/FLPaymentField.m; sourceTree = "<group>"; };
+		ABE914A21896D2D9003AC722 /* FLHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLHelper.h; path = Util/FLHelper.h; sourceTree = "<group>"; };
+		ABE914A31896D2D9003AC722 /* FLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLHelper.m; path = Util/FLHelper.m; sourceTree = "<group>"; };
+		ABE914A51896D4C3003AC722 /* FLNewTransactionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNewTransactionBar.h; path = Views/FLNewTransactionBar/FLNewTransactionBar.h; sourceTree = "<group>"; };
+		ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionBar.m; path = Views/FLNewTransactionBar/FLNewTransactionBar.m; sourceTree = "<group>"; };
 		ABF46A11187575C600E92A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABF46A131875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ABF46A141875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -336,6 +357,13 @@
 		AB3D08D5186CA6F800CF8380 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				ABE914A11896D166003AC722 /* FLNewTransactionBar */,
+				ABE9149D18968E1A003AC722 /* FLPaymentField */,
+				ABE9149918968C17003AC722 /* FLTextFieldTitle */,
+				ABE9149518967657003AC722 /* FLTextFieldIcon */,
+				ABE9148C189337C8003AC722 /* FLTextField */,
+				ABE914881892C721003AC722 /* FLKeyboardView */,
+				ABE914841892AE3B003AC722 /* FLNewTransactionAmount */,
 				ABE9146B1892948F003AC722 /* FLMenuNewTransactionButton */,
 				ABE9146A18929445003AC722 /* FLValidNavBar */,
 				ABE9145A18928A75003AC722 /* FLSocialView */,
@@ -347,10 +375,8 @@
 				AB46C66E18803421006C8334 /* FLContainerViewController */,
 				ABE91428188C5D20003AC722 /* FLFilterView */,
 				AB5EB6F91882157300D81AF6 /* Cells */,
-				AB5EB7001882157300D81AF6 /* FLTableView.h */,
+				ABE9149418933900003AC722 /* FLTableView.h */,
 				AB5EB7011882157300D81AF6 /* FLTableView.m */,
-				AB4CB6FA1886C67F00D1C573 /* FLTextField.h */,
-				AB4CB6FB1886C67F00D1C573 /* FLTextField.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -397,6 +423,8 @@
 				AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */,
 				AB3D08E51871C0CC00CF8380 /* UIFont+custom.h */,
 				AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */,
+				ABE914A21896D2D9003AC722 /* FLHelper.h */,
+				ABE914A31896D2D9003AC722 /* FLHelper.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -640,6 +668,69 @@
 			name = EditAccount;
 			sourceTree = "<group>";
 		};
+		ABE914841892AE3B003AC722 /* FLNewTransactionAmount */ = {
+			isa = PBXGroup;
+			children = (
+				ABE914851892AE59003AC722 /* FLNewTransactionAmount.h */,
+				ABE914861892AE59003AC722 /* FLNewTransactionAmount.m */,
+			);
+			name = FLNewTransactionAmount;
+			sourceTree = "<group>";
+		};
+		ABE914881892C721003AC722 /* FLKeyboardView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE914891892C734003AC722 /* FLKeyboardView.h */,
+				ABE9148A1892C734003AC722 /* FLKeyboardView.m */,
+			);
+			name = FLKeyboardView;
+			sourceTree = "<group>";
+		};
+		ABE9148C189337C8003AC722 /* FLTextField */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9148D189337E4003AC722 /* FLTextField.h */,
+				ABE9148E189337E4003AC722 /* FLTextField.m */,
+			);
+			name = FLTextField;
+			sourceTree = "<group>";
+		};
+		ABE9149518967657003AC722 /* FLTextFieldIcon */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9149618967670003AC722 /* FLTextFieldIcon.h */,
+				ABE9149718967670003AC722 /* FLTextFieldIcon.m */,
+			);
+			name = FLTextFieldIcon;
+			sourceTree = "<group>";
+		};
+		ABE9149918968C17003AC722 /* FLTextFieldTitle */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9149A18968C30003AC722 /* FLTextFieldTitle.h */,
+				ABE9149B18968C30003AC722 /* FLTextFieldTitle.m */,
+			);
+			name = FLTextFieldTitle;
+			sourceTree = "<group>";
+		};
+		ABE9149D18968E1A003AC722 /* FLPaymentField */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9149E18968E52003AC722 /* FLPaymentField.h */,
+				ABE9149F18968E52003AC722 /* FLPaymentField.m */,
+			);
+			name = FLPaymentField;
+			sourceTree = "<group>";
+		};
+		ABE914A11896D166003AC722 /* FLNewTransactionBar */ = {
+			isa = PBXGroup;
+			children = (
+				ABE914A51896D4C3003AC722 /* FLNewTransactionBar.h */,
+				ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */,
+			);
+			name = FLNewTransactionBar;
+			sourceTree = "<group>";
+		};
 		ABF46A1C1875B54600E92A77 /* JTImageLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -828,25 +919,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB3D08A2186CA11A00CF8380 /* AppDelegate.m in Sources */,
+				ABE9148F189337E4003AC722 /* FLTextField.m in Sources */,
+				ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */,
 				ABE9145D18928AA3003AC722 /* FLSocialView.m in Sources */,
 				ABE9146E189294A0003AC722 /* FLMenuNewTransactionButton.m in Sources */,
 				AB5EB6ED188214F000D81AF6 /* MenuNewTransactionViewController.m in Sources */,
 				AB5EB7061882157300D81AF6 /* TransactionCell.m in Sources */,
 				ABE9146618929402003AC722 /* FLAccountButton.m in Sources */,
+				ABE914A018968E52003AC722 /* FLPaymentField.m in Sources */,
 				AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */,
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
 				AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */,
+				ABE9148B1892C734003AC722 /* FLKeyboardView.m in Sources */,
 				ABE9147318929A5C003AC722 /* InformationsViewController.m in Sources */,
 				ABE91424188944D5003AC722 /* FLValidNavBar.m in Sources */,
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
+				ABE9149818967670003AC722 /* FLTextFieldIcon.m in Sources */,
 				ABE9143A1890A034003AC722 /* FLNavigationController.m in Sources */,
 				AB4CB6DB1886A26400D1C573 /* PreviewViewController.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
 				AB4CB6E11886AE2D00D1C573 /* LoginViewController.m in Sources */,
 				ABE914461890A12C003AC722 /* FLUser.m in Sources */,
+				ABE914871892AE59003AC722 /* FLNewTransactionAmount.m in Sources */,
 				ABE914371890A029003AC722 /* FLLoadView.m in Sources */,
 				ABE914331890A01F003AC722 /* FLContainerViewController.m in Sources */,
-				AB4CB6FC1886C67F00D1C573 /* FLTextField.m in Sources */,
+				ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */,
 				ABE914451890A12C003AC722 /* FLTransaction.m in Sources */,
 				ABE9143D1890A08A003AC722 /* UIBarButtonItem+custom.m in Sources */,
 				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
@@ -866,6 +963,7 @@
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,
+				ABE9149C18968C30003AC722 /* FLTextFieldTitle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,6 +6,8 @@
  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
  */
 
+"GLOBAL_OR" = "ou";
+
 "NAV_LOGIN" = "Log in";
 "NAV_SIGNUP" = "Sign up";
 "NAV_ACCOUNT" = "Account";
@@ -20,6 +22,14 @@
 "HOME_SIGNUP" = "Sign up";
 "HOME_PREVIEW" = "Take a tour";
 
+"INFORMATIONS_WHY" = "POURQUOI FLOOZ EST SURE?";
+"INFORMATIONS_TERMS" = "CGU / CGV";
+"INFORMATIONS_FAQ" = "FAQ";
+"INFORMATIONS_PREVIEW" = "TOUR";
+"INFORMATIONS_WEBSITE" = "SITE WEB";
+"INFORMATIONS_ABOUT" = "A PROPOS";
+"INFORMATIONS_CONTACT" = "CONTACT";
+
 "FIELD_USERNAME" = "Username";
 "FIELD_FIRSTNAME" = "First Name";
 "FIELD_LASTNAME" = "Last Name";
@@ -28,8 +38,13 @@
 "FIELD_PASSWORD" = "Password";
 "FIELD_CODE" = "Codea 4 chiffres";
 
+"FIELD_TRANSACTION_TITLE" = "NOM :";
+"FIELD_TRANSACTION_TITLE_PLACEHOLDER" = "Par exemple : Anniversaire";
+"FIELD_TRANSACTION_TO" = "A :";
+"FIELD_TRANSACTION_TO_PLACEHOLDER" = "Name, phone or email";
+"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Pour quelle occasion?";
+
 "SIGNUP_FACEBOOK" = "Register with Facebook";
-"SIGN_OR" = "or";
 "SIGNUP_SECURITY_INFO" = "Security informations";
 "SIGNUP_CODE_INFO" = "Ce code secret vous permettra de sécuriser votre application en cas de vol ou perte de votre mobile";
 

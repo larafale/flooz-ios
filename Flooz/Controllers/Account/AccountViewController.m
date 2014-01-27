@@ -42,34 +42,38 @@
     
     {
         userView = [FLAccountUserView new];
+        [userView addTarget:self action:@selector(presentEditAccountController)];
         [_contentView addSubview:userView];
     }
     
     {
         UIImageView *imageView = [UIImageView imageNamed:@"account-balance"];
-        imageView.frame = CGRectSetXY(imageView.frame, 25, 190);
+        imageView.frame = CGRectSetXY(imageView.frame, 25, 200);
         
-        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(69, 180, 200, 30)];
+        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(69, 185, 200, 30)];
         text.text = NSLocalizedString(@"ACCOUNT_BALANCE", nil);
+        text.font = [UIFont customContentRegular:10];
         text.textColor = [UIColor customBlueLight];
         
         UILabel *amount = [[UILabel alloc] initWithFrame:CGRectMake(69, 200, 200, 30)];
-        amount.text = [[[Flooz sharedInstance] currentUser] amountFormated];
-        amount.textColor = [UIColor customBlue];
         
+        amount.text = [FLHelper formatedAmount:[[[Flooz sharedInstance] currentUser] amount]];
+        amount.font = [UIFont customTitleExtraLight:24];
+        amount.textColor = [UIColor customBlue];
+                
         [_contentView addSubview:imageView];
         [_contentView addSubview:text];
         [_contentView addSubview:amount];
     }
     
     {
-        FLAccountButton *profil = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(0, 244) title:NSLocalizedString(@"ACCOUNT_BUTTON_PROFIL", nil) imageNamed:@"account-button-profil"];
+        FLAccountButton *profil = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 246) title:NSLocalizedString(@"ACCOUNT_BUTTON_PROFIL", nil) imageNamed:@"account-button-profil"];
         
-        FLAccountButton *cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(profil.frame), profil.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-cashout"];
+        FLAccountButton *cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(profil.frame) - 1, profil.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-cashout"];
         
-        FLAccountButton *settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(profil.frame)) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
+        FLAccountButton *settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(profil.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
         
-        FLAccountButton *informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame), CGRectGetMaxY(profil.frame)) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
+        FLAccountButton *informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame) - 1, CGRectGetMaxY(profil.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
         
         [profil addTarget:self action:@selector(presentEditAccountController) forControlEvents:UIControlEventTouchUpInside];
         [cashout addTarget:self action:@selector(presentCashOutController) forControlEvents:UIControlEventTouchUpInside];

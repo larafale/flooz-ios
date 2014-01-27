@@ -16,6 +16,8 @@
 #import "TimelineViewController.h"
 #import "AccountViewController.h"
 
+#import "NewTransactionViewController.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -25,12 +27,14 @@
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
     
+//    self.window.rootViewController = [NewTransactionViewController new];
+    
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
-    
+
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
+
+//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
     return YES;
 }
