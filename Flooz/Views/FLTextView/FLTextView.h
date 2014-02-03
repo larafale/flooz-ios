@@ -1,18 +1,19 @@
 //
-//  FLTextField.h
+//  FLTextView.h
 //  Flooz
 //
-//  Created by jonathan on 1/15/2014.
+//  Created by jonathan on 1/28/2014.
 //  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface FLTextField : UIView<UITextFieldDelegate>{
+@interface FLTextView : UIView<UITextViewDelegate>{
     __weak NSMutableDictionary *_dictionary;
     NSString *_dictionaryKey;
     
-    UITextField *_textfield;
+    UITextView *_textView;
+    UILabel *_placeholder;
 }
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position;

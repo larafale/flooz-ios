@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface FLTextFieldTitle : UIView<UITextFieldDelegate>{
-    __weak NSMutableDictionary *_dictionnary;
-    __weak NSString *_dictionnaryKey;
+    __weak NSMutableDictionary *_dictionary;
+    NSString *_dictionaryKey;
     
     UILabel *_title;
     UITextField *_textfield;
 }
 
-- (id)initWithTitle:(NSString *)title placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionnary key:(NSString *)dictionnaryKey position:(CGPoint)position;
+- (id)initWithTitle:(NSString *)title placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position;
 
 @end

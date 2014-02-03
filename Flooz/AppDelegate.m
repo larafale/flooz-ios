@@ -27,8 +27,6 @@
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
     
-//    self.window.rootViewController = [NewTransactionViewController new];
-    
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
@@ -53,6 +51,28 @@
                     }
                     completion:NULL
      ];
+}
+
+- (void)displayError:(NSError *)error
+{
+    if((lastErrorCode == FLNetworkError) && (error.code == FLNetworkError)){
+        lastErrorDate = [NSDate date];
+        return;
+    }
+    
+    lastErrorDate = [NSDate date];
+    lastErrorCode = error.code;
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
+                                                    message:ERROR_LOCALIZED_DESCRIPTION(error.code)
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
+                                          otherButtonTitles:nil
+                          ];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alert show];
+    });
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

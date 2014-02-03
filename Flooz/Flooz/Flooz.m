@@ -93,6 +93,11 @@
     [self requestPath:@"flooz" method:@"GET" params:@{@"scope": scope} success:successBlock failure:failure];
 }
 
+- (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failure];
+}
+
 #pragma mark -
 
 -(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -115,6 +120,14 @@
     id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", operation.responseString);
         [loadView hide];
+                
+        if(error.code == kCFURLErrorTimedOut ||
+           error.code == kCFURLErrorCannotConnectToHost ||
+           error.code == kCFURLErrorNotConnectedToInternet ||
+           error.code == kCFURLErrorNetworkConnectionLost
+           ){
+            DISPLAY_ERROR(FLNetworkError);
+        }
         
         if(failure){
             failure(error);

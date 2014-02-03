@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FLPaymentField : UIView
+@interface FLPaymentField : UIView{
+    __weak NSMutableDictionary *_dictionary;
+    NSString *_dictionaryKey;
+}
 
+- (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey;
 - (void)setStyleLight;
 
 @end

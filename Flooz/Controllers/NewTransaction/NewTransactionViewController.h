@@ -10,4 +10,6 @@
 
 @interface NewTransactionViewController : UIViewController
 
+- (id)initWithTransactionType:(TransactionType)transactionType;
+
 @end

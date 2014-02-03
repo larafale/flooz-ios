@@ -81,6 +81,7 @@
 
 - (void)createViews{
     height = 0;
+    isSwipable = NO;
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor customBackground];
@@ -202,7 +203,8 @@
 
 - (void)prepareViews{
     height = 0;
-    
+    isSwipable = [_transaction isPendingForMe];
+        
     [self prepareAvatarView];
     [self prepareSlideView];
     
@@ -227,7 +229,7 @@
 }
 
 - (void)prepareSlideView{
-    if([[self transaction] status] == TransactionStatusPending){
+    if(isSwipable){
         slideView.hidden = NO;
     }else{
         slideView.hidden = YES;
@@ -330,7 +332,7 @@
         return NO;
     }
     
-    if(_transaction.status != TransactionStatusPending){
+    if(!isSwipable){
         return NO;
     }
     

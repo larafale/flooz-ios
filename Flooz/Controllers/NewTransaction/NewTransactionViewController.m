@@ -17,6 +17,7 @@
     
     FLValidNavBar *navBar;
     UIScrollView *_contentView;
+    
     FLNewTransactionBar *transactionBar;
 }
 
@@ -24,11 +25,13 @@
 
 @implementation NewTransactionViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithTransactionType:(TransactionType)transactionType;
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
+        transaction = [NSMutableDictionary new];
         
+        [transaction setValue:[FLTransaction TransactionTypeToParams:transactionType] forKey:@"method"];
     }
     return self;
 }
@@ -58,7 +61,8 @@
         [_contentView addSubview:title];
 
         
-        FLNewTransactionAmount *amountInput = [FLNewTransactionAmount new];
+        FLNewTransactionAmount *amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
+        [amountInput setInputAccessoryView:[[FLNewTransactionBar alloc] initWithFor:transaction]];
         [_contentView addSubview:amountInput];
         
         amountInput.frame = CGRectSetY(amountInput.frame, CGRectGetMaxY(title.frame));
@@ -68,29 +72,30 @@
         [_contentView addSubview:to];
         
         
-        FLTextField *content = [[FLTextField alloc] initWithPlaceholder:@"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" for:transaction key:@"content" position:CGPointMake(0, CGRectGetMaxY(to.frame))];
+        FLTextView *content = [[FLTextView alloc] initWithPlaceholder:@"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" for:transaction key:@"content" position:CGPointMake(0, CGRectGetMaxY(to.frame))];
         
         [_contentView addSubview:content];
 
-        
-        FLPaymentField *payementField = [[FLPaymentField alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(content.frame))];
-        [_contentView addSubview:payementField];
+        if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction TransactionTypeToParams:TransactionTypePayment]]){
+            FLPaymentField *payementField = [[FLPaymentField alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(content.frame)) for:transaction key:@"source"];
+            [_contentView addSubview:payementField];
+        }
 
-        transactionBar = [[FLNewTransactionBar alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(payementField.frame))];
+        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction];
         [_contentView addSubview:transactionBar];
-        
-        [amountInput setInputAccessoryView:transactionBar];
     }
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     
     _contentView.frame = CGRectMake(0, CGRectGetMaxY(navBar.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+    
+    transactionBar.frame = CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _contentView.frame.origin.y);
 }
+
+#pragma mark - callbacks
 
 - (void)dismiss
 {
@@ -99,14 +104,10 @@
 
 - (void)valid
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
--(void)onKeyboardHide:(NSNotification *)notification
-{
-//    NSLog(@"hidden");
-//    transactionBar.frame = CGRectMakePosition(0, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - 100);
-    NSLogFrame(transactionBar.frame);
+    NSLog(@"%@", transaction);
+    [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    } failure:NULL];
 }
 
 @end

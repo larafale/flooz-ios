@@ -8,19 +8,29 @@
 
 #import "FLNewTransactionBar.h"
 
+#import "AppDelegate.h"
+
 @implementation FLNewTransactionBar
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFor:(NSMutableDictionary *)dictionary
 {
-    self = [super initWithFrame:CGRectMake(0, frame.origin.y, SCREEN_WIDTH, 37)];
+    self = [super initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 37)];
     if (self) {
         self.backgroundColor = [UIColor customBackgroundHeader];
+        
+        _dictionary = dictionary;
+        
+        locationManager = [CLLocationManager new];
+        locationManager.delegate = self;
         
         [self createLocalizeButton];
         [self createImageButton];
         [self createFacebookButton];
         [self createSeparator];
         [self createPrivacyButton];
+        
+        [_dictionary setValue:[FLTransaction TransactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
+        [privacyButton setTitle:[FLTransaction TransactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
     }
     return self;
 }
@@ -33,6 +43,8 @@
     [localizeButton setImage:[UIImage imageNamed:@"new-transaction-bar-localize-selected"] forState:UIControlStateSelected];
     [localizeButton setImage:[UIImage imageNamed:@"new-transaction-bar-localize-selected"] forState:UIControlStateHighlighted];
     
+    [localizeButton addTarget:self action:@selector(didLocalizeButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    
     [self addSubview:localizeButton];
 }
 
@@ -44,6 +56,8 @@
     [imageButton setImage:[UIImage imageNamed:@"new-transaction-bar-image-selected"] forState:UIControlStateSelected];
     [imageButton setImage:[UIImage imageNamed:@"new-transaction-bar-image-selected"] forState:UIControlStateHighlighted];
     
+    [imageButton addTarget:self action:@selector(didImageButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    
     [self addSubview:imageButton];
 }
 
@@ -54,6 +68,8 @@
     [facebookButton setImage:[UIImage imageNamed:@"new-transaction-bar-facebook"] forState:UIControlStateNormal];
     [facebookButton setImage:[UIImage imageNamed:@"new-transaction-bar-facebook-selected"] forState:UIControlStateSelected];
     [facebookButton setImage:[UIImage imageNamed:@"new-transaction-bar-facebook-selected"] forState:UIControlStateHighlighted];
+    
+    [facebookButton addTarget:self action:@selector(didFacebookButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:facebookButton];
 }
@@ -76,11 +92,140 @@
     privacyButton.imageEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
     privacyButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, [privacyButton imageForState:UIControlStateNormal].size.width);
     
-    [privacyButton setTitle:@"Public" forState:UIControlStateNormal];
     [privacyButton setTitleColor:[UIColor customBlue] forState:UIControlStateNormal];
     privacyButton.titleLabel.font = [UIFont customContentRegular:12];
     
+    [privacyButton addTarget:self action:@selector(didPrivacyButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    
     [self addSubview:privacyButton];
+}
+
+#pragma mark -
+
+- (void)didLocalizeButtonTouch
+{
+    localizeButton.selected = !localizeButton.selected;
+    
+    if(localizeButton.selected){
+        if([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized){
+            [locationManager startUpdatingLocation];
+        }else{
+            localizeButton.selected = NO;
+            DISPLAY_ERROR(FLGPSAccessDenyError);
+        }
+    }
+    else{
+        [_dictionary setValue:nil forKey:@"lat"];
+        [_dictionary setValue:nil forKey:@"lng"];
+    }
+}
+
+- (void)didImageButtonTouch
+{
+    if(imageButton.selected){
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"GLOBAL_CAMERA", nil), NSLocalizedString(@"GLOBAL_ALBUMS", nil), nil];
+        
+        [actionSheet showInView:appDelegate.window.rootViewController.view];
+    }
+    else{
+        [_dictionary setValue:nil forKey:@"image"];
+        imageButton.selected = NO;
+    }
+}
+
+- (void)didFacebookButtonTouch
+{
+    facebookButton.selected = !facebookButton.selected;
+    
+    if(facebookButton.selected){
+        [_dictionary setValue:@"1" forKey:@"shareFacebook"];
+    }
+    else{
+        [_dictionary setValue:nil forKey:@"shareFacebook"];
+    }
+}
+
+- (void)didPrivacyButtonTouch
+{
+    NSInteger currentIndex = TransactionScopePublic;
+    for(NSInteger scope = TransactionScopePublic; scope <= TransactionScopePrivate; ++scope){
+        if([[_dictionary objectForKey:@"scope"] isEqualToString:[FLTransaction TransactionScopeToParams:scope]]){
+            currentIndex = scope;
+            break;
+        }
+    }
+    
+    currentIndex++;
+    if(currentIndex > TransactionScopePrivate){
+        currentIndex = TransactionScopePublic;
+    }
+    
+    [privacyButton setTitle:[FLTransaction TransactionScopeToText:currentIndex] forState:UIControlStateNormal];
+    [_dictionary setValue:[FLTransaction TransactionScopeToParams:currentIndex] forKey:@"scope"];
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    NSNumber *lat = [NSNumber numberWithDouble:[manager.location coordinate].latitude];
+    NSNumber *lng = [NSNumber numberWithDouble:[manager.location coordinate].longitude];
+
+    [_dictionary setValue:lat forKey:@"lat"];
+    [_dictionary setValue:lng forKey:@"lng"];
+    
+    [manager stopUpdatingLocation];
+}
+
+#pragma mark - ImagePicker
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *cameraUI = [UIImagePickerController new];
+    
+    if(buttonIndex == 0){
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == NO){
+            DISPLAY_ERROR(FLCameraAccessDenyError);
+            return;
+        }
+        
+        cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }else if(buttonIndex == 1){
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == NO){
+            DISPLAY_ERROR(FLAlbumsAccessDenyError);
+            return;
+        }
+        
+        cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }else{
+        return;
+    }
+    
+    cameraUI.delegate = self;
+    
+    [appDelegate.window.rootViewController presentViewController:cameraUI animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    UIImage *resizedImage;
+    //Resize
+    {
+        CGFloat width = originalImage.size.width / originalImage.size.height * 156.;
+        CGSize newSize = CGSizeMake(width, 156);
+        
+        UIGraphicsBeginImageContext(newSize);
+        [originalImage drawInRect:CGRectMakeSize(newSize.width, newSize.height)];
+        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    
+    imageButton.selected = YES;
+    [_dictionary setValue:UIImagePNGRepresentation(resizedImage) forKey:@"image"];
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

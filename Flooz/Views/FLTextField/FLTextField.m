@@ -10,12 +10,12 @@
 
 @implementation FLTextField
 
-- (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionnary key:(NSString *)dictionnaryKey position:(CGPoint)position
+- (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position
 {
     self = [super initWithFrame:CGRectMake(position.x, position.y, SCREEN_WIDTH - position.x, 39)];
     if (self) {
-        _dictionnary = dictionnary;
-        _dictionnaryKey = dictionnaryKey;
+        _dictionary = dictionary;
+        _dictionaryKey = dictionaryKey;
         
         [self createTextField:placeholder];
         [self createBottomBar];
@@ -67,9 +67,9 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if([textField.text isBlank]){
-        [_dictionnary setValue:nil forKey:_dictionnaryKey];
+        [_dictionary setValue:nil forKey:_dictionaryKey];
     }else{
-        [_dictionnary setValue:textField.text forKey:_dictionnaryKey];
+        [_dictionary setValue:textField.text forKey:_dictionaryKey];
     }
     [textField resignFirstResponder];
 }

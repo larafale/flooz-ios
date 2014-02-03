@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+    NSDate *lastErrorDate;
+    NSInteger lastErrorCode;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
 - (void)didConnected;
+- (void)displayError:(NSError *)error;
 
 @end

@@ -25,6 +25,7 @@
     
     {
         userView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) - 97.) / 2., 13, 97, 96.5)];
+        [userView setAlternativeStyle];
         [self addSubview:userView];
     }
     

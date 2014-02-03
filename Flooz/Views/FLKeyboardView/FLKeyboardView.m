@@ -72,7 +72,14 @@
 
 - (void)didButtonTouch:(UIButton *)sender
 {
-    [_textField insertText:sender.titleLabel.text];
+    NSInteger startOffset = [_textField offsetFromPosition:_textField.beginningOfDocument toPosition:_textField.selectedTextRange.start];
+    NSInteger endOffset = [_textField offsetFromPosition:_textField.beginningOfDocument toPosition:_textField.selectedTextRange.end];
+    
+    NSRange offsetRange = NSMakeRange(startOffset, endOffset - startOffset);
+    
+    if([[_textField delegate] textField:_textField shouldChangeCharactersInRange:offsetRange replacementString:sender.titleLabel.text]){
+        [_textField insertText:sender.titleLabel.text];
+    }
 }
 
 - (void)didButtonCloseTouch:(UIButton *)sender

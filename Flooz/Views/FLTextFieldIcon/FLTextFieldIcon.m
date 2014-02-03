@@ -10,20 +10,22 @@
 
 @implementation FLTextFieldIcon
 
-- (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionnary key:(NSString *)dictionnaryKey position:(CGPoint)position
+- (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position
 {
-    return [self initWithIcon:iconName placeholder:placeholder for:dictionnary key:dictionnaryKey position:position placeholder2:nil key2:nil];
+    return [self initWithIcon:iconName placeholder:placeholder for:dictionary key:dictionaryKey position:position placeholder2:nil key2:nil];
 }
 
-- (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionnary key:(NSString *)dictionnaryKey position:(CGPoint)position placeholder2:(NSString *)placeholder2 key2:(NSString *)dictionnaryKey2
+- (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position placeholder2:(NSString *)placeholder2 key2:(NSString *)dictionaryKey2
 {
     self = [super initWithFrame:CGRectMake(position.x, position.y, SCREEN_WIDTH - (2 * position.x), 37)];
     if (self) {
-        _dictionnary = dictionnary;
-        _dictionnaryKey = dictionnaryKey;
+        _dictionary = dictionary;
+        _dictionaryKey = dictionaryKey;
+        _dictionaryKey2 = dictionaryKey2;
         
         [self createIcon:iconName];
         [self createTextField:placeholder];
+        [self createTextField2:placeholder2];
         [self createBottomBar];
     }
     return self;
@@ -39,7 +41,13 @@
 
 - (void)createTextField:(NSString *)placeholder
 {
-    _textfield = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(icon.frame) + 18, 8, CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18, 30)];
+    BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
+    CGFloat width = CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18;
+    if(haveOneTextField){
+        width /= 2.;
+    }
+    
+    _textfield = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(icon.frame) + 18, 8, width, 30)];
     
     _textfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _textfield.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -62,6 +70,31 @@
     [self addSubview:_textfield];
 }
 
+- (void)createTextField2:(NSString *)placeholder
+{
+    _textfield2 = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(icon.frame) + 18, 8, CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18, 30)];
+    
+    _textfield2.autocorrectionType = UITextAutocorrectionTypeNo;
+    _textfield2.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    _textfield2.returnKeyType = UIReturnKeyNext;
+    
+    _textfield2.delegate = self;
+    
+    _textfield2.font = [UIFont customContentLight:12];
+    _textfield2.textColor = [UIColor whiteColor];
+    
+    NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                          initWithString:NSLocalizedString(placeholder, nil)
+                                          attributes:@{
+                                                       NSFontAttributeName: [UIFont customContentLight:14],
+                                                       NSForegroundColorAttributeName: [UIColor customPlaceholder]
+                                                       }];
+    
+    _textfield2.attributedPlaceholder = attributedText;
+    
+    [self addSubview:_textfield2];
+}
+
 - (void)createBottomBar
 {
     UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame), 1)];
@@ -81,9 +114,9 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if([textField.text isBlank]){
-        [_dictionnary setValue:nil forKey:_dictionnaryKey];
+        [_dictionary setValue:nil forKey:_dictionaryKey];
     }else{
-        [_dictionnary setValue:textField.text forKey:_dictionnaryKey];
+        [_dictionary setValue:textField.text forKey:_dictionaryKey];
     }
     [textField resignFirstResponder];
 }

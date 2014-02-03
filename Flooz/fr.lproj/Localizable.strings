@@ -7,6 +7,11 @@
  */
 
 "GLOBAL_OR" = "ou";
+"GLOBAL_OK" = "OK";
+"GLOBAL_ERROR" = "Error";
+"GLOBAL_CANCEL" = "Annuler";
+"GLOBAL_CAMERA" = "Appareil photo";
+"GLOBAL_ALBUMS" = "Albums";
 
 "NAV_LOGIN" = "Log in";
 "NAV_SIGNUP" = "Sign up";
@@ -57,7 +62,7 @@
 "TIMELINE_FILTER_PERSO" = "PERSO";
 
 "MENU_NEW_TRANSACTION_EVENT" = "Cagnotte";
-"MENU_NEW_TRANSACTION_PAYMENT" = "Encaissement";
+"MENU_NEW_TRANSACTION_PAYMENT" = "Envoyer";
 "MENU_NEW_TRANSACTION_COLLECT" = "Récalmer";
 
 "ACCOUNT_FRIENDS" = " friends";
@@ -93,6 +98,10 @@
 
 "TRANSACTION_TYPE_PAYMENT" = "PAYMENT";
 "TRANSACTION_TYPE_COLLECTION" = "COLLECTION";
+
+"TRANSACTION_SCOPE_PUBLIC" = "Public";
+"TRANSACTION_SCOPE_FRIEND" = "Friend";
+"TRANSACTION_SCOPE_PRIVATE" = "Private";
 
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_REFUSED" = "Je n'y participe pas";

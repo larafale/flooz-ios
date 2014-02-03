@@ -18,11 +18,14 @@
 
 @implementation FLNewTransactionAmount
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initFor:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey
 {
-    frame = CGRectSetWidthHeight(frame, SCREEN_WIDTH, HEIGHT);
+    CGRect frame = CGRectMakeSize(SCREEN_WIDTH, HEIGHT);
     self = [super initWithFrame:frame];
     if (self) {
+        _dictionary = dictionary;
+        _dictionaryKey = dictionaryKey;
+        
         [self commontInit];
     }
     return self;
@@ -41,7 +44,7 @@
     currency.font = [UIFont customTitleThin:55];
     point.font = amount.font = amount2.font = [UIFont customTitleThin:FONT_SIZE_MAX];
     currency.textColor = point.textColor = amount.textColor = amount2.textColor = [UIColor whiteColor];
-//    amount.tintColor = amount2.tintColor = [UIColor clearColor];
+    amount.tintColor = amount2.tintColor = [UIColor clearColor];
     
     currency.text = @"$";
     currency.textAlignment = NSTextAlignmentCenter;
@@ -50,14 +53,14 @@
     point.textAlignment = NSTextAlignmentCenter;
 
     amount.text = @"000";
-    amount.textAlignment = NSTextAlignmentRight;
+    amount.textAlignment = NSTextAlignmentCenter;
     amount.delegate = self;
     FLKeyboardView *inputView = [FLKeyboardView new];
     inputView.textField = amount;
     amount.inputView = inputView;
         
     amount2.text = @"00";
-    amount2.textAlignment = NSTextAlignmentLeft;
+    amount2.textAlignment = NSTextAlignmentCenter;
     amount2.delegate = self;
     FLKeyboardView *inputView2 = [FLKeyboardView new];
     inputView2.textField = amount2;
@@ -76,7 +79,6 @@
 
 - (void)resizeText
 {
-    NSLog(@"resize");
     CGFloat currentFontSize = FONT_SIZE_MAX;
     
     point.font = amount.font = amount2.font = [UIFont customTitleThin:FONT_SIZE_MAX];
@@ -100,25 +102,54 @@
     [point setWidthToFit];
     [amount2 setWidthToFit];
 
-    amount.frame = CGRectSetWidth(amount.frame, CGRectGetWidth(amount.frame) + 5 + ([amount isEditing] ? 10 : 0));
+    CGFloat offset = 0;
+    CGSize size = [@" " sizeWithAttributes:@{ NSFontAttributeName:amount.font }];
+    offset = size.width;
+    
+    amount.frame = CGRectSetWidth(amount.frame, CGRectGetWidth(amount.frame) + offset + ([amount isEditing] ? 0 : 0));
     point.frame = CGRectSetX(point.frame, CGRectGetMaxX(amount.frame));
     amount2.frame = CGRectSetX(amount2.frame, CGRectGetMaxX(point.frame) + 5);
-    amount2.frame = CGRectSetWidth(amount2.frame, CGRectGetWidth(amount2.frame) + 5  + ([amount2 isEditing] ? 10 : 0));
+    amount2.frame = CGRectSetWidth(amount2.frame, CGRectGetWidth(amount2.frame) + offset  + ([amount2 isEditing] ? 0 : 0));
 }
 
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
+{    
     NSCharacterSet *nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     NSRange r = [string rangeOfCharacterFromSet:nonNumbers];
+        
+    if(r.location != NSNotFound){
+        return NO;
+    }
     
-    return r.location == NSNotFound;
+    if(textField == amount && [textField.text isEqualToString:@"000"]){
+        textField.text = string;
+        return NO;
+    }
+    else if(textField == amount2){
+        string = [[amount2.text substringWithRange:NSMakeRange(1, 1)] stringByAppendingString:string];
+        textField.text = string;
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    [textField setBackgroundColor:[UIColor customBlue]];
     [self resizeText];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [textField setBackgroundColor:[UIColor clearColor]];
+    
+    CGFloat value = [amount.text floatValue];
+    value += [amount2.text floatValue] / 100.;
+    
+    [_dictionary setValue:[NSNumber numberWithFloat:value] forKey:_dictionaryKey];
 }
 
 - (void)setInputAccessoryView:(UIView *)accessoryView

@@ -65,6 +65,14 @@
     _attachmentThumbURL = [json objectForKey:@"picMini"];
     
     _social = [[FLSocial alloc] initWithJSON:json];
+    
+    _isPendingForMe = NO;
+    if([self status] == TransactionStatusPending){
+        NSString *toUserId = [[json objectForKey:@"to"] objectForKey:@"userId"];
+        if([toUserId isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]){
+            _isPendingForMe = YES;
+        }
+    }
 }
 
 - (NSString *)typeText
@@ -92,6 +100,46 @@
     }
     else{ // if([self status] == TransactionStatusExpired){
         return NSLocalizedString(@"TRANSACTION_STATUS_EXPIRED", nil);
+    }
+}
+
++ (NSString *)TransactionScopeToText:(TransactionScope)scope
+{
+    NSString *key = nil;
+    
+    if(scope == TransactionScopePublic){
+        key = @"PUBLIC";
+    }
+    else if(scope == TransactionScopeFriend){
+        key = @"FRIEND";
+    }
+    else{ // if(status == TransactionScopePrivate){
+        key = @"PRIVATE";
+    }
+    
+    return NSLocalizedString([@"TRANSACTION_SCOPE_" stringByAppendingString:key], nil);
+}
+
++ (NSString *)TransactionScopeToParams:(TransactionScope)scope
+{
+    if(scope == TransactionScopePublic){
+        return @"0";
+    }
+    else if(scope == TransactionScopeFriend){
+        return @"1";
+    }
+    else{ // if(status == TransactionScopePrivate){
+        return @"2";
+    }
+}
+
++ (NSString *)TransactionTypeToParams:(TransactionType)type
+{
+    if(type == TransactionTypePayment){
+        return @"pay";
+    }
+    else{ // if(type == TransactionTypePayment){
+        return @"charge";
     }
 }
 

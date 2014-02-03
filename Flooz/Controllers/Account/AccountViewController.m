@@ -111,8 +111,8 @@
 
 - (void)presentCashOutController
 {
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];
-    [self presentViewController:controller animated:YES completion:NULL];
+//    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];
+//    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)presentSettingsController

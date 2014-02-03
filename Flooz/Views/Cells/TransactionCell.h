@@ -22,6 +22,8 @@
     
     UIPanGestureRecognizer *gesture;
     CGPoint lastTranslation;
+    
+    BOOL isSwipable;
 }
 
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction;

@@ -8,11 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FLNewTransactionBar : UIView{
+#import <MapKit/MapKit.h>
+
+@interface FLNewTransactionBar : UIView<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate>{
     UIButton *localizeButton;
     UIButton *imageButton;
     UIButton *facebookButton;
     UIButton *privacyButton;
+    
+    __weak NSMutableDictionary *_dictionary;
+    CLLocationManager *locationManager;
 }
+
+- (id)initWithFor:(NSMutableDictionary *)dictionary;
 
 @end

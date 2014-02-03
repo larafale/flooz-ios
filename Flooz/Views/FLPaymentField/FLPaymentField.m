@@ -10,10 +10,15 @@
 
 @implementation FLPaymentField
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey
 {
     self = [super initWithFrame:CGRectMake(0, frame.origin.y, SCREEN_WIDTH, 122)];
     if (self) {
+        _dictionary = dictionary;
+        _dictionaryKey = dictionaryKey;
+        
+        [self didWalletTouch];
+        
         [self createSeparators];
         [self createButtons];
     }
@@ -31,6 +36,9 @@
     [rightButton setImage:[UIImage imageNamed:@"payment-field-card"] forState:UIControlStateNormal];
     
     leftButton.imageEdgeInsets = rightButton.imageEdgeInsets = UIEdgeInsetsMake(- space, 0, 0, 0);
+    
+    [leftButton addTarget:self action:@selector(didWalletTouch) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton addTarget:self action:@selector(didCardTouch) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:leftButton];
     [self addSubview:rightButton];
@@ -96,6 +104,16 @@
 - (void)setStyleLight
 {
     self.backgroundColor = [UIColor customBackgroundHeader];
+}
+
+- (void)didWalletTouch
+{
+    [_dictionary setValue:@"balance" forKey:_dictionaryKey];
+}
+
+- (void)didCardTouch
+{
+    [_dictionary setValue:@"card" forKey:_dictionaryKey];
 }
 
 @end

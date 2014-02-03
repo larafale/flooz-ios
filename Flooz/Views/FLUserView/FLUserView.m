@@ -30,7 +30,7 @@
 
 - (void)commonInit
 {    
-    UIImageView *filter = [UIImageView imageNamed:@"avatar-filter2"];
+    filter = [UIImageView imageNamed:@"avatar-filter"];
     avatar = [[UIImageView alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
 
     filter.frame = CGRectMakeWithSize(self.frame.size);
@@ -38,6 +38,14 @@
     avatar.image = placeholder;
     
     [self addSubview:avatar];
+    [self addSubview:filter];
+}
+
+- (void)setAlternativeStyle
+{
+    [filter removeFromSuperview];
+    filter = [UIImageView imageNamed:@"avatar-filter2"];
+    filter.frame = CGRectMakeWithSize(self.frame.size);
     [self addSubview:filter];
 }
 

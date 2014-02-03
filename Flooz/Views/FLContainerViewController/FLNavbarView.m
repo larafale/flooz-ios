@@ -77,6 +77,8 @@
             diffTranslation.x -= lastTranslation.x;
             lastTranslation = translation;
             
+            diffTranslation.x = diffTranslation.x * 0.7;
+            
             [self moveViews:diffTranslation];
             break;
         }
@@ -137,7 +139,7 @@
 
     [UIView animateWithDuration:0.3
                           delay:0
-                        options:UIViewAnimationOptionCurveEaseIn
+                        options:0
                      animations:^{
                          [self updateViewsPositions];
                          

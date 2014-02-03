@@ -118,7 +118,7 @@
 
 - (void)didFilterPersoTouch:(NSNumber *)index
 {
-    [[Flooz sharedInstance] timeline:@"perso" success:^(id result) {
+    [[Flooz sharedInstance] timeline:@"private" success:^(id result) {
         transactions = result;
         [self didFilterChange];
     } failure:NULL];

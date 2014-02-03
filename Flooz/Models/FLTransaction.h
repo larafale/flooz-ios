@@ -25,6 +25,12 @@ typedef NS_ENUM(NSInteger, TransactionStatus) {
     TransactionStatusExpired
 };
 
+typedef NS_ENUM(NSInteger, TransactionScope) {
+    TransactionScopePublic,
+    TransactionScopeFriend,
+    TransactionScopePrivate
+};
+
 @property TransactionType type;
 @property TransactionStatus status;
 
@@ -37,12 +43,18 @@ typedef NS_ENUM(NSInteger, TransactionStatus) {
 @property NSString *attachmentURL;
 @property NSString *attachmentThumbURL;
 
+@property BOOL isPendingForMe;
+
 @property FLSocial* social;
 
 - (id)initWithJSON:(NSDictionary *)json;
 
 - (NSString *)typeText;
 - (NSString *)statusText;
+
++ (NSString *)TransactionScopeToText:(TransactionScope)scope;
++ (NSString *)TransactionScopeToParams:(TransactionScope)scope;
++ (NSString *)TransactionTypeToParams:(TransactionType)type;
 
 + (NSArray *)testData;
 

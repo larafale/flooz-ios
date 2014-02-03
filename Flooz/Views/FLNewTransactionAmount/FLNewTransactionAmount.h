@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface FLNewTransactionAmount : UIView<UITextFieldDelegate>{
+    __weak NSMutableDictionary *_dictionary;
+    NSString *_dictionaryKey;
+    
     UILabel *currency;
     UILabel *point;
     
@@ -16,6 +19,7 @@
     UITextField *amount2;
 }
 
+- (id)initFor:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey;
 - (void)setInputAccessoryView:(UIView *)accessoryView;
 
 @end

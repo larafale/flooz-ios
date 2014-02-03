@@ -24,7 +24,12 @@
         [formatter setMaximumFractionDigits:2];
     }
     
-    return [NSString stringWithFormat:@"+ %@€", [formatter stringFromNumber:amount]];
+    if(amount){
+        return [NSString stringWithFormat:@"+ %@€", [formatter stringFromNumber:amount]];
+    }
+    else{
+        return nil;
+    }
 }
 
 @end

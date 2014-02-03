@@ -76,6 +76,7 @@
 		ABE914A018968E52003AC722 /* FLPaymentField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149F18968E52003AC722 /* FLPaymentField.m */; };
 		ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A31896D2D9003AC722 /* FLHelper.m */; };
 		ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */; };
+		ABE914AB1898558E003AC722 /* FLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914AA1898558E003AC722 /* FLTextView.m */; };
 		ABF46A10187575C600E92A77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
 		ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A1E1875B54600E92A77 /* JTImageLabel.m */; };
 		ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */; };
@@ -85,6 +86,7 @@
 		ABF46A341875C1B400E92A77 /* Rene Bieder - Gentona ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2D1875C0B100E92A77 /* Rene Bieder - Gentona ExtraLight.otf */; };
 		ABF46A351875C1B400E92A77 /* Rene Bieder - Gentona Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2E1875C0B100E92A77 /* Rene Bieder - Gentona Light.otf */; };
 		ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2F1875C0B100E92A77 /* Rene Bieder - Gentona Thin.otf */; };
+		ABF7091E18A03D4600517389 /* Error.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092018A03D4600517389 /* Error.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -215,6 +217,8 @@
 		ABE914A31896D2D9003AC722 /* FLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLHelper.m; path = Util/FLHelper.m; sourceTree = "<group>"; };
 		ABE914A51896D4C3003AC722 /* FLNewTransactionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNewTransactionBar.h; path = Views/FLNewTransactionBar/FLNewTransactionBar.h; sourceTree = "<group>"; };
 		ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionBar.m; path = Views/FLNewTransactionBar/FLNewTransactionBar.m; sourceTree = "<group>"; };
+		ABE914A91898558E003AC722 /* FLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextView.h; path = Views/FLTextView/FLTextView.h; sourceTree = "<group>"; };
+		ABE914AA1898558E003AC722 /* FLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextView.m; path = Views/FLTextView/FLTextView.m; sourceTree = "<group>"; };
 		ABF46A11187575C600E92A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABF46A131875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ABF46A141875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -228,6 +232,9 @@
 		ABF46A2D1875C0B100E92A77 /* Rene Bieder - Gentona ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona ExtraLight.otf"; path = "Resources/Fonts/Rene Bieder - Gentona ExtraLight.otf"; sourceTree = "<group>"; };
 		ABF46A2E1875C0B100E92A77 /* Rene Bieder - Gentona Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona Light.otf"; path = "Resources/Fonts/Rene Bieder - Gentona Light.otf"; sourceTree = "<group>"; };
 		ABF46A2F1875C0B100E92A77 /* Rene Bieder - Gentona Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Rene Bieder - Gentona Thin.otf"; path = "Resources/Fonts/Rene Bieder - Gentona Thin.otf"; sourceTree = "<group>"; };
+		ABF7091B18A03B1D00517389 /* FLError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLError.h; path = Util/FLError.h; sourceTree = "<group>"; };
+		ABF7091F18A03D4600517389 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Error.strings; sourceTree = "<group>"; };
+		ABF7092118A03D4900517389 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file; name = fr; path = fr.lproj/Error.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,6 +319,7 @@
 				AB3D089D186CA11A00CF8380 /* main.m */,
 				AB3D089F186CA11A00CF8380 /* Flooz-Prefix.pch */,
 				ABF46A12187575C600E92A77 /* Localizable.strings */,
+				ABF7092018A03D4600517389 /* Error.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -357,6 +365,7 @@
 		AB3D08D5186CA6F800CF8380 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				ABE914A81898557A003AC722 /* FLTextView */,
 				ABE914A11896D166003AC722 /* FLNewTransactionBar */,
 				ABE9149D18968E1A003AC722 /* FLPaymentField */,
 				ABE9149918968C17003AC722 /* FLTextFieldTitle */,
@@ -425,6 +434,7 @@
 				AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */,
 				ABE914A21896D2D9003AC722 /* FLHelper.h */,
 				ABE914A31896D2D9003AC722 /* FLHelper.m */,
+				ABF7091B18A03B1D00517389 /* FLError.h */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -731,6 +741,15 @@
 			name = FLNewTransactionBar;
 			sourceTree = "<group>";
 		};
+		ABE914A81898557A003AC722 /* FLTextView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE914A91898558E003AC722 /* FLTextView.h */,
+				ABE914AA1898558E003AC722 /* FLTextView.m */,
+			);
+			name = FLTextView;
+			sourceTree = "<group>";
+		};
 		ABF46A1C1875B54600E92A77 /* JTImageLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -859,6 +878,7 @@
 				AB4CB6E21886AE2D00D1C573 /* LoginViewController.xib in Resources */,
 				ABF46A351875C1B400E92A77 /* Rene Bieder - Gentona Light.otf in Resources */,
 				ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */,
+				ABF7091E18A03D4600517389 /* Error.strings in Resources */,
 				ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */,
 				AB3D089C186CA11A00CF8380 /* InfoPlist.strings in Resources */,
 				ABE9146318929168003AC722 /* AccountViewController.xib in Resources */,
@@ -944,6 +964,7 @@
 				ABE914371890A029003AC722 /* FLLoadView.m in Sources */,
 				ABE914331890A01F003AC722 /* FLContainerViewController.m in Sources */,
 				ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */,
+				ABE914AB1898558E003AC722 /* FLTextView.m in Sources */,
 				ABE914451890A12C003AC722 /* FLTransaction.m in Sources */,
 				ABE9143D1890A08A003AC722 /* UIBarButtonItem+custom.m in Sources */,
 				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
@@ -1011,6 +1032,15 @@
 				ABF46A141875775200E92A77 /* fr */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		ABF7092018A03D4600517389 /* Error.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ABF7091F18A03D4600517389 /* en */,
+				ABF7092118A03D4900517389 /* fr */,
+			);
+			name = Error.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
