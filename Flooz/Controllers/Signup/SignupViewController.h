@@ -10,4 +10,6 @@
 
 @interface SignupViewController : UIViewController
 
+- (id)initWithUser:(NSDictionary *)user;
+
 @end

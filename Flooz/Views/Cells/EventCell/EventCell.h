@@ -19,7 +19,6 @@
     UIView *slideView;
 }
 
-+ (CGFloat)getEstimatedHeight;
 + (CGFloat)getHeightForEvent:(FLEvent *)event;
 
 @property (strong, nonatomic) FLEvent *event;

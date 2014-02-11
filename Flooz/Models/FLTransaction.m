@@ -21,6 +21,8 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
+    _transactionId = [json objectForKey:@"_id"];
+    
     NSString *method = [json objectForKey:@"method"];
     if([method isEqualToString:@"pay"]){
         _type = TransactionTypePayment;
@@ -47,15 +49,20 @@
     }
     
     _amount = [json objectForKey:@"amount"];
-    if(_amount && _type == TransactionTypePayment){
+    if(_amount && [[json objectForKey:@"payer"] isEqualToNumber:@1]){
         _amount = [NSNumber numberWithFloat:([_amount floatValue] * -1.)];
     }
-    
-    if([[[json objectForKey:@"starter"] objectForKey:@"field"] isEqualToString:@"from"]){
-        _avatarURL = [[json objectForKey:@"from"] objectForKey:@"pic"];
+        
+    if([[json objectForKey:@"currentScope"] isEqualToString:@"private"]){
+        _avatarURL = [[json objectForKey:[json objectForKey:@"myFriend"]] objectForKey:@"pic"];
     }
     else{
-        _avatarURL = [[json objectForKey:@"to"] objectForKey:@"pic"];
+        if([[[json objectForKey:@"starter"] objectForKey:@"field"] isEqualToString:@"from"]){
+            _avatarURL = [[json objectForKey:@"from"] objectForKey:@"pic"];
+        }
+        else{
+            _avatarURL = [[json objectForKey:@"to"] objectForKey:@"pic"];
+        }
     }
     
     _text = [json objectForKey:@"text"];
@@ -66,21 +73,45 @@
     
     _social = [[FLSocial alloc] initWithJSON:json];
     
-    _isPendingForMe = NO;
-    if([self status] == TransactionStatusPending){
-        NSString *toUserId = [[json objectForKey:@"to"] objectForKey:@"userId"];
-        if([toUserId isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]){
-            _isPendingForMe = YES;
+    _isPrivate = NO;
+    if([[json objectForKey:@"currentScope"] isEqualToString:@"private"]){
+        _isPrivate = YES;
+    }
+    
+    {
+        _isCancelable = NO;
+        _isAcceptable = NO;
+    
+        if(_status == TransactionStatusPending){
+            if([[json objectForKey:@"actions"] count] == 1){
+                _isCancelable = YES;
+            }
+            else if([[json objectForKey:@"actions"] count] == 2){
+                _isAcceptable = YES;
+            }
         }
     }
-}
-
-- (NSString *)typeText
-{
-    if([self type] == TransactionTypePayment){
-        return NSLocalizedString(@"TRANSACTION_TYPE_PAYMENT", nil);
-    }else{
-        return NSLocalizedString(@"TRANSACTION_TYPE_COLLECTION", nil);
+    
+    _from = [[FLUser alloc] initWithJSON:[json objectForKey:@"from"]];
+    _to = [[FLUser alloc] initWithJSON:[json objectForKey:@"to"]];
+    
+    
+    {
+        static NSDateFormatter *dateFormatter;
+        if(!dateFormatter){
+            dateFormatter = [NSDateFormatter new];
+            [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
+        }
+                
+        _date = [dateFormatter dateFromString:[json objectForKey:@"cAt"]];
+    }
+    
+    {
+        NSMutableArray *comments = [NSMutableArray new];
+        for(NSDictionary *commentJSON in [json objectForKey:@"comments"]){
+            [comments addObject:[[FLComment alloc] initWithJSON:commentJSON]];
+        }
+        _comments = comments;
     }
 }
 
@@ -100,6 +131,16 @@
     }
     else{ // if([self status] == TransactionStatusExpired){
         return NSLocalizedString(@"TRANSACTION_STATUS_EXPIRED", nil);
+    }
+}
+
+- (NSString *)typeText
+{
+    if([self type] == TransactionTypePayment){
+        return NSLocalizedString(@"TRANSACTION_TYPE_PAYMENT", nil);
+    }
+    else{
+        return NSLocalizedString(@"TRANSACTION_TYPE_COLLECTION", nil);
     }
 }
 
@@ -138,8 +179,11 @@
     if(type == TransactionTypePayment){
         return @"pay";
     }
-    else{ // if(type == TransactionTypePayment){
+    else if(type == TransactionTypeCollection){
         return @"charge";
+    }
+    else{ // if(type == TransactionTypeCagnotte){
+        return @"event";
     }
 }
 

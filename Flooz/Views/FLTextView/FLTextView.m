@@ -18,7 +18,6 @@
         _dictionaryKey = dictionaryKey;
         
         [self createTextView:placeholder];
-        [self createBottomBar];
     }
     return self;
 }
@@ -49,14 +48,6 @@
     _placeholder = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_textView.frame), 39)];
     _placeholder.attributedText = attributedText;
     [_textView addSubview:_placeholder];
-}
-
-- (void)createBottomBar
-{
-    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame), 1)];
-    bottomBar.backgroundColor = [UIColor customSeparator];
-    
-    [self addSubview:bottomBar];
 }
 
 #pragma mark - UITextViewDelegate

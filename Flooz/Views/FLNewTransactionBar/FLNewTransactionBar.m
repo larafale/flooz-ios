@@ -122,10 +122,11 @@
 
 - (void)didImageButtonTouch
 {
-    if(imageButton.selected){
+    if(!imageButton.selected){
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"GLOBAL_CAMERA", nil), NSLocalizedString(@"GLOBAL_ALBUMS", nil), nil];
         
-        [actionSheet showInView:appDelegate.window.rootViewController.view];
+        // WARNING
+        [actionSheet showInView:self];
     }
     else{
         [_dictionary setValue:nil forKey:@"image"];
@@ -210,20 +211,20 @@
 {
     UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     
-    UIImage *resizedImage;
-    //Resize
-    {
-        CGFloat width = originalImage.size.width / originalImage.size.height * 156.;
-        CGSize newSize = CGSizeMake(width, 156);
-        
-        UIGraphicsBeginImageContext(newSize);
-        [originalImage drawInRect:CGRectMakeSize(newSize.width, newSize.height)];
-        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-    }
-    
+//    UIImage *resizedImage;
+//    //Resize
+//    {
+//        CGFloat width = originalImage.size.width / originalImage.size.height * 156.;
+//        CGSize newSize = CGSizeMake(width, 156);
+//        
+//        UIGraphicsBeginImageContext(newSize);
+//        [originalImage drawInRect:CGRectMakeSize(newSize.width, newSize.height)];
+//        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//    }
+//    
     imageButton.selected = YES;
-    [_dictionary setValue:UIImagePNGRepresentation(resizedImage) forKey:@"image"];
+    [_dictionary setValue:UIImagePNGRepresentation(originalImage) forKey:@"image"];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

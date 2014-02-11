@@ -27,6 +27,9 @@
         [self createTextField:placeholder];
         [self createTextField2:placeholder2];
         [self createBottomBar];
+        
+        _textfield.text = [_dictionary objectForKey:_dictionaryKey];
+        _textfield2.text = [_dictionary objectForKey:_dictionaryKey2];
     }
     return self;
 }
@@ -43,7 +46,7 @@
 {
     BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
     CGFloat width = CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18;
-    if(haveOneTextField){
+    if(!haveOneTextField){
         width /= 2.;
     }
     
@@ -54,6 +57,10 @@
     _textfield.returnKeyType = UIReturnKeyNext;
     
     _textfield.delegate = self;
+    
+    if([_dictionaryKey isEqualToString:@"phone"]){
+        _textfield.keyboardType = UIKeyboardTypeNumberPad;
+    }
     
     _textfield.font = [UIFont customContentLight:12];
     _textfield.textColor = [UIColor whiteColor];
@@ -72,7 +79,14 @@
 
 - (void)createTextField2:(NSString *)placeholder
 {
-    _textfield2 = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(icon.frame) + 18, 8, CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18, 30)];
+    BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
+    if(haveOneTextField){
+        return;
+    }
+    
+    CGFloat width = (CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18) / 2.;
+    
+    _textfield2 = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_textfield.frame), 8, width, 30)];
     
     _textfield2.autocorrectionType = UITextAutocorrectionTypeNo;
     _textfield2.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -113,10 +127,18 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    NSString *currentDictionaryKey;
+    if(textField == _textfield){
+        currentDictionaryKey = _dictionaryKey;
+    }
+    else{
+        currentDictionaryKey = _dictionaryKey2;
+    }
+    
     if([textField.text isBlank]){
-        [_dictionary setValue:nil forKey:_dictionaryKey];
+        [_dictionary setValue:nil forKey:currentDictionaryKey];
     }else{
-        [_dictionary setValue:textField.text forKey:_dictionaryKey];
+        [_dictionary setValue:textField.text forKey:currentDictionaryKey];
     }
     [textField resignFirstResponder];
 }

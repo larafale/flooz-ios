@@ -17,25 +17,24 @@
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;
         
-        [self didWalletTouch];
-        
         [self createSeparators];
         [self createButtons];
+        [self createBottomBar];
     }
     return self;
 }
 
 - (void)createButtons
 {
-    CGFloat space = 15.;
-    
-    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame))];
-    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame))];
+    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame))];
+    rightButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame))];
     
     [leftButton setImage:[UIImage imageNamed:@"payment-field-wallet"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"payment-field-wallet-selected"] forState:UIControlStateSelected];
     [rightButton setImage:[UIImage imageNamed:@"payment-field-card"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"payment-field-card-selected"] forState:UIControlStateSelected];
     
-    leftButton.imageEdgeInsets = rightButton.imageEdgeInsets = UIEdgeInsetsMake(- space, 0, 0, 0);
+    leftButton.imageEdgeInsets = rightButton.imageEdgeInsets = UIEdgeInsetsMake(- 60, 0, 0, 0);
     
     [leftButton addTarget:self action:@selector(didWalletTouch) forControlEvents:UIControlEventTouchUpInside];
     [rightButton addTarget:self action:@selector(didCardTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -44,8 +43,8 @@
     [self addSubview:rightButton];
     
     {
-        UILabel *leftText = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(leftButton.frame.size)];
-        UILabel *rightText = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(rightButton.frame.size)];
+        leftText = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(leftButton.frame.size)];
+        rightText = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(rightButton.frame.size)];
         
         leftText.textColor = rightText.textColor = [UIColor whiteColor];
         leftText.textAlignment = rightText.textAlignment = NSTextAlignmentCenter;
@@ -54,9 +53,6 @@
         leftText.text = NSLocalizedString(@"PAYEMENT_FIELD_WALLET", nil);
         rightText.text = NSLocalizedString(@"PAYEMENT_FIELD_CARD", nil);
         
-        leftText.frame = CGRectSetY(leftText.frame, space);
-        rightText.frame = CGRectSetY(rightText.frame, space);
-        
         [leftButton addSubview:leftText];
         [rightButton addSubview:rightText];
     }
@@ -64,7 +60,7 @@
     {
         CGFloat width = 60;
         CGFloat x = (CGRectGetWidth(leftButton.frame) - width) / 2.;
-        UILabel *amount = [[UILabel alloc] initWithFrame:CGRectMake(x, 89, width, 19)];
+        amount = [[UILabel alloc] initWithFrame:CGRectMake(x, 79, width, 19)];
         
         amount.textAlignment = NSTextAlignmentCenter;
         amount.backgroundColor = [UIColor colorWithIntegerRed:45 green:58 blue:70];
@@ -76,6 +72,14 @@
         
         [leftButton addSubview:amount];
     }
+}
+
+- (void)createBottomBar
+{
+    UIView *topBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame), 1)];
+    topBar.backgroundColor = [UIColor customSeparator];
+    
+    [self addSubview:topBar];
 }
 
 - (void)createSeparators
@@ -108,11 +112,23 @@
 
 - (void)didWalletTouch
 {
+    amount.textColor = leftText.textColor = [UIColor customBlue];
+    rightText.textColor = [UIColor whiteColor];
+    
+    leftButton.selected = YES;
+    rightButton.selected = NO;
+    
     [_dictionary setValue:@"balance" forKey:_dictionaryKey];
 }
 
 - (void)didCardTouch
 {
+    amount.textColor = leftText.textColor = [UIColor whiteColor];
+    rightText.textColor = [UIColor customBlue];
+    
+    leftButton.selected = NO;
+    rightButton.selected = YES;
+    
     [_dictionary setValue:@"card" forKey:_dictionaryKey];
 }
 

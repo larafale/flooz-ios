@@ -14,6 +14,7 @@
 @property NSNumber *amount;
 @property NSString *firstname;
 @property NSString *lastname;
+@property NSString *fullname;
 @property NSString *username;
 @property NSString *email;
 @property NSString *phone;
@@ -21,7 +22,11 @@
 @property NSString *profileCompletion;
 @property NSNumber *friendsCount;
 @property NSNumber *transactionsCount;
+@property BOOL haveStatsPending;
 
 - (id)initWithJSON:(NSDictionary *)json;
+- (void)updateStatsPending:(NSDictionary *)json;
+
+- (NSString *)avatarURL:(CGSize)size;
 
 @end

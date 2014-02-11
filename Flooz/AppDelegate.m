@@ -11,12 +11,13 @@
 #import "FLContainerViewController.h"
 
 #import "HomeViewController.h"
+#import "SignupViewController.h"
 
 #import "SocialViewController.h"
 #import "TimelineViewController.h"
 #import "AccountViewController.h"
 
-#import "NewTransactionViewController.h"
+#import "FriendPickerViewController.h"
 
 @implementation AppDelegate
 
@@ -27,12 +28,14 @@
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
 //    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
+    
+//    self.window.rootViewController = [FriendPickerViewController new];
     
     return YES;
 }
@@ -75,6 +78,15 @@
     });
 }
 
+- (void)loadSignupWithUser:(NSDictionary *)user
+{
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    [controller setViewControllers:@[[HomeViewController new], [[SignupViewController alloc] initWithUser:user]]];
+    self.window.rootViewController = controller;
+}
+
+#pragma mark -
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -92,14 +104,54 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Facebook
+
+- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
+{
+    if (!error && state == FBSessionStateOpen){
+        [[Flooz sharedInstance] didConnectFacebook];
+        return;
+    }
+    if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
+        // If the session is closed
+        NSLog(@"Session closed");
+        // Show the user the logged-out UI
+        //        [self userLoggedOut];
+        
+        [[Flooz sharedInstance] hideLoadView];
+    }
+    
+    // Handle errors
+    if (error){
+        NSLog(@"Error");
+        NSLog(@"%@", [FBErrorUtility userMessageForError:error]);
+        // Clear this token
+        [FBSession.activeSession closeAndClearTokenInformation];
+        // Show the user the logged-out UI
+//        [self userLoggedOut];
+    }
+}
+
+// During the Facebook login flow, your app passes control to the Facebook iOS app or Facebook in a mobile browser.
+// After authentication, your app will be called back with the session information.
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    // Handle the user leaving the app while the Facebook login dialog is being shown
+    // For example: when the user presses the iOS "home" button while the login dialog is active
+    
+    [FBAppCall handleDidBecomeActive];
 }
 
 @end

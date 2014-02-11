@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NewTransactionViewController : UIViewController
+#import "FLSelectAmountDelegate.h"
+#import "FLNewTransactionAmount.h"
+
+@interface NewTransactionViewController : UIViewController<FLSelectAmountDelegate>
 
 - (id)initWithTransactionType:(TransactionType)transactionType;
 

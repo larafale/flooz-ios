@@ -11,6 +11,13 @@
 @interface FLPaymentField : UIView{
     __weak NSMutableDictionary *_dictionary;
     NSString *_dictionaryKey;
+    
+    UIButton *leftButton;
+    UIButton *rightButton;
+    
+    UILabel *leftText;
+    UILabel *rightText;
+    UILabel *amount;
 }
 
 - (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey;

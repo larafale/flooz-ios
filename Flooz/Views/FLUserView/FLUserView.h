@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FLUser.h"
 
 @interface FLUserView : UIView{
     UIImage *placeholder;
@@ -15,6 +16,10 @@
 }
 
 - (void)setAlternativeStyle;
+- (void)setAlternativeStyle2;
+
 - (void)setImageFromURL:(NSString *)url;
+- (void)setImageFromUser:(FLUser *)user;
+- (void)setImageFromData:(NSData *)data;
 
 @end

@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 
 #import "FLSocial.h"
+#import "FLComment.h"
 
 @interface FLTransaction : NSObject
 
 typedef NS_ENUM(NSInteger, TransactionType) {
     TransactionTypePayment,
-    TransactionTypeCollection
+    TransactionTypeCollection,
+    TransactionTypeEvent
 };
 
 typedef NS_ENUM(NSInteger, TransactionStatus) {
@@ -34,6 +36,7 @@ typedef NS_ENUM(NSInteger, TransactionScope) {
 @property TransactionType type;
 @property TransactionStatus status;
 
+@property NSString *transactionId;
 @property NSNumber *amount;
 
 @property NSString *avatarURL;
@@ -43,14 +46,23 @@ typedef NS_ENUM(NSInteger, TransactionScope) {
 @property NSString *attachmentURL;
 @property NSString *attachmentThumbURL;
 
-@property BOOL isPendingForMe;
+@property BOOL isPrivate;
+@property BOOL isCancelable;
+@property BOOL isAcceptable;
+
+@property NSDate *date;
+
+@property FLUser *from;
+@property FLUser *to;
+
+@property NSArray *comments;
 
 @property FLSocial* social;
 
 - (id)initWithJSON:(NSDictionary *)json;
 
-- (NSString *)typeText;
 - (NSString *)statusText;
+- (NSString *)typeText;
 
 + (NSString *)TransactionScopeToText:(TransactionScope)scope;
 + (NSString *)TransactionScopeToParams:(TransactionScope)scope;

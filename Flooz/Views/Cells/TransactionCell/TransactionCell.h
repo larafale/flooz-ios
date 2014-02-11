@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "FLTransaction.h"
+#import "TransactionCellDelegate.h"
 
 #import "FLSocialView.h"
 
@@ -20,7 +21,7 @@
     UIView *rightView;
     UIView *slideView;
     
-    UIPanGestureRecognizer *gesture;
+    CGPoint totalTranslation;
     CGPoint lastTranslation;
     
     BOOL isSwipable;
@@ -28,6 +29,7 @@
 
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction;
 
-@property (strong, nonatomic) FLTransaction *transaction;
+@property (weak, nonatomic) id<TransactionCellDelegate> delegate;
+@property (weak, nonatomic) FLTransaction *transaction;
 
 @end

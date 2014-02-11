@@ -12,6 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
+    frame = CGRectSetHeight(frame, 15);
     self = [super initWithFrame:frame];
     if (self) {
         [self createView];
@@ -39,7 +40,8 @@
 {
     {
         if(social.commentsCount == 0){
-            comment.text = NSLocalizedString(@"CELL_SOCIAL_COMMENT", nil);
+//            comment.text = NSLocalizedString(@"CELL_SOCIAL_COMMENT", nil);
+            comment.text = @""; // Ne pas mettre nil
         }
         else{
             comment.text = [NSString stringWithFormat:@"%.2ld", social.commentsCount];
@@ -60,17 +62,14 @@
         comment.frame = CGRectSetWidth(comment.frame, CGRectGetWidth(comment.frame) + 18);
     }
 
-    separator.frame = CGRectSetX(separator.frame, CGRectGetMaxX(comment.frame) + 12);
+    separator.frame = CGRectSetX(separator.frame, CGRectGetMaxX(comment.frame) + 5);
     
     {
         if(social.likesCount == 0){
             like.text = NSLocalizedString(@"CELL_SOCIAL_LIKE", nil);
         }
         else{
-            like.text = [NSString stringWithFormat:@"%.2ld", social.likesCount];
-            if(![social.likeText isBlank]){
-                like.text = [like.text stringByAppendingFormat:@" - %@", social.likeText];
-            }
+            like.text = social.likeText;
         }
         
         if(social.isLiked){

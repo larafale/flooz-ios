@@ -13,6 +13,7 @@
     
     FLUserView *userView;
     UILabel *username;
+    UILabel *fullname;
     UILabel *friends;
     UILabel *flooz;
     UILabel *profilCompletion;

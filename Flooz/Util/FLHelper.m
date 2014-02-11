@@ -12,7 +12,13 @@
 
 + (NSString *)formatedAmount:(NSNumber *)amount
 {
+    return [self formatedAmount:amount withCurrency:YES];
+}
+
++ (NSString *)formatedAmount:(NSNumber *)amount withCurrency:(BOOL)withCurrency
+{
     static NSNumberFormatter *formatter = nil;
+    static NSString *currency = nil;
     
     if(!formatter){
         formatter = [NSNumberFormatter new];
@@ -22,14 +28,46 @@
         [formatter setDecimalSeparator:@"."];
         [formatter setMinimumFractionDigits:2];
         [formatter setMaximumFractionDigits:2];
+        
+        currency = NSLocalizedString(@"GLOBAL_EURO", nil);
     }
     
     if(amount){
-        return [NSString stringWithFormat:@"+ %@€", [formatter stringFromNumber:amount]];
+        if(withCurrency){
+            if([amount intValue] > 0){
+                return [NSString stringWithFormat:@"+ %@%@", [formatter stringFromNumber:amount], currency];
+            }
+            else{
+                return [NSString stringWithFormat:@"- %.2f%@", [amount floatValue] * -1., currency];
+            }
+        }
+        else{
+            if([amount intValue] > 0){
+                return [NSString stringWithFormat:@"+ %@", [formatter stringFromNumber:amount]];
+            }
+            else{
+                return [NSString stringWithFormat:@"- %.2f", [amount floatValue] * -1.];
+            }
+        }
     }
     else{
         return nil;
     }
+}
+
++ (NSString *)formatedDate:(NSDate *)date
+{
+    static NSDateFormatter *dateFormatter;
+    if(!dateFormatter){
+        dateFormatter = [NSDateFormatter new];
+        [dateFormatter setDateFormat:@"dd'/'MM'/'yy"];
+    }
+    
+    if(date){
+        return [dateFormatter stringFromDate:date];
+    }
+    
+    return nil;
 }
 
 @end

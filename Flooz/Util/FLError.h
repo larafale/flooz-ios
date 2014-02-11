@@ -7,7 +7,7 @@
 //
 
 #define DISPLAY_ERROR(error) [appDelegate displayError:[NSError errorWithDomain:@"com.flooz.Flooz" code:error userInfo:nil]];
-#define ERROR_LOCALIZED_DESCRIPTION(code) NSLocalizedStringFromTable(([NSString stringWithFormat:@"%d", code]), @"Error", nil)
+#define ERROR_LOCALIZED_DESCRIPTION(code) NSLocalizedStringFromTable(([NSString stringWithFormat:@"%ld", code]), @"Error", nil)
 
 enum {
     FLNetworkError = 1000,
@@ -17,4 +17,5 @@ enum {
     FLAlbumsAccessDenyError,
     FLCameraAccessDenyError,
     FLGPSAccessDenyError,
+    FLContactAccessDenyError,
 };

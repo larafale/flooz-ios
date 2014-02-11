@@ -38,12 +38,15 @@
     
     {
         registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(MARGE, 27, SCREEN_WIDTH - (2 * MARGE), 45)];
-        registerFacebook.backgroundColor = [UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5];
+        [registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
         
         [registerFacebook setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
         registerFacebook.titleLabel.font = [UIFont customContentRegular:13];
         [registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateNormal];
+        [registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateHighlighted];
         [registerFacebook setImageEdgeInsets:UIEdgeInsetsMake(-1, 0, 0, 12)];
+        
+        [registerFacebook addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
         
         [self.view addSubview:registerFacebook];
     }
@@ -91,8 +94,14 @@
 
 - (void)presentTimelineController
 {
+    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] login:user success:NULL failure:NULL];
 }
 
+- (void)didFacebookTouch
+{
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] connectFacebook];
+}
 
 @end

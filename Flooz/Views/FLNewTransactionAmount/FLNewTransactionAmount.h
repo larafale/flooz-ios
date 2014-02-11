@@ -19,6 +19,8 @@
     UITextField *amount2;
 }
 
++ (CGFloat)height;
+
 - (id)initFor:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey;
 - (void)setInputAccessoryView:(UIView *)accessoryView;
 

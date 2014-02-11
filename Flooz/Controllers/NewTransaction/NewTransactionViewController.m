@@ -11,6 +11,8 @@
 #import "FLNewTransactionAmount.h"
 #import "FLPaymentField.h"
 #import "FLNewTransactionBar.h"
+#import "FLSelectAmount.h"
+#import "FLSelectFriendButton.h"
 
 @interface NewTransactionViewController (){
     NSMutableDictionary *transaction;
@@ -19,6 +21,10 @@
     UIScrollView *_contentView;
     
     FLNewTransactionBar *transactionBar;
+    
+    TransactionType _transactionType;
+    FLNewTransactionAmount *amountInput;
+    FLTextView *content;
 }
 
 @end
@@ -31,6 +37,7 @@
     if (self) {
         transaction = [NSMutableDictionary new];
         
+        _transactionType = transactionType;
         [transaction setValue:[FLTransaction TransactionTypeToParams:transactionType] forKey:@"method"];
     }
     return self;
@@ -56,33 +63,66 @@
     }
     
     {
-        FLTextFieldTitle *title = [[FLTextFieldTitle alloc] initWithTitle:@"FIELD_TRANSACTION_TITLE" placeholder:@"FIELD_TRANSACTION_TITLE_PLACEHOLDER" for:transaction key:@"why" position:CGPointMake(0, 0)];
+        CGFloat offset = 0;
         
-        [_contentView addSubview:title];
+        if(_transactionType == TransactionTypeEvent){
+            FLTextFieldTitle *title = [[FLTextFieldTitle alloc] initWithTitle:@"FIELD_TRANSACTION_TITLE" placeholder:@"FIELD_TRANSACTION_TITLE_PLACEHOLDER" for:transaction key:@"why" position:CGPointMake(0, 0)];
+            
+            [_contentView addSubview:title];
+            
+            offset = CGRectGetMaxY(title.frame);
+        }
 
+        if(_transactionType == TransactionTypeEvent){
+            FLSelectAmount *selectAmount = [[FLSelectAmount alloc] initWithFrame:CGRectMakePosition(0, offset) for:transaction];
+            [_contentView addSubview:selectAmount];
+            
+            selectAmount.delegate = self;
+            
+            offset = CGRectGetMaxY(selectAmount.frame);
+        }
         
-        FLNewTransactionAmount *amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
+        
+        amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
         [amountInput setInputAccessoryView:[[FLNewTransactionBar alloc] initWithFor:transaction]];
         [_contentView addSubview:amountInput];
+        amountInput.frame = CGRectSetY(amountInput.frame, offset);
+        offset = CGRectGetMaxY(amountInput.frame);
         
-        amountInput.frame = CGRectSetY(amountInput.frame, CGRectGetMaxY(title.frame));
+        if(_transactionType != TransactionTypeEvent){
+            FLSelectFriendButton *friend = [[FLSelectFriendButton alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(amountInput.frame)) dictionary:transaction];
+            friend.delegate = self;
+
+            [_contentView addSubview:friend];
+            
+            offset = CGRectGetMaxY(friend.frame);
+        }
         
-        FLTextFieldTitle *to = [[FLTextFieldTitle alloc] initWithTitle:@"FIELD_TRANSACTION_TO" placeholder:@"FIELD_TRANSACTION_TO_PLACEHOLDER" for:transaction key:@"to" position:CGPointMake(0, CGRectGetMaxY(amountInput.frame))];
         
-        [_contentView addSubview:to];
+        if(_transactionType == TransactionTypePayment){
+            FLPaymentField *payementField = [[FLPaymentField alloc] initWithFrame:CGRectMakePosition(0, offset) for:transaction key:@"source"];
+            [_contentView addSubview:payementField];
+            
+            offset = CGRectGetMaxY(payementField.frame);
+        }
+
         
+        NSString *contentPlaceholder = @"FIELD_TRANSACTION_CONTENT_PLACEHOLDER";
+        if(_transactionType == TransactionTypeEvent){
+            contentPlaceholder = @"FIELD_TRANSACTION_EVENT_PLACEHOLDER";
+        }
         
-        FLTextView *content = [[FLTextView alloc] initWithPlaceholder:@"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" for:transaction key:@"content" position:CGPointMake(0, CGRectGetMaxY(to.frame))];
+        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"content" position:CGPointMake(0, offset)];
         
         [_contentView addSubview:content];
 
-        if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction TransactionTypeToParams:TransactionTypePayment]]){
-            FLPaymentField *payementField = [[FLPaymentField alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(content.frame)) for:transaction key:@"source"];
-            [_contentView addSubview:payementField];
-        }
-
+        
         transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction];
         [_contentView addSubview:transactionBar];
+    }
+    
+    if(_transactionType == TransactionTypeEvent){
+        [self didAmountFreeSelected];
     }
 }
 
@@ -95,6 +135,26 @@
     transactionBar.frame = CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _contentView.frame.origin.y);
 }
 
+#pragma mark -
+
+- (void)didAmountFixSelected
+{
+    [UIView animateWithDuration:.5 animations:^{
+        amountInput.frame = CGRectSetHeight(amountInput.frame, [FLNewTransactionAmount height]);
+        content.frame = CGRectSetY(content.frame, content.frame.origin.y + [FLNewTransactionAmount height]);
+    }];
+}
+
+- (void)didAmountFreeSelected
+{
+    [transaction setValue:nil forKey:@"amount"];
+    
+    [UIView animateWithDuration:.5 animations:^{
+        amountInput.frame = CGRectSetHeight(amountInput.frame, 1);
+        content.frame = CGRectSetY(content.frame, content.frame.origin.y - [FLNewTransactionAmount height]);
+    }];
+}
+
 #pragma mark - callbacks
 
 - (void)dismiss
@@ -105,6 +165,7 @@
 - (void)valid
 {
     NSLog(@"%@", transaction);
+    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
         [self dismissViewControllerAnimated:YES completion:NULL];
     } failure:NULL];

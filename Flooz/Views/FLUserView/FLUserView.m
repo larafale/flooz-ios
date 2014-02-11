@@ -49,9 +49,32 @@
     [self addSubview:filter];
 }
 
+- (void)setAlternativeStyle2
+{
+    [filter removeFromSuperview];
+    filter = [UIImageView imageNamed:@"avatar-filter3"];
+    filter.frame = CGRectMakeWithSize(self.frame.size);
+    [self addSubview:filter];
+}
+
 - (void)setImageFromURL:(NSString *)url
 {
     [avatar setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
+}
+
+- (void)setImageFromUser:(FLUser *)user
+{
+    [avatar setImageWithURL:[NSURL URLWithString:[user avatarURL:avatar.frame.size]] placeholderImage:placeholder];
+}
+
+- (void)setImageFromData:(NSData *)data
+{
+    if(data){
+        avatar.image = [UIImage imageWithData:data];
+    }
+    else{
+        avatar.image = placeholder;
+    }
 }
 
 @end

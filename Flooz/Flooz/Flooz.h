@@ -22,11 +22,20 @@
 
 + (Flooz *)sharedInstance;
 
+- (void)showLoadView;
+- (void)hideLoadView;
+
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
 - (void)login:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)timeline:(NSString *)scope success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
+- (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
+- (void)connectFacebook;
+- (void)didConnectFacebook;
 
 @end

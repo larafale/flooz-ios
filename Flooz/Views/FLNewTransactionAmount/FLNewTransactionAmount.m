@@ -20,7 +20,7 @@
 
 - (id)initFor:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey
 {
-    CGRect frame = CGRectMakeSize(SCREEN_WIDTH, HEIGHT);
+    CGRect frame = CGRectMakeSize(SCREEN_WIDTH, [[self class] height]);
     self = [super initWithFrame:frame];
     if (self) {
         _dictionary = dictionary;
@@ -31,12 +31,18 @@
     return self;
 }
 
++ (CGFloat)height
+{
+    return 84.;
+}
+
 - (void)commontInit
 {
+    self.clipsToBounds = YES;
     self.layer.borderWidth = 1.;
     self.layer.borderColor = [UIColor customSeparator].CGColor;
     
-    currency = [[UILabel alloc] initWithFrame:CGRectMake(0, MARGE_TOP - 2.5, 49, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
+    currency = [[UILabel alloc] initWithFrame:CGRectMake(5, MARGE_TOP - 2.5, 49, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
     point = [[UILabel alloc] initWithFrame:CGRectMake(0, MARGE_TOP, 0, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
     amount = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(currency.frame), MARGE_TOP, 0, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
     amount2 = [[UITextField alloc] initWithFrame:CGRectMake(0, MARGE_TOP, 0, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
@@ -46,13 +52,13 @@
     currency.textColor = point.textColor = amount.textColor = amount2.textColor = [UIColor whiteColor];
     amount.tintColor = amount2.tintColor = [UIColor clearColor];
     
-    currency.text = @"$";
+    currency.text = NSLocalizedString(@"GLOBAL_EURO", nil);
     currency.textAlignment = NSTextAlignmentCenter;
     
-    point.text = @" . ";
+    point.text = @".";
     point.textAlignment = NSTextAlignmentCenter;
 
-    amount.text = @"000";
+    amount.text = @"100";
     amount.textAlignment = NSTextAlignmentCenter;
     amount.delegate = self;
     FLKeyboardView *inputView = [FLKeyboardView new];
@@ -115,7 +121,14 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{    
+{
+    if([string isEqualToString:@"\r"] && textField == amount && amount.text.length > 0){
+        return YES;
+    }
+    if(textField == amount && amount.text.length == 3){
+        return NO;
+    }
+    
     NSCharacterSet *nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     NSRange r = [string rangeOfCharacterFromSet:nonNumbers];
         
@@ -139,6 +152,11 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [textField setBackgroundColor:[UIColor customBlue]];
+    
+    if(textField == amount){
+        textField.text = @"";
+    }
+    
     [self resizeText];
 }
 

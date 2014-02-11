@@ -11,5 +11,8 @@
 @interface FLHelper : NSObject
 
 + (NSString *)formatedAmount:(NSNumber *)amount;
++ (NSString *)formatedAmount:(NSNumber *)amount withCurrency:(BOOL)withCurrency;
+
++ (NSString *)formatedDate:(NSDate *)date;
 
 @end

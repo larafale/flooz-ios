@@ -42,12 +42,12 @@
 
 - (void)cancelAddTarget:(id)target action:(SEL)action
 {
-    [cancel addTarget:target action:action forControlEvents:UIControlEventTouchDown];
+    [cancel addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)validAddTarget:(id)target action:(SEL)action
 {
-    [valid addTarget:target action:action forControlEvents:UIControlEventTouchDown];
+    [valid addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

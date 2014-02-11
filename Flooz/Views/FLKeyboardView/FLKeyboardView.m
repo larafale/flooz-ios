@@ -89,7 +89,14 @@
 
 - (void)didButtonReturnTouch:(UIButton *)sender
 {
-    [_textField deleteBackward];
+    NSInteger startOffset = [_textField offsetFromPosition:_textField.beginningOfDocument toPosition:_textField.selectedTextRange.start];
+    NSInteger endOffset = [_textField offsetFromPosition:_textField.beginningOfDocument toPosition:_textField.selectedTextRange.end];
+    
+    NSRange offsetRange = NSMakeRange(startOffset, endOffset - startOffset);
+    
+    if([[_textField delegate] textField:_textField shouldChangeCharactersInRange:offsetRange replacementString:@"\r"]){
+        [_textField deleteBackward];
+    }
 }
 
 

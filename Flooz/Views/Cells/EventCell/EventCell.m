@@ -54,10 +54,6 @@
     return current_height;
 }
 
-+ (CGFloat)getEstimatedHeight{
-    return 193;
-}
-
 - (void)setEvent:(FLEvent *)event{
     self->_event = event;
     [self prepareViews];
@@ -132,7 +128,7 @@
 }
 
 - (void)createSocialView{
-    FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 15)];
+    FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
     [rightView addSubview:view];
     height = CGRectGetMaxY(view.frame);
 }

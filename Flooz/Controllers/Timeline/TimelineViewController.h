@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "FLFilterView.h"
+#import "TransactionCellDelegate.h"
 
-@interface TimelineViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
+@interface TimelineViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, TransactionCellDelegate>{
     NSArray *transactions;
     UIButton *crossButton;
 }

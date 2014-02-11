@@ -21,10 +21,11 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-    _userId = [json objectForKey:@"_id"];
+    _userId = [json objectForKey:@"_id"]; // ou userId 
     _amount = [json objectForKey:@"balance"];
     _firstname = [json objectForKey:@"fisrtName"];
     _lastname = [json objectForKey:@"lastName"];
+    _fullname = [json objectForKey:@"name"];
     _username = [json objectForKey:@"nick"];
     _email = [json objectForKey:@"email"];
     _phone = [json objectForKey:@"phone"];
@@ -37,6 +38,31 @@
     
     _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
     _transactionsCount = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"total"];
+    
+    _haveStatsPending = NO;
+        
+    NSNumber *statsPending = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"pending"];
+    if([statsPending intValue] > 0){
+        _haveStatsPending = YES;
+    }
+}
+
+- (void)updateStatsPending:(NSDictionary *)json
+{
+    NSNumber *statsPending = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"pending"];
+    if([statsPending intValue] > 0){
+        _haveStatsPending = YES;
+    }
+}
+
+- (NSString *)avatarURL:(CGSize)size
+{
+    if(_avatarURL){
+        return [_avatarURL stringByAppendingFormat:@"?width=%d&height=%d", 2 * (int)floorf(size.width), 2 * (int)floorf(size.height)];
+    }
+    else{
+        return nil;
+    }
 }
 
 @end

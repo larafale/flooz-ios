@@ -44,7 +44,7 @@
     [crossButton setImage:buttonImage forState:UIControlStateNormal];
     [self.view addSubview:crossButton];
     
-    [crossButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchDown];
+    [crossButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     
     eventButton = [[FLMenuNewTransactionButton alloc] initWithPosition:90 imageNamed:@"menu-new-transaction-event" title:@"MENU_NEW_TRANSACTION_EVENT"];
     [self.view addSubview:eventButton];
@@ -103,7 +103,7 @@
 {
     __strong UIViewController *presentingController = self.presentingViewController;
     [self dismissViewControllerAnimated:NO completion:^{
-        [presentingController presentViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypePayment] animated:YES completion:NULL];
+        [presentingController presentViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeEvent] animated:YES completion:NULL];
     }];
 }
 

@@ -75,7 +75,7 @@
         button.tag = [buttonColors count];
         [buttonColors addObject:colors];
         
-        [button addTarget:self action:@selector(didButtonTouch:) forControlEvents:UIControlEventTouchDown];
+        [button addTarget:self action:@selector(didButtonTouch:) forControlEvents:UIControlEventTouchUpInside];
         
         [filterView addSubview:button];
     }

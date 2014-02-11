@@ -18,4 +18,7 @@
 - (void)didConnected;
 - (void)displayError:(NSError *)error;
 
+- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
+- (void)loadSignupWithUser:(NSDictionary *)user;
+
 @end

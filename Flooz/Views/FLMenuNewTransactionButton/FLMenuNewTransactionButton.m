@@ -31,7 +31,7 @@
         
     [self setImage:[UIImage imageNamed:imageNamed] forState:UIControlStateNormal];
     [self setImage:[UIImage imageNamed:imageNamed] forState:UIControlStateHighlighted];
-    [self setImageEdgeInsets:UIEdgeInsetsMake(- 10, 0, 0, 0)];
+    [self setImageEdgeInsets:UIEdgeInsetsMake(- 20, 0, 0, 0)];
     
     {
         UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 13, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];

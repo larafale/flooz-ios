@@ -38,11 +38,6 @@
     return [events count];
 }
 
-- (CGFloat)tableView:(FLTableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [EventCell getEstimatedHeight];
-}
-
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     FLEvent *event = [events objectAtIndex:indexPath.row];
     return [EventCell getHeightForEvent:event];

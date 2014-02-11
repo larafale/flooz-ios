@@ -24,29 +24,27 @@
     self.backgroundColor = [UIColor colorWithIntegerRed:30. green:41. blue:52.];
     
     {
-        userView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) - 97.) / 2., 13, 97, 96.5)];
+        userView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) - 97.) / 2., 6, 97, 96.5)];
         [userView setAlternativeStyle];
         [self addSubview:userView];
     }
     
     {
-        UILabel *usernameText = [[UILabel alloc] initWithFrame:CGRectMake(0, 105, CGRectGetWidth(self.frame), 30)];
+        fullname = [[UILabel alloc] initWithFrame:CGRectMake(0, 103, CGRectGetWidth(self.frame), 17)];
         
-        usernameText.text = @"username";
+        fullname.font = [UIFont customTitleExtraLight:21];
+        fullname.textAlignment = NSTextAlignmentCenter;
+        fullname.textColor = [UIColor whiteColor];
         
-        usernameText.font = [UIFont customContentRegular:10];
-        usernameText.textAlignment = NSTextAlignmentCenter;
-        usernameText.textColor = [UIColor customBlueLight];
-        
-        [self addSubview:usernameText];
+        [self addSubview:fullname];
     }
     
     {
-        username = [[UILabel alloc] initWithFrame:CGRectMake(0, 125, CGRectGetWidth(self.frame), 17)];
+        username = [[UILabel alloc] initWithFrame:CGRectMake(0, 118, CGRectGetWidth(self.frame), 30)];
         
-        username.font = [UIFont customTitleExtraLight:21];
+        username.font = [UIFont customContentRegular:10];
         username.textAlignment = NSTextAlignmentCenter;
-        username.textColor = [UIColor whiteColor];
+        username.textColor = [UIColor customBlueLight];
         
         [self addSubview:username];
     }
@@ -108,8 +106,10 @@
 {
     user = [[Flooz sharedInstance] currentUser];
     
-    username.text = [user.username uppercaseString];
-    [userView setImageFromURL:user.avatarURL];
+    fullname.text = [user.fullname uppercaseString];
+    username.text = [@"@" stringByAppendingString:user.username];
+    
+    [userView setImageFromUser:user];
     
     {
         NSMutableAttributedString *text = [[NSMutableAttributedString alloc]

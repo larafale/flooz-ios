@@ -11,6 +11,7 @@
 #import "TransactionCell.h"
 
 #import "MenuNewTransactionViewController.h"
+#import "TransactionViewController.h"
 
 @implementation TimelineViewController
 
@@ -37,7 +38,7 @@
     [crossButton setImage:buttonImage forState:UIControlStateNormal];
     [self.view addSubview:crossButton];
     
-    [crossButton addTarget:self action:@selector(presentMenuTransactionController) forControlEvents:UIControlEventTouchDown];
+    [crossButton addTarget:self action:@selector(presentMenuTransactionController) forControlEvents:UIControlEventTouchUpInside];
     
     
     {
@@ -45,12 +46,16 @@
         [_filterView addFilter:@"TIMELINE_FILTER_FRIEND" target:self action:@selector(didFilterFriendTouch)];
         [_filterView addFilter:@"TIMELINE_FILTER_PERSO" target:self action:@selector(didFilterPersoTouch:) colors:@[
                                                                                         [UIColor customBlue],
-                                                                                        [UIColor customYellow],
-                                                                                        [UIColor customGreen]
+                                                                                        [UIColor customYellow]
                                                                                         ]];
     }
     
-    [self didFilterPublicTouch];
+//    if([[[Flooz sharedInstance] currentUser] haveStatsPending]){
+//        [self didFilterPersoTouch:@1];
+//    }
+//    else{
+        [self didFilterPublicTouch];
+//    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -76,6 +81,7 @@
     
     if(!cell){
         cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.delegate = self;
     }
     
     FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
@@ -102,6 +108,7 @@
 
 - (void)didFilterPublicTouch
 {
+    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] timeline:@"public" success:^(id result) {
         transactions = result;
         [self didFilterChange];
@@ -110,6 +117,7 @@
 
 - (void)didFilterFriendTouch
 {
+    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] timeline:@"friend" success:^(id result) {
         transactions = result;
         [self didFilterChange];
@@ -118,7 +126,13 @@
 
 - (void)didFilterPersoTouch:(NSNumber *)index
 {
-    [[Flooz sharedInstance] timeline:@"private" success:^(id result) {
+    NSString *state = @"";
+    if([index intValue] == 1){
+        state = @"pending";
+    }
+    
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] timeline:@"private" state:state success:^(id result) {
         transactions = result;
         [self didFilterChange];
     } failure:NULL];
@@ -127,7 +141,19 @@
 - (void)didFilterChange
 {
     [_tableView reloadData];
-    [_tableView setContentOffset:CGPointZero animated:YES]; // WARNING Bug graphique quand scroll
+    [_tableView setContentOffset:CGPointZero animated:YES];
+}
+
+#pragma mark - TransactionCellDelegate
+
+- (void)didTransactionTouch:(FLTransaction *)transaction
+{
+    UIViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction];
+    self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+
+    [self presentViewController:controller animated:YES completion:^{
+        self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }];
 }
 
 @end
