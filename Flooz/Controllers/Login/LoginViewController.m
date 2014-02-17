@@ -94,6 +94,8 @@
 
 - (void)presentTimelineController
 {
+    [[self view] endEditing:YES];
+    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] login:user success:NULL failure:NULL];
 }

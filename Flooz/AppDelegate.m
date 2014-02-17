@@ -17,7 +17,7 @@
 #import "TimelineViewController.h"
 #import "AccountViewController.h"
 
-#import "FriendPickerViewController.h"
+#import "NotificationsViewController.h"
 
 @implementation AppDelegate
 
@@ -33,9 +33,7 @@
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
-//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
-    
-//    self.window.rootViewController = [FriendPickerViewController new];
+    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
     return YES;
 }
@@ -56,6 +54,20 @@
      ];
 }
 
+- (void)didDisconnected
+{
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    
+    [UIView transitionWithView:self.window
+                      duration:0.7
+                       options:(UIViewAnimationOptionTransitionFlipFromRight | UIViewAnimationOptionAllowAnimatedContent)
+                    animations:^{
+                        self.window.rootViewController = controller;
+                    }
+                    completion:NULL
+     ];
+}
+
 - (void)displayError:(NSError *)error
 {
     if((lastErrorCode == FLNetworkError) && (error.code == FLNetworkError)){
@@ -68,6 +80,20 @@
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
                                                     message:ERROR_LOCALIZED_DESCRIPTION(error.code)
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
+                                          otherButtonTitles:nil
+                          ];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alert show];
+    });
+}
+
+- (void)displayErrorMessage:(NSString *)errorMessage
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
+                                                    message:errorMessage
                                                    delegate:nil
                                           cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
                                           otherButtonTitles:nil

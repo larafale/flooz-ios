@@ -17,6 +17,7 @@
 
 @interface TransactionViewController (){
     FLTransaction *_transaction;
+    NSIndexPath *_indexPath;
     
     UIScrollView *_contentView;
     UIView *_mainView;
@@ -28,11 +29,12 @@
 
 @implementation TransactionViewController
 
-- (id)initWithTransaction:(FLTransaction *)transaction
+- (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _transaction = transaction;
+        _indexPath = indexPath;
     }
     return self;
 }
@@ -116,6 +118,7 @@
     if([_transaction isPrivate] && [_transaction status] == TransactionStatusPending){
         TransactionActionsView *view = [[TransactionActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.transaction = _transaction;
+        view.delegate = self;
         [_mainView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
@@ -149,6 +152,7 @@
     }
     
     _mainView.frame = CGRectSetHeight(_mainView.frame, height + 15);
+    _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -222,6 +226,63 @@
 //    _contentView.contentSize = CGSizeMake(0, _contentView.contentSize.height - keyboardSize.height);
 //    
     keyboardIsShown = NO;
+}
+
+- (void)reloadTransaction
+{
+    // WARNING
+    for(UIView *view in [self.view subviews]){
+        [view removeFromSuperview];
+    }
+    [self loadView];
+    
+    [_delegateController updateTransactionAtIndex:_indexPath transaction:_transaction];
+}
+
+#pragma mark - Actions
+
+- (void)cancelTransaction
+{
+    [[Flooz sharedInstance] showLoadView];
+    
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusCanceled]
+                             };
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        [self reloadTransaction];
+    } failure:NULL];
+}
+
+- (void)acceptTransaction
+{
+    //    [[Flooz sharedInstance] showLoadView];
+    //
+    //    NSDictionary *params = @{
+    //                             @"id": [_transaction transactionId],
+    //                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
+    //                             };
+    //
+    //    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+    //
+    //    } failure:NULL];
+}
+
+- (void)refuseTransaction
+{
+    [[Flooz sharedInstance] showLoadView];
+    
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusRefused]
+                             };
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        [self reloadTransaction];
+    } failure:NULL];
 }
 
 @end

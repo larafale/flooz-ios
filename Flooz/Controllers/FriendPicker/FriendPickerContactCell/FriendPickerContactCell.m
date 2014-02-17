@@ -69,7 +69,8 @@
 
 #pragma mark - Prepare Views
 
-- (void)prepareViews{
+- (void)prepareViews
+{
     [self prepareAvatarView];
     [self prepareNameView];
     [self preparePhoneView];

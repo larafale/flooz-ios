@@ -46,7 +46,7 @@
     [super loadView];
     
     self.view.backgroundColor = [UIColor customBackground];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(presentTimelineController)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(didSignupTouch)];
     
     _contentView = [[UIScrollView alloc] initWithFrame:CGRectMakeWithSize(self.view.frame.size)];
     [self.view addSubview:_contentView];
@@ -127,8 +127,10 @@
     _contentView.frame = CGRectMakeWithSize(self.view.frame.size);
 }
 
-- (void)presentTimelineController
+- (void)didSignupTouch
 {
+    [[self view] endEditing:YES];
+    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] signup:_user success:NULL failure:NULL];
 }

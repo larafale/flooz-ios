@@ -144,7 +144,7 @@
     }
 }
 
-+ (NSString *)TransactionScopeToText:(TransactionScope)scope
++ (NSString *)transactionScopeToText:(TransactionScope)scope
 {
     NSString *key = nil;
     
@@ -161,7 +161,24 @@
     return NSLocalizedString([@"TRANSACTION_SCOPE_" stringByAppendingString:key], nil);
 }
 
-+ (NSString *)TransactionScopeToParams:(TransactionScope)scope
++ (NSString *)transactionStatusToParams:(TransactionStatus)status
+{
+    if(status == TransactionStatusAccepted){
+        return @"accept";
+    }
+    else if(status == TransactionStatusRefused){
+        return @"decline";
+    }
+    else if(status == TransactionStatusCanceled){
+        return @"cancel";
+    }
+    else{
+        NSLog(@"Bad TransactionStatus");
+        return @"";
+    }
+}
+
++ (NSString *)transactionScopeToParams:(TransactionScope)scope
 {
     if(scope == TransactionScopePublic){
         return @"0";
@@ -174,7 +191,7 @@
     }
 }
 
-+ (NSString *)TransactionTypeToParams:(TransactionType)type
++ (NSString *)transactionTypeToParams:(TransactionType)type
 {
     if(type == TransactionTypePayment){
         return @"pay";

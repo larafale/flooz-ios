@@ -13,9 +13,13 @@
 @interface FriendPickerViewController : UIViewController<FriendPickerSearchBarDelegate, UITableViewDataSource, UITableViewDelegate>{
     NSMutableArray *_contactsFromAdressBook;
     NSArray *_contacts;
+    
+    NSString *_selectionText;
 }
 
 @property (weak, nonatomic) IBOutlet FriendPickerSearchBar* searchBar;
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
+
+@property (weak, nonatomic) NSMutableDictionary *dictionary;
 
 @end

@@ -29,8 +29,8 @@
         [self createSeparator];
         [self createPrivacyButton];
         
-        [_dictionary setValue:[FLTransaction TransactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
-        [privacyButton setTitle:[FLTransaction TransactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
+        [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
+        [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
     }
     return self;
 }
@@ -150,7 +150,7 @@
 {
     NSInteger currentIndex = TransactionScopePublic;
     for(NSInteger scope = TransactionScopePublic; scope <= TransactionScopePrivate; ++scope){
-        if([[_dictionary objectForKey:@"scope"] isEqualToString:[FLTransaction TransactionScopeToParams:scope]]){
+        if([[_dictionary objectForKey:@"scope"] isEqualToString:[FLTransaction transactionScopeToParams:scope]]){
             currentIndex = scope;
             break;
         }
@@ -161,8 +161,8 @@
         currentIndex = TransactionScopePublic;
     }
     
-    [privacyButton setTitle:[FLTransaction TransactionScopeToText:currentIndex] forState:UIControlStateNormal];
-    [_dictionary setValue:[FLTransaction TransactionScopeToParams:currentIndex] forKey:@"scope"];
+    [privacyButton setTitle:[FLTransaction transactionScopeToText:currentIndex] forState:UIControlStateNormal];
+    [_dictionary setValue:[FLTransaction transactionScopeToParams:currentIndex] forKey:@"scope"];
 }
 
 #pragma mark - CLLocationManagerDelegate

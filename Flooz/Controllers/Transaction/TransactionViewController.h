@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TransactionViewController : UIViewController
+#import "TransactionActionsViewDelegate.h"
+#import "TransactionCellDelegate.h"
 
-- (id)initWithTransaction:(FLTransaction *)transaction;
+@interface TransactionViewController : UIViewController<TransactionActionsViewDelegate>
+
+- (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;
+
+@property (strong, nonatomic) UIViewController<TransactionCellDelegate> *delegateController;
 
 @end

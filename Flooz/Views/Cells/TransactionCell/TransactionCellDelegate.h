@@ -10,6 +10,8 @@
 
 @protocol TransactionCellDelegate <NSObject>
 
-- (void)didTransactionTouch:(FLTransaction *)transaction;
+- (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;
+- (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;
+- (FLTableView *)tableView;
 
 @end

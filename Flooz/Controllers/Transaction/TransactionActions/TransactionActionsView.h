@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TransactionActionsViewDelegate.h"
+
 @interface TransactionActionsView : UIView{
     CGFloat height;
 }
 
 @property (strong, nonatomic) FLTransaction *transaction;
+@property (weak, nonatomic) id<TransactionActionsViewDelegate> delegate;
 
 @end

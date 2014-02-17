@@ -13,6 +13,7 @@
 #import "SettingsViewController.h"
 #import "EditAccountViewController.h"
 #import "InformationsViewController.h"
+#import "CashOutViewController.h"
 
 @interface AccountViewController (){
     UIScrollView *_contentView;
@@ -93,6 +94,7 @@
 {
     [super viewWillAppear:animated];
     
+    [[Flooz sharedInstance] updateCurrentUser];
     [userView reloadData];
 }
 
@@ -101,6 +103,15 @@
     [super viewDidAppear:animated];
     
     _contentView.frame = CGRectMakeWithSize(self.view.frame.size);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCurrentUser) name:@"reloadCurrentUser" object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"reloadCurrentUser" object:nil];
 }
 
 - (void)presentEditAccountController
@@ -111,8 +122,8 @@
 
 - (void)presentCashOutController
 {
-//    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];
-//    [self presentViewController:controller animated:YES completion:NULL];
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[CashOutViewController new]];
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)presentSettingsController
@@ -125,6 +136,11 @@
 {
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[InformationsViewController new]];
     [self presentViewController:controller animated:YES completion:NULL];
+}
+
+- (void)reloadCurrentUser
+{
+    [userView reloadData];
 }
 
 @end

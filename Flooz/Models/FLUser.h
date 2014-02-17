@@ -24,6 +24,9 @@
 @property NSNumber *transactionsCount;
 @property BOOL haveStatsPending;
 
+@property NSMutableDictionary *address;
+@property NSMutableDictionary *sepa;
+
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)updateStatsPending:(NSDictionary *)json;
 

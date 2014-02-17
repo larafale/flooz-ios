@@ -31,4 +31,6 @@ typedef NS_ENUM(NSInteger, EventStatus) {
 
 + (NSArray *)testData;
 
+- (id)initWithJSON:(NSDictionary *)json;
+
 @end

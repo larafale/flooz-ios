@@ -12,7 +12,7 @@
 #import "TransactionCellDelegate.h"
 
 @interface TimelineViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, TransactionCellDelegate>{
-    NSArray *transactions;
+    NSMutableArray *transactions;
     UIButton *crossButton;
 }
 

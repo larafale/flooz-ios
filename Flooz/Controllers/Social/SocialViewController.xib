@@ -7,7 +7,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SocialViewController">
             <connections>
                 <outlet property="filterView" destination="qof-yu-oZg" id="jfl-10-YBx"/>
-                <outlet property="tableView" destination="j7x-n0-W6A" id="qI0-JW-lX9"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -16,15 +15,6 @@
             <rect key="frame" x="0.0" y="64" width="320" height="504"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="j7x-n0-W6A" customClass="FLTableView">
-                    <rect key="frame" x="0.0" y="34" width="320" height="470"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="zNO-P4-baq"/>
-                        <outlet property="delegate" destination="-1" id="B33-2u-3FQ"/>
-                    </connections>
-                </tableView>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qof-yu-oZg" customClass="FLFilterView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

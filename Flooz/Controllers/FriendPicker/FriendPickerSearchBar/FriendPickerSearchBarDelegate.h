@@ -11,5 +11,6 @@
 @protocol FriendPickerSearchBarDelegate <NSObject>
 
 - (void)dismiss;
+- (void)didfilterChange:(NSString *)text;
 
 @end

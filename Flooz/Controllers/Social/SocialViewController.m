@@ -8,7 +8,8 @@
 
 #import "SocialViewController.h"
 
-#import "EventCell.h"
+#import "EventsViewController.h"
+#import "AcitvitiesViewController.h"
 
 @implementation SocialViewController
 
@@ -17,7 +18,13 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"NAV_SOCIAL", nil);
-        events = [FLEvent testData];
+        
+        currentController = nil;
+        controllers = @[
+                        [EventsViewController new],
+                        [EventsViewController new],
+                        [AcitvitiesViewController new]
+                        ];
     }
     return self;
 }
@@ -27,34 +34,62 @@
     [super viewDidLoad];
     
     {
-//        [_filterView addFilter:@"TIMELINE_FILTER_PUBLIC" target:self action:nil];
-//        [_filterView addFilter:@"TIMELINE_FILTER_FRIEND" target:self action:nil];
-    }
-}
-
-#pragma mark - TableView
-
-- (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [events count];
-}
-
-- (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    FLEvent *event = [events objectAtIndex:indexPath.row];
-    return [EventCell getHeightForEvent:event];
-}
-
-- (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellIdentifier = @"EventCell";
-    EventCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if(!cell){
-        cell = [[EventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        [_filterView addFilter:@"SOCIAL_FILTER_FRIENDS" target:self action:@selector(didFilterFriendsTouch)];
+        [_filterView addFilter:@"SOCIAL_FILTER_EVENTS" target:self action:@selector(didFilterEventsTouch)];
+        [_filterView addFilter:@"SOCIAL_FILTER_ACTIVITIES" target:self action:@selector(didFilterActivitiesTouch)];
     }
     
-    FLEvent *event = [events objectAtIndex:indexPath.row];
-    [cell setEvent:event];
+    [self didFilterActivitiesTouch];
+}
+
+- (CGRect)frameForContentController
+{
+    return CGRectMake(0, CGRectGetMaxY(_filterView.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - CGRectGetMaxY(_filterView.frame));
+}
+
+- (void)displayContentController:(UIViewController*)newController;
+{
+    if(currentController == newController){
+        return;
+    }
     
-    return cell;
+    if(currentController){
+        [self hideContentController:currentController];
+    }
+    
+    [self addChildViewController:newController];
+    newController.view.frame = [self frameForContentController];
+    [self.view addSubview:newController.view];
+    [newController didMoveToParentViewController:self];
+    
+    currentController = newController;
+}
+
+- (void)hideContentController:(UIViewController*)newController
+{
+    [newController willMoveToParentViewController:nil];
+    [newController.view removeFromSuperview];
+    [newController removeFromParentViewController];
+    
+    currentController = nil;
+}
+
+
+#pragma mark - Filters
+
+- (void)didFilterFriendsTouch
+{
+    [self displayContentController:[controllers objectAtIndex:0]];
+}
+
+- (void)didFilterEventsTouch
+{
+    [self displayContentController:[controllers objectAtIndex:1]];
+}
+
+- (void)didFilterActivitiesTouch
+{
+    [self displayContentController:[controllers objectAtIndex:2]];
 }
 
 @end

@@ -10,7 +10,6 @@
 
 @implementation FLTextFieldTitle
 
-
 - (id)initWithTitle:(NSString *)title placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position
 {
     self = [super initWithFrame:CGRectMake(position.x, position.y, SCREEN_WIDTH - position.x, 41)];
@@ -88,7 +87,5 @@
     }
     [textField resignFirstResponder];
 }
-
-
 
 @end

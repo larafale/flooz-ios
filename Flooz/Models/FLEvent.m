@@ -10,6 +10,24 @@
 
 @implementation FLEvent
 
+- (id)initWithJSON:(NSDictionary *)json
+{
+    self = [super init];
+    if(self){
+        [self setJSON:json];
+    }
+    return self;
+}
+
+- (void)setJSON:(NSDictionary *)json
+{
+    NSLog(@"%@", json);
+    
+    _status = EventStatusAccepted;
+    _title = @"KDO pour lolo";
+    _content = @"Merci pour le café ;)";
+}
+
 - (NSString *)statusText{
     if([self status] == EventStatusAccepted){
         return NSLocalizedString(@"EVENT_STATUS_ACCEPTED", nil);

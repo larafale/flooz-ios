@@ -8,6 +8,10 @@
 
 #import "SettingsViewController.h"
 
+#import "NotificationsViewController.h"
+#import "RIBViewController.h"
+#import "PasswordViewController.h"
+
 @interface SettingsViewController (){
     NSArray *links;
 }
@@ -29,9 +33,9 @@
                  @"rib",
                  @"privacy",
                  @"documents",
-                 @"password"
+                 @"password",
+                 @"logout"
                  ];
-        
     }
     return self;
 }
@@ -65,6 +69,22 @@
     cell.imageView.image = [UIImage imageNamed:[@"settings-" stringByAppendingString:link]];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row == 0){
+        [[self navigationController] pushViewController:[NotificationsViewController new] animated:YES];
+    }
+    else if(indexPath.row == 3){
+        [[self navigationController] pushViewController:[RIBViewController new] animated:YES];
+    }
+    else if(indexPath.row == 6){
+        [[self navigationController] pushViewController:[PasswordViewController new] animated:YES];
+    }
+    else if(indexPath.row == 7){
+        [[Flooz sharedInstance] logout];
+    }
 }
 
 @end

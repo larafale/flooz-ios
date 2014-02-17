@@ -26,6 +26,8 @@
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;
         
+        [_dictionary setValue:[NSNumber numberWithFloat:100.] forKey:_dictionaryKey];
+        
         [self commontInit];
     }
     return self;
@@ -118,6 +120,13 @@
     amount2.frame = CGRectSetWidth(amount2.frame, CGRectGetWidth(amount2.frame) + offset  + ([amount2 isEditing] ? 0 : 0));
 }
 
+- (BOOL)resignFirstResponder
+{
+    [amount resignFirstResponder];
+    [amount2 resignFirstResponder];
+    return [super resignFirstResponder];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -163,6 +172,11 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     [textField setBackgroundColor:[UIColor clearColor]];
+    
+    if(textField == amount && [textField.text isEqualToString:@""]){
+        textField.text = @"0";
+        [self resizeInputs];
+    }
     
     CGFloat value = [amount.text floatValue];
     value += [amount2.text floatValue] / 100.;

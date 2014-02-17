@@ -29,7 +29,6 @@
     self = [super init];
     if(self){
         manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://api.flooz.me"]];
-//        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://192.168.0.19:3002"]];
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         
@@ -50,10 +49,18 @@
 
 #pragma mark -
 
+- (void)logout
+{
+    _currentUser = nil;
+    access_token = nil;
+    
+    [appDelegate didDisconnected];
+}
+
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
-        [self updateCurrentUser:result];
+        [self updateCurrentUserAfterConnect:result];
         
         if(success){
             success(result);
@@ -71,7 +78,7 @@
              };
     
     id successBlock = ^(id result) {
-        [self updateCurrentUser:result];
+        [self updateCurrentUserAfterConnect:result];
         
         if(success){
             success(result);
@@ -79,6 +86,30 @@
     };
     
     [self requestPath:@"login/basic" method:@"POST" params:user success:successBlock failure:failure];
+}
+
+- (void)updateCurrentUser
+{
+    [self requestPath:@"profile" method:@"GET" params:nil success:^(id result) {
+        _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
+    } failure:NULL];
+}
+
+- (void)updateUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"profile" method:@"PUT" params:user success:^(id result) {
+        _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
+        if(success){
+            success(result);
+        }
+    } failure:failure];
+}
+
+- (void)updatePassword:(NSDictionary *)password success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"password/change" method:@"POST" params:password success:success failure:failure];
 }
 
 - (void)timeline:(NSString *)scope success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -115,6 +146,44 @@
     [self requestPath:@"flooz" method:@"GET" params:params success:successBlock failure:failure];
 }
 
+- (void)activitiesWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    id successBlock = ^(id result) {
+        NSMutableArray *activities = [NSMutableArray new];
+        NSArray *activitiesJSON = [result objectForKey:@"items"];
+        
+        for(NSDictionary *json in activitiesJSON){
+            FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
+            [activities addObject:activity];
+        }
+
+        if(success){
+            success(activities);
+        }
+    };
+    
+    [self requestPath:@"feed" method:@"GET" params:nil success:successBlock failure:failure];
+}
+
+- (void)eventsWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    id successBlock = ^(id result) {
+        NSMutableArray *events = [NSMutableArray new];
+        NSArray *eventsJSON = [result objectForKey:@"items"];
+        
+        for(NSDictionary *json in eventsJSON){
+            FLEvent *event = [[FLEvent alloc] initWithJSON:json];
+            [events addObject:event];
+        }
+        
+        if(success){
+            success(events);
+        }
+    };
+    
+    [self requestPath:@"cagnottes" method:@"GET" params:nil success:successBlock failure:failure];
+}
+
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     if([transaction objectForKey:@"image"]){
@@ -131,9 +200,20 @@
     
 }
 
+- (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    NSString *path = [@"flooz/" stringByAppendingString:[transaction objectForKey:@"id"]];
+    [self requestPath:path method:@"POST" params:transaction success:success failure:failure];
+}
+
 - (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     [self requestPath:@"comments" method:@"POST" params:comment success:success failure:failure];
+}
+
+- (void)cashout:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{    
+    [self requestPath:@"cashout" method:@"POST" params:@{ @"amount": amount } success:success failure:failure];
 }
 
 #pragma mark -
@@ -169,6 +249,12 @@
            ){
             DISPLAY_ERROR(FLNetworkError);
         }
+        else if(operation.responseObject){
+            NSString *message = [operation.responseObject objectForKey:@"item"];
+            if(message){
+                DISPLAY_ERROR_MESSAGE(message);
+            }
+        }
         
         if(failure){
             failure(error);
@@ -191,7 +277,7 @@
 
 #pragma mark -
 
-- (void)updateCurrentUser:(id)result
+- (void)updateCurrentUserAfterConnect:(id)result
 {
     _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
     access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
@@ -215,7 +301,7 @@
     NSString *accessToken = [[[FBSession activeSession] accessTokenData] accessToken];
     
     [self requestPath:@"/login/facebook" method:@"POST" params:@{@"token": accessToken} success:^(id result) {
-        [self updateCurrentUser:result];
+        [self updateCurrentUserAfterConnect:result];
     } failure:^(NSError *error) {
     
         [FBRequestConnection startWithGraphPath:@"/me?field=email,first_name,last_name" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {

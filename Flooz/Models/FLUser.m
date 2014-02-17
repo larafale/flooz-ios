@@ -23,7 +23,7 @@
 {
     _userId = [json objectForKey:@"_id"]; // ou userId 
     _amount = [json objectForKey:@"balance"];
-    _firstname = [json objectForKey:@"fisrtName"];
+    _firstname = [json objectForKey:@"firstName"];
     _lastname = [json objectForKey:@"lastName"];
     _fullname = [json objectForKey:@"name"];
     _username = [json objectForKey:@"nick"];
@@ -44,6 +44,22 @@
     NSNumber *statsPending = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"pending"];
     if([statsPending intValue] > 0){
         _haveStatsPending = YES;
+    }
+    
+    {
+        _address = [NSMutableDictionary new];
+        
+        if([json objectForKey:@"settings"] && [[json objectForKey:@"settings"] objectForKey:@"address"]){
+            _address = [[[json objectForKey:@"settings"] objectForKey:@"address"] mutableCopy];
+        }
+    }
+    
+    {
+        _sepa = [NSMutableDictionary new];
+        
+        if([json objectForKey:@"settings"] && [[json objectForKey:@"settings"] objectForKey:@"sepa"]){
+            _sepa = [[[json objectForKey:@"settings"] objectForKey:@"sepa"] mutableCopy];
+        }
     }
 }
 

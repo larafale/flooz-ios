@@ -54,12 +54,14 @@
 {
     UISearchBar *view = [[UISearchBar alloc] initWithFrame:CGRectMake(42, 0, 240, CGRectGetHeight(self.frame))];
     
+    view.delegate = self;
+    
     view.translucent = NO;
     view.barTintColor = self.backgroundColor;
     view.tintColor = [UIColor whiteColor]; // Curseur
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor customBackground]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
-    
+        
     [self addSubview:view];
 }
 
@@ -73,6 +75,16 @@
 - (void)didBackTouch
 {
     [_delegate dismiss];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [_delegate didfilterChange:searchText];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
 }
 
 @end

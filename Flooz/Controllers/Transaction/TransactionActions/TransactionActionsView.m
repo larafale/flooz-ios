@@ -24,7 +24,7 @@
 {
     [self createRefuseView];
     [self createAcceptView];
-    [self creatCancelView];
+    [self createCancelView];
     [self createBottomBar];
 }
 
@@ -39,6 +39,8 @@
     [view setImage:[UIImage imageNamed:@"transaction-cell-cross"] forState:UIControlStateNormal];
     [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_REFUSE", nil) forState:UIControlStateNormal];
     [view setTitleColor:[UIColor customRed] forState:UIControlStateNormal];
+    
+    [view addTarget:self action:@selector(didRefuseTouch) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:view];
 }
@@ -55,10 +57,12 @@
     [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil) forState:UIControlStateNormal];
     [view setTitleColor:[UIColor customGreen] forState:UIControlStateNormal];
     
+    [view addTarget:self action:@selector(didAcceptTouch) forControlEvents:UIControlEventTouchUpInside];
+    
     [self addSubview:view];
 }
 
-- (void)creatCancelView
+- (void)createCancelView
 {
     UIButton *view = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
     
@@ -69,6 +73,8 @@
     [view setImage:[UIImage imageNamed:@"transaction-cell-cross"] forState:UIControlStateNormal];
     [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_CANCEL", nil) forState:UIControlStateNormal];
     [view setTitleColor:[UIColor customRed] forState:UIControlStateNormal];
+    
+    [view addTarget:self action:@selector(didCancelTouch) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:view];
 }
@@ -104,6 +110,21 @@
     else if([_transaction isAcceptable]){
         refuseView.hidden = acceptView.hidden = NO;
     }
+}
+
+- (void)didAcceptTouch
+{
+    [_delegate acceptTransaction];
+}
+
+- (void)didRefuseTouch
+{
+    [_delegate refuseTransaction];
+}
+
+- (void)didCancelTouch
+{
+    [_delegate cancelTransaction];
 }
 
 @end

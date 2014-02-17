@@ -25,6 +25,8 @@
     TransactionType _transactionType;
     FLNewTransactionAmount *amountInput;
     FLTextView *content;
+    
+    FLSelectFriendButton *friend;
 }
 
 @end
@@ -38,7 +40,7 @@
         transaction = [NSMutableDictionary new];
         
         _transactionType = transactionType;
-        [transaction setValue:[FLTransaction TransactionTypeToParams:transactionType] forKey:@"method"];
+        [transaction setValue:[FLTransaction transactionTypeToParams:transactionType] forKey:@"method"];
     }
     return self;
 }
@@ -82,15 +84,16 @@
             offset = CGRectGetMaxY(selectAmount.frame);
         }
         
-        
-        amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
-        [amountInput setInputAccessoryView:[[FLNewTransactionBar alloc] initWithFor:transaction]];
-        [_contentView addSubview:amountInput];
-        amountInput.frame = CGRectSetY(amountInput.frame, offset);
-        offset = CGRectGetMaxY(amountInput.frame);
-        
+        {
+            amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
+            [amountInput setInputAccessoryView:[[FLNewTransactionBar alloc] initWithFor:transaction]];
+            [_contentView addSubview:amountInput];
+            amountInput.frame = CGRectSetY(amountInput.frame, offset);
+            offset = CGRectGetMaxY(amountInput.frame);
+        }
+
         if(_transactionType != TransactionTypeEvent){
-            FLSelectFriendButton *friend = [[FLSelectFriendButton alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(amountInput.frame)) dictionary:transaction];
+            friend = [[FLSelectFriendButton alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(amountInput.frame)) dictionary:transaction];
             friend.delegate = self;
 
             [_contentView addSubview:friend];
@@ -133,6 +136,8 @@
     _contentView.frame = CGRectMake(0, CGRectGetMaxY(navBar.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
     
     transactionBar.frame = CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _contentView.frame.origin.y);
+    
+    [friend reloadData];
 }
 
 #pragma mark -
@@ -164,7 +169,8 @@
 
 - (void)valid
 {
-    NSLog(@"%@", transaction);
+    [[self view] endEditing:YES];
+    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
         [self dismissViewControllerAnimated:YES completion:NULL];

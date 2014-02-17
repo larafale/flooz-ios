@@ -15,5 +15,6 @@
 @property (weak, nonatomic) UIViewController *delegate;
 
 - (id)initWithFrame:(CGRect)frame dictionary:(NSMutableDictionary *)dictionary;
+- (void)reloadData;
 
 @end

@@ -10,11 +10,11 @@
 
 #import "FLFilterView.h"
 
-@interface SocialViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
-    NSArray *events;
+@interface SocialViewController : UIViewController{
+    NSArray *controllers;
+    UIViewController *currentController;
 }
 
-@property (weak, nonatomic) IBOutlet FLTableView *tableView;
 @property (weak, nonatomic) IBOutlet FLFilterView *filterView;
 
 @end

@@ -16,7 +16,7 @@
 @interface TransactionCell : UITableViewCell{
     CGFloat height;
     
-    UIView *validView;
+    UIView *actionView;
     UIView *leftView;
     UIView *rightView;
     UIView *slideView;
@@ -29,7 +29,7 @@
 
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction;
 
-@property (weak, nonatomic) id<TransactionCellDelegate> delegate;
+@property (weak, nonatomic) UIViewController<TransactionCellDelegate> *delegate;
 @property (weak, nonatomic) FLTransaction *transaction;
 
 @end

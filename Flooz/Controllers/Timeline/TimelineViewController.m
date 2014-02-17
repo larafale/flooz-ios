@@ -20,7 +20,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"NAV_TIMELINE", nil);
-        transactions = @[];
+        transactions = [NSMutableArray new];
     }
     return self;
 }
@@ -110,7 +110,7 @@
 {
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] timeline:@"public" success:^(id result) {
-        transactions = result;
+        transactions = [result mutableCopy];
         [self didFilterChange];
     } failure:NULL];
 }
@@ -119,7 +119,7 @@
 {
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] timeline:@"friend" success:^(id result) {
-        transactions = result;
+        transactions = [result mutableCopy];
         [self didFilterChange];
     } failure:NULL];
 }
@@ -133,7 +133,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] timeline:@"private" state:state success:^(id result) {
-        transactions = result;
+        transactions = [result mutableCopy];
         [self didFilterChange];
     } failure:NULL];
 }
@@ -146,14 +146,24 @@
 
 #pragma mark - TransactionCellDelegate
 
-- (void)didTransactionTouch:(FLTransaction *)transaction
+- (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction
 {
-    UIViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction];
+    TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
+    controller.delegateController = self;
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
 
     [self presentViewController:controller animated:YES completion:^{
         self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     }];
+}
+
+- (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction
+{
+    [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
+    
+    [_tableView beginUpdates];
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [_tableView endUpdates];
 }
 
 @end

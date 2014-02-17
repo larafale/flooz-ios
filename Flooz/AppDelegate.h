@@ -16,7 +16,10 @@
 @property (strong, nonatomic) UIWindow *window;
 
 - (void)didConnected;
+- (void)didDisconnected;
+
 - (void)displayError:(NSError *)error;
+- (void)displayErrorMessage:(NSString *)errorMessage;
 
 - (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 - (void)loadSignupWithUser:(NSDictionary *)user;

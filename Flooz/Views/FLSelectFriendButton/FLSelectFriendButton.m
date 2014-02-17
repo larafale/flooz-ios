@@ -21,6 +21,8 @@
         [self createImage];
         [self createButton];
         [self createBottomBar];
+        
+        [self reloadData];
     }
     return self;
 }
@@ -41,8 +43,6 @@
     [button setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont customContentLight:14];
     
-    [button setTitle:NSLocalizedString(@"FIELD_TRANSACTION_SELECT_FRIEND", nil) forState:UIControlStateNormal];
-    
     [button addTarget:self action:@selector(didButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:button];
@@ -58,9 +58,22 @@
 
 #pragma mark -
 
+- (void)reloadData
+{
+    UIButton *button = [[self subviews] objectAtIndex:1];
+    if([_dictionary objectForKey:@"to"] && ![[_dictionary objectForKey:@"to"] isBlank]){
+        [button setTitle:[_dictionary objectForKey:@"to"] forState:UIControlStateNormal];
+    }
+    else{
+        [button setTitle:NSLocalizedString(@"FIELD_TRANSACTION_SELECT_FRIEND", nil) forState:UIControlStateNormal];
+    }
+}
+
 - (void)didButtonTouch
 {
-    [_delegate presentViewController:[FriendPickerViewController new] animated:YES completion:NULL];
+    FriendPickerViewController *controller = [FriendPickerViewController new];
+    [controller setDictionary:_dictionary];
+    [_delegate presentViewController:controller animated:YES completion:NULL];
 }
 
 @end

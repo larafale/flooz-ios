@@ -8,14 +8,11 @@
 
 #import "FriendPickerViewController.h"
 
+#import "FriendPickerSelectionCell.h"
 #import "FriendPickerContactCell.h"
 
 #import "AppDelegate.h"
 #import <AddressBook/AddressBook.h>
-
-@interface FriendPickerViewController ()
-
-@end
 
 @implementation FriendPickerViewController
 
@@ -45,7 +42,18 @@
 
 #pragma mark - TableView
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if(section == 0){
+        if(_selectionText && ![_selectionText isBlank]){
+            return 1;
+        }
+        return 0;
+    }
     return [_contacts count];
 }
 
@@ -54,6 +62,19 @@
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section == 0){
+        static NSString *cellIdentifierSelection = @"FriendPickerSelectionCell";
+        FriendPickerSelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSelection];
+        
+        if(!cell){
+            cell = [[FriendPickerSelectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
+        }
+        
+        [cell setSelectionText:_selectionText];
+        
+        return cell;
+    }
+    
     static NSString *cellIdentifier = @"FriendPickerContactCell";
     FriendPickerContactCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
@@ -65,6 +86,51 @@
     [cell setContact:contact];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *value = nil;
+    
+    if(indexPath.section == 0){
+        value = _selectionText;
+    }
+    else{
+        value = [[_contacts objectAtIndex:indexPath.row] objectForKey:@"value"];
+    }
+    
+    [_dictionary setValue:value forKey:@"to"];
+    [self dismiss];
+}
+
+#pragma mark -
+
+- (void)didfilterChange:(NSString *)text
+{
+    _selectionText = text;
+    
+    if(!text || [text isBlank]){
+        _contacts = _contactsFromAdressBook;
+        [self didTableDataChanged];
+        return;
+    }
+    
+    NSMutableArray *contactsFiltred = [NSMutableArray new];
+    
+    for(NSDictionary *contact in _contactsFromAdressBook){
+        if([contact objectForKey:@"name"] && [[[contact objectForKey:@"name"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+            [contactsFiltred addObject:contact];
+        }
+        else if([contact objectForKey:@"email"] && [[[contact objectForKey:@"email"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+            [contactsFiltred addObject:contact];
+        }
+        else if([contact objectForKey:@"phone"] && [[[contact objectForKey:@"phone"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+            [contactsFiltred addObject:contact];
+        }
+    }
+    
+    _contacts = contactsFiltred;
+    [self didTableDataChanged];
 }
 
 - (void)didTableDataChanged
@@ -98,10 +164,6 @@
 
 - (void)didAddressBookPermissionGranted
 {
-    // Que tel
-    // filtre sur n importe quel champs
-    // tel est prioritaire a l email
-    
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
     CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);

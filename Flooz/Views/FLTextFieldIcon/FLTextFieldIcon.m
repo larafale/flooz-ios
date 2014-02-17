@@ -8,6 +8,8 @@
 
 #import "FLTextFieldIcon.h"
 
+#define MARGE_MIDDLE_BAR 10
+
 @implementation FLTextFieldIcon
 
 - (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position
@@ -47,7 +49,7 @@
     BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
     CGFloat width = CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18;
     if(!haveOneTextField){
-        width /= 2.;
+        width = (width / 2.) - MARGE_MIDDLE_BAR;
     }
     
     _textfield = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(icon.frame) + 18, 8, width, 30)];
@@ -84,9 +86,17 @@
         return;
     }
     
-    CGFloat width = (CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18) / 2.;
+    {
+        UIView *middleBar = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_textfield.frame) + MARGE_MIDDLE_BAR, 10, 1, CGRectGetHeight(self.frame) - 10)];
+        middleBar.backgroundColor = [UIColor customSeparator];
+        
+        [self addSubview:middleBar];
+    }
     
-    _textfield2 = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_textfield.frame), 8, width, 30)];
+    
+    CGFloat width = ((CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18) / 2.) - MARGE_MIDDLE_BAR;
+    
+    _textfield2 = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_textfield.frame) + MARGE_MIDDLE_BAR + MARGE_MIDDLE_BAR, 8, width, 30)];
     
     _textfield2.autocorrectionType = UITextAutocorrectionTypeNo;
     _textfield2.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -140,6 +150,7 @@
     }else{
         [_dictionary setValue:textField.text forKey:currentDictionaryKey];
     }
+    
     [textField resignFirstResponder];
 }
 

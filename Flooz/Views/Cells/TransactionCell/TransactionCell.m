@@ -8,8 +8,7 @@
 
 #import "TransactionCell.h"
 
-#define MARGE_TOP 14.
-#define MARGE_BOTTOM 14.
+#define MARGE_TOP_BOTTOM 14.
 #define MARGE_LEFT_RIGHT 10.
 
 @implementation TransactionCell
@@ -27,7 +26,7 @@
     CGRect rect = CGRectZero;
     CGFloat rightViewWidth = SCREEN_WIDTH - 60 - MARGE_LEFT_RIGHT;
     
-    CGFloat current_height = MARGE_TOP;
+    CGFloat current_height = MARGE_TOP_BOTTOM;
     
     // Details
     
@@ -64,7 +63,7 @@
     // Social, Footer
     current_height += 14 + 15;
     
-    current_height += MARGE_BOTTOM;
+    current_height += MARGE_TOP_BOTTOM;
     
     return current_height;
 }
@@ -86,20 +85,11 @@
     [self createLeftViews];
     [self createSlideView];
     [self createRightViews];
-    [self createValidViews];
-    
-    UIPanGestureRecognizer *swipeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipe:)];
-    swipeGesture.delegate = self;
-    [self addGestureRecognizer:swipeGesture];
-    
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCellTouch)];
-    tapGesture.delegate = self;
-    [tapGesture requireGestureRecognizerToFail:swipeGesture];
-    [self addGestureRecognizer:tapGesture];
+    [self createActionViews];
 }
 
 - (void)createLeftViews{
-    leftView = [[UIView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, MARGE_TOP, 50, 0)];
+    leftView = [[UIView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, MARGE_TOP_BOTTOM, 50, 0)];
     
     [self.contentView addSubview:leftView];
     
@@ -114,7 +104,7 @@
 }
 
 - (void)createRightViews{
-    rightView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(leftView.frame), MARGE_TOP, CGRectGetWidth(self.frame) - CGRectGetMaxX(leftView.frame) - MARGE_LEFT_RIGHT, 0)];
+    rightView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(leftView.frame), MARGE_TOP_BOTTOM, CGRectGetWidth(self.frame) - CGRectGetMaxX(leftView.frame) - MARGE_LEFT_RIGHT, 0)];
     
     [self.contentView addSubview:rightView];
     
@@ -124,19 +114,34 @@
     [self createFooterView];
 }
 
-- (void)createValidViews{
-    validView = [[UIView alloc] initWithFrame:CGRectMake(- CGRectGetWidth(self.frame), 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
-    
-    validView.backgroundColor = [UIColor customBackgroundHeader];
-    
-    [self.contentView addSubview:validView];
-    
-    JTImageLabel *text = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(validView.frame) - 30, CGRectGetHeight(validView.frame))];
-    
-    [text setImageOffset:CGPointMake(-10, 0)];
-    text.textAlignment = NSTextAlignmentRight;
-    
-    [validView addSubview:text];
+- (void)createActionViews{
+    {
+        actionView = [[UIView alloc] initWithFrame:CGRectMake(- CGRectGetWidth(self.frame), 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+        
+        actionView.backgroundColor = [UIColor customBackgroundHeader];
+        
+        [self.contentView addSubview:actionView];
+    }
+
+    {
+        JTImageLabel *text = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(actionView.frame) - 30, CGRectGetHeight(actionView.frame))];
+        
+        [text setImageOffset:CGPointMake(-10, 0)];
+        text.textAlignment = NSTextAlignmentRight;
+        
+        [actionView addSubview:text];
+    }
+
+    {
+        UIPanGestureRecognizer *swipeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipe:)];
+        swipeGesture.delegate = self;
+        [self addGestureRecognizer:swipeGesture];
+        
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCellTouch)];
+        tapGesture.delegate = self;
+        [tapGesture requireGestureRecognizerToFail:swipeGesture];
+        [self addGestureRecognizer:tapGesture];
+    }
 }
 
 - (void)createAvatarView{
@@ -205,10 +210,10 @@
     leftView.frame = CGRectSetHeight(leftView.frame, height);
     rightView.frame = CGRectSetHeight(rightView.frame, height);
     
-    height += MARGE_TOP + MARGE_BOTTOM;
+    height += MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM;
     
     slideView.frame = CGRectSetHeight(slideView.frame, height);
-    validView.frame = CGRectSetHeight(validView.frame, height);
+    actionView.frame = CGRectSetHeight(actionView.frame, height);
     self.frame = CGRectSetHeight(self.frame, height);
 }
 
@@ -359,7 +364,7 @@
             break;
         }
         case UIGestureRecognizerStateEnded:
-            [self completeTranslation];
+            [self completeTranslation:progress];
             break;
         default:
             break;
@@ -373,8 +378,22 @@
     }
 }
 
-- (void)completeTranslation
+- (void)completeTranslation:(CGFloat)progress
 {
+    if(isSwipable && progress >= 0.50){
+        if([_transaction isCancelable]){
+            [self cancelTransaction];
+        }
+        else{
+            if(progress < 0.75){
+                [self acceptTransaction];
+            }
+            else{
+                [self refuseTransaction];
+            }
+        }
+    }
+    
     totalTranslation.x = - totalTranslation.x;
     
     [UIView animateWithDuration:.3 animations:^{
@@ -384,30 +403,101 @@
 
 - (void)updateValidView:(CGFloat)progress
 {
-    JTImageLabel *text = [[validView subviews] objectAtIndex:0];
+    JTImageLabel *text = [[actionView subviews] objectAtIndex:0];
     
-    if(progress < 0.50){
-        text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);
-        text.textColor = [UIColor whiteColor];
-        [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
-    }
-    else if(progress < 0.75){
-        text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);
-        text.textColor = [UIColor customGreen];
-        [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
+    if([_transaction isCancelable]){
+        if(progress < 0.50){
+            text.text = NSLocalizedString(@"TRANSACTION_ACTION_CANCEL", nil);
+            text.textColor = [UIColor whiteColor];
+            [text setImage:[UIImage imageNamed:@"transaction-cell-cross"]];
+        }
+        else{
+            text.text = NSLocalizedString(@"TRANSACTION_ACTION_CANCEL", nil);
+            text.textColor = [UIColor customRed];
+            [text setImage:[UIImage imageNamed:@"transaction-cell-cross"]];
+        }
     }
     else{
-        text.text = NSLocalizedString(@"TRANSACTION_ACTION_REFUSE", nil);
-        text.textColor = [UIColor customRed];
-        [text setImage:[UIImage imageNamed:@"transaction-cell-cross"]];
+        if(progress < 0.50){
+            text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);
+            text.textColor = [UIColor whiteColor];
+            [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
+        }
+        else if(progress < 0.75){
+            text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);
+            text.textColor = [UIColor customGreen];
+            [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
+        }
+        else{
+            text.text = NSLocalizedString(@"TRANSACTION_ACTION_REFUSE", nil);
+            text.textColor = [UIColor customRed];
+            [text setImage:[UIImage imageNamed:@"transaction-cell-cross"]];
+        }
     }
     
-    text.center = CGPointMake(text.center.x, validView.center.y);
+    text.center = CGPointMake(text.center.x, actionView.center.y);
 }
+
+#pragma mark -
 
 - (void)didCellTouch
 {
-    [_delegate didTransactionTouch:_transaction];
+    NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
+    [_delegate didTransactionTouchAtIndex:indexPath transaction:_transaction];
+}
+
+#pragma mark - Actions
+
+- (void)cancelTransaction
+{
+    [[Flooz sharedInstance] showLoadView];
+    
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusCanceled]
+                             };
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
+        
+        if(indexPath){
+            [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
+        }
+    } failure:NULL];
+}
+
+- (void)acceptTransaction
+{
+//    [[Flooz sharedInstance] showLoadView];
+//    
+//    NSDictionary *params = @{
+//                             @"id": [_transaction transactionId],
+//                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
+//                             };
+//    
+//    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+//        
+//    } failure:NULL];
+}
+
+- (void)refuseTransaction
+{
+    [[Flooz sharedInstance] showLoadView];
+    
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusRefused]
+                             };
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
+        
+        if(indexPath){
+            [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
+        }
+    } failure:NULL];
 }
 
 @end

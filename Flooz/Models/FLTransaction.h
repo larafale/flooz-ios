@@ -64,9 +64,10 @@ typedef NS_ENUM(NSInteger, TransactionScope) {
 - (NSString *)statusText;
 - (NSString *)typeText;
 
-+ (NSString *)TransactionScopeToText:(TransactionScope)scope;
-+ (NSString *)TransactionScopeToParams:(TransactionScope)scope;
-+ (NSString *)TransactionTypeToParams:(TransactionType)type;
++ (NSString *)transactionScopeToText:(TransactionScope)scope;
++ (NSString *)transactionStatusToParams:(TransactionStatus)status;
++ (NSString *)transactionScopeToParams:(TransactionScope)scope;
++ (NSString *)transactionTypeToParams:(TransactionType)type;
 
 + (NSArray *)testData;
 
