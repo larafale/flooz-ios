@@ -64,9 +64,9 @@
             _avatarURL = [[json objectForKey:@"to"] objectForKey:@"pic"];
         }
     }
-    
-    _text = [json objectForKey:@"text"];
-    _why = [json objectForKey:@"why"];
+        
+    _title = [json objectForKey:@"text"];
+    _content = [json objectForKey:@"why"];
 
     _attachmentURL = [json objectForKey:@"pic"];
     _attachmentThumbURL = [json objectForKey:@"picMini"];
@@ -204,40 +204,14 @@
     }
 }
 
-+ (NSArray *)testData
++ (NSString *)transactionPaymentMethodToParams:(TransactionPaymentMethod)paymentMethod
 {
-    NSMutableArray *transactions = [NSMutableArray new];
-    
-    FLTransaction *transaction = nil;
-
-    int i = 0;
-    
-    for(NSInteger type = TransactionTypePayment; type <= TransactionTypeCollection; ++type){
-        for(NSInteger status = TransactionStatusAccepted; status <= TransactionStatusExpired; ++status){
-                        
-            transaction = [FLTransaction new];
-            transaction.type = type;
-            transaction.status = status;
-            transaction.text = @"koko a flooz avec kik";
-            transaction.why = [NSString stringWithFormat:@"%d Merci pour le café ;)", ++i];
-            [transactions addObject:transaction];
-            
-            transaction = [FLTransaction new];
-            transaction.type = type;
-            transaction.status = status;
-             transaction.text = [NSString stringWithFormat:@"%d Ca roxe", ++i];
-            [transactions addObject:transaction];
-            
-            transaction = [FLTransaction new];
-            transaction.type = type;
-            transaction.status = status;
-             transaction.why = [NSString stringWithFormat:@"%d Plop plop plop", ++i];
-            [transactions addObject:transaction];
-            
-        }
+    if(paymentMethod == TransactionPaymentMethodWallet){
+        return @"balance";
     }
-        
-    return transactions;
+    else{
+        return @"card";
+    }
 }
 
 @end

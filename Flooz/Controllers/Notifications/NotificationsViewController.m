@@ -11,6 +11,7 @@
 @interface NotificationsViewController (){
     NSMutableDictionary *_notifications;
     NSArray *_sections;
+    NSArray *_rows;
 }
 
 @end
@@ -23,72 +24,41 @@
     if (self) {
         self.title = NSLocalizedString(@"NAV_NOTIFICATIONS", nil);
         
-        _notifications = [NSMutableDictionary new];
+        FLUser *currentUser = [[Flooz sharedInstance] currentUser];
+        _notifications = [[currentUser notifications] mutableCopy];
         
         _sections = @[
-                      @[
-                          @{ @"comments": @"" },
-                          @{ @"likes": @"" },
-                          @{ @"friend_request": @"" },
-                          @{ @"friend_joined": @"" },
-                          @{ @"status": @"" }
-                          ],
-                      @[
-                          @{ @"status": @"" }
-                          ],
-                      @[
-                          @{ @"comments": @"" },
-                          @{ @"likes": @"" },
-                          @{ @"friend_request": @"" },
-                          @{ @"friend_joined": @"" },
-                          @{ @"status": @"" }
-                          ]
+                      @"feed",
+                      @"push",
+                      @"email",
+                      @"phone"
                       ];
+        
+        _rows = @[
+                  @{ @"floozRequest": @"flooz_request" },
+                  @{ @"floozStatus": @"flooz_status" },
+                  @{ @"friendRequest": @"friend_request" },
+                  @{ @"friendJoined": @"friend_joined" },
+                  @{ @"event": @"event" },
+                  @{ @"comments": @"comments" },
+                  @{ @"likes": @"likes" },
+                  @{ @"lineNew": @"new_transaction" }
+                  ];
     }
     return self;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(didValidTouch)];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    // Bug avec uitableview style grouped
-    _tableView.frame = CGRectSetY(_tableView.frame, _tableView.frame.origin.y - 40);
 }
 
 #pragma mark - TableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [_sections count];
+    return [[_notifications allKeys] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *title = nil;
-    switch (section) {
-        case 0:
-            title = NSLocalizedString(@"NOTIFICATIONS_SECTION_PUSH", nil);
-            break;
-        case 1:
-            title = NSLocalizedString(@"NOTIFICATIONS_SECTION_SMS", nil);
-            break;
-        case 2:
-            title = NSLocalizedString(@"NOTIFICATIONS_SECTION_EMAIL", nil);
-            break;
-        default:
-            break;
-    }
-    
-    return title;
+    NSString *sectionName = [_sections objectAtIndex:section];
+    return NSLocalizedString([@"NOTIFICATIONS_SECTION_" stringByAppendingString:[sectionName uppercaseString]], nil);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -96,11 +66,14 @@
     return 71;
 }
 
-- (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [[_sections objectAtIndex:section] count];
+- (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSString *sectionName = [_sections objectAtIndex:section];
+    return [[[_notifications objectForKey:sectionName] allKeys] count];
 }
 
-- (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return 57;
 }
 
@@ -120,18 +93,7 @@
         
         [view addSubview:label];
     }
-    
-    {
-        UIView *separatorTop = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.frame), 1)];
-        UIView *separatorBottom = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(view.frame) - 1, CGRectGetWidth(view.frame), 1)];
-        
-        separatorTop.backgroundColor = separatorBottom.backgroundColor = [UIColor customSeparator];
-        
-        [view addSubview:separatorTop];
-        [view addSubview:separatorBottom];
-    }
-    
-    
+
     return view;
 }
 
@@ -153,20 +115,96 @@
         [switchView setThumbTintColor:[UIColor customBackgroundHeader]]; // Cursuer
         [switchView setOnTintColor:[UIColor customBlue]]; // Couleur de fond
         
+        switchView.userInteractionEnabled = NO; // Permet de detecter le click sur la cellule
+        
         cell.accessoryView = switchView;
     }
     
-    NSString *notificationKey = [[[[_sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] allKeys] firstObject];
-    cell.textLabel.text = NSLocalizedString([@"NOTIFICATIONS_" stringByAppendingString:[notificationKey uppercaseString]], nil);;
+    cell.textLabel.text = [self notificationTitleAtIndexPath:indexPath];
+    
+    UISwitch *switchView = (UISwitch *)cell.accessoryView;
+    if([self notificationValueAtIndexPath:indexPath]){
+        switchView.on = YES;
+    }
+    else{
+        switchView.on = NO;
+    }
     
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UISwitch *switchView = (UISwitch *)cell.accessoryView;
+    
+    NSDictionary *notification = [self notificationAtIndexPath:indexPath];
+    NSString *sectionKey = [notification objectForKey:@"sectionKey"];
+    NSString *rowKey = [notification objectForKey:@"rowKey"];
+    
+    NSDictionary *notificationAPI = @{
+                                   @"canal": sectionKey,
+                                   @"type": rowKey,
+                                   @"value": [NSNumber numberWithBool:(!switchView.on)]
+                                   };
+        
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] updateNotification:notificationAPI success:^(id result) {
+        [switchView setOn:(!switchView.on) animated:YES];
+        [self notificationValue:switchView.on indexPath:indexPath];
+    } failure:NULL];
+}
+
 #pragma mark - 
 
-- (void)didValidTouch
+- (NSString *)notificationTitleAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *notification = [self notificationAtIndexPath:indexPath];
+    NSString *rowLocalKey = [notification objectForKey:@"rowLocalKey"];
     
+    return NSLocalizedString([@"NOTIFICATIONS_" stringByAppendingString:[rowLocalKey uppercaseString]], nil);
+}
+
+- (BOOL)notificationValueAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *notification = [self notificationAtIndexPath:indexPath];
+    NSString *sectionKey = [notification objectForKey:@"sectionKey"];
+    NSString *rowKey = [notification objectForKey:@"rowKey"];
+    
+    return [[[_notifications objectForKey:sectionKey] objectForKey:rowKey] isEqualToNumber:@1];
+}
+
+- (void)notificationValue:(BOOL)value indexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *notification = [self notificationAtIndexPath:indexPath];
+    NSString *sectionKey = [notification objectForKey:@"sectionKey"];
+    NSString *rowKey = [notification objectForKey:@"rowKey"];
+    
+    [[_notifications objectForKey:sectionKey] setObject:[NSNumber numberWithBool:value] forKey:rowKey];
+}
+
+- (NSDictionary *)notificationAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *sectionKey = [_sections objectAtIndex:indexPath.section];
+    
+    int indexRowNotification = 0;
+    for(indexRowNotification = 0; indexRowNotification < [_rows count]; ++indexRowNotification){
+        NSString *notificationKey = [[[_notifications objectForKey:sectionKey] allKeys] objectAtIndex:indexPath.row];
+        NSString *rowKey = [[[_rows objectAtIndex:indexRowNotification] allKeys] firstObject];
+        
+        if([notificationKey isEqualToString:rowKey]){
+            break;
+        }
+    }
+    
+    NSString *rowKey = [[[_rows objectAtIndex:indexRowNotification] allKeys] firstObject];
+    NSString *rowLocalKey = [[[_rows objectAtIndex:indexRowNotification] allValues] firstObject];
+    
+    return @{
+             @"sectionKey": sectionKey,
+             @"rowKey": rowKey,
+             @"rowLocalKey": rowLocalKey
+             };
 }
 
 @end

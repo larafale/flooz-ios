@@ -9,10 +9,7 @@
 #import "EventsViewController.h"
 
 #import "EventCell.h"
-
-@interface EventsViewController ()
-
-@end
+#import "TransactionViewController.h"
 
 @implementation EventsViewController
 
@@ -20,7 +17,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        events = @[];
+        events = [NSMutableArray new];
     }
     return self;
 }
@@ -28,13 +25,23 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] eventsWithSuccess:^(id result) {
-        events = result;
-                
-        [_tableView reloadData];
-        [_tableView setContentOffset:CGPointZero animated:YES];
-    } failure:NULL];
+    if(!animated){
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] eventsWithSuccess:^(id result) {
+            events = [result mutableCopy];
+                        
+            [_tableView reloadData];
+            [_tableView setContentOffset:CGPointZero animated:YES];
+        } failure:NULL];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // WARNING Hack contraintes ne fonctionnent pas
+    _tableView.frame = CGRectMakeWithSize(self.view.frame.size);
 }
 
 #pragma mark - TableView
@@ -54,12 +61,35 @@
     
     if(!cell){
         cell = [[EventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.delegate = self;
     }
     
     FLEvent *event = [events objectAtIndex:indexPath.row];
     [cell setEvent:event];
     
     return cell;
+}
+
+#pragma mark - EventCellDelegate
+
+- (void)didEventTouchAtIndex:(NSIndexPath *)indexPath event:(FLEvent *)event
+{
+//    TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:event indexPath:indexPath];
+//    controller.delegateController = self;
+//    self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+//    
+//    [self presentViewController:controller animated:YES completion:^{
+//        self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+//    }];
+}
+
+- (void)updateEventAtIndex:(NSIndexPath *)indexPath event:(FLTransaction *)event
+{
+    [events replaceObjectAtIndex:indexPath.row withObject:event];
+    
+    [_tableView beginUpdates];
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [_tableView endUpdates];
 }
 
 @end

@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <AFHTTPRequestOperationManager.h>
 
+#import "FLFriendRequest.h"
 #import "FLUser.h"
 #import "FLEvent.h"
 #import "FLTransaction.h"
 #import "FLComment.h"
+#import "FLCreditCard.h"
 #import "FLActivity.h"
 
 @interface Flooz : NSObject{
@@ -32,7 +34,9 @@
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
 - (void)login:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
 - (void)updateCurrentUser;
+- (void)updateCurrentUserWithSuccess:(void (^)())success;
 
 - (void)updateUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updatePassword:(NSDictionary *)password success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
@@ -44,12 +48,18 @@
 - (void)eventsWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
-
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
+- (void)createEvent:(NSDictionary *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)cashout:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
+- (void)updateNotification:(NSDictionary *)notification success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
+- (void)createCreditCard:(NSDictionary *)creditCard success:(void (^)(id result))success;
+- (void)removeCreditCard:(NSString *)creditCardId success:(void (^)(id result))success;
 
 - (void)connectFacebook;
 - (void)didConnectFacebook;

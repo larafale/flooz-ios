@@ -30,9 +30,9 @@
     
     // Details
     
-    if([transaction text]){
+    if([transaction title] && ![[transaction title] isBlank]){
         attributedText = [[NSAttributedString alloc]
-                          initWithString:[transaction text]
+                          initWithString:[transaction title]
                           attributes:@{NSFontAttributeName: [UIFont customContentRegular:13]}];
         rect = [attributedText boundingRectWithSize:(CGSize){rightViewWidth, CGFLOAT_MAX}
                                             options:NSStringDrawingUsesLineFragmentOrigin
@@ -40,13 +40,13 @@
         current_height += rect.size.height;
     }
     
-    if([transaction why] && ![[transaction why] isBlank]){
-        if([transaction text]){
+    if([transaction content] && ![[transaction content] isBlank]){
+        if([transaction title] && ![[transaction title] isBlank]){
             current_height += 4;
         }
         
         attributedText = [[NSAttributedString alloc]
-                          initWithString:[transaction why]
+                          initWithString:[transaction content]
                           attributes:@{NSFontAttributeName: [UIFont customContentLight:12]}];
         rect = [attributedText boundingRectWithSize:(CGSize){rightViewWidth, CGFLOAT_MAX}
                                             options:NSStringDrawingUsesLineFragmentOrigin
@@ -236,15 +236,15 @@
     UILabel *text = [[view subviews] objectAtIndex:0];
     UILabel *content = [[view subviews] objectAtIndex:1];
     
-    text.text = [[self transaction] text];
+    text.text = [[self transaction] title];
     [text setHeightToFit];
 
     CGFloat offset = 0.;
-    if([[self transaction] text] && [[self transaction] why]){
+    if([[self transaction] title] && [[self transaction] content]){
         offset = 4.;
     }
     
-    content.text = [[self transaction] why];
+    content.text = [[self transaction] content];
     content.frame = CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
     [content setHeightToFit];
     
@@ -386,7 +386,15 @@
         }
         else{
             if(progress < 0.75){
-                [self acceptTransaction];
+                if(
+                   [_transaction type] == TransactionTypePayment &&
+                   [[[_transaction to] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]
+                   ){
+                    [self acceptTransaction];
+                }
+                else{
+                    [self showPaymentField];
+                }
             }
             else{
                 [self refuseTransaction];
@@ -448,6 +456,11 @@
 
 #pragma mark - Actions
 
+- (void)showPaymentField
+{
+    
+}
+
 - (void)cancelTransaction
 {
     [[Flooz sharedInstance] showLoadView];
@@ -458,10 +471,10 @@
                              };
     
     [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-        FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         
         if(indexPath){
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
             [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
         }
     } failure:NULL];
@@ -469,16 +482,41 @@
 
 - (void)acceptTransaction
 {
-//    [[Flooz sharedInstance] showLoadView];
-//    
-//    NSDictionary *params = @{
-//                             @"id": [_transaction transactionId],
-//                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
-//                             };
-//    
-//    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-//        
-//    } failure:NULL];
+    [[Flooz sharedInstance] showLoadView];
+    
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
+                             };
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
+        
+        if(indexPath){
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
+        }
+    } failure:NULL];
+}
+
+- (void)acceptTransaction:(TransactionPaymentMethod)paymentMethod
+{
+    [[Flooz sharedInstance] showLoadView];
+    
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted],
+                             @"source": [FLTransaction transactionPaymentMethodToParams:paymentMethod]
+                             };
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
+        
+        if(indexPath){
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
+        }
+    } failure:NULL];
 }
 
 - (void)refuseTransaction
@@ -491,10 +529,10 @@
                              };
     
     [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-        FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         
         if(indexPath){
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
             [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
         }
     } failure:NULL];

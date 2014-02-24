@@ -15,6 +15,10 @@
 #import "TransactionContentView.h"
 #import "TransactionCommentsView.h"
 
+#import "FLPaymentField.h"
+
+#define STATUSBAR_HEIGHT 20.
+
 @interface TransactionViewController (){
     FLTransaction *_transaction;
     NSIndexPath *_indexPath;
@@ -22,6 +26,7 @@
     UIScrollView *_contentView;
     UIView *_mainView;
     
+    BOOL paymentFieldIsShown;
     BOOL keyboardIsShown;
 }
 
@@ -35,6 +40,7 @@
     if (self) {
         _transaction = transaction;
         _indexPath = indexPath;
+        paymentFieldIsShown = NO;
     }
     return self;
 }
@@ -45,11 +51,12 @@
     
     self.view.backgroundColor = [UIColor customBackgroundHeader:0.9];
     
-    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMakeWithSize(self.view.frame.size)];
+    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT)];
+    
     [self.view addSubview:_contentView];
     
     {
-        UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(134, 40, 52, 52)];
+        UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(134, 20, 52, 52)];
         
         [closeButton setImage:[UIImage imageNamed:@"transaction-close"] forState:UIControlStateNormal];
         [closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
@@ -58,7 +65,7 @@
     }
     
     if([_transaction isPrivate]){
-        UILabel *status = [[UILabel alloc] initWithFrame:CGRectMake(0, 75, 0, 18)];
+        UILabel *status = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, 0, 18)];
         status.backgroundColor = [UIColor customBackground];
         status.layer.borderColor = [UIColor customSeparator].CGColor;
         status.layer.borderWidth = 1.;
@@ -93,7 +100,7 @@
     }
     
     {
-        _mainView = [[UIView alloc] initWithFrame:CGRectMake(13, 100, CGRectGetWidth(_contentView.frame) - (2 * 13), 200)];
+        _mainView = [[UIView alloc] initWithFrame:CGRectMake(13, 80, CGRectGetWidth(_contentView.frame) - (2 * 13), 0)];
         
         _mainView.backgroundColor = [UIColor customBackgroundHeader];
         _mainView.layer.borderWidth = 1.;
@@ -116,11 +123,19 @@
     }
     
     if([_transaction isPrivate] && [_transaction status] == TransactionStatusPending){
-        TransactionActionsView *view = [[TransactionActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.transaction = _transaction;
-        view.delegate = self;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+        if(paymentFieldIsShown){
+            FLPaymentField *view = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) for:nil key:nil];
+            view.delegate = self;
+            [_mainView addSubview:view];
+            height = CGRectGetMaxY(view.frame);
+        }
+        else{
+            TransactionActionsView *view = [[TransactionActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+            view.transaction = _transaction;
+            view.delegate = self;
+            [_mainView addSubview:view];
+            height = CGRectGetMaxY(view.frame);
+        }
     }
     
     {
@@ -147,6 +162,7 @@
     {
         TransactionCommentsView *view = [[TransactionCommentsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.transaction = _transaction;
+        view.delegate = self;
         [_mainView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
@@ -159,7 +175,7 @@
 {
     [super viewDidAppear:animated];
     
-    _contentView.frame = CGRectMakeWithSize(self.view.frame.size);
+    _contentView.frame = CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT);
     _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
     
     _contentView.frame = CGRectSetY(_contentView.frame, CGRectGetHeight(self.view.frame));
@@ -168,7 +184,7 @@
         _contentView.frame = CGRectSetY(_contentView.frame, - 10);
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.2 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _contentView.frame = CGRectSetY(_contentView.frame, 0);
+            _contentView.frame = CGRectSetY(_contentView.frame, STATUSBAR_HEIGHT);
         } completion:NULL];
     }];
 }
@@ -228,6 +244,50 @@
     keyboardIsShown = NO;
 }
 
+#pragma mark - FLPaymentFieldDelegate
+
+- (void)didCreditCardSelected
+{
+    [[Flooz sharedInstance] showLoadView];
+    
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted],
+                             @"source": [FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodCreditCard]
+                             };
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        paymentFieldIsShown = NO;
+        [self reloadTransaction];
+    } failure:NULL];
+}
+
+- (void)didWalletSelected
+{
+    [[Flooz sharedInstance] showLoadView];
+    
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted],
+                             @"source": [FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodWallet]
+                             };
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        paymentFieldIsShown = NO;
+        [self reloadTransaction];
+    } failure:NULL];
+}
+
+#pragma mark - Actions
+
+- (void)showPaymentField
+{
+    paymentFieldIsShown = YES;
+    [self reloadTransaction];
+}
+
 - (void)reloadTransaction
 {
     // WARNING
@@ -238,8 +298,6 @@
     
     [_delegateController updateTransactionAtIndex:_indexPath transaction:_transaction];
 }
-
-#pragma mark - Actions
 
 - (void)cancelTransaction
 {
@@ -258,16 +316,17 @@
 
 - (void)acceptTransaction
 {
-    //    [[Flooz sharedInstance] showLoadView];
-    //
-    //    NSDictionary *params = @{
-    //                             @"id": [_transaction transactionId],
-    //                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
-    //                             };
-    //
-    //    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-    //
-    //    } failure:NULL];
+    [[Flooz sharedInstance] showLoadView];
+    
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
+                             };
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        [self reloadTransaction];
+    } failure:NULL];
 }
 
 - (void)refuseTransaction

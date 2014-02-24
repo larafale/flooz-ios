@@ -27,6 +27,10 @@
         panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToPanGesture:)];
         [self addGestureRecognizer:panGesture];
         
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
+        [tapGesture requireGestureRecognizerToFail:panGesture];
+        [self addGestureRecognizer:tapGesture];
+        
         _viewControllers = viewControllers;
         [self prepareTitleViews];
     }
@@ -61,13 +65,24 @@
     }
 }
 
+- (void)respondToTapGesture:(UITapGestureRecognizer *)recognizer
+{
+    CGPoint location = [recognizer locationInView:self];
+    if(location.x < (CGRectGetWidth(self.frame) / 3.)){
+        [self loadPreviousController];
+    }
+    else if(location.x > (CGRectGetWidth(self.frame) / 3. * 2)){
+        [self loadNextController];
+    }
+}
+
 - (void)respondToPanGesture:(UIPanGestureRecognizer *)recognizer
 {
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:
             lastTranslation = CGPointZero;
             for(UIViewController *controller in _viewControllers){
-                [controller beginAppearanceTransition:YES animated:YES];
+//                [controller beginAppearanceTransition:YES animated:YES];
             }
             break;
         case UIGestureRecognizerStateChanged:{
@@ -133,10 +148,31 @@
     CGPoint positionFirstTitle = [[[_titlesView subviews] objectAtIndex:0] frame].origin;
     CGFloat screenWidth = CGRectGetWidth(self.frame);
     
-    selectedTitleIndex = roundf(((positionFirstTitle.x * -1.0) / (screenWidth / RATIO_TITLE_CONTENT)));
-    selectedTitleIndex = MAX(selectedTitleIndex, 0);
-    selectedTitleIndex = MIN(selectedTitleIndex, [[_titlesView subviews] count] - 1);
+    NSInteger newSelectedTitleIndex = roundf(((positionFirstTitle.x * -1.0) / (screenWidth / RATIO_TITLE_CONTENT)));
+    newSelectedTitleIndex = MAX(newSelectedTitleIndex, 0);
+    newSelectedTitleIndex = MIN(newSelectedTitleIndex, [[_titlesView subviews] count] - 1);
 
+    [self loadControllerWithIndex:newSelectedTitleIndex];
+}
+
+- (void)loadPreviousController
+{
+    [self loadControllerWithIndex:(selectedTitleIndex - 1)];
+}
+
+- (void)loadNextController
+{
+    [self loadControllerWithIndex:(selectedTitleIndex + 1)];
+}
+
+- (void)loadControllerWithIndex:(NSInteger)index
+{
+    if(index < 0 || index >= [[_titlesView subviews] count]){
+        return;
+    }
+    
+    selectedTitleIndex = index;
+    
     [UIView animateWithDuration:0.3
                           delay:0
                         options:0
@@ -144,7 +180,7 @@
                          [self updateViewsPositions];
                          
                          for(UIViewController *controller in _viewControllers){
-                             [controller endAppearanceTransition];
+//                             [controller endAppearanceTransition];
                          }
                      } completion:NULL];
 }

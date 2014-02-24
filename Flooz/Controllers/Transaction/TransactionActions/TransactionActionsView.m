@@ -114,7 +114,15 @@
 
 - (void)didAcceptTouch
 {
-    [_delegate acceptTransaction];
+    if(
+        [_transaction type] == TransactionTypePayment &&
+        [[[_transaction to] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]
+       ){
+        [_delegate acceptTransaction];
+    }
+    else{
+        [_delegate showPaymentField];
+    }
 }
 
 - (void)didRefuseTouch

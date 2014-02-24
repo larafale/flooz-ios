@@ -71,20 +71,6 @@
     self.frame = CGRectSetHeight(self.frame, height);
 }
 
-- (void)addCommentView:(FLComment *)comment
-{
-    UIView *commentSendView = [[self subviews] objectAtIndex:0];
-    height = commentSendView.frame.origin.y;
-    
-    UIView *commentView = [self createCommentView:comment];
-    height = CGRectGetMaxY(commentView.frame);
-    [self addSubview:commentView];
-    
-    [self prepareSendCommentView];
-    
-    self.frame = CGRectSetHeight(self.frame, height);
-}
-
 - (void)prepareSendCommentView
 {
     UIView *view = [[self subviews] objectAtIndex:0];
@@ -161,7 +147,7 @@
         [comments addObject:comment];
         _transaction.comments = comments;
         
-        [self addCommentView:comment];
+        [_delegate reloadTransaction];
     } failure:NULL];
 }
 

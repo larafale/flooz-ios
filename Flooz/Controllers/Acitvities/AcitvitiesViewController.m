@@ -28,12 +28,22 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] activitiesWithSuccess:^(id result) {
-        activities = result;
-        [_tableView reloadData];
-        [_tableView setContentOffset:CGPointZero animated:YES];
-    } failure:NULL];
+    if(!animated){
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] activitiesWithSuccess:^(id result) {
+            activities = result;
+            [_tableView reloadData];
+            [_tableView setContentOffset:CGPointZero animated:YES];
+        } failure:NULL];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // WARNING Hack contraintes ne fonctionnent pas
+    _tableView.frame = CGRectMakeWithSize(self.view.frame.size);
 }
 
 #pragma mark - TableView

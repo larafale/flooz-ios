@@ -27,10 +27,11 @@
     if (self) {
         self.title = NSLocalizedString(@"NAV_EDIT_ACCOUNT", nil);
         
+        FLUser *currentUser = [[Flooz sharedInstance] currentUser];
+        
         _user = [NSMutableDictionary new];
         [_user setObject:[NSMutableDictionary new] forKey:@"settings"];
-        
-        FLUser *currentUser = [[Flooz sharedInstance] currentUser];
+        [[_user objectForKey:@"settings"] setObject:[[currentUser address] mutableCopy] forKey:@"address"];
         
         if([currentUser lastname]){
             [_user setObject:[currentUser lastname] forKey:@"lastName"];
@@ -43,13 +44,6 @@
         }
         if([currentUser phone]){
             [_user setObject:[currentUser phone] forKey:@"phone"];
-        }
-        
-        if([currentUser address]){
-            [[_user objectForKey:@"settings"] setObject:[[currentUser address] mutableCopy] forKey:@"address"];
-        }
-        else{
-            [[_user objectForKey:@"settings"] setObject:[NSMutableDictionary new] forKey:@"address"];
         }
     }
     return self;

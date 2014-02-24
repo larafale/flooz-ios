@@ -28,7 +28,7 @@
 {
     self = [super init];
     if(self){
-        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://api.flooz.me"]];
+        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         
@@ -90,10 +90,21 @@
 
 - (void)updateCurrentUser
 {
-    [self requestPath:@"profile" method:@"GET" params:nil success:^(id result) {
+    [self updateCurrentUserWithSuccess:nil];
+}
+
+- (void)updateCurrentUserWithSuccess:(void (^)())success
+{
+    id successBlock = ^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
-    } failure:NULL];
+        
+        if(success){
+            success();
+        }
+    };
+    
+    [self requestPath:@"profile" method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
 - (void)updateUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -101,6 +112,7 @@
     [self requestPath:@"profile" method:@"PUT" params:user success:^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
+        
         if(success){
             success(result);
         }
@@ -151,7 +163,7 @@
     id successBlock = ^(id result) {
         NSMutableArray *activities = [NSMutableArray new];
         NSArray *activitiesJSON = [result objectForKey:@"items"];
-        
+                
         for(NSDictionary *json in activitiesJSON){
             FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
             [activities addObject:activity];
@@ -197,13 +209,35 @@
     else{
         [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failure];
     }
-    
 }
 
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
+    id successBlock = ^(id result) {
+        [self updateCurrentUser];
+        
+        if(success){
+            success(result);
+        }
+    };
+    
     NSString *path = [@"flooz/" stringByAppendingString:[transaction objectForKey:@"id"]];
-    [self requestPath:path method:@"POST" params:transaction success:success failure:failure];
+    [self requestPath:path method:@"POST" params:transaction success:successBlock failure:failure];
+}
+
+- (void)createEvent:(NSDictionary *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{    
+    if([event objectForKey:@"image"]){
+        NSData *image = [event objectForKey:@"image"];
+        [event setValue:nil forKey:@"image"];
+        
+        [self requestPath:@"cagnottes" method:@"POST" params:event success:success failure:failure constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            [formData appendPartWithFormData:image name:@"image"];
+        }];
+    }
+    else{
+        [self requestPath:@"cagnottes" method:@"POST" params:event success:success failure:failure];
+    }
 }
 
 - (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -216,6 +250,29 @@
     [self requestPath:@"cashout" method:@"POST" params:@{ @"amount": amount } success:success failure:failure];
 }
 
+- (void)updateNotification:(NSDictionary *)notification success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"alerts" method:@"PUT" params:notification success:success failure:failure];
+}
+
+- (void)createCreditCard:(NSDictionary *)creditCard success:(void (^)(id result))success
+{
+    id successBlock = ^(id result) {
+        if(success){
+            [_currentUser setCreditCard:[[FLCreditCard alloc] initWithJSON:[result objectForKey:@"item"]]];
+            success(result);
+        }
+    };
+    
+    [self requestPath:@"cards" method:@"POST" params:creditCard success:successBlock failure:nil];
+}
+
+- (void)removeCreditCard:(NSString *)creditCardId success:(void (^)(id result))success
+{
+    NSString *path = [@"cards/" stringByAppendingString:creditCardId];
+    [self requestPath:path method:@"DELETE" params:nil success:success failure:nil];
+}
+
 #pragma mark -
 
 -(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -225,6 +282,8 @@
 
 -(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> formData))constructingBodyWithBlock
 {
+//    NSLog(@"request: %@", path);
+    
     if(access_token){
         path = [path stringByAppendingFormat:@"?token=%@", access_token];
     }
@@ -249,9 +308,14 @@
            ){
             DISPLAY_ERROR(FLNetworkError);
         }
+        else if(error.code == kCFURLErrorUserCancelledAuthentication){
+            // Token expire
+            DISPLAY_ERROR(FLBadLoginError);
+            [self logout];
+        }
         else if(operation.responseObject){
-            NSString *message = [operation.responseObject objectForKey:@"item"];
-            if(message){
+            id message = [operation.responseObject objectForKey:@"item"];
+            if([message respondsToSelector:@selector(length)]){ // Test si string
                 DISPLAY_ERROR_MESSAGE(message);
             }
         }
@@ -270,8 +334,12 @@
     else if([method isEqualToString:@"PUT"]){
         [manager PUT:path parameters:params success:successBlock failure:failureBlock];
     }
+    else if([method isEqualToString:@"DELETE"]){
+        [manager DELETE:path parameters:params success:successBlock failure:failureBlock];
+    }
     else{
-        NSLog(@"no method");
+        NSLog(@"Flooz request no valid method");
+        [loadView hide];
     }
 }
 

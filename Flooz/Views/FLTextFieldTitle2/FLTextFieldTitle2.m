@@ -26,6 +26,11 @@
     return self;
 }
 
+- (void)reloadData
+{
+    _textfield.text = [_dictionary objectForKey:_dictionaryKey];
+}
+
 - (void)createTitle:(NSString *)title
 {
     _title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 21)];

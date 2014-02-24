@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 
 #import "NotificationsViewController.h"
+#import "CreditCardViewController.h"
 #import "RIBViewController.h"
 #import "PasswordViewController.h"
 
@@ -75,6 +76,9 @@
 {
     if(indexPath.row == 0){
         [[self navigationController] pushViewController:[NotificationsViewController new] animated:YES];
+    }
+    if(indexPath.row == 2){
+        [[self navigationController] pushViewController:[CreditCardViewController new] animated:YES];
     }
     else if(indexPath.row == 3){
         [[self navigationController] pushViewController:[RIBViewController new] animated:YES];

@@ -34,19 +34,19 @@
     
     if(amount){
         if(withCurrency){
-            if([amount intValue] > 0){
+            if([amount intValue] >= 0){
                 return [NSString stringWithFormat:@"+ %@%@", [formatter stringFromNumber:amount], currency];
             }
             else{
-                return [NSString stringWithFormat:@"- %.2f%@", [amount floatValue] * -1., currency];
+                return [NSString stringWithFormat:@"- %.2f%@", fabsf([amount floatValue]), currency];
             }
         }
         else{
-            if([amount intValue] > 0){
+            if([amount intValue] >= 0){
                 return [NSString stringWithFormat:@"+ %@", [formatter stringFromNumber:amount]];
             }
             else{
-                return [NSString stringWithFormat:@"- %.2f", [amount floatValue] * -1.];
+                return [NSString stringWithFormat:@"- %.2f", fabsf([amount floatValue])];
             }
         }
     }

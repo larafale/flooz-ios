@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EventCellDelegate.h"
 
-@interface EventsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
-    NSArray *events;
+@interface EventsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, EventCellDelegate>{
+    NSMutableArray *events;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

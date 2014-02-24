@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FLUser.h"
+#import "FLSocial.h"
+#import "FLComment.h"
+
 @interface FLEvent : NSObject
 
 typedef NS_ENUM(NSInteger, EventStatus) {
@@ -17,19 +21,29 @@ typedef NS_ENUM(NSInteger, EventStatus) {
 };
 
 @property (nonatomic) EventStatus status;
-@property (strong, nonatomic) NSString *title;
 
-@property (strong, nonatomic) NSString *content;
-@property (strong, nonatomic) NSString *attachment_url;
+@property NSString *eventId;
+@property NSNumber *amount;
 
-@property (strong, nonatomic) NSNumber *commentsCount;
-@property (strong, nonatomic) NSNumber *likesCount;
-@property (strong, nonatomic) NSNumber *isCommented;
-@property (strong, nonatomic) NSNumber *isLiked;
+@property NSString *avatarURL;
+
+@property NSString *title;
+@property NSString *content;
+@property NSString *attachmentURL;
+@property NSString *attachmentThumbURL;
+
+@property BOOL isPrivate;
+
+@property NSDate *date;
+
+@property FLUser *creator;
+@property NSArray *participants;
+
+@property FLSocial *social;
+
+@property NSArray *comments;
 
 - (NSString *)statusText;
-
-+ (NSArray *)testData;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

@@ -33,6 +33,11 @@ typedef NS_ENUM(NSInteger, TransactionScope) {
     TransactionScopePrivate
 };
 
+typedef NS_ENUM(NSInteger, TransactionPaymentMethod) {
+    TransactionPaymentMethodWallet,
+    TransactionPaymentMethodCreditCard
+};
+
 @property TransactionType type;
 @property TransactionStatus status;
 
@@ -41,23 +46,23 @@ typedef NS_ENUM(NSInteger, TransactionScope) {
 
 @property NSString *avatarURL;
 
-@property NSString *text;
-@property NSString *why;
+@property NSString *title;
+@property NSString *content;
 @property NSString *attachmentURL;
 @property NSString *attachmentThumbURL;
 
 @property BOOL isPrivate;
-@property BOOL isCancelable;
-@property BOOL isAcceptable;
+@property BOOL isCancelable; // Si peut annuler la demande
+@property BOOL isAcceptable; // Si peut accepter ou refuser de payer
 
 @property NSDate *date;
 
 @property FLUser *from;
 @property FLUser *to;
 
-@property NSArray *comments;
+@property FLSocial *social;
 
-@property FLSocial* social;
+@property NSArray *comments;
 
 - (id)initWithJSON:(NSDictionary *)json;
 
@@ -68,7 +73,6 @@ typedef NS_ENUM(NSInteger, TransactionScope) {
 + (NSString *)transactionStatusToParams:(TransactionStatus)status;
 + (NSString *)transactionScopeToParams:(TransactionScope)scope;
 + (NSString *)transactionTypeToParams:(TransactionType)type;
-
-+ (NSArray *)testData;
++ (NSString *)transactionPaymentMethodToParams:(TransactionPaymentMethod)paymentMethod;
 
 @end

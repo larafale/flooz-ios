@@ -70,18 +70,10 @@
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [dictionary setObject:@0 forKey:@"amount"];
-}
-
 - (void)didValidTouch
 {
-    [amountInput resignFirstResponder]; // WARNING test si toujours utile
     [[self view] endEditing:YES];
-    
+        
     if([[dictionary objectForKey:@"amount"] floatValue] > 0){
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] cashout:[dictionary objectForKey:@"amount"] success:^(id result) {

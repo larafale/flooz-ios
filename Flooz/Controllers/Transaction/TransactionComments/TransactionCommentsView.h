@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TransactionActionsViewDelegate.h"
+
 @interface TransactionCommentsView : UIView<UITextFieldDelegate>{
     CGFloat height;
     __weak UITextField *_textField;
 }
 
-@property (strong, nonatomic) FLTransaction *transaction;
+@property (weak, nonatomic) FLTransaction *transaction;
+@property (weak, nonatomic) id<TransactionActionsViewDelegate> delegate;
 
 @end

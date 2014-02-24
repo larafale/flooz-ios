@@ -29,10 +29,39 @@
         [self createSeparator];
         [self createPrivacyButton];
         
-        [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
-        [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
+        [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopeFriend] forKey:@"scope"];
+        [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopeFriend] forState:UIControlStateNormal];
     }
     return self;
+}
+
+- (void)reloadData
+{    
+    localizeButton.selected = NO;
+    imageButton.selected = NO;
+    facebookButton.selected = NO;
+    
+    if([_dictionary objectForKey:@"lat"]){
+        localizeButton.selected = YES;
+    }
+    if([_dictionary objectForKey:@"image"]){
+        imageButton.selected = YES;
+    }
+    if([_dictionary objectForKey:@"share"]){
+        facebookButton.selected = YES;
+    }
+    
+    {
+        NSInteger currentIndex = TransactionScopePublic;
+        for(NSInteger scope = TransactionScopePublic; scope <= TransactionScopePrivate; ++scope){
+            if([[_dictionary objectForKey:@"scope"] isEqualToString:[FLTransaction transactionScopeToParams:scope]]){
+                currentIndex = scope;
+                break;
+            }
+        }
+        
+        [privacyButton setTitle:[FLTransaction transactionScopeToText:currentIndex] forState:UIControlStateNormal];
+    }
 }
 
 - (void)createLocalizeButton
@@ -139,10 +168,10 @@
     facebookButton.selected = !facebookButton.selected;
     
     if(facebookButton.selected){
-        [_dictionary setValue:@"1" forKey:@"shareFacebook"];
+        [_dictionary setValue:@"1" forKey:@"share"];
     }
     else{
-        [_dictionary setValue:nil forKey:@"shareFacebook"];
+        [_dictionary setValue:nil forKey:@"share"];
     }
 }
 
@@ -171,7 +200,7 @@
 {
     NSNumber *lat = [NSNumber numberWithDouble:[manager.location coordinate].latitude];
     NSNumber *lng = [NSNumber numberWithDouble:[manager.location coordinate].longitude];
-
+    
     [_dictionary setValue:lat forKey:@"lat"];
     [_dictionary setValue:lng forKey:@"lng"];
     

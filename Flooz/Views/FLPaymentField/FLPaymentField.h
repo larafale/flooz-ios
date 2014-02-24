@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FLPaymentFieldDelegate.h"
+
 @interface FLPaymentField : UIView{
     __weak NSMutableDictionary *_dictionary;
     NSString *_dictionaryKey;
@@ -19,6 +21,8 @@
     UILabel *rightText;
     UILabel *amount;
 }
+
+@property (weak, nonatomic) id<FLPaymentFieldDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey;
 - (void)setStyleLight;

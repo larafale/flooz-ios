@@ -21,7 +21,13 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-    _userId = [json objectForKey:@"_id"]; // ou userId 
+    if([json objectForKey:@"userId"]){
+        _userId = [json objectForKey:@"userId"];
+    }
+    else{
+        _userId = [json objectForKey:@"_id"];
+    }
+    
     _amount = [json objectForKey:@"balance"];
     _firstname = [json objectForKey:@"firstName"];
     _lastname = [json objectForKey:@"lastName"];
@@ -60,6 +66,49 @@
         if([json objectForKey:@"settings"] && [[json objectForKey:@"settings"] objectForKey:@"sepa"]){
             _sepa = [[[json objectForKey:@"settings"] objectForKey:@"sepa"] mutableCopy];
         }
+    }
+    
+    {
+        _notifications = [NSMutableDictionary new];
+                
+        if([json objectForKey:@"notifications"]){
+            NSDictionary *notificationsJSON = [json objectForKey:@"notifications"];
+            
+            for(NSString *key in notificationsJSON){
+                NSDictionary *dictionary = [notificationsJSON objectForKey:key];
+                [_notifications setObject:[dictionary mutableCopy] forKey:key];
+            }
+        }
+    }
+    
+    if([json objectForKey:@"cards"] && [[json objectForKey:@"cards"] count] > 0){
+        _creditCard = [[FLCreditCard alloc] initWithJSON:[[json objectForKey:@"cards"] objectAtIndex:0]];
+    }
+    
+    {
+        NSMutableArray *friends = [NSMutableArray new];
+        
+        if([json objectForKey:@"friends"]){
+            for(NSDictionary *friendJSON in [json objectForKey:@"friends"]){
+                FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
+                [friends addObject:friend];
+            }
+        }
+        
+        _friends = friends;
+    }
+    
+    {
+        NSMutableArray *friendsRequest = [NSMutableArray new];
+        
+        if([json objectForKey:@"friendsRequest"]){
+            for(NSDictionary *friendRequestJSON in [json objectForKey:@"friendsRequest"]){
+                FLFriendRequest *friendRequest = [[FLFriendRequest alloc] initWithJSON:friendRequestJSON];
+                [friendsRequest addObject:friendRequest];
+            }
+        }
+        
+        _friendsRequest = friendsRequest;
     }
 }
 

@@ -11,10 +11,14 @@
 #import "FLTransaction.h"
 #import "TransactionCellDelegate.h"
 
+#import "FLPaymentField.h"
 #import "FLSocialView.h"
 
 @interface TransactionCell : UITableViewCell{
     CGFloat height;
+    
+    BOOL paymentFieldIsShown;
+    FLPaymentField *paymentField;
     
     UIView *actionView;
     UIView *leftView;

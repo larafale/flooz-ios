@@ -21,11 +21,66 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-    NSLog(@"%@", json);
+//    NSLog(@"%@", json);
     
-    _status = EventStatusAccepted;
-    _title = @"KDO pour lolo";
-    _content = @"Merci pour le café ;)";
+    _eventId = [json objectForKey:@"_id"];
+    
+//    NSNumber *state = [json objectForKey:@"state"];
+//    if([state integerValue] == 0){
+//        _status = TransactionStatusPending;
+//    }
+//    else if([state integerValue] == 1){
+//        _status = TransactionStatusAccepted;
+//    }
+//    else if([state integerValue] == 2){
+//        _status = TransactionStatusRefused;
+//    }
+//    else if([state integerValue] == 3){
+//        _status = TransactionStatusCanceled;
+//    }
+//    else if([state integerValue] == 4){
+//        _status = TransactionStatusExpired;
+//    }
+//    
+    _amount = [json objectForKey:@"amount"];
+
+    _title = [json objectForKey:@"name"];
+    _content = [json objectForKey:@"why"];
+    
+    _attachmentURL = [json objectForKey:@"pic"];
+    _attachmentThumbURL = [json objectForKey:@"picMini"];
+    
+    _social = [[FLSocial alloc] initWithJSON:json];
+    
+    _isPrivate = YES;
+    
+    _creator = [[FLUser alloc] initWithJSON:[json objectForKey:@"creator"]];
+    
+    {
+        NSMutableArray *participants = [NSMutableArray new];
+        for(NSDictionary *paricipantJSON in [json objectForKey:@"participants"]){
+            [participants addObject:[[FLUser alloc] initWithJSON:paricipantJSON]];
+        }
+        _participants = participants;
+    }
+    
+    {
+        static NSDateFormatter *dateFormatter;
+        if(!dateFormatter){
+            dateFormatter = [NSDateFormatter new];
+            [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
+        }
+        
+        _date = [dateFormatter dateFromString:[json objectForKey:@"cAt"]];
+    }
+    
+    {
+        NSMutableArray *comments = [NSMutableArray new];
+        for(NSDictionary *commentJSON in [json objectForKey:@"comments"]){
+            [comments addObject:[[FLComment alloc] initWithJSON:commentJSON]];
+        }
+        _comments = comments;
+    }
 }
 
 - (NSString *)statusText{
@@ -36,38 +91,6 @@
     }else{
         return NSLocalizedString(@"EVENT_STATUS_WAITING", nil);
     }
-}
-
-+ (NSArray *)testData{
-    NSMutableArray *events = [NSMutableArray new];
-    
-    FLEvent *event = nil;
-    
-    int i = 0;
-    
-    for(NSInteger status = EventStatusAccepted; status <= EventStatusWaiting; ++status){
-        
-        event = [FLEvent new];
-        event.status = status;
-        event.title = @"KDO pour lolo";
-        event.content = [NSString stringWithFormat:@"%d Merci pour le café ;)", ++i];
-        [events addObject:event];
-        
-        event = [FLEvent new];
-        event.status = status;
-        event.title = @"La fete a toto";
-        event.content = [NSString stringWithFormat:@"%d Ca roxe", ++i];
-        [events addObject:event];
-        
-        event = [FLEvent new];
-        event.status = status;
-        event.title = @"Diner entre amis";
-        event.content = [NSString stringWithFormat:@"%d Plop plop plop", ++i];
-        [events addObject:event];
-        
-    }
-    
-    return events;
 }
 
 @end

@@ -88,4 +88,9 @@
     [textField resignFirstResponder];
 }
 
+- (void)setInputAccessoryView:(UIView *)accessoryView
+{
+    _textfield.inputAccessoryView = accessoryView;
+}
+
 @end

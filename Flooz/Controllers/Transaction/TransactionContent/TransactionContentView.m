@@ -112,7 +112,7 @@
     UILabel *view = [[self subviews] objectAtIndex:0];
     view.frame = CGRectSetY(view.frame, height);
     
-    view.text = [[self transaction] text];
+    view.text = [[self transaction] title];
     [view setHeightToFit];
         
     height = CGRectGetMaxY(view.frame);
@@ -123,7 +123,7 @@
     UILabel *view = [[self subviews] objectAtIndex:1];
     view.frame = CGRectSetY(view.frame, height);
     
-    view.text = [[self transaction] why];
+    view.text = [[self transaction] content];
     [view setHeightToFit];
     
     height = CGRectGetMaxY(view.frame);

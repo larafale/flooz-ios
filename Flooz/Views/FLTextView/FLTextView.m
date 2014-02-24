@@ -78,4 +78,9 @@
     }
 }
 
+- (void)setInputAccessoryView:(UIView *)accessoryView
+{
+    _textView.inputAccessoryView = accessoryView;
+}
+
 @end

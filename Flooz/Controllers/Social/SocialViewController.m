@@ -8,6 +8,7 @@
 
 #import "SocialViewController.h"
 
+#import "FriendsViewController.h"
 #import "EventsViewController.h"
 #import "AcitvitiesViewController.h"
 
@@ -21,7 +22,7 @@
         
         currentController = nil;
         controllers = @[
-                        [EventsViewController new],
+                        [FriendsViewController new],
                         [EventsViewController new],
                         [AcitvitiesViewController new]
                         ];
@@ -32,14 +33,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     {
         [_filterView addFilter:@"SOCIAL_FILTER_FRIENDS" target:self action:@selector(didFilterFriendsTouch)];
         [_filterView addFilter:@"SOCIAL_FILTER_EVENTS" target:self action:@selector(didFilterEventsTouch)];
         [_filterView addFilter:@"SOCIAL_FILTER_ACTIVITIES" target:self action:@selector(didFilterActivitiesTouch)];
     }
     
-    [self didFilterActivitiesTouch];
+    [self didFilterFriendsTouch];
 }
 
 - (CGRect)frameForContentController
@@ -56,7 +57,7 @@
     if(currentController){
         [self hideContentController:currentController];
     }
-    
+        
     [self addChildViewController:newController];
     newController.view.frame = [self frameForContentController];
     [self.view addSubview:newController.view];

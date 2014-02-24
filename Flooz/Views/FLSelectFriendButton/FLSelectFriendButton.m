@@ -61,8 +61,8 @@
 - (void)reloadData
 {
     UIButton *button = [[self subviews] objectAtIndex:1];
-    if([_dictionary objectForKey:@"to"] && ![[_dictionary objectForKey:@"to"] isBlank]){
-        [button setTitle:[_dictionary objectForKey:@"to"] forState:UIControlStateNormal];
+    if([_dictionary objectForKey:@"toTitle"] && ![[_dictionary objectForKey:@"toTitle"] isBlank]){
+        [button setTitle:[_dictionary objectForKey:@"toTitle"] forState:UIControlStateNormal];
     }
     else{
         [button setTitle:NSLocalizedString(@"FIELD_TRANSACTION_SELECT_FRIEND", nil) forState:UIControlStateNormal];

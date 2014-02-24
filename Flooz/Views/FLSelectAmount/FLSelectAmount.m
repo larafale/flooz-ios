@@ -73,19 +73,25 @@
 
 - (void)didButtonLeftTouch
 {
+    if(buttonLeft.selected){
+        return;
+    }
+    
     buttonLeft.selected = YES;
     buttonRight.selected = NO;
     
-    [_dictionary setValue:@"" forKey:@"amountFix"];
     [_delegate didAmountFreeSelected];
 }
 
 - (void)didButtonRightTouch
 {
+    if(buttonRight.selected){
+        return;
+    }
+    
     buttonLeft.selected = NO;
     buttonRight.selected = YES;
     
-    [_dictionary setValue:@"" forKey:@"amountFix"];
     [_delegate didAmountFixSelected];
 }
 

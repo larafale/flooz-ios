@@ -90,16 +90,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *title = nil;
     NSString *value = nil;
     
     if(indexPath.section == 0){
+        title = _selectionText;
         value = _selectionText;
     }
     else{
+        title = [[_contacts objectAtIndex:indexPath.row] objectForKey:@"title"];
         value = [[_contacts objectAtIndex:indexPath.row] objectForKey:@"value"];
     }
     
+    [_dictionary setValue:title forKey:@"toTitle"];
     [_dictionary setValue:value forKey:@"to"];
+    
     [self dismiss];
 }
 
@@ -170,6 +175,7 @@
     
     _contactsFromAdressBook = [NSMutableArray new];
     
+    // Doit avoir nom et (telephone ou email)
     for(int i = 0; i < nPeople; ++i){
         ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
 
@@ -210,6 +216,18 @@
         [contact setValue:phone forKey:@"phone"];
         [contact setValue:image forKey:@"image"];
         
+        // Valeur a afficher pour l utilisateur
+        if([contact objectForKey:@"name"] && ![[contact objectForKey:@"name"] isBlank]){
+            [contact setValue:name forKey:@"title"];
+        }
+        else if([contact objectForKey:@"phone"] && ![[contact objectForKey:@"phone"] isBlank]){
+            [contact setValue:phone forKey:@"title"];
+        }
+        else if([contact objectForKey:@"email"] && ![[contact objectForKey:@"email"] isBlank]){
+            [contact setValue:email forKey:@"title"];
+        }
+        
+        // Valeur a envoyer sur l API
         if([contact objectForKey:@"phone"] && ![[contact objectForKey:@"phone"] isBlank]){
             [contact setValue:phone forKey:@"value"];
             [_contactsFromAdressBook addObject:contact];
@@ -219,6 +237,13 @@
             [_contactsFromAdressBook addObject:contact];
         }
     }
+    
+    // rewrite phone format 0612345678 https://github.com/iziz/libPhoneNumber-iOS
+    // _contactsFromAdressBook sort by name
+    
+    _contactsFromAdressBook = [[_contactsFromAdressBook sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        return [[a objectForKey:@"title"] compare:[b objectForKey:@"title"]];
+    }] mutableCopy];
     
     _contacts = _contactsFromAdressBook;
     [self didTableDataChanged];

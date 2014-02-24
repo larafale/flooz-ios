@@ -10,6 +10,9 @@
 
 @protocol TransactionActionsViewDelegate <NSObject>
 
+- (void)reloadTransaction;
+
+- (void)showPaymentField;
 - (void)acceptTransaction;
 - (void)refuseTransaction;
 - (void)cancelTransaction;

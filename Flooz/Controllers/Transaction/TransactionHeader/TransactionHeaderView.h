@@ -10,6 +10,6 @@
 
 @interface TransactionHeaderView : UIView
 
-@property (strong, nonatomic) FLTransaction *transaction;
+@property (weak, nonatomic) FLTransaction *transaction;
 
 @end

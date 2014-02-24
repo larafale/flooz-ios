@@ -21,6 +21,7 @@
     UIScrollView *_contentView;
     
     FLNewTransactionBar *transactionBar;
+    FLNewTransactionBar *transactionBarKeyboard;
     
     TransactionType _transactionType;
     FLNewTransactionAmount *amountInput;
@@ -51,6 +52,8 @@
     
     self.view.backgroundColor = [UIColor customBackground];
     
+    transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction];
+    
     {
         navBar = [FLValidNavBar new];
         [self.view addSubview:navBar];
@@ -68,8 +71,8 @@
         CGFloat offset = 0;
         
         if(_transactionType == TransactionTypeEvent){
-            FLTextFieldTitle *title = [[FLTextFieldTitle alloc] initWithTitle:@"FIELD_TRANSACTION_TITLE" placeholder:@"FIELD_TRANSACTION_TITLE_PLACEHOLDER" for:transaction key:@"why" position:CGPointMake(0, 0)];
-            
+            FLTextFieldTitle *title = [[FLTextFieldTitle alloc] initWithTitle:@"FIELD_TRANSACTION_TITLE" placeholder:@"FIELD_TRANSACTION_TITLE_PLACEHOLDER" for:transaction key:@"name" position:CGPointMake(0, 0)];
+            [title setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:title];
             
             offset = CGRectGetMaxY(title.frame);
@@ -86,7 +89,7 @@
         
         {
             amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
-            [amountInput setInputAccessoryView:[[FLNewTransactionBar alloc] initWithFor:transaction]];
+            [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
             amountInput.frame = CGRectSetY(amountInput.frame, offset);
             offset = CGRectGetMaxY(amountInput.frame);
@@ -101,14 +104,12 @@
             offset = CGRectGetMaxY(friend.frame);
         }
         
-        
         if(_transactionType == TransactionTypePayment){
-            FLPaymentField *payementField = [[FLPaymentField alloc] initWithFrame:CGRectMakePosition(0, offset) for:transaction key:@"source"];
+            FLPaymentField *payementField = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, offset, CGRectGetWidth(_contentView.frame), 0) for:transaction key:@"source"];
             [_contentView addSubview:payementField];
             
             offset = CGRectGetMaxY(payementField.frame);
         }
-
         
         NSString *contentPlaceholder = @"FIELD_TRANSACTION_CONTENT_PLACEHOLDER";
         if(_transactionType == TransactionTypeEvent){
@@ -116,10 +117,9 @@
         }
         
         content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"content" position:CGPointMake(0, offset)];
-        
+        [content setInputAccessoryView:transactionBarKeyboard];
         [_contentView addSubview:content];
 
-        
         transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction];
         [_contentView addSubview:transactionBar];
     }
@@ -138,6 +138,24 @@
     transactionBar.frame = CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _contentView.frame.origin.y);
     
     [friend reloadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didKeyboardChange)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didKeyboardChange)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:self.view.window];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:self.view.window];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:self.view.window];
 }
 
 #pragma mark -
@@ -172,9 +190,23 @@
     [[self view] endEditing:YES];
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    } failure:NULL];
+    
+    if(_transactionType == TransactionTypeEvent){
+        [[Flooz sharedInstance] createEvent:transaction success:^(id result) {
+            [self dismissViewControllerAnimated:YES completion:NULL];
+        } failure:NULL];
+    }
+    else{
+        [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
+            [self dismissViewControllerAnimated:YES completion:NULL];
+        } failure:NULL];
+    }
+}
+
+- (void)didKeyboardChange
+{    
+    [transactionBar reloadData];
+    [transactionBarKeyboard reloadData];
 }
 
 @end

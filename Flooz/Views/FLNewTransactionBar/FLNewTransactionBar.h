@@ -21,5 +21,6 @@
 }
 
 - (id)initWithFor:(NSMutableDictionary *)dictionary;
+- (void)reloadData;
 
 @end

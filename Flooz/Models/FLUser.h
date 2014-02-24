@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FLCreditCard.h"
+
 @interface FLUser : NSObject
 
 @property NSString *userId;
@@ -26,6 +28,11 @@
 
 @property NSMutableDictionary *address;
 @property NSMutableDictionary *sepa;
+@property NSMutableDictionary *notifications;
+@property FLCreditCard *creditCard;
+
+@property NSArray *friends;
+@property NSArray *friendsRequest;
 
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)updateStatsPending:(NSDictionary *)json;

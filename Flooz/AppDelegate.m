@@ -17,7 +17,7 @@
 #import "TimelineViewController.h"
 #import "AccountViewController.h"
 
-#import "NotificationsViewController.h"
+#import "TestFlight.h"
 
 @implementation AppDelegate
 
@@ -31,9 +31,12 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+//    controller = [[FLNavigationController alloc] initWithRootViewController:[EditAccountViewController new]];
     self.window.rootViewController = controller;
 
     [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
+    
+//    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
     
     return YES;
 }
@@ -160,6 +163,8 @@
         [FBSession.activeSession closeAndClearTokenInformation];
         // Show the user the logged-out UI
 //        [self userLoggedOut];
+        
+        [[Flooz sharedInstance] hideLoadView];
     }
 }
 

@@ -12,7 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey
 {
-    self = [super initWithFrame:CGRectMake(0, frame.origin.y, SCREEN_WIDTH, 122)];
+    self = [super initWithFrame:CGRectMake(0, frame.origin.y, frame.size.width, 122)];
     if (self) {
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;
@@ -112,24 +112,34 @@
 
 - (void)didWalletTouch
 {
+    if(leftButton.selected){
+        return;
+    }
+    
     amount.textColor = leftText.textColor = [UIColor customBlue];
     rightText.textColor = [UIColor whiteColor];
     
     leftButton.selected = YES;
     rightButton.selected = NO;
     
-    [_dictionary setValue:@"balance" forKey:_dictionaryKey];
+    [_dictionary setValue:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodWallet] forKey:_dictionaryKey];
+    [_delegate didWalletSelected];
 }
 
 - (void)didCardTouch
 {
+    if(rightButton.selected){
+        return;
+    }
+    
     amount.textColor = leftText.textColor = [UIColor whiteColor];
     rightText.textColor = [UIColor customBlue];
     
     leftButton.selected = NO;
     rightButton.selected = YES;
     
-    [_dictionary setValue:@"card" forKey:_dictionaryKey];
+    [_dictionary setValue:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodCreditCard] forKey:_dictionaryKey];
+    [_delegate didCreditCardSelected];
 }
 
 @end

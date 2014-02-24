@@ -19,6 +19,7 @@
     UIScrollView *_contentView;
     
     FLAccountUserView *userView;
+    UILabel *amount;
 }
 
 @end
@@ -56,7 +57,7 @@
         text.font = [UIFont customContentRegular:10];
         text.textColor = [UIColor customBlueLight];
         
-        UILabel *amount = [[UILabel alloc] initWithFrame:CGRectMake(69, 200, 200, 30)];
+        amount = [[UILabel alloc] initWithFrame:CGRectMake(69, 200, 200, 30)];
         
         amount.text = [FLHelper formatedAmount:[[[Flooz sharedInstance] currentUser] amount]];
         amount.font = [UIFont customTitleExtraLight:24];
@@ -90,21 +91,14 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [[Flooz sharedInstance] updateCurrentUser];
-    [userView reloadData];
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCurrentUser) name:@"reloadCurrentUser" object:nil];
     _contentView.frame = CGRectMakeWithSize(self.view.frame.size);
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCurrentUser) name:@"reloadCurrentUser" object:nil];
+    [[Flooz sharedInstance] updateCurrentUser];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -141,6 +135,7 @@
 - (void)reloadCurrentUser
 {
     [userView reloadData];
+    amount.text = [FLHelper formatedAmount:[[[Flooz sharedInstance] currentUser] amount]];
 }
 
 @end

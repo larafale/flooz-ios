@@ -24,14 +24,7 @@
         self.title = NSLocalizedString(@"NAV_RIB", nil);
         
         FLUser *currentUser = [[Flooz sharedInstance] currentUser];
-        
-        if([currentUser sepa]){
-            _sepa = [[currentUser sepa] mutableCopy];
-        }
-        else{
-            _sepa = [NSMutableDictionary new];
-        }
-        
+        _sepa = [[currentUser sepa] mutableCopy];
     }
     return self;
 }
@@ -58,12 +51,7 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-}
+#pragma mark -
 
 - (void)didValidTouch
 {
