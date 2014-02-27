@@ -14,10 +14,9 @@
 #import "FLPaymentField.h"
 #import "FLSocialView.h"
 
-@interface TransactionCell : UITableViewCell{
+@interface TransactionCell : UITableViewCell<FLPaymentFieldDelegate>{
     CGFloat height;
     
-    BOOL paymentFieldIsShown;
     FLPaymentField *paymentField;
     
     UIView *actionView;
@@ -32,6 +31,7 @@
 }
 
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction;
+- (void)showPaymentField;
 
 @property (weak, nonatomic) UIViewController<TransactionCellDelegate> *delegate;
 @property (weak, nonatomic) FLTransaction *transaction;

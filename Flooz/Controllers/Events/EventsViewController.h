@@ -14,5 +14,6 @@
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
+@property (strong) NSString *scope;
 
 @end

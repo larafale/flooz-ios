@@ -15,6 +15,7 @@
     frame = CGRectSetHeight(frame, 15);
     self = [super initWithFrame:frame];
     if (self) {
+        _gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeTouch)];
         [self createView];
     }
     return self;
@@ -28,8 +29,10 @@
     
     comment.font = [UIFont customContentRegular:11];
     like.font = [UIFont customContentRegular:11];
-
+    
     separator.backgroundColor = [UIColor customSeparator];
+    
+    [self addGestureRecognizer:_gesture];
     
     [self addSubview:comment];
     [self addSubview:like];
@@ -38,14 +41,17 @@
 
 - (void)prepareView:(FLSocial *)social
 {
-    {
-        if(social.commentsCount == 0){
-//            comment.text = NSLocalizedString(@"CELL_SOCIAL_COMMENT", nil);
-            comment.text = @""; // Ne pas mettre nil
-        }
-        else{
-            comment.text = [NSString stringWithFormat:@"%.2ld", social.commentsCount];
-        }
+    if(social.commentsCount == 0){
+        comment.hidden = YES;
+        separator.hidden = YES;
+        
+        separator.frame = CGRectSetX(separator.frame, comment.frame.origin.x - 13);
+    }
+    else{
+        comment.hidden = NO;
+        separator.hidden = NO;
+        
+        comment.text = [NSString stringWithFormat:@"%.2ld", social.commentsCount];
         
         if(social.isCommented){
             comment.textColor = [UIColor whiteColor];
@@ -60,9 +66,9 @@
         
         [comment setWidthToFit];
         comment.frame = CGRectSetWidth(comment.frame, CGRectGetWidth(comment.frame) + 18);
+        
+        separator.frame = CGRectSetX(separator.frame, CGRectGetMaxX(comment.frame) + 5);
     }
-
-    separator.frame = CGRectSetX(separator.frame, CGRectGetMaxX(comment.frame) + 5);
     
     {
         if(social.likesCount == 0){
@@ -87,6 +93,17 @@
         [like setWidthToFit];
         like.frame = CGRectSetWidth(like.frame, CGRectGetWidth(like.frame) + 18);
     }
+}
+
+- (void)addTargetForLike:(id)target action:(SEL)action
+{
+    _target = target;
+    _action = action;
+}
+
+- (void)didLikeTouch
+{
+    [_target performSelector:_action withObject:nil];
 }
 
 @end

@@ -1,14 +1,14 @@
 //
-//  TransactionHeader.m
+//  EventHeaderView.m
 //  Flooz
 //
-//  Created by jonathan on 2/7/2014.
+//  Created by jonathan on 2/26/2014.
 //  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
 //
 
-#import "TransactionHeaderView.h"
+#import "EventHeaderView.h"
 
-@implementation TransactionHeaderView
+@implementation EventHeaderView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -53,8 +53,8 @@
 
 #pragma mark -
 
-- (void)setTransaction:(FLTransaction *)transaction{
-    self->_transaction = transaction;
+- (void)setEvent:(FLEvent *)event{
+    self->_event = event;
     [self prepareViews];
 }
 
@@ -69,7 +69,7 @@
 {
     UILabel *view = [[self subviews] objectAtIndex:0];
     
-    view.text = [_transaction typeText];
+    view.text = [[_event title] uppercaseString];
 }
 
 @end

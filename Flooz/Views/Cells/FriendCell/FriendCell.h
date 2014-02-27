@@ -10,7 +10,7 @@
 
 @interface FriendCell : UITableViewCell
 
-+ (CGFloat)height;
++ (CGFloat)getHeight;
 @property (weak, nonatomic) FLUser *friend;
 
 @end

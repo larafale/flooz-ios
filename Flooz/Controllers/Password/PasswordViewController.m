@@ -38,7 +38,7 @@
     CGFloat height = 0;
     
     {
-        FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CURRENT_PASSWORD" placeholder:@"" for:_password key:@"password" position:CGPointMake(20, 10)];
+        FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CURRENT_PASSWORD" placeholder:@"" for:_password key:@"password" position:CGPointMake(20, 30)];
         [self.view addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }

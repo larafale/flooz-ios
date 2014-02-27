@@ -9,7 +9,7 @@
 #import "EventCell.h"
 
 #define MARGE_TOP_BOTTOM 14.
-#define MARGE_LEFT_RIGHT 15.
+#define MARGE_LEFT_RIGHT 25.
 
 @implementation EventCell
 
@@ -123,8 +123,11 @@
     }
     
     {
+        FLSocialView *socialView = [[rightView subviews] objectAtIndex:2];
+        
         UIPanGestureRecognizer *swipeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipe:)];
         swipeGesture.delegate = self;
+        [swipeGesture requireGestureRecognizerToFail:[socialView gesture]];
         [self addGestureRecognizer:swipeGesture];
         
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCellTouch)];
@@ -161,6 +164,7 @@
 
 - (void)createSocialView{
     FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
+    [view addTargetForLike:self action:@selector(didLikeButtonTouch)];
     [rightView addSubview:view];
 }
 
@@ -369,5 +373,22 @@
 }
 
 #pragma mark - Actions
+
+- (void)didLikeButtonTouch
+{
+    if([[_event social] isLiked]){
+        return;
+    }
+    
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] createLikeOnEvent:_event success:^(id result) {
+        [[_event social] setIsLiked:YES];
+        
+        NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
+        if(indexPath){
+            [_delegate updateEventAtIndex:indexPath event:_event];
+        }
+    } failure:NULL];
+}
 
 @end

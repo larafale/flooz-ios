@@ -177,7 +177,7 @@
     [self requestPath:@"feed" method:@"GET" params:nil success:successBlock failure:failure];
 }
 
-- (void)eventsWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+- (void)events:(NSString *)scope success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
         NSMutableArray *events = [NSMutableArray new];
@@ -193,7 +193,7 @@
         }
     };
     
-    [self requestPath:@"cagnottes" method:@"GET" params:nil success:successBlock failure:failure];
+    [self requestPath:@"cagnottes" method:@"GET" params:@{ @"scope": scope } success:successBlock failure:failure];
 }
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -271,6 +271,46 @@
 {
     NSString *path = [@"cards/" stringByAppendingString:creditCardId];
     [self requestPath:path method:@"DELETE" params:nil success:success failure:nil];
+}
+
+- (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success
+{
+    NSString *path = [@"friends/" stringByAppendingFormat:@"%@/%@", [dictionary objectForKey:@"id"], [dictionary objectForKey:@"action"]];
+    [self requestPath:path method:@"GET" params:nil success:success failure:nil];
+}
+
+- (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"likes" method:@"POST" params:@{ @"lineId": [transaction transactionId] } success:success failure:failure];
+}
+
+- (void)createLikeOnEvent:(FLEvent *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"likes" method:@"POST" params:@{ @"eventId": [event eventId] } success:success failure:failure];
+}
+
+- (void)eventWithId:(NSString *)eventId success:(void (^)(id result))success
+{
+    NSString *path = [NSString stringWithFormat:@"cagnottes/%@", eventId];
+    [self requestPath:path method:@"GET" params:nil success:success failure:NULL];
+}
+
+- (void)eventParticipate:(NSDictionary *)dictionary success:(void (^)(id result))success
+{
+    NSString *path = [NSString stringWithFormat:@"cagnottes/%@/participate", [dictionary objectForKey:@"id"]];
+    [self requestPath:path method:@"POST" params:dictionary success:success failure:NULL];
+}
+
+- (void)eventDecline:(FLEvent *)event success:(void (^)(id result))success
+{
+    NSString *path = [NSString stringWithFormat:@"cagnottes/%@/decline", [event eventId]];
+    [self requestPath:path method:@"POST" params:nil success:success failure:NULL];
+}
+
+- (void)eventInvite:(FLEvent *)event friend:(NSString *)friend success:(void (^)(id result))success
+{
+    NSString *path = [NSString stringWithFormat:@"cagnottes/%@/invite", [event eventId]];
+    [self requestPath:path method:@"POST" params:@{ @"q": friend } success:success failure:NULL];
 }
 
 #pragma mark -

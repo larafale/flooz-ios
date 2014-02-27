@@ -31,10 +31,13 @@
         
         currency = NSLocalizedString(@"GLOBAL_EURO", nil);
     }
-    
+        
     if(amount){
         if(withCurrency){
-            if([amount intValue] >= 0){
+            if([amount floatValue] == 0){
+                return [NSString stringWithFormat:@"%@%@", [formatter stringFromNumber:amount], currency];
+            }
+            else if([amount floatValue] > 0){
                 return [NSString stringWithFormat:@"+ %@%@", [formatter stringFromNumber:amount], currency];
             }
             else{
@@ -42,7 +45,10 @@
             }
         }
         else{
-            if([amount intValue] >= 0){
+            if([amount floatValue] == 0){
+                return @"0.00";
+            }
+            else if([amount floatValue] >= 0){
                 return [NSString stringWithFormat:@"+ %@", [formatter stringFromNumber:amount]];
             }
             else{
@@ -68,6 +74,22 @@
     }
     
     return nil;
+}
+
++ (NSString *)formatedPhone:(NSString *)phone{
+    NSString *formatedPhone = [[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""]
+        stringByReplacingOccurrencesOfString:@"." withString:@""]
+        stringByReplacingOccurrencesOfString:@"-" withString:@""];
+
+    if([formatedPhone hasPrefix:@"+33"]){
+        formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
+    }
+    
+    if([formatedPhone length] != 10){
+        formatedPhone = nil;
+    }
+        
+    return formatedPhone;
 }
 
 @end

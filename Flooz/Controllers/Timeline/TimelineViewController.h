@@ -14,6 +14,8 @@
 @interface TimelineViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, TransactionCellDelegate>{
     NSMutableArray *transactions;
     UIButton *crossButton;
+    
+    NSMutableSet *rowsWithPaymentField;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

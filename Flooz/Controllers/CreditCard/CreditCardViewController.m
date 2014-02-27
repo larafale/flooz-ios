@@ -77,6 +77,8 @@
             button.backgroundColor = [UIColor customBackgroundStatus];
             [button setTitle:NSLocalizedString(@"CREDIT_CARD_SCAN", Nil) forState:UIControlStateNormal];
             
+            button.titleLabel.font = [UIFont customTitleExtraLight:14];
+            
             [button addTarget:self action:@selector(presentCardIOViewController) forControlEvents:UIControlEventTouchUpInside];
             
             [view addSubview:button];
@@ -124,14 +126,15 @@
     {
         CGFloat MARGE_LEFT_RIGHT = 27;
         
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 20, CGRectGetWidth(_contentView.frame) - (2 * MARGE_LEFT_RIGHT), 156)];
-        view.backgroundColor = [UIColor customBackgroundHeader];
-        
+        UIImageView *view = [UIImageView imageNamed:@"card-background"];
+        view.frame = CGRectSetXY(view.frame, MARGE_LEFT_RIGHT, 20);
+  
         [_contentView addSubview:view];
         
         {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(21, 62, 0, 30)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 62, 0, 30)];
             label.textColor = [UIColor whiteColor];
+            label.font = [UIFont customTitleExtraLight:24];
             
             label.text = creditCard.number;
             [label setWidthToFit];
@@ -139,10 +142,11 @@
         }
         
         {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(21, 110, 0, 30)];
-            label.textColor = [UIColor whiteColor];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 110, 0, 30)];
+            label.textColor = [UIColor customPlaceholder];
             
-            label.text = creditCard.owner;
+            label.font = [UIFont customContentRegular:12];
+            label.text = [creditCard.owner uppercaseString];
             [label setWidthToFit];
             [view addSubview:label];
         }
@@ -157,6 +161,9 @@
         [button setTitle:NSLocalizedString(@"CREDIT_CARD_REMOVE", Nil) forState:UIControlStateNormal];
         
         [button setImage:[UIImage imageNamed:@"trash"] forState:UIControlStateNormal];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(0, -15, 0, 0)];
+        
+        button.titleLabel.font = [UIFont customTitleExtraLight:14];
         
         [button addTarget:self action:@selector(didRemoveCardTouch) forControlEvents:UIControlEventTouchUpInside];
         

@@ -77,7 +77,7 @@
 - (void)createBottomBar
 {
     UIView *topBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame), 1)];
-    topBar.backgroundColor = [UIColor customSeparator];
+    topBar.backgroundColor = [UIColor customSeparator:0.5];
     
     [self addSubview:topBar];
 }
@@ -122,7 +122,10 @@
     leftButton.selected = YES;
     rightButton.selected = NO;
     
-    [_dictionary setValue:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodWallet] forKey:_dictionaryKey];
+    if(_dictionary){
+        [_dictionary setValue:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodWallet] forKey:_dictionaryKey];    
+    }
+    
     [_delegate didWalletSelected];
 }
 
@@ -138,7 +141,10 @@
     leftButton.selected = NO;
     rightButton.selected = YES;
     
-    [_dictionary setValue:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodCreditCard] forKey:_dictionaryKey];
+    if(_dictionary){
+        [_dictionary setValue:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodCreditCard] forKey:_dictionaryKey];
+    }
+    
     [_delegate didCreditCardSelected];
 }
 

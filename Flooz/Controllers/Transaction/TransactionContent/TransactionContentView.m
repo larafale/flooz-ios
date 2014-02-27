@@ -112,7 +112,7 @@
     UILabel *view = [[self subviews] objectAtIndex:0];
     view.frame = CGRectSetY(view.frame, height);
     
-    view.text = [[self transaction] title];
+    view.text = [_transaction title];
     [view setHeightToFit];
         
     height = CGRectGetMaxY(view.frame);
@@ -123,7 +123,7 @@
     UILabel *view = [[self subviews] objectAtIndex:1];
     view.frame = CGRectSetY(view.frame, height);
     
-    view.text = [[self transaction] content];
+    view.text = [_transaction content];
     [view setHeightToFit];
     
     height = CGRectGetMaxY(view.frame);
@@ -145,7 +145,7 @@
     JTImageLabel *view = [[self subviews] objectAtIndex:3];
     view.frame = CGRectSetY(view.frame, height + 8);
         
-    view.text = [FLHelper formatedDate:[[self transaction] date]];
+    view.text = [FLHelper formatedDate:[_transaction date]];
     
     height = CGRectGetMaxY(view.frame);
 }

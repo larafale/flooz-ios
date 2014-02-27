@@ -9,7 +9,7 @@
 #import "EventsViewController.h"
 
 #import "EventCell.h"
-#import "TransactionViewController.h"
+#import "EventViewController.h"
 
 @implementation EventsViewController
 
@@ -18,6 +18,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         events = [NSMutableArray new];
+        _scope = @"1";
     }
     return self;
 }
@@ -27,7 +28,7 @@
     
     if(!animated){
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] eventsWithSuccess:^(id result) {
+        [[Flooz sharedInstance] events:_scope success:^(id result) {
             events = [result mutableCopy];
                         
             [_tableView reloadData];
@@ -39,7 +40,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+        
     // WARNING Hack contraintes ne fonctionnent pas
     _tableView.frame = CGRectMakeWithSize(self.view.frame.size);
 }
@@ -74,13 +75,13 @@
 
 - (void)didEventTouchAtIndex:(NSIndexPath *)indexPath event:(FLEvent *)event
 {
-//    TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:event indexPath:indexPath];
-//    controller.delegateController = self;
-//    self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-//    
-//    [self presentViewController:controller animated:YES completion:^{
-//        self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-//    }];
+    EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:indexPath];
+    controller.delegateController = self;
+    self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    
+    [self presentViewController:controller animated:NO completion:^{
+        self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }];
 }
 
 - (void)updateEventAtIndex:(NSIndexPath *)indexPath event:(FLTransaction *)event

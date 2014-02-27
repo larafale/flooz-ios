@@ -39,7 +39,7 @@
     CGFloat height = 0;
     
     {
-        FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_IBAN" placeholder:@"FIELD_IBAN_PLACEHOLDER" for:_sepa key:@"iban" position:CGPointMake(20, 10)];
+        FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_IBAN" placeholder:@"FIELD_IBAN_PLACEHOLDER" for:_sepa key:@"iban" position:CGPointMake(20, 30)];
         [self.view addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }

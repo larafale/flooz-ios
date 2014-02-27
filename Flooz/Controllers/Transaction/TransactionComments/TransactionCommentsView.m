@@ -24,19 +24,28 @@
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame), 45)];
     
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame), 1)];
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(self.frame) - 20, 1)];
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(12, 15, 220, 30)];
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(textField.frame), 15, CGRectGetWidth(self.frame) - CGRectGetMaxX(textField.frame), 30)];
     
-    separator.backgroundColor = [UIColor customSeparator];
+    separator.backgroundColor = [UIColor customSeparator:0.5];
     
     textField.delegate = self;
-    textField.backgroundColor = [UIColor customPlaceholder];
-    textField.layer.cornerRadius = 10.;
+    textField.backgroundColor = [UIColor customBackground];
+    textField.layer.cornerRadius = 15.;
+    textField.font = [UIFont customContentLight:12];
+    textField.textColor = [UIColor customPlaceholder];
+
+    {
+        UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 15, 30)];
+        textField.leftView = paddingView;
+        textField.leftViewMode = UITextFieldViewModeAlways;
+    }
     
     [button setTitle:NSLocalizedString(@"GLOBAL_SEND", Nil) forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(didButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    button.titleLabel.font = [UIFont customTitleExtraLight:14];
   
     [view addSubview:separator];
     [view addSubview:textField];

@@ -29,6 +29,11 @@
     }
     
     _amount = [json objectForKey:@"balance"];
+    if(!_amount){
+        // Argent mis dans une cagnotte
+        _amount = [json objectForKey:@"amount"];
+    }
+    
     _firstname = [json objectForKey:@"firstName"];
     _lastname = [json objectForKey:@"lastName"];
     _fullname = [json objectForKey:@"name"];

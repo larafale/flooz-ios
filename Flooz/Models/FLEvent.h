@@ -17,13 +17,14 @@
 typedef NS_ENUM(NSInteger, EventStatus) {
     EventStatusAccepted,
     EventStatusRefused,
-    EventStatusWaiting
+    EventStatusPending
 };
 
 @property (nonatomic) EventStatus status;
 
 @property NSString *eventId;
 @property NSNumber *amount;
+@property NSNumber *amountCollect;
 
 @property NSString *avatarURL;
 
@@ -33,6 +34,10 @@ typedef NS_ENUM(NSInteger, EventStatus) {
 @property NSString *attachmentThumbURL;
 
 @property BOOL isPrivate;
+
+@property BOOL isAcceptable; // Si peut y participer
+@property BOOL isRefusable; // Si peut decliner invitation
+@property BOOL isCollectable; // Si peut recolter ou donner la cagnotte
 
 @property NSDate *date;
 

@@ -14,5 +14,6 @@
 + (NSString *)formatedAmount:(NSNumber *)amount withCurrency:(BOOL)withCurrency;
 
 + (NSString *)formatedDate:(NSDate *)date;
++ (NSString *)formatedPhone:(NSString *)phone;
 
 @end

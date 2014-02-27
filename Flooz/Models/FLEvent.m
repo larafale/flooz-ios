@@ -21,29 +21,30 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-//    NSLog(@"%@", json);
-    
     _eventId = [json objectForKey:@"_id"];
     
-//    NSNumber *state = [json objectForKey:@"state"];
-//    if([state integerValue] == 0){
-//        _status = TransactionStatusPending;
-//    }
-//    else if([state integerValue] == 1){
-//        _status = TransactionStatusAccepted;
-//    }
-//    else if([state integerValue] == 2){
-//        _status = TransactionStatusRefused;
-//    }
-//    else if([state integerValue] == 3){
-//        _status = TransactionStatusCanceled;
-//    }
-//    else if([state integerValue] == 4){
-//        _status = TransactionStatusExpired;
-//    }
-//    
+    NSString *state = [json objectForKey:@"statusString"];
+    if([[json objectForKey:@"closed"] boolValue]){
+        _status = EventStatusRefused;
+    }
+    else if([state isEqualToString:@"invited"]){
+        _status = EventStatusPending;
+    }
+    else if([state isEqualToString:@"participating"]){
+        _status = EventStatusAccepted;
+    }
+    else{
+        NSLog(@"FLEevent status: %@", state);
+//        _status = EventStatusRefused;
+        
+        // Tester si encore possible
+        
+        _status = -1;
+    }
+    
     _amount = [json objectForKey:@"amount"];
-
+    _amountCollect = [json objectForKey:@"total"];
+    
     _title = [json objectForKey:@"name"];
     _content = [json objectForKey:@"why"];
     
@@ -52,14 +53,42 @@
     
     _social = [[FLSocial alloc] initWithJSON:json];
     
-    _isPrivate = YES;
+    {
+        _isPrivate = NO;
+        if([[json objectForKey:@"canParticipate"] boolValue]){
+            _isPrivate = YES;
+        }
+    }
+    
+    {
+        _isAcceptable = NO;
+        
+        if([[json objectForKey:@"actions"] objectForKey:@"1"]){
+            _isAcceptable = YES;
+        }
+    }
+    
+    {
+        _isRefusable = NO;
+        if([[json objectForKey:@"actions"] objectForKey:@"2"]){
+            _isRefusable = YES;
+        }
+    }
+    
+    {
+        _isCollectable = NO;
+        
+        if([[json objectForKey:@"actions"] objectForKey:@"3"]){
+            _isCollectable = YES;
+        }
+    }
     
     _creator = [[FLUser alloc] initWithJSON:[json objectForKey:@"creator"]];
     
     {
         NSMutableArray *participants = [NSMutableArray new];
-        for(NSDictionary *paricipantJSON in [json objectForKey:@"participants"]){
-            [participants addObject:[[FLUser alloc] initWithJSON:paricipantJSON]];
+        for(NSDictionary *participantJSON in [json objectForKey:@"participants"]){
+            [participants addObject:[[FLUser alloc] initWithJSON:participantJSON]];
         }
         _participants = participants;
     }
@@ -86,10 +115,15 @@
 - (NSString *)statusText{
     if([self status] == EventStatusAccepted){
         return NSLocalizedString(@"EVENT_STATUS_ACCEPTED", nil);
-    }else if([self status] == EventStatusRefused){
+    }
+    else if([self status] == EventStatusRefused){
         return NSLocalizedString(@"EVENT_STATUS_REFUSED", nil);
-    }else{
+    }
+    else if([self status] == EventStatusPending){
         return NSLocalizedString(@"EVENT_STATUS_WAITING", nil);
+    }
+    else{
+        return nil;
     }
 }
 

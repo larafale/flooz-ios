@@ -20,7 +20,12 @@
 
 - (id)initFor:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey
 {
-    CGRect frame = CGRectMakeSize(SCREEN_WIDTH, [[self class] height]);
+    return [self initFor:dictionary key:dictionaryKey width:SCREEN_WIDTH delegate:nil];
+}
+
+- (id)initFor:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey width:(CGFloat)width delegate:(id<FLNewTransactionAmountDelegate>)delegate
+{
+    CGRect frame = CGRectMakeSize(width, HEIGHT);
     self = [super initWithFrame:frame];
     if (self) {
         _dictionary = dictionary;
@@ -28,6 +33,7 @@
         
         [_dictionary setValue:[NSNumber numberWithFloat:100.] forKey:_dictionaryKey];
         
+        _delegate = delegate;
         [self commontInit];
     }
     return self;
@@ -35,7 +41,7 @@
 
 + (CGFloat)height
 {
-    return 84.;
+    return HEIGHT;
 }
 
 - (void)commontInit
@@ -83,6 +89,37 @@
         
     [amount addTarget:self action:@selector(resizeText) forControlEvents:UIControlEventEditingChanged];
     [amount2 addTarget:self action:@selector(resizeText) forControlEvents:UIControlEventEditingChanged];
+    
+    if(_delegate){
+        [self createButtonsView];
+    }
+}
+
+- (void)createButtonsView
+{
+    buttonsView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 42, 0, 42, HEIGHT)];
+    buttonsView.layer.borderWidth = 1.;
+    buttonsView.layer.borderColor = [UIColor customSeparator].CGColor;
+    
+    {
+        UIButton *valid = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(buttonsView.frame), CGRectGetHeight(buttonsView.frame) / 2.)];
+        UIButton *cancel = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(buttonsView.frame) / 2., CGRectGetWidth(buttonsView.frame), CGRectGetHeight(buttonsView.frame) / 2.)];
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(buttonsView.frame) / 2., CGRectGetWidth(buttonsView.frame), 1)];
+        
+        [valid setImage:[UIImage imageNamed:@"transaction-cell-check"] forState:UIControlStateNormal];
+        [cancel setImage:[UIImage imageNamed:@"transaction-cell-cross"] forState:UIControlStateNormal];
+
+        [valid addTarget:self action:@selector(didValidTouch) forControlEvents:UIControlEventTouchUpInside];
+        [cancel addTarget:self action:@selector(didCancelTouch) forControlEvents:UIControlEventTouchUpInside];
+        
+        separator.backgroundColor = [UIColor customSeparator];
+        
+        [buttonsView addSubview:valid];
+        [buttonsView addSubview:cancel];
+        [buttonsView addSubview:separator];
+    }
+    
+    [self addSubview:buttonsView];
 }
 
 - (void)resizeText
@@ -187,6 +224,22 @@
 - (void)setInputAccessoryView:(UIView *)accessoryView
 {
     amount.inputAccessoryView = amount2.inputAccessoryView = accessoryView;
+}
+
+#pragma mark -
+
+- (void)didValidTouch
+{
+    [amount resignFirstResponder];
+    [amount2 resignFirstResponder];
+    [_delegate didAmountValidTouch];
+}
+
+- (void)didCancelTouch
+{
+    [amount resignFirstResponder];
+    [amount2 resignFirstResponder];
+    [_delegate didAmountCancelTouch];
 }
 
 @end

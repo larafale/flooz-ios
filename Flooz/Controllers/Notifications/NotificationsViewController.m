@@ -84,9 +84,10 @@
     view.backgroundColor = [UIColor customBackground];
     
     {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(24, 36, 0, 31)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 36, 0, 31)];
         
-        label.textColor = [UIColor customPlaceholder];
+        label.textColor = [UIColor customBlueLight];
+        label.font = [UIFont customContentRegular:10];
         
         label.text = [self tableView:tableView titleForHeaderInSection:section];
         [label setWidthToFit];
@@ -108,12 +109,9 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = [UIColor customBackground];
         cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.font = [UIFont customContentLight:14];
         
         UISwitch *switchView = [UISwitch new];
-
-        [switchView setTintColor:[UIColor customBlue]]; // Bordure
-        [switchView setThumbTintColor:[UIColor customBackgroundHeader]]; // Cursuer
-        [switchView setOnTintColor:[UIColor customBlue]]; // Couleur de fond
         
         switchView.userInteractionEnabled = NO; // Permet de detecter le click sur la cellule
         
@@ -129,6 +127,8 @@
     else{
         switchView.on = NO;
     }
+    
+    [self refreshSwitchViewColors:switchView];
     
     return cell;
 }
@@ -147,11 +147,12 @@
                                    @"type": rowKey,
                                    @"value": [NSNumber numberWithBool:(!switchView.on)]
                                    };
-        
+    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateNotification:notificationAPI success:^(id result) {
         [switchView setOn:(!switchView.on) animated:YES];
         [self notificationValue:switchView.on indexPath:indexPath];
+        [self refreshSwitchViewColors:switchView];
     } failure:NULL];
 }
 
@@ -205,6 +206,19 @@
              @"rowKey": rowKey,
              @"rowLocalKey": rowLocalKey
              };
+}
+
+- (void)refreshSwitchViewColors:(UISwitch *)switchView{
+    if(switchView.on){
+        [switchView setThumbTintColor:[UIColor customBackground]]; // Curseur
+        [switchView setTintColor:[UIColor customBlue]]; // Bordure
+        [switchView setOnTintColor:[UIColor customBlue]]; // Couleur de fond
+    }
+    else{
+        [switchView setThumbTintColor:[UIColor customBackgroundHeader]]; // Curseur
+        [switchView setTintColor:[UIColor customBackgroundHeader]]; // Bordure
+        [switchView setOnTintColor:[UIColor customBackgroundHeader]]; // Couleur de fond
+    }
 }
 
 @end

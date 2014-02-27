@@ -35,9 +35,21 @@
     [self requestAddressBookPermission];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[[self navigationController] navigationBar] setHidden:YES];
+}
+
 - (void)dismiss
 {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    if([self navigationController]){
+        [[self navigationController] popViewControllerAnimated:YES];
+    }
+    else{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 #pragma mark - TableView
@@ -208,6 +220,7 @@
         }
         name = [name uppercaseString];
         
+        phone = [FLHelper formatedPhone:phone];
 
         NSMutableDictionary *contact = [NSMutableDictionary new];
         

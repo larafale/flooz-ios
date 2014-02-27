@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FLNewTransactionAmountDelegate.h"
+
 @interface FLNewTransactionAmount : UIView<UITextFieldDelegate>{
     __weak NSMutableDictionary *_dictionary;
     NSString *_dictionaryKey;
@@ -17,11 +19,17 @@
     
     UITextField *amount;
     UITextField *amount2;
+    
+    UIView *buttonsView;
 }
 
 + (CGFloat)height;
 
 - (id)initFor:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey;
+- (id)initFor:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey width:(CGFloat)width delegate:(id<FLNewTransactionAmountDelegate>)delegate;
+
 - (void)setInputAccessoryView:(UIView *)accessoryView;
+
+@property (weak, nonatomic) id<FLNewTransactionAmountDelegate> delegate;
 
 @end

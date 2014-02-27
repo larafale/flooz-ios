@@ -21,6 +21,7 @@
     if (self) {
         self.title = NSLocalizedString(@"NAV_TIMELINE", nil);
         transactions = [NSMutableArray new];
+        rowsWithPaymentField = [NSMutableSet new];
     }
     return self;
 }
@@ -32,7 +33,7 @@
     UIImageView *shadow = [UIImageView imageNamed:@"tableview-shadow"];
     shadow.frame = CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
     [self.view addSubview:shadow];
-        
+    
     UIImage *buttonImage = [UIImage imageNamed:@"menu-new-transaction"];
     crossButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - buttonImage.size.width) / 2., self.view.frame.size.height - buttonImage.size.height - 20, buttonImage.size.width, buttonImage.size.height)];
     [crossButton setImage:buttonImage forState:UIControlStateNormal];
@@ -71,6 +72,12 @@
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    for(NSIndexPath *currentIndexPath in rowsWithPaymentField){
+        if([currentIndexPath isEqual:indexPath]){
+            return 122;
+        }
+    }
+    
     FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
     return [TransactionCell getHeightForTransaction:transaction];
 }
@@ -85,7 +92,19 @@
     }
     
     FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
+    
+    BOOL havePaymentField = NO;
+    for(NSIndexPath *currentIndexPath in rowsWithPaymentField){
+        if([currentIndexPath isEqual:indexPath]){
+            havePaymentField = YES;
+            break;
+        }
+    }
+    
     [cell setTransaction:transaction];
+    if(havePaymentField){
+        [cell showPaymentField];
+    }
     
     return cell;
 }
@@ -140,6 +159,7 @@
 
 - (void)didFilterChange
 {
+    rowsWithPaymentField = [NSMutableSet new];
     [_tableView reloadData];
     [_tableView setContentOffset:CGPointZero animated:YES];
 }
@@ -152,14 +172,23 @@
     controller.delegateController = self;
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
 
-    [self presentViewController:controller animated:YES completion:^{
+    [self presentViewController:controller animated:NO completion:^{
         self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     }];
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction
 {
+    [rowsWithPaymentField removeObject:indexPath];
     [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
+    
+    [_tableView beginUpdates];
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [_tableView endUpdates];
+}
+
+- (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath{
+    [rowsWithPaymentField addObject:indexPath];
     
     [_tableView beginUpdates];
     [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];

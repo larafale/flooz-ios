@@ -45,7 +45,7 @@
 - (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)activitiesWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
-- (void)eventsWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)events:(NSString *)scope success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
@@ -60,6 +60,16 @@
 
 - (void)createCreditCard:(NSDictionary *)creditCard success:(void (^)(id result))success;
 - (void)removeCreditCard:(NSString *)creditCardId success:(void (^)(id result))success;
+
+- (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success;
+
+- (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)createLikeOnEvent:(FLEvent *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
+- (void)eventWithId:(NSString *)eventId success:(void (^)(id result))success;
+- (void)eventParticipate:(NSDictionary *)dictionary success:(void (^)(id result))success;
+- (void)eventDecline:(FLEvent *)event success:(void (^)(id result))success;
+- (void)eventInvite:(FLEvent *)event friend:(NSString *)friend success:(void (^)(id result))success;
 
 - (void)connectFacebook;
 - (void)didConnectFacebook;

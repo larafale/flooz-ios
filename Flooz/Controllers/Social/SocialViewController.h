@@ -16,5 +16,6 @@
 }
 
 @property (weak, nonatomic) IBOutlet FLFilterView *filterView;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @end

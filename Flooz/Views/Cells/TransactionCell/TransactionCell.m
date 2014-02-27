@@ -112,6 +112,7 @@
     [self createAttachmentView];
     [self createSocialView];
     [self createFooterView];
+    [self createPaymentFieldView];
 }
 
 - (void)createActionViews{
@@ -128,19 +129,24 @@
         
         [text setImageOffset:CGPointMake(-10, 0)];
         text.textAlignment = NSTextAlignmentRight;
+        text.font = [UIFont customTitleExtraLight:14];
         
         [actionView addSubview:text];
     }
 
     {
+        FLSocialView *socialView = [[rightView subviews] objectAtIndex:2];
+                
         UIPanGestureRecognizer *swipeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipe:)];
         swipeGesture.delegate = self;
-        [self addGestureRecognizer:swipeGesture];
+        [swipeGesture requireGestureRecognizerToFail:[socialView gesture]];
+        [self.contentView addGestureRecognizer:swipeGesture];
         
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCellTouch)];
         tapGesture.delegate = self;
+        [tapGesture requireGestureRecognizerToFail:[socialView gesture]];
         [tapGesture requireGestureRecognizerToFail:swipeGesture];
-        [self addGestureRecognizer:tapGesture];
+        [self.contentView addGestureRecognizer:tapGesture];
     }
 }
 
@@ -176,6 +182,7 @@
 
 - (void)createSocialView{
     FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
+    [view addTargetForLike:self action:@selector(didLikeButtonTouch)];
     [rightView addSubview:view];
 }
 
@@ -193,12 +200,22 @@
     [rightView addSubview:view];
 }
 
+- (void)createPaymentFieldView{
+    paymentField = [[FLPaymentField alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame), 0) for:nil key:nil];
+    
+    paymentField.delegate = self;
+    
+    [self.contentView addSubview:paymentField];
+}
+
 #pragma mark - Prepare Views
 
 - (void)prepareViews{
     height = 0;
     isSwipable = [_transaction isCancelable] || [_transaction isAcceptable];
-        
+    
+    [self hidePaymentField];
+    
     [self prepareAvatarView];
     [self prepareSlideView];
     
@@ -321,6 +338,10 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
+    if(!paymentField.hidden){
+        return NO;
+    }
+    
     if([gestureRecognizer class] == [UIPanGestureRecognizer class]){
         UIPanGestureRecognizer *gesture = (UIPanGestureRecognizer *)gestureRecognizer;
         
@@ -393,7 +414,7 @@
                     [self acceptTransaction];
                 }
                 else{
-                    [self showPaymentField];
+                    [self didAcceptWithPaymentField];
                 }
             }
             else{
@@ -454,11 +475,43 @@
     [_delegate didTransactionTouchAtIndex:indexPath transaction:_transaction];
 }
 
+#pragma mark - PaymentFieldDelegate
+
+- (void)didWalletSelected{
+    [self acceptTransaction:TransactionPaymentMethodWallet];
+}
+
+- (void)didCreditCardSelected{
+    [self acceptTransaction:TransactionPaymentMethodCreditCard];
+}
+
 #pragma mark - Actions
 
-- (void)showPaymentField
+- (void)didAcceptWithPaymentField
 {
+    [self showPaymentField];
     
+    NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
+    if(indexPath){
+        [_delegate showPayementFieldAtIndex:indexPath];
+    }
+}
+
+- (void)didLikeButtonTouch
+{
+    if([[_transaction social] isLiked]){
+        return;
+    }
+
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] createLikeOnTransaction:_transaction success:^(id result) {
+        [[_transaction social] setIsLiked:YES];
+        
+        NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
+        if(indexPath){
+            [_delegate updateTransactionAtIndex:indexPath transaction:_transaction];
+        }
+    } failure:NULL];
 }
 
 - (void)cancelTransaction
@@ -536,6 +589,20 @@
             [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
         }
     } failure:NULL];
+}
+
+- (void)showPaymentField{
+    for(UIView *subview in self.contentView.subviews){
+        subview.hidden = YES;
+    }
+    paymentField.hidden = NO;
+}
+
+- (void)hidePaymentField{
+    for(UIView *subview in self.contentView.subviews){
+        subview.hidden = NO;
+    }
+    paymentField.hidden = YES;
 }
 
 @end

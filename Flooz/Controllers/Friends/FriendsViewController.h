@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FriendRequestCellDelegate.h"
 
-@interface FriendsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface FriendsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FriendRequestCellDelegate>
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
 

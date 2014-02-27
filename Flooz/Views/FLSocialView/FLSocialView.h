@@ -12,8 +12,14 @@
     JTImageLabel *comment;
     JTImageLabel *like;
     UIView *separator;
+    
+    __weak id _target;
+    SEL _action;
 }
 
+@property (strong, nonatomic) UITapGestureRecognizer *gesture;
+
 - (void)prepareView:(FLSocial *)social;
+- (void)addTargetForLike:(id)target action:(SEL)action;
 
 @end

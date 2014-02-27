@@ -31,12 +31,11 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-//    controller = [[FLNavigationController alloc] initWithRootViewController:[EditAccountViewController new]];
     self.window.rootViewController = controller;
 
-    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
+//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
-//    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
+    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
     
     return YES;
 }

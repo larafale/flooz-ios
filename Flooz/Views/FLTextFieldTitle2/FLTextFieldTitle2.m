@@ -35,7 +35,7 @@
 {
     _title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 21)];
     
-    _title.textColor = [UIColor whiteColor];
+    _title.textColor = [UIColor customBlueLight];
     _title.text = NSLocalizedString(title, nil);
     _title.font = [UIFont customContentRegular:12];
     

@@ -36,7 +36,10 @@
         
     {
         [_filterView addFilter:@"SOCIAL_FILTER_FRIENDS" target:self action:@selector(didFilterFriendsTouch)];
-        [_filterView addFilter:@"SOCIAL_FILTER_EVENTS" target:self action:@selector(didFilterEventsTouch)];
+        [_filterView addFilter:@"SOCIAL_FILTER_EVENTS" target:self action:@selector(didFilterEventsTouch:)colors:@[
+                                                                                                                  [UIColor customBlue],
+                                                                                                                  [UIColor customYellow]
+                                                                                                                  ]];
         [_filterView addFilter:@"SOCIAL_FILTER_ACTIVITIES" target:self action:@selector(didFilterActivitiesTouch)];
     }
     
@@ -45,14 +48,14 @@
 
 - (CGRect)frameForContentController
 {
-    return CGRectMake(0, CGRectGetMaxY(_filterView.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - CGRectGetMaxY(_filterView.frame));
+    return CGRectMakeSize(CGRectGetWidth(_contentView.frame), CGRectGetHeight(_contentView.frame));
 }
 
 - (void)displayContentController:(UIViewController*)newController;
 {
-    if(currentController == newController){
-        return;
-    }
+//    if(currentController == newController){
+//        return;
+//    }
     
     if(currentController){
         [self hideContentController:currentController];
@@ -60,7 +63,7 @@
         
     [self addChildViewController:newController];
     newController.view.frame = [self frameForContentController];
-    [self.view addSubview:newController.view];
+    [_contentView addSubview:newController.view];
     [newController didMoveToParentViewController:self];
     
     currentController = newController;
@@ -83,9 +86,17 @@
     [self displayContentController:[controllers objectAtIndex:0]];
 }
 
-- (void)didFilterEventsTouch
+- (void)didFilterEventsTouch:(NSNumber *)index
 {
-    [self displayContentController:[controllers objectAtIndex:1]];
+    NSString *scope = @"1";
+    if([index intValue] == 1){
+        scope = @"2";
+    }
+    
+    EventsViewController *controller = (EventsViewController *)[controllers objectAtIndex:1];
+    [controller setScope:scope];
+    
+    [self displayContentController:controller];
 }
 
 - (void)didFilterActivitiesTouch

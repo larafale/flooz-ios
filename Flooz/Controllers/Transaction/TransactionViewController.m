@@ -8,7 +8,6 @@
 
 #import "TransactionViewController.h"
 
-#import "TransactionHeaderView.h"
 #import "TransactionActionsView.h"
 #import "TransactionUsersView.h"
 #import "TransactionAmountView.h"
@@ -27,7 +26,6 @@
     UIView *_mainView;
     
     BOOL paymentFieldIsShown;
-    BOOL keyboardIsShown;
 }
 
 @end
@@ -115,17 +113,11 @@
     
      CGFloat height = 0;
     
-    if([_transaction type] == TransactionTypeEvent){
-        TransactionHeaderView *view = [[TransactionHeaderView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.transaction = _transaction;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
-    }
-    
     if([_transaction isPrivate] && [_transaction status] == TransactionStatusPending){
         if(paymentFieldIsShown){
             FLPaymentField *view = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) for:nil key:nil];
             view.delegate = self;
+            view.backgroundColor = [UIColor customBackground:0.4];
             [_mainView addSubview:view];
             height = CGRectGetMaxY(view.frame);
         }
@@ -189,59 +181,9 @@
     }];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardWillShow:)
-//                                                 name:UIKeyboardWillShowNotification
-//                                               object:self.view.window];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(keyboardWillHide:)
-//                                                 name:UIKeyboardWillHideNotification
-//                                               object:self.view.window];
-    
-    keyboardIsShown = NO;
-}
-
-- (void)viewDidUnload
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillShowNotification
-                                                  object:nil];
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillHideNotification
-                                                  object:nil];
-    
-}
-
 - (void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-- (void)keyboardWillShow:(NSNotification *)n
-{
-    if(keyboardIsShown){
-        return;
-    }
-    keyboardIsShown = YES;
-    
-//    NSDictionary* userInfo = [n userInfo];
-//    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-//    _contentView.contentSize = CGSizeMake(0, _contentView.contentSize.height + keyboardSize.height);
-}
-
-- (void)keyboardWillHide:(NSNotification *)n
-{
-//    NSDictionary* userInfo = [n userInfo];
-//    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-//    _mainView.frame = CGRectSetHeight(_mainView.frame, CGRectGetHeight(_mainView.frame) - keyboardSize.height);
-//    _contentView.contentSize = CGSizeMake(0, _contentView.contentSize.height - keyboardSize.height);
-//    
-    keyboardIsShown = NO;
 }
 
 #pragma mark - FLPaymentFieldDelegate
