@@ -135,6 +135,12 @@
         return;
     }
     
+    if(![[[Flooz sharedInstance] currentUser] creditCard]){
+        [_delegate presentCreditCardController];
+        return;
+    }
+    
+    
     amount.textColor = leftText.textColor = [UIColor whiteColor];
     rightText.textColor = [UIColor customBlue];
     

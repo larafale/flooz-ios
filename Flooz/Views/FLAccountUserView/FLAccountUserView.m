@@ -97,7 +97,7 @@
     
     {
         UIImageView *arrow = [UIImageView imageNamed:@"arrow-right"];
-        arrow.frame = CGRectSetXY(arrow.frame, CGRectGetWidth(self.frame) - 10, (CGRectGetHeight(self.frame) - arrow.image.size.height) / 2.);
+        CGRectSetXY(arrow.frame, CGRectGetWidth(self.frame) - 10, (CGRectGetHeight(self.frame) - arrow.image.size.height) / 2.);
         [self addSubview:arrow];
     }
 }

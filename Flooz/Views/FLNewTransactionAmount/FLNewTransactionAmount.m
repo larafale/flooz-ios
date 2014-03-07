@@ -151,10 +151,10 @@
     CGSize size = [@" " sizeWithAttributes:@{ NSFontAttributeName:amount.font }];
     offset = size.width;
     
-    amount.frame = CGRectSetWidth(amount.frame, CGRectGetWidth(amount.frame) + offset + ([amount isEditing] ? 0 : 0));
-    point.frame = CGRectSetX(point.frame, CGRectGetMaxX(amount.frame));
-    amount2.frame = CGRectSetX(amount2.frame, CGRectGetMaxX(point.frame) + 5);
-    amount2.frame = CGRectSetWidth(amount2.frame, CGRectGetWidth(amount2.frame) + offset  + ([amount2 isEditing] ? 0 : 0));
+    CGRectSetWidth(amount.frame, CGRectGetWidth(amount.frame) + offset + ([amount isEditing] ? 0 : 0));
+    CGRectSetX(point.frame, CGRectGetMaxX(amount.frame));
+    CGRectSetX(amount2.frame, CGRectGetMaxX(point.frame) + 5);
+    CGRectSetWidth(amount2.frame, CGRectGetWidth(amount2.frame) + offset  + ([amount2 isEditing] ? 0 : 0));
 }
 
 - (BOOL)resignFirstResponder

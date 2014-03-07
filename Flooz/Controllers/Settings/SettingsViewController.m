@@ -32,7 +32,7 @@
                  @"code",
                  @"card",
                  @"rib",
-                 @"privacy",
+//                 @"privacy",
                  @"documents",
                  @"password",
                  @"logout"
@@ -83,10 +83,10 @@
     else if(indexPath.row == 3){
         [[self navigationController] pushViewController:[RIBViewController new] animated:YES];
     }
-    else if(indexPath.row == 6){
+    else if(indexPath.row == 5){
         [[self navigationController] pushViewController:[PasswordViewController new] animated:YES];
     }
-    else if(indexPath.row == 7){
+    else if(indexPath.row == 6){
         [[Flooz sharedInstance] logout];
     }
 }

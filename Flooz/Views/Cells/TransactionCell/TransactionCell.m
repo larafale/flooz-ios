@@ -8,6 +8,8 @@
 
 #import "TransactionCell.h"
 
+#import "CreditCardViewController.h"
+
 #define MARGE_TOP_BOTTOM 14.
 #define MARGE_LEFT_RIGHT 10.
 
@@ -176,7 +178,7 @@
 }
 
 - (void)createAttachmentView{
-    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(rightView.frame), 0)];
+    FLImageView *view = [[FLImageView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(rightView.frame), 0)];
     [rightView addSubview:view];
 }
 
@@ -224,14 +226,14 @@
     [self prepareSocialView];
     [self prepareFooterView];
     
-    leftView.frame = CGRectSetHeight(leftView.frame, height);
-    rightView.frame = CGRectSetHeight(rightView.frame, height);
+    CGRectSetHeight(leftView.frame, height);
+    CGRectSetHeight(rightView.frame, height);
     
     height += MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM;
     
-    slideView.frame = CGRectSetHeight(slideView.frame, height);
-    actionView.frame = CGRectSetHeight(actionView.frame, height);
-    self.frame = CGRectSetHeight(self.frame, height);
+    CGRectSetHeight(slideView.frame, height);
+    CGRectSetHeight(actionView.frame, height);
+    CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareAvatarView{
@@ -262,33 +264,33 @@
     }
     
     content.text = [[self transaction] content];
-    content.frame = CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
+    CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
     [content setHeightToFit];
     
-    view.frame = CGRectSetY(view.frame, height);
-    view.frame = CGRectSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + offset);
+    CGRectSetY(view.frame, height);
+    CGRectSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + offset);
     height = CGRectGetMaxY(view.frame);
 }
 
 - (void)prepareAttachmentView{
-    UIImageView *view = [[rightView subviews] objectAtIndex:1];
+    FLImageView *view = [[rightView subviews] objectAtIndex:1];
     
     if([_transaction attachmentThumbURL]){
-        [view setImageWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]]];
+        [view setImageWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
         
-        view.frame = CGRectSetY(view.frame, height + 13);
-        view.frame = CGRectSetHeight(view.frame, 80);
+        CGRectSetY(view.frame, height + 13);
+        CGRectSetHeight(view.frame, 80);
         height = CGRectGetMaxY(view.frame);
     }
     else{
-        view.frame = CGRectSetHeight(view.frame, 0);
+        CGRectSetHeight(view.frame, 0);
     }
 }
 
 - (void)prepareSocialView{
     FLSocialView *view = [[rightView subviews] objectAtIndex:2];
     [view prepareView:_transaction.social];
-    view.frame = CGRectSetY(view.frame, height + 14);
+    CGRectSetY(view.frame, height + 14);
 
     height = CGRectGetMaxY(view.frame);
 }
@@ -307,9 +309,9 @@
     amount.text = [FLHelper formatedAmount:[_transaction amount] withCurrency:NO];
     [amount setWidthToFit];
     
-    imageView.frame = CGRectSetX(imageView.frame, CGRectGetMaxX(amount.frame) + 5);
-    view.frame = CGRectSetWidth(view.frame, CGRectGetMaxX(imageView.frame) + 10);
-    view.frame = CGRectSetX(view.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(view.frame));
+    CGRectSetX(imageView.frame, CGRectGetMaxX(amount.frame) + 5);
+    CGRectSetWidth(view.frame, CGRectGetMaxX(imageView.frame));
+    CGRectSetX(view.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(view.frame));
     
     NSString *image;
     
@@ -331,7 +333,7 @@
     
     
     UIView *socialView = [[rightView subviews] objectAtIndex:2];
-    view.frame = CGRectSetY(view.frame,  socialView.frame.origin.y - 4);
+    CGRectSetY(view.frame,  socialView.frame.origin.y - 4);
 }
 
 #pragma mark - Swipe
@@ -438,7 +440,7 @@
         if(progress < 0.50){
             text.text = NSLocalizedString(@"TRANSACTION_ACTION_CANCEL", nil);
             text.textColor = [UIColor whiteColor];
-            [text setImage:[UIImage imageNamed:@"transaction-cell-cross"]];
+            [text setImage:[UIImage imageNamed:@"transaction-cell-cross-white"]];
         }
         else{
             text.text = NSLocalizedString(@"TRANSACTION_ACTION_CANCEL", nil);
@@ -450,7 +452,7 @@
         if(progress < 0.50){
             text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);
             text.textColor = [UIColor whiteColor];
-            [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
+            [text setImage:[UIImage imageNamed:@"transaction-cell-check-white"]];
         }
         else if(progress < 0.75){
             text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);
@@ -485,6 +487,13 @@
     [self acceptTransaction:TransactionPaymentMethodCreditCard];
 }
 
+- (void)presentCreditCardController
+{
+    CreditCardViewController *controller = [CreditCardViewController new];
+    
+    [_delegate presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+}
+
 #pragma mark - Actions
 
 - (void)didAcceptWithPaymentField
@@ -503,10 +512,9 @@
         return;
     }
 
-    [[Flooz sharedInstance] showLoadView];
+    [[_transaction social] setIsLiked:YES];
+
     [[Flooz sharedInstance] createLikeOnTransaction:_transaction success:^(id result) {
-        [[_transaction social] setIsLiked:YES];
-        
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         if(indexPath){
             [_delegate updateTransactionAtIndex:indexPath transaction:_transaction];
@@ -515,7 +523,7 @@
 }
 
 - (void)cancelTransaction
-{
+{    
     [[Flooz sharedInstance] showLoadView];
     
     NSDictionary *params = @{

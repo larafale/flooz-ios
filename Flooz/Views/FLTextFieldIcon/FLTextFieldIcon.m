@@ -39,7 +39,7 @@
 - (void)createIcon:(NSString *)iconName
 {
     icon = [UIImageView imageNamed:iconName];
-    icon.frame = CGRectSetXY(icon.frame, 6, 17);
+    CGRectSetXY(icon.frame, 6, 17);
     
     [self addSubview:icon];
 }

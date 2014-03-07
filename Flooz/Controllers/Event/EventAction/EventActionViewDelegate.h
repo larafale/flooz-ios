@@ -15,6 +15,9 @@
 - (void)showPaymentField;
 - (void)refuseEvent;
 
+- (void)collectEvent;
+- (void)offerEvent;
+
 - (void)presentEventParticipantsController;
 
 @end

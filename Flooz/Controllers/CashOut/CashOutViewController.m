@@ -43,7 +43,7 @@
         
         {
             UIImageView *imageView = [UIImageView imageNamed:@"account-balance"];
-            imageView.frame = CGRectSetXY(imageView.frame, 25, 20);
+            CGRectSetXY(imageView.frame, 25, 20);
             
             UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(69, 5, 200, 30)];
             text.text = NSLocalizedString(@"ACCOUNT_BALANCE", nil);
@@ -65,7 +65,7 @@
     
     {
         amountInput = [[FLNewTransactionAmount alloc] initFor:dictionary key:@"amount"];
-        amountInput.frame = CGRectSetY(amountInput.frame, offset);
+        CGRectSetY(amountInput.frame, offset);
         [self.view addSubview:amountInput];
     }
 }

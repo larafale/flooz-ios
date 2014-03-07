@@ -22,6 +22,8 @@
         [self createBottomBar];
         
         _textfield.text = [_dictionary objectForKey:_dictionaryKey];
+        
+        _maxLength = 50;
     }
     return self;
 }
@@ -79,6 +81,12 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSUInteger newLength = [textField.text length] + [string length] - range.length;
+    return (newLength > _maxLength) ? NO : YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -93,6 +101,14 @@
         [_dictionary setValue:textField.text forKey:_dictionaryKey];
     }
     [textField resignFirstResponder];
+}
+
+- (BOOL)becomeFirstResponder{
+    return [_textfield becomeFirstResponder];
+}
+
+- (void)setKeyboardType:(UIKeyboardType)keyboardType{
+    _textfield.keyboardType = keyboardType;
 }
 
 @end

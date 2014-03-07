@@ -12,6 +12,7 @@
 
 #import "MenuNewTransactionViewController.h"
 #import "TransactionViewController.h"
+#import "EventViewController.h"
 
 @implementation TimelineViewController
 
@@ -22,6 +23,7 @@
         self.title = NSLocalizedString(@"NAV_TIMELINE", nil);
         transactions = [NSMutableArray new];
         rowsWithPaymentField = [NSMutableSet new];
+        nextPageIsLoading = NO;
     }
     return self;
 }
@@ -31,7 +33,7 @@
     [super viewDidLoad];
         
     UIImageView *shadow = [UIImageView imageNamed:@"tableview-shadow"];
-    shadow.frame = CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
+    CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
     [self.view addSubview:shadow];
     
     UIImage *buttonImage = [UIImage imageNamed:@"menu-new-transaction"];
@@ -106,6 +108,10 @@
         [cell showPaymentField];
     }
     
+    if(_nextPageUrl && ![_nextPageUrl isBlank] && !nextPageIsLoading && indexPath.row == [transactions count] - 1){
+        [self loadNextPage];
+    }
+    
     return cell;
 }
 
@@ -128,8 +134,10 @@
 - (void)didFilterPublicTouch
 {
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] timeline:@"public" success:^(id result) {
+    [[Flooz sharedInstance] timeline:@"public" success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
         [self didFilterChange];
     } failure:NULL];
 }
@@ -137,8 +145,10 @@
 - (void)didFilterFriendTouch
 {
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] timeline:@"friend" success:^(id result) {
+    [[Flooz sharedInstance] timeline:@"friend" success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
         [self didFilterChange];
     } failure:NULL];
 }
@@ -151,8 +161,10 @@
     }
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] timeline:@"private" state:state success:^(id result) {
+    [[Flooz sharedInstance] timeline:@"private" state:state success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
         [self didFilterChange];
     } failure:NULL];
 }
@@ -168,13 +180,29 @@
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction
 {
-    TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
-    controller.delegateController = self;
-    self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-
-    [self presentViewController:controller animated:NO completion:^{
-        self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-    }];
+    if([transaction eventId]){
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] eventWithId:[transaction eventId] success:^(id result) {
+            FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+            EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:indexPath];
+            
+            self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+            
+            [self presentViewController:controller animated:NO completion:^{
+                self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+            }];
+        }];
+    }
+    else{
+        TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
+        controller.delegateController = self;
+        
+        self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+        
+        [self presentViewController:controller animated:NO completion:^{
+            self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        }];
+    }
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction
@@ -193,6 +221,20 @@
     [_tableView beginUpdates];
     [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [_tableView endUpdates];
+}
+
+- (void)loadNextPage{
+    if(!_nextPageUrl || [_nextPageUrl isBlank]){
+        return;
+    }
+    nextPageIsLoading = YES;
+    
+    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success:^(id result, NSString *nextPageUrl) {
+        [transactions addObjectsFromArray:result];
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
+        [_tableView reloadData];
+    }];
 }
 
 @end

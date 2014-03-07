@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PreviewViewController : UIViewController
+#import "PreviewNavBar.h"
+
+@interface PreviewViewController : UIViewController<PreviewNavBarDelegate>
+
+@property (weak, nonatomic) IBOutlet PreviewNavBar *previewNavBar;
+@property (weak, nonatomic) IBOutlet UIView *mainView;
 
 @end

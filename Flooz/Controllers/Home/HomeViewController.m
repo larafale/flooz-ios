@@ -83,7 +83,7 @@
     
     {
         UIImageView *shadow = [UIImageView imageNamed:@"tableview-shadow"];
-        shadow.frame = CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height - preview.frame.size.height);
+        CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height - preview.frame.size.height);
         [self.view addSubview:shadow];
     }
     
@@ -136,7 +136,7 @@
 
 - (void)didFilterPublicTouch
 {
-    [[Flooz sharedInstance] timeline:@"public" success:^(id result) {
+    [[Flooz sharedInstance] timeline:@"public" success:^(id result, NSString *nextPageUrl) {
         transactions = result;
         [_tableView reloadData];
     } failure:NULL];

@@ -158,7 +158,7 @@
 }
 
 - (void)createAttachmentView{
-    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(rightView.frame), 0)];
+    FLImageView *view = [[FLImageView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(rightView.frame), 0)];
     [rightView addSubview:view];
 }
 
@@ -180,13 +180,13 @@
     [self prepareAttachmentView];
     [self prepareSocialView];
     
-    rightView.frame = CGRectSetHeight(rightView.frame, height);
+    CGRectSetHeight(rightView.frame, height);
     
     height += MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM;
     
-    slideView.frame = CGRectSetHeight(slideView.frame, height);
-    actionView.frame = CGRectSetHeight(actionView.frame, height);
-    self.frame = CGRectSetHeight(self.frame, height);
+    CGRectSetHeight(slideView.frame, height);
+    CGRectSetHeight(actionView.frame, height);
+    CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareSlideView{
@@ -212,33 +212,33 @@
     }
     
     content.text = [_event content];
-    content.frame = CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
+    CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
     [content setHeightToFit];
     
-    view.frame = CGRectSetY(view.frame, height);
-    view.frame = CGRectSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + offset);
+    CGRectSetY(view.frame, height);
+    CGRectSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + offset);
     height = CGRectGetMaxY(view.frame);
 }
 
 - (void)prepareAttachmentView{
-    UIImageView *view = [[rightView subviews] objectAtIndex:1];
+    FLImageView *view = [[rightView subviews] objectAtIndex:1];
     
     if([_event attachmentThumbURL]){
-        [view setImageWithURL:[NSURL URLWithString:[_event attachmentThumbURL]]];
+        [view setImageWithURL:[NSURL URLWithString:[_event attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_event attachmentURL]]];
         
-        view.frame = CGRectSetY(view.frame, height + 13);
-        view.frame = CGRectSetHeight(view.frame, 80);
+        CGRectSetY(view.frame, height + 13);
+        CGRectSetHeight(view.frame, 80);
         height = CGRectGetMaxY(view.frame);
     }
     else{
-        view.frame = CGRectSetHeight(view.frame, 0);
+        CGRectSetHeight(view.frame, 0);
     }
 }
 
 - (void)prepareSocialView{
     FLSocialView *view = [[rightView subviews] objectAtIndex:2];
     [view prepareView:_event.social];
-    view.frame = CGRectSetY(view.frame, height + 14);
+    CGRectSetY(view.frame, height + 14);
     
     height = CGRectGetMaxY(view.frame);
 }
@@ -380,10 +380,8 @@
         return;
     }
     
-    [[Flooz sharedInstance] showLoadView];
+    [[_event social] setIsLiked:YES];
     [[Flooz sharedInstance] createLikeOnEvent:_event success:^(id result) {
-        [[_event social] setIsLiked:YES];
-        
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         if(indexPath){
             [_delegate updateEventAtIndex:indexPath event:_event];

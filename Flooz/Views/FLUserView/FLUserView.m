@@ -29,14 +29,14 @@
 }
 
 - (void)commonInit
-{    
+{
     filter = [UIImageView imageNamed:@"avatar-filter"];
     avatar = [[UIImageView alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
 
     filter.frame = CGRectMakeWithSize(self.frame.size);
     placeholder = [UIImage imageNamed:@"default-avatar"];
     avatar.image = placeholder;
-    
+        
     [self addSubview:avatar];
     [self addSubview:filter];
 }
@@ -59,21 +59,36 @@
 
 - (void)setImageFromURL:(NSString *)url
 {
-    [avatar setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
+    if(!url || [url isBlank] || [url isEqualToString:@"/img/nopic.png"]){
+        avatar.image = placeholder;
+        filter.hidden = YES;
+    }
+    else{
+        [avatar setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
+        filter.hidden = NO;
+    }
 }
 
 - (void)setImageFromUser:(FLUser *)user
 {
-    [avatar setImageWithURL:[NSURL URLWithString:[user avatarURL:avatar.frame.size]] placeholderImage:placeholder];
+    if([user avatarURL:avatar.frame.size]){
+        [avatar setImageWithURL:[NSURL URLWithString:[user avatarURL:avatar.frame.size]] placeholderImage:placeholder];
+        filter.hidden = NO;
+    }
+    else{
+        filter.hidden = YES;
+    }
 }
 
 - (void)setImageFromData:(NSData *)data
 {
     if(data){
         avatar.image = [UIImage imageWithData:data];
+        filter.hidden = NO;
     }
     else{
         avatar.image = placeholder;
+        filter.hidden = YES;
     }
 }
 

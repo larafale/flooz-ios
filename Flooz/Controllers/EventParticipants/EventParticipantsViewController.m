@@ -135,6 +135,9 @@
         if(!cell){
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             
+            cell.editingAccessoryView = [UIImageView imageNamed:@"arrow-white-right"];
+            cell.accessoryView = [UIImageView imageNamed:@"arrow-white-right"];
+            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.backgroundColor = [UIColor customBackgroundHeader];

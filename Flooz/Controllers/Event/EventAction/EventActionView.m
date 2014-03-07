@@ -12,7 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 55);
+    CGRectSetHeight(frame, 55);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];
@@ -85,11 +85,7 @@
     
     refuseView.hidden = acceptView.hidden = YES;
     
-    if([_event isRefusable]){
-        refuseView.hidden = acceptView.hidden = NO;
-        acceptView.frame = CGRectMake(CGRectGetWidth(self.frame) / 2., 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame));
-    }
-    else if([_event isAcceptable]){
+    if([_event isAcceptable]){
         acceptView.hidden = NO;
         acceptView.frame = CGRectMakeWithSize(self.frame.size);
     }

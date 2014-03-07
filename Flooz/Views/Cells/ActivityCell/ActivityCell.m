@@ -85,7 +85,7 @@
     [self prepareAvatarView];
     [self prepareTypeView];
     
-    self.frame = CGRectSetHeight(self.frame, height);
+    CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareAvatarView{

@@ -27,8 +27,10 @@
         FLUser *currentUser = [[Flooz sharedInstance] currentUser];
         _notifications = [[currentUser notifications] mutableCopy];
         
+        [_notifications removeObjectForKey:@"feed"];
+        
         _sections = @[
-                      @"feed",
+//                      @"feed",
                       @"push",
                       @"email",
                       @"phone"

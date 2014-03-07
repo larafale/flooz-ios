@@ -95,6 +95,8 @@
     
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_NUMBER" placeholder:@"FIELD_CARD_NUMBER_PLACEHOLDER" for:_card key:@"number" position:CGPointMake(20, height + OFFSET)];
+        view.maxLength = 16;
+        [view setKeyboardType:UIKeyboardTypeDecimalPad];
         [_contentView  addSubview:view];
         height = CGRectGetMaxY(view.frame);
         
@@ -103,6 +105,8 @@
     
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_EXPIRES" placeholder:@"FIELD_CARD_EXPIRES_PLACEHOLDER" for:_card key:@"expires" position:CGPointMake(20, height + OFFSET)];
+        view.maxLength = 5;
+        [view setKeyboardType:UIKeyboardTypeDecimalPad];
         [_contentView  addSubview:view];
         height = CGRectGetMaxY(view.frame);
         
@@ -111,6 +115,8 @@
     
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_CVV" placeholder:@"FIELD_CARD_CVV_PLACEHOLDER" for:_card key:@"cvv" position:CGPointMake(20, height + OFFSET)];
+        view.maxLength = 3;
+        [view setKeyboardType:UIKeyboardTypeDecimalPad];
         [_contentView  addSubview:view];
         height = CGRectGetMaxY(view.frame);
         
@@ -127,17 +133,20 @@
         CGFloat MARGE_LEFT_RIGHT = 27;
         
         UIImageView *view = [UIImageView imageNamed:@"card-background"];
-        view.frame = CGRectSetXY(view.frame, MARGE_LEFT_RIGHT, 20);
+        CGRectSetXY(view.frame, MARGE_LEFT_RIGHT, 20);
   
         [_contentView addSubview:view];
         
         {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 62, 0, 30)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 62, SCREEN_WIDTH - 30, 30)];
             label.textColor = [UIColor whiteColor];
             label.font = [UIFont customTitleExtraLight:24];
             
-            label.text = creditCard.number;
-            [label setWidthToFit];
+            NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc]initWithString:creditCard.number];
+            [attributedString addAttribute:NSKernAttributeName value:@(2.5) range:NSMakeRange(0, attributedString.length)];
+
+            label.attributedText = attributedString;
+//            [label setWidthToFit];
             [view addSubview:label];
         }
         
@@ -200,6 +209,8 @@
     for(FLTextFieldTitle2 *view in fieldsView){
         [view reloadData];
     }
+    
+    [[fieldsView objectAtIndex:0] becomeFirstResponder];
 }
 
 #pragma mark -

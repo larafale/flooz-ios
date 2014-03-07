@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xLp-In-5xg" customClass="FLTableView">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xLp-In-5xg" customClass="FLTableView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="588"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -26,6 +26,12 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="xLp-In-5xg" secondAttribute="trailing" id="3Fc-Jt-zuP"/>
+                <constraint firstItem="xLp-In-5xg" firstAttribute="top" secondItem="1" secondAttribute="top" id="4nr-21-tXX"/>
+                <constraint firstAttribute="bottom" secondItem="xLp-In-5xg" secondAttribute="bottom" constant="-20" id="kva-5H-S4A"/>
+                <constraint firstItem="xLp-In-5xg" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="xqT-SX-LLj"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

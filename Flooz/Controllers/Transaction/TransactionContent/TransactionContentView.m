@@ -18,7 +18,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 0);
+    CGRectSetHeight(frame, 0);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];
@@ -59,7 +59,7 @@
 
 - (void)createAttachmentView
 {
-    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 0, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 80)];
+    FLImageView *view = [[FLImageView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 0, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 80)];
     [self addSubview:view];
 }
 
@@ -104,13 +104,13 @@
 
     height += MARGE_BOTTOM;
 
-    self.frame = CGRectSetHeight(self.frame, height);
+    CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareTextView
 {
     UILabel *view = [[self subviews] objectAtIndex:0];
-    view.frame = CGRectSetY(view.frame, height);
+    CGRectSetY(view.frame, height);
     
     view.text = [_transaction title];
     [view setHeightToFit];
@@ -121,7 +121,7 @@
 - (void)prepareContentView
 {
     UILabel *view = [[self subviews] objectAtIndex:1];
-    view.frame = CGRectSetY(view.frame, height);
+    CGRectSetY(view.frame, height);
     
     view.text = [_transaction content];
     [view setHeightToFit];
@@ -131,11 +131,11 @@
 
 - (void)prepareAttachmentView
 {
-    UIImageView *view = [[self subviews] objectAtIndex:2];
-    view.frame = CGRectSetY(view.frame, height + 10);
+    FLImageView *view = [[self subviews] objectAtIndex:2];
+    CGRectSetY(view.frame, height + 10);
     
     if([_transaction attachmentThumbURL]){
-        [view setImageWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]]];
+        [view setImageWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
         height = CGRectGetMaxY(view.frame);
     }
 }
@@ -143,17 +143,17 @@
 - (void)prepareDateView
 {
     JTImageLabel *view = [[self subviews] objectAtIndex:3];
-    view.frame = CGRectSetY(view.frame, height + 8);
+    CGRectSetY(view.frame, height + 8);
         
     view.text = [FLHelper formatedDate:[_transaction date]];
     
-    height = CGRectGetMaxY(view.frame);
+//    height = CGRectGetMaxY(view.frame);
 }
 
 - (void)prepareSocialView
 {
     FLSocialView *view = [[self subviews] objectAtIndex:4];
-    view.frame = CGRectSetY(view.frame, height + 8);
+    CGRectSetY(view.frame, height + 8);
     
     [view prepareView:_transaction.social];
     

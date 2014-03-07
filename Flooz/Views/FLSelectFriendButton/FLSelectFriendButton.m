@@ -13,7 +13,7 @@
 
 - (id)initWithFrame:(CGRect)frame dictionary:(NSMutableDictionary *)dictionary
 {
-    frame = CGRectSetWidthHeight(frame, SCREEN_WIDTH, 50);
+    CGRectSetWidthHeight(frame, SCREEN_WIDTH, 50);
     self = [super initWithFrame:frame];
     if (self) {
         _dictionary = dictionary;
@@ -38,10 +38,12 @@
 
 - (void)createButton
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(35, 0, SCREEN_WIDTH - 60, CGRectGetHeight(self.frame))];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(65, 0, CGRectGetWidth(self.frame) - 65, CGRectGetHeight(self.frame))];
     
     [button setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont customContentLight:14];
+
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
     [button addTarget:self action:@selector(didButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     

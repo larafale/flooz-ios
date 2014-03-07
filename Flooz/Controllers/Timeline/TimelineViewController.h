@@ -16,6 +16,9 @@
     UIButton *crossButton;
     
     NSMutableSet *rowsWithPaymentField;
+    
+    NSString *_nextPageUrl;
+    BOOL nextPageIsLoading;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

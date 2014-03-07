@@ -31,6 +31,7 @@
 @property NSMutableDictionary *notifications;
 @property FLCreditCard *creditCard;
 
+@property NSString *friendRelationId;
 @property NSArray *friends;
 @property NSArray *friendsRequest;
 

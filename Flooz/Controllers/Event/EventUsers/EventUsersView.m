@@ -13,7 +13,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 155);
+    CGRectSetHeight(frame, 155);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];
@@ -37,7 +37,7 @@
 - (void)createRightUserView
 {
     UIView *view = [self createUserView];
-    view.frame = CGRectSetX(view.frame, CGRectGetWidth(self.frame) / 2);
+    CGRectSetX(view.frame, CGRectGetWidth(self.frame) / 2);
     
     [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didAddParticipantTouch)]];
     
@@ -106,9 +106,10 @@
 - (void)prepareRightUserView
 {
     UIView *view = [[self subviews] objectAtIndex:1];
-//    FLUserView *avatar = [[view subviews] objectAtIndex:0];
+    FLUserView *avatar = [[view subviews] objectAtIndex:0];
     UILabel *username = [[view subviews] objectAtIndex:1];
     
+    [avatar setImageFromURL:nil];
     username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
 }
 

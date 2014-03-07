@@ -8,6 +8,9 @@
 
 #import "InformationsViewController.h"
 
+#import "WebViewController.h"
+#import "PreviewViewController.h"
+
 @interface InformationsViewController (){
     NSArray *links;
 }
@@ -33,6 +36,13 @@
                   ];
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 #pragma mark - TableView
@@ -64,6 +74,48 @@
     cell.imageView.image = [UIImage imageNamed:[@"informations-" stringByAppendingString:link]];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Tour
+    if(indexPath.row == 3){
+        PreviewViewController *controller = [PreviewViewController new];
+        [[self navigationController] pushViewController:controller animated:YES];
+        return;
+    }
+    
+    NSString *url;
+    NSString *link = [links objectAtIndex:indexPath.row];
+    NSString *title = NSLocalizedString([@"INFORMATIONS_" stringByAppendingString:[link uppercaseString]], nil);
+    
+    switch (indexPath.row) {
+        case 0:
+            url = @"n/security";
+            break;
+        case 1:
+            url = @"n/cgu";
+            break;
+        case 2:
+            url = @"n/faq";
+            break;
+        case 4:
+            url = @"";
+            break;
+        case 5:
+            url = @"n/about";
+            break;
+        case 6:
+            url = @"n/contact";
+            break;
+        default:
+            break;
+    }
+    
+    WebViewController *controller = [WebViewController new];
+    [controller setUrl:[@"https://www.flooz.me/" stringByAppendingString:url]];
+    controller.title = title;
+    [[self navigationController] pushViewController:controller animated:YES];
 }
 
 @end

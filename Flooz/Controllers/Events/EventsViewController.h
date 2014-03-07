@@ -11,6 +11,9 @@
 
 @interface EventsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, EventCellDelegate>{
     NSMutableArray *events;
+    
+    NSString *_nextPageUrl;
+    BOOL nextPageIsLoading;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

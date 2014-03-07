@@ -12,7 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 50);
+    CGRectSetHeight(frame, 50);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];
@@ -76,13 +76,13 @@
     
     [self prepareAmountView];
     
-    self.frame = CGRectSetHeight(self.frame, height);
+    CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareAmountView
 {
     UILabel *view = [[self subviews] objectAtIndex:1];
-    view.text = [FLHelper formatedAmount:[_event amountCollect]];
+    view.text = [FLHelper formatedAmount:[_event amountCollect] withSymbol:NO];
     height = CGRectGetMaxY(view.frame);
 }
 

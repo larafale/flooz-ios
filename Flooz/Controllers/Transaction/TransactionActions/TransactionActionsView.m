@@ -12,7 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 55);
+    CGRectSetHeight(frame, 55);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];

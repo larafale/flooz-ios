@@ -23,23 +23,14 @@
 {
     _eventId = [json objectForKey:@"_id"];
     
-    NSString *state = [json objectForKey:@"statusString"];
-    if([[json objectForKey:@"closed"] boolValue]){
-        _status = EventStatusRefused;
-    }
-    else if([state isEqualToString:@"invited"]){
+    if([[json objectForKey:@"isInvited"] boolValue]){
         _status = EventStatusPending;
     }
-    else if([state isEqualToString:@"participating"]){
+    else if([[json objectForKey:@"isAttending"] boolValue]){
         _status = EventStatusAccepted;
     }
     else{
-        NSLog(@"FLEevent status: %@", state);
-//        _status = EventStatusRefused;
-        
-        // Tester si encore possible
-        
-        _status = -1;
+        _status = EventStatusRefused;
     }
     
     _amount = [json objectForKey:@"amount"];
@@ -69,13 +60,6 @@
     }
     
     {
-        _isRefusable = NO;
-        if([[json objectForKey:@"actions"] objectForKey:@"2"]){
-            _isRefusable = YES;
-        }
-    }
-    
-    {
         _isCollectable = NO;
         
         if([[json objectForKey:@"actions"] objectForKey:@"3"]){
@@ -83,6 +67,14 @@
         }
     }
     
+    {
+        _canInvite = NO;
+        
+        if([[json objectForKey:@"isCreator"] boolValue] && ![[json objectForKey:@"closed"] boolValue]){
+            _canInvite = YES;
+        }
+    }
+        
     _creator = [[FLUser alloc] initWithJSON:[json objectForKey:@"creator"]];
     
     {
@@ -116,15 +108,26 @@
     if([self status] == EventStatusAccepted){
         return NSLocalizedString(@"EVENT_STATUS_ACCEPTED", nil);
     }
-    else if([self status] == EventStatusRefused){
-        return NSLocalizedString(@"EVENT_STATUS_REFUSED", nil);
-    }
     else if([self status] == EventStatusPending){
         return NSLocalizedString(@"EVENT_STATUS_WAITING", nil);
     }
     else{
         return nil;
     }
+}
+
++ (NSString *)transactionScopeToText:(TransactionScope)scope
+{
+    NSString *key = nil;
+    
+    if(scope == TransactionScopeFriend){
+        key = @"FRIEND";
+    }
+    else{ // if(status == TransactionScopePrivate){
+        key = @"PRIVATE";
+    }
+    
+    return NSLocalizedString([@"EVENT_SCOPE_" stringByAppendingString:key], nil);
 }
 
 @end

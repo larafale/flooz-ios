@@ -14,6 +14,12 @@
 #import "FLSelectAmount.h"
 #import "FLSelectFriendButton.h"
 
+#import "EventViewController.h"
+
+#import "CreditCardViewController.h"
+#import "FLContainerViewController.h"
+#import "TimelineViewController.h"
+
 @interface NewTransactionViewController (){
     NSMutableDictionary *transaction;
     
@@ -52,7 +58,7 @@
     
     self.view.backgroundColor = [UIColor customBackground];
     
-    transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction];
+    transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self];
     
     {
         navBar = [FLValidNavBar new];
@@ -91,7 +97,7 @@
             amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
             [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
-            amountInput.frame = CGRectSetY(amountInput.frame, offset);
+            CGRectSetY(amountInput.frame, offset);
             offset = CGRectGetMaxY(amountInput.frame);
         }
 
@@ -106,6 +112,7 @@
         
         if(_transactionType == TransactionTypePayment){
             FLPaymentField *payementField = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, offset, CGRectGetWidth(_contentView.frame), 0) for:transaction key:@"source"];
+            payementField.delegate = self;
             [_contentView addSubview:payementField];
             
             offset = CGRectGetMaxY(payementField.frame);
@@ -116,11 +123,11 @@
             contentPlaceholder = @"FIELD_TRANSACTION_EVENT_PLACEHOLDER";
         }
         
-        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"content" position:CGPointMake(0, offset)];
+        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" position:CGPointMake(0, offset)];
         [content setInputAccessoryView:transactionBarKeyboard];
         [_contentView addSubview:content];
 
-        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction];
+        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self];
         [_contentView addSubview:transactionBar];
     }
     
@@ -135,7 +142,7 @@
     
     _contentView.frame = CGRectMake(0, CGRectGetMaxY(navBar.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
     
-    transactionBar.frame = CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _contentView.frame.origin.y);
+    CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _contentView.frame.origin.y);
     
     [friend reloadData];
     
@@ -163,8 +170,8 @@
 - (void)didAmountFixSelected
 {
     [UIView animateWithDuration:.5 animations:^{
-        amountInput.frame = CGRectSetHeight(amountInput.frame, [FLNewTransactionAmount height]);
-        content.frame = CGRectSetY(content.frame, content.frame.origin.y + [FLNewTransactionAmount height]);
+        CGRectSetHeight(amountInput.frame, [FLNewTransactionAmount height]);
+        CGRectSetY(content.frame, content.frame.origin.y + [FLNewTransactionAmount height]);
     }];
 }
 
@@ -173,8 +180,8 @@
     [transaction setValue:nil forKey:@"amount"];
     
     [UIView animateWithDuration:.5 animations:^{
-        amountInput.frame = CGRectSetHeight(amountInput.frame, 1);
-        content.frame = CGRectSetY(content.frame, content.frame.origin.y - [FLNewTransactionAmount height]);
+        CGRectSetHeight(amountInput.frame, 1);
+        CGRectSetY(content.frame, content.frame.origin.y - [FLNewTransactionAmount height]);
     }];
 }
 
@@ -193,12 +200,27 @@
     
     if(_transactionType == TransactionTypeEvent){
         [[Flooz sharedInstance] createEvent:transaction success:^(id result) {
-            [self dismissViewControllerAnimated:YES completion:NULL];
+            FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+            EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
+            
+            __strong UIViewController *presentingViewController = [self presentingViewController];
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                presentingViewController.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                
+                [presentingViewController presentViewController:controller animated:NO completion:^{
+                    presentingViewController.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                }];
+            }];
         } failure:NULL];
     }
     else{
         [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
-            [self dismissViewControllerAnimated:YES completion:NULL];
+            FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
+            TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [[timelineController filterView] selectFilter:2];
+            }];
         } failure:NULL];
     }
 }
@@ -207,6 +229,25 @@
 {    
     [transactionBar reloadData];
     [transactionBarKeyboard reloadData];
+}
+
+#pragma mark - PaymentFielDelegate
+
+- (void)didWalletSelected
+{
+    
+}
+
+- (void)didCreditCardSelected
+{
+
+}
+
+- (void)presentCreditCardController
+{
+    CreditCardViewController *controller = [CreditCardViewController new];
+    
+    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 @end

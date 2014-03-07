@@ -78,14 +78,14 @@
 
 - (void)prepapreTextView{
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
-    view.text = [[_user username] uppercaseString];
+    view.text = [[_user fullname] uppercaseString];
 }
 
 - (void)prepapreAmountView{
     UILabel *view = [[self.contentView subviews] objectAtIndex:2];
     
     if([[_user amount] floatValue] > 0){
-        view.text = [FLHelper formatedAmount:[_user amount]];
+        view.text = [FLHelper formatedAmount:[_user amount] withSymbol:NO];
         view.hidden = NO;
     }
     else{

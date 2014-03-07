@@ -50,7 +50,7 @@
     
     {
         UIImageView *imageView = [UIImageView imageNamed:@"account-balance"];
-        imageView.frame = CGRectSetXY(imageView.frame, 25, 200);
+        CGRectSetXY(imageView.frame, 25, 200);
         
         UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(69, 185, 200, 30)];
         text.text = NSLocalizedString(@"ACCOUNT_BALANCE", nil);

@@ -7,6 +7,7 @@
 //
 
 #import "EventCommentsView.h"
+#define MARGIN_LEFT_RIGHT 12.
 
 @implementation EventCommentsView
 
@@ -25,8 +26,8 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame), 45)];
     
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(self.frame) - 20, 1)];
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(12, 15, 220, 30)];
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(textField.frame), 15, CGRectGetWidth(self.frame) - CGRectGetMaxX(textField.frame), 30)];
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(MARGIN_LEFT_RIGHT, 15, 0, 30)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 15, 0, 30)];
     
     separator.backgroundColor = [UIColor customSeparator:0.5];
     
@@ -46,6 +47,7 @@
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(didButtonClick) forControlEvents:UIControlEventTouchUpInside];
     button.titleLabel.font = [UIFont customTitleExtraLight:14];
+    button.titleLabel.textAlignment = NSTextAlignmentCenter;
     
     [view addSubview:separator];
     [view addSubview:textField];
@@ -53,6 +55,12 @@
     [self addSubview:view];
     
     _textField = textField;
+    
+    // Redimensionne taille du bouton en fonction du text
+    CGFloat width = [button widthToFit] + 10;
+    CGRectSetWidth(button.frame, width);
+    CGRectSetX(button.frame, CGRectGetWidth(view.frame) - MARGIN_LEFT_RIGHT - width);
+    CGRectSetWidth(textField.frame, button.frame.origin.x - 20);
 }
 
 #pragma mark -
@@ -77,14 +85,14 @@
     
     [self prepareSendCommentView];
     
-    self.frame = CGRectSetHeight(self.frame, height);
+    CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareSendCommentView
 {
     UIView *view = [[self subviews] objectAtIndex:0];
     
-    view.frame = CGRectSetY(view.frame, height);
+    CGRectSetY(view.frame, height);
     height = CGRectGetMaxY(view.frame);
 }
 
@@ -108,14 +116,14 @@
     [content setHeightToFit];
     
     if(CGRectGetHeight(content.frame) > CGRectGetHeight(view.frame)){
-        view.frame = CGRectSetHeight(view.frame, CGRectGetHeight(content.frame));
+        CGRectSetHeight(view.frame, CGRectGetHeight(content.frame));
     }
     else{
-        content.frame = CGRectSetHeight(content.frame, CGRectGetHeight(view.frame));
+        CGRectSetHeight(content.frame, CGRectGetHeight(view.frame));
     }
     
-    separator.frame = CGRectSetHeight(separator.frame, CGRectGetHeight(view.frame));
-    avatar.frame = CGRectSetY(avatar.frame, (CGRectGetHeight(view.frame) - CGRectGetHeight(avatar.frame)) / 2);
+    CGRectSetHeight(separator.frame, CGRectGetHeight(view.frame));
+    CGRectSetY(avatar.frame, (CGRectGetHeight(view.frame) - CGRectGetHeight(avatar.frame)) / 2);
     
     [view addSubview:separator];
     [view addSubview:avatar];

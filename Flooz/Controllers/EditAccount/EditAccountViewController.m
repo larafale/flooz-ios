@@ -140,13 +140,13 @@
         
         {
             UIImageView *arrow = [UIImageView imageNamed:@"arrow-white-right"];
-            arrow.frame = CGRectSetXY(arrow.frame, CGRectGetWidth(view.frame) - 24, 26);
+            CGRectSetXY(arrow.frame, CGRectGetWidth(view.frame) - 24, 26);
             [view addSubview:arrow];
         }
         
         {
             UIImageView *fb = [UIImageView imageNamed:@"facebook2"];
-            fb.frame = CGRectSetXY(fb.frame, 24, 21);
+            CGRectSetXY(fb.frame, 24, 21);
             [view addSubview:fb];
         }
         

@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FriendRequestCellDelegate.h"
 
 @interface FriendCell : UITableViewCell
 
 + (CGFloat)getHeight;
 @property (weak, nonatomic) FLUser *friend;
+
+@property (weak, nonatomic) id<FriendRequestCellDelegate> delegate;
 
 @end

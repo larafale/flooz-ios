@@ -36,6 +36,7 @@
     
     [self createAvatarView];
     [self createTextView];
+    [self createButtonView];
 }
 
 - (void)createAvatarView{
@@ -48,6 +49,17 @@
     
     view.textColor = [UIColor whiteColor];
     view.font = [UIFont customTitleLight:13];
+    
+    [self.contentView addSubview:view];
+}
+
+- (void)createButtonView{
+    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 21, 37, 28)];
+    [view setImage:[UIImage imageNamed:@"friends-remove"] forState:UIControlStateNormal];
+    view.backgroundColor = [UIColor customBackgroundStatus];
+    view.layer.cornerRadius = 14;
+
+    [view addTarget:self action:@selector(didButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     
     [self.contentView addSubview:view];
 }
@@ -66,7 +78,11 @@
 
 - (void)prepapreTextView{
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
-    view.text = [[_friend username] uppercaseString];
+    view.text = [[_friend fullname] uppercaseString];
+}
+
+- (void)didButtonTouch{
+    [_delegate removeFriend:[_friend friendRelationId]];
 }
 
 @end

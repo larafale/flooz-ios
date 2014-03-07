@@ -11,7 +11,9 @@
 #import "FLSelectAmountDelegate.h"
 #import "FLNewTransactionAmount.h"
 
-@interface NewTransactionViewController : UIViewController<FLSelectAmountDelegate>
+#import "FLPaymentFieldDelegate.h"
+
+@interface NewTransactionViewController : UIViewController<FLSelectAmountDelegate, FLPaymentFieldDelegate>
 
 - (id)initWithTransactionType:(TransactionType)transactionType;
 

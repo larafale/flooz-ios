@@ -18,9 +18,13 @@
     
     __weak NSMutableDictionary *_dictionary;
     CLLocationManager *locationManager;
+    
+    BOOL isEvent;
+    
+    __weak UIViewController* currentController;
 }
 
-- (id)initWithFor:(NSMutableDictionary *)dictionary;
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller;
 - (void)reloadData;
 
 @end

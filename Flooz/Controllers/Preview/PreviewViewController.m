@@ -27,15 +27,34 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor customBackground];
+    self.view.backgroundColor = [UIColor customBackgroundHeader];
+    _mainView.backgroundColor = [UIColor customBackground];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+#pragma mark - NavBarDelegate
+
+- (void)loadPreviousSlide{
     
+}
+
+- (void)loadNextSlide{
+    
+}
+
+- (void)dismiss{
+    if([self navigationController]){
+        [[self navigationController] popViewControllerAnimated:YES];
+    }
+    else{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 @end

@@ -38,14 +38,6 @@
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    // WARNING Hack contraintes ne fonctionnent pas
-    _tableView.frame = CGRectMakeWithSize(self.view.frame.size);
-}
-
 #pragma mark - TableView
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{

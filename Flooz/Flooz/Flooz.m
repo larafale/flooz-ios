@@ -85,7 +85,7 @@
         }
     };
     
-    [self requestPath:@"login/basic" method:@"POST" params:user success:successBlock failure:failure];
+    [self requestPath:@"/login/basic" method:@"POST" params:user success:successBlock failure:failure];
 }
 
 - (void)updateCurrentUser
@@ -124,12 +124,12 @@
     [self requestPath:@"password/change" method:@"POST" params:password success:success failure:failure];
 }
 
-- (void)timeline:(NSString *)scope success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
 {
     [self timeline:scope state:nil success:success failure:failure];
 }
 
-- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [NSMutableArray new];
@@ -143,7 +143,7 @@
         [_currentUser updateStatsPending:result];
         
         if(success){
-            success(transactions);
+            success(transactions, [result objectForKey:@"next"]);
         }
     };
     
@@ -156,6 +156,25 @@
     }
     
     [self requestPath:@"flooz" method:@"GET" params:params success:successBlock failure:failure];
+}
+
+- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success
+{
+    id successBlock = ^(id result) {
+        NSMutableArray *transactions = [NSMutableArray new];
+        NSArray *transactionsJSON = [result objectForKey:@"items"];
+        
+        for(NSDictionary *json in transactionsJSON){
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
+            [transactions addObject:transaction];
+        }
+        
+        if(success){
+            success(transactions, [result objectForKey:@"next"]);
+        }
+    };
+    
+    [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
 - (void)activitiesWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -177,7 +196,7 @@
     [self requestPath:@"feed" method:@"GET" params:nil success:successBlock failure:failure];
 }
 
-- (void)events:(NSString *)scope success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+- (void)events:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
         NSMutableArray *events = [NSMutableArray new];
@@ -189,11 +208,30 @@
         }
         
         if(success){
-            success(events);
+            success(events, [result objectForKey:@"next"]);
         }
     };
     
-    [self requestPath:@"cagnottes" method:@"GET" params:@{ @"scope": scope } success:successBlock failure:failure];
+    [self requestPath:@"pots" method:@"GET" params:@{ @"scope": scope } success:successBlock failure:failure];
+}
+
+- (void)eventsNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success
+{
+    id successBlock = ^(id result) {
+        NSMutableArray *events = [NSMutableArray new];
+        NSArray *eventsJSON = [result objectForKey:@"items"];
+        
+        for(NSDictionary *json in eventsJSON){
+            FLEvent *event = [[FLEvent alloc] initWithJSON:json];
+            [events addObject:event];
+        }
+        
+        if(success){
+            success(events, [result objectForKey:@"next"]);
+        }
+    };
+    
+    [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -202,7 +240,14 @@
         NSData *image = [transaction objectForKey:@"image"];
         [transaction setValue:nil forKey:@"image"];
         
-        [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failure constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        id failureBlock = ^(NSError *error) {
+            [transaction setValue:image forKey:@"image"];
+            if(failure){
+                failure(error);
+            }
+        };
+        
+        [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failureBlock constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [formData appendPartWithFormData:image name:@"image"];
         }];
     }
@@ -231,12 +276,19 @@
         NSData *image = [event objectForKey:@"image"];
         [event setValue:nil forKey:@"image"];
         
-        [self requestPath:@"cagnottes" method:@"POST" params:event success:success failure:failure constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        id failureBlock = ^(NSError *error) {
+            [event setValue:image forKey:@"image"];
+            if(failure){
+                failure(error);
+            }
+        };
+        
+        [self requestPath:@"pots" method:@"POST" params:event success:success failure:failureBlock constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [formData appendPartWithFormData:image name:@"image"];
         }];
     }
     else{
-        [self requestPath:@"cagnottes" method:@"POST" params:event success:success failure:failure];
+        [self requestPath:@"pots" method:@"POST" params:event success:success failure:failure];
     }
 }
 
@@ -279,6 +331,58 @@
     [self requestPath:path method:@"GET" params:nil success:success failure:nil];
 }
 
+- (void)friendsSuggestion:(void (^)(id result))success
+{
+    id successBlock = ^(id result) {
+        NSMutableArray *friends = [NSMutableArray new];
+        
+        if([result objectForKey:@"items"]){
+            for(NSDictionary *friendJSON in [result objectForKey:@"items"]){
+                FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
+                [friends addObject:friend];
+            }
+        }
+        
+        if(success){
+            success(friends);
+        }
+    };
+    
+    [self requestPath:@"/friends/suggestion" method:@"GET" params:nil success:successBlock failure:NULL];
+}
+
+- (void)friendRemove:(NSString *)friendRelationId success:(void (^)())success
+{
+    NSString *path = [@"/friends/" stringByAppendingFormat:@"%@/delete", friendRelationId];
+    [self requestPath:path method:@"GET" params:nil success:success failure:nil];
+}
+
+- (void)friendAcceptSuggestion:(NSString *)friendId success:(void (^)())success
+{
+    NSString *path = [@"/friends/request/" stringByAppendingString:friendId];
+    [self requestPath:path method:@"GET" params:nil success:success failure:nil];
+}
+
+- (void)friendSearch:(NSString *)text success:(void (^)(id result))success
+{
+    id successBlock = ^(id result) {
+        NSMutableArray *friends = [NSMutableArray new];
+        
+        if([result objectForKey:@"items"]){
+            for(NSDictionary *friendJSON in [result objectForKey:@"items"]){
+                FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
+                [friends addObject:friend];
+            }
+        }
+        
+        if(success){
+            success(friends);
+        }
+    };
+    
+    [self requestPath:@"/friends/search" method:@"GET" params:@{@"q" : text} success:successBlock failure:nil];
+}
+
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     [self requestPath:@"likes" method:@"POST" params:@{ @"lineId": [transaction transactionId] } success:success failure:failure];
@@ -291,26 +395,38 @@
 
 - (void)eventWithId:(NSString *)eventId success:(void (^)(id result))success
 {
-    NSString *path = [NSString stringWithFormat:@"cagnottes/%@", eventId];
+    NSString *path = [NSString stringWithFormat:@"pots/%@", eventId];
     [self requestPath:path method:@"GET" params:nil success:success failure:NULL];
 }
 
 - (void)eventParticipate:(NSDictionary *)dictionary success:(void (^)(id result))success
 {
-    NSString *path = [NSString stringWithFormat:@"cagnottes/%@/participate", [dictionary objectForKey:@"id"]];
+    NSString *path = [NSString stringWithFormat:@"pots/%@/participate", [dictionary objectForKey:@"id"]];
     [self requestPath:path method:@"POST" params:dictionary success:success failure:NULL];
 }
 
 - (void)eventDecline:(FLEvent *)event success:(void (^)(id result))success
 {
-    NSString *path = [NSString stringWithFormat:@"cagnottes/%@/decline", [event eventId]];
+    NSString *path = [NSString stringWithFormat:@"pots/%@/decline", [event eventId]];
     [self requestPath:path method:@"POST" params:nil success:success failure:NULL];
 }
 
 - (void)eventInvite:(FLEvent *)event friend:(NSString *)friend success:(void (^)(id result))success
 {
-    NSString *path = [NSString stringWithFormat:@"cagnottes/%@/invite", [event eventId]];
+    NSString *path = [NSString stringWithFormat:@"pots/%@/invite", [event eventId]];
     [self requestPath:path method:@"POST" params:@{ @"q": friend } success:success failure:NULL];
+}
+
+- (void)eventCollect:(FLEvent *)event success:(void (^)(id result))success
+{
+    NSString *path = [NSString stringWithFormat:@"pots/%@/take", [event eventId]];
+    [self requestPath:path method:@"POST" params:nil success:success failure:NULL];
+}
+
+- (void)eventOffer:(FLEvent *)event to:(NSString *)to success:(void (^)(id result))success
+{
+    NSString *path = [NSString stringWithFormat:@"pots/%@/give", [event eventId]];
+    [self requestPath:path method:@"POST" params:@{ @"to": to } success:success failure:NULL];
 }
 
 #pragma mark -
@@ -322,10 +438,15 @@
 
 -(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> formData))constructingBodyWithBlock
 {
-//    NSLog(@"request: %@", path);
+    NSLog(@"%@ request: %@ - %@", method, path, params);
     
     if(access_token){
-        path = [path stringByAppendingFormat:@"?token=%@", access_token];
+        if([path rangeOfString:@"?"].location == NSNotFound){
+            path = [path stringByAppendingFormat:@"?token=%@", access_token];
+        }
+        else if([path rangeOfString:@"token="].location == NSNotFound){ // Dans le cas des next url ou le token est deja forni
+            path = [path stringByAppendingFormat:@"&token=%@", access_token];
+        }
     }
 
     id successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -338,10 +459,13 @@
     };
     
     id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", operation.responseString);
+        NSLog(@"Error request: %@", operation.responseString);
         [loadView hide];
-                
-        if(error.code == kCFURLErrorTimedOut ||
+        
+        if([path isEqualToString:@"/login/facebook"]){
+            
+        }
+        else if(error.code == kCFURLErrorTimedOut ||
            error.code == kCFURLErrorCannotConnectToHost ||
            error.code == kCFURLErrorNotConnectedToInternet ||
            error.code == kCFURLErrorNetworkConnectionLost
@@ -353,9 +477,15 @@
             DISPLAY_ERROR(FLBadLoginError);
             [self logout];
         }
-        else if(operation.responseObject){
+        else if(![path isEqualToString:@"/login/basic"] && operation.responseObject){
+            id statusCode = [operation.responseObject objectForKey:@"statusCode"];
             id message = [operation.responseObject objectForKey:@"item"];
-            if([message respondsToSelector:@selector(length)]){ // Test si string
+            
+            if([statusCode respondsToSelector:@selector(intValue)] && [statusCode intValue] == 401){
+                // Token expire
+                DISPLAY_ERROR(FLBadLoginError);
+                [self logout];
+            }else if([message respondsToSelector:@selector(length)]){ // Test si string
                 DISPLAY_ERROR_MESSAGE(message);
             }
         }
@@ -386,9 +516,9 @@
 #pragma mark -
 
 - (void)updateCurrentUserAfterConnect:(id)result
-{
-    _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
+{    
     access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
+    _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
     [appDelegate didConnected];
 }
 
@@ -396,10 +526,12 @@
 
 - (void)connectFacebook
 { 
-    [FBSession openActiveSessionWithReadPermissions:@[@"basic_info,email"]
+    [FBSession openActiveSessionWithReadPermissions:@[@"basic_info,email,user_friends"]
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
+         [self hideLoadView];
+
          [appDelegate sessionStateChanged:session state:state error:error];
      }];
 }
@@ -411,16 +543,26 @@
     [self requestPath:@"/login/facebook" method:@"POST" params:@{@"token": accessToken} success:^(id result) {
         [self updateCurrentUserAfterConnect:result];
     } failure:^(NSError *error) {
-    
-        [FBRequestConnection startWithGraphPath:@"/me?field=email,first_name,last_name" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        
+        [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,username,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+            [self hideLoadView];
+            
             if (!error) {
                 NSDictionary *user = @{
                                        @"email": [result objectForKey:@"email"],
                                        @"lastName": [result objectForKey:@"last_name"],
                                        @"firstName": [result objectForKey:@"first_name"],
                                        @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", [result objectForKey:@"id"]],
-                                       @"token": accessToken
+                                           @"fb": [@{
+                                               @"devices": [result objectForKey:@"devices"],
+                                               @"email": [result objectForKey:@"email"],
+                                               @"id": [result objectForKey:@"id"],
+                                               @"name": [result objectForKey:@"name"],
+                                               @"username": [result objectForKey:@"username"],
+                                               @"token": accessToken
+                                           } mutableCopy]
                                        };
+
                 [appDelegate loadSignupWithUser:user];
             } else {
                 NSLog(@"didConnectFacebook error");
@@ -428,6 +570,19 @@
                 // See: https://developers.facebook.com/docs/ios/errors
             }
         }];
+    }];
+}
+
+- (void)facebokSearchFriends:(void (^)(id result))success
+{
+    [FBRequestConnection startWithGraphPath:@"/me/friends?fields=first_name,last_name,name,id,picture" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        [self hideLoadView];
+        
+        if (!error) {
+            success([result objectForKey:@"data"]);
+        } else {
+            NSLog(@"facebokSearchFriends: %@", [error description]);
+        }
     }];
 }
 

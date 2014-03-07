@@ -8,11 +8,15 @@
 
 #import "FriendsViewController.h"
 
+#import "FriendAddViewController.h"
+
 #import "FriendRequestCell.h"
 #import "FriendCell.h"
+#import "FriendSuggestionCell.h"
 
 @interface FriendsViewController (){
     NSArray *friendsRequest;
+    NSArray *friendsSuggestion;
     NSArray *friends;
 }
 
@@ -25,6 +29,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         friendsRequest = @[];
+        friendsSuggestion = @[];
         friends = @[];
     }
     return self;
@@ -36,47 +41,66 @@
         
     if(!animated){
         [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
-            friendsRequest = [[[Flooz sharedInstance] currentUser] friendsRequest];
-            friends = [[[Flooz sharedInstance] currentUser] friends];
-            
-            [_tableView reloadData];
-            [_tableView setContentOffset:CGPointZero animated:YES];
+            [[Flooz sharedInstance] friendsSuggestion:^(id result) {
+                friendsRequest = [[[Flooz sharedInstance] currentUser] friendsRequest];
+                friends = [[[Flooz sharedInstance] currentUser] friends];
+                friendsSuggestion = result;
+                
+                [_tableView reloadData];
+                [_tableView setContentOffset:CGPointZero animated:YES];
+            }];
         }];
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    // WARNING Hack contraintes ne fonctionnent pas
-    _tableView.frame = CGRectMakeWithSize(self.view.frame.size);
 }
 
 #pragma mark - TableView
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if(section == 0){
-        return NSLocalizedString(@"FRIENDS_FRIEND_REQUESTS", nil);
+    if(section == 1){
+        return NSLocalizedString(@"FRIENDS_FRIENDS_REQUEST", nil);
+    }
+    else if(section == 2){
+        return NSLocalizedString(@"FRIENDS_FRIENDS_SUGGESTION", nil);
     }
     
     return NSLocalizedString(@"FRIENDS_FRIENDS", nil);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if(section == 0){
+        return 45;
+    }
+    else if(section == 1 && [friendsRequest count] == 0){
+        return 0;
+    }
+    else if(section == 2 && [friendsSuggestion count] == 0){
+        return 0;
+    }
+    else if(section == 3 && [friends count] == 0){
+        return 0;
+    }
+    
     return 28;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), [self tableView:tableView heightForHeaderInSection:section])];
+    CGFloat heigth = [self tableView:tableView heightForHeaderInSection:section];
     
     if(section == 0){
+        FriendSearchButton *view = [[FriendSearchButton alloc] initWithFrame:CGRectMakeSize(SCREEN_WIDTH, heigth)];
+        view.delegate = self;
+        return view;
+    }
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), heigth)];
+    
+    if(section == 1){
         view.backgroundColor = [UIColor customBackgroundHeader];
     }
     else{
@@ -107,15 +131,21 @@
 }
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if(section == 0){
+    if(section == 1){
         return [friendsRequest count];
     }
+    else if(section == 2){
+        return [friendsSuggestion count];
+    }
+    else if(section == 3){
+        return [friends count];
+    }
     
-    return [friends count];
+    return 0;
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == 0){
+    if(indexPath.section == 1){
         return [FriendRequestCell getHeight];
     }
     
@@ -123,7 +153,7 @@
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == 0){
+    if(indexPath.section == 1){
         static NSString *cellIdentifier = @"FriendRequestCell";
         FriendRequestCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
@@ -137,12 +167,27 @@
         
         return cell;
     }
+    else if(indexPath.section == 2){
+        static NSString *cellIdentifier = @"FriendSuggestionCell";
+        FriendSuggestionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if(!cell){
+            cell = [[FriendSuggestionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.delegate = self;
+        }
+        
+        FLUser *friend = [friendsSuggestion objectAtIndex:indexPath.row];
+        [cell setFriend:friend];
+        
+        return cell;
+    }
     else{
         static NSString *cellIdentifier = @"FriendCell";
         FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
         if(!cell){
             cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.delegate = self;
         }
         
         FLUser *friend = [friends objectAtIndex:indexPath.row];
@@ -155,12 +200,35 @@
 - (void)didReloadData{
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
-        friendsRequest = [[[Flooz sharedInstance] currentUser] friendsRequest];
-        friends = [[[Flooz sharedInstance] currentUser] friends];
-        
-        [_tableView reloadData];
-        [_tableView setContentOffset:CGPointZero animated:YES];
+        [[Flooz sharedInstance] friendsSuggestion:^(id result) {
+            friendsRequest = [[[Flooz sharedInstance] currentUser] friendsRequest];
+            friends = [[[Flooz sharedInstance] currentUser] friends];
+            friendsSuggestion = result;
+            
+            [_tableView reloadData];
+            [_tableView setContentOffset:CGPointZero animated:YES];
+        }];
     }];
+}
+
+- (void)acceptFriendSuggestion:(NSString *)friendSuggestionId
+{
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] friendAcceptSuggestion:friendSuggestionId success:^{
+        [self didReloadData];
+    }];
+}
+
+- (void)removeFriend:(NSString *)friendId
+{
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] friendRemove:friendId success:^{
+        [self didReloadData];
+    }];
+}
+
+- (void)presentFriendAddController{
+    [self presentViewController:[FriendAddViewController new] animated:YES completion:NULL];
 }
 
 @end

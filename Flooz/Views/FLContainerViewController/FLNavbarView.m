@@ -60,7 +60,7 @@
     
     {
         UIImageView *shadow = [UIImageView imageNamed:@"navbar-shadow"];
-        shadow.frame = CGRectSetY(shadow.frame, STATUSBAR_HEIGHT);
+        CGRectSetY(shadow.frame, STATUSBAR_HEIGHT);
         [self addSubview:shadow];
     }
 }
@@ -122,13 +122,13 @@
 {
     NSInteger index = 0;
     for(UIView *view in [_titlesView subviews]){
-        view.frame = CGRectSetX(view.frame, OFFSET_BETWEEN_TITLES * (index - selectedTitleIndex));
+        CGRectSetX(view.frame, OFFSET_BETWEEN_TITLES * (index - selectedTitleIndex));
         index++;
     }
     
     index = 0;
     for(UIViewController *controller in _viewControllers){
-        controller.view.frame = CGRectSetX(controller.view.frame, CGRectGetWidth(self.frame) * (index - selectedTitleIndex));
+        CGRectSetX(controller.view.frame, CGRectGetWidth(self.frame) * (index - selectedTitleIndex));
         index++;
         
         CGFloat progress = fabs(controller.view.frame.origin.x / CGRectGetWidth(self.frame));
@@ -172,7 +172,7 @@
     }
     
     selectedTitleIndex = index;
-    
+        
     [UIView animateWithDuration:0.3
                           delay:0
                         options:0

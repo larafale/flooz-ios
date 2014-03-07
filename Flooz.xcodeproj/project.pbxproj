@@ -56,6 +56,15 @@
 		AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6F51882151000D81AF6 /* TimelineViewController.m */; };
 		AB5EB6F81882151000D81AF6 /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */; };
 		AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
+		AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50918C4A5D80073B947 /* WebViewController.m */; };
+		AB6DA50C18C4A5D80073B947 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA50A18C4A5D80073B947 /* WebViewController.xib */; };
+		AB6DA51018C4DDFD0073B947 /* FLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50F18C4DDFD0073B947 /* FLImageView.m */; };
+		AB6DA51518C89C240073B947 /* PreviewNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51418C89C240073B947 /* PreviewNavBar.m */; };
+		AB6DA51A18C8C5B90073B947 /* FriendSearchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51918C8C5B90073B947 /* FriendSearchButton.m */; };
+		AB6DA52018C8CEF70073B947 /* FriendAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51E18C8CEF70073B947 /* FriendAddViewController.m */; };
+		AB6DA52118C8CEF70073B947 /* FriendAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA51F18C8CEF70073B947 /* FriendAddViewController.xib */; };
+		AB6DA52518C8D0AF0073B947 /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA52418C8D0AF0073B947 /* FriendAddSearchBar.m */; };
+		AB6DA52A18C8D4CE0073B947 /* FriendAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA52918C8D4CE0073B947 /* FriendAddCell.m */; };
 		ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4618BCE805002FCAAE /* EventViewController.m */; };
 		ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D4718BCE805002FCAAE /* EventViewController.xib */; };
 		ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4D18BE60C5002FCAAE /* EventHeaderView.m */; };
@@ -67,6 +76,8 @@
 		ABB12D6B18BF9F25002FCAAE /* EventParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D6918BF9F25002FCAAE /* EventParticipantsViewController.m */; };
 		ABB12D6C18BF9F25002FCAAE /* EventParticipantsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D6A18BF9F25002FCAAE /* EventParticipantsViewController.xib */; };
 		ABB12D7018BFA2D2002FCAAE /* EventParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D6F18BFA2D2002FCAAE /* EventParticipantCell.m */; };
+		ABB12D7418C0C42D002FCAAE /* EventAmountActionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D7318C0C42D002FCAAE /* EventAmountActionsView.m */; };
+		ABB12D7818C0DEE8002FCAAE /* FriendSuggestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D7718C0DEE8002FCAAE /* FriendSuggestionCell.m */; };
 		ABBB75CB18B63DB20070C2A8 /* CreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75C918B63DB20070C2A8 /* CreditCardViewController.m */; };
 		ABBB75CC18B63DB20070C2A8 /* CreditCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBB75CA18B63DB20070C2A8 /* CreditCardViewController.xib */; };
 		ABBB75CF18B64A0B0070C2A8 /* FLCreditCard.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75CE18B64A0B0070C2A8 /* FLCreditCard.m */; };
@@ -227,6 +238,25 @@
 		AB5EB6F51882151000D81AF6 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
 		AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineViewController.xib; sourceTree = "<group>"; };
 		AB5EB7011882157300D81AF6 /* FLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTableView.m; path = Views/FLTableView.m; sourceTree = "<group>"; };
+		AB6DA50818C4A5D80073B947 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = Controllers/Web/WebViewController.h; sourceTree = "<group>"; };
+		AB6DA50918C4A5D80073B947 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = Controllers/Web/WebViewController.m; sourceTree = "<group>"; };
+		AB6DA50A18C4A5D80073B947 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = Controllers/Web/WebViewController.xib; sourceTree = "<group>"; };
+		AB6DA50E18C4DDFD0073B947 /* FLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLImageView.h; path = Views/FLImageView/FLImageView.h; sourceTree = "<group>"; };
+		AB6DA50F18C4DDFD0073B947 /* FLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLImageView.m; path = Views/FLImageView/FLImageView.m; sourceTree = "<group>"; };
+		AB6DA51318C89C240073B947 /* PreviewNavBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewNavBar.h; path = Controllers/Preview/PreviewNavBar/PreviewNavBar.h; sourceTree = "<group>"; };
+		AB6DA51418C89C240073B947 /* PreviewNavBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreviewNavBar.m; path = Controllers/Preview/PreviewNavBar/PreviewNavBar.m; sourceTree = "<group>"; };
+		AB6DA51618C8A48B0073B947 /* PreviewNavBarDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PreviewNavBarDelegate.h; path = Controllers/Preview/PreviewNavBar/PreviewNavBarDelegate.h; sourceTree = "<group>"; };
+		AB6DA51818C8C5B90073B947 /* FriendSearchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendSearchButton.h; path = Controllers/Friends/FriendSearchButton/FriendSearchButton.h; sourceTree = "<group>"; };
+		AB6DA51918C8C5B90073B947 /* FriendSearchButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendSearchButton.m; path = Controllers/Friends/FriendSearchButton/FriendSearchButton.m; sourceTree = "<group>"; };
+		AB6DA51B18C8CE6D0073B947 /* FriendSearchButtonDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FriendSearchButtonDelegate.h; path = Controllers/Friends/FriendSearchButton/FriendSearchButtonDelegate.h; sourceTree = "<group>"; };
+		AB6DA51D18C8CEF70073B947 /* FriendAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAddViewController.h; path = Controllers/FriendAdd/FriendAddViewController.h; sourceTree = "<group>"; };
+		AB6DA51E18C8CEF70073B947 /* FriendAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendAddViewController.m; path = Controllers/FriendAdd/FriendAddViewController.m; sourceTree = "<group>"; };
+		AB6DA51F18C8CEF70073B947 /* FriendAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FriendAddViewController.xib; path = Controllers/FriendAdd/FriendAddViewController.xib; sourceTree = "<group>"; };
+		AB6DA52318C8D0AF0073B947 /* FriendAddSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAddSearchBar.h; path = Controllers/FriendAdd/FriendAddSearchBar/FriendAddSearchBar.h; sourceTree = "<group>"; };
+		AB6DA52418C8D0AF0073B947 /* FriendAddSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendAddSearchBar.m; path = Controllers/FriendAdd/FriendAddSearchBar/FriendAddSearchBar.m; sourceTree = "<group>"; };
+		AB6DA52618C8D1810073B947 /* FriendAddSearchBarDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FriendAddSearchBarDelegate.h; path = Controllers/FriendAdd/FriendAddSearchBar/FriendAddSearchBarDelegate.h; sourceTree = "<group>"; };
+		AB6DA52818C8D4CE0073B947 /* FriendAddCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAddCell.h; path = Controllers/FriendAdd/FriendAddCell/FriendAddCell.h; sourceTree = "<group>"; };
+		AB6DA52918C8D4CE0073B947 /* FriendAddCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendAddCell.m; path = Controllers/FriendAdd/FriendAddCell/FriendAddCell.m; sourceTree = "<group>"; };
 		ABB12D4518BCE805002FCAAE /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventViewController.h; path = Controllers/Event/EventViewController.h; sourceTree = "<group>"; };
 		ABB12D4618BCE805002FCAAE /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventViewController.m; path = Controllers/Event/EventViewController.m; sourceTree = "<group>"; };
 		ABB12D4718BCE805002FCAAE /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Controllers/Event/EventViewController.xib; sourceTree = "<group>"; };
@@ -249,6 +279,10 @@
 		ABB12D6A18BF9F25002FCAAE /* EventParticipantsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventParticipantsViewController.xib; path = Controllers/EventParticipants/EventParticipantsViewController.xib; sourceTree = "<group>"; };
 		ABB12D6E18BFA2D2002FCAAE /* EventParticipantCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventParticipantCell.h; path = EventParticipantCell/EventParticipantCell.h; sourceTree = "<group>"; };
 		ABB12D6F18BFA2D2002FCAAE /* EventParticipantCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventParticipantCell.m; path = EventParticipantCell/EventParticipantCell.m; sourceTree = "<group>"; };
+		ABB12D7218C0C42D002FCAAE /* EventAmountActionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventAmountActionsView.h; path = Controllers/Event/EventAmountActions/EventAmountActionsView.h; sourceTree = "<group>"; };
+		ABB12D7318C0C42D002FCAAE /* EventAmountActionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventAmountActionsView.m; path = Controllers/Event/EventAmountActions/EventAmountActionsView.m; sourceTree = "<group>"; };
+		ABB12D7618C0DEE8002FCAAE /* FriendSuggestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendSuggestionCell.h; path = FriendSuggestionCell/FriendSuggestionCell.h; sourceTree = "<group>"; };
+		ABB12D7718C0DEE8002FCAAE /* FriendSuggestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendSuggestionCell.m; path = FriendSuggestionCell/FriendSuggestionCell.m; sourceTree = "<group>"; };
 		ABBB75C818B63DB20070C2A8 /* CreditCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreditCardViewController.h; path = Controllers/CreditCard/CreditCardViewController.h; sourceTree = "<group>"; };
 		ABBB75C918B63DB20070C2A8 /* CreditCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreditCardViewController.m; path = Controllers/CreditCard/CreditCardViewController.m; sourceTree = "<group>"; };
 		ABBB75CA18B63DB20070C2A8 /* CreditCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreditCardViewController.xib; path = Controllers/CreditCard/CreditCardViewController.xib; sourceTree = "<group>"; };
@@ -487,6 +521,7 @@
 		AB2FB55918B2B4600079AA1D /* Friends */ = {
 			isa = PBXGroup;
 			children = (
+				AB6DA51718C8C5970073B947 /* FriendSearchButton */,
 				AB2FB55A18B2B4710079AA1D /* FriendsViewController.h */,
 				AB2FB55B18B2B4710079AA1D /* FriendsViewController.m */,
 				AB2FB55C18B2B4710079AA1D /* FriendsViewController.xib */,
@@ -596,6 +631,7 @@
 				ABB12D4418BCE7E5002FCAAE /* Event */,
 				ABB12D6718BF9F03002FCAAE /* EventParticipants */,
 				AB2FB55318B234200079AA1D /* Events */,
+				AB6DA51C18C8CEDF0073B947 /* FriendAdd */,
 				ABF7093318A3C4FE00517389 /* FriendPicker */,
 				AB2FB55918B2B4600079AA1D /* Friends */,
 				AB5EB6D7188214F000D81AF6 /* Home */,
@@ -612,6 +648,7 @@
 				AB5EB6E3188214F000D81AF6 /* Social */,
 				AB5EB6E9188214F000D81AF6 /* Timeline */,
 				ABF7092618A2CA1300517389 /* Transaction */,
+				AB6DA50718C4A5BC0073B947 /* Web */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -619,6 +656,7 @@
 		AB3D08D5186CA6F800CF8380 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AB6DA50D18C4DDE80073B947 /* FLImageView */,
 				AB5EB6F91882157300D81AF6 /* Cells */,
 				ABE9145618927EDD003AC722 /* FLAccountButton */,
 				ABE9144F189165BA003AC722 /* FLAccountUserView */,
@@ -719,6 +757,7 @@
 		AB4CB6D71886A24B00D1C573 /* Preview */ = {
 			isa = PBXGroup;
 			children = (
+				AB6DA51218C89C100073B947 /* PreviewNavBar */,
 				AB4CB6D81886A26400D1C573 /* PreviewViewController.h */,
 				AB4CB6D91886A26400D1C573 /* PreviewViewController.m */,
 				AB4CB6DA1886A26400D1C573 /* PreviewViewController.xib */,
@@ -827,10 +866,81 @@
 				ABB12D6D18BFA2B0002FCAAE /* EventParticipantCell */,
 				AB2FB56018B63B300079AA1D /* FriendCell */,
 				ABBB75DF18BBADB40070C2A8 /* FriendRequestCell */,
+				ABB12D7518C0DECF002FCAAE /* FriendSuggestionCell */,
 				ABF7093918A4CEEC00517389 /* TransactionCell */,
 			);
 			name = Cells;
 			path = Views/Cells;
+			sourceTree = "<group>";
+		};
+		AB6DA50718C4A5BC0073B947 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				AB6DA50818C4A5D80073B947 /* WebViewController.h */,
+				AB6DA50918C4A5D80073B947 /* WebViewController.m */,
+				AB6DA50A18C4A5D80073B947 /* WebViewController.xib */,
+			);
+			name = Web;
+			sourceTree = "<group>";
+		};
+		AB6DA50D18C4DDE80073B947 /* FLImageView */ = {
+			isa = PBXGroup;
+			children = (
+				AB6DA50E18C4DDFD0073B947 /* FLImageView.h */,
+				AB6DA50F18C4DDFD0073B947 /* FLImageView.m */,
+			);
+			name = FLImageView;
+			sourceTree = "<group>";
+		};
+		AB6DA51218C89C100073B947 /* PreviewNavBar */ = {
+			isa = PBXGroup;
+			children = (
+				AB6DA51318C89C240073B947 /* PreviewNavBar.h */,
+				AB6DA51418C89C240073B947 /* PreviewNavBar.m */,
+				AB6DA51618C8A48B0073B947 /* PreviewNavBarDelegate.h */,
+			);
+			name = PreviewNavBar;
+			sourceTree = "<group>";
+		};
+		AB6DA51718C8C5970073B947 /* FriendSearchButton */ = {
+			isa = PBXGroup;
+			children = (
+				AB6DA51818C8C5B90073B947 /* FriendSearchButton.h */,
+				AB6DA51918C8C5B90073B947 /* FriendSearchButton.m */,
+				AB6DA51B18C8CE6D0073B947 /* FriendSearchButtonDelegate.h */,
+			);
+			name = FriendSearchButton;
+			sourceTree = "<group>";
+		};
+		AB6DA51C18C8CEDF0073B947 /* FriendAdd */ = {
+			isa = PBXGroup;
+			children = (
+				AB6DA52718C8D4B00073B947 /* FriendAddCell */,
+				AB6DA52218C8D0930073B947 /* FriendAddSearchBar */,
+				AB6DA51D18C8CEF70073B947 /* FriendAddViewController.h */,
+				AB6DA51E18C8CEF70073B947 /* FriendAddViewController.m */,
+				AB6DA51F18C8CEF70073B947 /* FriendAddViewController.xib */,
+			);
+			name = FriendAdd;
+			sourceTree = "<group>";
+		};
+		AB6DA52218C8D0930073B947 /* FriendAddSearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				AB6DA52318C8D0AF0073B947 /* FriendAddSearchBar.h */,
+				AB6DA52418C8D0AF0073B947 /* FriendAddSearchBar.m */,
+				AB6DA52618C8D1810073B947 /* FriendAddSearchBarDelegate.h */,
+			);
+			name = FriendAddSearchBar;
+			sourceTree = "<group>";
+		};
+		AB6DA52718C8D4B00073B947 /* FriendAddCell */ = {
+			isa = PBXGroup;
+			children = (
+				AB6DA52818C8D4CE0073B947 /* FriendAddCell.h */,
+				AB6DA52918C8D4CE0073B947 /* FriendAddCell.m */,
+			);
+			name = FriendAddCell;
 			sourceTree = "<group>";
 		};
 		ABB12D4418BCE7E5002FCAAE /* Event */ = {
@@ -838,6 +948,7 @@
 			children = (
 				ABB12D4B18BE6070002FCAAE /* EventAction */,
 				ABB12D5218BE6193002FCAAE /* EventAmount */,
+				ABB12D7118C0C3FE002FCAAE /* EventAmountActions */,
 				ABB12D5A18BE62D6002FCAAE /* EventComments */,
 				ABB12D5F18BE6491002FCAAE /* EventContent */,
 				ABB12D4A18BE5F42002FCAAE /* EventHeader */,
@@ -921,6 +1032,24 @@
 				ABB12D6F18BFA2D2002FCAAE /* EventParticipantCell.m */,
 			);
 			name = EventParticipantCell;
+			sourceTree = "<group>";
+		};
+		ABB12D7118C0C3FE002FCAAE /* EventAmountActions */ = {
+			isa = PBXGroup;
+			children = (
+				ABB12D7218C0C42D002FCAAE /* EventAmountActionsView.h */,
+				ABB12D7318C0C42D002FCAAE /* EventAmountActionsView.m */,
+			);
+			name = EventAmountActions;
+			sourceTree = "<group>";
+		};
+		ABB12D7518C0DECF002FCAAE /* FriendSuggestionCell */ = {
+			isa = PBXGroup;
+			children = (
+				ABB12D7618C0DEE8002FCAAE /* FriendSuggestionCell.h */,
+				ABB12D7718C0DEE8002FCAAE /* FriendSuggestionCell.m */,
+			);
+			name = FriendSuggestionCell;
 			sourceTree = "<group>";
 		};
 		ABBB75C718B63D930070C2A8 /* CreditCard */ = {
@@ -1401,6 +1530,7 @@
 				AB5EB6F0188214F000D81AF6 /* SettingsViewController.xib in Resources */,
 				AB5EB6F81882151000D81AF6 /* TimelineViewController.xib in Resources */,
 				ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */,
+				AB6DA50C18C4A5D80073B947 /* WebViewController.xib in Resources */,
 				ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */,
 				ABF7093818A3C52200517389 /* FriendPickerViewController.xib in Resources */,
 				ABE9147418929A5C003AC722 /* InformationsViewController.xib in Resources */,
@@ -1424,6 +1554,7 @@
 				ABF7091E18A03D4600517389 /* Error.strings in Resources */,
 				ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */,
 				ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */,
+				AB6DA52118C8CEF70073B947 /* FriendAddViewController.xib in Resources */,
 				AB3D089C186CA11A00CF8380 /* InfoPlist.strings in Resources */,
 				ABBB75CC18B63DB20070C2A8 /* CreditCardViewController.xib in Resources */,
 				AB2FB55218B232B10079AA1D /* AcitvitiesViewController.xib in Resources */,
@@ -1489,6 +1620,7 @@
 				ABE9148F189337E4003AC722 /* FLTextField.m in Sources */,
 				ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */,
 				ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */,
+				AB6DA51A18C8C5B90073B947 /* FriendSearchButton.m in Sources */,
 				ABB12D6B18BF9F25002FCAAE /* EventParticipantsViewController.m in Sources */,
 				ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */,
 				ABB12D5518BE61A3002FCAAE /* EventAmountView.m in Sources */,
@@ -1501,6 +1633,7 @@
 				ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */,
 				ABE9146618929402003AC722 /* FLAccountButton.m in Sources */,
 				ABC1115B18ACE4C700C3C52D /* TransactionUsersView.m in Sources */,
+				AB6DA52018C8CEF70073B947 /* FriendAddViewController.m in Sources */,
 				ABE914A018968E52003AC722 /* FLPaymentField.m in Sources */,
 				ABB12D6218BE64B3002FCAAE /* EventContentView.m in Sources */,
 				AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */,
@@ -1528,6 +1661,7 @@
 				AB2FB55718B234320079AA1D /* EventsViewController.m in Sources */,
 				ABE914461890A12C003AC722 /* FLUser.m in Sources */,
 				ABE914871892AE59003AC722 /* FLNewTransactionAmount.m in Sources */,
+				AB6DA52518C8D0AF0073B947 /* FriendAddSearchBar.m in Sources */,
 				AB2FB55118B232B10079AA1D /* AcitvitiesViewController.m in Sources */,
 				ABB12D5918BE61BC002FCAAE /* EventUsersView.m in Sources */,
 				ABE914371890A029003AC722 /* FLLoadView.m in Sources */,
@@ -1538,13 +1672,17 @@
 				ABE914AB1898558E003AC722 /* FLTextView.m in Sources */,
 				ABF7092A18A2CA3500517389 /* TransactionViewController.m in Sources */,
 				ABE914451890A12C003AC722 /* FLTransaction.m in Sources */,
+				AB6DA51518C89C240073B947 /* PreviewNavBar.m in Sources */,
 				AB2FB54818AE798D0079AA1D /* FLActivity.m in Sources */,
+				AB6DA52A18C8D4CE0073B947 /* FriendAddCell.m in Sources */,
 				ABE9143D1890A08A003AC722 /* UIBarButtonItem+custom.m in Sources */,
 				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
 				ABE9147918929AC8003AC722 /* NotificationsViewController.m in Sources */,
 				ABBB75CF18B64A0B0070C2A8 /* FLCreditCard.m in Sources */,
 				ABE9142018894385003AC722 /* NewTransactionViewController.m in Sources */,
 				ABE9146218929168003AC722 /* AccountViewController.m in Sources */,
+				ABB12D7418C0C42D002FCAAE /* EventAmountActionsView.m in Sources */,
+				ABB12D7818C0DEE8002FCAAE /* FriendSuggestionCell.m in Sources */,
 				ABBB75E218BBADFA0070C2A8 /* FriendRequestCell.m in Sources */,
 				ABC1114F18ACE48900C3C52D /* TransactionAmountView.m in Sources */,
 				ABF7092518A2AF7F00517389 /* FLSelectAmount.m in Sources */,
@@ -1563,8 +1701,10 @@
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */,
+				AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */,
 				ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,
+				AB6DA51018C4DDFD0073B947 /* FLImageView.m in Sources */,
 				ABE9149C18968C30003AC722 /* FLTextFieldTitle.m in Sources */,
 				AB2FB54318AD9C7A0079AA1D /* PasswordViewController.m in Sources */,
 			);
@@ -1707,6 +1847,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jonathan/Documents/FacebookSDK,
@@ -1738,6 +1879,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1749,6 +1892,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jonathan/Documents/FacebookSDK,
@@ -1780,6 +1924,8 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

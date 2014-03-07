@@ -175,29 +175,34 @@
         
         // Si FilterView
         if(index % 2 == 0){
-            view.frame = CGRectSetWidth(view.frame, widthForFilterView);
+            CGRectSetWidth(view.frame, widthForFilterView);
             
             {
                 UIView *button = [[view subviews] objectAtIndex:0];
                 UIView *line = [[view subviews] objectAtIndex:1];
                 
-                button.frame = CGRectSetWidth(button.frame, widthForFilterView);
-                line.frame = CGRectSetWidth(line.frame, widthForFilterView);
+                CGRectSetWidth(button.frame, widthForFilterView);
+                CGRectSetWidth(line.frame, widthForFilterView);
             }
             
             if([[view subviews] count] > 2){
                 UIView *arrow = [[view subviews] objectAtIndex:2];
                 UIView *arrow_selected = [[view subviews] objectAtIndex:3];
                 
-                arrow.frame = CGRectSetX(arrow.frame, widthForFilterView - 12);
-                arrow_selected.frame = CGRectSetX(arrow_selected.frame, widthForFilterView - 12);
+                CGRectSetX(arrow.frame, widthForFilterView - 12);
+                CGRectSetX(arrow_selected.frame, widthForFilterView - 12);
             }
         }
         
-        view.frame = CGRectSetX(view.frame, offset + 1);
+        CGRectSetX(view.frame, offset + 1);
         offset = CGRectGetMaxX(view.frame);
         index++;
     }
+}
+
+- (void)selectFilter:(NSUInteger)index
+{
+    [self didButtonTouch:[[[filterViews objectAtIndex:index] subviews] firstObject]];
 }
 
 @end

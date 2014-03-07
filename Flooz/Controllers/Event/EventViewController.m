@@ -10,6 +10,7 @@
 
 #import "EventActionView.h"
 #import "EventAmountView.h"
+#import "EventAmountActionsView.h"
 #import "EventHeaderView.h"
 #import "EventUsersView.h"
 #import "EventContentView.h"
@@ -19,6 +20,9 @@
 #import "FLNewTransactionAmount.h"
 
 #import "EventParticipantsViewController.h"
+#import "FriendPickerViewController.h"
+
+#import "CreditCardViewController.h"
 
 #define STATUSBAR_HEIGHT 20.
 
@@ -34,6 +38,8 @@
     
     FLNewTransactionAmount *amountInput;
     NSMutableDictionary *amount;
+    
+    NSMutableDictionary *_eventOfferUser;
     
     BOOL firstView;
 }
@@ -95,16 +101,16 @@
                 textColor = [UIColor customYellow];
                 break;
             case EventStatusRefused:
-                textColor = [UIColor whiteColor];
+                textColor = [UIColor customRed];
                 break;
         }
         
         status.textColor = textColor;
         
-        status.text = [_event statusText];
+        status.text = [NSString stringWithFormat:@"  %@", [_event statusText]]; // Hack pour mettre un padding
         [status setWidthToFit];
-        status.frame = CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 20);
-        status.frame = CGRectSetX(status.frame, CGRectGetWidth(self.view.frame) - CGRectGetWidth(status.frame) - 13);
+        CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 30);
+        CGRectSetX(status.frame, CGRectGetWidth(self.view.frame) - CGRectGetWidth(status.frame) - 13);
         
         [_contentView addSubview:status];
     }
@@ -144,11 +150,11 @@
     else if(amountFieldIsShown){
         amountInput = [[FLNewTransactionAmount alloc] initFor:amount key:@"amount" width:CGRectGetWidth(_mainView.frame) delegate:self];
         [_mainView addSubview:amountInput];
-        amountInput.frame = CGRectSetY(amountInput.frame, height - 1);
+        CGRectSetY(amountInput.frame, height - 1);
         
         height = CGRectGetMaxY(amountInput.frame);
     }
-    else if([_event isRefusable] || [_event isAcceptable]){
+    else if([_event isAcceptable]){
         EventActionView *view = [[EventActionView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event = _event;
         view.delegate = self;
@@ -171,6 +177,14 @@
         height = CGRectGetMaxY(view.frame);
     }
 
+    if([_event isCollectable]){
+        EventAmountActionsView *view = [[EventAmountActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        view.event = _event;
+        view.delegate = self;
+        [_mainView addSubview:view];
+        height = CGRectGetMaxY(view.frame);
+    }
+    
     {
         EventContentView *view = [[EventContentView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event= _event;
@@ -186,7 +200,7 @@
         height = CGRectGetMaxY(view.frame);
     }
     
-    _mainView.frame = CGRectSetHeight(_mainView.frame, height + 15);
+    CGRectSetHeight(_mainView.frame, height + 15);
     _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
 }
 
@@ -198,17 +212,21 @@
         _contentView.frame = CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT);
         _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
         
-        _contentView.frame = CGRectSetY(_contentView.frame, CGRectGetHeight(self.view.frame));
+        CGRectSetY(_contentView.frame, CGRectGetHeight(self.view.frame));
         
         [UIView animateWithDuration:0.3 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _contentView.frame = CGRectSetY(_contentView.frame, - 10);
+            CGRectSetY(_contentView.frame, - 10);
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.2 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
-                _contentView.frame = CGRectSetY(_contentView.frame, STATUSBAR_HEIGHT);
+                CGRectSetY(_contentView.frame, STATUSBAR_HEIGHT);
             } completion:NULL];
         }];
         
         firstView = NO;
+    }
+    
+    if(_eventOfferUser && [_eventOfferUser objectForKey:@"to"] && ![[_eventOfferUser objectForKey:@"to"] isBlank]){
+        [self didOfferEvent];
     }
 }
 
@@ -241,6 +259,13 @@
     else{
         [self acceptEvent];
     }
+}
+
+- (void)presentCreditCardController
+{
+    CreditCardViewController *controller = [CreditCardViewController new];
+    
+    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 #pragma mark - Actions
@@ -326,8 +351,53 @@
 
 - (void)presentEventParticipantsController
 {
+    if(![_event canInvite]){
+        return;
+    }
+    
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[EventParticipantsViewController alloc] initWithEvent:_event]];
     [self presentViewController:controller animated:YES completion:NULL];
+}
+
+- (void)collectEvent
+{
+    [[Flooz sharedInstance] showLoadView];
+    
+    [[Flooz sharedInstance] eventCollect:_event success:^(id result) {
+        
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
+            _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+            paymentFieldIsShown = NO;
+            amountFieldIsShown = NO;
+            [self reloadEvent];
+        }];
+    }];
+}
+
+- (void)offerEvent
+{
+    _eventOfferUser = [NSMutableDictionary new];
+    FriendPickerViewController *controller = [FriendPickerViewController new];
+    [controller setDictionary:_eventOfferUser];
+    [self presentViewController:controller animated:YES completion:NULL];
+}
+
+- (void)didOfferEvent
+{
+    [[Flooz sharedInstance] showLoadView];
+    
+    [[Flooz sharedInstance] eventOffer:_event to:[_eventOfferUser objectForKey:@"to"] success:^(id result) {
+        
+        
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
+            _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+            paymentFieldIsShown = NO;
+            amountFieldIsShown = NO;
+            [self reloadEvent];
+        }];
+    }];
 }
 
 @end

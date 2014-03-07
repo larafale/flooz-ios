@@ -12,7 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 44.);
+    CGRectSetHeight(frame, 44.);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];
@@ -42,7 +42,7 @@
 
 - (void)createBackView
 {
-    UIButton *back = [[UIButton alloc] initWithFrame:CGRectMake(5, 14, 20, 17)];
+    UIButton *back = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 42, CGRectGetHeight(self.frame))];
     
     [back setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
     [back addTarget:self action:@selector(didBackTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -61,13 +61,27 @@
     view.tintColor = [UIColor whiteColor]; // Curseur
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor customBackground]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
-        
+    
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackground:[UIImage imageWithColor:[UIColor customBackground]]];
+    
+    // Hack pour supprimer bordure noir
+    [[[[[view subviews] firstObject] subviews] firstObject] removeFromSuperview];
+    
     [self addSubview:view];
 }
 
 - (void)createFacebookView
 {
+    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(42 + 240, 0, CGRectGetWidth(self.frame) - 42 - 240, CGRectGetHeight(self.frame))];
     
+    view.titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [view setImage:[UIImage imageNamed:@"friends-facebook"] forState:UIControlStateNormal];
+    [view setImage:[UIImage imageNamed:@"friends-facebook-selected"] forState:UIControlStateSelected];
+    
+    [view addTarget:self action:@selector(didFacebookTouch:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self addSubview:view];
 }
 
 #pragma mark -
@@ -77,9 +91,15 @@
     [_delegate dismiss];
 }
 
+- (void)didFacebookTouch:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
+    [_delegate didSourceFacebook:sender.selected];
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [_delegate didfilterChange:searchText];
+    [_delegate didFilterChange:searchText];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar

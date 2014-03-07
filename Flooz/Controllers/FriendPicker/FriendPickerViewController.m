@@ -22,6 +22,7 @@
     if (self) {
         _contacts = @[];
         _contactsFromAdressBook = [NSMutableArray new];
+        _contactsFromFacebook = [NSMutableArray new];
     }
     return self;
 }
@@ -102,39 +103,53 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *title = nil;
-    NSString *value = nil;
+    NSDictionary *contact;
+    NSString *title;
+    NSString *value;
     
     if(indexPath.section == 0){
         title = _selectionText;
         value = _selectionText;
     }
     else{
-        title = [[_contacts objectAtIndex:indexPath.row] objectForKey:@"title"];
-        value = [[_contacts objectAtIndex:indexPath.row] objectForKey:@"value"];
+        contact = [_contacts objectAtIndex:indexPath.row];
+        title = [contact objectForKey:@"title"];
+        value = [contact objectForKey:@"value"];
     }
-    
+
     [_dictionary setValue:title forKey:@"toTitle"];
     [_dictionary setValue:value forKey:@"to"];
+    
+    if([contact objectForKey:@"facebook_id"]){
+        id paramsFacebook = @{
+                                  @"id": [contact objectForKey:@"facebook_id"],
+                                  @"firstName": [contact objectForKey:@"firstname"],
+                                  @"lastName": [contact objectForKey:@"lastname"]
+                              };
+        [_dictionary setValue:paramsFacebook forKey:@"fb"];
+    }
+    else{
+        [_dictionary setValue:nil forKey:@"fb"];
+    }
     
     [self dismiss];
 }
 
 #pragma mark -
 
-- (void)didfilterChange:(NSString *)text
+- (void)didFilterChange:(NSString *)text
 {
     _selectionText = text;
     
     if(!text || [text isBlank]){
-        _contacts = _contactsFromAdressBook;
+        _contacts = _currentContacts;
         [self didTableDataChanged];
         return;
     }
     
     NSMutableArray *contactsFiltred = [NSMutableArray new];
     
-    for(NSDictionary *contact in _contactsFromAdressBook){
+    for(NSDictionary *contact in _currentContacts){
         if([contact objectForKey:@"name"] && [[[contact objectForKey:@"name"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
             [contactsFiltred addObject:contact];
         }
@@ -157,6 +172,30 @@
 }
 
 #pragma mark - Contacts
+
+- (void)requestFacebookFriends
+{
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] facebokSearchFriends:^(id result) {
+        _contactsFromFacebook = [NSMutableArray new];
+        
+        for(NSDictionary *friend in result){
+            NSMutableDictionary *contact = [NSMutableDictionary new];
+            
+            [contact setValue:[friend objectForKey:@"first_name"] forKey:@"firstname"];
+            [contact setValue:[friend objectForKey:@"last_name"] forKey:@"lastname"];
+            
+            [contact setValue:[friend objectForKey:@"name"] forKey:@"name"];
+            [contact setValue:[friend objectForKey:@"id"] forKey:@"facebook_id"];
+            [contact setValue:[[[friend objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"] forKey:@"image_url"];
+            
+            [_contactsFromFacebook addObject:contact];
+        }
+        
+        _contactsFromFacebook = [self processContacts:_contactsFromFacebook];
+        [self loadFacebookContacts];
+    }];
+}
 
 - (void)requestAddressBookPermission
 {
@@ -201,13 +240,6 @@
             email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, 0);
         }
         
-        NSString *phone = nil;
-        ABMultiValueRef phoneNumbers = ABRecordCopyValue(ref, kABPersonPhoneProperty);
-        for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); ++i) {
-            phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phoneNumbers, i);
-            break;
-        }
-        
         NSString *name = nil;
         if(!firstName){
             name = lastName;
@@ -218,47 +250,90 @@
         else{
             name = [firstName stringByAppendingFormat:@" %@", lastName];
         }
-        name = [name uppercaseString];
-        
-        phone = [FLHelper formatedPhone:phone];
 
-        NSMutableDictionary *contact = [NSMutableDictionary new];
-        
-        [contact setValue:name forKey:@"name"];
-        [contact setValue:email forKey:@"email"];
-        [contact setValue:phone forKey:@"phone"];
-        [contact setValue:image forKey:@"image"];
-        
-        // Valeur a afficher pour l utilisateur
-        if([contact objectForKey:@"name"] && ![[contact objectForKey:@"name"] isBlank]){
-            [contact setValue:name forKey:@"title"];
-        }
-        else if([contact objectForKey:@"phone"] && ![[contact objectForKey:@"phone"] isBlank]){
-            [contact setValue:phone forKey:@"title"];
-        }
-        else if([contact objectForKey:@"email"] && ![[contact objectForKey:@"email"] isBlank]){
-            [contact setValue:email forKey:@"title"];
-        }
-        
-        // Valeur a envoyer sur l API
-        if([contact objectForKey:@"phone"] && ![[contact objectForKey:@"phone"] isBlank]){
-            [contact setValue:phone forKey:@"value"];
-            [_contactsFromAdressBook addObject:contact];
-        }
-        else if([contact objectForKey:@"email"] && ![[contact objectForKey:@"email"] isBlank]){
-            [contact setValue:email forKey:@"value"];
+        ABMultiValueRef phoneNumbers = ABRecordCopyValue(ref, kABPersonPhoneProperty);
+        for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); ++i) {
+            NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phoneNumbers, i);
+
+            NSMutableDictionary *contact = [NSMutableDictionary new];
+            
+            [contact setValue:name forKey:@"name"];
+            [contact setValue:email forKey:@"email"];
+            [contact setValue:phone forKey:@"phone"];
+            [contact setValue:image forKey:@"image"];
+            
             [_contactsFromAdressBook addObject:contact];
         }
     }
     
-    // rewrite phone format 0612345678 https://github.com/iziz/libPhoneNumber-iOS
-    // _contactsFromAdressBook sort by name
+    _contactsFromAdressBook = [self processContacts:_contactsFromAdressBook];
+    [self loadAddressBookContacts];
+}
+
+- (NSMutableArray *)processContacts:(NSArray *)contacts
+{
+    // Les contacts ont les champs name, phone, email, facebook_id, image OU image_url
     
-    _contactsFromAdressBook = [[_contactsFromAdressBook sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+    NSMutableArray *newContacts = [NSMutableArray new];
+    
+    for(NSDictionary *contact in contacts){
+        // Format contact
+        if([contact objectForKey:@"name"]){
+            [contact setValue:[[contact objectForKey:@"name"] uppercaseString] forKey:@"title"];
+        }
+        
+        if([contact objectForKey:@"phone"]){
+            [contact setValue:[FLHelper formatedPhone:[contact objectForKey:@"phone"]] forKey:@"phone"];
+        }
+        
+        if([contact objectForKey:@"phone"] && ![[contact objectForKey:@"phone"] isBlank]){
+            [contact setValue:[contact objectForKey:@"phone"] forKey:@"value"];
+        }
+        else if([contact objectForKey:@"email"] && ![[contact objectForKey:@"email"] isBlank]){
+            [contact setValue:[contact objectForKey:@"email"] forKey:@"value"];
+        }
+        else if([contact objectForKey:@"facebook_id"] && ![[contact objectForKey:@"facebook_id"] isBlank]){
+            [contact setValue:[contact objectForKey:@"facebook_id"] forKey:@"value"];
+            
+        }
+        
+        // Filtre les contacts invalide
+        if([contact objectForKey:@"title"] && [contact objectForKey:@"value"]){
+            [newContacts addObject:contact];
+        }
+    }
+    
+    newContacts = [[newContacts sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         return [[a objectForKey:@"title"] compare:[b objectForKey:@"title"]];
     }] mutableCopy];
     
-    _contacts = _contactsFromAdressBook;
+    return newContacts;
+}
+
+- (void)didSourceFacebook:(BOOL)isFacebook
+{
+    if(isFacebook && [_contactsFromFacebook count] == 0){
+        [self requestFacebookFriends];
+        return;
+    }
+
+    if(isFacebook){
+        [self loadFacebookContacts];
+    }
+    else{
+        [self loadAddressBookContacts];
+    }
+}
+
+- (void)loadFacebookContacts
+{
+    _currentContacts = _contacts = _contactsFromFacebook;
+    [self didTableDataChanged];
+}
+
+- (void)loadAddressBookContacts
+{
+    _currentContacts = _contacts = _contactsFromAdressBook;
     [self didTableDataChanged];
 }
 

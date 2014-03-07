@@ -13,7 +13,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 155);
+    CGRectSetHeight(frame, 155);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];
@@ -37,7 +37,7 @@
 - (void)createRightUserView
 {
     UIView *view = [self createUserView];
-    view.frame = CGRectSetX(view.frame, CGRectGetWidth(self.frame) / 2);
+    CGRectSetX(view.frame, CGRectGetWidth(self.frame) / 2);
     [self addSubview:view];
 }
 
@@ -59,7 +59,7 @@
     [self addSubview:middleBottomBar];
     
     UIImageView *arrow = [UIImageView imageNamed:@"transaction-users-arrow"];
-    arrow.frame = CGRectSetXY(arrow.frame, x - arrow.image.size.width / 2., height + arrow.image.size.height / 2.);
+    CGRectSetXY(arrow.frame, x - arrow.image.size.width / 2., height + arrow.image.size.height / 2.);
     [self addSubview:arrow];
 }
 
@@ -68,7 +68,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
     
     FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMakeSize(88, 88)];
-    UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, CGRectGetWidth(view.frame), 50)];
+    UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(30, 100, CGRectGetWidth(view.frame) - 60, 50)];
     
     [avatar setAlternativeStyle2];
     

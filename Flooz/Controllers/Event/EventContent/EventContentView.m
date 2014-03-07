@@ -18,7 +18,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 0);
+    CGRectSetHeight(frame, 0);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];
@@ -28,22 +28,10 @@
 
 - (void)createViews
 {
-    [self createTextView];
     [self createContentView];
     [self createAttachmentView];
     [self createDateView];
     [self createSocialView];
-}
-
-- (void)createTextView
-{
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, MARGE_TOP, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 0)];
-    
-    view.textColor = [UIColor whiteColor];
-    view.font = [UIFont customContentRegular:13];
-    view.numberOfLines = 0;
-    
-    [self addSubview:view];
 }
 
 - (void)createContentView
@@ -59,7 +47,7 @@
 
 - (void)createAttachmentView
 {
-    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 0, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 80)];
+    FLImageView *view = [[FLImageView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 0, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 80)];
     [self addSubview:view];
 }
 
@@ -96,7 +84,6 @@
 {
     height = MARGE_TOP;
     
-    [self prepareTextView];
     [self prepareContentView];
     [self prepareAttachmentView];
     [self prepareDateView];
@@ -104,24 +91,13 @@
     
     height += MARGE_BOTTOM;
     
-    self.frame = CGRectSetHeight(self.frame, height);
-}
-
-- (void)prepareTextView
-{
-    UILabel *view = [[self subviews] objectAtIndex:0];
-    view.frame = CGRectSetY(view.frame, height);
-    
-    view.text = [_event title];
-    [view setHeightToFit];
-    
-    height = CGRectGetMaxY(view.frame);
+    CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareContentView
 {
-    UILabel *view = [[self subviews] objectAtIndex:1];
-    view.frame = CGRectSetY(view.frame, height);
+    UILabel *view = [[self subviews] objectAtIndex:0];
+    CGRectSetY(view.frame, height);
     
     view.text = [_event content];
     [view setHeightToFit];
@@ -131,29 +107,29 @@
 
 - (void)prepareAttachmentView
 {
-    UIImageView *view = [[self subviews] objectAtIndex:2];
-    view.frame = CGRectSetY(view.frame, height + 10);
+    FLImageView *view = [[self subviews] objectAtIndex:1];
+    CGRectSetY(view.frame, height + 10);
     
     if([_event attachmentThumbURL]){
-        [view setImageWithURL:[NSURL URLWithString:[_event attachmentThumbURL]]];
+        [view setImageWithURL:[NSURL URLWithString:[_event attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_event attachmentURL]]];
         height = CGRectGetMaxY(view.frame);
     }
 }
 
 - (void)prepareDateView
 {
-    JTImageLabel *view = [[self subviews] objectAtIndex:3];
-    view.frame = CGRectSetY(view.frame, height + 8);
+    JTImageLabel *view = [[self subviews] objectAtIndex:2];
+    CGRectSetY(view.frame, height + 8);
     
     view.text = [FLHelper formatedDate:[_event date]];
     
-    height = CGRectGetMaxY(view.frame);
+//    height = CGRectGetMaxY(view.frame);
 }
 
 - (void)prepareSocialView
 {
-    FLSocialView *view = [[self subviews] objectAtIndex:4];
-    view.frame = CGRectSetY(view.frame, height + 8);
+    FLSocialView *view = [[self subviews] objectAtIndex:3];
+    CGRectSetY(view.frame, height + 8);
     
     [view prepareView:_event.social];
     

@@ -102,7 +102,7 @@
 
 - (void)prepapreTextView{
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
-    view.text = [[[_friendRequest user] username] uppercaseString];
+    view.text = [[[_friendRequest user] fullname] uppercaseString];
 }
 
 #pragma mark - Swipe
@@ -192,7 +192,7 @@
     if(progress < 0.50){
         text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);
         text.textColor = [UIColor whiteColor];
-        [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
+        [text setImage:[UIImage imageNamed:@"transaction-cell-check-white"]];
     }
     else if(progress < 0.75){
         text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);

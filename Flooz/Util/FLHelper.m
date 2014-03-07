@@ -12,10 +12,20 @@
 
 + (NSString *)formatedAmount:(NSNumber *)amount
 {
-    return [self formatedAmount:amount withCurrency:YES];
+    return [self formatedAmount:amount withCurrency:YES withSymbol:YES];
 }
 
 + (NSString *)formatedAmount:(NSNumber *)amount withCurrency:(BOOL)withCurrency
+{
+    return [self formatedAmount:amount withCurrency:withCurrency withSymbol:YES];
+}
+
++ (NSString *)formatedAmount:(NSNumber *)amount withSymbol:(BOOL)withSymbol
+{
+    return [self formatedAmount:amount withCurrency:YES withSymbol:withSymbol];
+}
+
++ (NSString *)formatedAmount:(NSNumber *)amount withCurrency:(BOOL)withCurrency withSymbol:(BOOL)withSymbol;
 {
     static NSNumberFormatter *formatter = nil;
     static NSString *currency = nil;
@@ -31,34 +41,30 @@
         
         currency = NSLocalizedString(@"GLOBAL_EURO", nil);
     }
-        
-    if(amount){
-        if(withCurrency){
-            if([amount floatValue] == 0){
-                return [NSString stringWithFormat:@"%@%@", [formatter stringFromNumber:amount], currency];
-            }
-            else if([amount floatValue] > 0){
-                return [NSString stringWithFormat:@"+ %@%@", [formatter stringFromNumber:amount], currency];
-            }
-            else{
-                return [NSString stringWithFormat:@"- %.2f%@", fabsf([amount floatValue]), currency];
-            }
-        }
-        else{
-            if([amount floatValue] == 0){
-                return @"0.00";
-            }
-            else if([amount floatValue] >= 0){
-                return [NSString stringWithFormat:@"+ %@", [formatter stringFromNumber:amount]];
-            }
-            else{
-                return [NSString stringWithFormat:@"- %.2f", fabsf([amount floatValue])];
-            }
-        }
-    }
-    else{
+    
+    if(!amount){
         return nil;
     }
+    
+    NSString *prefix = @"";
+    NSString *suffix = @"";
+    
+    if(withSymbol){
+        if([amount floatValue] > 0){
+            prefix = @"+ ";
+        }
+        else if([amount floatValue] < 0){
+            prefix = @"- ";
+        }
+    }
+        
+    if(withCurrency){
+        suffix = [NSString stringWithFormat:@" %@", currency];
+    }
+    
+    NSNumber *absoluteValue = [NSNumber numberWithFloat:fabsf([amount floatValue])];
+    
+    return [NSString stringWithFormat:@"%@%@%@", prefix, [formatter stringFromNumber:absoluteValue], suffix];
 }
 
 + (NSString *)formatedDate:(NSDate *)date

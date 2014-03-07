@@ -15,8 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jf6-1e-CLw" customClass="FLTableView">
-                    <rect key="frame" x="0.0" y="20" width="320" height="568"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jf6-1e-CLw" customClass="FLTableView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -26,6 +26,12 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="jf6-1e-CLw" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="3yE-2Q-VsX"/>
+                <constraint firstItem="jf6-1e-CLw" firstAttribute="top" secondItem="1" secondAttribute="top" id="H1T-cG-M7z"/>
+                <constraint firstAttribute="bottom" secondItem="jf6-1e-CLw" secondAttribute="bottom" id="VvK-4f-XD2"/>
+                <constraint firstAttribute="trailing" secondItem="jf6-1e-CLw" secondAttribute="trailing" id="lhv-Zt-bpL"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

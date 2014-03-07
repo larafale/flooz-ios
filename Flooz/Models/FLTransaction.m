@@ -113,6 +113,10 @@
         }
         _comments = comments;
     }
+    
+    if([json objectForKey:@"event"] && [[json objectForKey:@"event"] objectForKey:@"_id"]){
+        _eventId = [[json objectForKey:@"event"] objectForKey:@"_id"];
+    }
 }
 
 - (NSString *)statusText
@@ -199,7 +203,7 @@
     else if(type == TransactionTypeCollection){
         return @"charge";
     }
-    else{ // if(type == TransactionTypeCagnotte){
+    else{ // if(type == TransactionTypeEvent){
         return @"event";
     }
 }

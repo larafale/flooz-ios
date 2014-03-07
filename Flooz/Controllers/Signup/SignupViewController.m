@@ -13,8 +13,6 @@
 @interface SignupViewController (){
     NSMutableDictionary *_user;
     UIButton *registerFacebook;
-    
-    UIScrollView *_contentView;
 }
 
 @end
@@ -41,15 +39,14 @@
     return self;
 }
 
-- (void)loadView
+- (void)viewDidLoad
 {
-    [super loadView];
+    [super viewDidLoad];
+    
+    [self registerForKeyboardNotifications];
     
     self.view.backgroundColor = [UIColor customBackground];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(didSignupTouch)];
-    
-    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMakeWithSize(self.view.frame.size)];
-    [self.view addSubview:_contentView];
     
     {
         FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) / 2.) - (97. / 2.), 10, 97, 96.5)];
@@ -71,6 +68,10 @@
         [registerFacebook addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
         
         [_contentView addSubview:registerFacebook];
+    }
+    
+    if([_user objectForKey:@"fb"]){
+        registerFacebook.hidden = YES;
     }
     
     {
@@ -99,7 +100,7 @@
         textFooter.numberOfLines = 0;
         
         textFooter.text = NSLocalizedString(@"SIGNUP_CODE_INFO", nil);
-        
+                
         [_contentView addSubview:username];
         [_contentView addSubview:name];
         [_contentView addSubview:phone];
@@ -120,13 +121,6 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    _contentView.frame = CGRectMakeWithSize(self.view.frame.size);
-}
-
 - (void)didSignupTouch
 {
     [[self view] endEditing:YES];
@@ -139,6 +133,33 @@
 {
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] connectFacebook];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+}
+
+- (void)keyboardWillDisappear
+{
+    _contentView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

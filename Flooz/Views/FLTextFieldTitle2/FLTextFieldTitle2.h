@@ -16,7 +16,11 @@
     UITextField *_textfield;
 }
 
+@property NSUInteger maxLength;
+
 - (id)initWithTitle:(NSString *)title placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position;
 - (void)reloadData;
+
+- (void)setKeyboardType:(UIKeyboardType)keyboardType;
 
 @end

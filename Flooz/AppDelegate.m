@@ -35,7 +35,7 @@
 
 //    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
-    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
+//    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
     
     return YES;
 }
@@ -141,6 +141,8 @@
 
 - (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
 {
+    [[Flooz sharedInstance] hideLoadView];
+    
     if (!error && state == FBSessionStateOpen){
         [[Flooz sharedInstance] didConnectFacebook];
         return;
@@ -151,7 +153,7 @@
         // Show the user the logged-out UI
         //        [self userLoggedOut];
         
-        [[Flooz sharedInstance] hideLoadView];
+        
     }
     
     // Handle errors
@@ -162,8 +164,6 @@
         [FBSession.activeSession closeAndClearTokenInformation];
         // Show the user the logged-out UI
 //        [self userLoggedOut];
-        
-        [[Flooz sharedInstance] hideLoadView];
     }
 }
 

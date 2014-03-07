@@ -12,5 +12,6 @@
 
 - (void)didWalletSelected;
 - (void)didCreditCardSelected;
+- (void)presentCreditCardController;
 
 @end

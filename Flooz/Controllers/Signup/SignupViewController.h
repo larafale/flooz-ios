@@ -12,4 +12,6 @@
 
 - (id)initWithUser:(NSDictionary *)user;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *contentView;
+
 @end

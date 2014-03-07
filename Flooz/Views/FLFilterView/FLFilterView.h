@@ -21,4 +21,6 @@
 - (void)addFilter:(NSString *)title target:(id)target action:(SEL)action;
 - (void)addFilter:(NSString *)title target:(id)target action:(SEL)action colors:(NSArray *)colors;
 
+- (void)selectFilter:(NSUInteger)index;
+
 @end

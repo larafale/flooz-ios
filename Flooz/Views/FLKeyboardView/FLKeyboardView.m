@@ -15,7 +15,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetWidthHeight(frame, SCREEN_WIDTH, (BUTTON_HEIGHT * 4));
+    CGRectSetWidthHeight(frame, SCREEN_WIDTH, (BUTTON_HEIGHT * 4));
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInit];

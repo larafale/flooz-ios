@@ -41,11 +41,14 @@
 - (void)updateUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updatePassword:(NSDictionary *)password success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
-- (void)timeline:(NSString *)scope success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
-- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
 
 - (void)activitiesWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
-- (void)events:(NSString *)scope success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
+- (void)events:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)eventsNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
@@ -62,6 +65,10 @@
 - (void)removeCreditCard:(NSString *)creditCardId success:(void (^)(id result))success;
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success;
+- (void)friendsSuggestion:(void (^)(id result))success;
+- (void)friendRemove:(NSString *)friendRelationId success:(void (^)())success;
+- (void)friendAcceptSuggestion:(NSString *)friendId success:(void (^)())success;
+- (void)friendSearch:(NSString *)text success:(void (^)(id result))success;
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)createLikeOnEvent:(FLEvent *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
@@ -70,8 +77,11 @@
 - (void)eventParticipate:(NSDictionary *)dictionary success:(void (^)(id result))success;
 - (void)eventDecline:(FLEvent *)event success:(void (^)(id result))success;
 - (void)eventInvite:(FLEvent *)event friend:(NSString *)friend success:(void (^)(id result))success;
+- (void)eventCollect:(FLEvent *)event success:(void (^)(id result))success;
+- (void)eventOffer:(FLEvent *)event to:(NSString *)to success:(void (^)(id result))success;
 
 - (void)connectFacebook;
 - (void)didConnectFacebook;
+- (void)facebokSearchFriends:(void (^)(id result))success;
 
 @end

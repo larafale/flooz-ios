@@ -49,9 +49,9 @@
 
 - (void)createNameView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 18, CGRectGetWidth(self.frame) - 75, 9)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 18, CGRectGetWidth(self.frame) - 75, 11)];
     
-    view.font = [UIFont customContentBold:9];
+    view.font = [UIFont customContentBold:11];
     view.textColor = [UIColor whiteColor];
     
     [self.contentView addSubview:view];
@@ -59,7 +59,7 @@
 
 - (void)createPhoneView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 27, CGRectGetWidth(self.frame) - 75, 9)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 29, CGRectGetWidth(self.frame) - 75, 9)];
     
     view.font = [UIFont customContentBold:9];
     view.textColor = [UIColor customPlaceholder];
@@ -80,7 +80,15 @@
 {
     FLUserView *view = [[self.contentView subviews] objectAtIndex:0];
     
-    [view setImageFromData:[_contact objectForKey:@"image"]];
+    if([_contact objectForKey:@"image"]){
+        [view setImageFromData:[_contact objectForKey:@"image"]];
+    }
+    else if([_contact objectForKey:@"image_url"]){
+        [view setImageFromURL:[_contact objectForKey:@"image_url"]];
+    }
+    else{
+        [view setImageFromData:nil];
+    }
 }
 
 - (void)prepareNameView

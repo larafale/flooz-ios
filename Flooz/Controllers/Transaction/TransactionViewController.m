@@ -14,6 +14,8 @@
 #import "TransactionContentView.h"
 #import "TransactionCommentsView.h"
 
+#import "CreditCardViewController.h"
+
 #import "FLPaymentField.h"
 
 #define STATUSBAR_HEIGHT 20.
@@ -26,6 +28,7 @@
     UIView *_mainView;
     
     BOOL paymentFieldIsShown;
+    BOOL firstView;
 }
 
 @end
@@ -39,6 +42,7 @@
         _transaction = transaction;
         _indexPath = indexPath;
         paymentFieldIsShown = NO;
+        firstView = YES;
     }
     return self;
 }
@@ -83,18 +87,37 @@
             case TransactionStatusRefused:
             case TransactionStatusCanceled:
             case TransactionStatusExpired:
-                textColor = [UIColor whiteColor];
+                textColor = [UIColor customRed];
                 break;
         }
         
         status.textColor = textColor;
         
-        status.text = [_transaction statusText];
+        status.text = [NSString stringWithFormat:@"  %@", [_transaction statusText]]; // Hack pour mettre un padding
         [status setWidthToFit];
-        status.frame = CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 20);
-        status.frame = CGRectSetX(status.frame, CGRectGetWidth(self.view.frame) - CGRectGetWidth(status.frame) - 13);
+        CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 20);
+        CGRectSetX(status.frame, CGRectGetWidth(self.view.frame) - CGRectGetWidth(status.frame) - 13);
         
         [_contentView addSubview:status];
+        
+        
+        UIImageView *imageView;
+        switch ([_transaction status]) {
+            case TransactionStatusAccepted:
+                imageView = [UIImageView imageNamed:@"transaction-cell-status-accepted"];
+                break;
+            case TransactionStatusPending:
+                imageView = [UIImageView imageNamed:@"transaction-cell-status-pending"];
+                break;
+            case TransactionStatusRefused:
+            case TransactionStatusCanceled:
+            case TransactionStatusExpired:
+                imageView = [UIImageView imageNamed:@"transaction-cell-status-refused"];
+                break;
+        }
+        
+        CGRectSetXY(imageView.frame, status.frame.origin.x + 5, status.center.y - 2);
+        [_contentView addSubview:imageView];
     }
     
     {
@@ -159,7 +182,7 @@
         height = CGRectGetMaxY(view.frame);
     }
     
-    _mainView.frame = CGRectSetHeight(_mainView.frame, height + 15);
+    CGRectSetHeight(_mainView.frame, height + 15);
     _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
 }
 
@@ -167,18 +190,21 @@
 {
     [super viewDidAppear:animated];
     
-    _contentView.frame = CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT);
-    _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
-    
-    _contentView.frame = CGRectSetY(_contentView.frame, CGRectGetHeight(self.view.frame));
-    
-    [UIView animateWithDuration:0.3 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
-        _contentView.frame = CGRectSetY(_contentView.frame, - 10);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.2 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _contentView.frame = CGRectSetY(_contentView.frame, STATUSBAR_HEIGHT);
-        } completion:NULL];
-    }];
+    if(firstView){
+        firstView = NO;
+        _contentView.frame = CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT);
+        _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
+        
+        CGRectSetY(_contentView.frame, CGRectGetHeight(self.view.frame));
+        
+        [UIView animateWithDuration:0.3 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
+            CGRectSetY(_contentView.frame, - 10);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.2 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
+                CGRectSetY(_contentView.frame, STATUSBAR_HEIGHT);
+            } completion:NULL];
+        }];
+    }
 }
 
 - (void)dismiss
@@ -220,6 +246,13 @@
         paymentFieldIsShown = NO;
         [self reloadTransaction];
     } failure:NULL];
+}
+
+- (void)presentCreditCardController
+{
+    CreditCardViewController *controller = [CreditCardViewController new];
+    
+    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 #pragma mark - Actions

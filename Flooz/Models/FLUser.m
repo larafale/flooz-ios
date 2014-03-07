@@ -23,6 +23,10 @@
 {
     if([json objectForKey:@"userId"]){
         _userId = [json objectForKey:@"userId"];
+        
+        if([json objectForKey:@"_id"]){
+            _friendRelationId = [json objectForKey:@"_id"];
+        }
     }
     else{
         _userId = [json objectForKey:@"_id"];
@@ -51,7 +55,7 @@
     _transactionsCount = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"total"];
     
     _haveStatsPending = NO;
-        
+    
     NSNumber *statsPending = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"pending"];
     if([statsPending intValue] > 0){
         _haveStatsPending = YES;
@@ -94,7 +98,7 @@
         NSMutableArray *friends = [NSMutableArray new];
         
         if([json objectForKey:@"friends"]){
-            for(NSDictionary *friendJSON in [json objectForKey:@"friends"]){
+            for(NSDictionary *friendJSON in [json objectForKey:@"friends"]){                
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
                 [friends addObject:friend];
             }

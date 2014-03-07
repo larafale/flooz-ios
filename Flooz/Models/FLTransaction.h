@@ -62,6 +62,8 @@ typedef NS_ENUM(NSInteger, TransactionPaymentMethod) {
 
 @property FLSocial *social;
 
+@property NSString *eventId;
+
 @property NSArray *comments;
 
 - (id)initWithJSON:(NSDictionary *)json;

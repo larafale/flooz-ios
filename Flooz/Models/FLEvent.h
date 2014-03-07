@@ -12,6 +12,8 @@
 #import "FLSocial.h"
 #import "FLComment.h"
 
+#import "FLTransaction.h"
+
 @interface FLEvent : NSObject
 
 typedef NS_ENUM(NSInteger, EventStatus) {
@@ -36,8 +38,9 @@ typedef NS_ENUM(NSInteger, EventStatus) {
 @property BOOL isPrivate;
 
 @property BOOL isAcceptable; // Si peut y participer
-@property BOOL isRefusable; // Si peut decliner invitation
 @property BOOL isCollectable; // Si peut recolter ou donner la cagnotte
+
+@property BOOL canInvite;
 
 @property NSDate *date;
 
@@ -51,5 +54,6 @@ typedef NS_ENUM(NSInteger, EventStatus) {
 - (NSString *)statusText;
 
 - (id)initWithJSON:(NSDictionary *)json;
++ (NSString *)transactionScopeToText:(TransactionScope)scope;
 
 @end

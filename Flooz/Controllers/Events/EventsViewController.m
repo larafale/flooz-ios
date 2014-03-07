@@ -19,6 +19,7 @@
     if (self) {
         events = [NSMutableArray new];
         _scope = @"1";
+        nextPageIsLoading = NO;
     }
     return self;
 }
@@ -28,21 +29,15 @@
     
     if(!animated){
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] events:_scope success:^(id result) {
+        [[Flooz sharedInstance] events:_scope success:^(id result, NSString *nextPageUrl) {
             events = [result mutableCopy];
-                        
+            _nextPageUrl = nextPageUrl;
+            nextPageIsLoading = NO;
+            
             [_tableView reloadData];
             [_tableView setContentOffset:CGPointZero animated:YES];
         } failure:NULL];
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-        
-    // WARNING Hack contraintes ne fonctionnent pas
-    _tableView.frame = CGRectMakeWithSize(self.view.frame.size);
 }
 
 #pragma mark - TableView
@@ -68,6 +63,10 @@
     FLEvent *event = [events objectAtIndex:indexPath.row];
     [cell setEvent:event];
     
+    if(_nextPageUrl && ![_nextPageUrl isBlank] && !nextPageIsLoading && indexPath.row == [events count] - 1){
+        [self loadNextPage];
+    }
+    
     return cell;
 }
 
@@ -91,6 +90,20 @@
     [_tableView beginUpdates];
     [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [_tableView endUpdates];
+}
+
+- (void)loadNextPage{
+    if(!_nextPageUrl || [_nextPageUrl isBlank]){
+        return;
+    }
+    nextPageIsLoading = YES;
+    
+    [[Flooz sharedInstance] eventsNextPage:_nextPageUrl success:^(id result, NSString *nextPageUrl) {
+        [events addObjectsFromArray:result];
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
+        [_tableView reloadData];
+    }];
 }
 
 @end

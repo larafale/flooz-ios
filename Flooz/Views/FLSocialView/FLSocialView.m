@@ -12,7 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 15);
+    CGRectSetHeight(frame, 15);
     self = [super initWithFrame:frame];
     if (self) {
         _gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeTouch)];
@@ -32,7 +32,8 @@
     
     separator.backgroundColor = [UIColor customSeparator];
     
-    [self addGestureRecognizer:_gesture];
+    like.userInteractionEnabled = YES;
+    [like addGestureRecognizer:_gesture];
     
     [self addSubview:comment];
     [self addSubview:like];
@@ -45,7 +46,7 @@
         comment.hidden = YES;
         separator.hidden = YES;
         
-        separator.frame = CGRectSetX(separator.frame, comment.frame.origin.x - 13);
+        CGRectSetX(separator.frame, comment.frame.origin.x - 13);
     }
     else{
         comment.hidden = NO;
@@ -65,9 +66,9 @@
         [comment setImageOffset:CGPointMake(-5, 0)];
         
         [comment setWidthToFit];
-        comment.frame = CGRectSetWidth(comment.frame, CGRectGetWidth(comment.frame) + 18);
+        CGRectSetWidth(comment.frame, CGRectGetWidth(comment.frame) + 18);
         
-        separator.frame = CGRectSetX(separator.frame, CGRectGetMaxX(comment.frame) + 5);
+        CGRectSetX(separator.frame, CGRectGetMaxX(comment.frame) + 5);
     }
     
     {
@@ -87,11 +88,11 @@
             [like setImage:[UIImage imageNamed:@"social-like"]];
         }
         
-        like.frame = CGRectSetX(like.frame, CGRectGetMaxX(separator.frame) + 12);
+        CGRectSetX(like.frame, CGRectGetMaxX(separator.frame) + 12);
         [like setImageOffset:CGPointMake(-5, 0)];
         
         [like setWidthToFit];
-        like.frame = CGRectSetWidth(like.frame, CGRectGetWidth(like.frame) + 18);
+        CGRectSetWidth(like.frame, CGRectGetWidth(like.frame) + 18);
     }
 }
 
