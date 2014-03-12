@@ -88,11 +88,11 @@
 #pragma mark -
 
 - (void)didCollectTouch{
-    [_delegate collectEvent];
+    [_delegate didUpdateEventWithAction:EventActionTakeOffer];
 }
 
 - (void)didOfferTouch{
-    [_delegate offerEvent];
+    [_delegate presentFriendPickerViewControllerForOffer];
 }
 
 @end

@@ -28,9 +28,11 @@
     return self;
 }
 
-- (void)loadView
+- (void)viewDidLoad
 {
-    [super loadView];
+    [super viewDidLoad];
+    
+    [self registerForKeyboardNotifications];
     
     self.view.backgroundColor = [UIColor customBackground];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(didValidTouch)];
@@ -39,21 +41,23 @@
     
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CURRENT_PASSWORD" placeholder:@"" for:_password key:@"password" position:CGPointMake(20, 30)];
-        [self.view addSubview:view];
+        [_contentView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
         
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_NEW_PASSWORD" placeholder:@"" for:_password key:@"newPassword" position:CGPointMake(20, height + 50)];
-        [self.view  addSubview:view];
+        [_contentView  addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
     
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_PASSWORD_CONFIRMATION" placeholder:@"" for:_password key:@"confirm" position:CGPointMake(20, height + 50)];
-        [self.view  addSubview:view];
+        [_contentView  addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
+    
+    _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), height);
 }
 
 - (void)didValidTouch
@@ -64,6 +68,33 @@
     [[Flooz sharedInstance] updatePassword:_password success:^(id result) {
         [self dismissViewControllerAnimated:YES completion:NULL];
     } failure:NULL];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+}
+
+- (void)keyboardWillDisappear
+{
+    _contentView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

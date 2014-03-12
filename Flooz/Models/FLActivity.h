@@ -24,6 +24,9 @@ typedef NS_ENUM(NSInteger, ActivityType) {
 @property ActivityType type;
 @property NSString *content;
 
+@property NSString *eventId;
+@property NSString *transactionId;
+
 - (id)initWithJSON:(NSDictionary *)json;
 
 @end

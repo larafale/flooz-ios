@@ -128,6 +128,8 @@
 		ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A31896D2D9003AC722 /* FLHelper.m */; };
 		ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */; };
 		ABE914AB1898558E003AC722 /* FLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914AA1898558E003AC722 /* FLTextView.m */; };
+		ABEC029418D06DF500C03025 /* TransactionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEC029218D06DF500C03025 /* TransactionsViewController.m */; };
+		ABEC029518D06DF500C03025 /* TransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABEC029318D06DF500C03025 /* TransactionsViewController.xib */; };
 		ABF46A10187575C600E92A77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
 		ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A1E1875B54600E92A77 /* JTImageLabel.m */; };
 		ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */; };
@@ -385,6 +387,9 @@
 		ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionBar.m; path = Views/FLNewTransactionBar/FLNewTransactionBar.m; sourceTree = "<group>"; };
 		ABE914A91898558E003AC722 /* FLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextView.h; path = Views/FLTextView/FLTextView.h; sourceTree = "<group>"; };
 		ABE914AA1898558E003AC722 /* FLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextView.m; path = Views/FLTextView/FLTextView.m; sourceTree = "<group>"; };
+		ABEC029118D06DF500C03025 /* TransactionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionsViewController.h; path = Controllers/Transactions/TransactionsViewController.h; sourceTree = "<group>"; };
+		ABEC029218D06DF500C03025 /* TransactionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionsViewController.m; path = Controllers/Transactions/TransactionsViewController.m; sourceTree = "<group>"; };
+		ABEC029318D06DF500C03025 /* TransactionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionsViewController.xib; path = Controllers/Transactions/TransactionsViewController.xib; sourceTree = "<group>"; };
 		ABF46A11187575C600E92A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABF46A131875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ABF46A141875775200E92A77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -648,6 +653,7 @@
 				AB5EB6E3188214F000D81AF6 /* Social */,
 				AB5EB6E9188214F000D81AF6 /* Timeline */,
 				ABF7092618A2CA1300517389 /* Transaction */,
+				ABEC028D18D06DB500C03025 /* Transactions */,
 				AB6DA50718C4A5BC0073B947 /* Web */,
 			);
 			name = Controllers;
@@ -1291,6 +1297,16 @@
 			name = FLTextView;
 			sourceTree = "<group>";
 		};
+		ABEC028D18D06DB500C03025 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				ABEC029118D06DF500C03025 /* TransactionsViewController.h */,
+				ABEC029218D06DF500C03025 /* TransactionsViewController.m */,
+				ABEC029318D06DF500C03025 /* TransactionsViewController.xib */,
+			);
+			name = Transactions;
+			sourceTree = "<group>";
+		};
 		ABF46A1C1875B54600E92A77 /* JTImageLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1564,6 +1580,7 @@
 				ABF46A10187575C600E92A77 /* Localizable.strings in Resources */,
 				AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */,
 				AB5EB6F2188214F000D81AF6 /* SocialViewController.xib in Resources */,
+				ABEC029518D06DF500C03025 /* TransactionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1671,6 +1688,7 @@
 				ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */,
 				ABE914AB1898558E003AC722 /* FLTextView.m in Sources */,
 				ABF7092A18A2CA3500517389 /* TransactionViewController.m in Sources */,
+				ABEC029418D06DF500C03025 /* TransactionsViewController.m in Sources */,
 				ABE914451890A12C003AC722 /* FLTransaction.m in Sources */,
 				AB6DA51518C89C240073B947 /* PreviewNavBar.m in Sources */,
 				AB2FB54818AE798D0079AA1D /* FLActivity.m in Sources */,

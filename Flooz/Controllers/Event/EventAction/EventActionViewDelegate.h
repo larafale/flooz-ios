@@ -13,11 +13,10 @@
 - (void)reloadEvent;
 
 - (void)showPaymentField;
-- (void)refuseEvent;
 
-- (void)collectEvent;
-- (void)offerEvent;
-
+- (void)presentFriendPickerViewControllerForOffer;
 - (void)presentEventParticipantsController;
+
+- (void)didUpdateEventWithAction:(EventAction)action;
 
 @end

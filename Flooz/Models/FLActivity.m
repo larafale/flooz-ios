@@ -48,6 +48,15 @@
     else{
         NSLog(@"activity type unknown: %@", [json objectForKey:@"type"] );
     }
+    
+    if([json objectForKey:@"data"]){
+        if([[json objectForKey:@"data"] objectForKey:@"line"]){
+            _transactionId = [[json objectForKey:@"data"] objectForKey:@"line"];
+        }
+        else if([[json objectForKey:@"data"] objectForKey:@"event"]){
+            _eventId = [[json objectForKey:@"data"] objectForKey:@"event"];
+        }
+    }
 }
 
 @end

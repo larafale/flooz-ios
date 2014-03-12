@@ -35,6 +35,8 @@
 {
     [super viewDidLoad];
     
+    [self registerForKeyboardNotifications];
+    
     self.view.backgroundColor = [UIColor customBackground];
     
     FLUser *currentUser = [[Flooz sharedInstance] currentUser];
@@ -122,6 +124,8 @@
         
         [fieldsView addObject:view];
     }
+    
+    _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), height);
 }
 
 - (void)prepareViewForDelete
@@ -237,6 +241,33 @@
         [[[Flooz sharedInstance] currentUser] setCreditCard:nil];
         [self prepareViewForCreate];
     }];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+}
+
+- (void)keyboardWillDisappear
+{
+    _contentView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

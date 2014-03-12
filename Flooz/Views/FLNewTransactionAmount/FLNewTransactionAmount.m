@@ -168,26 +168,26 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if([string isEqualToString:@"\r"] && textField == amount && amount.text.length > 0){
+    if([string isEqualToString:@"\r"] && textField.text.length > 0){
         return YES;
     }
+    
+    NSCharacterSet *nonNumbers = [NSCharacterSet decimalDigitCharacterSet];
+    NSRange r = [string rangeOfCharacterFromSet:nonNumbers];
+    
+    // Si n est pas un nombre
+    if(r.location == NSNotFound){
+        return NO;
+    }
+ 
+    // Taille limite
     if(textField == amount && amount.text.length == 3){
         return NO;
     }
     
-    NSCharacterSet *nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
-    NSRange r = [string rangeOfCharacterFromSet:nonNumbers];
-        
-    if(r.location != NSNotFound){
-        return NO;
-    }
-    
-    if(textField == amount && [textField.text isEqualToString:@"000"]){
-        textField.text = string;
-        return NO;
-    }
-    else if(textField == amount2){
-        string = [[amount2.text substringWithRange:NSMakeRange(1, 1)] stringByAppendingString:string];
+    // Taille limite sur les centimes alors remplace le premier chiffre
+    if(textField == amount2 && amount2.text.length == 2){
+        string = [[textField.text substringWithRange:NSMakeRange(1, 1)] stringByAppendingString:string];
         textField.text = string;
         return NO;
     }
@@ -210,8 +210,19 @@
 {
     [textField setBackgroundColor:[UIColor clearColor]];
     
-    if(textField == amount && [textField.text isEqualToString:@""]){
+    if(textField == amount && [textField.text isBlank]){
         textField.text = @"0";
+        [self resizeInputs];
+    }
+    
+    if(textField == amount2 && textField.text.length != 2){
+        if([textField.text isBlank]){
+            textField.text = @"00";
+        }
+        else{
+            textField.text = [textField.text stringByAppendingString:@"0"];
+        }
+        
         [self resizeInputs];
     }
     

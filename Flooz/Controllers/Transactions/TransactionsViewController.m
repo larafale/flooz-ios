@@ -1,12 +1,12 @@
 //
-//  TimelineViewController.m
+//  TransactionsViewController.m
 //  Flooz
 //
-//  Created by jonathan on 12/26/2013.
-//  Copyright (c) 2013 Jonathan Tribouharet. All rights reserved.
+//  Created by jonathan on 2014-03-12.
+//  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
 //
 
-#import "TimelineViewController.h"
+#import "TransactionsViewController.h"
 
 #import "TransactionCell.h"
 
@@ -14,13 +14,16 @@
 #import "TransactionViewController.h"
 #import "EventViewController.h"
 
-@implementation TimelineViewController
+@interface TransactionsViewController ()
+
+@end
+
+@implementation TransactionsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"NAV_TIMELINE", nil);
         transactions = [NSMutableArray new];
         rowsWithPaymentField = [NSMutableSet new];
         nextPageIsLoading = NO;
@@ -31,7 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
     UIImageView *shadow = [UIImageView imageNamed:@"tableview-shadow"];
     CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
     [self.view addSubview:shadow];
@@ -48,17 +51,17 @@
         [_filterView addFilter:@"TIMELINE_FILTER_PUBLIC" target:self action:@selector(didFilterPublicTouch)];
         [_filterView addFilter:@"TIMELINE_FILTER_FRIEND" target:self action:@selector(didFilterFriendTouch)];
         [_filterView addFilter:@"TIMELINE_FILTER_PERSO" target:self action:@selector(didFilterPersoTouch:) colors:@[
-                                                                                        [UIColor customBlue],
-                                                                                        [UIColor customYellow]
-                                                                                        ]];
+                                                                                                                    [UIColor customBlue],
+                                                                                                                    [UIColor customYellow]
+                                                                                                                    ]];
     }
     
-//    if([[[Flooz sharedInstance] currentUser] haveStatsPending]){
-//        [self didFilterPersoTouch:@1];
-//    }
-//    else{
-        [self didFilterPublicTouch];
-//    }
+    //    if([[[Flooz sharedInstance] currentUser] haveStatsPending]){
+    //        [self didFilterPersoTouch:@1];
+    //    }
+    //    else{
+    [self didFilterPublicTouch];
+    //    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -122,12 +125,12 @@
     return cell;
 }
 
-#pragma mark - 
+#pragma mark -
 
 - (void)presentMenuTransactionController
 {
     crossButton.hidden = YES;
- 
+    
     UIViewController *controller = [MenuNewTransactionViewController new];
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     
@@ -140,7 +143,7 @@
 
 - (void)didFilterPublicTouch
 {
-//    [[Flooz sharedInstance] showLoadView];
+    //    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] timeline:@"public" success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
@@ -151,7 +154,7 @@
 
 - (void)didFilterFriendTouch
 {
-//    [[Flooz sharedInstance] showLoadView];
+    //    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] timeline:@"friend" success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
@@ -167,7 +170,7 @@
         state = @"pending";
     }
     
-//    [[Flooz sharedInstance] showLoadView];
+    //    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] timeline:@"private" state:state success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;

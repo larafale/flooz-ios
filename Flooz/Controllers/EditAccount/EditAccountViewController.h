@@ -10,4 +10,6 @@
 
 @interface EditAccountViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIScrollView *contentView;
+
 @end

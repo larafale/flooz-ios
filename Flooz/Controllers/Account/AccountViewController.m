@@ -12,6 +12,7 @@
 
 #import "SettingsViewController.h"
 #import "EditAccountViewController.h"
+#import "FriendsViewController.h"
 #import "InformationsViewController.h"
 #import "CashOutViewController.h"
 
@@ -69,20 +70,20 @@
     }
     
     {
-        FLAccountButton *profil = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 246) title:NSLocalizedString(@"ACCOUNT_BUTTON_PROFIL", nil) imageNamed:@"account-button-profil"];
+        FLAccountButton *friends = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 246) title:NSLocalizedString(@"ACCOUNT_BUTTON_FRIENDS", nil) imageNamed:@"account-button-friends"];
         
-        FLAccountButton *cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(profil.frame) - 1, profil.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-cashout"];
+        FLAccountButton *cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(friends.frame) - 1, friends.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-cashout"];
         
-        FLAccountButton *settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(profil.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
+        FLAccountButton *settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(friends.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
         
-        FLAccountButton *informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame) - 1, CGRectGetMaxY(profil.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
+        FLAccountButton *informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame) - 1, CGRectGetMaxY(friends.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
         
-        [profil addTarget:self action:@selector(presentEditAccountController) forControlEvents:UIControlEventTouchUpInside];
+        [friends addTarget:self action:@selector(presentFriendsController) forControlEvents:UIControlEventTouchUpInside];
         [cashout addTarget:self action:@selector(presentCashOutController) forControlEvents:UIControlEventTouchUpInside];
         [settings addTarget:self action:@selector(presentSettingsController) forControlEvents:UIControlEventTouchUpInside];
         [informations addTarget:self action:@selector(presentInformationsController) forControlEvents:UIControlEventTouchUpInside];
         
-        [_contentView addSubview:profil];
+        [_contentView addSubview:friends];
         [_contentView addSubview:cashout];
         [_contentView addSubview:settings];
         [_contentView addSubview:informations];
@@ -111,6 +112,12 @@
 - (void)presentEditAccountController
 {
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[EditAccountViewController new]];
+    [self presentViewController:controller animated:YES completion:NULL];
+}
+
+- (void)presentFriendsController
+{
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
     [self presentViewController:controller animated:YES completion:NULL];
 }
 

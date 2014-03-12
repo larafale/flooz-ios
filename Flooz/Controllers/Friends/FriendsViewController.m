@@ -28,6 +28,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.title = NSLocalizedString(@"NAV_FRIENDS", nil);
+        
         friendsRequest = @[];
         friendsSuggestion = @[];
         friends = @[];
@@ -38,7 +40,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-        
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
     if(!animated){
         [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
             [[Flooz sharedInstance] friendsSuggestion:^(id result) {
@@ -100,12 +104,12 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), heigth)];
     
-    if(section == 1){
-        view.backgroundColor = [UIColor customBackgroundHeader];
-    }
-    else{
+//    if(section == 1){
+//        view.backgroundColor = [UIColor customBackgroundHeader];
+//    }
+//    else{
         view.backgroundColor = [UIColor customBackground];
-    }
+//    }
     
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(24, 0, 0, CGRectGetHeight(view.frame))];
@@ -228,7 +232,12 @@
 }
 
 - (void)presentFriendAddController{
-    [self presentViewController:[FriendAddViewController new] animated:YES completion:NULL];
+    if([self navigationController]){
+        [[self navigationController] pushViewController:[FriendAddViewController new] animated:YES];
+    }
+    else{
+        [self presentViewController:[FriendAddViewController new] animated:YES completion:NULL];
+    }
 }
 
 @end

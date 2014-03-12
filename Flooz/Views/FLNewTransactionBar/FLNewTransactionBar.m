@@ -58,6 +58,7 @@
     }
     if([_dictionary objectForKey:@"image"]){
         imageButton.selected = YES;
+        [imageButton setImage:[UIImage imageWithData:[_dictionary objectForKey:@"image"]] forState:UIControlStateSelected];
     }
     if([_dictionary objectForKey:@"share"]){
         facebookButton.selected = YES;
@@ -280,20 +281,10 @@
 {
     UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     
-//    UIImage *resizedImage;
-//    //Resize
-//    {
-//        CGFloat width = originalImage.size.width / originalImage.size.height * 156.;
-//        CGSize newSize = CGSizeMake(width, 156);
-//        
-//        UIGraphicsBeginImageContext(newSize);
-//        [originalImage drawInRect:CGRectMakeSize(newSize.width, newSize.height)];
-//        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//    }
-//    
+    UIImage *resizedImage = [originalImage resize:CGSizeMake(1000, 0)];
+    
     imageButton.selected = YES;
-    [_dictionary setValue:UIImagePNGRepresentation(originalImage) forKey:@"image"];
+    [_dictionary setValue:UIImageJPEGRepresentation(resizedImage, 0.8) forKey:@"image"];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

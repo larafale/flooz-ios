@@ -72,10 +72,12 @@
 
 - (void)login:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
-    user = @{
-             @"login": @"louis.grellet@gmail.com",
-             @"password": @"bob"
-             };
+    if(!user || ![user objectForKey:@"login"] || [[user objectForKey:@"login"] isBlank]){
+        user = @{
+                 @"login": @"louis.grellet@gmail.com",
+                 @"password": @"bob"
+                 };
+    }
     
     id successBlock = ^(id result) {
         [self updateCurrentUserAfterConnect:result];
@@ -177,6 +179,12 @@
     [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
+- (void)transactionWithId:(NSString *)transactionId success:(void (^)(id result))success
+{
+    NSString *path = [NSString stringWithFormat:@"flooz/%@", transactionId];
+    [self requestPath:path method:@"GET" params:nil success:success failure:NULL];
+}
+
 - (void)activitiesWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
@@ -236,23 +244,43 @@
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
-    if([transaction objectForKey:@"image"]){
-        NSData *image = [transaction objectForKey:@"image"];
-        [transaction setValue:nil forKey:@"image"];
+    void(^ failureBlock1)(NSError *error);
+    
+    failureBlock1 = ^(NSError *error) {
+        if(failure){
+            failure(error);
+        }
+    };
+    
+    if([transaction objectForKey:@"toImage"]){
+         NSData *image = [transaction objectForKey:@"toImage"];
+        [transaction setValue:nil forKey:@"toImage"];
         
-        id failureBlock = ^(NSError *error) {
-            [transaction setValue:image forKey:@"image"];
+        failureBlock1 = ^(NSError *error) {
+            [transaction setValue:image forKey:@"toImage"];
             if(failure){
                 failure(error);
             }
         };
+    }
+    
+    if([transaction objectForKey:@"image"]){
+        NSData *image = [transaction objectForKey:@"image"];
+        [transaction setValue:nil forKey:@"image"];
         
-        [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failureBlock constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            [formData appendPartWithFormData:image name:@"image"];
+        id failureBlock2 = ^(NSError *error) {
+            [transaction setValue:image forKey:@"image"];
+            
+            failureBlock1(error);
+        };
+        
+        [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failureBlock2 constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSLog(@"image size: %.2fMB", image.length / 1024. / 1024.);
+            [formData appendPartWithFileData:image name:@"image" fileName:@"image.png" mimeType:@"image/png"];
         }];
     }
     else{
-        [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failure];
+        [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failureBlock1];
     }
 }
 
@@ -284,7 +312,8 @@
         };
         
         [self requestPath:@"pots" method:@"POST" params:event success:success failure:failureBlock constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            [formData appendPartWithFormData:image name:@"image"];
+            NSLog(@"image size: %.2fMB", image.length / 1024. / 1024.);
+            [formData appendPartWithFileData:image name:@"image" fileName:@"image.png" mimeType:@"image/png"];
         }];
     }
     else{
@@ -399,16 +428,16 @@
     [self requestPath:path method:@"GET" params:nil success:success failure:NULL];
 }
 
+- (void)eventAction:(FLEvent *)event action:(EventAction)action success:(void (^)(id result))success
+{
+    NSString *path = [NSString stringWithFormat:@"pots/%@/%@", [event eventId], [FLEvent eventActionToParams:action]];
+    [self requestPath:path method:@"POST" params:nil success:success failure:NULL];
+}
+
 - (void)eventParticipate:(NSDictionary *)dictionary success:(void (^)(id result))success
 {
     NSString *path = [NSString stringWithFormat:@"pots/%@/participate", [dictionary objectForKey:@"id"]];
     [self requestPath:path method:@"POST" params:dictionary success:success failure:NULL];
-}
-
-- (void)eventDecline:(FLEvent *)event success:(void (^)(id result))success
-{
-    NSString *path = [NSString stringWithFormat:@"pots/%@/decline", [event eventId]];
-    [self requestPath:path method:@"POST" params:nil success:success failure:NULL];
 }
 
 - (void)eventInvite:(FLEvent *)event friend:(NSString *)friend success:(void (^)(id result))success
@@ -417,16 +446,10 @@
     [self requestPath:path method:@"POST" params:@{ @"q": friend } success:success failure:NULL];
 }
 
-- (void)eventCollect:(FLEvent *)event success:(void (^)(id result))success
-{
-    NSString *path = [NSString stringWithFormat:@"pots/%@/take", [event eventId]];
-    [self requestPath:path method:@"POST" params:nil success:success failure:NULL];
-}
-
 - (void)eventOffer:(FLEvent *)event to:(NSString *)to success:(void (^)(id result))success
 {
     NSString *path = [NSString stringWithFormat:@"pots/%@/give", [event eventId]];
-    [self requestPath:path method:@"POST" params:@{ @"to": to } success:success failure:NULL];
+    [self requestPath:path method:@"POST" params:@{ @"q": to } success:success failure:NULL];
 }
 
 #pragma mark -
@@ -472,7 +495,7 @@
            ){
             DISPLAY_ERROR(FLNetworkError);
         }
-        else if(error.code == kCFURLErrorUserCancelledAuthentication){
+        else if(error.code == kCFURLErrorUserCancelledAuthentication && access_token){
             // Token expire
             DISPLAY_ERROR(FLBadLoginError);
             [self logout];

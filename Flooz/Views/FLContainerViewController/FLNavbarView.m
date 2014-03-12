@@ -25,6 +25,7 @@
         self.backgroundColor = [UIColor customBackgroundHeader];
         
         panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToPanGesture:)];
+        panGesture.delegate = self;
         [self addGestureRecognizer:panGesture];
         
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
@@ -63,6 +64,15 @@
         CGRectSetY(shadow.frame, STATUSBAR_HEIGHT);
         [self addSubview:shadow];
     }
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if(selectedTitleIndex == 0 || selectedTitleIndex == [[_titlesView subviews] count] - 1){
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (void)respondToTapGesture:(UITapGestureRecognizer *)recognizer

@@ -24,7 +24,6 @@
     FLTransaction *_transaction;
     NSIndexPath *_indexPath;
     
-    UIScrollView *_contentView;
     UIView *_mainView;
     
     BOOL paymentFieldIsShown;
@@ -47,16 +46,43 @@
     return self;
 }
 
-- (void)loadView
+- (void)viewDidLoad
 {
-    [super loadView];
+    [super viewDidLoad];
     
+    [self registerForKeyboardNotifications];
     self.view.backgroundColor = [UIColor customBackgroundHeader:0.9];
     
-    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT)];
+    [self buildView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
-    [self.view addSubview:_contentView];
-    
+    if(firstView){
+        firstView = NO;
+        _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
+        
+        CGRectSetY(_contentView.frame, CGRectGetHeight(self.view.frame));
+        
+        [UIView animateWithDuration:0.3 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
+            CGRectSetY(_contentView.frame, - 10);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.2 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
+                CGRectSetY(_contentView.frame, STATUSBAR_HEIGHT);
+            } completion:NULL];
+        }];
+    }
+}
+
+- (void)dismiss
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)buildView
+{
     {
         UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(134, 20, 52, 52)];
         
@@ -96,7 +122,7 @@
         status.text = [NSString stringWithFormat:@"  %@", [_transaction statusText]]; // Hack pour mettre un padding
         [status setWidthToFit];
         CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 20);
-        CGRectSetX(status.frame, CGRectGetWidth(self.view.frame) - CGRectGetWidth(status.frame) - 13);
+        CGRectSetX(status.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(status.frame) - 13);
         
         [_contentView addSubview:status];
         
@@ -134,7 +160,7 @@
         [_contentView addSubview:_mainView];
     }
     
-     CGFloat height = 0;
+    CGFloat height = 0;
     
     if([_transaction isPrivate] && [_transaction status] == TransactionStatusPending){
         if(paymentFieldIsShown){
@@ -184,32 +210,6 @@
     
     CGRectSetHeight(_mainView.frame, height + 15);
     _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    if(firstView){
-        firstView = NO;
-        _contentView.frame = CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT);
-        _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
-        
-        CGRectSetY(_contentView.frame, CGRectGetHeight(self.view.frame));
-        
-        [UIView animateWithDuration:0.3 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
-            CGRectSetY(_contentView.frame, - 10);
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.2 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
-                CGRectSetY(_contentView.frame, STATUSBAR_HEIGHT);
-            } completion:NULL];
-        }];
-    }
-}
-
-- (void)dismiss
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - FLPaymentFieldDelegate
@@ -265,11 +265,10 @@
 
 - (void)reloadTransaction
 {
-    // WARNING
-    for(UIView *view in [self.view subviews]){
+    for(UIView *view in [_contentView subviews]){
         [view removeFromSuperview];
     }
-    [self loadView];
+    [self buildView];
     
     [_delegateController updateTransactionAtIndex:_indexPath transaction:_transaction];
 }
@@ -317,6 +316,35 @@
         _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
         [self reloadTransaction];
     } failure:NULL];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+    
+    CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
+    [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
+}
+
+- (void)keyboardWillDisappear
+{
+    _contentView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

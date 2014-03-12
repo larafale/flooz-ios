@@ -28,7 +28,7 @@
     [super viewWillAppear:animated];
     
     if(!animated){
-        [[Flooz sharedInstance] showLoadView];
+//        [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] events:_scope success:^(id result, NSString *nextPageUrl) {
             events = [result mutableCopy];
             _nextPageUrl = nextPageUrl;

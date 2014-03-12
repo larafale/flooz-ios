@@ -12,30 +12,16 @@
 
 - (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary
 {
-    self = [super initWithFrame:CGRectMake(0, frame.origin.y, SCREEN_WIDTH, 84)];
+    self = [super initWithFrame:CGRectMake(0, frame.origin.y, SCREEN_WIDTH, 42)];
     if (self) {
         _dictionary = dictionary;
         
-        [self createLabel];
         [self createSeparator];
         [self createButtons];
         
         [self didButtonLeftTouch];
     }
     return self;
-}
-
-- (void)createLabel
-{
-    _title = [[UILabel alloc] initWithFrame:CGRectMake(14, 0, 0, CGRectGetHeight(self.frame) / 2)];
-    
-    _title.textColor = [UIColor whiteColor];
-    _title.text = NSLocalizedString(@"TRANSACTION_AMOUNT_TITLE", nil);
-    _title.font = [UIFont customContentRegular:12];
-    
-    [_title setWidthToFit];
-    
-    [self addSubview:_title];
 }
 
 - (void)createSeparator
@@ -48,8 +34,8 @@
 
 - (void)createButtons
 {
-    buttonLeft = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) / 2, CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame) / 2)];
-    buttonRight = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(buttonLeft.frame), CGRectGetHeight(self.frame) / 2, CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame) / 2)];
+    buttonLeft = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
+    buttonRight = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(buttonLeft.frame), 0, CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
     
     [buttonLeft setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateSelected];
     [buttonRight setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateSelected];

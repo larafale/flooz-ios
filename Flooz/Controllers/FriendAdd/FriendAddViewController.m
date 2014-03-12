@@ -30,6 +30,18 @@
     self.view.backgroundColor = [UIColor customBackgroundHeader];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [_searchBar becomeFirstResponder];
+}
 
 #pragma mark - TableView
 

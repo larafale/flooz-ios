@@ -10,6 +10,9 @@
 
 #import "ActivityCell.h"
 
+#import "TransactionViewController.h"
+#import "EventViewController.h"
+
 @interface AcitvitiesViewController ()
 
 @end
@@ -61,6 +64,38 @@
     [cell setActivity:activity];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    FLActivity *activity = [activities objectAtIndex:indexPath.row];
+    
+    if([activity transactionId]){
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] transactionWithId:[activity transactionId] success:^(id result) {
+            FLTransaction *event = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:event indexPath:indexPath];
+            
+            self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+            
+            [self presentViewController:controller animated:NO completion:^{
+                self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+            }];
+        }];
+    }
+    else if([activity eventId]){
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] eventWithId:[activity eventId] success:^(id result) {
+            FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+            EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:indexPath];
+            
+            self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+            
+            [self presentViewController:controller animated:NO completion:^{
+                self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+            }];
+        }];
+    }
 }
 
 @end

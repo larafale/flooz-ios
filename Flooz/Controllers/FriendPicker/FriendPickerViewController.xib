@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -16,25 +16,22 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dw5-BN-AF9" customClass="FLTableView">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dw5-BN-AF9" customClass="FLTableView">
                     <rect key="frame" x="1" y="64" width="320" height="504"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="504" id="SG8-vU-Ihs"/>
-                    </constraints>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="YId-ct-R1i"/>
                         <outlet property="delegate" destination="-1" id="Fna-2T-HnW"/>
                     </connections>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NT7-5i-Nnh" customClass="FriendPickerSearchBar">
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NT7-5i-Nnh" customClass="FriendPickerSearchBar">
                     <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="320" id="6cZ-iK-hS8"/>
-                        <constraint firstAttribute="height" constant="44" id="nVV-kf-FdZ"/>
+                        <constraint firstAttribute="height" constant="44" id="IxS-Na-X3E"/>
+                        <constraint firstAttribute="width" constant="320" id="fnB-ng-rdL"/>
                     </constraints>
                     <connections>
                         <outlet property="delegate" destination="-1" id="fhn-qr-k1f"/>
@@ -43,11 +40,11 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="dw5-BN-AF9" secondAttribute="bottom" id="2Zs-yu-pPS"/>
-                <constraint firstItem="dw5-BN-AF9" firstAttribute="leading" secondItem="NT7-5i-Nnh" secondAttribute="leading" id="NKX-K1-gfv"/>
-                <constraint firstItem="dw5-BN-AF9" firstAttribute="top" secondItem="NT7-5i-Nnh" secondAttribute="bottom" id="aBk-tj-CUs"/>
-                <constraint firstItem="dw5-BN-AF9" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="iXL-WQ-fEI"/>
-                <constraint firstItem="dw5-BN-AF9" firstAttribute="trailing" secondItem="NT7-5i-Nnh" secondAttribute="trailing" id="zuE-OO-EYQ"/>
+                <constraint firstAttribute="trailing" secondItem="dw5-BN-AF9" secondAttribute="trailing" constant="-1" id="E09-U5-GM7"/>
+                <constraint firstAttribute="bottom" secondItem="dw5-BN-AF9" secondAttribute="bottom" id="Op9-Cv-hOp"/>
+                <constraint firstItem="dw5-BN-AF9" firstAttribute="top" secondItem="NT7-5i-Nnh" secondAttribute="bottom" id="UCg-83-P5Q"/>
+                <constraint firstItem="NT7-5i-Nnh" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" id="hyh-50-vTA"/>
+                <constraint firstItem="dw5-BN-AF9" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="1" id="mhW-6p-GbI"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

@@ -36,7 +36,6 @@
     [view setImageEdgeInsets:UIEdgeInsetsMake(2, -10, 0, 0)];
     
     [view setImage:[UIImage imageNamed:@"transaction-cell-cross"] forState:UIControlStateNormal];
-    [view setTitle:NSLocalizedString(@"EVENT_ACTION_REFUSE", nil) forState:UIControlStateNormal];
     [view setTitleColor:[UIColor customRed] forState:UIControlStateNormal];
     
     [view addTarget:self action:@selector(didRefuseTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -80,31 +79,72 @@
 
 - (void)prepareViews
 {
-    UIView *refuseView = [[self subviews] objectAtIndex:0];
+    UIButton *refuseView = [[self subviews] objectAtIndex:0];
     UIButton *acceptView = [[self subviews] objectAtIndex:1];
     
-    refuseView.hidden = acceptView.hidden = YES;
+    NSString *textAccept = nil;
+    NSString *textRefuse = nil;
     
-    if([_event isAcceptable]){
+    if([_event canParticipate]){
+        textAccept = NSLocalizedString(@"EVENT_ACTION_PARTICIPATE", nil);
+        if([_event amount] && [[_event amount] floatValue] > 0){
+            textAccept = [NSString stringWithFormat:@"%@ : %@", textAccept, [FLHelper formatedAmount:[_event amount]]];
+        }
+        
+        if([_event canDeclineInvite]){
+            textRefuse = NSLocalizedString(@"EVENT_ACTION_REFUSE", nil);
+        }
+    }
+    else if([_event canAcceptOrDeclineOffer]){
+        textAccept = NSLocalizedString(@"EVENT_ACTION_ACCEPT", nil);
+        textRefuse = NSLocalizedString(@"EVENT_ACTION_REFUSE", nil);
+    }
+    else if([_event canCancelOffer]){
+        textRefuse = NSLocalizedString(@"EVENT_ACTION_REFUSE", nil);
+    }
+    
+    if(textAccept && textRefuse){
+        acceptView.frame = CGRectMake(CGRectGetWidth(self.frame) / 2., 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame));
+        refuseView.frame = CGRectMakeSize(CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame));
+        refuseView.hidden = NO;
         acceptView.hidden = NO;
+    }
+    else if(textAccept){
         acceptView.frame = CGRectMakeWithSize(self.frame.size);
+        refuseView.hidden = YES;
+        acceptView.hidden = NO;
+    }
+    else if(textRefuse){
+        refuseView.frame = CGRectMakeWithSize(self.frame.size);
+        refuseView.hidden = NO;
+        acceptView.hidden = YES;
     }
     
-    NSString *textAccept = NSLocalizedString(@"EVENT_ACTION_ACCEPT", nil);
-    if([_event amount] && [[_event amount] floatValue] > 0){
-        textAccept = [NSString stringWithFormat:@"%@ : %@", textAccept, [FLHelper formatedAmount:[_event amount]]];
-    }
     [acceptView setTitle:textAccept forState:UIControlStateNormal];
+    [refuseView setTitle:textRefuse forState:UIControlStateNormal];
 }
 
 #pragma mark -
 
 - (void)didAcceptTouch{
-    [_delegate showPaymentField];
+    if([_event canParticipate]){
+        [_delegate showPaymentField];
+    }
+    else if([_event canAcceptOrDeclineOffer]){
+        [_delegate didUpdateEventWithAction:EventActionAcceptOffer];
+    }
 }
 
 - (void)didRefuseTouch{
-    [_delegate refuseEvent];
+    if([_event canParticipate]){
+        [_delegate didUpdateEventWithAction:EventActionDeclineInvite];
+    }
+    else if([_event canAcceptOrDeclineOffer]){
+        [_delegate didUpdateEventWithAction:EventActionDeclineOffer];
+    }
+    else if([_event canCancelOffer]){
+        [_delegate didUpdateEventWithAction:EventActionCancelOffer];
+    }
 }
 
 @end

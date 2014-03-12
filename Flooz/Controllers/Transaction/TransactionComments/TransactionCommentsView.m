@@ -36,6 +36,13 @@
     textField.layer.cornerRadius = 15.;
     textField.font = [UIFont customContentLight:12];
     textField.textColor = [UIColor customPlaceholder];
+    
+    textField.attributedPlaceholder = [[NSAttributedString alloc]
+                                          initWithString:NSLocalizedString(@"SEND_COMMENT", nil)
+                                          attributes:@{
+                                                       NSFontAttributeName: [UIFont customContentLight:14],
+                                                       NSForegroundColorAttributeName: [UIColor customPlaceholder]
+                                                       }];
 
     {
         UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 15, 30)];

@@ -29,11 +29,9 @@
 
 - (void)createImage
 {
-    UIImageView *image = [UIImageView imageNamed:@"new-transaction-select-friend"];
-    
-    image.center = CGPointMake(30, CGRectGetHeight(self.frame) / 2);
-    
-    [self addSubview:image];
+    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMakeSize(30, 30)];
+    view.center = CGPointMake(30, CGRectGetHeight(self.frame) / 2);
+    [self addSubview:view];
 }
 
 - (void)createButton
@@ -62,12 +60,24 @@
 
 - (void)reloadData
 {
+    FLUserView *userView = [[self subviews] objectAtIndex:0];
     UIButton *button = [[self subviews] objectAtIndex:1];
+    
     if([_dictionary objectForKey:@"toTitle"] && ![[_dictionary objectForKey:@"toTitle"] isBlank]){
         [button setTitle:[_dictionary objectForKey:@"toTitle"] forState:UIControlStateNormal];
     }
     else{
         [button setTitle:NSLocalizedString(@"FIELD_TRANSACTION_SELECT_FRIEND", nil) forState:UIControlStateNormal];
+    }
+    
+    if([_dictionary objectForKey:@"toImage"]){
+        [userView setImageFromData:[_dictionary objectForKey:@"toImage"]];
+    }
+    else if([_dictionary objectForKey:@"toImageUrl"]){
+         [userView setImageFromURL:[_dictionary objectForKey:@"toImageUrl"]];
+    }
+    else{
+        [userView setImageFromData:nil];
     }
 }
 

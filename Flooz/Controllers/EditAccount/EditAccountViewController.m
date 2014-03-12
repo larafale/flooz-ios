@@ -13,8 +13,6 @@
 @interface EditAccountViewController (){
     NSMutableDictionary *_user;
     UIButton *registerFacebook;
-    
-    UIScrollView *_contentView;
 }
 
 @end
@@ -49,16 +47,15 @@
     return self;
 }
 
-- (void)loadView
+- (void)viewDidLoad
 {
-    [super loadView];
+    [super viewDidLoad];
+    
+    [self registerForKeyboardNotifications];
     
     self.view.backgroundColor = [UIColor customBackground];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(didValidTouch)];
-    
-    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMakeWithSize(self.view.frame.size)];
-    [self.view addSubview:_contentView];
-    
+        
     CGFloat height = 0;
     
     {
@@ -158,7 +155,7 @@
         height = CGRectGetMaxY(view.frame);
     }
     
-    _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), height);
+    _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), height);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -166,13 +163,6 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    _contentView.frame = CGRectMakeWithSize(self.view.frame.size);
 }
 
 - (void)didValidTouch
@@ -189,6 +179,33 @@
 {
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] connectFacebook];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+}
+
+- (void)keyboardWillDisappear
+{
+    _contentView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

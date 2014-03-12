@@ -15,6 +15,7 @@
     NSArray *friends;
 }
 
+@property (weak, nonatomic) IBOutlet FriendAddSearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
 
 @end

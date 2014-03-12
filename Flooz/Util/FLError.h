@@ -7,7 +7,7 @@
 //
 
 #define DISPLAY_ERROR(error) [appDelegate displayError:[NSError errorWithDomain:@"com.flooz.Flooz" code:error userInfo:nil]];
-#define ERROR_LOCALIZED_DESCRIPTION(code) NSLocalizedStringFromTable(([NSString stringWithFormat:@"%ld", code]), @"Error", nil)
+#define ERROR_LOCALIZED_DESCRIPTION(code) NSLocalizedStringFromTable(([NSString stringWithFormat:@"%d", code]), @"Error", nil)
 
 #define DISPLAY_ERROR_MESSAGE(message) [appDelegate displayErrorMessage:message];
 

@@ -121,7 +121,7 @@
 - (void)prepareContentView
 {
     UILabel *view = [[self subviews] objectAtIndex:1];
-    CGRectSetY(view.frame, height);
+    CGRectSetY(view.frame, height + 5);
     
     view.text = [_transaction content];
     [view setHeightToFit];

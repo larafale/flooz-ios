@@ -18,5 +18,6 @@
 - (id)initWithEvent:(FLEvent *)event indexPath:(NSIndexPath *)indexPath;
 
 @property (strong, nonatomic) UIViewController<EventCellDelegate> *delegateController;
+@property (weak, nonatomic) IBOutlet UIScrollView *contentView;
 
 @end

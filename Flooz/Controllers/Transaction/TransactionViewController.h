@@ -17,5 +17,6 @@
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;
 
 @property (strong, nonatomic) UIViewController<TransactionCellDelegate> *delegateController;
+@property (weak, nonatomic) IBOutlet UIScrollView *contentView;
 
 @end

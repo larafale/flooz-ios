@@ -30,7 +30,6 @@
     FLEvent *_event;
     NSIndexPath *_indexPath;
     
-    UIScrollView *_contentView;
     UIView *_mainView;
     
     BOOL paymentFieldIsShown;
@@ -63,16 +62,49 @@
     return self;
 }
 
-- (void)loadView
+- (void)viewDidLoad
 {
-    [super loadView];
+    [super viewDidLoad];
+    
+    [self registerForKeyboardNotifications];
     
     self.view.backgroundColor = [UIColor customBackgroundHeader:0.9];
     
-    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT)];
+    [self buildView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
-    [self.view addSubview:_contentView];
+    if(firstView){
+        _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
+        
+        CGRectSetY(_contentView.frame, CGRectGetHeight(self.view.frame));
+        
+        [UIView animateWithDuration:0.3 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
+            CGRectSetY(_contentView.frame, - 10);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.2 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
+                CGRectSetY(_contentView.frame, STATUSBAR_HEIGHT);
+            } completion:NULL];
+        }];
+        
+        firstView = NO;
+    }
     
+    if(_eventOfferUser && [_eventOfferUser objectForKey:@"to"] && ![[_eventOfferUser objectForKey:@"to"] isBlank]){
+        [self didOfferEvent];
+    }
+}
+
+- (void)dismiss
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)buildView
+{
     {
         UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(134, 20, 52, 52)];
         
@@ -110,7 +142,7 @@
         status.text = [NSString stringWithFormat:@"  %@", [_event statusText]]; // Hack pour mettre un padding
         [status setWidthToFit];
         CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 30);
-        CGRectSetX(status.frame, CGRectGetWidth(self.view.frame) - CGRectGetWidth(status.frame) - 13);
+        CGRectSetX(status.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(status.frame) - 13);
         
         [_contentView addSubview:status];
     }
@@ -154,14 +186,14 @@
         
         height = CGRectGetMaxY(amountInput.frame);
     }
-    else if([_event isAcceptable]){
+    else if([_event canParticipate] || [_event canCancelOffer] || [_event canAcceptOrDeclineOffer]){
         EventActionView *view = [[EventActionView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event = _event;
         view.delegate = self;
         [_mainView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
-    
+        
     {
         EventUsersView *view = [[EventUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event = _event;
@@ -176,8 +208,8 @@
         [_mainView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
-
-    if([_event isCollectable]){
+    
+    if([_event canGiveOrTakeOffer]){
         EventAmountActionsView *view = [[EventAmountActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event = _event;
         view.delegate = self;
@@ -202,37 +234,6 @@
     
     CGRectSetHeight(_mainView.frame, height + 15);
     _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    if(firstView){
-        _contentView.frame = CGRectMake(0, STATUSBAR_HEIGHT, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT);
-        _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
-        
-        CGRectSetY(_contentView.frame, CGRectGetHeight(self.view.frame));
-        
-        [UIView animateWithDuration:0.3 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
-            CGRectSetY(_contentView.frame, - 10);
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.2 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
-                CGRectSetY(_contentView.frame, STATUSBAR_HEIGHT);
-            } completion:NULL];
-        }];
-        
-        firstView = NO;
-    }
-    
-    if(_eventOfferUser && [_eventOfferUser objectForKey:@"to"] && ![[_eventOfferUser objectForKey:@"to"] isBlank]){
-        [self didOfferEvent];
-    }
-}
-
-- (void)dismiss
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - FLPaymentFieldDelegate
@@ -287,20 +288,19 @@
 }
 
 - (void)reloadEvent{
-    // WARNING
-    for(UIView *view in [self.view subviews]){
+    for(UIView *view in [_contentView subviews]){
         [view removeFromSuperview];
     }
-    [self loadView];
+    [self buildView];
     
     [_delegateController updateEventAtIndex:_indexPath event:_event];
 }
 
-- (void)refuseEvent
+- (void)didUpdateEventWithAction:(EventAction)action
 {
     [[Flooz sharedInstance] showLoadView];
-
-    [[Flooz sharedInstance] eventDecline:_event success:^(id result) {
+    
+    [[Flooz sharedInstance] eventAction:_event action:action success:^(id result) {
         [[Flooz sharedInstance] showLoadView];
         
         [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
@@ -359,23 +359,7 @@
     [self presentViewController:controller animated:YES completion:NULL];
 }
 
-- (void)collectEvent
-{
-    [[Flooz sharedInstance] showLoadView];
-    
-    [[Flooz sharedInstance] eventCollect:_event success:^(id result) {
-        
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
-            _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
-            paymentFieldIsShown = NO;
-            amountFieldIsShown = NO;
-            [self reloadEvent];
-        }];
-    }];
-}
-
-- (void)offerEvent
+- (void)presentFriendPickerViewControllerForOffer
 {
     _eventOfferUser = [NSMutableDictionary new];
     FriendPickerViewController *controller = [FriendPickerViewController new];
@@ -386,7 +370,6 @@
 - (void)didOfferEvent
 {
     [[Flooz sharedInstance] showLoadView];
-    
     [[Flooz sharedInstance] eventOffer:_event to:[_eventOfferUser objectForKey:@"to"] success:^(id result) {
         
         
@@ -398,6 +381,35 @@
             [self reloadEvent];
         }];
     }];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+    CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
+    [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
+}
+
+- (void)keyboardWillDisappear
+{
+    _contentView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

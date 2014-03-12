@@ -52,29 +52,62 @@
     }
     
     {
-        _isAcceptable = NO;
+        _canParticipate = NO;
         
         if([[json objectForKey:@"actions"] objectForKey:@"1"]){
-            _isAcceptable = YES;
-        }
-    }
-    
-    {
-        _isCollectable = NO;
-        
-        if([[json objectForKey:@"actions"] objectForKey:@"3"]){
-            _isCollectable = YES;
+            _canParticipate = YES;
         }
     }
     
     {
         _canInvite = NO;
         
-        if([[json objectForKey:@"isCreator"] boolValue] && ![[json objectForKey:@"closed"] boolValue]){
+        if([[json objectForKey:@"actions"] objectForKey:@"2"]){
             _canInvite = YES;
         }
     }
+    
+    {
+        _canGiveOrTakeOffer = NO;
         
+        if([[json objectForKey:@"actions"] objectForKey:@"3"]){
+            _canGiveOrTakeOffer = YES;
+        }
+    }
+    
+    {
+        _canCancelOffer = NO;
+        
+        if([[json objectForKey:@"actions"] objectForKey:@"5"]){
+            _canCancelOffer = YES;
+        }
+    }
+    
+    {
+        _canAcceptOrDeclineOffer = NO;
+        
+        if([[json objectForKey:@"actions"] objectForKey:@"6"]){
+            _canAcceptOrDeclineOffer = YES;
+        }
+    }
+    
+    {
+        _canDeclineInvite = NO;
+        
+        if([[json objectForKey:@"actions"] objectForKey:@"7"]){
+            _canDeclineInvite = YES;
+        }
+    }
+    
+    
+//    {
+//        _canInvite = NO;
+//        
+//        if([[json objectForKey:@"isCreator"] boolValue] && ![[json objectForKey:@"closed"] boolValue]){
+//            _canInvite = YES;
+//        }
+//    }
+    
     _creator = [[FLUser alloc] initWithJSON:[json objectForKey:@"creator"]];
     
     {
@@ -128,6 +161,38 @@
     }
     
     return NSLocalizedString([@"EVENT_SCOPE_" stringByAppendingString:key], nil);
+}
+
++ (NSString *)eventActionToParams:(EventAction)action
+{
+    if(action == EventActionParticipate){
+        return @"participate";
+    }
+    else if(action == EventActionInvite){
+        return @"invite";
+    }
+    else if(action == EventActionTakeOffer){
+        return @"take";
+    }
+    else if(action == EventActionGiveOffer){
+        return @"give";
+    }
+    else if(action == EventActionCancelOffer){
+        return @"cancel";
+    }
+    else if(action == EventActionDeclineOffer){
+        return @"decline";
+    }
+    else if(action == EventActionAcceptOffer){
+        return @"accept";
+    }
+    else if(action == EventActionDeclineInvite){
+        return @"declineInvite";
+    }
+    else{
+        NSLog(@"Bad event action: %d", (int)action);
+        return nil;
+    }
 }
 
 @end

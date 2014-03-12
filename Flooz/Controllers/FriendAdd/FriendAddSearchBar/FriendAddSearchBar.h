@@ -10,7 +10,10 @@
 
 #import "FriendAddSearchBarDelegate.h"
 
-@interface FriendAddSearchBar : UIView<UISearchBarDelegate>
+@interface FriendAddSearchBar : UIView<UISearchBarDelegate>{
+    UISearchBar *_searchBar;
+    NSTimer *timer;
+}
 
 @property (weak, nonatomic) IBOutlet id<FriendAddSearchBarDelegate> delegate;
 

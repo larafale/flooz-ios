@@ -132,6 +132,16 @@
         [_dictionary setValue:nil forKey:@"fb"];
     }
     
+    [_dictionary setValue:nil forKey:@"toImage"];
+    [_dictionary setValue:nil forKey:@"toImageUrl"];
+    
+    if([contact objectForKey:@"image"]){
+        [_dictionary setValue:[contact objectForKey:@"image"] forKey:@"toImage"];
+    }
+    else if([contact objectForKey:@"image_url"]){
+        [_dictionary setValue:[contact objectForKey:@"image_url"] forKey:@"toImageUrl"];
+    }
+    
     [self dismiss];
 }
 

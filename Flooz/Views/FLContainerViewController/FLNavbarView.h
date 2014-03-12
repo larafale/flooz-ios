@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FLNavbarView : UIView{
+@interface FLNavbarView : UIView<UIGestureRecognizerDelegate>{
     UIView *_titlesView;
     NSArray *_viewControllers;
     

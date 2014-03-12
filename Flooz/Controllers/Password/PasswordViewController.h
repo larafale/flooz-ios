@@ -10,4 +10,6 @@
 
 @interface PasswordViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIScrollView *contentView;
+
 @end

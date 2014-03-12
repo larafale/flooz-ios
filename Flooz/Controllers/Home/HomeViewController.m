@@ -32,13 +32,6 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -92,6 +85,22 @@
     [self.view addSubview:preview];
     
     [self didFilterPublicTouch];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    preview.frame = CGRectMake(0, CGRectGetHeight(_tableView.frame) - 34, CGRectGetWidth(self.view.frame), 34);
+    login.frame = CGRectMake(23, preview.frame.origin.y - 30 - 35, 134, 45);
+    signup.frame = CGRectMake(CGRectGetMaxX(login.frame) + 6, login.frame.origin.y, login.frame.size.width, login.frame.size.height);
 }
 
 - (void)presentLoginController

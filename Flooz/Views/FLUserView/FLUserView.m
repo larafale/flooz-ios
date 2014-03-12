@@ -36,7 +36,9 @@
     filter.frame = CGRectMakeWithSize(self.frame.size);
     placeholder = [UIImage imageNamed:@"default-avatar"];
     avatar.image = placeholder;
-        
+    
+    filter.hidden = YES;
+    
     [self addSubview:avatar];
     [self addSubview:filter];
 }
@@ -76,6 +78,7 @@
         filter.hidden = NO;
     }
     else{
+        avatar.image = placeholder;
         filter.hidden = YES;
     }
 }

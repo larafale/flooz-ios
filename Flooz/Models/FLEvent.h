@@ -22,6 +22,17 @@ typedef NS_ENUM(NSInteger, EventStatus) {
     EventStatusPending
 };
 
+typedef NS_ENUM(NSInteger, EventAction) {
+    EventActionParticipate,
+    EventActionInvite,
+    EventActionTakeOffer,
+    EventActionGiveOffer,
+    EventActionCancelOffer,
+    EventActionDeclineOffer,
+    EventActionAcceptOffer,
+    EventActionDeclineInvite
+};
+
 @property (nonatomic) EventStatus status;
 
 @property NSString *eventId;
@@ -37,10 +48,12 @@ typedef NS_ENUM(NSInteger, EventStatus) {
 
 @property BOOL isPrivate;
 
-@property BOOL isAcceptable; // Si peut y participer
-@property BOOL isCollectable; // Si peut recolter ou donner la cagnotte
-
-@property BOOL canInvite;
+@property BOOL canParticipate; // 1, participer
+@property BOOL canInvite; // 2, inviter
+@property BOOL canGiveOrTakeOffer; // 3, 4, offrir ou prendre une cagnotte
+@property BOOL canCancelOffer; // 5, annuler l offre
+@property BOOL canAcceptOrDeclineOffer; // 6, 7, accepter ou refuser l offre
+@property BOOL canDeclineInvite; // 8, refuser une invitation
 
 @property NSDate *date;
 
@@ -55,5 +68,6 @@ typedef NS_ENUM(NSInteger, EventStatus) {
 
 - (id)initWithJSON:(NSDictionary *)json;
 + (NSString *)transactionScopeToText:(TransactionScope)scope;
++ (NSString *)eventActionToParams:(EventAction)action;
 
 @end

@@ -92,7 +92,7 @@
     FLUserView *view = [[self.contentView subviews] objectAtIndex:0];
     
     [view setImageFromUser:[_activity user]];
-    
+
     view.center = CGPointMake(view.center.x, height / 2.);
 }
 

@@ -10,7 +10,7 @@
 
 #import "FLSocialView.h"
 
-#define MARGE_TOP 28.
+#define MARGE_TOP 10.
 #define MARGE_BOTTOM 10.
 #define MARGE_LEFT_RIGHT 25.
 

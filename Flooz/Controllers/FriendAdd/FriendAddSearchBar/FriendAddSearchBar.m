@@ -52,35 +52,53 @@
 
 - (void)createSearchView
 {
-    UISearchBar *view = [[UISearchBar alloc] initWithFrame:CGRectMake(42, 0, 240, CGRectGetHeight(self.frame))];
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(42, 0, 240, CGRectGetHeight(self.frame))];
     
-    view.delegate = self;
+    _searchBar.delegate = self;
     
-    view.translucent = NO;
-    view.barTintColor = self.backgroundColor;
-    view.tintColor = [UIColor whiteColor]; // Curseur
+    _searchBar.translucent = NO;
+    _searchBar.barTintColor = self.backgroundColor;
+    _searchBar.tintColor = [UIColor whiteColor]; // Curseur
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor customBackground]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackground:[UIImage imageWithColor:[UIColor customBackground]]];
     
     // Hack pour supprimer bordure noir
-    [[[[[view subviews] firstObject] subviews] firstObject] removeFromSuperview];
+    [[[[[_searchBar subviews] firstObject] subviews] firstObject] removeFromSuperview];
     
-    [self addSubview:view];
+    [self addSubview:_searchBar];
 }
 
 #pragma mark -
 
 - (void)didBackTouch
 {
+    [timer invalidate];
     [_delegate dismiss];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [timer invalidate];
+    timer = [NSTimer scheduledTimerWithTimeInterval:2. target:self selector:@selector(performRequest) userInfo:nil repeats:NO];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    [timer invalidate];
     [searchBar resignFirstResponder];
     [_delegate didFilterChange:searchBar.text];
+}
+
+- (void)performRequest
+{
+    [_delegate didFilterChange:_searchBar.text];
+}
+
+- (BOOL)becomeFirstResponder
+{
+    return [_searchBar becomeFirstResponder];
 }
 
 @end
