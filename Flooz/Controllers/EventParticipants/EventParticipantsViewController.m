@@ -13,7 +13,6 @@
 
 @interface EventParticipantsViewController (){
     FLEvent *_event;
-    NSMutableDictionary *friend;
 }
 
 @end
@@ -35,24 +34,8 @@
     [super viewWillAppear:animated];
     
     [[[self navigationController] navigationBar] setHidden:NO];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     
-    if(friend && [friend objectForKey:@"to"]){
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] eventInvite:_event friend:[friend objectForKey:@"to"] success:^(id result) {            
-            friend = nil;
-            
-            [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
-                _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
-                [_tableView reloadData];
-            }];
-        }];
-    }
+    [_tableView reloadData];
 }
 
 #pragma mark - TableView
@@ -122,7 +105,12 @@
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 0){
-        return 55;
+        if([_event canInvite]){
+            return 55;
+        }
+        else{
+            return 0;
+        }   
     }
     return [EventParticipantCell getHeight];
 }
@@ -171,8 +159,8 @@
     }
     
     FriendPickerViewController *controller = [FriendPickerViewController new];
-    friend = [NSMutableDictionary new];
-    controller.dictionary = friend;
+    controller.dictionary = [NSMutableDictionary new];
+    [controller setEvent:_event];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

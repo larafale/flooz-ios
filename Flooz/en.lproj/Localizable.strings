@@ -13,15 +13,15 @@
 "GLOBAL_CAMERA" = "Appareil photo";
 "GLOBAL_ALBUMS" = "Albums";
 "GLOBAL_EURO" = "€";
-"GLOBAL_SEND" = "SEND";
+"GLOBAL_SEND" = "PUBLIER";
 
-"SEND_COMMENT" = "Envoyer un commentaire";
+"SEND_COMMENT" = "Écrire un commentaire...";
 
 "NAV_LOGIN" = "Log in";
 "NAV_SIGNUP" = "Sign up";
-"NAV_ACCOUNT" = "Account";
+"NAV_ACCOUNT" = "Mon profil";
 "NAV_SETTINGS" = "Settings";
-"NAV_SOCIAL" = "Social";
+"NAV_SOCIAL" = "Cagnottes";
 "NAV_TIMELINE" = "Flooz";
 "NAV_EDIT_ACCOUNT" = "Edit";
 "NAV_INFORMATIONS" = "Informations";
@@ -32,6 +32,7 @@
 "NAV_CREDIT_CARD" = "Credit Card";
 "NAV_EVENT_PARTICIPANTS" = "Participants";
 "NAV_FRIENDS" = "FRIENDS";
+"NAV_DOCUMENTS" = "Documents";
 
 "HOME_LOGIN" = "Log in";
 "HOME_SIGNUP" = "Sign up";
@@ -105,8 +106,6 @@
 "FIELD_TRANSACTION_SELECT_FRIEND" = "Pseudo, Nom, Téléphone ou Email";
 
 "SIGNUP_FACEBOOK" = "Register with Facebook";
-"SIGNUP_SECURITY_INFO" = "Security informations";
-"SIGNUP_CODE_INFO" = "Ce code secret vous permettra de sécuriser votre application en cas de vol ou perte de votre mobile";
 
 "LOGIN_FACEBOOK" = "Login with Facebook";
 "LOGIN_OR" = "or";
@@ -177,13 +176,18 @@
 "FRIENDS_FRIENDS_SUGGESTION" = "Friend suggestions";
 "FRIENDS_FRIENDS" = "Friends";
 
-"EVENT_AMOUNT" = "Cagnotte";
+"FRIEND_PCIKER_PLACEHOLDER" = "Rechercher un contact";
+
+"EVENT_AMOUNT" = "Argent récolté";
 "EVENT_AMOUNT_FREE" = "Montant libre";
 
-"EVENT_INVITE_PARTICIPANT" = "INVITER PARTICIPANT";
+"EVENT_INVITE_PARTICIPANT" = "LISTE DES PARTICIPANTS";
+"EVENT_PARTICIPANTS_INVITED" = "%.2d AUTRES PARTICIPANTS";
 "EVENT_PARTICIPANT_INVITE" = "Inviter des amis";
 
-"EVENT_ACTION_REFUSE" = "DECLINER";
+"EVENT_ACTION_REFUSE" = "REFUSER";
+"EVENT_ACTION_CANCEL" = "ANNULER";
+"EVENT_ACTION_DECLINE" = "DECLINER L'INVITATION";
 "EVENT_ACTION_PARTICIPATE" = "PARTICIPER";
 "EVENT_ACTION_ACCEPT" = "ACCEPTER";
 
@@ -192,3 +196,7 @@
 
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_WAITING" = "Invité";
+
+"DOCUMENTS_CARD_ID_RECTO" = "ID Card (Recto)";
+"DOCUMENTS_CARD_ID_VERSO" = "ID Card (Verso)";
+"DOCUMENTS_HOME" = "Jusificatif de domcile";

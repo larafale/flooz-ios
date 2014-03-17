@@ -24,13 +24,12 @@
     self.backgroundColor = [UIColor colorWithIntegerRed:30. green:41. blue:52.];
     
     {
-        userView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) - 97.) / 2., 6, 97, 96.5)];
-        [userView setAlternativeStyle];
+        userView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) - 81.) / 2., 12, 81, 81)];
         [self addSubview:userView];
     }
     
     {
-        fullname = [[UILabel alloc] initWithFrame:CGRectMake(0, 103, CGRectGetWidth(self.frame), 17)];
+        fullname = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(userView.frame) + 12, CGRectGetWidth(self.frame), 17)];
         
         fullname.font = [UIFont customTitleExtraLight:21];
         fullname.textAlignment = NSTextAlignmentCenter;

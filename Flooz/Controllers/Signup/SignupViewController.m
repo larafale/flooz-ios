@@ -49,14 +49,14 @@
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(didSignupTouch)];
     
     {
-        FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) / 2.) - (97. / 2.), 10, 97, 96.5)];
+        FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) / 2.) - (97. / 2.), 20, 97, 96.5)];
                 
         [view setImageFromURL:[_user objectForKey:@"avatarURL"]];
         [_contentView addSubview:view];
     }
     
     {
-        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(MARGE, 127, SCREEN_WIDTH - (2 * MARGE), 45)];
+        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(MARGE, 137, SCREEN_WIDTH - (2 * MARGE), 45)];
         [registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
         
         [registerFacebook setTitle:NSLocalizedString(@"SIGNUP_FACEBOOK", nil) forState:UIControlStateNormal];
@@ -70,47 +70,32 @@
         [_contentView addSubview:registerFacebook];
     }
     
-    if([_user objectForKey:@"fb"]){
-        registerFacebook.hidden = YES;
-    }
-    
     {
-        //WARNING quand appuie sur suivant dois changer d input
-        FLTextFieldIcon *username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:_user key:@"nick" position:CGPointMake(MARGE, 180)];
+        FLTextFieldIcon *username;
+        
+        if([_user objectForKey:@"fb"]){
+            registerFacebook.hidden = YES;
+            
+            username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:_user key:@"nick" position:CGPointMake(MARGE, 137)];
+        }
+        else{
+            username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:_user key:@"nick" position:CGPointMake(MARGE, 190)];
+        }
+        
+        
         FLTextFieldIcon *name = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame)) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
         FLTextFieldIcon *phone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" position:CGPointMake(MARGE, CGRectGetMaxY(name.frame))];
         FLTextFieldIcon *email = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:_user key:@"email" position:CGPointMake(MARGE, CGRectGetMaxY(phone.frame))];
+        FLTextFieldIcon *password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:_user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(email.frame))];
         
-        
-        UILabel *textSecurity = [[UILabel alloc] initWithFrame:CGRectMake(MARGE, CGRectGetMaxY(email.frame) + 25, CGRectGetWidth(self.view.frame) - MARGE, 15)];
-        
-        textSecurity.font = [UIFont customContentRegular:10];
-        textSecurity.textColor = [UIColor customBlueLight];
-        
-        textSecurity.text = NSLocalizedString(@"SIGNUP_SECURITY_INFO", nil);
-        
-        
-        FLTextFieldIcon *password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:_user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(textSecurity.frame))];
-        FLTextFieldIcon *code = [[FLTextFieldIcon alloc] initWithIcon:@"field-code" placeholder:@"FIELD_CODE" for:_user key:@"code" position:CGPointMake(MARGE, CGRectGetMaxY(password.frame))];
-        
-        UILabel *textFooter = [[UILabel alloc] initWithFrame:CGRectMake(MARGE + 36, CGRectGetMaxY(code.frame), 244, 50)];
-        
-        textFooter.font = [UIFont customContentRegular:12];
-        textFooter.textColor = [UIColor customBlueLight];
-        textFooter.numberOfLines = 0;
-        
-        textFooter.text = NSLocalizedString(@"SIGNUP_CODE_INFO", nil);
-                
+ 
         [_contentView addSubview:username];
         [_contentView addSubview:name];
         [_contentView addSubview:phone];
         [_contentView addSubview:email];
-        [_contentView addSubview:textSecurity];
         [_contentView addSubview:password];
-        [_contentView addSubview:code];
-        [_contentView addSubview:textFooter];
         
-        _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetMaxY(textFooter.frame));
+        _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetMaxY(password.frame));
     }
 }
 

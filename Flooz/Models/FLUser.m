@@ -119,6 +119,11 @@
         
         _friendsRequest = friendsRequest;
     }
+    
+    _checkDocuments = @{};
+    if([json objectForKey:@"check"]){
+        _checkDocuments = [json objectForKey:@"check"];
+    }
 }
 
 - (void)updateStatsPending:(NSDictionary *)json

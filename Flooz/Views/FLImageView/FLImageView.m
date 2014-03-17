@@ -21,6 +21,9 @@
         
         self.userInteractionEnabled = YES;
         [self addGestureRecognizer:_imageGesture];
+        
+        self.layer.cornerRadius = 3.;
+        self.clipsToBounds = YES;
     }
     return self;
 }

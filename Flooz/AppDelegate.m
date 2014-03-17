@@ -33,7 +33,7 @@
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
-//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
+    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
 //    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
     
@@ -139,9 +139,14 @@
 
 #pragma mark - Facebook
 
-- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
+- (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
 {
     [[Flooz sharedInstance] hideLoadView];
+    
+    // WARNING erreur code 2 http://stackoverflow.com/questions/20657780/ios-facebook-sdk-error-domain-com-facebook-sdk-code-2-and-code-7
+    if(error){
+        DISPLAY_ERROR_MESSAGE([error description]);
+    }
     
     if (!error && state == FBSessionStateOpen){
         [[Flooz sharedInstance] didConnectFacebook];

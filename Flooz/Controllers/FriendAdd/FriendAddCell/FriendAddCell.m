@@ -38,7 +38,7 @@
     
     [self createAvatarView];
     [self createNameView];
-//    [self createPhoneView];
+    [self createPhoneView];
 }
 
 - (void)createAvatarView
@@ -49,9 +49,9 @@
 
 - (void)createNameView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 18, CGRectGetWidth(self.frame) - 75, 11)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 17, CGRectGetWidth(self.frame) - 75, 11)];
     
-    view.font = [UIFont customContentBold:11];
+    view.font = [UIFont customContentBold:13];
     view.textColor = [UIColor whiteColor];
     
     [self.contentView addSubview:view];
@@ -59,9 +59,9 @@
 
 - (void)createPhoneView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 29, CGRectGetWidth(self.frame) - 75, 9)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 31, CGRectGetWidth(self.frame) - 75, 9)];
     
-    view.font = [UIFont customContentBold:9];
+    view.font = [UIFont customContentBold:11];
     view.textColor = [UIColor customPlaceholder];
     
     [self.contentView addSubview:view];
@@ -91,9 +91,8 @@
 
 - (void)preparePhoneView
 {
-//    UILabel *view = [[self.contentView subviews] objectAtIndex:2];
-    
-//    view.text = [_contact objectForKey:@"value"];
+    UILabel *view = [[self.contentView subviews] objectAtIndex:2];
+    view.text = [NSString stringWithFormat:@"@%@", [_user username]];
 }
 
 @end

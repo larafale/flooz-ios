@@ -10,6 +10,8 @@
 
 @interface AcitvitiesViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
     NSArray *activities;
+    
+    UIRefreshControl *refreshControl;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

@@ -15,6 +15,8 @@
     NSInteger selectedTitleIndex;
     
     UIGestureRecognizer *panGesture;
+    UISwipeGestureRecognizer *swipeGestureLeft;
+    UISwipeGestureRecognizer *swipeGestureRight;
     CGPoint lastTranslation;
 }
 

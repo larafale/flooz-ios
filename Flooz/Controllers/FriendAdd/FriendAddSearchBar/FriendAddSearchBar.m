@@ -81,7 +81,7 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     [timer invalidate];
-    timer = [NSTimer scheduledTimerWithTimeInterval:2. target:self selector:@selector(performRequest) userInfo:nil repeats:NO];
+    timer = [NSTimer scheduledTimerWithTimeInterval:.6 target:self selector:@selector(performRequest) userInfo:nil repeats:NO];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar

@@ -34,7 +34,7 @@
     UILabel *view = [[UILabel alloc] initWithFrame:CGRectMakeSize(self.frame.size.width, 30)];
     
     view.textAlignment = NSTextAlignmentCenter;
-    view.textColor = [UIColor customPlaceholder];
+    view.textColor = [UIColor customBlue];
     view.font = [UIFont customContentRegular:12];
     
     view.text = NSLocalizedString(@"EVENT_AMOUNT", nil);

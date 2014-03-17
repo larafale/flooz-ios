@@ -17,5 +17,6 @@
 
 + (NSString *)formatedDate:(NSDate *)date;
 + (NSString *)formatedPhone:(NSString *)phone;
++ (NSString *)formatedPhoneForDisplay:(NSString *)phone;
 
 @end

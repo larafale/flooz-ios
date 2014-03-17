@@ -11,12 +11,8 @@
 
 @interface FLUserView : UIView{
     UIImage *placeholder;
-    UIImageView *filter;
     UIImageView *avatar;
 }
-
-- (void)setAlternativeStyle;
-- (void)setAlternativeStyle2;
 
 - (void)setImageFromURL:(NSString *)url;
 - (void)setImageFromUser:(FLUser *)user;

@@ -200,8 +200,17 @@
     }
 }
 
+
+// Utiliser par des controleurs externes
 - (void)selectFilter:(NSUInteger)index
 {
+    // WARNING Evite que le public passe en mode filtré
+    if(index == 2 && index == currentFilterIndex && currentFilterColorIndex == 0){
+        [self didButtonTouch:[[[filterViews objectAtIndex:index] subviews] firstObject]];
+        [self didButtonTouch:[[[filterViews objectAtIndex:index] subviews] firstObject]];
+        return;
+    }
+    
     [self didButtonTouch:[[[filterViews objectAtIndex:index] subviews] firstObject]];
 }
 

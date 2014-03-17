@@ -28,16 +28,20 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    refreshControl = [UIRefreshControl new];
+    [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
+    [_tableView addSubview:refreshControl];
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
     if(!animated){
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] activitiesWithSuccess:^(id result) {
-            activities = result;
-            [_tableView reloadData];
-            [_tableView setContentOffset:CGPointZero animated:YES];
-        } failure:NULL];
+        [self handleRefresh];
     }
 }
 
@@ -96,6 +100,19 @@
             }];
         }];
     }
+}
+
+- (void)handleRefresh
+{
+    [refreshControl beginRefreshing];
+    
+    [[Flooz sharedInstance] activitiesWithSuccess:^(id result) {
+        activities = result;
+        [refreshControl endRefreshing];
+        
+        [_tableView reloadData];
+        [_tableView setContentOffset:CGPointZero animated:YES];
+    } failure:NULL];
 }
 
 @end

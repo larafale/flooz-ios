@@ -37,7 +37,7 @@
     
     [self createBackView];
     [self createSearchView];
-    [self createFacebookView];
+//    [self createFacebookView];
 }
 
 - (void)createBackView
@@ -52,10 +52,10 @@
 
 - (void)createSearchView
 {
-    UISearchBar *view = [[UISearchBar alloc] initWithFrame:CGRectMake(42, 0, 240, CGRectGetHeight(self.frame))];
+    UISearchBar *view = [[UISearchBar alloc] initWithFrame:CGRectMake(42, 0, CGRectGetWidth(self.frame) - 42, CGRectGetHeight(self.frame))];
     
     view.delegate = self;
-    
+    view.placeholder = NSLocalizedString(@"FRIEND_PCIKER_PLACEHOLDER", nil);
     view.translucent = NO;
     view.barTintColor = self.backgroundColor;
     view.tintColor = [UIColor whiteColor]; // Curseur

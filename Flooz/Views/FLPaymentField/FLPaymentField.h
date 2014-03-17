@@ -27,4 +27,6 @@
 - (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey;
 - (void)setStyleLight;
 
++ (CGFloat)height;
+
 @end

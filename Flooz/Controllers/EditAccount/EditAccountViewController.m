@@ -8,10 +8,13 @@
 
 #import "EditAccountViewController.h"
 
+#import "AppDelegate.h"
+
 #define MARGE 20.
 
 @interface EditAccountViewController (){
     NSMutableDictionary *_user;
+    FLUserView *userView;
     UIButton *registerFacebook;
 }
 
@@ -59,21 +62,38 @@
     CGFloat height = 0;
     
     {
-//        FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) / 2.) - (97. / 2.), 10, 97, 96.5)];
+        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 65, 0, 65, 80)];
         
-//        [view setImageFromURL:[_user objectForKey:@"avatarURL"]];
-//        [_contentView addSubview:view];
+        {
+            userView = [[FLUserView alloc] initWithFrame:CGRectMake(17, 25, 32, 32)];
+            [userView setImageFromUser:[[Flooz sharedInstance] currentUser]];
+            [view addSubview:userView];
+        }
+        
+        {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(view.frame) - 16, CGRectGetWidth(view.frame), 16)];
+            label.font = [UIFont customTitleBook:12];
+            label.textColor = [UIColor customBlueLight];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.text = @"EDIT";
+            
+            [view addSubview:label];
+        }
+        
+        [view addTarget:self action:@selector(didEditAvatarTouch) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_contentView addSubview:view];
     }
 
     
     {
-        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" position:CGPointMake(MARGE, 10) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
+        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" frame:CGRectMake(MARGE, 10, 225, 0) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
         [_contentView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
     
     {
-        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" position:CGPointMake(MARGE, height)];
+        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" frame:CGRectMake(MARGE, height, 225, 0)];
         [_contentView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
@@ -181,6 +201,13 @@
     [[Flooz sharedInstance] connectFacebook];
 }
 
+- (void)didEditAvatarTouch
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"GLOBAL_CAMERA", nil), NSLocalizedString(@"GLOBAL_ALBUMS", nil), nil];
+    
+    [actionSheet showInView:self.view];
+}
+
 #pragma mark - Keyboard Management
 
 - (void)registerForKeyboardNotifications
@@ -206,6 +233,49 @@
 - (void)keyboardWillDisappear
 {
     _contentView.contentInset = UIEdgeInsetsZero;
+}
+
+#pragma mark - ImagePicker
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *cameraUI = [UIImagePickerController new];
+    
+    if(buttonIndex == 0){
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == NO){
+            DISPLAY_ERROR(FLCameraAccessDenyError);
+            return;
+        }
+        
+        cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }else if(buttonIndex == 1){
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == NO){
+            DISPLAY_ERROR(FLAlbumsAccessDenyError);
+            return;
+        }
+        
+        cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }else{
+        return;
+    }
+    
+    cameraUI.delegate = self;
+    
+    [self presentViewController:cameraUI animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
+    NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
+
+    [userView setImageFromData:imageData];
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] uploadDocument:imageData field:@"picId" success:NULL failure:NULL];
+    }];
 }
 
 @end

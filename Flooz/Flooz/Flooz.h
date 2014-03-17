@@ -41,6 +41,8 @@
 - (void)updateUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updatePassword:(NSDictionary *)password success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
+- (void)uploadDocument:(NSData *)data field:(NSString *)field success:(void (^)())success failure:(void (^)(NSError *error))failure;
+
 - (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
@@ -77,8 +79,8 @@
 - (void)eventWithId:(NSString *)eventId success:(void (^)(id result))success;
 - (void)eventAction:(FLEvent *)event action:(EventAction)action success:(void (^)(id result))success;
 - (void)eventParticipate:(NSDictionary *)dictionary success:(void (^)(id result))success;
-- (void)eventInvite:(FLEvent *)event friend:(NSString *)friend success:(void (^)(id result))success;
-- (void)eventOffer:(FLEvent *)event to:(NSString *)to success:(void (^)(id result))success;
+- (void)eventInvite:(FLEvent *)event friend:(NSDictionary *)friend success:(void (^)(id result))success;
+- (void)eventOffer:(FLEvent *)event friend:(NSDictionary *)friend success:(void (^)(id result))success;
 
 - (void)connectFacebook;
 - (void)didConnectFacebook;

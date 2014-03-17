@@ -214,7 +214,7 @@
 
 - (void)prepareViews{
     height = 0;
-    isSwipable = [_transaction isCancelable] || [_transaction isAcceptable];
+    isSwipable = [_transaction isAcceptable];
     
     [self hidePaymentField];
     
@@ -306,7 +306,7 @@
     }
     view.hidden = NO;
     
-    amount.text = [FLHelper formatedAmount:[_transaction amount] withCurrency:NO];
+    amount.text = [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
     [amount setWidthToFit];
     
     CGRectSetX(imageView.frame, CGRectGetMaxX(amount.frame) + 5);
@@ -331,9 +331,7 @@
     
     [imageView setImage:[UIImage imageNamed:image]];
     
-    
-    UIView *socialView = [[rightView subviews] objectAtIndex:2];
-    CGRectSetY(view.frame,  socialView.frame.origin.y - 4);
+    CGRectSetY(view.frame, - 4);
 }
 
 #pragma mark - Swipe
@@ -508,13 +506,18 @@
 
 - (void)didLikeButtonTouch
 {
-    if([[_transaction social] isLiked]){
+    if([[_transaction social] isLiked] || ![[Flooz sharedInstance] currentUser]){
         return;
     }
 
     [[_transaction social] setIsLiked:YES];
 
     [[Flooz sharedInstance] createLikeOnTransaction:_transaction success:^(id result) {
+        [[_transaction social] setLikeText:[result objectForKey:@"item"]];
+        [[_transaction social] setLikesCount:[[_transaction social] likesCount] + 1];
+        FLSocialView *view = [[rightView subviews] objectAtIndex:2];
+        [view prepareView:_transaction.social];
+        
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         if(indexPath){
             [_delegate updateTransactionAtIndex:indexPath transaction:_transaction];

@@ -12,16 +12,23 @@
 
 - (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey
 {
-    self = [super initWithFrame:CGRectMake(0, frame.origin.y, frame.size.width, 122)];
+    self = [super initWithFrame:CGRectMake(0, frame.origin.y, frame.size.width, [[self class] height])];
     if (self) {
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;
+        
+        self.clipsToBounds = YES;
         
         [self createSeparators];
         [self createButtons];
         [self createBottomBar];
     }
     return self;
+}
+
++ (CGFloat)height
+{
+    return 122;
 }
 
 - (void)createButtons

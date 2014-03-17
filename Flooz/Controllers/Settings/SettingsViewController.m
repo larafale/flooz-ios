@@ -10,7 +10,9 @@
 
 #import "NotificationsViewController.h"
 #import "CreditCardViewController.h"
+#import "CashOutViewController.h"
 #import "RIBViewController.h"
+#import "DocumentsViewController.h"
 #import "PasswordViewController.h"
 
 @interface SettingsViewController (){
@@ -82,6 +84,9 @@
     }
     else if(indexPath.row == 3){
         [[self navigationController] pushViewController:[RIBViewController new] animated:YES];
+    }
+    else if(indexPath.row == 4){
+        [[self navigationController] pushViewController:[DocumentsViewController new] animated:YES];
     }
     else if(indexPath.row == 5){
         [[self navigationController] pushViewController:[PasswordViewController new] animated:YES];

@@ -36,7 +36,7 @@
         [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
         [formatter setGroupingSeparator:@""];
         [formatter setDecimalSeparator:@"."];
-        [formatter setMinimumFractionDigits:2];
+        [formatter setMinimumFractionDigits:0];
         [formatter setMaximumFractionDigits:2];
         
         currency = NSLocalizedString(@"GLOBAL_EURO", nil);
@@ -63,8 +63,15 @@
     }
     
     NSNumber *absoluteValue = [NSNumber numberWithFloat:fabsf([amount floatValue])];
+    NSString *amountString = [formatter stringFromNumber:absoluteValue];
     
-    return [NSString stringWithFormat:@"%@%@%@", prefix, [formatter stringFromNumber:absoluteValue], suffix];
+    // Si 1 seul chiffre apres la virguel
+    NSRange rangeDot = [amountString rangeOfString:@"."];
+    if(rangeDot.location == amountString.length - 2){
+        amountString = [amountString stringByAppendingString:@"0"];
+    }
+    
+    return [NSString stringWithFormat:@"%@%@%@", prefix, amountString, suffix];
 }
 
 + (NSString *)formatedDate:(NSDate *)date
@@ -94,8 +101,27 @@
     if([formatedPhone length] != 10){
         formatedPhone = nil;
     }
-        
+
+    if(![formatedPhone hasPrefix:@"06"] && ![formatedPhone hasPrefix:@"07"]){
+        formatedPhone = nil;
+    }
+    
     return formatedPhone;
+}
+
++ (NSString *)formatedPhoneForDisplay:(NSString *)phone
+{
+    if(!phone){
+        return nil;
+    }
+    
+    NSString *formattedPhone = [phone substringWithRange:NSMakeRange(0, 2)];
+    
+    for(int i = 2; i < phone.length; i += 2){
+        formattedPhone = [NSString stringWithFormat:@"%@ %@", formattedPhone, [phone substringWithRange:NSMakeRange(i, 2)]];
+    }
+    
+    return formattedPhone;
 }
 
 @end

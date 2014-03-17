@@ -39,8 +39,11 @@
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(65, 0, CGRectGetWidth(self.frame) - 65, CGRectGetHeight(self.frame))];
     
     [button setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     button.titleLabel.font = [UIFont customContentLight:14];
 
+    [button setTitle:NSLocalizedString(@"FIELD_TRANSACTION_SELECT_FRIEND", nil) forState:UIControlStateNormal];
+    
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
     [button addTarget:self action:@selector(didButtonTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -64,10 +67,11 @@
     UIButton *button = [[self subviews] objectAtIndex:1];
     
     if([_dictionary objectForKey:@"toTitle"] && ![[_dictionary objectForKey:@"toTitle"] isBlank]){
-        [button setTitle:[_dictionary objectForKey:@"toTitle"] forState:UIControlStateNormal];
+        [button setTitle:[_dictionary objectForKey:@"toTitle"] forState:UIControlStateSelected];
+        button.selected = YES;
     }
     else{
-        [button setTitle:NSLocalizedString(@"FIELD_TRANSACTION_SELECT_FRIEND", nil) forState:UIControlStateNormal];
+        button.selected = NO;
     }
     
     if([_dictionary objectForKey:@"toImage"]){

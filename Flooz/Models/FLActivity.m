@@ -49,12 +49,12 @@
         NSLog(@"activity type unknown: %@", [json objectForKey:@"type"] );
     }
     
-    if([json objectForKey:@"data"]){
-        if([[json objectForKey:@"data"] objectForKey:@"line"]){
-            _transactionId = [[json objectForKey:@"data"] objectForKey:@"line"];
+    if([json objectForKey:@"resource"]){
+        if([[[json objectForKey:@"resource"] objectForKey:@"type"] isEqualToString:@"line"]){
+            _transactionId = [[json objectForKey:@"resource"] objectForKey:@"resourceId"];
         }
-        else if([[json objectForKey:@"data"] objectForKey:@"event"]){
-            _eventId = [[json objectForKey:@"data"] objectForKey:@"event"];
+        else if([[[json objectForKey:@"resource"] objectForKey:@"type"] isEqualToString:@"event"]){
+            _eventId = [[json objectForKey:@"resource"] objectForKey:@"resourceId"];
         }
     }
 }

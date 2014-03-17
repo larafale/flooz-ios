@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EditAccountViewController : UIViewController
+@interface EditAccountViewController : UIViewController<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentView;
 

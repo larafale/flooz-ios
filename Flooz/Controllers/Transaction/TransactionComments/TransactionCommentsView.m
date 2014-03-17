@@ -117,7 +117,6 @@
     content.textColor = [UIColor customPlaceholder];
     content.numberOfLines = 0;
     
-    [avatar setAlternativeStyle2];
     [avatar setImageFromUser:comment.user];
     
     content.text = comment.content;

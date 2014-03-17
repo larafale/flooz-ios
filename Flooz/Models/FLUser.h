@@ -29,6 +29,7 @@
 @property NSMutableDictionary *address;
 @property NSMutableDictionary *sepa;
 @property NSMutableDictionary *notifications;
+@property NSDictionary *checkDocuments;
 @property FLCreditCard *creditCard;
 
 @property NSString *friendRelationId;

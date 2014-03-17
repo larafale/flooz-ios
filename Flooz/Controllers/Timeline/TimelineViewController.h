@@ -19,6 +19,10 @@
     
     NSString *_nextPageUrl;
     BOOL nextPageIsLoading;
+    
+    NSString *currentFilter;
+    NSString *currentScope;
+    UIRefreshControl *refreshControl;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

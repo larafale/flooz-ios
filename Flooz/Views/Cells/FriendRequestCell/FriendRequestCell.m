@@ -42,7 +42,6 @@
 
 - (void)createAvatarView{
     FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 15, 40, 40)];
-    [view setAlternativeStyle2];
     [self.contentView addSubview:view];
 }
 

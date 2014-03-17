@@ -8,11 +8,13 @@
 
 #import "TransactionAmountView.h"
 
+#define HEIGHT 50
+
 @implementation TransactionAmountView
 
 - (id)initWithFrame:(CGRect)frame
 {
-    CGRectSetHeight(frame, 50);
+    CGRectSetHeight(frame, HEIGHT);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];
@@ -22,6 +24,8 @@
 
 - (void)createViews
 {
+    self.backgroundColor = [UIColor customBackground:0.4];
+    
     [self createTitleView];
     [self createBottomBar];
 }
@@ -29,8 +33,9 @@
 - (void)createTitleView
 {
     UILabel *view = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
+    CGRectSetY(view.frame, - 3);
     
-    view.backgroundColor = [UIColor customBackground:0.4];
+    view.backgroundColor = [UIColor clearColor];
     view.textAlignment = NSTextAlignmentCenter;
     view.textColor = [UIColor customBlue];
     view.font = [UIFont customTitleExtraLight:24];
@@ -57,11 +62,7 @@
 
 - (void)prepareViews
 {
-    height = 0;
-
     [self prepareTitleView];
-    
-    CGRectSetHeight(self.frame, height);
 }
 
 - (void)prepareTitleView
@@ -69,11 +70,11 @@
     UILabel *view = [[self subviews] objectAtIndex:0];
     
     if(![_transaction amount]){
-        return;
+        CGRectSetHeight(self.frame, 0);
     }
     
     view.text = [FLHelper formatedAmount:[_transaction amount]];
-    height = CGRectGetMaxY(view.frame);
+    CGRectSetHeight(self.frame, HEIGHT);
 }
 
 @end

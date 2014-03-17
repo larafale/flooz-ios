@@ -67,6 +67,8 @@ typedef NS_ENUM(NSInteger, EventAction) {
 - (NSString *)statusText;
 
 - (id)initWithJSON:(NSDictionary *)json;
+- (void)setJSON:(NSDictionary *)json;
+
 + (NSString *)transactionScopeToText:(TransactionScope)scope;
 + (NSString *)eventActionToParams:(EventAction)action;
 

@@ -39,4 +39,16 @@
     [_webView loadRequest:request];
 }
 
+#pragma mark - UIWebViewDelegate
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [[Flooz sharedInstance] showLoadView];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [[Flooz sharedInstance] hideLoadView];
+}
+
 @end

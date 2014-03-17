@@ -142,7 +142,25 @@
         [_dictionary setValue:[contact objectForKey:@"image_url"] forKey:@"toImageUrl"];
     }
     
-    [self dismiss];
+    [_dictionary setValue:nil forKey:@"contact"];
+    if([contact objectForKey:@"firstname"] || [contact objectForKey:@"lastname"]){
+        [_dictionary setValue:[NSMutableDictionary new] forKey:@"contact"];
+        
+        if(![[contact objectForKey:@"firstname"] isBlank]){
+            [[_dictionary objectForKey:@"contact"] setValue:[contact objectForKey:@"firstname"] forKey:@"firstName"];
+        }
+        
+        if(![[contact objectForKey:@"lastname"] isBlank]){
+            [[_dictionary objectForKey:@"contact"] setValue:[contact objectForKey:@"lastname"] forKey:@"lastName"];
+        }
+    }
+    
+    if(_event){
+        [self inviteEvent:_dictionary];
+    }
+    else{
+        [self dismiss];
+    }
 }
 
 #pragma mark -
@@ -167,6 +185,10 @@
             [contactsFiltred addObject:contact];
         }
         else if([contact objectForKey:@"phone"] && [[[contact objectForKey:@"phone"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+            [contactsFiltred addObject:contact];
+        }
+        // Pour rechercher sur telephone sans les points
+        else if([contact objectForKey:@"value"] && [[[contact objectForKey:@"value"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
             [contactsFiltred addObject:contact];
         }
     }
@@ -244,12 +266,6 @@
         NSString *lastName = (__bridge NSString *)(ABRecordCopyValue(ref, kABPersonLastNameProperty));
         NSData *image = (__bridge_transfer NSData *)ABPersonCopyImageDataWithFormat(ref, kABPersonImageFormatThumbnail);
         
-        NSString *email = nil;
-        ABMutableMultiValueRef emailList  = ABRecordCopyValue(ref, kABPersonEmailProperty);
-        if(ABMultiValueGetCount(emailList) > 0) {
-            email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, 0);
-        }
-        
         NSString *name = nil;
         if(!firstName){
             name = lastName;
@@ -261,14 +277,30 @@
             name = [firstName stringByAppendingFormat:@" %@", lastName];
         }
 
+        ABMultiValueRef emailList = ABRecordCopyValue(ref, kABPersonEmailProperty);
+        for (CFIndex i = 0; i < ABMultiValueGetCount(emailList); ++i) {
+            NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
+
+            NSMutableDictionary *contact = [NSMutableDictionary new];
+            
+            [contact setValue:firstName forKey:@"firstname"];
+            [contact setValue:lastName forKey:@"lastname"];
+            [contact setValue:name forKey:@"name"];
+            [contact setValue:email forKey:@"email"];
+            [contact setValue:image forKey:@"image"];
+            
+            [_contactsFromAdressBook addObject:contact];
+        }
+        
         ABMultiValueRef phoneNumbers = ABRecordCopyValue(ref, kABPersonPhoneProperty);
         for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); ++i) {
             NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phoneNumbers, i);
 
             NSMutableDictionary *contact = [NSMutableDictionary new];
             
+            [contact setValue:firstName forKey:@"firstname"];
+            [contact setValue:lastName forKey:@"lastname"];
             [contact setValue:name forKey:@"name"];
-            [contact setValue:email forKey:@"email"];
             [contact setValue:phone forKey:@"phone"];
             [contact setValue:image forKey:@"image"];
             
@@ -304,9 +336,13 @@
         }
         else if([contact objectForKey:@"facebook_id"] && ![[contact objectForKey:@"facebook_id"] isBlank]){
             [contact setValue:[contact objectForKey:@"facebook_id"] forKey:@"value"];
-            
         }
         
+        //Format téléphone
+        if([contact objectForKey:@"phone"]){
+            [contact setValue:[FLHelper formatedPhoneForDisplay:[contact objectForKey:@"phone"]] forKey:@"phone"];
+        }
+                
         // Filtre les contacts invalide
         if([contact objectForKey:@"title"] && [contact objectForKey:@"value"]){
             [newContacts addObject:contact];
@@ -345,6 +381,16 @@
 {
     _currentContacts = _contacts = _contactsFromAdressBook;
     [self didTableDataChanged];
+}
+
+#pragma mark - Event
+
+- (void)inviteEvent:(NSDictionary *)friend
+{
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] eventInvite:_event friend:friend success:^(id result) {
+        [_event setJSON:[result objectForKey:@"item"]];
+    }];
 }
 
 @end

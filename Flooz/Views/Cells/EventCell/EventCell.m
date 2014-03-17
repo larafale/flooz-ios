@@ -382,6 +382,11 @@
     
     [[_event social] setIsLiked:YES];
     [[Flooz sharedInstance] createLikeOnEvent:_event success:^(id result) {
+        [[_event social] setLikeText:[result objectForKey:@"item"]];
+        [[_event social] setLikesCount:[[_event social] likesCount] + 1];
+        FLSocialView *view = [[rightView subviews] objectAtIndex:2];
+        [view prepareView:_event.social];
+        
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         if(indexPath){
             [_delegate updateEventAtIndex:indexPath event:_event];

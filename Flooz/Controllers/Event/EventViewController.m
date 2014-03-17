@@ -24,6 +24,8 @@
 
 #import "CreditCardViewController.h"
 
+#import "UIView+FindFirstResponder.h"
+
 #define STATUSBAR_HEIGHT 20.
 
 @interface EventViewController (){
@@ -41,6 +43,9 @@
     NSMutableDictionary *_eventOfferUser;
     
     BOOL firstView;
+    BOOL needReloadEvent;
+    
+    UISwipeGestureRecognizer *swipeGesture;
 }
 
 @end
@@ -55,6 +60,7 @@
         _indexPath = indexPath;
         paymentFieldIsShown = NO;
         amountFieldIsShown = NO;
+        needReloadEvent = NO;
         
         amount = [NSMutableDictionary new];
         firstView = YES;
@@ -69,6 +75,11 @@
     [self registerForKeyboardNotifications];
     
     self.view.backgroundColor = [UIColor customBackgroundHeader:0.9];
+    
+    swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+    swipeGesture.direction = UISwipeGestureRecognizerDirectionDown;
+    [[_contentView panGestureRecognizer] requireGestureRecognizerToFail:swipeGesture];
+    [self.view addGestureRecognizer:swipeGesture];
     
     [self buildView];
 }
@@ -95,6 +106,10 @@
     
     if(_eventOfferUser && [_eventOfferUser objectForKey:@"to"] && ![[_eventOfferUser objectForKey:@"to"] isBlank]){
         [self didOfferEvent];
+    }
+    
+    if(needReloadEvent){
+        [self reloadEvent];
     }
 }
 
@@ -158,6 +173,8 @@
         _mainView.layer.shadowColor = [UIColor blackColor].CGColor;
         _mainView.layer.shadowOffset = CGSizeMake(-1, -1);
         _mainView.layer.shadowOpacity = .5;
+        
+        _mainView.clipsToBounds = YES;
         
         [_contentView addSubview:_mainView];
     }
@@ -287,7 +304,9 @@
     [self reloadEvent];
 }
 
-- (void)reloadEvent{
+- (void)reloadEvent
+{
+    needReloadEvent = NO;
     for(UIView *view in [_contentView subviews]){
         [view removeFromSuperview];
     }
@@ -351,10 +370,7 @@
 
 - (void)presentEventParticipantsController
 {
-    if(![_event canInvite]){
-        return;
-    }
-    
+    needReloadEvent = YES;
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[EventParticipantsViewController alloc] initWithEvent:_event]];
     [self presentViewController:controller animated:YES completion:NULL];
 }
@@ -370,8 +386,7 @@
 - (void)didOfferEvent
 {
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] eventOffer:_event to:[_eventOfferUser objectForKey:@"to"] success:^(id result) {
-        
+    [[Flooz sharedInstance] eventOffer:_event friend:_eventOfferUser success:^(id result) {
         
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
@@ -402,9 +417,12 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
-    CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
-    [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
+    UIView *firstResponder = [self.view findFirstResponder];
+    if([[[firstResponder superview] superview] isKindOfClass:[EventCommentsView class]]){
+        _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+        CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
+        [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
+    }
 }
 
 - (void)keyboardWillDisappear

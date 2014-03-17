@@ -13,7 +13,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectSetHeight(frame, 0);
+    CGRectSetHeight(frame, 0);
     self = [super initWithFrame:frame];
     if (self) {
         [self createSendCommentView];
@@ -116,7 +116,6 @@
     content.textColor = [UIColor customPlaceholder];
     content.numberOfLines = 0;
     
-    [avatar setAlternativeStyle2];
     [avatar setImageFromUser:comment.user];
     
     content.text = comment.content;

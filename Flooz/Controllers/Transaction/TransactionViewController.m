@@ -18,6 +18,8 @@
 
 #import "FLPaymentField.h"
 
+#import "UIView+FindFirstResponder.h"
+
 #define STATUSBAR_HEIGHT 20.
 
 @interface TransactionViewController (){
@@ -28,6 +30,8 @@
     
     BOOL paymentFieldIsShown;
     BOOL firstView;
+    
+    UISwipeGestureRecognizer *swipeGesture;
 }
 
 @end
@@ -52,6 +56,11 @@
     
     [self registerForKeyboardNotifications];
     self.view.backgroundColor = [UIColor customBackgroundHeader:0.9];
+    
+    swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+    swipeGesture.direction = UISwipeGestureRecognizerDirectionDown;
+    [[_contentView panGestureRecognizer] requireGestureRecognizerToFail:swipeGesture];
+    [self.view addGestureRecognizer:swipeGesture];
     
     [self buildView];
 }
@@ -162,6 +171,20 @@
     
     CGFloat height = 0;
     
+    {
+        TransactionUsersView *view = [[TransactionUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        view.transaction = _transaction;
+        [_mainView addSubview:view];
+        height = CGRectGetMaxY(view.frame);
+    }
+    
+    if([_transaction isPrivate]){
+        TransactionAmountView *view = [[TransactionAmountView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        view.transaction = _transaction;
+        [_mainView addSubview:view];
+        height = CGRectGetMaxY(view.frame);
+    }
+    
     if([_transaction isPrivate] && [_transaction status] == TransactionStatusPending){
         if(paymentFieldIsShown){
             FLPaymentField *view = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) for:nil key:nil];
@@ -177,20 +200,6 @@
             [_mainView addSubview:view];
             height = CGRectGetMaxY(view.frame);
         }
-    }
-    
-    {
-        TransactionUsersView *view = [[TransactionUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.transaction = _transaction;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
-    }
-    
-    if([_transaction isPrivate]){
-        TransactionAmountView *view = [[TransactionAmountView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.transaction = _transaction;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
     }
     
     {
@@ -336,10 +345,12 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
-    
-    CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
-    [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
+    UIView *firstResponder = [self.view findFirstResponder];
+    if([[[firstResponder superview] superview] isKindOfClass:[TransactionCommentsView class]]){
+        _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+        CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
+        [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
+    }
 }
 
 - (void)keyboardWillDisappear

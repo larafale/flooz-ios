@@ -14,6 +14,8 @@
 
 #import "AppDelegate.h"
 
+#import <Accounts/Accounts.h>
+
 @implementation Flooz
 
 + (Flooz *)sharedInstance
@@ -126,6 +128,14 @@
     [self requestPath:@"password/change" method:@"POST" params:password success:success failure:failure];
 }
 
+- (void)uploadDocument:(NSData *)data field:(NSString *)field success:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"/profile/upload" method:@"POST" params:@{@"field": field} success:success failure:failure constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        NSLog(@"image size: %.2fMB", data.length / 1024. / 1024.);
+        [formData appendPartWithFileData:data name:field fileName:@"image.jpg" mimeType:@"image/jpg"];
+    }];
+}
+
 - (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
 {
     [self timeline:scope state:nil success:success failure:failure];
@@ -201,7 +211,7 @@
         }
     };
     
-    [self requestPath:@"feed" method:@"GET" params:nil success:successBlock failure:failure];
+    [self requestPath:@"feeds" method:@"GET" params:nil success:successBlock failure:failure];
 }
 
 - (void)events:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
@@ -276,7 +286,7 @@
         
         [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failureBlock2 constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSLog(@"image size: %.2fMB", image.length / 1024. / 1024.);
-            [formData appendPartWithFileData:image name:@"image" fileName:@"image.png" mimeType:@"image/png"];
+            [formData appendPartWithFileData:image name:@"image" fileName:@"image.jpg" mimeType:@"image/jpg"];
         }];
     }
     else{
@@ -313,7 +323,7 @@
         
         [self requestPath:@"pots" method:@"POST" params:event success:success failure:failureBlock constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSLog(@"image size: %.2fMB", image.length / 1024. / 1024.);
-            [formData appendPartWithFileData:image name:@"image" fileName:@"image.png" mimeType:@"image/png"];
+            [formData appendPartWithFileData:image name:@"image" fileName:@"image.jpg" mimeType:@"image/jpg"];
         }];
     }
     else{
@@ -440,16 +450,35 @@
     [self requestPath:path method:@"POST" params:dictionary success:success failure:NULL];
 }
 
-- (void)eventInvite:(FLEvent *)event friend:(NSString *)friend success:(void (^)(id result))success
+- (void)eventInvite:(FLEvent *)event friend:(NSDictionary *)friend success:(void (^)(id result))success
 {
     NSString *path = [NSString stringWithFormat:@"pots/%@/invite", [event eventId]];
-    [self requestPath:path method:@"POST" params:@{ @"q": friend } success:success failure:NULL];
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    [params setObject:[friend objectForKey:@"to"] forKey:@"q"];
+    
+    if([friend objectForKey:@"fb"]){
+        [params setObject:[friend objectForKey:@"fb"] forKey:@"fb"];
+    }
+    if([friend objectForKey:@"contact"]){
+        [params setObject:[friend objectForKey:@"contact"] forKey:@"contact"];
+    }
+    
+    [self requestPath:path method:@"POST" params:params success:success failure:NULL];
 }
 
-- (void)eventOffer:(FLEvent *)event to:(NSString *)to success:(void (^)(id result))success
+- (void)eventOffer:(FLEvent *)event friend:(NSDictionary *)friend success:(void (^)(id result))success
 {
     NSString *path = [NSString stringWithFormat:@"pots/%@/give", [event eventId]];
-    [self requestPath:path method:@"POST" params:@{ @"q": to } success:success failure:NULL];
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    [params setObject:[friend objectForKey:@"to"] forKey:@"q"];
+    
+    if([friend objectForKey:@"fb"]){
+        [params setObject:[friend objectForKey:@"fb"] forKey:@"fb"];
+    }
+    
+    [self requestPath:path method:@"POST" params:params success:success failure:NULL];
 }
 
 #pragma mark -
@@ -548,14 +577,13 @@
 #pragma mark - Facebook
 
 - (void)connectFacebook
-{ 
+{
     [FBSession openActiveSessionWithReadPermissions:@[@"basic_info,email,user_friends"]
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
          [self hideLoadView];
-
-         [appDelegate sessionStateChanged:session state:state error:error];
+         [appDelegate facebookSessionStateChanged:session state:state error:error];
      }];
 }
 

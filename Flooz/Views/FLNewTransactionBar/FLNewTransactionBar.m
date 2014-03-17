@@ -281,10 +281,10 @@
 {
     UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     
-    UIImage *resizedImage = [originalImage resize:CGSizeMake(1000, 0)];
+    UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
     
     imageButton.selected = YES;
-    [_dictionary setValue:UIImageJPEGRepresentation(resizedImage, 0.8) forKey:@"image"];
+    [_dictionary setValue:UIImageJPEGRepresentation(resizedImage, 0.7) forKey:@"image"];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

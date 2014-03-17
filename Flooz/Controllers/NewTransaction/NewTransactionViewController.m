@@ -13,6 +13,7 @@
 #import "FLNewTransactionBar.h"
 #import "FLSelectAmount.h"
 #import "FLSelectFriendButton.h"
+#import "NewTransactionSelectTypeView.h"
 
 #import "EventViewController.h"
 
@@ -28,7 +29,9 @@
     FLNewTransactionBar *transactionBar;
     FLNewTransactionBar *transactionBarKeyboard;
     
-    TransactionType _transactionType;
+    FLPaymentField *payementField;
+    
+    BOOL isEvent;
     FLNewTransactionAmount *amountInput;
     FLTextView *content;
     
@@ -45,7 +48,7 @@
     if (self) {
         transaction = [NSMutableDictionary new];
         
-        _transactionType = transactionType;
+        isEvent = (transactionType == TransactionTypeEvent);
         [transaction setValue:[FLTransaction transactionTypeToParams:transactionType] forKey:@"method"];
     }
     return self;
@@ -74,7 +77,7 @@
     }
  
     {
-        if(_transactionType == TransactionTypeEvent){
+        if(isEvent){
             FLTextFieldTitle *title = [[FLTextFieldTitle alloc] initWithTitle:@"FIELD_TRANSACTION_TITLE" placeholder:@"FIELD_TRANSACTION_TITLE_PLACEHOLDER" for:transaction key:@"name" position:CGPointMake(0, offset)];
             [title setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:title];
@@ -82,13 +85,21 @@
             offset = CGRectGetMaxY(title.frame);
         }
 
-        if(_transactionType == TransactionTypeEvent){
+        if(isEvent){
             FLSelectAmount *selectAmount = [[FLSelectAmount alloc] initWithFrame:CGRectMakePosition(0, offset) for:transaction];
             [_contentView addSubview:selectAmount];
             
             selectAmount.delegate = self;
             
             offset = CGRectGetMaxY(selectAmount.frame);
+        }
+        else{
+            NewTransactionSelectTypeView *view = [[NewTransactionSelectTypeView alloc] initWithFrame:CGRectMakePosition(0, offset) for:transaction];
+            [_contentView addSubview:view];
+            
+            view.delegate = self;
+            
+            offset = CGRectGetMaxY(view.frame);
         }
         
         {
@@ -99,7 +110,7 @@
             offset = CGRectGetMaxY(amountInput.frame);
         }
 
-        if(_transactionType != TransactionTypeEvent){
+        if(!isEvent){
             friend = [[FLSelectFriendButton alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(amountInput.frame)) dictionary:transaction];
             friend.delegate = self;
 
@@ -108,16 +119,20 @@
             offset = CGRectGetMaxY(friend.frame);
         }
         
-        if(_transactionType == TransactionTypePayment){
-            FLPaymentField *payementField = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, offset, CGRectGetWidth(_contentView.frame), 0) for:transaction key:@"source"];
+        if(!isEvent){
+            payementField = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, offset, CGRectGetWidth(_contentView.frame), 0) for:transaction key:@"source"];
             payementField.delegate = self;
             [_contentView addSubview:payementField];
+            
+            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeCollection]]){
+                CGRectSetHeight(payementField.frame, 1);
+            }
             
             offset = CGRectGetMaxY(payementField.frame);
         }
         
         NSString *contentPlaceholder = @"FIELD_TRANSACTION_CONTENT_PLACEHOLDER";
-        if(_transactionType == TransactionTypeEvent){
+        if(isEvent){
             contentPlaceholder = @"FIELD_TRANSACTION_EVENT_PLACEHOLDER";
         }
         
@@ -131,7 +146,7 @@
         offset = CGRectGetMaxY(content.frame);
     }
     
-    if(_transactionType == TransactionTypeEvent){
+    if(isEvent){
         [self didAmountFreeSelected];
     }
     
@@ -185,6 +200,36 @@
     }];
 }
 
+- (void)didTypePaymentelected
+{
+    [[self view] endEditing:YES];
+    
+    NSLog(@"didTypePaymentelected");
+    
+    if(CGRectGetHeight(payementField.frame) <= 1){
+        [UIView animateWithDuration:.5 animations:^{
+            CGRectSetHeight(payementField.frame, [FLPaymentField height]);
+            CGRectSetY(content.frame, content.frame.origin.y + [FLPaymentField height]);
+        }];
+    }
+}
+
+- (void)didTypeCollectSelected
+{
+    [[self view] endEditing:YES];
+    
+    [transaction setValue:nil forKey:@"source"];
+    
+    NSLog(@"didTypeCollectSelected");
+    
+    if(CGRectGetHeight(payementField.frame) > 1){
+        [UIView animateWithDuration:.5 animations:^{
+            CGRectSetHeight(payementField.frame, 1);
+            CGRectSetY(content.frame, content.frame.origin.y - [FLPaymentField height]);
+        }];
+    }
+}
+
 #pragma mark - callbacks
 
 - (void)dismiss
@@ -198,7 +243,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     
-    if(_transactionType == TransactionTypeEvent){
+    if(isEvent){
         [[Flooz sharedInstance] createEvent:transaction success:^(id result) {
             FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
             EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];

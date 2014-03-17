@@ -43,18 +43,16 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    if(!animated){
-        [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
-            [[Flooz sharedInstance] friendsSuggestion:^(id result) {
-                friendsRequest = [[[Flooz sharedInstance] currentUser] friendsRequest];
-                friends = [[[Flooz sharedInstance] currentUser] friends];
-                friendsSuggestion = result;
-                
-                [_tableView reloadData];
-                [_tableView setContentOffset:CGPointZero animated:YES];
-            }];
+    [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
+        [[Flooz sharedInstance] friendsSuggestion:^(id result) {
+            friendsRequest = [[[Flooz sharedInstance] currentUser] friendsRequest];
+            friends = [[[Flooz sharedInstance] currentUser] friends];
+            friendsSuggestion = result;
+            
+            [_tableView reloadData];
+            [_tableView setContentOffset:CGPointZero animated:YES];
         }];
-    }
+    }];
 }
 
 #pragma mark - TableView

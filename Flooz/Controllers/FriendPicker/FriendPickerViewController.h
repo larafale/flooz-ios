@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet FriendPickerSearchBar* searchBar;
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
 
-@property (weak, nonatomic) NSMutableDictionary *dictionary;
+@property (strong, nonatomic) NSMutableDictionary *dictionary;
+@property (weak) FLEvent *event;
 
 @end

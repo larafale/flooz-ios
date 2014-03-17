@@ -37,40 +37,11 @@
     
     [self addSubview:comment];
     [self addSubview:like];
-    [self addSubview:separator];
+//    [self addSubview:separator];
 }
 
 - (void)prepareView:(FLSocial *)social
 {
-    if(social.commentsCount == 0){
-        comment.hidden = YES;
-        separator.hidden = YES;
-        
-        CGRectSetX(separator.frame, comment.frame.origin.x - 13);
-    }
-    else{
-        comment.hidden = NO;
-        separator.hidden = NO;
-        
-        comment.text = [NSString stringWithFormat:@"%.2ld", social.commentsCount];
-        
-        if(social.isCommented){
-            comment.textColor = [UIColor whiteColor];
-            [comment setImage:[UIImage imageNamed:@"social-comment-selected"]];
-        }
-        else{
-            comment.textColor = [UIColor customBlueLight];
-            [comment setImage:[UIImage imageNamed:@"social-comment"]];
-        }
-        
-        [comment setImageOffset:CGPointMake(-5, 0)];
-        
-        [comment setWidthToFit];
-        CGRectSetWidth(comment.frame, CGRectGetWidth(comment.frame) + 18);
-        
-        CGRectSetX(separator.frame, CGRectGetMaxX(comment.frame) + 5);
-    }
-    
     {
         if(social.likesCount == 0){
             like.text = NSLocalizedString(@"CELL_SOCIAL_LIKE", nil);
@@ -88,11 +59,37 @@
             [like setImage:[UIImage imageNamed:@"social-like"]];
         }
         
-        CGRectSetX(like.frame, CGRectGetMaxX(separator.frame) + 12);
         [like setImageOffset:CGPointMake(-5, 0)];
-        
         [like setWidthToFit];
+        
         CGRectSetWidth(like.frame, CGRectGetWidth(like.frame) + 18);
+    }
+    
+    {
+        if(social.commentsCount == 0){
+            comment.hidden = YES;
+        }
+        else{
+            comment.hidden = NO;
+            
+            comment.text = [NSString stringWithFormat:@"%.2ld", social.commentsCount];
+            
+            if(social.isCommented){
+                comment.textColor = [UIColor whiteColor];
+                [comment setImage:[UIImage imageNamed:@"social-comment-selected"]];
+            }
+            else{
+                comment.textColor = [UIColor customBlueLight];
+                [comment setImage:[UIImage imageNamed:@"social-comment"]];
+            }
+            
+            [comment setImageOffset:CGPointMake(-5, 0)];
+            [comment setWidthToFit];
+            
+            CGRectSetWidth(comment.frame, CGRectGetWidth(comment.frame) + 18);
+            
+            CGRectSetX(comment.frame, CGRectGetMaxX(like.frame) + 5);
+        }
     }
 }
 

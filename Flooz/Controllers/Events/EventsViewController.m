@@ -24,19 +24,20 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    refreshControl = [UIRefreshControl new];
+    [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
+    [_tableView addSubview:refreshControl];
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
     if(!animated){
-//        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] events:_scope success:^(id result, NSString *nextPageUrl) {
-            events = [result mutableCopy];
-            _nextPageUrl = nextPageUrl;
-            nextPageIsLoading = NO;
-            
-            [_tableView reloadData];
-            [_tableView setContentOffset:CGPointZero animated:YES];
-        } failure:NULL];
+        [self handleRefresh];
     }
 }
 
@@ -104,6 +105,21 @@
         nextPageIsLoading = NO;
         [_tableView reloadData];
     }];
+}
+
+- (void)handleRefresh
+{
+    [refreshControl beginRefreshing];
+    
+    [[Flooz sharedInstance] events:_scope success:^(id result, NSString *nextPageUrl) {
+        events = [result mutableCopy];
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
+        [refreshControl endRefreshing];
+        
+        [_tableView reloadData];
+        [_tableView setContentOffset:CGPointZero animated:YES];
+    } failure:NULL];
 }
 
 @end

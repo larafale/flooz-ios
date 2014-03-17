@@ -59,6 +59,10 @@
 //    else{
         [self didFilterPublicTouch];
 //    }
+    
+    refreshControl = [UIRefreshControl new];
+    [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
+    [_tableView addSubview:refreshControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -138,9 +142,23 @@
 
 #pragma mark - Filters
 
+- (void)handleRefresh
+{
+    [refreshControl beginRefreshing];
+
+    [[Flooz sharedInstance] timeline:currentFilter state:currentScope success:^(id result, NSString *nextPageUrl) {
+        transactions = [result mutableCopy];
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
+        [self didFilterChange];
+    } failure:NULL];
+}
+
 - (void)didFilterPublicTouch
 {
-//    [[Flooz sharedInstance] showLoadView];
+    currentFilter = @"public";
+    currentScope = @"";
+
     [[Flooz sharedInstance] timeline:@"public" success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
@@ -151,7 +169,9 @@
 
 - (void)didFilterFriendTouch
 {
-//    [[Flooz sharedInstance] showLoadView];
+    currentFilter = @"friend";
+    currentScope = @"";
+
     [[Flooz sharedInstance] timeline:@"friend" success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
@@ -167,7 +187,9 @@
         state = @"pending";
     }
     
-//    [[Flooz sharedInstance] showLoadView];
+    currentFilter = @"private";
+    currentScope = state;
+    
     [[Flooz sharedInstance] timeline:@"private" state:state success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
@@ -181,6 +203,7 @@
     rowsWithPaymentField = [NSMutableSet new];
     [_tableView reloadData];
     [_tableView setContentOffset:CGPointZero animated:YES];
+    [refreshControl endRefreshing];
 }
 
 #pragma mark - TransactionCellDelegate

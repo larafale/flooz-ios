@@ -67,21 +67,25 @@
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
     
-    FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMakeSize(88, 88)];
-    UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(30, 100, CGRectGetWidth(view.frame) - 60, 50)];
-    
-    [avatar setAlternativeStyle2];
-    
-    avatar.center = CGRectGetCenter(view.frame);
-    avatar.frame = CGRectOffset(avatar.frame, 0, - 20);
+    {
+        FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMakeSize(88, 88)];
         
-    username.numberOfLines = 0;
-    username.textAlignment = NSTextAlignmentCenter;
-    username.textColor = [UIColor whiteColor];
-    username.font = [UIFont customTitleExtraLight:12];
+        avatar.center = CGRectGetCenter(view.frame);
+        avatar.frame = CGRectOffset(avatar.frame, 0, - 20);
+                
+        [view addSubview:avatar];
+    }
     
-    [view addSubview:avatar];
-    [view addSubview:username];
+    {
+        UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, CGRectGetWidth(view.frame), 50)];
+        
+        username.numberOfLines = 0;
+        username.textAlignment = NSTextAlignmentCenter;
+        username.textColor = [UIColor whiteColor];
+        username.font = [UIFont customTitleExtraLight:12];
+        
+        [view addSubview:username];
+    }
     
     return view;
 }

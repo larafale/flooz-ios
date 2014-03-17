@@ -24,18 +24,41 @@
     if (self) {
         self.backgroundColor = [UIColor customBackgroundHeader];
         
-        panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToPanGesture:)];
-        panGesture.delegate = self;
-        [self addGestureRecognizer:panGesture];
+
         
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
-        [tapGesture requireGestureRecognizerToFail:panGesture];
-        [self addGestureRecognizer:tapGesture];
-        
+        [self preparePanGesture];
+        [self prepareSwipeGesture];
         _viewControllers = viewControllers;
         [self prepareTitleViews];
     }
     return self;
+}
+
+- (void)preparePanGesture
+{
+    panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToPanGesture:)];
+    panGesture.delegate = self;
+    [self addGestureRecognizer:panGesture];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
+    [tapGesture requireGestureRecognizerToFail:panGesture];
+    [self addGestureRecognizer:tapGesture];
+}
+
+- (void)prepareSwipeGesture
+{
+    {
+        swipeGestureLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(loadNextController)];
+        swipeGestureLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+        [panGesture requireGestureRecognizerToFail:swipeGestureLeft];
+        [self addGestureRecognizer:swipeGestureLeft];
+    }
+    {
+        swipeGestureRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(loadPreviousController)];
+        swipeGestureRight.direction = UISwipeGestureRecognizerDirectionRight;
+        [panGesture requireGestureRecognizerToFail:swipeGestureRight];
+        [self addGestureRecognizer:swipeGestureRight];
+    }
 }
 
 - (void)prepareTitleViews
@@ -68,10 +91,17 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if(selectedTitleIndex == 0 || selectedTitleIndex == [[_titlesView subviews] count] - 1){
-        return NO;
+    if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]){
+        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGPoint translation = [recognizer translationInView:_titlesView];
+        
+        if(translation.x > 0 && selectedTitleIndex == 0){
+            return NO;
+        }
+        else if(translation.x < 0 && selectedTitleIndex == [[_titlesView subviews] count] - 1){
+            return NO;
+        }
     }
-    
     return YES;
 }
 

@@ -36,10 +36,9 @@
 
 - (void)createRightUserView
 {
-    UIView *view = [self createUserView];
-    CGRectSetX(view.frame, CGRectGetWidth(self.frame) / 2);
-    
-    [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didAddParticipantTouch)]];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) / 2), 0, CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
+
+    [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didParticipantsTouch)]];
     
     [self addSubview:view];
 }
@@ -59,21 +58,49 @@
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
     
-    FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMakeSize(88, 88)];
-    UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, CGRectGetWidth(view.frame), 50)];
+    {
+        FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMakeSize(88, 88)];
+
+        avatar.center = CGRectGetCenter(view.frame);
+        avatar.frame = CGRectOffset(avatar.frame, 0, - 20);
+        
+        [view addSubview:avatar];
+    }
     
-    [avatar setAlternativeStyle2];
+    {
+        UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, CGRectGetWidth(view.frame), 50)];
+        
+        username.numberOfLines = 0;
+        username.textAlignment = NSTextAlignmentCenter;
+        username.textColor = [UIColor whiteColor];
+        username.font = [UIFont customTitleExtraLight:12];
+        
+        [view addSubview:username];
+    }
     
-    avatar.center = CGRectGetCenter(view.frame);
-    avatar.frame = CGRectOffset(avatar.frame, 0, - 20);
+    return view;
+}
+
+- (UIView *)createMiniUserView
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame) / 2, 45)];
     
-    username.numberOfLines = 0;
-    username.textAlignment = NSTextAlignmentCenter;
-    username.textColor = [UIColor whiteColor];
-    username.font = [UIFont customTitleExtraLight:12];
+    {
+        FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMakeSize(40, 40)];
+        avatar.frame = CGRectOffset(avatar.frame, 16, 2.5);
+                
+        [view addSubview:avatar];
+    }
     
-    [view addSubview:avatar];
-    [view addSubview:username];
+    {
+        UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(62, 0, CGRectGetWidth(view.frame) - 62, CGRectGetHeight(view.frame))];
+        
+        username.numberOfLines = 0;
+        username.textColor = [UIColor whiteColor];
+        username.font = [UIFont customTitleExtraLight:10];
+        
+        [view addSubview:username];
+    }
     
     return view;
 }
@@ -106,16 +133,82 @@
 - (void)prepareRightUserView
 {
     UIView *view = [[self subviews] objectAtIndex:1];
-    FLUserView *avatar = [[view subviews] objectAtIndex:0];
-    UILabel *username = [[view subviews] objectAtIndex:1];
     
-    [avatar setImageFromURL:nil];
-    username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
+    for(UIView *subview in [view subviews]){
+        [subview removeFromSuperview];
+    }
+    
+    if([[_event participants] count] > 0){
+        CGFloat MARGE_TOP_BOTTOM = 9.;
+        CGFloat height = 0;
+        
+        UIView *firstUserView = [self createMiniUserView];
+        UIView *secondUserView = nil;
+        UIView *lastUserView = [self createMiniUserView];
+        
+        {
+            CGRectSetY(firstUserView.frame, MARGE_TOP_BOTTOM);
+            FLUser *user = [[_event participants] objectAtIndex:0];
+            
+            FLUserView *avatar = [[firstUserView subviews] objectAtIndex:0];
+            UILabel *username = [[firstUserView subviews] objectAtIndex:1];
+            
+            [avatar setImageFromUser:user];
+            username.text = [[user fullname] uppercaseString];
+            
+            height = CGRectGetMaxY(firstUserView.frame);
+        }
+        
+        if([[_event participants] count] > 1){
+            secondUserView = [self createMiniUserView];
+            CGRectSetY(secondUserView.frame, height);
+            
+            FLUser *user = [[_event participants] objectAtIndex:1];
+            
+            FLUserView *avatar = [[secondUserView subviews] objectAtIndex:0];
+            UILabel *username = [[secondUserView subviews] objectAtIndex:1];
+            
+            [avatar setImageFromUser:user];
+            username.text = [[user fullname] uppercaseString];
+            
+            height = CGRectGetMaxY(secondUserView.frame);
+        }
+        
+        {
+            CGRectSetY(lastUserView.frame, height);
+            FLUserView *avatar = [[lastUserView subviews] objectAtIndex:0];
+            UILabel *username = [[lastUserView subviews] objectAtIndex:1];
+            
+            [avatar setImageFromUser:nil];
+            
+            if([[_event participants] count] > 2){
+                 username.text = [NSString stringWithFormat:[NSLocalizedString(@"EVENT_PARTICIPANTS_INVITED", nil) uppercaseString], [[_event participants] count] - 2];
+            }
+            else{
+                username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
+            }
+        }
+        
+        
+        [view addSubview:firstUserView];
+        [view addSubview:secondUserView];
+        [view addSubview:lastUserView];
+    }
+    else{
+        UIView *contentView = [self createUserView];
+        FLUserView *avatar = [[contentView subviews] objectAtIndex:0];
+        UILabel *username = [[contentView subviews] objectAtIndex:1];
+        
+        [avatar setImageFromURL:nil];
+        username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
+        
+        [view addSubview:contentView];
+    }
 }
 
 #pragma mark -
 
-- (void)didAddParticipantTouch
+- (void)didParticipantsTouch
 {
     [_delegate presentEventParticipantsController];
 }

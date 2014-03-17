@@ -14,12 +14,27 @@
 
 - (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position
 {
-    return [self initWithIcon:iconName placeholder:placeholder for:dictionary key:dictionaryKey position:position placeholder2:nil key2:nil];
+    return [self initWithIcon:iconName placeholder:placeholder for:dictionary key:dictionaryKey frame:CGRectMakeWithPosition(position) placeholder2:nil key2:nil];
+}
+
+- (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey frame:(CGRect)frame
+{
+    return [self initWithIcon:iconName placeholder:placeholder for:dictionary key:dictionaryKey frame:frame placeholder2:nil key2:nil];
 }
 
 - (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position placeholder2:(NSString *)placeholder2 key2:(NSString *)dictionaryKey2
 {
-    self = [super initWithFrame:CGRectMake(position.x, position.y, SCREEN_WIDTH - (2 * position.x), 37)];
+    return [self initWithIcon:iconName placeholder:placeholder for:dictionary key:dictionaryKey frame:CGRectMakeWithPosition(position) placeholder2:placeholder2 key2:dictionaryKey2];
+}
+
+- (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey frame:(CGRect)frame placeholder2:(NSString *)placeholder2 key2:(NSString *)dictionaryKey2
+{
+    if(frame.size.width == 0){
+        CGRectSetWidth(frame, SCREEN_WIDTH - (2 * frame.origin.x));
+    }
+    CGRectSetHeight(frame, 37);
+    
+    self = [super initWithFrame:frame];
     if (self) {
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;

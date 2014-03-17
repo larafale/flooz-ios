@@ -21,7 +21,7 @@
 - (void)displayError:(NSError *)error;
 - (void)displayErrorMessage:(NSString *)errorMessage;
 
-- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
+- (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 - (void)loadSignupWithUser:(NSDictionary *)user;
 
 @end

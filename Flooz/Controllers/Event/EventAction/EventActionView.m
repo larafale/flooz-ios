@@ -97,10 +97,10 @@
     }
     else if([_event canAcceptOrDeclineOffer]){
         textAccept = NSLocalizedString(@"EVENT_ACTION_ACCEPT", nil);
-        textRefuse = NSLocalizedString(@"EVENT_ACTION_REFUSE", nil);
+        textRefuse = NSLocalizedString(@"EVENT_ACTION_DECLINE", nil);
     }
     else if([_event canCancelOffer]){
-        textRefuse = NSLocalizedString(@"EVENT_ACTION_REFUSE", nil);
+        textRefuse = NSLocalizedString(@"EVENT_ACTION_CANCEL", nil);
     }
     
     if(textAccept && textRefuse){

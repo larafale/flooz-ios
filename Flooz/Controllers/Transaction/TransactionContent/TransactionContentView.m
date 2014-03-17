@@ -10,7 +10,7 @@
 
 #import "FLSocialView.h"
 
-#define MARGE_TOP 28.
+#define MARGE_TOP 10.
 #define MARGE_BOTTOM 10.
 #define MARGE_LEFT_RIGHT 25.
 
@@ -80,6 +80,7 @@
 - (void)createSocialView
 {
     FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 0, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 0)];
+    [view addTargetForLike:self action:@selector(didLikeButtonTouch)];
     [self addSubview:view];
 }
 
@@ -112,10 +113,12 @@
     UILabel *view = [[self subviews] objectAtIndex:0];
     CGRectSetY(view.frame, height);
     
-    view.text = [_transaction title];
-    [view setHeightToFit];
+    if(![_transaction isPrivate]){
+        view.text = [_transaction title];
+        [view setHeightToFit];
         
-    height = CGRectGetMaxY(view.frame);
+        height = CGRectGetMaxY(view.frame);
+    }
 }
 
 - (void)prepareContentView
@@ -158,6 +161,24 @@
     [view prepareView:_transaction.social];
     
     height = CGRectGetMaxY(view.frame);
+}
+
+#pragma mark - Social action
+
+- (void)didLikeButtonTouch
+{
+    if([[_transaction social] isLiked]){
+        return;
+    }
+    
+    [[_transaction social] setIsLiked:YES];
+    [[Flooz sharedInstance] createLikeOnTransaction:_transaction success:^(id result) {
+        [[_transaction social] setLikeText:[result objectForKey:@"item"]];
+        [[_transaction social] setLikesCount:[[_transaction social] likesCount] + 1];
+        
+        FLSocialView *view = [[self subviews] objectAtIndex:4];
+        [view prepareView:_transaction.social];
+    } failure:NULL];
 }
 
 @end

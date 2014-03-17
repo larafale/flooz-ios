@@ -86,7 +86,7 @@
     {
         _canAcceptOrDeclineOffer = NO;
         
-        if([[json objectForKey:@"actions"] objectForKey:@"6"]){
+        if([[json objectForKey:@"actions"] objectForKey:@"6"]){ // 6 decliner offre et 7 accepter
             _canAcceptOrDeclineOffer = YES;
         }
     }
@@ -94,7 +94,7 @@
     {
         _canDeclineInvite = NO;
         
-        if([[json objectForKey:@"actions"] objectForKey:@"7"]){
+        if([[json objectForKey:@"actions"] objectForKey:@"8"]){
             _canDeclineInvite = YES;
         }
     }
