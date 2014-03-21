@@ -34,6 +34,7 @@
 
 @property NSString *friendRelationId;
 @property NSArray *friends;
+@property NSArray *friendsRecent;
 @property NSArray *friendsRequest;
 
 - (id)initWithJSON:(NSDictionary *)json;

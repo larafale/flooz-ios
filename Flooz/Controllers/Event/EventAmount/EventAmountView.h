@@ -10,6 +10,10 @@
 
 @interface EventAmountView : UIView{
     CGFloat height;
+    
+    UIView *amountView;
+    UIView *dayView;
+    UIView *progressBarView;
 }
 
 @property (weak, nonatomic) FLEvent *event;

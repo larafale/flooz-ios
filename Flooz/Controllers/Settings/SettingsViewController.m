@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 
 #import "NotificationsViewController.h"
+#import "SecureCodeViewController.h"
 #import "CreditCardViewController.h"
 #import "CashOutViewController.h"
 #import "RIBViewController.h"
@@ -79,7 +80,12 @@
     if(indexPath.row == 0){
         [[self navigationController] pushViewController:[NotificationsViewController new] animated:YES];
     }
-    if(indexPath.row == 2){
+    else if(indexPath.row == 1){
+        SecureCodeViewController *controller = [SecureCodeViewController new];
+        controller.isForChangeSecureCode = YES;
+        [[self navigationController] pushViewController:controller animated:YES];
+    }
+    else if(indexPath.row == 2){
         [[self navigationController] pushViewController:[CreditCardViewController new] animated:YES];
     }
     else if(indexPath.row == 3){

@@ -188,6 +188,20 @@
         height = CGRectGetMaxY(view.frame);
     }
     
+    {
+        EventAmountView *view = [[EventAmountView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        view.event = _event;
+        [_mainView addSubview:view];
+        height = CGRectGetMaxY(view.frame);
+    }
+    
+    {
+        EventUsersView *view = [[EventUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        view.event = _event;
+        view.delegate = self;
+        [_mainView addSubview:view];
+        height = CGRectGetMaxY(view.frame);
+    }
     
     if(paymentFieldIsShown){
         FLPaymentField *view = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) for:nil key:nil];
@@ -207,21 +221,6 @@
         EventActionView *view = [[EventActionView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event = _event;
         view.delegate = self;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
-    }
-        
-    {
-        EventUsersView *view = [[EventUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.event = _event;
-        view.delegate = self;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
-    }
-    
-    {
-        EventAmountView *view = [[EventAmountView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.event = _event;
         [_mainView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }

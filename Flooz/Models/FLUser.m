@@ -108,6 +108,19 @@
     }
     
     {
+        NSMutableArray *friendsRecent = [NSMutableArray new];
+        
+        if([json objectForKey:@"recentFriends"]){
+            for(NSDictionary *friendJSON in [json objectForKey:@"recentFriends"]){
+                FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
+                [friendsRecent addObject:friend];
+            }
+        }
+        
+        _friendsRecent = friendsRecent;
+    }
+    
+    {
         NSMutableArray *friendsRequest = [NSMutableArray new];
         
         if([json objectForKey:@"friendsRequest"]){

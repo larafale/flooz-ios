@@ -47,12 +47,14 @@
 {
     UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame))];
     
+    view.backgroundColor = [UIColor customBlue];
+    
     view.titleLabel.textAlignment = NSTextAlignmentCenter;
     view.titleLabel.font = [UIFont customTitleExtraLight:14];
     [view setImageEdgeInsets:UIEdgeInsetsMake(2, -10, 0, 0)];
     
     [view setImage:[UIImage imageNamed:@"transaction-cell-check"] forState:UIControlStateNormal];
-    [view setTitleColor:[UIColor customGreen] forState:UIControlStateNormal];
+    [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [view addTarget:self action:@selector(didAcceptTouch) forControlEvents:UIControlEventTouchUpInside];
     

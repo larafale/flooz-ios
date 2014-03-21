@@ -47,7 +47,7 @@
     else if([state integerValue] == 4){
         _status = TransactionStatusExpired;
     }
-    
+        
     _amount = [json objectForKey:@"amount"];
     if(_amount && [[json objectForKey:@"payer"] isEqualToNumber:@1]){
         _amount = [NSNumber numberWithFloat:([_amount floatValue] * -1.)];

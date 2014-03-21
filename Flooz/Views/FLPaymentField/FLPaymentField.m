@@ -161,4 +161,9 @@
     [_delegate didCreditCardSelected];
 }
 
+- (void)reloadUser
+{
+    amount.text = [FLHelper formatedAmount:[[[Flooz sharedInstance] currentUser] amount]];
+}
+
 @end

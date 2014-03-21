@@ -42,6 +42,16 @@
             break;
         }
     }
+    
+    if([[json objectForKey:@"scope"] intValue] == 0){
+        _scope = SocialScopePublic;
+    } else if([[json objectForKey:@"scope"] intValue] == 1){
+        _scope = SocialScopeFriend;
+    } else if([[json objectForKey:@"scope"] intValue] == 2){
+        _scope = SocialScopePrivate;
+    } else{
+        _scope = SocialScopeNone;
+    }
 }
 
 @end

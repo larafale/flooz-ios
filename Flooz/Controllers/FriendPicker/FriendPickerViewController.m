@@ -10,6 +10,7 @@
 
 #import "FriendPickerSelectionCell.h"
 #import "FriendPickerContactCell.h"
+#import "FriendPickerFriendCell.h"
 
 #import "AppDelegate.h"
 #import <AddressBook/AddressBook.h>
@@ -23,6 +24,12 @@
         _contacts = @[];
         _contactsFromAdressBook = [NSMutableArray new];
         _contactsFromFacebook = [NSMutableArray new];
+        
+        _friends = [[[[Flooz sharedInstance] currentUser] friends] copy];
+        _friendsRecent = [[[[Flooz sharedInstance] currentUser] friendsRecent] copy];
+        
+        _friendsFiltred = _friends;
+        _friendsRecentFiltred = _friendsRecent;
     }
     return self;
 }
@@ -33,6 +40,7 @@
     
     self.view.backgroundColor = [UIColor customBackgroundHeader];
     
+    [self registerForKeyboardNotifications];
     [self requestAddressBookPermission];
 }
 
@@ -57,7 +65,70 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 4;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if(section == 0){
+        return @"";
+    }
+    else if(section == 1){
+        return NSLocalizedString(@"FRIEND_PICKER_FRIENDS_RECENT", nil);
+    }
+    else if(section == 2){
+        return NSLocalizedString(@"FRIEND_PICKER_FRIENDS", nil);
+    }
+    
+    return NSLocalizedString(@"FRIEND_PICKER_ADDRESS_BOOK", nil);
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if(section == 0){
+        return 0;
+    }
+    else if(section == 1 && [_friendsRecentFiltred count] == 0){
+        return 0;
+    }
+    else if(section == 2 && [_friendsFiltred count] == 0){
+        return 0;
+    }
+    else if(section == 3 && [_contacts count] == 0){
+        return 0;
+    }
+    
+    return 28;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CGFloat heigth = [self tableView:tableView heightForHeaderInSection:section];
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), heigth)];
+    
+    view.backgroundColor = [UIColor customBackground];
+    
+    {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(24, 0, 0, CGRectGetHeight(view.frame))];
+        
+        label.textColor = [UIColor customBlueLight];
+        
+        label.font = [UIFont customContentRegular:10];
+        label.text = [self tableView:tableView titleForHeaderInSection:section];
+        [label setWidthToFit];
+        
+        [view addSubview:label];
+    }
+    
+    {
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(view.frame), CGRectGetWidth(view.frame), 1)];
+        
+        separator.backgroundColor = [UIColor customSeparator];
+        
+        [view addSubview:separator];
+    }
+    
+    return view;
 }
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -67,6 +138,13 @@
         }
         return 0;
     }
+    else if(section == 1){
+        return [_friendsRecentFiltred count];
+    }
+    else if(section == 2){
+        return [_friendsFiltred count];
+    }
+    
     return [_contacts count];
 }
 
@@ -84,6 +162,23 @@
         }
         
         [cell setSelectionText:_selectionText];
+        
+        return cell;
+    }
+    else if(indexPath.section == 1 || indexPath.section == 2){
+        static NSString *cellIdentifierSelection = @"FriendPickerFriendCell";
+        FriendPickerFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSelection];
+        
+        if(!cell){
+            cell = [[FriendPickerFriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
+        }
+        
+        if(indexPath.section == 1){
+            [cell setUser:[_friendsRecentFiltred objectAtIndex:indexPath.row]];
+        }
+        else{
+            [cell setUser:[_friendsFiltred objectAtIndex:indexPath.row]];
+        }
         
         return cell;
     }
@@ -110,6 +205,33 @@
     if(indexPath.section == 0){
         title = _selectionText;
         value = _selectionText;
+    }
+    else if(indexPath.section == 1 || indexPath.section == 2){
+        FLUser *friend;
+        if(indexPath.section == 1){
+            friend = [_friendsRecentFiltred objectAtIndex:indexPath.row];
+        }
+        else{
+            friend = [_friendsFiltred objectAtIndex:indexPath.row];
+        }
+        
+        
+        contact = [NSMutableDictionary new];
+        
+        if([friend firstname] && ![[friend firstname] isBlank]){
+            [contact setValue:[friend firstname] forKeyPath:@"firstname"];
+        }
+        
+        if([friend lastname] && ![[friend lastname] isBlank]){
+            [contact setValue:[friend lastname] forKeyPath:@"lastname"];
+        }
+        
+        if([friend avatarURL] && ![[friend avatarURL] isBlank]){
+            [contact setValue:[friend avatarURL] forKeyPath:@"image_url"];
+        }
+        
+        title = [friend fullname];
+        value = [friend username];
     }
     else{
         contact = [_contacts objectAtIndex:indexPath.row];
@@ -169,13 +291,22 @@
 {
     _selectionText = text;
     
+    // Supprime le @ si text commence par @
+    if([text rangeOfString:@"@"].location == 0){
+        text = [text substringFromIndex:1];
+    }
+    
     if(!text || [text isBlank]){
         _contacts = _currentContacts;
+        _friendsFiltred = _friends;
+        _friendsRecentFiltred = _friendsRecent;
         [self didTableDataChanged];
         return;
     }
     
     NSMutableArray *contactsFiltred = [NSMutableArray new];
+    NSMutableArray *friendsFiltred = [NSMutableArray new];
+    NSMutableArray *friendsRecentFiltred = [NSMutableArray new];
     
     for(NSDictionary *contact in _currentContacts){
         if([contact objectForKey:@"name"] && [[[contact objectForKey:@"name"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
@@ -193,14 +324,47 @@
         }
     }
     
+    for(FLUser *user in _friends){
+        if([user firstname] && [[[user firstname] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+            [friendsFiltred addObject:user];
+        }
+        else if([user lastname] && [[[user lastname] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+            [friendsFiltred addObject:user];
+        }
+        else if([user fullname] && [[[user fullname] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+            [friendsFiltred addObject:user];
+        }
+        else if([user username] && [[[user username] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+            [friendsFiltred addObject:user];
+        }
+    }
+    
+//    for(FLUser *user in _friendsRecent){
+//        if([user firstname] && [[[user firstname] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+//            [friendsRecentFiltred addObject:user];
+//        }
+//        else if([user lastname] && [[[user lastname] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+//            [friendsRecentFiltred addObject:user];
+//        }
+//        else if([user fullname] && [[[user fullname] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+//            [friendsRecentFiltred addObject:user];
+//        }
+//        else if([user username] && [[[user username] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+//            [friendsRecentFiltred addObject:user];
+//        }
+//    }
+    
     _contacts = contactsFiltred;
+    _friendsFiltred = friendsFiltred;
+    _friendsRecentFiltred = friendsRecentFiltred;
+    
     [self didTableDataChanged];
 }
 
 - (void)didTableDataChanged
 {
-    [_tableView reloadData];
-    [_tableView setContentOffset:CGPointZero animated:YES];
+    [self.tableView setContentOffset:CGPointZero animated:YES];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Contacts
@@ -391,6 +555,33 @@
     [[Flooz sharedInstance] eventInvite:_event friend:friend success:^(id result) {
         [_event setJSON:[result objectForKey:@"item"]];
     }];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+}
+
+- (void)keyboardWillDisappear
+{
+    _tableView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

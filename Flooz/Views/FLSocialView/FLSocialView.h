@@ -11,6 +11,7 @@
 @interface FLSocialView : UIView{
     JTImageLabel *comment;
     JTImageLabel *like;
+    UIImageView *scope;
     UIView *separator;
     
     __weak id _target;

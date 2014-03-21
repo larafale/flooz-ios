@@ -8,6 +8,8 @@
 
 #import "SignupViewController.h"
 
+#import "SecureCodeViewController.h"
+
 #define MARGE 20.
 
 @interface SignupViewController (){
@@ -110,8 +112,13 @@
 {
     [[self view] endEditing:YES];
     
-    [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] signup:_user success:NULL failure:NULL];
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    id completeBlock = ^{
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] signup:_user success:NULL failure:NULL];
+    };
+    controller.completeBlock = completeBlock;
+    [[self navigationController] pushViewController:controller animated:YES];
 }
 
 - (void)didFacebookTouch

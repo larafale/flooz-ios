@@ -45,8 +45,8 @@
     
     [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
         [[Flooz sharedInstance] friendsSuggestion:^(id result) {
-            friendsRequest = [[[Flooz sharedInstance] currentUser] friendsRequest];
-            friends = [[[Flooz sharedInstance] currentUser] friends];
+            friendsRequest = [[[[Flooz sharedInstance] currentUser] friendsRequest] copy];
+            friends = [[[[Flooz sharedInstance] currentUser] friends] copy];
             friendsSuggestion = result;
             
             [_tableView reloadData];
@@ -203,8 +203,8 @@
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
         [[Flooz sharedInstance] friendsSuggestion:^(id result) {
-            friendsRequest = [[[Flooz sharedInstance] currentUser] friendsRequest];
-            friends = [[[Flooz sharedInstance] currentUser] friends];
+            friendsRequest = [[[[Flooz sharedInstance] currentUser] friendsRequest] copy];
+            friends = [[[[Flooz sharedInstance] currentUser] friends] copy];
             friendsSuggestion = result;
             
             [_tableView reloadData];

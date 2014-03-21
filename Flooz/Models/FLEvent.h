@@ -37,7 +37,9 @@ typedef NS_ENUM(NSInteger, EventAction) {
 
 @property NSString *eventId;
 @property NSNumber *amount;
-@property NSNumber *amountCollect;
+@property NSNumber *amountCollected;
+@property NSNumber *amountExpected;
+@property NSNumber *dayLeft;
 
 @property NSString *avatarURL;
 

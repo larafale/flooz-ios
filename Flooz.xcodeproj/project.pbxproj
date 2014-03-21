@@ -66,6 +66,10 @@
 		AB6DA52518C8D0AF0073B947 /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA52418C8D0AF0073B947 /* FriendAddSearchBar.m */; };
 		AB6DA52A18C8D4CE0073B947 /* FriendAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA52918C8D4CE0073B947 /* FriendAddCell.m */; };
 		AB7C9B1218D7049B002775BA /* NewTransactionSelectTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B1118D7049B002775BA /* NewTransactionSelectTypeView.m */; };
+		AB7C9B1718D71884002775BA /* FriendPickerFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B1618D71884002775BA /* FriendPickerFriendCell.m */; };
+		AB7C9B2218D73AE9002775BA /* SecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2018D73AE9002775BA /* SecureCodeViewController.m */; };
+		AB7C9B2318D73AE9002775BA /* SecureCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C9B2118D73AE9002775BA /* SecureCodeViewController.xib */; };
+		AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2618D84F99002775BA /* SecureCodeField.m */; };
 		ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4618BCE805002FCAAE /* EventViewController.m */; };
 		ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D4718BCE805002FCAAE /* EventViewController.xib */; };
 		ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4D18BE60C5002FCAAE /* EventHeaderView.m */; };
@@ -129,8 +133,6 @@
 		ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A31896D2D9003AC722 /* FLHelper.m */; };
 		ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */; };
 		ABE914AB1898558E003AC722 /* FLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914AA1898558E003AC722 /* FLTextView.m */; };
-		ABEC029A18D1B24A00C03025 /* FloozViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEC029818D1B24A00C03025 /* FloozViewController.m */; };
-		ABEC029B18D1B24A00C03025 /* FloozViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABEC029918D1B24A00C03025 /* FloozViewController.xib */; };
 		ABEC02A018D20DA300C03025 /* DocumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEC029E18D20DA300C03025 /* DocumentsViewController.m */; };
 		ABEC02A118D20DA300C03025 /* DocumentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABEC029F18D20DA300C03025 /* DocumentsViewController.xib */; };
 		ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEC02A718D3165600C03025 /* UIView+FindFirstResponder.m */; };
@@ -266,6 +268,15 @@
 		AB7C9B1018D7049B002775BA /* NewTransactionSelectTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionSelectTypeView.h; path = Controllers/NewTransaction/NewTransactionSelectType/NewTransactionSelectTypeView.h; sourceTree = "<group>"; };
 		AB7C9B1118D7049B002775BA /* NewTransactionSelectTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionSelectTypeView.m; path = Controllers/NewTransaction/NewTransactionSelectType/NewTransactionSelectTypeView.m; sourceTree = "<group>"; };
 		AB7C9B1318D704D2002775BA /* NewTransactionSelectTypeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NewTransactionSelectTypeDelegate.h; path = Controllers/NewTransaction/NewTransactionSelectType/NewTransactionSelectTypeDelegate.h; sourceTree = "<group>"; };
+		AB7C9B1518D71884002775BA /* FriendPickerFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendPickerFriendCell.h; path = Controllers/FriendPicker/FriendPickerFriendCell/FriendPickerFriendCell.h; sourceTree = "<group>"; };
+		AB7C9B1618D71884002775BA /* FriendPickerFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendPickerFriendCell.m; path = Controllers/FriendPicker/FriendPickerFriendCell/FriendPickerFriendCell.m; sourceTree = "<group>"; };
+		AB7C9B1F18D73AE9002775BA /* SecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecureCodeViewController.h; path = Controllers/SecureCode/SecureCodeViewController.h; sourceTree = "<group>"; };
+		AB7C9B2018D73AE9002775BA /* SecureCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecureCodeViewController.m; path = Controllers/SecureCode/SecureCodeViewController.m; sourceTree = "<group>"; };
+		AB7C9B2118D73AE9002775BA /* SecureCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SecureCodeViewController.xib; path = Controllers/SecureCode/SecureCodeViewController.xib; sourceTree = "<group>"; };
+		AB7C9B2518D84F99002775BA /* SecureCodeField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecureCodeField.h; path = Controllers/SecureCode/SecureCodeField/SecureCodeField.h; sourceTree = "<group>"; };
+		AB7C9B2618D84F99002775BA /* SecureCodeField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecureCodeField.m; path = Controllers/SecureCode/SecureCodeField/SecureCodeField.m; sourceTree = "<group>"; };
+		AB7C9B2818D8559A002775BA /* FLKeyboardViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLKeyboardViewDelegate.h; path = Views/FLKeyboardView/FLKeyboardViewDelegate.h; sourceTree = "<group>"; };
+		AB7C9B2918D85AEA002775BA /* SecureCodeFieldDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SecureCodeFieldDelegate.h; path = Controllers/SecureCode/SecureCodeField/SecureCodeFieldDelegate.h; sourceTree = "<group>"; };
 		ABB12D4518BCE805002FCAAE /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventViewController.h; path = Controllers/Event/EventViewController.h; sourceTree = "<group>"; };
 		ABB12D4618BCE805002FCAAE /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventViewController.m; path = Controllers/Event/EventViewController.m; sourceTree = "<group>"; };
 		ABB12D4718BCE805002FCAAE /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Controllers/Event/EventViewController.xib; sourceTree = "<group>"; };
@@ -394,9 +405,6 @@
 		ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionBar.m; path = Views/FLNewTransactionBar/FLNewTransactionBar.m; sourceTree = "<group>"; };
 		ABE914A91898558E003AC722 /* FLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextView.h; path = Views/FLTextView/FLTextView.h; sourceTree = "<group>"; };
 		ABE914AA1898558E003AC722 /* FLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextView.m; path = Views/FLTextView/FLTextView.m; sourceTree = "<group>"; };
-		ABEC029718D1B24A00C03025 /* FloozViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FloozViewController.h; path = Controllers/Flooz/FloozViewController.h; sourceTree = "<group>"; };
-		ABEC029818D1B24A00C03025 /* FloozViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FloozViewController.m; path = Controllers/Flooz/FloozViewController.m; sourceTree = "<group>"; };
-		ABEC029918D1B24A00C03025 /* FloozViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FloozViewController.xib; path = Controllers/Flooz/FloozViewController.xib; sourceTree = "<group>"; };
 		ABEC029D18D20DA300C03025 /* DocumentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DocumentsViewController.h; path = Controllers/Documents/DocumentsViewController.h; sourceTree = "<group>"; };
 		ABEC029E18D20DA300C03025 /* DocumentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DocumentsViewController.m; path = Controllers/Documents/DocumentsViewController.m; sourceTree = "<group>"; };
 		ABEC029F18D20DA300C03025 /* DocumentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DocumentsViewController.xib; path = Controllers/Documents/DocumentsViewController.xib; sourceTree = "<group>"; };
@@ -649,7 +657,6 @@
 				ABB12D4418BCE7E5002FCAAE /* Event */,
 				ABB12D6718BF9F03002FCAAE /* EventParticipants */,
 				AB2FB55318B234200079AA1D /* Events */,
-				ABEC029618D1B23C00C03025 /* Flooz */,
 				AB6DA51C18C8CEDF0073B947 /* FriendAdd */,
 				ABF7093318A3C4FE00517389 /* FriendPicker */,
 				AB2FB55918B2B4600079AA1D /* Friends */,
@@ -662,6 +669,7 @@
 				AB2FB53F18AD9C660079AA1D /* Password */,
 				AB4CB6D71886A24B00D1C573 /* Preview */,
 				AB2FB53918AD8D370079AA1D /* RIB */,
+				AB7C9B1E18D73AD2002775BA /* SecureCode */,
 				AB5EB6DF188214F000D81AF6 /* Settings */,
 				AB4CB6F41886C1B000D1C573 /* Signup */,
 				AB5EB6E3188214F000D81AF6 /* Social */,
@@ -974,6 +982,36 @@
 			name = NewTransactionSelectType;
 			sourceTree = "<group>";
 		};
+		AB7C9B1418D71862002775BA /* FriendPickerFriendCell */ = {
+			isa = PBXGroup;
+			children = (
+				AB7C9B1518D71884002775BA /* FriendPickerFriendCell.h */,
+				AB7C9B1618D71884002775BA /* FriendPickerFriendCell.m */,
+			);
+			name = FriendPickerFriendCell;
+			sourceTree = "<group>";
+		};
+		AB7C9B1E18D73AD2002775BA /* SecureCode */ = {
+			isa = PBXGroup;
+			children = (
+				AB7C9B2418D84F77002775BA /* SecureCodeField */,
+				AB7C9B1F18D73AE9002775BA /* SecureCodeViewController.h */,
+				AB7C9B2018D73AE9002775BA /* SecureCodeViewController.m */,
+				AB7C9B2118D73AE9002775BA /* SecureCodeViewController.xib */,
+			);
+			name = SecureCode;
+			sourceTree = "<group>";
+		};
+		AB7C9B2418D84F77002775BA /* SecureCodeField */ = {
+			isa = PBXGroup;
+			children = (
+				AB7C9B2518D84F99002775BA /* SecureCodeField.h */,
+				AB7C9B2618D84F99002775BA /* SecureCodeField.m */,
+				AB7C9B2918D85AEA002775BA /* SecureCodeFieldDelegate.h */,
+			);
+			name = SecureCodeField;
+			sourceTree = "<group>";
+		};
 		ABB12D4418BCE7E5002FCAAE /* Event */ = {
 			isa = PBXGroup;
 			children = (
@@ -1264,6 +1302,7 @@
 			children = (
 				ABE914891892C734003AC722 /* FLKeyboardView.h */,
 				ABE9148A1892C734003AC722 /* FLKeyboardView.m */,
+				AB7C9B2818D8559A002775BA /* FLKeyboardViewDelegate.h */,
 			);
 			name = FLKeyboardView;
 			sourceTree = "<group>";
@@ -1321,16 +1360,6 @@
 				ABE914AA1898558E003AC722 /* FLTextView.m */,
 			);
 			name = FLTextView;
-			sourceTree = "<group>";
-		};
-		ABEC029618D1B23C00C03025 /* Flooz */ = {
-			isa = PBXGroup;
-			children = (
-				ABEC029718D1B24A00C03025 /* FloozViewController.h */,
-				ABEC029818D1B24A00C03025 /* FloozViewController.m */,
-				ABEC029918D1B24A00C03025 /* FloozViewController.xib */,
-			);
-			name = Flooz;
 			sourceTree = "<group>";
 		};
 		ABEC029C18D20D8E00C03025 /* Documents */ = {
@@ -1412,6 +1441,7 @@
 		ABF7093318A3C4FE00517389 /* FriendPicker */ = {
 			isa = PBXGroup;
 			children = (
+				AB7C9B1418D71862002775BA /* FriendPickerFriendCell */,
 				ABC1115C18ACE4D900C3C52D /* FriendPickerSelectionCell */,
 				ABC1113F18AA922B00C3C52D /* FriendPickerContactCell */,
 				ABF7095F18A512BB00517389 /* FriendPickerSearchBar */,
@@ -1585,6 +1615,7 @@
 				AB6DA50C18C4A5D80073B947 /* WebViewController.xib in Resources */,
 				ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */,
 				ABEC02A118D20DA300C03025 /* DocumentsViewController.xib in Resources */,
+				AB7C9B2318D73AE9002775BA /* SecureCodeViewController.xib in Resources */,
 				ABF7093818A3C52200517389 /* FriendPickerViewController.xib in Resources */,
 				ABE9147418929A5C003AC722 /* InformationsViewController.xib in Resources */,
 				ABF46A321875C1B400E92A77 /* ProximaNova-Semibold.otf in Resources */,
@@ -1617,7 +1648,6 @@
 				ABF46A10187575C600E92A77 /* Localizable.strings in Resources */,
 				AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */,
 				AB5EB6F2188214F000D81AF6 /* SocialViewController.xib in Resources */,
-				ABEC029B18D1B24A00C03025 /* FloozViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1671,6 +1701,7 @@
 			files = (
 				ABBB75CB18B63DB20070C2A8 /* CreditCardViewController.m in Sources */,
 				AB3D08A2186CA11A00CF8380 /* AppDelegate.m in Sources */,
+				AB7C9B1718D71884002775BA /* FriendPickerFriendCell.m in Sources */,
 				ABE9148F189337E4003AC722 /* FLTextField.m in Sources */,
 				ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */,
 				ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */,
@@ -1708,6 +1739,7 @@
 				ABE9143A1890A034003AC722 /* FLNavigationController.m in Sources */,
 				AB4CB6DB1886A26400D1C573 /* PreviewViewController.m in Sources */,
 				ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */,
+				AB7C9B2218D73AE9002775BA /* SecureCodeViewController.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
 				AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */,
 				ABB12D6518BE66D7002FCAAE /* EventCommentsView.m in Sources */,
@@ -1720,6 +1752,7 @@
 				AB2FB55118B232B10079AA1D /* AcitvitiesViewController.m in Sources */,
 				ABB12D5918BE61BC002FCAAE /* EventUsersView.m in Sources */,
 				ABE914371890A029003AC722 /* FLLoadView.m in Sources */,
+				AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */,
 				ABE914331890A01F003AC722 /* FLContainerViewController.m in Sources */,
 				ABC1115518ACE4B500C3C52D /* TransactionContentView.m in Sources */,
 				AB2FB53318AD40580079AA1D /* CashOutViewController.m in Sources */,
@@ -1756,7 +1789,6 @@
 				ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */,
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
-				ABEC029A18D1B24A00C03025 /* FloozViewController.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */,
 				AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */,

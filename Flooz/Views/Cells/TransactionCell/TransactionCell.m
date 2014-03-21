@@ -42,11 +42,13 @@
         current_height += rect.size.height;
     }
     
+    current_height += 4;
+    
     if([transaction content] && ![[transaction content] isBlank]){
-        if([transaction title] && ![[transaction title] isBlank]){
-            current_height += 4;
-        }
-        
+//        if([transaction title] && ![[transaction title] isBlank]){
+//            current_height += 4;
+//        }
+    
         attributedText = [[NSAttributedString alloc]
                           initWithString:[transaction content]
                           attributes:@{NSFontAttributeName: [UIFont customContentLight:12]}];
@@ -138,16 +140,17 @@
 
     {
         FLSocialView *socialView = [[rightView subviews] objectAtIndex:2];
-                
-        UIPanGestureRecognizer *swipeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipe:)];
-        swipeGesture.delegate = self;
-        [swipeGesture requireGestureRecognizerToFail:[socialView gesture]];
-        [self.contentView addGestureRecognizer:swipeGesture];
         
+        // Plus de swipe sur les flooz
+//        UIPanGestureRecognizer *swipeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipe:)];
+//        swipeGesture.delegate = self;
+//        [swipeGesture requireGestureRecognizerToFail:[socialView gesture]];
+//        [self.contentView addGestureRecognizer:swipeGesture];
+//        
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCellTouch)];
         tapGesture.delegate = self;
         [tapGesture requireGestureRecognizerToFail:[socialView gesture]];
-        [tapGesture requireGestureRecognizerToFail:swipeGesture];
+//        [tapGesture requireGestureRecognizerToFail:swipeGesture];
         [self.contentView addGestureRecognizer:tapGesture];
     }
 }
@@ -214,7 +217,7 @@
 
 - (void)prepareViews{
     height = 0;
-    isSwipable = [_transaction isAcceptable];
+    isSwipable = NO; //[_transaction isAcceptable];
     
     [self hidePaymentField];
     
@@ -258,10 +261,13 @@
     text.text = [[self transaction] title];
     [text setHeightToFit];
 
-    CGFloat offset = 0.;
-    if([[self transaction] title] && [[self transaction] content]){
-        offset = 4.;
-    }
+    CGFloat offset = 4.;
+//    if([[self transaction] title] &&
+//       [[self transaction] content]
+//       && ![[[self transaction] title] isBlank]
+//       && ![[[self transaction] content] isBlank]){
+//        offset = 4.;
+//    }
     
     content.text = [[self transaction] content];
     CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
@@ -606,6 +612,7 @@
     for(UIView *subview in self.contentView.subviews){
         subview.hidden = YES;
     }
+    [paymentField reloadUser];
     paymentField.hidden = NO;
 }
 

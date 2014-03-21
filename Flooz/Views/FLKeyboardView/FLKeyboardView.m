@@ -72,6 +72,8 @@
 
 - (void)didButtonTouch:(UIButton *)sender
 {
+    [_delegate keyboardPress:sender.titleLabel.text];
+    
     NSInteger startOffset = [_textField offsetFromPosition:_textField.beginningOfDocument toPosition:_textField.selectedTextRange.start];
     NSInteger endOffset = [_textField offsetFromPosition:_textField.beginningOfDocument toPosition:_textField.selectedTextRange.end];
     
@@ -89,6 +91,8 @@
 
 - (void)didButtonReturnTouch:(UIButton *)sender
 {
+    [_delegate keyboardBackwardTouch];
+    
     NSInteger startOffset = [_textField offsetFromPosition:_textField.beginningOfDocument toPosition:_textField.selectedTextRange.start];
     NSInteger endOffset = [_textField offsetFromPosition:_textField.beginningOfDocument toPosition:_textField.selectedTextRange.end];
     

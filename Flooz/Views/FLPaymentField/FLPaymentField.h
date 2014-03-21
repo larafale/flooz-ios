@@ -26,6 +26,7 @@
 
 - (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey;
 - (void)setStyleLight;
+- (void)reloadUser;
 
 + (CGFloat)height;
 

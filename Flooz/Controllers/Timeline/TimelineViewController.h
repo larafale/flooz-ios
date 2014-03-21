@@ -21,7 +21,6 @@
     BOOL nextPageIsLoading;
     
     NSString *currentFilter;
-    NSString *currentScope;
     UIRefreshControl *refreshControl;
 }
 

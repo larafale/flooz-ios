@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FLKeyboardViewDelegate.h"
+
 @interface FLKeyboardView : UIView
 
-@property (weak) UITextField *textField;
+@property (weak, nonatomic) UITextField *textField;
+@property (weak, nonatomic) id<FLKeyboardViewDelegate> delegate;
 
 @end

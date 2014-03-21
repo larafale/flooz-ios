@@ -22,6 +22,7 @@
 "NAV_ACCOUNT" = "Mon profil";
 "NAV_SETTINGS" = "Settings";
 "NAV_SOCIAL" = "Cagnottes";
+"NAV_EVENTS" = "Cagnottes";
 "NAV_TIMELINE" = "Flooz";
 "NAV_EDIT_ACCOUNT" = "Edit";
 "NAV_INFORMATIONS" = "Informations";
@@ -33,6 +34,7 @@
 "NAV_EVENT_PARTICIPANTS" = "Participants";
 "NAV_FRIENDS" = "FRIENDS";
 "NAV_DOCUMENTS" = "Documents";
+"NAV_SECURE_CODE" = "Secure Code";
 
 "HOME_LOGIN" = "Log in";
 "HOME_SIGNUP" = "Sign up";
@@ -177,9 +179,15 @@
 "FRIENDS_FRIENDS" = "Friends";
 
 "FRIEND_PCIKER_PLACEHOLDER" = "Rechercher un contact";
+"FRIEND_PICKER_FRIENDS_RECENT" = "Récent";
+"FRIEND_PICKER_FRIENDS" = "Mes amis";
+"FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";
 
 "EVENT_AMOUNT" = "Argent récolté";
 "EVENT_AMOUNT_FREE" = "Montant libre";
+
+"EVENT_HEADER_MONEY_COLLECTED" = "Collectée";
+"EVENT_HEADER_DAY_LEFT" = "Jours restant";
 
 "EVENT_INVITE_PARTICIPANT" = "LISTE DES PARTICIPANTS";
 "EVENT_PARTICIPANTS_INVITED" = "%.2d AUTRES PARTICIPANTS";
@@ -196,6 +204,9 @@
 
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_WAITING" = "Invité";
+
+"SECORE_CODE_TEXT" = "TAPER VOTRE CODE";
+"SECORE_CODE_TEXT_2" = "TAPER VOTRE NOUVEAU CODE";
 
 "DOCUMENTS_CARD_ID_RECTO" = "ID Card (Recto)";
 "DOCUMENTS_CARD_ID_VERSO" = "ID Card (Verso)";

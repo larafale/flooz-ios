@@ -32,6 +32,7 @@
 
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction;
 - (void)showPaymentField;
+- (void)hidePaymentField;
 
 @property (weak, nonatomic) UIViewController<TransactionCellDelegate> *delegate;
 @property (weak, nonatomic) FLTransaction *transaction;

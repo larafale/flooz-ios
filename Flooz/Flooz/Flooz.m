@@ -211,7 +211,7 @@
         }
     };
     
-    [self requestPath:@"feeds" method:@"GET" params:nil success:successBlock failure:failure];
+    [self requestPath:@"feeds" method:@"GET" params:@{ @"scope": @"private" } success:successBlock failure:failure];
 }
 
 - (void)events:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure

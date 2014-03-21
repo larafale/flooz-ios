@@ -10,11 +10,19 @@
 
 @interface FLSocial : NSObject
 
+typedef NS_ENUM(NSInteger, SocialScope) {
+    SocialScopeNone, // Pour desactiver pour les cagnottes
+    SocialScopePublic,
+    SocialScopeFriend,
+    SocialScopePrivate
+};
+
 @property NSUInteger commentsCount;
 @property NSUInteger likesCount;
 @property BOOL isCommented;
 @property BOOL isLiked;
 @property NSString *likeText;
+@property SocialScope scope;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

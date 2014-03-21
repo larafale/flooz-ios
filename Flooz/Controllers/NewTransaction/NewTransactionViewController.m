@@ -21,6 +21,8 @@
 #import "FLContainerViewController.h"
 #import "TimelineViewController.h"
 
+#import "SecureCodeViewController.h"
+
 @interface NewTransactionViewController (){
     NSMutableDictionary *transaction;
     
@@ -184,6 +186,7 @@
     [UIView animateWithDuration:.5 animations:^{
         CGRectSetHeight(amountInput.frame, [FLNewTransactionAmount height]);
         CGRectSetY(content.frame, content.frame.origin.y + [FLNewTransactionAmount height]);
+        _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), CGRectGetMaxY(content.frame));
     }];
 }
 
@@ -197,6 +200,7 @@
     [UIView animateWithDuration:.5 animations:^{
         CGRectSetHeight(amountInput.frame, 1);
         CGRectSetY(content.frame, content.frame.origin.y - [FLNewTransactionAmount height]);
+        _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), CGRectGetMaxY(content.frame));
     }];
 }
 
@@ -204,12 +208,11 @@
 {
     [[self view] endEditing:YES];
     
-    NSLog(@"didTypePaymentelected");
-    
     if(CGRectGetHeight(payementField.frame) <= 1){
         [UIView animateWithDuration:.5 animations:^{
             CGRectSetHeight(payementField.frame, [FLPaymentField height]);
             CGRectSetY(content.frame, content.frame.origin.y + [FLPaymentField height]);
+            _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), CGRectGetMaxY(content.frame));
         }];
     }
 }
@@ -219,13 +222,12 @@
     [[self view] endEditing:YES];
     
     [transaction setValue:nil forKey:@"source"];
-    
-    NSLog(@"didTypeCollectSelected");
-    
+        
     if(CGRectGetHeight(payementField.frame) > 1){
         [UIView animateWithDuration:.5 animations:^{
             CGRectSetHeight(payementField.frame, 1);
             CGRectSetY(content.frame, content.frame.origin.y - [FLPaymentField height]);
+            _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), CGRectGetMaxY(content.frame));
         }];
     }
 }
@@ -241,9 +243,8 @@
 {
     [[self view] endEditing:YES];
     
-    [[Flooz sharedInstance] showLoadView];
-    
     if(isEvent){
+        [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] createEvent:transaction success:^(id result) {
             FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
             EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
@@ -260,13 +261,27 @@
         } failure:NULL];
     }
     else{
-        [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
-            FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
-            TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
-            [self dismissViewControllerAnimated:YES completion:^{
-                [[timelineController filterView] selectFilter:2];
-            }];
-        } failure:NULL];
+        CompleteBlock completeBlock = ^{
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
+                FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
+                TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [[timelineController filterView] selectFilter:2];
+                }];
+            } failure:NULL];
+        };
+        
+        if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+
+            SecureCodeViewController *controller = [SecureCodeViewController new];
+            controller.completeBlock = completeBlock;
+
+            [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+        }
+        else{
+            completeBlock();
+        }
     }
 }
 
@@ -318,6 +333,8 @@
 - (void)keyboardWillDisappear
 {
     _contentView.contentInset = UIEdgeInsetsZero;
+    
+    CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _contentView.frame.origin.y);
 }
 
 @end

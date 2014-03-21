@@ -20,7 +20,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json
-{
+{    
     _eventId = [json objectForKey:@"_id"];
     
     if([[json objectForKey:@"isInvited"] boolValue]){
@@ -32,9 +32,11 @@
     else{
         _status = EventStatusRefused;
     }
-    
+            
     _amount = [json objectForKey:@"amount"];
-    _amountCollect = [json objectForKey:@"total"];
+    _amountCollected = [json objectForKey:@"total"];
+    _amountExpected = @512;
+    _dayLeft = @3;
     
     _title = [json objectForKey:@"name"];
     _content = [json objectForKey:@"why"];
@@ -43,6 +45,7 @@
     _attachmentThumbURL = [json objectForKey:@"picMini"];
     
     _social = [[FLSocial alloc] initWithJSON:json];
+    _social.scope = SocialScopeNone;
     
     {
         _isPrivate = NO;

@@ -58,6 +58,8 @@
     }
     if([_dictionary objectForKey:@"image"]){
         imageButton.selected = YES;
+        
+        [[imageButton imageView] setContentMode:UIViewContentModeScaleAspectFit]; // Permet de garder proportion
         [imageButton setImage:[UIImage imageWithData:[_dictionary objectForKey:@"image"]] forState:UIControlStateSelected];
     }
     if([_dictionary objectForKey:@"share"]){

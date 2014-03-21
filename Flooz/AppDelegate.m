@@ -13,7 +13,7 @@
 #import "HomeViewController.h"
 #import "SignupViewController.h"
 
-#import "SocialViewController.h"
+#import "EventsViewController.h"
 #import "TimelineViewController.h"
 #import "AccountViewController.h"
 
@@ -33,7 +33,7 @@
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
-    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
+//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
 //    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
     
@@ -43,7 +43,7 @@
 - (void)didConnected
 {
     FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[
-        [SocialViewController new], [TimelineViewController new], [AccountViewController new]
+        [EventsViewController new], [TimelineViewController new], [AccountViewController new]
     ]];
 
     [UIView transitionWithView:self.window

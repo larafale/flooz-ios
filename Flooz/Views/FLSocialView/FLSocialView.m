@@ -26,6 +26,7 @@
     comment = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     like = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     separator = [[UIView alloc] initWithFrame:CGRectMakeSize(1, CGRectGetHeight(self.frame))];
+    scope = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 13, 10)];
     
     comment.font = [UIFont customContentRegular:11];
     like.font = [UIFont customContentRegular:11];
@@ -35,9 +36,14 @@
     like.userInteractionEnabled = YES;
     [like addGestureRecognizer:_gesture];
     
+
+    
+
+    
     [self addSubview:comment];
     [self addSubview:like];
 //    [self addSubview:separator];
+    [self addSubview:scope];
 }
 
 - (void)prepareView:(FLSocial *)social
@@ -51,7 +57,7 @@
         }
         
         if(social.isLiked){
-            like.textColor = [UIColor whiteColor];
+            like.textColor = [UIColor customBlue];
             [like setImage:[UIImage imageNamed:@"social-like-selected"]];
         }
         else{
@@ -68,6 +74,7 @@
     {
         if(social.commentsCount == 0){
             comment.hidden = YES;
+            CGRectSetX(comment.frame, CGRectGetMaxX(like.frame));
         }
         else{
             comment.hidden = NO;
@@ -75,7 +82,7 @@
             comment.text = [NSString stringWithFormat:@"%.2ld", social.commentsCount];
             
             if(social.isCommented){
-                comment.textColor = [UIColor whiteColor];
+                comment.textColor = [UIColor customBlue];
                 [comment setImage:[UIImage imageNamed:@"social-comment-selected"]];
             }
             else{
@@ -91,6 +98,27 @@
             CGRectSetX(comment.frame, CGRectGetMaxX(like.frame) + 5);
         }
     }
+    
+    {
+        switch ([social scope]) {
+            case SocialScopePrivate:
+                scope.image = [UIImage imageNamed:@"scope-private"];
+                break;
+            case SocialScopeFriend:
+                scope.image = [UIImage imageNamed:@"scope-friend"];
+                break;
+            case SocialScopePublic:
+                scope.image = [UIImage imageNamed:@"scope-public"];
+                break;
+            default:
+                scope.image = nil;
+                break;
+        }
+        
+        CGRectSetX(scope.frame, CGRectGetMaxX(comment.frame) + 7);
+    }
+    
+    CGRectSetWidth(self.frame, CGRectGetMaxX(scope.frame));
 }
 
 - (void)addTargetForLike:(id)target action:(SEL)action

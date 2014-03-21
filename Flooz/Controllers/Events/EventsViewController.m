@@ -17,6 +17,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.title = NSLocalizedString(@"NAV_EVENTS", nil);
         events = [NSMutableArray new];
         _scope = @"1";
         nextPageIsLoading = NO;

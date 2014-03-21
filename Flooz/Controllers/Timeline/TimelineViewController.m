@@ -47,10 +47,7 @@
     {
         [_filterView addFilter:@"TIMELINE_FILTER_PUBLIC" target:self action:@selector(didFilterPublicTouch)];
         [_filterView addFilter:@"TIMELINE_FILTER_FRIEND" target:self action:@selector(didFilterFriendTouch)];
-        [_filterView addFilter:@"TIMELINE_FILTER_PERSO" target:self action:@selector(didFilterPersoTouch:) colors:@[
-                                                                                        [UIColor customBlue],
-                                                                                        [UIColor customYellow]
-                                                                                        ]];
+        [_filterView addFilter:@"TIMELINE_FILTER_PERSO" target:self action:@selector(didFilterPersoTouch)];
     }
     
 //    if([[[Flooz sharedInstance] currentUser] haveStatsPending]){
@@ -146,7 +143,7 @@
 {
     [refreshControl beginRefreshing];
 
-    [[Flooz sharedInstance] timeline:currentFilter state:currentScope success:^(id result, NSString *nextPageUrl) {
+    [[Flooz sharedInstance] timeline:currentFilter success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
@@ -157,7 +154,6 @@
 - (void)didFilterPublicTouch
 {
     currentFilter = @"public";
-    currentScope = @"";
 
     [[Flooz sharedInstance] timeline:@"public" success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
@@ -170,7 +166,6 @@
 - (void)didFilterFriendTouch
 {
     currentFilter = @"friend";
-    currentScope = @"";
 
     [[Flooz sharedInstance] timeline:@"friend" success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
@@ -180,17 +175,11 @@
     } failure:NULL];
 }
 
-- (void)didFilterPersoTouch:(NSNumber *)index
+- (void)didFilterPersoTouch
 {
-    NSString *state = @"";
-    if([index intValue] == 1){
-        state = @"pending";
-    }
-    
     currentFilter = @"private";
-    currentScope = state;
     
-    [[Flooz sharedInstance] timeline:@"private" state:state success:^(id result, NSString *nextPageUrl) {
+    [[Flooz sharedInstance] timeline:@"private" state:@"" success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
@@ -245,11 +234,16 @@
     [_tableView endUpdates];
 }
 
-- (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath{
+- (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath
+{
+    NSMutableSet *rowsToReload = [rowsWithPaymentField mutableCopy];
+    
+    [rowsWithPaymentField removeAllObjects];
     [rowsWithPaymentField addObject:indexPath];
+    [rowsToReload addObject:indexPath];
     
     [_tableView beginUpdates];
-    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [_tableView reloadRowsAtIndexPaths:[rowsToReload allObjects] withRowAnimation:UITableViewRowAnimationNone];
     [_tableView endUpdates];
 }
 

@@ -24,7 +24,7 @@
 {
     [self createTitleView];
     [self createAcceptView];
-    [self createBottomBar];
+//    [self createBottomBar];
 }
 
 - (void)createTitleView

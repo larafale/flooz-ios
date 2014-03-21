@@ -9,6 +9,8 @@
 #import "CashOutViewController.h"
 #import "FLNewTransactionAmount.h"
 
+#import "SecureCodeViewController.h"
+
 @interface CashOutViewController (){
     FLNewTransactionAmount *amountInput;
     NSMutableDictionary *dictionary;
@@ -73,13 +75,21 @@
 - (void)didValidTouch
 {
     [[self view] endEditing:YES];
-        
-    if([[dictionary objectForKey:@"amount"] floatValue] > 0){
+    
+    if([[dictionary objectForKey:@"amount"] floatValue] <= 0){
+        return;
+    }
+    
+    CompleteBlock completeBlock = ^{
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] cashout:[dictionary objectForKey:@"amount"] success:^(id result) {
             [self dismissViewControllerAnimated:YES completion:NULL];
         } failure:NULL];
-    }
+    };
+    
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    controller.completeBlock = completeBlock;
+    [[self navigationController] pushViewController:controller animated:YES];
 }
 
 @end

@@ -13,9 +13,17 @@
 @interface FriendPickerViewController : UIViewController<FriendPickerSearchBarDelegate, UITableViewDataSource, UITableViewDelegate>{
     NSMutableArray *_contactsFromAdressBook;
     NSMutableArray *_contactsFromFacebook;
+
+    NSArray *_friends;
+    NSArray *_friendsRecent;
+    
+    NSArray *_friendsFiltred;
+    NSArray *_friendsRecentFiltred;
     
     NSArray *_currentContacts;
     NSArray *_contacts;
+    
+
     
     NSString *_selectionText;
 }
