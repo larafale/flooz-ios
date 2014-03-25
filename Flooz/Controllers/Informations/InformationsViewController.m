@@ -9,7 +9,6 @@
 #import "InformationsViewController.h"
 
 #import "WebViewController.h"
-#import "PreviewViewController.h"
 
 @interface InformationsViewController (){
     NSArray *links;
@@ -29,7 +28,6 @@
                   @"why",
                   @"terms",
                   @"faq",
-                  @"preview",
                   @"website",
                   @"about",
                   @"contact"
@@ -78,13 +76,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Tour
-    if(indexPath.row == 3){
-        PreviewViewController *controller = [PreviewViewController new];
-        [[self navigationController] pushViewController:controller animated:YES];
-        return;
-    }
-    
     NSString *url;
     NSString *link = [links objectAtIndex:indexPath.row];
     NSString *title = NSLocalizedString([@"INFORMATIONS_" stringByAppendingString:[link uppercaseString]], nil);
@@ -99,13 +90,13 @@
         case 2:
             url = @"n/faq";
             break;
-        case 4:
+        case 3:
             url = @"";
             break;
-        case 5:
+        case 4:
             url = @"n/about";
             break;
-        case 6:
+        case 5:
             url = @"n/contact";
             break;
         default:

@@ -10,6 +10,8 @@
 #import "EventCellDelegate.h"
 
 @interface EventsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, EventCellDelegate>{
+    UIButton *crossButton;
+    
     NSMutableArray *events;
     
     NSString *_nextPageUrl;
@@ -19,6 +21,5 @@
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
-@property (strong) NSString *scope;
 
 @end

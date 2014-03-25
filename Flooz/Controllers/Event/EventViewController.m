@@ -129,38 +129,56 @@
         [_contentView addSubview:closeButton];
     }
     
-    if([_event statusText]){
-        UILabel *status = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, 0, 18)];
-        status.backgroundColor = [UIColor customBackground];
-        status.layer.borderColor = [UIColor customSeparator].CGColor;
-        status.layer.borderWidth = 1.;
-        status.layer.cornerRadius = 9.;
-        status.font = [UIFont customTitleBook:10];
-        status.textAlignment = NSTextAlignmentCenter;
+    if([_event isInvited] || true){
+        JTImageLabel *view = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
         
-        UIColor *textColor = [UIColor whiteColor];
+        view.textAlignment = NSTextAlignmentRight;
+        view.textColor = [UIColor whiteColor];
+        view.font = [UIFont customContentLight:11];
         
-        switch ([_event status]) {
-            case EventStatusAccepted:
-                textColor = [UIColor customGreen];
-                break;
-            case EventStatusPending:
-                textColor = [UIColor customYellow];
-                break;
-            case EventStatusRefused:
-                textColor = [UIColor customRed];
-                break;
-        }
+        [view setImage:[UIImage imageNamed:@"invite"]];
+        [view setImageOffset:CGPointMake(- 4, - 1)];
         
-        status.textColor = textColor;
+        view.text = NSLocalizedString(@"EVENT_STATUS_IS_INVITED", nil);
         
-        status.text = [NSString stringWithFormat:@"  %@", [_event statusText]]; // Hack pour mettre un padding
-        [status setWidthToFit];
-        CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 30);
-        CGRectSetX(status.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(status.frame) - 13);
+        [view setWidthToFit];
+        CGRectSetX(view.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(view.frame) - 13);
         
-        [_contentView addSubview:status];
+        [_contentView addSubview:view];
     }
+    
+//    if([_event statusText]){
+//        UILabel *status = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, 0, 18)];
+//        status.backgroundColor = [UIColor customBackground];
+//        status.layer.borderColor = [UIColor customSeparator].CGColor;
+//        status.layer.borderWidth = 1.;
+//        status.layer.cornerRadius = 9.;
+//        status.font = [UIFont customTitleBook:10];
+//        status.textAlignment = NSTextAlignmentCenter;
+//        
+//        UIColor *textColor = [UIColor whiteColor];
+//        
+//        switch ([_event status]) {
+//            case EventStatusAccepted:
+//                textColor = [UIColor customGreen];
+//                break;
+//            case EventStatusPending:
+//                textColor = [UIColor customYellow];
+//                break;
+//            case EventStatusRefused:
+//                textColor = [UIColor customRed];
+//                break;
+//        }
+//        
+//        status.textColor = textColor;
+//        
+//        status.text = [NSString stringWithFormat:@"  %@", [_event statusText]]; // Hack pour mettre un padding
+//        [status setWidthToFit];
+//        CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 30);
+//        CGRectSetX(status.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(status.frame) - 13);
+//        
+//        [_contentView addSubview:status];
+//    }
     
     
     {
@@ -173,9 +191,7 @@
         _mainView.layer.shadowColor = [UIColor blackColor].CGColor;
         _mainView.layer.shadowOffset = CGSizeMake(-1, -1);
         _mainView.layer.shadowOpacity = .5;
-        
-        _mainView.clipsToBounds = YES;
-        
+                
         [_contentView addSubview:_mainView];
     }
     
@@ -191,14 +207,6 @@
     {
         EventAmountView *view = [[EventAmountView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event = _event;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
-    }
-    
-    {
-        EventUsersView *view = [[EventUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.event = _event;
-        view.delegate = self;
         [_mainView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
@@ -219,6 +227,15 @@
     }
     else if([_event canParticipate] || [_event canCancelOffer] || [_event canAcceptOrDeclineOffer]){
         EventActionView *view = [[EventActionView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        view.event = _event;
+        view.delegate = self;
+        [_mainView addSubview:view];
+        height = CGRectGetMaxY(view.frame);
+    }
+    
+    
+    {
+        EventUsersView *view = [[EventUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event = _event;
         view.delegate = self;
         [_mainView addSubview:view];

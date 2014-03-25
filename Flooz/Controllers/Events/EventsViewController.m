@@ -11,6 +11,8 @@
 #import "EventCell.h"
 #import "EventViewController.h"
 
+#import "MenuNewTransactionViewController.h"
+
 @implementation EventsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -19,7 +21,6 @@
     if (self) {
         self.title = NSLocalizedString(@"NAV_EVENTS", nil);
         events = [NSMutableArray new];
-        _scope = @"1";
         nextPageIsLoading = NO;
     }
     return self;
@@ -29,17 +30,37 @@
 {
     [super viewDidLoad];
     
+    UIImageView *shadow = [UIImageView imageNamed:@"tableview-shadow"];
+    CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
+    [self.view addSubview:shadow];
+    
+    UIImage *buttonImage = [UIImage imageNamed:@"menu-new-transaction"];
+    crossButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - buttonImage.size.width) / 2., self.view.frame.size.height - buttonImage.size.height - 20, buttonImage.size.width, buttonImage.size.height)];
+    [crossButton setImage:buttonImage forState:UIControlStateNormal];
+    [self.view addSubview:crossButton];
+    
+    [crossButton addTarget:self action:@selector(presentMenuTransactionController) forControlEvents:UIControlEventTouchUpInside];
+    
     refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     
     if(!animated){
         [self handleRefresh];
     }
+    
+    crossButton.frame = CGRectMake((self.view.frame.size.width - crossButton.imageView.image.size.width) / 2., self.view.frame.size.height - crossButton.imageView.image.size.height - 20, crossButton.imageView.image.size.width, crossButton.imageView.image.size.height);
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    crossButton.hidden = NO;
 }
 
 #pragma mark - TableView
@@ -112,7 +133,7 @@
 {
     [refreshControl beginRefreshing];
     
-    [[Flooz sharedInstance] events:_scope success:^(id result, NSString *nextPageUrl) {
+    [[Flooz sharedInstance] events:@"1" success:^(id result, NSString *nextPageUrl) {
         events = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
@@ -121,6 +142,20 @@
         [_tableView reloadData];
         [_tableView setContentOffset:CGPointZero animated:YES];
     } failure:NULL];
+}
+
+#pragma mark -
+
+- (void)presentMenuTransactionController
+{
+    crossButton.hidden = YES;
+    
+    UIViewController *controller = [MenuNewTransactionViewController new];
+    self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    
+    [self presentViewController:controller animated:YES completion:^{
+        self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }];
 }
 
 @end

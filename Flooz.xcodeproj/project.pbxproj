@@ -39,8 +39,6 @@
 		AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08DF1871AAB400CF8380 /* Flooz.m */; };
 		AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */; };
 		AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
-		AB4CB6DB1886A26400D1C573 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6D91886A26400D1C573 /* PreviewViewController.m */; };
-		AB4CB6DC1886A26400D1C573 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6DA1886A26400D1C573 /* PreviewViewController.xib */; };
 		AB4CB6E11886AE2D00D1C573 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6DF1886AE2D00D1C573 /* LoginViewController.m */; };
 		AB4CB6E21886AE2D00D1C573 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6E01886AE2D00D1C573 /* LoginViewController.xib */; };
 		AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6F61886C1C600D1C573 /* SignupViewController.m */; };
@@ -59,7 +57,6 @@
 		AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50918C4A5D80073B947 /* WebViewController.m */; };
 		AB6DA50C18C4A5D80073B947 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA50A18C4A5D80073B947 /* WebViewController.xib */; };
 		AB6DA51018C4DDFD0073B947 /* FLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50F18C4DDFD0073B947 /* FLImageView.m */; };
-		AB6DA51518C89C240073B947 /* PreviewNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51418C89C240073B947 /* PreviewNavBar.m */; };
 		AB6DA51A18C8C5B90073B947 /* FriendSearchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51918C8C5B90073B947 /* FriendSearchButton.m */; };
 		AB6DA52018C8CEF70073B947 /* FriendAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51E18C8CEF70073B947 /* FriendAddViewController.m */; };
 		AB6DA52118C8CEF70073B947 /* FriendAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA51F18C8CEF70073B947 /* FriendAddViewController.xib */; };
@@ -70,6 +67,7 @@
 		AB7C9B2218D73AE9002775BA /* SecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2018D73AE9002775BA /* SecureCodeViewController.m */; };
 		AB7C9B2318D73AE9002775BA /* SecureCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C9B2118D73AE9002775BA /* SecureCodeViewController.xib */; };
 		AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2618D84F99002775BA /* SecureCodeField.m */; };
+		AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */; };
 		ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4618BCE805002FCAAE /* EventViewController.m */; };
 		ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D4718BCE805002FCAAE /* EventViewController.xib */; };
 		ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4D18BE60C5002FCAAE /* EventHeaderView.m */; };
@@ -221,9 +219,6 @@
 		AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+custom.m"; path = "Util/UIColor+custom.m"; sourceTree = "<group>"; };
 		AB3D08E51871C0CC00CF8380 /* UIFont+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIFont+custom.h"; path = "Util/UIFont+custom.h"; sourceTree = "<group>"; };
 		AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIFont+custom.m"; path = "Util/UIFont+custom.m"; sourceTree = "<group>"; };
-		AB4CB6D81886A26400D1C573 /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewViewController.h; path = Controllers/Preview/PreviewViewController.h; sourceTree = "<group>"; };
-		AB4CB6D91886A26400D1C573 /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreviewViewController.m; path = Controllers/Preview/PreviewViewController.m; sourceTree = "<group>"; };
-		AB4CB6DA1886A26400D1C573 /* PreviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PreviewViewController.xib; path = Controllers/Preview/PreviewViewController.xib; sourceTree = "<group>"; };
 		AB4CB6DE1886AE2D00D1C573 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Controllers/Login/LoginViewController.h; sourceTree = "<group>"; };
 		AB4CB6DF1886AE2D00D1C573 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Controllers/Login/LoginViewController.m; sourceTree = "<group>"; };
 		AB4CB6E01886AE2D00D1C573 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Controllers/Login/LoginViewController.xib; sourceTree = "<group>"; };
@@ -251,9 +246,6 @@
 		AB6DA50A18C4A5D80073B947 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = Controllers/Web/WebViewController.xib; sourceTree = "<group>"; };
 		AB6DA50E18C4DDFD0073B947 /* FLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLImageView.h; path = Views/FLImageView/FLImageView.h; sourceTree = "<group>"; };
 		AB6DA50F18C4DDFD0073B947 /* FLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLImageView.m; path = Views/FLImageView/FLImageView.m; sourceTree = "<group>"; };
-		AB6DA51318C89C240073B947 /* PreviewNavBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreviewNavBar.h; path = Controllers/Preview/PreviewNavBar/PreviewNavBar.h; sourceTree = "<group>"; };
-		AB6DA51418C89C240073B947 /* PreviewNavBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreviewNavBar.m; path = Controllers/Preview/PreviewNavBar/PreviewNavBar.m; sourceTree = "<group>"; };
-		AB6DA51618C8A48B0073B947 /* PreviewNavBarDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PreviewNavBarDelegate.h; path = Controllers/Preview/PreviewNavBar/PreviewNavBarDelegate.h; sourceTree = "<group>"; };
 		AB6DA51818C8C5B90073B947 /* FriendSearchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendSearchButton.h; path = Controllers/Friends/FriendSearchButton/FriendSearchButton.h; sourceTree = "<group>"; };
 		AB6DA51918C8C5B90073B947 /* FriendSearchButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendSearchButton.m; path = Controllers/Friends/FriendSearchButton/FriendSearchButton.m; sourceTree = "<group>"; };
 		AB6DA51B18C8CE6D0073B947 /* FriendSearchButtonDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FriendSearchButtonDelegate.h; path = Controllers/Friends/FriendSearchButton/FriendSearchButtonDelegate.h; sourceTree = "<group>"; };
@@ -277,6 +269,8 @@
 		AB7C9B2618D84F99002775BA /* SecureCodeField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecureCodeField.m; path = Controllers/SecureCode/SecureCodeField/SecureCodeField.m; sourceTree = "<group>"; };
 		AB7C9B2818D8559A002775BA /* FLKeyboardViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLKeyboardViewDelegate.h; path = Views/FLKeyboardView/FLKeyboardViewDelegate.h; sourceTree = "<group>"; };
 		AB7C9B2918D85AEA002775BA /* SecureCodeFieldDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SecureCodeFieldDelegate.h; path = Controllers/SecureCode/SecureCodeField/SecureCodeFieldDelegate.h; sourceTree = "<group>"; };
+		AB8F9FA418E18F45006039D0 /* NewTransactionDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionDatePicker.h; path = Controllers/NewTransaction/NewTransactionDatePicker/NewTransactionDatePicker.h; sourceTree = "<group>"; };
+		AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionDatePicker.m; path = Controllers/NewTransaction/NewTransactionDatePicker/NewTransactionDatePicker.m; sourceTree = "<group>"; };
 		ABB12D4518BCE805002FCAAE /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventViewController.h; path = Controllers/Event/EventViewController.h; sourceTree = "<group>"; };
 		ABB12D4618BCE805002FCAAE /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventViewController.m; path = Controllers/Event/EventViewController.m; sourceTree = "<group>"; };
 		ABB12D4718BCE805002FCAAE /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Controllers/Event/EventViewController.xib; sourceTree = "<group>"; };
@@ -667,7 +661,6 @@
 				ABE9141C1889436B003AC722 /* NewTransaction */,
 				ABE9147518929A61003AC722 /* Notifications */,
 				AB2FB53F18AD9C660079AA1D /* Password */,
-				AB4CB6D71886A24B00D1C573 /* Preview */,
 				AB2FB53918AD8D370079AA1D /* RIB */,
 				AB7C9B1E18D73AD2002775BA /* SecureCode */,
 				AB5EB6DF188214F000D81AF6 /* Settings */,
@@ -781,17 +774,6 @@
 				ABE914321890A01F003AC722 /* FLNavbarView.m */,
 			);
 			name = FLContainerViewController;
-			sourceTree = "<group>";
-		};
-		AB4CB6D71886A24B00D1C573 /* Preview */ = {
-			isa = PBXGroup;
-			children = (
-				AB6DA51218C89C100073B947 /* PreviewNavBar */,
-				AB4CB6D81886A26400D1C573 /* PreviewViewController.h */,
-				AB4CB6D91886A26400D1C573 /* PreviewViewController.m */,
-				AB4CB6DA1886A26400D1C573 /* PreviewViewController.xib */,
-			);
-			name = Preview;
 			sourceTree = "<group>";
 		};
 		AB4CB6DD1886AE1E00D1C573 /* Login */ = {
@@ -921,16 +903,6 @@
 			name = FLImageView;
 			sourceTree = "<group>";
 		};
-		AB6DA51218C89C100073B947 /* PreviewNavBar */ = {
-			isa = PBXGroup;
-			children = (
-				AB6DA51318C89C240073B947 /* PreviewNavBar.h */,
-				AB6DA51418C89C240073B947 /* PreviewNavBar.m */,
-				AB6DA51618C8A48B0073B947 /* PreviewNavBarDelegate.h */,
-			);
-			name = PreviewNavBar;
-			sourceTree = "<group>";
-		};
 		AB6DA51718C8C5970073B947 /* FriendSearchButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1010,6 +982,15 @@
 				AB7C9B2918D85AEA002775BA /* SecureCodeFieldDelegate.h */,
 			);
 			name = SecureCodeField;
+			sourceTree = "<group>";
+		};
+		AB8F9FA318E18F2E006039D0 /* NewTransactionDatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				AB8F9FA418E18F45006039D0 /* NewTransactionDatePicker.h */,
+				AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */,
+			);
+			name = NewTransactionDatePicker;
 			sourceTree = "<group>";
 		};
 		ABB12D4418BCE7E5002FCAAE /* Event */ = {
@@ -1176,6 +1157,7 @@
 		ABE9141C1889436B003AC722 /* NewTransaction */ = {
 			isa = PBXGroup;
 			children = (
+				AB8F9FA318E18F2E006039D0 /* NewTransactionDatePicker */,
 				AB7C9B0F18D70477002775BA /* NewTransactionSelectType */,
 				ABE9141D18894385003AC722 /* NewTransactionViewController.h */,
 				ABE9141E18894385003AC722 /* NewTransactionViewController.m */,
@@ -1643,7 +1625,6 @@
 				ABBB75CC18B63DB20070C2A8 /* CreditCardViewController.xib in Resources */,
 				AB2FB55218B232B10079AA1D /* AcitvitiesViewController.xib in Resources */,
 				ABE9146318929168003AC722 /* AccountViewController.xib in Resources */,
-				AB4CB6DC1886A26400D1C573 /* PreviewViewController.xib in Resources */,
 				AB3D08A4186CA11A00CF8380 /* Images.xcassets in Resources */,
 				ABF46A10187575C600E92A77 /* Localizable.strings in Resources */,
 				AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */,
@@ -1734,10 +1715,10 @@
 				ABF7093E18A4D63300517389 /* EventCell.m in Sources */,
 				ABC1115218ACE4AA00C3C52D /* TransactionCommentsView.m in Sources */,
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
+				AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */,
 				ABE9149818967670003AC722 /* FLTextFieldIcon.m in Sources */,
 				ABB12D7018BFA2D2002FCAAE /* EventParticipantCell.m in Sources */,
 				ABE9143A1890A034003AC722 /* FLNavigationController.m in Sources */,
-				AB4CB6DB1886A26400D1C573 /* PreviewViewController.m in Sources */,
 				ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */,
 				AB7C9B2218D73AE9002775BA /* SecureCodeViewController.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
@@ -1760,7 +1741,6 @@
 				ABE914AB1898558E003AC722 /* FLTextView.m in Sources */,
 				ABF7092A18A2CA3500517389 /* TransactionViewController.m in Sources */,
 				ABE914451890A12C003AC722 /* FLTransaction.m in Sources */,
-				AB6DA51518C89C240073B947 /* PreviewNavBar.m in Sources */,
 				AB2FB54818AE798D0079AA1D /* FLActivity.m in Sources */,
 				AB6DA52A18C8D4CE0073B947 /* FriendAddCell.m in Sources */,
 				ABE9143D1890A08A003AC722 /* UIBarButtonItem+custom.m in Sources */,

@@ -34,6 +34,7 @@
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
 - (void)login:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)updateCurrentUser;
 - (void)updateCurrentUserWithSuccess:(void (^)())success;

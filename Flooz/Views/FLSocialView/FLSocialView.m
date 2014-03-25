@@ -26,7 +26,7 @@
     comment = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     like = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     separator = [[UIView alloc] initWithFrame:CGRectMakeSize(1, CGRectGetHeight(self.frame))];
-    scope = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 13, 10)];
+    scope = [[UIImageView alloc] initWithFrame:CGRectMake(0, 1, 13, 10)];
     
     comment.font = [UIFont customContentRegular:11];
     like.font = [UIFont customContentRegular:11];
@@ -36,9 +36,6 @@
     like.userInteractionEnabled = YES;
     [like addGestureRecognizer:_gesture];
     
-
-    
-
     
     [self addSubview:comment];
     [self addSubview:like];
@@ -61,11 +58,11 @@
             [like setImage:[UIImage imageNamed:@"social-like-selected"]];
         }
         else{
-            like.textColor = [UIColor customBlueLight];
+            like.textColor = [UIColor customPlaceholder];
             [like setImage:[UIImage imageNamed:@"social-like"]];
         }
         
-        [like setImageOffset:CGPointMake(-5, 0)];
+        [like setImageOffset:CGPointMake(-2.5, -1)];
         [like setWidthToFit];
         
         CGRectSetWidth(like.frame, CGRectGetWidth(like.frame) + 18);
@@ -74,6 +71,8 @@
     {
         if(social.commentsCount == 0){
             comment.hidden = YES;
+            
+            CGRectSetWidth(comment.frame, 0);
             CGRectSetX(comment.frame, CGRectGetMaxX(like.frame));
         }
         else{
@@ -86,15 +85,14 @@
                 [comment setImage:[UIImage imageNamed:@"social-comment-selected"]];
             }
             else{
-                comment.textColor = [UIColor customBlueLight];
+                comment.textColor = [UIColor customPlaceholder];
                 [comment setImage:[UIImage imageNamed:@"social-comment"]];
             }
             
-            [comment setImageOffset:CGPointMake(-5, 0)];
+            [comment setImageOffset:CGPointMake(-2.5, -1)];
             [comment setWidthToFit];
             
             CGRectSetWidth(comment.frame, CGRectGetWidth(comment.frame) + 18);
-            
             CGRectSetX(comment.frame, CGRectGetMaxX(like.frame) + 5);
         }
     }

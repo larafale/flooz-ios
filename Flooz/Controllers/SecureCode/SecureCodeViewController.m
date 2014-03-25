@@ -17,6 +17,11 @@
     UILabel *textCode;
     SecureCodeField *secureCodeField;
     FLKeyboardView *keyboardView;
+    UIButton *passwordForget;
+    NSMutableDictionary *user;
+    
+    FLTextFieldIcon *usernameField;
+    FLTextFieldIcon *passwordField;
 }
 
 @end
@@ -29,6 +34,7 @@
     if (self) {
         self.title = NSLocalizedString(@"NAV_SECURE_CODE", nil);
         _isForChangeSecureCode = NO;
+        user = [NSMutableDictionary new];
     }
     return self;
 }
@@ -46,6 +52,29 @@
         textCode.font = [UIFont customContentRegular:14];
         
         [self.view addSubview:textCode];
+    }
+    
+    {
+        usernameField = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(20, 50)];
+        passwordField = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(20, CGRectGetMaxY(usernameField.frame))];
+     
+        usernameField.hidden = YES;
+        passwordField.hidden = YES;
+        
+        [self.view addSubview:usernameField];
+        [self.view addSubview:passwordField];
+    }
+    
+    {
+        passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, 150, CGRectGetWidth(self.view.frame), 50)];
+        passwordForget.titleLabel.textAlignment = NSTextAlignmentCenter;
+        passwordForget.titleLabel.font = [UIFont customContentRegular:12];
+        [passwordForget setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
+        [passwordForget setTitle:NSLocalizedString(@"LOGIN_PASSWORD_FORGOT", nil) forState:UIControlStateNormal];
+        
+        [passwordForget addTarget:self action:@selector(didPasswordForgetTouch) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.view addSubview:passwordForget];
     }
     
     secureCodeField = [SecureCodeField new];
@@ -113,14 +142,14 @@
 {
     if([self navigationController]){
         if([[[self navigationController] viewControllers] count] == 1){
-            [[self navigationController] dismissViewControllerAnimated:YES completion:NULL];
+            [[self navigationController] dismissViewControllerAnimated:YES completion:_completeBlock];
         }
         else{
             [[self navigationController] popViewControllerAnimated:YES];
-        }
-        
-        if(_completeBlock){
-            _completeBlock();
+            
+            if(_completeBlock){
+                _completeBlock();
+            }
         }
     }
     else{
@@ -134,18 +163,54 @@
     
     if(!currentSecureCode){
         textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_2", nil);
+        passwordForget.hidden = YES;
         
         [[self navigationItem] setHidesBackButton:YES];
         [[self navigationItem] setLeftBarButtonItem:nil];
     }
     else{
         textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT", nil);
+        passwordForget.hidden = NO;
     }
 }
 
 - (void)clearSecureCode
 {
     [UICKeyChainStore removeAllItems];
+}
+
+- (void)didPasswordForgetTouch
+{
+    passwordForget.hidden = YES;
+    secureCodeField.hidden = YES;
+    keyboardView.hidden = YES;
+    
+    usernameField.hidden = NO;
+    passwordField.hidden = NO;
+    
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(login)];
+}
+
+- (void)login
+{
+    [[self view] endEditing:YES];
+    
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] loginForSecureCode:user success:^(id result) {
+        
+        [secureCodeField clean];
+        [self clearSecureCode];
+        [self checkBlockBackButton];
+        
+        self.navigationItem.rightBarButtonItem = nil;
+        
+        passwordForget.hidden = NO;
+        secureCodeField.hidden = NO;
+        keyboardView.hidden = NO;
+        
+        usernameField.hidden = YES;
+        passwordField.hidden = YES;
+    } failure:NULL];
 }
 
 @end

@@ -92,6 +92,11 @@
     [self requestPath:@"/login/basic" method:@"POST" params:user success:successBlock failure:failure];
 }
 
+- (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"/login/basic" method:@"POST" params:user success:success failure:failure];
+}
+
 - (void)updateCurrentUser
 {
     [self updateCurrentUserWithSuccess:nil];
@@ -531,14 +536,23 @@
         }
         else if(![path isEqualToString:@"/login/basic"] && operation.responseObject){
             id statusCode = [operation.responseObject objectForKey:@"statusCode"];
-            id message = [operation.responseObject objectForKey:@"item"];
             
+            NSString *errorTitle;
+            NSString *errorContent;
+            if([operation.responseObject respondsToSelector:@selector(objectForKey:)]){
+                NSDictionary *error = [operation.responseObject objectForKey:@"item"];
+                if(error && [error objectForKey:@"visible"] && [[error objectForKey:@"visible"] boolValue]){
+                    errorTitle = [[error objectForKey:@"err"] objectForKey:@"title"];
+                    errorContent = [[error objectForKey:@"err"] objectForKey:@"text"];
+                }
+            }
+                
             if([statusCode respondsToSelector:@selector(intValue)] && [statusCode intValue] == 401){
                 // Token expire
                 DISPLAY_ERROR(FLBadLoginError);
                 [self logout];
-            }else if([message respondsToSelector:@selector(length)]){ // Test si string
-                DISPLAY_ERROR_MESSAGE(message);
+            }else if(errorContent){
+                [appDelegate displayErrorMessage:errorTitle content:errorContent];
             }
         }
         

@@ -30,7 +30,6 @@
 {
     [self createContentView];
     [self createAttachmentView];
-    [self createDateView];
     [self createSocialView];
 }
 
@@ -48,20 +47,6 @@
 - (void)createAttachmentView
 {
     FLImageView *view = [[FLImageView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 0, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 80)];
-    [self addSubview:view];
-}
-
-- (void)createDateView
-{
-    JTImageLabel *view = [[JTImageLabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - MARGE_LEFT_RIGHT - 100, 0, 100, 15)];
-    
-    view.textAlignment = NSTextAlignmentRight;
-    view.textColor = [UIColor whiteColor];
-    view.font = [UIFont customContentLight:11];
-    
-    [view setImage:[UIImage imageNamed:@"transaction-content-clock"]];
-    [view setImageOffset:CGPointMake(- 4, 0)];
-    
     [self addSubview:view];
 }
 
@@ -87,7 +72,6 @@
     
     [self prepareContentView];
     [self prepareAttachmentView];
-    [self prepareDateView];
     [self prepareSocialView];
     
     height += MARGE_BOTTOM;
@@ -117,19 +101,9 @@
     }
 }
 
-- (void)prepareDateView
-{
-    JTImageLabel *view = [[self subviews] objectAtIndex:2];
-    CGRectSetY(view.frame, height + 8);
-    
-    view.text = [FLHelper formatedDate:[_event date]];
-    
-//    height = CGRectGetMaxY(view.frame);
-}
-
 - (void)prepareSocialView
 {
-    FLSocialView *view = [[self subviews] objectAtIndex:3];
+    FLSocialView *view = [[self subviews] objectAtIndex:2];
     CGRectSetY(view.frame, height + 8);
     
     [view prepareView:_event.social];
@@ -150,7 +124,7 @@
         [[_event social] setLikeText:[result objectForKey:@"item"]];
         [[_event social] setLikesCount:[[_event social] likesCount] + 1];
         
-        FLSocialView *view = [[self subviews] objectAtIndex:3];
+        FLSocialView *view = [[self subviews] objectAtIndex:2];
         [view prepareView:_event.social];
     } failure:NULL];
 }

@@ -32,12 +32,23 @@
     else{
         _status = EventStatusRefused;
     }
-            
+    
     _amount = [json objectForKey:@"amount"];
     _amountCollected = [json objectForKey:@"total"];
-    _amountExpected = @512;
-    _dayLeft = @3;
+    _amountExpected = [json objectForKey:@"goal"];
     
+    if([_amountExpected isEqualToNumber:@0]){
+        _amountExpected = nil;
+    }
+        
+    _dayLeft = [json objectForKey:@"endWhen"];
+    _pourcentage = [json objectForKey:@"fulfilled"];
+
+    _isInvited = NO;
+    if([json objectForKey:@"isInvited"] && [[json objectForKey:@"isInvited"] boolValue]){
+        _isInvited = YES;
+    }
+        
     _title = [json objectForKey:@"name"];
     _content = [json objectForKey:@"why"];
     
@@ -152,7 +163,7 @@
     }
 }
 
-+ (NSString *)transactionScopeToText:(TransactionScope)scope
++ (NSString *)eventScopeToText:(TransactionScope)scope
 {
     NSString *key = nil;
     
@@ -164,6 +175,20 @@
     }
     
     return NSLocalizedString([@"EVENT_SCOPE_" stringByAppendingString:key], nil);
+}
+
++ (UIImage *)eventScopeToImage:(TransactionScope)scope
+{
+    NSString *key = nil;
+    
+    if(scope == TransactionScopeFriend){
+        key = @"scope-friend-large";
+    }
+    else{ // if(status == TransactionScopePrivate){
+        key = @"scope-invite-large";
+    }
+    
+    return [UIImage imageNamed:key];
 }
 
 + (NSString *)eventActionToParams:(EventAction)action

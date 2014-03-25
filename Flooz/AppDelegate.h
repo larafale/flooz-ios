@@ -19,7 +19,7 @@
 - (void)didDisconnected;
 
 - (void)displayError:(NSError *)error;
-- (void)displayErrorMessage:(NSString *)errorMessage;
+- (void)displayErrorMessage:(NSString *)title content:(NSString *)content;
 
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 - (void)loadSignupWithUser:(NSDictionary *)user;

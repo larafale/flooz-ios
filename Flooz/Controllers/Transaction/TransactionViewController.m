@@ -103,59 +103,77 @@
         [_contentView addSubview:closeButton];
     }
     
-    if([_transaction isPrivate]){
-        UILabel *status = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, 0, 18)];
-        status.backgroundColor = [UIColor customBackground];
-        status.layer.borderColor = [UIColor customSeparator].CGColor;
-        status.layer.borderWidth = 1.;
-        status.layer.cornerRadius = 9.;
-        status.font = [UIFont customTitleBook:10];
-        status.textAlignment = NSTextAlignmentCenter;
+    {
+        JTImageLabel *view = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
         
-        UIColor *textColor = [UIColor whiteColor];
+        view.textAlignment = NSTextAlignmentRight;
+        view.textColor = [UIColor whiteColor];
+        view.font = [UIFont customContentLight:11];
         
-        switch ([_transaction status]) {
-            case TransactionStatusAccepted:
-                textColor = [UIColor customGreen];
-                break;
-            case TransactionStatusPending:
-                textColor = [UIColor customYellow];
-                break;
-            case TransactionStatusRefused:
-            case TransactionStatusCanceled:
-            case TransactionStatusExpired:
-                textColor = [UIColor customRed];
-                break;
-        }
+        [view setImage:[UIImage imageNamed:@"transaction-content-clock"]];
+        [view setImageOffset:CGPointMake(- 4, 0)];
         
-        status.textColor = textColor;
+        view.text = [FLHelper formatedDate:[_transaction date]];
         
-        status.text = [NSString stringWithFormat:@"  %@", [_transaction statusText]]; // Hack pour mettre un padding
-        [status setWidthToFit];
-        CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 20);
-        CGRectSetX(status.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(status.frame) - 13);
+        [view setWidthToFit];
+        CGRectSetX(view.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(view.frame) - 13);
         
-        [_contentView addSubview:status];
-        
-        
-        UIImageView *imageView;
-        switch ([_transaction status]) {
-            case TransactionStatusAccepted:
-                imageView = [UIImageView imageNamed:@"transaction-cell-status-accepted"];
-                break;
-            case TransactionStatusPending:
-                imageView = [UIImageView imageNamed:@"transaction-cell-status-pending"];
-                break;
-            case TransactionStatusRefused:
-            case TransactionStatusCanceled:
-            case TransactionStatusExpired:
-                imageView = [UIImageView imageNamed:@"transaction-cell-status-refused"];
-                break;
-        }
-        
-        CGRectSetXY(imageView.frame, status.frame.origin.x + 5, status.center.y - 2);
-        [_contentView addSubview:imageView];
+        [_contentView addSubview:view];
     }
+    
+//    if([_transaction isPrivate]){
+//        UILabel *status = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, 0, 18)];
+//        status.backgroundColor = [UIColor customBackground];
+//        status.layer.borderColor = [UIColor customSeparator].CGColor;
+//        status.layer.borderWidth = 1.;
+//        status.layer.cornerRadius = 9.;
+//        status.font = [UIFont customTitleBook:10];
+//        status.textAlignment = NSTextAlignmentCenter;
+//        
+//        UIColor *textColor = [UIColor whiteColor];
+//        
+//        switch ([_transaction status]) {
+//            case TransactionStatusAccepted:
+//                textColor = [UIColor customGreen];
+//                break;
+//            case TransactionStatusPending:
+//                textColor = [UIColor customYellow];
+//                break;
+//            case TransactionStatusRefused:
+//            case TransactionStatusCanceled:
+//            case TransactionStatusExpired:
+//                textColor = [UIColor customRed];
+//                break;
+//        }
+//        
+//        status.textColor = textColor;
+//        
+//        status.text = [NSString stringWithFormat:@"  %@", [_transaction statusText]]; // Hack pour mettre un padding
+//        [status setWidthToFit];
+//        CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 20);
+//        CGRectSetX(status.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(status.frame) - 13);
+//        
+//        [_contentView addSubview:status];
+//        
+//        
+//        UIImageView *imageView;
+//        switch ([_transaction status]) {
+//            case TransactionStatusAccepted:
+//                imageView = [UIImageView imageNamed:@"transaction-cell-status-accepted"];
+//                break;
+//            case TransactionStatusPending:
+//                imageView = [UIImageView imageNamed:@"transaction-cell-status-pending"];
+//                break;
+//            case TransactionStatusRefused:
+//            case TransactionStatusCanceled:
+//            case TransactionStatusExpired:
+//                imageView = [UIImageView imageNamed:@"transaction-cell-status-refused"];
+//                break;
+//        }
+//        
+//        CGRectSetXY(imageView.frame, status.frame.origin.x + 5, status.center.y - 2);
+//        [_contentView addSubview:imageView];
+//    }
     
     {
         _mainView = [[UIView alloc] initWithFrame:CGRectMake(13, 80, CGRectGetWidth(_contentView.frame) - (2 * 13), 0)];

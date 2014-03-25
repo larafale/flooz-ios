@@ -33,7 +33,7 @@
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
-//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
+    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
 //    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
     
@@ -92,10 +92,14 @@
     });
 }
 
-- (void)displayErrorMessage:(NSString *)errorMessage
+- (void)displayErrorMessage:(NSString *)title content:(NSString *)content;
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
-                                                    message:errorMessage
+    if(!title || [title isBlank]){
+        title = NSLocalizedString(@"GLOBAL_ERROR", nil);
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:content
                                                    delegate:nil
                                           cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
                                           otherButtonTitles:nil
@@ -145,7 +149,7 @@
     
     // WARNING erreur code 2 http://stackoverflow.com/questions/20657780/ios-facebook-sdk-error-domain-com-facebook-sdk-code-2-and-code-7
     if(error){
-        DISPLAY_ERROR_MESSAGE([error description]);
+        [appDelegate displayErrorMessage:nil content:[error description]];
     }
     
     if (!error && state == FBSessionStateOpen){

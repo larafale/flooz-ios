@@ -18,4 +18,6 @@
 - (void)setImageFromUser:(FLUser *)user;
 - (void)setImageFromData:(NSData *)data;
 
+- (void)hidePlaceholder;
+
 @end

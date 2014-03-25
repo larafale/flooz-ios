@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, EventAction) {
 @property NSNumber *amountCollected;
 @property NSNumber *amountExpected;
 @property NSNumber *dayLeft;
+@property NSNumber *pourcentage;
 
 @property NSString *avatarURL;
 
@@ -49,6 +50,8 @@ typedef NS_ENUM(NSInteger, EventAction) {
 @property NSString *attachmentThumbURL;
 
 @property BOOL isPrivate;
+
+@property BOOL isInvited;
 
 @property BOOL canParticipate; // 1, participer
 @property BOOL canInvite; // 2, inviter
@@ -71,7 +74,8 @@ typedef NS_ENUM(NSInteger, EventAction) {
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)setJSON:(NSDictionary *)json;
 
-+ (NSString *)transactionScopeToText:(TransactionScope)scope;
++ (NSString *)eventScopeToText:(TransactionScope)scope;
++ (UIImage *)eventScopeToImage:(TransactionScope)scope;
 + (NSString *)eventActionToParams:(EventAction)action;
 
 @end

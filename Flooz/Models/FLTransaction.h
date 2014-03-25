@@ -72,6 +72,7 @@ typedef NS_ENUM(NSInteger, TransactionPaymentMethod) {
 - (NSString *)typeText;
 
 + (NSString *)transactionScopeToText:(TransactionScope)scope;
++ (UIImage *)transactionScopeToImage:(TransactionScope)scope;
 + (NSString *)transactionStatusToParams:(TransactionStatus)status;
 + (NSString *)transactionScopeToParams:(TransactionScope)scope;
 + (NSString *)transactionTypeToParams:(TransactionType)type;

@@ -192,16 +192,12 @@
 }
 
 - (void)createFooterView{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 22)];
-    UILabel *amount = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 0, CGRectGetHeight(view.frame))];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 8, 9, 5)];
-        
-    amount.textColor = [UIColor whiteColor];
-    amount.textAlignment = NSTextAlignmentCenter;
-    amount.font = [UIFont customContentRegular:12];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 22)];
     
-    [view addSubview:amount];
-    [view addSubview:imageView];
+    view.textColor = [UIColor whiteColor];
+    view.textAlignment = NSTextAlignmentCenter;
+    view.font = [UIFont customContentRegular:12];
+    
     [rightView addSubview:view];
 }
 
@@ -226,8 +222,8 @@
     
     [self prepareDetailView];
     [self prepareAttachmentView];
-    [self prepareSocialView];
     [self prepareFooterView];
+    [self prepareSocialView];
     
     CGRectSetHeight(leftView.frame, height);
     CGRectSetHeight(rightView.frame, height);
@@ -302,9 +298,7 @@
 }
 
 - (void)prepareFooterView{
-    UIView *view = [[rightView subviews] objectAtIndex:3];
-    UILabel *amount = [[view subviews] objectAtIndex:0];
-    UIImageView *imageView = [[view subviews] objectAtIndex:1];
+    UILabel *view = [[rightView subviews] objectAtIndex:3];
     
     if(![_transaction isPrivate]){
         view.hidden = YES;
@@ -312,32 +306,10 @@
     }
     view.hidden = NO;
     
-    amount.text = [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
-    [amount setWidthToFit];
+    view.text = [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
+    [view setWidthToFit];
     
-    CGRectSetX(imageView.frame, CGRectGetMaxX(amount.frame) + 5);
-    CGRectSetWidth(view.frame, CGRectGetMaxX(imageView.frame));
-    CGRectSetX(view.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(view.frame));
-    
-    NSString *image;
-    
-    switch ([[self transaction] status]) {
-        case TransactionStatusAccepted:
-            image = @"transaction-cell-status-accepted";
-            break;
-        case TransactionStatusPending:
-            image = @"transaction-cell-status-pending";
-            break;
-        case TransactionStatusRefused:
-        case TransactionStatusCanceled:
-        case TransactionStatusExpired:
-            image = @"transaction-cell-status-refused";
-            break;
-    }
-    
-    [imageView setImage:[UIImage imageNamed:image]];
-    
-    CGRectSetY(view.frame, - 4);
+    CGRectSetXY(view.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(view.frame), height + 9.5);
 }
 
 #pragma mark - Swipe

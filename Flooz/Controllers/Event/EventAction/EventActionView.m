@@ -53,10 +53,15 @@
     view.titleLabel.font = [UIFont customTitleExtraLight:14];
     [view setImageEdgeInsets:UIEdgeInsetsMake(2, -10, 0, 0)];
     
-    [view setImage:[UIImage imageNamed:@"transaction-cell-check"] forState:UIControlStateNormal];
     [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [view addTarget:self action:@selector(didAcceptTouch) forControlEvents:UIControlEventTouchUpInside];
+    
+    {
+        UIImageView *arrow = [UIImageView imageNamed:@"arrow-white-right"];
+        CGRectSetXY(arrow.frame, CGRectGetWidth(self.frame) - 20, (CGRectGetHeight(view.frame) - arrow.image.size.height) / 2.);
+        [view addSubview:arrow];
+    }
     
     [self addSubview:view];
 }

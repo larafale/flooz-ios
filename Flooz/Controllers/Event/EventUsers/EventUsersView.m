@@ -179,7 +179,7 @@
             FLUserView *avatar = [[lastUserView subviews] objectAtIndex:0];
             UILabel *username = [[lastUserView subviews] objectAtIndex:1];
             
-            [avatar setImageFromUser:nil];
+            [avatar setImageFromData:UIImagePNGRepresentation([UIImage imageNamed:@"avatar-participants"])];
             
             if([[_event participants] count] > 2){
                  username.text = [NSString stringWithFormat:[NSLocalizedString(@"EVENT_PARTICIPANTS_INVITED", nil) uppercaseString], [[_event participants] count] - 2];
@@ -199,7 +199,8 @@
         FLUserView *avatar = [[contentView subviews] objectAtIndex:0];
         UILabel *username = [[contentView subviews] objectAtIndex:1];
         
-        [avatar setImageFromURL:nil];
+        [avatar setImageFromData:UIImagePNGRepresentation([UIImage imageNamed:@"avatar-participants"])];
+    
         username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
         
         [view addSubview:contentView];

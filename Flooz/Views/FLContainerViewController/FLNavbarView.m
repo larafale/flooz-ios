@@ -24,8 +24,6 @@
     if (self) {
         self.backgroundColor = [UIColor customBackgroundHeader];
         
-
-        
         [self preparePanGesture];
         [self prepareSwipeGesture];
         _viewControllers = viewControllers;
@@ -121,9 +119,9 @@
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:
             lastTranslation = CGPointZero;
-            for(UIViewController *controller in _viewControllers){
+//            for(UIViewController *controller in _viewControllers){
 //                [controller beginAppearanceTransition:YES animated:YES];
-            }
+//            }
             break;
         case UIGestureRecognizerStateChanged:{
             CGPoint translation = [recognizer translationInView:_titlesView];
@@ -219,9 +217,9 @@
                      animations:^{
                          [self updateViewsPositions];
                          
-                         for(UIViewController *controller in _viewControllers){
+//                         for(UIViewController *controller in _viewControllers){
 //                             [controller endAppearanceTransition];
-                         }
+//                         }
                      } completion:NULL];
 }
 

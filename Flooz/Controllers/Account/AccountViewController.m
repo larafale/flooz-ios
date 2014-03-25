@@ -16,6 +16,8 @@
 #import "InformationsViewController.h"
 #import "CashOutViewController.h"
 
+#import "SecureCodeViewController.h"
+
 @interface AccountViewController (){
     UIScrollView *_contentView;
     
@@ -129,8 +131,15 @@
 
 - (void)presentSettingsController
 {
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];
-    [self presentViewController:controller animated:YES completion:NULL];
+    CompleteBlock completeBlock = ^{
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];
+        [self presentViewController:controller animated:YES completion:NULL];
+    };
+
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    controller.completeBlock = completeBlock;
+    
+    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)presentInformationsController

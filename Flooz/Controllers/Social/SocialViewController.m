@@ -88,14 +88,7 @@
 
 - (void)didFilterEventsTouch:(NSNumber *)index
 {
-    NSString *scope = @"1";
-    if([index intValue] == 1){
-        scope = @"2";
-    }
-    
     EventsViewController *controller = (EventsViewController *)[controllers objectAtIndex:1];
-    [controller setScope:scope];
-    
     [self displayContentController:controller];
 }
 

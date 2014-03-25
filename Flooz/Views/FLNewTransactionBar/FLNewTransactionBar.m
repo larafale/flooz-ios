@@ -37,11 +37,13 @@
         
         if(isEvent){
             [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopeFriend] forKey:@"scope"];
-             [privacyButton setTitle:[FLEvent transactionScopeToText:TransactionScopeFriend] forState:UIControlStateNormal];
+             [privacyButton setTitle:[FLEvent eventScopeToText:TransactionScopeFriend] forState:UIControlStateNormal];
+            [privacyButton setImage:[FLEvent eventScopeToImage:TransactionScopeFriend] forState:UIControlStateNormal];
         }
         else{
             [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
             [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
+            [privacyButton setImage:[FLTransaction transactionScopeToImage:TransactionScopePublic] forState:UIControlStateNormal];
         }
     }
     return self;
@@ -79,10 +81,12 @@
         }
         
         if(isEvent){
-            [privacyButton setTitle:[FLEvent transactionScopeToText:currentIndex] forState:UIControlStateNormal];
+            [privacyButton setTitle:[FLEvent eventScopeToText:currentIndex] forState:UIControlStateNormal];
+            [privacyButton setImage:[FLEvent eventScopeToImage:currentIndex] forState:UIControlStateNormal];
         }
         else{
             [privacyButton setTitle:[FLTransaction transactionScopeToText:currentIndex] forState:UIControlStateNormal];
+            [privacyButton setImage:[FLTransaction transactionScopeToImage:currentIndex] forState:UIControlStateNormal];
         }
     }
 }
@@ -122,7 +126,7 @@
 {
 //    facebookButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
     
-        facebookButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(localizeButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
+    facebookButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(localizeButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
     
     [facebookButton setImage:[UIImage imageNamed:@"new-transaction-bar-facebook"] forState:UIControlStateNormal];
     [facebookButton setImage:[UIImage imageNamed:@"new-transaction-bar-facebook-selected"] forState:UIControlStateSelected];
@@ -155,6 +159,9 @@
     privacyButton.titleLabel.font = [UIFont customContentRegular:12];
     
     [privacyButton addTarget:self action:@selector(didPrivacyButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    
+    privacyButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+    privacyButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     
     [self addSubview:privacyButton];
 }
@@ -230,10 +237,12 @@
     [_dictionary setValue:[FLTransaction transactionScopeToParams:currentIndex] forKey:@"scope"];
     
     if(isEvent){
-        [privacyButton setTitle:[FLEvent transactionScopeToText:currentIndex] forState:UIControlStateNormal];
+        [privacyButton setTitle:[FLEvent eventScopeToText:currentIndex] forState:UIControlStateNormal];
+        [privacyButton setImage:[FLEvent eventScopeToImage:currentIndex] forState:UIControlStateNormal];
     }
     else{
         [privacyButton setTitle:[FLTransaction transactionScopeToText:currentIndex] forState:UIControlStateNormal];
+        [privacyButton setImage:[FLTransaction transactionScopeToImage:currentIndex] forState:UIControlStateNormal];
     }
 }
 

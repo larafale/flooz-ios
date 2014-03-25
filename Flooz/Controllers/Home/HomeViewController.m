@@ -8,7 +8,6 @@
 
 #import "HomeViewController.h"
 
-#import "PreviewViewController.h"
 #import "LoginViewController.h"
 #import "SignupViewController.h"
 #import "TransactionCell.h"
@@ -16,7 +15,6 @@
 @interface HomeViewController (){
     UIButton *login;
     UIButton *signup;
-    UIButton *preview;
 }
 
 @end
@@ -39,9 +37,8 @@
     self.view.backgroundColor = [UIColor customBackgroundHeader];
     _tableView.backgroundColor = [UIColor customBackgroundHeader];
     
-    preview = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_tableView.frame) - 34, CGRectGetWidth(self.view.frame), 34)];
-    login = [[UIButton alloc] initWithFrame:CGRectMake(23, preview.frame.origin.y - 30 - 35, 134, 45)];
-    signup = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(login.frame) + 6, login.frame.origin.y, login.frame.size.width, login.frame.size.height)];
+    login = [UIButton new];
+    signup = [UIButton new];
     
     login.backgroundColor = [UIColor customBackgroundStatus];
     login.titleLabel.font = [UIFont customTitleLight:14];
@@ -57,32 +54,14 @@
     [signup setTitle:NSLocalizedString(@"HOME_SIGNUP", nil) forState:UIControlStateNormal];
     [signup addTarget:self action:@selector(presentSignupController) forControlEvents:UIControlEventTouchUpInside];
     
-    preview.backgroundColor = [UIColor colorWithIntegerRed:30 green:41 blue:52 alpha:1.];
-    preview.titleLabel.font = [UIFont customContentRegular:12];
-    
-    [preview setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
-    [preview setTitle:NSLocalizedString(@"HOME_PREVIEW", nil) forState:UIControlStateNormal];
-    [preview addTarget:self action:@selector(presentPreviewController) forControlEvents:UIControlEventTouchUpInside];
-    [preview setImage:[UIImage imageNamed:@"arrow-right"] forState:UIControlStateNormal];
-    
-    preview.imageEdgeInsets = UIEdgeInsetsMake(2, 135, 0, 0);
-    preview.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, [preview imageForState:UIControlStateNormal].size.width);
-    
-    {
-        UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(preview.frame), .5)];
-        borderView.backgroundColor = [UIColor colorWithRed:1. green:1. blue:1. alpha:.1];
-        [preview addSubview:borderView];
-    }
-    
     {
         UIImageView *shadow = [UIImageView imageNamed:@"tableview-shadow"];
-        CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height - preview.frame.size.height);
+        CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
         [self.view addSubview:shadow];
     }
     
     [self.view addSubview:login];
     [self.view addSubview:signup];
-    [self.view addSubview:preview];
     
     [self didFilterPublicTouch];
 }
@@ -98,8 +77,7 @@
 {
     [super viewDidAppear:animated];
     
-    preview.frame = CGRectMake(0, CGRectGetHeight(_tableView.frame) - 34, CGRectGetWidth(self.view.frame), 34);
-    login.frame = CGRectMake(23, preview.frame.origin.y - 30 - 35, 134, 45);
+    login.frame = CGRectMake(23, self.view.frame.size.height - 30 - 35, 134, 45);
     signup.frame = CGRectMake(CGRectGetMaxX(login.frame) + 6, login.frame.origin.y, login.frame.size.width, login.frame.size.height);
 }
 
@@ -111,11 +89,6 @@
 - (void)presentSignupController
 {
     [self.navigationController pushViewController:[SignupViewController new] animated:YES];
-}
-
-- (void)presentPreviewController
-{
-    [self.navigationController pushViewController:[PreviewViewController new] animated:YES];
 }
 
 #pragma mark - TableView

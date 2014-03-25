@@ -20,6 +20,7 @@
 #import "CreditCardViewController.h"
 #import "FLContainerViewController.h"
 #import "TimelineViewController.h"
+#import "NewTransactionDatePicker.h"
 
 #import "SecureCodeViewController.h"
 
@@ -86,7 +87,14 @@
             
             offset = CGRectGetMaxY(title.frame);
         }
-
+        
+        if(isEvent){
+            NewTransactionDatePicker *view = [[NewTransactionDatePicker alloc] initWithTitle:@"FIELD_TRANSACTION_DATE" for:transaction key:@"endAt" position:CGPointMake(0, offset)];
+            [_contentView addSubview:view];
+            
+            offset = CGRectGetMaxY(view.frame);
+        }
+        
         if(isEvent){
             FLSelectAmount *selectAmount = [[FLSelectAmount alloc] initWithFrame:CGRectMakePosition(0, offset) for:transaction];
             [_contentView addSubview:selectAmount];
@@ -104,7 +112,14 @@
             offset = CGRectGetMaxY(view.frame);
         }
         
-        {
+        if(isEvent){
+            amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"goal"];
+            [amountInput setInputAccessoryView:transactionBarKeyboard];
+            [_contentView addSubview:amountInput];
+            CGRectSetY(amountInput.frame, offset);
+            offset = CGRectGetMaxY(amountInput.frame);
+        }
+        else{
             amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
             [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
@@ -181,7 +196,12 @@
 {
     [[self view] endEditing:YES];
     
-    [transaction setValue:@100.0 forKey:@"amount"];
+    if(isEvent){
+        [transaction setValue:@100.0 forKey:@"goal"];
+    }
+    else{
+        [transaction setValue:@100.0 forKey:@"amount"];
+    }
     
     [UIView animateWithDuration:.5 animations:^{
         CGRectSetHeight(amountInput.frame, [FLNewTransactionAmount height]);
@@ -196,6 +216,7 @@
     [[self view] endEditing:YES];
     
     [transaction setValue:nil forKey:@"amount"];
+    [transaction setValue:nil forKey:@"goal"];
     
     [UIView animateWithDuration:.5 animations:^{
         CGRectSetHeight(amountInput.frame, 1);

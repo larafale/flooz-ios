@@ -165,6 +165,23 @@
     return NSLocalizedString([@"TRANSACTION_SCOPE_" stringByAppendingString:key], nil);
 }
 
++ (UIImage *)transactionScopeToImage:(TransactionScope)scope
+{
+    NSString *key = nil;
+    
+    if(scope == TransactionScopePublic){
+        key = @"scope-public-large";
+    }
+    else if(scope == TransactionScopeFriend){
+        key = @"scope-friend-large";
+    }
+    else{ // if(status == TransactionScopePrivate){
+        key = @"scope-private-large";
+    }
+    
+    return [UIImage imageNamed:key];
+}
+
 + (NSString *)transactionStatusToParams:(TransactionStatus)status
 {
     if(status == TransactionStatusAccepted){

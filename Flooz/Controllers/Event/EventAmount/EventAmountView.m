@@ -150,7 +150,7 @@
 {
     {
         UILabel *view = [[amountView subviews] objectAtIndex:0];
-        view.text = [FLHelper formatedAmount:[_event amountCollected]];
+        view.text = [FLHelper formatedAmount:[_event amountCollected] withSymbol:NO];
     }
     
     {
@@ -177,14 +177,14 @@
 - (void)prepareProgressBarView
 {
     UIView *view = [[progressBarView subviews] objectAtIndex:0];
-    
+        
     if(![_event amountExpected]){
-        view.hidden = YES;
+        progressBarView.hidden = YES;
         return;
     }
     
-    view.hidden = NO;
-    CGRectSetWidth(view.frame, CGRectGetWidth(progressBarView.frame) * 0.4);
+    progressBarView.hidden = NO;
+    CGRectSetWidth(view.frame, CGRectGetWidth(progressBarView.frame) * [[_event pourcentage] floatValue] / 100.0);
     
     height += MARGE_BOTTOM / 2.;
 }
