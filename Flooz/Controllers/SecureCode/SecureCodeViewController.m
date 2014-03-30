@@ -70,7 +70,7 @@
         passwordForget.titleLabel.textAlignment = NSTextAlignmentCenter;
         passwordForget.titleLabel.font = [UIFont customContentRegular:12];
         [passwordForget setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
-        [passwordForget setTitle:NSLocalizedString(@"LOGIN_PASSWORD_FORGOT", nil) forState:UIControlStateNormal];
+        [passwordForget setTitle:NSLocalizedString(@"SECURE_CODE_FORGOT", nil) forState:UIControlStateNormal];
         
         [passwordForget addTarget:self action:@selector(didPasswordForgetTouch) forControlEvents:UIControlEventTouchUpInside];
         
@@ -100,19 +100,19 @@
 
 - (void)didSecureCodeEnter:(NSString *)secureCode
 {
-    NSString *currentSecureCode = [UICKeyChainStore stringForKey:@"secureCode"];
+    NSString *currentSecureCode = [[self class] secureCodeForCurrentUser];
  
     NSLog(@"currentCode: %@ %@", currentSecureCode, secureCode);
     
     // 1ere fois qu un code est entré
     if(!currentSecureCode){
-        [UICKeyChainStore setString:secureCode forKey:@"secureCode"];
+        [[self class] setSecureCodeForCurrentUser:secureCode];
         [self dismissWithSuccess];
     }
     else if([currentSecureCode isEqual:secureCode]){
         if(_isForChangeSecureCode){
             [secureCodeField clean];
-            [self clearSecureCode];
+            [[self class ] clearSecureCode];
             [self checkBlockBackButton];
         }
         else{
@@ -174,11 +174,6 @@
     }
 }
 
-- (void)clearSecureCode
-{
-    [UICKeyChainStore removeAllItems];
-}
-
 - (void)didPasswordForgetTouch
 {
     passwordForget.hidden = YES;
@@ -199,7 +194,7 @@
     [[Flooz sharedInstance] loginForSecureCode:user success:^(id result) {
         
         [secureCodeField clean];
-        [self clearSecureCode];
+        [[self class] clearSecureCode];
         [self checkBlockBackButton];
         
         self.navigationItem.rightBarButtonItem = nil;
@@ -210,7 +205,30 @@
         
         usernameField.hidden = YES;
         passwordField.hidden = YES;
+
     } failure:NULL];
+}
+
+#pragma mark - SecureCode
+
++ (NSString *)secureCodeForCurrentUser
+{
+    return [UICKeyChainStore stringForKey:@"secureCode"];
+}
+
++ (void)setSecureCodeForCurrentUser:(NSString *)secureCode
+{
+    [UICKeyChainStore setString:secureCode forKey:@"secureCode"];
+}
+
++ (BOOL)hasSecureCodeForCurrentUser
+{
+    return [self secureCodeForCurrentUser] != nil;
+}
+
++ (void)clearSecureCode
+{
+    [UICKeyChainStore removeAllItems];
 }
 
 @end

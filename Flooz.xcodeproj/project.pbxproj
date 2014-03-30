@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
+		AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB618E46861008E03FE /* libicucore.dylib */; };
+		AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB818E4686A008E03FE /* CFNetwork.framework */; };
+		AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBBA18E46872008E03FE /* Security.framework */; };
 		AB2FB53318AD40580079AA1D /* CashOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53118AD40580079AA1D /* CashOutViewController.m */; };
 		AB2FB53418AD40580079AA1D /* CashOutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB53218AD40580079AA1D /* CashOutViewController.xib */; };
 		AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53718AD8C7A0079AA1D /* FLTextFieldTitle2.m */; };
@@ -49,15 +52,12 @@
 		AB5EB6EE188214F000D81AF6 /* MenuNewTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DE188214F000D81AF6 /* MenuNewTransactionViewController.xib */; };
 		AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6E1188214F000D81AF6 /* SettingsViewController.m */; };
 		AB5EB6F0188214F000D81AF6 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6E2188214F000D81AF6 /* SettingsViewController.xib */; };
-		AB5EB6F1188214F000D81AF6 /* SocialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6E5188214F000D81AF6 /* SocialViewController.m */; };
-		AB5EB6F2188214F000D81AF6 /* SocialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6E6188214F000D81AF6 /* SocialViewController.xib */; };
 		AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6F51882151000D81AF6 /* TimelineViewController.m */; };
 		AB5EB6F81882151000D81AF6 /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */; };
 		AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
 		AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50918C4A5D80073B947 /* WebViewController.m */; };
 		AB6DA50C18C4A5D80073B947 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA50A18C4A5D80073B947 /* WebViewController.xib */; };
 		AB6DA51018C4DDFD0073B947 /* FLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50F18C4DDFD0073B947 /* FLImageView.m */; };
-		AB6DA51A18C8C5B90073B947 /* FriendSearchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51918C8C5B90073B947 /* FriendSearchButton.m */; };
 		AB6DA52018C8CEF70073B947 /* FriendAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51E18C8CEF70073B947 /* FriendAddViewController.m */; };
 		AB6DA52118C8CEF70073B947 /* FriendAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA51F18C8CEF70073B947 /* FriendAddViewController.xib */; };
 		AB6DA52518C8D0AF0073B947 /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA52418C8D0AF0073B947 /* FriendAddSearchBar.m */; };
@@ -68,6 +68,7 @@
 		AB7C9B2318D73AE9002775BA /* SecureCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C9B2118D73AE9002775BA /* SecureCodeViewController.xib */; };
 		AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2618D84F99002775BA /* SecureCodeField.m */; };
 		AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */; };
+		AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
 		ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4618BCE805002FCAAE /* EventViewController.m */; };
 		ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D4718BCE805002FCAAE /* EventViewController.xib */; };
 		ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4D18BE60C5002FCAAE /* EventHeaderView.m */; };
@@ -169,6 +170,9 @@
 /* Begin PBXFileReference section */
 		1686D3DC8F1E47F8A8972682 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		AB15DBB618E46861008E03FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		AB15DBB818E4686A008E03FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		AB15DBBA18E46872008E03FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AB2FB53018AD40580079AA1D /* CashOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashOutViewController.h; path = Controllers/CashOut/CashOutViewController.h; sourceTree = "<group>"; };
 		AB2FB53118AD40580079AA1D /* CashOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashOutViewController.m; path = Controllers/CashOut/CashOutViewController.m; sourceTree = "<group>"; };
 		AB2FB53218AD40580079AA1D /* CashOutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CashOutViewController.xib; path = Controllers/CashOut/CashOutViewController.xib; sourceTree = "<group>"; };
@@ -234,9 +238,6 @@
 		AB5EB6E0188214F000D81AF6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		AB5EB6E1188214F000D81AF6 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		AB5EB6E2188214F000D81AF6 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
-		AB5EB6E4188214F000D81AF6 /* SocialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialViewController.h; sourceTree = "<group>"; };
-		AB5EB6E5188214F000D81AF6 /* SocialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialViewController.m; sourceTree = "<group>"; };
-		AB5EB6E6188214F000D81AF6 /* SocialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SocialViewController.xib; sourceTree = "<group>"; };
 		AB5EB6EA188214F000D81AF6 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineViewController.h; sourceTree = "<group>"; };
 		AB5EB6F51882151000D81AF6 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
 		AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineViewController.xib; sourceTree = "<group>"; };
@@ -246,9 +247,6 @@
 		AB6DA50A18C4A5D80073B947 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = Controllers/Web/WebViewController.xib; sourceTree = "<group>"; };
 		AB6DA50E18C4DDFD0073B947 /* FLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLImageView.h; path = Views/FLImageView/FLImageView.h; sourceTree = "<group>"; };
 		AB6DA50F18C4DDFD0073B947 /* FLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLImageView.m; path = Views/FLImageView/FLImageView.m; sourceTree = "<group>"; };
-		AB6DA51818C8C5B90073B947 /* FriendSearchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendSearchButton.h; path = Controllers/Friends/FriendSearchButton/FriendSearchButton.h; sourceTree = "<group>"; };
-		AB6DA51918C8C5B90073B947 /* FriendSearchButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendSearchButton.m; path = Controllers/Friends/FriendSearchButton/FriendSearchButton.m; sourceTree = "<group>"; };
-		AB6DA51B18C8CE6D0073B947 /* FriendSearchButtonDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FriendSearchButtonDelegate.h; path = Controllers/Friends/FriendSearchButton/FriendSearchButtonDelegate.h; sourceTree = "<group>"; };
 		AB6DA51D18C8CEF70073B947 /* FriendAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAddViewController.h; path = Controllers/FriendAdd/FriendAddViewController.h; sourceTree = "<group>"; };
 		AB6DA51E18C8CEF70073B947 /* FriendAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendAddViewController.m; path = Controllers/FriendAdd/FriendAddViewController.m; sourceTree = "<group>"; };
 		AB6DA51F18C8CEF70073B947 /* FriendAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FriendAddViewController.xib; path = Controllers/FriendAdd/FriendAddViewController.xib; sourceTree = "<group>"; };
@@ -271,6 +269,8 @@
 		AB7C9B2918D85AEA002775BA /* SecureCodeFieldDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SecureCodeFieldDelegate.h; path = Controllers/SecureCode/SecureCodeField/SecureCodeFieldDelegate.h; sourceTree = "<group>"; };
 		AB8F9FA418E18F45006039D0 /* NewTransactionDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionDatePicker.h; path = Controllers/NewTransaction/NewTransactionDatePicker/NewTransactionDatePicker.h; sourceTree = "<group>"; };
 		AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionDatePicker.m; path = Controllers/NewTransaction/NewTransactionDatePicker/NewTransactionDatePicker.m; sourceTree = "<group>"; };
+		AB8F9FA818E1EF93006039D0 /* FLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAlertView.h; path = Views/FLAlertView/FLAlertView.h; sourceTree = "<group>"; };
+		AB8F9FA918E1EF93006039D0 /* FLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAlertView.m; path = Views/FLAlertView/FLAlertView.m; sourceTree = "<group>"; };
 		ABB12D4518BCE805002FCAAE /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventViewController.h; path = Controllers/Event/EventViewController.h; sourceTree = "<group>"; };
 		ABB12D4618BCE805002FCAAE /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventViewController.m; path = Controllers/Event/EventViewController.m; sourceTree = "<group>"; };
 		ABB12D4718BCE805002FCAAE /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Controllers/Event/EventViewController.xib; sourceTree = "<group>"; };
@@ -446,6 +446,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */,
+				AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */,
+				AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */,
 				ABBB75DA18B656820070C2A8 /* AVFoundation.framework in Frameworks */,
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
 				ABBB75D818B654DA0070C2A8 /* libCardIO.a in Frameworks */,
@@ -540,7 +543,6 @@
 		AB2FB55918B2B4600079AA1D /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				AB6DA51718C8C5970073B947 /* FriendSearchButton */,
 				AB2FB55A18B2B4710079AA1D /* FriendsViewController.h */,
 				AB2FB55B18B2B4710079AA1D /* FriendsViewController.m */,
 				AB2FB55C18B2B4710079AA1D /* FriendsViewController.xib */,
@@ -580,6 +582,9 @@
 		AB3D0890186CA11A00CF8380 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB15DBBA18E46872008E03FE /* Security.framework */,
+				AB15DBB818E4686A008E03FE /* CFNetwork.framework */,
+				AB15DBB618E46861008E03FE /* libicucore.dylib */,
 				ABBB75D918B656820070C2A8 /* AVFoundation.framework */,
 				ABF7092C18A39ECF00517389 /* FacebookSDK.framework */,
 				AB3D0891186CA11A00CF8380 /* Foundation.framework */,
@@ -665,7 +670,6 @@
 				AB7C9B1E18D73AD2002775BA /* SecureCode */,
 				AB5EB6DF188214F000D81AF6 /* Settings */,
 				AB4CB6F41886C1B000D1C573 /* Signup */,
-				AB5EB6E3188214F000D81AF6 /* Social */,
 				AB5EB6E9188214F000D81AF6 /* Timeline */,
 				ABF7092618A2CA1300517389 /* Transaction */,
 				AB6DA50718C4A5BC0073B947 /* Web */,
@@ -679,6 +683,7 @@
 				AB5EB6F91882157300D81AF6 /* Cells */,
 				ABE9145618927EDD003AC722 /* FLAccountButton */,
 				ABE9144F189165BA003AC722 /* FLAccountUserView */,
+				AB8F9FA718E1EF76006039D0 /* FLAlertView */,
 				AB46C66E18803421006C8334 /* FLContainerViewController */,
 				ABE91428188C5D20003AC722 /* FLFilterView */,
 				AB6DA50D18C4DDE80073B947 /* FLImageView */,
@@ -847,17 +852,6 @@
 			path = Controllers/Settings;
 			sourceTree = "<group>";
 		};
-		AB5EB6E3188214F000D81AF6 /* Social */ = {
-			isa = PBXGroup;
-			children = (
-				AB5EB6E4188214F000D81AF6 /* SocialViewController.h */,
-				AB5EB6E5188214F000D81AF6 /* SocialViewController.m */,
-				AB5EB6E6188214F000D81AF6 /* SocialViewController.xib */,
-			);
-			name = Social;
-			path = Controllers/Social;
-			sourceTree = "<group>";
-		};
 		AB5EB6E9188214F000D81AF6 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
@@ -901,16 +895,6 @@
 				AB6DA50F18C4DDFD0073B947 /* FLImageView.m */,
 			);
 			name = FLImageView;
-			sourceTree = "<group>";
-		};
-		AB6DA51718C8C5970073B947 /* FriendSearchButton */ = {
-			isa = PBXGroup;
-			children = (
-				AB6DA51818C8C5B90073B947 /* FriendSearchButton.h */,
-				AB6DA51918C8C5B90073B947 /* FriendSearchButton.m */,
-				AB6DA51B18C8CE6D0073B947 /* FriendSearchButtonDelegate.h */,
-			);
-			name = FriendSearchButton;
 			sourceTree = "<group>";
 		};
 		AB6DA51C18C8CEDF0073B947 /* FriendAdd */ = {
@@ -991,6 +975,15 @@
 				AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */,
 			);
 			name = NewTransactionDatePicker;
+			sourceTree = "<group>";
+		};
+		AB8F9FA718E1EF76006039D0 /* FLAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				AB8F9FA818E1EF93006039D0 /* FLAlertView.h */,
+				AB8F9FA918E1EF93006039D0 /* FLAlertView.m */,
+			);
+			name = FLAlertView;
 			sourceTree = "<group>";
 		};
 		ABB12D4418BCE7E5002FCAAE /* Event */ = {
@@ -1628,7 +1621,6 @@
 				AB3D08A4186CA11A00CF8380 /* Images.xcassets in Resources */,
 				ABF46A10187575C600E92A77 /* Localizable.strings in Resources */,
 				AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */,
-				AB5EB6F2188214F000D81AF6 /* SocialViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1686,7 +1678,6 @@
 				ABE9148F189337E4003AC722 /* FLTextField.m in Sources */,
 				ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */,
 				ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */,
-				AB6DA51A18C8C5B90073B947 /* FriendSearchButton.m in Sources */,
 				ABB12D6B18BF9F25002FCAAE /* EventParticipantsViewController.m in Sources */,
 				ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */,
 				ABB12D5518BE61A3002FCAAE /* EventAmountView.m in Sources */,
@@ -1763,12 +1754,12 @@
 				AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */,
 				ABE914441890A12C003AC722 /* FLEvent.m in Sources */,
 				ABE914341890A01F003AC722 /* FLNavbarView.m in Sources */,
-				AB5EB6F1188214F000D81AF6 /* SocialViewController.m in Sources */,
 				ABE9144E18915E9F003AC722 /* FLUserView.m in Sources */,
 				ABF7094118A4D64300517389 /* TransactionCell.m in Sources */,
 				ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */,
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
+				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */,
 				AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */,

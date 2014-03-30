@@ -179,7 +179,7 @@
             FLUserView *avatar = [[lastUserView subviews] objectAtIndex:0];
             UILabel *username = [[lastUserView subviews] objectAtIndex:1];
             
-            [avatar setImageFromData:UIImagePNGRepresentation([UIImage imageNamed:@"avatar-participants"])];
+            [avatar setImageFromData:UIImagePNGRepresentation([UIImage imageNamed:@"avatar-participants-thumb"])];
             
             if([[_event participants] count] > 2){
                  username.text = [NSString stringWithFormat:[NSLocalizedString(@"EVENT_PARTICIPANTS_INVITED", nil) uppercaseString], [[_event participants] count] - 2];

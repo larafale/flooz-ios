@@ -37,6 +37,13 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem createSearchButtonWithTarget:self action:@selector(presentFriendAddController)];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -59,10 +66,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if(section == 1){
+    if(section == 0){
         return NSLocalizedString(@"FRIENDS_FRIENDS_REQUEST", nil);
     }
-    else if(section == 2){
+    else if(section == 1){
         return NSLocalizedString(@"FRIENDS_FRIENDS_SUGGESTION", nil);
     }
     
@@ -70,20 +77,17 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if(section == 0){
-        return 45;
-    }
-    else if(section == 1 && [friendsRequest count] == 0){
+    if(section == 0 && [friendsRequest count] == 0){
         return 0;
     }
-    else if(section == 2 && [friendsSuggestion count] == 0){
+    else if(section == 1 && [friendsSuggestion count] == 0){
         return 0;
     }
-    else if(section == 3 && [friends count] == 0){
+    else if(section == 2 && [friends count] == 0){
         return 0;
     }
     
@@ -93,12 +97,6 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     CGFloat heigth = [self tableView:tableView heightForHeaderInSection:section];
-    
-    if(section == 0){
-        FriendSearchButton *view = [[FriendSearchButton alloc] initWithFrame:CGRectMakeSize(SCREEN_WIDTH, heigth)];
-        view.delegate = self;
-        return view;
-    }
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), heigth)];
     
@@ -133,13 +131,13 @@
 }
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if(section == 1){
+    if(section == 0){
         return [friendsRequest count];
     }
-    else if(section == 2){
+    else if(section == 1){
         return [friendsSuggestion count];
     }
-    else if(section == 3){
+    else if(section == 2){
         return [friends count];
     }
     
@@ -147,7 +145,7 @@
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == 1){
+    if(indexPath.section == 0){
         return [FriendRequestCell getHeight];
     }
     
@@ -155,7 +153,7 @@
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == 1){
+    if(indexPath.section == 0){
         static NSString *cellIdentifier = @"FriendRequestCell";
         FriendRequestCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
@@ -169,7 +167,7 @@
         
         return cell;
     }
-    else if(indexPath.section == 2){
+    else if(indexPath.section == 1){
         static NSString *cellIdentifier = @"FriendSuggestionCell";
         FriendSuggestionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         

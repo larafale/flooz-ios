@@ -88,7 +88,8 @@
     }
 }
 
-- (void)didFilterChange:(NSString *)text{
+- (void)didFilterChange:(NSString *)text
+{
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] friendSearch:text success:^(id result) {
         friends = result;

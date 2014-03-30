@@ -8,8 +8,8 @@
 
 #import "EventAmountView.h"
 
-#define MARGE_BOTTOM 24.
-#define MARGE_LEFT_RIGHT 21.
+#define MARGE_BOTTOM 20.
+#define MARGE_LEFT_RIGHT 0.
 
 #define AMOUNT_VIEW_HEIGHT 39.
 
@@ -17,12 +17,18 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    CGRectSetHeight(frame, AMOUNT_VIEW_HEIGHT + MARGE_BOTTOM);
     self = [super initWithFrame:frame];
     if (self) {
         [self createViews];
     }
     return self;
+}
+
++ (CGFloat)getHeightForEvent:(FLEvent *)event
+{
+    CGFloat _height = AMOUNT_VIEW_HEIGHT + MARGE_BOTTOM;
+    
+    return _height;
 }
 
 - (void)createViews
@@ -39,17 +45,25 @@
     amountView = [[UIView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 0, (CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT)) * 0.65, AMOUNT_VIEW_HEIGHT)];
     
     {
-        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(amountView.frame), 20)];
+        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(amountView.frame), 27)];
         view.textColor = [UIColor customBlue];
-        view.font = [UIFont customTitleExtraLight:26];
+        view.font = [UIFont customTitleExtraLight:35];
         
         [amountView addSubview:view];
     }
     
     {
-        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(amountView.frame) - 11, CGRectGetWidth(amountView.frame), 11)];
+        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(0, 4, CGRectGetWidth(amountView.frame), 12)];
+        view.textColor = [UIColor customBlue];
+        view.font = [UIFont customContentRegular:13];
         
-        view.font = [UIFont customTitleExtraLight:10];
+        [amountView addSubview:view];
+    }
+    
+    {
+        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(0, 17.5, CGRectGetWidth(amountView.frame), 11)];
+        
+        view.font = [UIFont customContentRegular:11];
         
         [amountView addSubview:view];
     }
@@ -59,7 +73,7 @@
 
 - (void)createSeparatorView
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(amountView.frame), 0, 1, AMOUNT_VIEW_HEIGHT)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(amountView.frame), 0, 1, AMOUNT_VIEW_HEIGHT + 5)];
     
     {
         view.backgroundColor = [UIColor customSeparator];
@@ -70,21 +84,21 @@
 
 - (void)createDayVew
 {
-    dayView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(amountView.frame) + MARGE_LEFT_RIGHT, 0, CGRectGetWidth(self.frame) - CGRectGetMaxX(amountView.frame) - MARGE_LEFT_RIGHT - MARGE_LEFT_RIGHT, AMOUNT_VIEW_HEIGHT)];
+    dayView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(amountView.frame) + 20, 0, CGRectGetWidth(self.frame) - CGRectGetMaxX(amountView.frame) - MARGE_LEFT_RIGHT - MARGE_LEFT_RIGHT, AMOUNT_VIEW_HEIGHT)];
     
     {
-        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(dayView.frame), 20)];
+        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(dayView.frame), 27)];
         view.textColor = [UIColor whiteColor];
-        view.font = [UIFont customTitleExtraLight:26];
+        view.font = [UIFont customTitleExtraLight:35];
         
         [dayView addSubview:view];
     }
     
     {
-        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(dayView.frame) - 11, CGRectGetWidth(dayView.frame), 11)];
+        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(dayView.frame) - 6, CGRectGetWidth(dayView.frame), 11)];
         
         view.textColor = [UIColor whiteColor];
-        view.font = [UIFont customTitleExtraLight:10];
+        view.font = [UIFont customContentRegular:11];
         
         view.text = NSLocalizedString(@"EVENT_HEADER_DAY_LEFT", nil);
         
@@ -96,7 +110,7 @@
 
 - (void)createProgressBarView
 {
-    progressBarView = [[UIView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, CGRectGetMaxY(amountView.frame) + MARGE_BOTTOM / 2., CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 2)];
+    progressBarView = [[UIView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, CGRectGetMaxY(amountView.frame), CGRectGetWidth(amountView.frame) - 15, 2)];
     
     {
         progressBarView.backgroundColor = [UIColor customSeparator];
@@ -149,12 +163,27 @@
 - (void)prepareAmountView
 {
     {
-        UILabel *view = [[amountView subviews] objectAtIndex:0];
-        view.text = [FLHelper formatedAmount:[_event amountCollected] withSymbol:NO];
-    }
-    
-    {
-        UILabel *view = [[amountView subviews] objectAtIndex:1];
+        UILabel *integral = [[amountView subviews] objectAtIndex:0];
+        UILabel *decimal = [[amountView subviews] objectAtIndex:1];
+
+        integral.text = [NSString stringWithFormat:@"%ld", (long)[[_event amountCollected] integerValue]];
+        
+        if([[_event amountCollected] integerValue] == [[_event amountCollected] floatValue]){
+            decimal.text = NSLocalizedString(@"GLOBAL_EURO", nil);
+        }
+        else{
+            double integralDouble;
+            decimal.text = [[NSString stringWithFormat:@"%.2f%@", modf([[_event amountCollected] floatValue], &integralDouble), NSLocalizedString(@"GLOBAL_EURO", nil)] substringFromIndex:1];
+        }
+        
+        
+        [integral setWidthToFit];
+        [decimal setWidthToFit];
+        CGRectSetX(decimal.frame, CGRectGetMaxX(integral.frame) + 2);
+   
+        
+        
+        UILabel *collectText = [[amountView subviews] objectAtIndex:2];
         
         NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"EVENT_HEADER_MONEY_COLLECTED", nil) attributes:@{ NSForegroundColorAttributeName: [UIColor customBlue]}];
         
@@ -164,7 +193,8 @@
             [attributedText appendAttributedString:attributedText2];
         }
         
-        view.attributedText = attributedText;
+        collectText.attributedText = attributedText;
+        CGRectSetX(collectText.frame, CGRectGetMaxX(integral.frame) + 2);
     }
 }
 
@@ -185,8 +215,6 @@
     
     progressBarView.hidden = NO;
     CGRectSetWidth(view.frame, CGRectGetWidth(progressBarView.frame) * [[_event pourcentage] floatValue] / 100.0);
-    
-    height += MARGE_BOTTOM / 2.;
 }
 
 - (void)prepareSeparatorBottomView
@@ -194,6 +222,12 @@
     UIView *view = [[self subviews] lastObject];
     
     CGRectSetY(view.frame, height - 1);
+}
+
+- (void)hideBottomBar
+{
+    UIView *view = [[self subviews] lastObject];
+    view.hidden = YES;
 }
 
 @end

@@ -17,4 +17,7 @@ typedef void (^CompleteBlock)();
 @property BOOL isForChangeSecureCode;
 @property (strong, nonatomic) CompleteBlock completeBlock;
 
++ (BOOL)hasSecureCodeForCurrentUser;
++ (void)clearSecureCode;
+
 @end

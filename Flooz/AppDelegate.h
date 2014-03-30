@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FLAlertView.h"
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
     NSDate *lastErrorDate;
     NSInteger lastErrorCode;
+    
+    FLAlertView *alertView;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -19,7 +23,7 @@
 - (void)didDisconnected;
 
 - (void)displayError:(NSError *)error;
-- (void)displayErrorMessage:(NSString *)title content:(NSString *)content;
+- (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style;
 
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 - (void)loadSignupWithUser:(NSDictionary *)user;

@@ -30,4 +30,7 @@
 
 + (CGFloat)height;
 
+- (void)didWalletTouch;
+- (void)didCardTouch;
+
 @end

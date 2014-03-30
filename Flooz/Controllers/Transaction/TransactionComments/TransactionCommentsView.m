@@ -84,6 +84,12 @@
 {
     height = 0;
     
+    if([_transaction comments] && [[_transaction comments] count] > 0){
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(self.frame) - 20, 1)];
+        separator.backgroundColor = [UIColor customSeparator:0.5];
+        [self addSubview:separator];
+    }
+    
     for(FLComment *comment in [_transaction comments]){
         UIView *commentView = [self createCommentView:comment];
         height = CGRectGetMaxY(commentView.frame);

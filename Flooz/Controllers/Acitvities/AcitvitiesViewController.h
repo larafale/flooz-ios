@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AcitvitiesViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
-    NSArray *activities;
+@interface AcitvitiesViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
+    NSMutableArray *activities;
     
     UIRefreshControl *refreshControl;
+    UIView *tableViewShadow;
+    BOOL isLoaded;
+    
+    UITapGestureRecognizer *closeGesture;
+    UILabel *tableHeaderView;
+    
+    NSString *_nextPageUrl;
+    BOOL nextPageIsLoading;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

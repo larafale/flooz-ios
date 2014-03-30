@@ -51,7 +51,7 @@
         return nil;
     }
     
-    return [NSString stringWithFormat:@"%ld %@", [[_event participants] count], NSLocalizedString(@"NAV_EVENT_PARTICIPANTS", nil)];
+    return [NSString stringWithFormat:@"%ld %@", (unsigned long)[[_event participants] count], NSLocalizedString(@"NAV_EVENT_PARTICIPANTS", nil)];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

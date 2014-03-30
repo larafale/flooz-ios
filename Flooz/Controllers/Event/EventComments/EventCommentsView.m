@@ -83,6 +83,12 @@
 {
     height = 0;
     
+    if([_event comments] && [[_event comments] count] > 0){
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(self.frame) - 20, 1)];
+        separator.backgroundColor = [UIColor customSeparator:0.5];
+        [self addSubview:separator];
+    }
+    
     for(FLComment *comment in [_event comments]){
         UIView *commentView = [self createCommentView:comment];
         height = CGRectGetMaxY(commentView.frame);

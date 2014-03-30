@@ -44,6 +44,8 @@
     refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"UpdateEvents" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated

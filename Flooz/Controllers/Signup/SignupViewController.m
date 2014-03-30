@@ -112,13 +112,8 @@
 {
     [[self view] endEditing:YES];
     
-    SecureCodeViewController *controller = [SecureCodeViewController new];
-    id completeBlock = ^{
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] signup:_user success:NULL failure:NULL];
-    };
-    controller.completeBlock = completeBlock;
-    [[self navigationController] pushViewController:controller animated:YES];
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] signup:_user success:NULL failure:NULL];
 }
 
 - (void)didFacebookTouch

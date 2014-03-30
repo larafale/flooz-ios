@@ -18,4 +18,7 @@
 
 @property (weak, nonatomic) FLEvent *event;
 
++ (CGFloat)getHeightForEvent:(FLEvent *)event;
+- (void)hideBottomBar;
+
 @end

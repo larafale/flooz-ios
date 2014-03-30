@@ -44,8 +44,6 @@
     
     BOOL firstView;
     BOOL needReloadEvent;
-    
-    UISwipeGestureRecognizer *swipeGesture;
 }
 
 @end
@@ -75,11 +73,6 @@
     [self registerForKeyboardNotifications];
     
     self.view.backgroundColor = [UIColor customBackgroundHeader:0.9];
-    
-    swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-    swipeGesture.direction = UISwipeGestureRecognizerDirectionDown;
-    [[_contentView panGestureRecognizer] requireGestureRecognizerToFail:swipeGesture];
-    [self.view addGestureRecognizer:swipeGesture];
     
     [self buildView];
 }
@@ -129,18 +122,23 @@
         [_contentView addSubview:closeButton];
     }
     
-    if([_event isInvited] || true){
+    {
         JTImageLabel *view = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
         
         view.textAlignment = NSTextAlignmentRight;
         view.textColor = [UIColor whiteColor];
         view.font = [UIFont customContentLight:11];
+    
+        if([_event scope] == TransactionScopeFriend){
+            [view setImage:[UIImage imageNamed:@"scope-friend"]];
+            view.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
+        }
+        else{
+            [view setImage:[UIImage imageNamed:@"scope-invite"]];
+            view.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
+        }
         
-        [view setImage:[UIImage imageNamed:@"invite"]];
         [view setImageOffset:CGPointMake(- 4, - 1)];
-        
-        view.text = NSLocalizedString(@"EVENT_STATUS_IS_INVITED", nil);
-        
         [view setWidthToFit];
         CGRectSetX(view.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(view.frame) - 13);
         
@@ -205,7 +203,8 @@
     }
     
     {
-        EventAmountView *view = [[EventAmountView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        CGFloat MARGE = 21.;
+        EventAmountView *view = [[EventAmountView alloc] initWithFrame:CGRectMake(MARGE, height, CGRectGetWidth(_mainView.frame) - 2 * MARGE, 0)];
         view.event = _event;
         [_mainView addSubview:view];
         height = CGRectGetMaxY(view.frame);

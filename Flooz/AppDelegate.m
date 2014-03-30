@@ -19,6 +19,8 @@
 
 #import "TestFlight.h"
 
+#import "SecureCodeViewController.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -28,12 +30,14 @@
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
     
+    alertView = [FLAlertView new];
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     self.window.rootViewController = controller;
 
-    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
+//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
     
 //    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
     
@@ -42,18 +46,29 @@
 
 - (void)didConnected
 {
-    FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[
-        [EventsViewController new], [TimelineViewController new], [AccountViewController new]
-    ]];
-
-    [UIView transitionWithView:self.window
-                      duration:0.7
-                       options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
-                    animations:^{
-                        self.window.rootViewController = controller;
-                    }
-                    completion:NULL
-     ];
+    CompleteBlock completeBlock = ^{
+        FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[[EventsViewController new], [TimelineViewController new], [AccountViewController new]]];
+        
+        [UIView transitionWithView:self.window
+                          duration:0.7
+                           options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
+                        animations:^{
+                            self.window.rootViewController = controller;
+                        }
+                        completion:NULL
+         ];
+    };
+    
+    if(![SecureCodeViewController hasSecureCodeForCurrentUser]){
+        SecureCodeViewController *controller = [SecureCodeViewController new];
+        controller.completeBlock = completeBlock;
+        
+        FLNavigationController *rootController = (FLNavigationController *)self.window.rootViewController;
+        [rootController pushViewController:controller animated:YES];
+    }
+    else{
+        completeBlock();
+    }
 }
 
 - (void)didDisconnected
@@ -81,7 +96,7 @@
     lastErrorCode = error.code;
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
-                                                    message:ERROR_LOCALIZED_DESCRIPTION(error.code)
+                                                    message:ERROR_LOCALIZED_DESCRIPTION((long)error.code)
                                                    delegate:nil
                                           cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
                                           otherButtonTitles:nil
@@ -92,22 +107,13 @@
     });
 }
 
-- (void)displayErrorMessage:(NSString *)title content:(NSString *)content;
+- (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style;
 {
     if(!title || [title isBlank]){
         title = NSLocalizedString(@"GLOBAL_ERROR", nil);
     }
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:content
-                                                   delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
-                                          otherButtonTitles:nil
-                          ];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [alert show];
-    });
+
+    [alertView show:title content:content style:style];
 }
 
 - (void)loadSignupWithUser:(NSDictionary *)user
@@ -149,7 +155,7 @@
     
     // WARNING erreur code 2 http://stackoverflow.com/questions/20657780/ios-facebook-sdk-error-domain-com-facebook-sdk-code-2-and-code-7
     if(error){
-        [appDelegate displayErrorMessage:nil content:[error description]];
+        [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError];
     }
     
     if (!error && state == FBSessionStateOpen){
@@ -191,6 +197,7 @@
     // For example: when the user presses the iOS "home" button while the login dialog is active
     
     [FBAppCall handleDidBecomeActive];
+    [[Flooz sharedInstance] startSocket];
 }
 
 @end

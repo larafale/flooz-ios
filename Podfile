@@ -4,4 +4,6 @@ pod 'SDWebImage'
 pod 'TestFlightSDK', '2.2.1'
 pod 'IDMPhotoBrowser'
 pod 'UICKeyChainStore'
+pod 'SocketRocket'
+pod 'socket.IO'
 pod 'JTHelper', :git => "https://github.com/jonathantribouharet/JTHelper.git"

@@ -87,7 +87,7 @@
                                                   }];
         
         profilCompletionTextStatic = [[NSAttributedString alloc]
-                                     initWithString:NSLocalizedString(@"ACCOUNT_PROFIL_COMPLETION", nil)
+                                     initWithString:NSLocalizedString(@"ACCOUNT_EVENTS", nil)
                                      attributes:@{
                                                   NSForegroundColorAttributeName: [UIColor customPlaceholder],
                                                   NSFontAttributeName: [UIFont customContentRegular:12]
@@ -136,7 +136,7 @@
     
     {
         NSMutableAttributedString *text = [[NSMutableAttributedString alloc]
-                                           initWithString:[user profileCompletion]
+                                           initWithString:[[user eventsCount] stringValue]
                                            attributes:@{
                                                         NSForegroundColorAttributeName: [UIColor whiteColor],
                                                         NSFontAttributeName: [UIFont customTitleExtraLight:14]

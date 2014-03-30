@@ -206,7 +206,7 @@
     [_card setValue:cardInfo.cardNumber forKey:@"number"];
     [_card setValue:cardInfo.cvv forKey:@"cvv"];
     
-    NSString *expires = [NSString stringWithFormat:@"%.2ld-%.2ld", cardInfo.expiryMonth, cardInfo.expiryYear - 2000];
+    NSString *expires = [NSString stringWithFormat:@"%.2ld-%.2u", cardInfo.expiryMonth, cardInfo.expiryYear - 2000];
     
     [_card setValue:expires forKey:@"expires"];
     

@@ -10,75 +10,66 @@
 
 @implementation FLSelectAmount
 
-- (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary
+- (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:CGRectMake(0, frame.origin.y, SCREEN_WIDTH, 42)];
-    if (self) {
-        _dictionary = dictionary;
-        
-        [self createSeparator];
-        [self createButtons];
-        
-        [self didButtonLeftTouch];
+    self = [super initWithFrame:CGRectMake(0, frame.origin.y, SCREEN_WIDTH, 50)];
+    if (self) {        
+        [self createTitle];
+        [self createSwitchView];
     }
     return self;
 }
 
-- (void)createSeparator
+- (void)createTitle
 {
-    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_title.frame) - 1, CGRectGetWidth(self.frame), 1)];
-    bottomBar.backgroundColor = [UIColor customSeparator];
+    _title = [[UILabel alloc] initWithFrame:CGRectMake(14, 0, 0, CGRectGetHeight(self.frame))];
     
-    [self addSubview:bottomBar];
+    _title.textColor = [UIColor whiteColor];
+    _title.text = NSLocalizedString(@"TRANSACTION_FIELD_GOAL", nil);
+    _title.font = [UIFont customContentRegular:12];
+    
+    [_title setWidthToFit];
+    
+    [self addSubview:_title];
 }
 
-- (void)createButtons
+- (void)createSwitchView
 {
-    buttonLeft = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
-    buttonRight = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(buttonLeft.frame), 0, CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
+    UISwitch *view = [UISwitch new];
     
-    [buttonLeft setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateSelected];
-    [buttonRight setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateSelected];
+    CGRectSetXY(view.frame, CGRectGetWidth(self.frame) - 65, (CGRectGetHeight(self.frame) - CGRectGetHeight(view.frame)) / 2.);
     
-    buttonLeft.titleLabel.font = buttonRight.titleLabel.font = [UIFont customContentRegular:13];
-
-//    [buttonLeft setTitleColor:[UIColor customBlueHover] forState:UIControlStateNormal];
-//    [buttonRight setTitleColor:[UIColor customBlueHover] forState:UIControlStateNormal];
-    [buttonLeft setTitleColor:[UIColor customBlueLight] forState:UIControlStateSelected];
-    [buttonRight setTitleColor:[UIColor customBlueLight] forState:UIControlStateSelected];
+        [view addTarget:self action:@selector(didSwitchChange:) forControlEvents:UIControlEventValueChanged];
     
-    [buttonLeft setTitle:NSLocalizedString(@"TRANSACTION_AMOUNT_FREE", nil) forState:UIControlStateNormal];
-    [buttonRight setTitle:NSLocalizedString(@"TRANSACTION_AMOUNT_FIX", nil) forState:UIControlStateNormal];
+    [self addSubview:view];
     
-    [buttonLeft addTarget:self action:@selector(didButtonLeftTouch) forControlEvents:UIControlEventTouchUpInside];
-    [buttonRight addTarget:self action:@selector(didButtonRightTouch) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self addSubview:buttonLeft];
-    [self addSubview:buttonRight];
+    view.on = NO;
+    [self didSwitchChange:view];
 }
 
-- (void)didButtonLeftTouch
+- (void)didSwitchChange:(UISwitch *)switchView
 {
-    if(buttonLeft.selected){
-        return;
+    if(switchView.on){
+         [_delegate didAmountFixSelected];
+    }
+    else{
+        [_delegate didAmountFreeSelected];
     }
     
-    buttonLeft.selected = YES;
-    buttonRight.selected = NO;
-    
-    [_delegate didAmountFreeSelected];
+    [self refreshSwitchViewColors:switchView];
 }
 
-- (void)didButtonRightTouch
-{
-    if(buttonRight.selected){
-        return;
+- (void)refreshSwitchViewColors:(UISwitch *)switchView{
+    if(switchView.on){
+        [switchView setThumbTintColor:[UIColor customBackground]]; // Curseur
+        [switchView setTintColor:[UIColor customBlue]]; // Bordure
+        [switchView setOnTintColor:[UIColor customBlue]]; // Couleur de fond
     }
-    
-    buttonLeft.selected = NO;
-    buttonRight.selected = YES;
-    
-    [_delegate didAmountFixSelected];
+    else{
+        [switchView setThumbTintColor:[UIColor customBackgroundHeader]]; // Curseur
+        [switchView setTintColor:[UIColor customBackgroundHeader]]; // Bordure
+        [switchView setOnTintColor:[UIColor customBackgroundHeader]]; // Couleur de fond
+    }
 }
 
 @end

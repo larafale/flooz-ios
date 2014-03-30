@@ -22,39 +22,17 @@
 - (void)setJSON:(NSDictionary *)json
 {    
     _content = [json objectForKey:@"text"];
-    _user = [[FLUser alloc] initWithJSON:[json objectForKey:@"emitter"]];
+    _user = [[FLUser alloc] initWithJSON:json[@"emitter"]];
     
-    if([[json objectForKey:@"type"] isEqualToString:@"commentsLine"]){
-        _type = ActivityTypeCommentTransaction;
-    }
-    else if([[json objectForKey:@"type"] isEqualToString:@"commentsEvent"]){
-        _type = ActivityTypeCommentEvent;
-    }
-    else if([[json objectForKey:@"type"] isEqualToString:@"likesLine"]){
-        _type = ActivityTypeLikeTransaction;
-    }
-    else if([[json objectForKey:@"type"] isEqualToString:@"likesEvent"]){
-        _type = ActivityTypeLikeEvent;
-    }
-    else if([[json objectForKey:@"type"] isEqualToString:@"friendRequest"]){
-        _type = ActivityTypeFriendRequest;
-    }
-    else if([[json objectForKey:@"type"] isEqualToString:@"friendRequestAnswer"]){
-        _type = ActivityTypeFriendRequestAccepted;
-    }
-    else if([[json objectForKey:@"type"] isEqualToString:@"friendJoined"]){
-        _type = ActivityTypeFriendJoined;
-    }
-    else{
-        NSLog(@"activity type unknown: %@", [json objectForKey:@"type"] );
-    }
+    // Si 0 alors pas lu
+    _isRead = json[@"state"] == 0;
     
-    if([json objectForKey:@"resource"]){
-        if([[[json objectForKey:@"resource"] objectForKey:@"type"] isEqualToString:@"line"]){
-            _transactionId = [[json objectForKey:@"resource"] objectForKey:@"resourceId"];
+    if(json[@"resource"]){
+        if([json[@"resource"][@"type"] isEqualToString:@"line"]){
+            _transactionId = json[@"resource"][@"resourceId"];
         }
-        else if([[[json objectForKey:@"resource"] objectForKey:@"type"] isEqualToString:@"event"]){
-            _eventId = [[json objectForKey:@"resource"] objectForKey:@"resourceId"];
+        else if([json[@"resource"][@"type"] isEqualToString:@"event"]){
+            _eventId = json[@"resource"][@"resourceId"];
         }
     }
 }

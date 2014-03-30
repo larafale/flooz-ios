@@ -10,16 +10,11 @@
 #import "FLSelectAmountDelegate.h"
 
 @interface FLSelectAmount : UIView{
-    __weak NSMutableDictionary *_dictionary;
-    
     UILabel *_title;
-    
-    UIButton *buttonLeft;
-    UIButton *buttonRight;
 }
 
 @property (weak) id<FLSelectAmountDelegate> delegate;
 
-- (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary;
+- (id)initWithFrame:(CGRect)frame;
 
 @end

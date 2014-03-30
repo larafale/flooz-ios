@@ -10,19 +10,9 @@
 
 @interface FLActivity : NSObject
 
-typedef NS_ENUM(NSInteger, ActivityType) {
-    ActivityTypeCommentTransaction,
-    ActivityTypeCommentEvent,
-    ActivityTypeLikeTransaction,
-    ActivityTypeLikeEvent,
-    ActivityTypeFriendRequest,
-    ActivityTypeFriendRequestAccepted,
-    ActivityTypeFriendJoined // Ami facebook qui s inscrit sur Flooz
-};
-
 @property FLUser *user;
-@property ActivityType type;
 @property NSString *content;
+@property BOOL isRead;
 
 @property NSString *eventId;
 @property NSString *transactionId;

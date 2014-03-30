@@ -32,8 +32,6 @@
     
     BOOL paymentFieldIsShown;
     BOOL firstView;
-    
-    UISwipeGestureRecognizer *swipeGesture;
 }
 
 @end
@@ -58,11 +56,6 @@
     
     [self registerForKeyboardNotifications];
     self.view.backgroundColor = [UIColor customBackgroundHeader:0.9];
-    
-    swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-    swipeGesture.direction = UISwipeGestureRecognizerDirectionDown;
-    [[_contentView panGestureRecognizer] requireGestureRecognizerToFail:swipeGesture];
-    [self.view addGestureRecognizer:swipeGesture];
     
     [self buildView];
 }
@@ -110,10 +103,9 @@
         view.textColor = [UIColor whiteColor];
         view.font = [UIFont customContentLight:11];
         
+        view.text = [FLHelper formatedDate:[_transaction date]];
         [view setImage:[UIImage imageNamed:@"transaction-content-clock"]];
         [view setImageOffset:CGPointMake(- 4, 0)];
-        
-        view.text = [FLHelper formatedDate:[_transaction date]];
         
         [view setWidthToFit];
         CGRectSetX(view.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(view.frame) - 13);

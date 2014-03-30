@@ -25,4 +25,9 @@
     return [UIBarButtonItem barButtonWithImageNamed:@"navbar-cross" target:target action:action];
 }
 
++ (id)createSearchButtonWithTarget:(id)target action:(SEL)action
+{
+    return [UIBarButtonItem barButtonWithImageNamed:@"navbar-search" target:target action:action];
+}
+
 @end

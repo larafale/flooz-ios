@@ -119,6 +119,10 @@
 
 - (void)didWalletTouch
 {
+    if(_dictionary){
+        [_dictionary setValue:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodWallet] forKey:_dictionaryKey];
+    }
+    
     if(leftButton.selected){
         return;
     }
@@ -128,10 +132,6 @@
     
     leftButton.selected = YES;
     rightButton.selected = NO;
-    
-    if(_dictionary){
-        [_dictionary setValue:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodWallet] forKey:_dictionaryKey];    
-    }
     
     [_delegate didWalletSelected];
 }
@@ -146,7 +146,6 @@
         [_delegate presentCreditCardController];
         return;
     }
-    
     
     amount.textColor = leftText.textColor = [UIColor whiteColor];
     rightText.textColor = [UIColor customBlue];

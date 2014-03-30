@@ -9,8 +9,11 @@
 #import "ActivityCell.h"
 
 #define MIN_HEIGHT 60
-#define MARGE_TOP_BOTTOM 5.
-#define MARGE_LEFT_RIGHT 10.
+#define MARGE_TOP_BOTTOM 10.
+#define MARGE_LEFT 10.
+#define MARGE_RIGHT 20.
+#define CELL_WIDTH 290.
+#define CONTENT_X 80.
 
 @implementation ActivityCell
 
@@ -29,7 +32,7 @@
     NSAttributedString *attributedText = [[NSAttributedString alloc]
                       initWithString:[activity content]
                       attributes:@{NSFontAttributeName: [UIFont customContentRegular:13]}];
-    CGRect rect = [attributedText boundingRectWithSize:(CGSize){SCREEN_WIDTH - 96 - MARGE_LEFT_RIGHT, CGFLOAT_MAX}
+    CGRect rect = [attributedText boundingRectWithSize:(CGSize){CELL_WIDTH - CONTENT_X - MARGE_RIGHT, CGFLOAT_MAX}
                                         options:NSStringDrawingUsesLineFragmentOrigin
                                         context:nil];
     height += rect.size.height;
@@ -49,31 +52,53 @@
 - (void)createViews{
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor customBackground];
-    
+
+    [self createSeparatorViews];
+    [self createReadView];
     [self createAvatarView];
-    [self createTypeView];
     [self createContentView];
 }
 
-- (void)createAvatarView{
-    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, MARGE_TOP_BOTTOM, 42, 42)];
+- (void)createReadView
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(MARGE_LEFT, MARGE_TOP_BOTTOM + 22.5, 5, 5)];
+    view.backgroundColor = [UIColor customBlue];
+    view.layer.cornerRadius = CGRectGetHeight(view.frame) / 2.;
     [self.contentView addSubview:view];
 }
 
-- (void)createTypeView{
-    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(63, 0, 14, 9)];
+- (void)createAvatarView{
+    userView = [[FLUserView alloc] initWithFrame:CGRectMake(MARGE_LEFT + 5 + MARGE_LEFT, MARGE_TOP_BOTTOM, 30, 30)];
+    [self.contentView addSubview:userView];
     
-    [self.contentView addSubview:view];
+    CGRectSetX(horizontalSeparator.frame, userView.center.x);
 }
 
 - (void)createContentView{
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(96, 0, CGRectGetWidth(self.frame) - 96 - MARGE_LEFT_RIGHT, 0)];
+    contentView = [[UILabel alloc] initWithFrame:CGRectMake(CONTENT_X, 0, CELL_WIDTH - CONTENT_X - MARGE_RIGHT, 0)];
     
-    view.textColor = [UIColor whiteColor];
-    view.numberOfLines = 0;
-    view.font = [UIFont customContentRegular:13];
+    contentView.textColor = [UIColor whiteColor];
+    contentView.numberOfLines = 0;
+    contentView.font = [UIFont customContentRegular:13];
     
-    [self.contentView addSubview:view];
+    [self.contentView addSubview:contentView];
+    
+    CGRectSetX(verticalSeparator.frame, contentView.frame.origin.x);
+    CGRectSetWidth(verticalSeparator.frame, CGRectGetWidth(contentView.frame));
+}
+
+- (void)createSeparatorViews
+{
+    horizontalSeparator = [UIView new];
+    horizontalSeparator.backgroundColor = [UIColor customSeparator];
+    CGRectSetWidth(horizontalSeparator.frame, 1);
+    [self.contentView addSubview:horizontalSeparator];
+    
+    verticalSeparator = [UIView new];
+    verticalSeparator.backgroundColor = [UIColor customSeparator];
+    CGRectSetHeight(verticalSeparator.frame, 1);
+
+    [self.contentView addSubview:verticalSeparator];
 }
 
 #pragma mark - Prepare Views
@@ -83,62 +108,37 @@
     
     [self prepareContentView]; // Defini la hauteur du block
     [self prepareAvatarView];
-    [self prepareTypeView];
-    
+    [self prepareReadView];
+
+    CGRectSetHeight(horizontalSeparator.frame, height);
+    CGRectSetY(verticalSeparator.frame, height - 1);
     CGRectSetHeight(self.frame, height);
 }
 
+- (void)prepareReadView
+{
+    UIView *view = [[self.contentView subviews] objectAtIndex:2];
+    view.hidden = _activity.isRead;
+    view.center = CGPointMake(view.center.x, height / 2.);
+}
+
 - (void)prepareAvatarView{
-    FLUserView *view = [[self.contentView subviews] objectAtIndex:0];
-    
-    [view setImageFromUser:[_activity user]];
+    [userView setImageFromUser:[_activity user]];
 
-    view.center = CGPointMake(view.center.x, height / 2.);
+    userView.center = CGPointMake(userView.center.x, height / 2.);
 }
 
-- (void)prepareTypeView{
-    UIImageView *view = [[self.contentView subviews] objectAtIndex:1];
+- (void)prepareContentView{    
+    contentView.text = [_activity content];
     
-    switch ([_activity type]) {
-        case ActivityTypeCommentTransaction:
-        case ActivityTypeCommentEvent:
-            view.image = [UIImage imageNamed:@"activity-comment"];
-            break;
-        case ActivityTypeLikeTransaction:
-        case ActivityTypeLikeEvent:
-            view.image = [UIImage imageNamed:@"activity-like"];
-            break;
-        case ActivityTypeFriendRequest:
-            view.image = [UIImage imageNamed:@"activity-friend-request"];
-            break;
-        case ActivityTypeFriendRequestAccepted:
-            view.image = [UIImage imageNamed:@"activity-friend-request-accepted"];
-            break;
-        case ActivityTypeFriendJoined:
-            view.image = [UIImage imageNamed:@"activity-friend-joined"];
-            break;
-        default:
-            NSLog(@"ActivityCell unknown activity type");
-            view.image = nil;
-            break;
-    }
+    [contentView setHeightToFit];
     
-    view.center = CGPointMake(view.center.x, height / 2.);
-}
-
-- (void)prepareContentView{
-    UILabel *view = [[self.contentView subviews] objectAtIndex:2];
-    
-    view.text = [_activity content];
-    
-    [view setHeightToFit];
-    
-    height = CGRectGetHeight(view.frame) + MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM;
+    height = CGRectGetHeight(contentView.frame) + MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM;
     if(height < MIN_HEIGHT){
         height = MIN_HEIGHT;
     }
     
-    view.center = CGPointMake(view.center.x, height / 2.);
+    contentView.center = CGPointMake(contentView.center.x, height / 2.);
 }
 
 @end

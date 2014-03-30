@@ -22,46 +22,19 @@
 }
 
 + (CGFloat)getHeightForEvent:(FLEvent *)event{
-    NSAttributedString *attributedText = nil;
-    CGRect rect = CGRectZero;
-    CGFloat rightViewWidth = SCREEN_WIDTH - MARGE_LEFT_RIGHT - MARGE_LEFT_RIGHT;
-    
     CGFloat current_height = MARGE_TOP_BOTTOM;
     
     // Details
-    
-    if([event title] && ![[event title] isBlank]){
-        attributedText = [[NSAttributedString alloc]
-                          initWithString:[event title]
-                          attributes:@{NSFontAttributeName: [UIFont customContentRegular:13]}];
-        rect = [attributedText boundingRectWithSize:(CGSize){rightViewWidth, CGFLOAT_MAX}
-                                            options:NSStringDrawingUsesLineFragmentOrigin
-                                            context:nil];
-        current_height += rect.size.height;
-    }
-    
-    if([event content] && ![[event content] isBlank]){
-        if([event title] && ![[event title] isBlank]){
-            current_height += 4;
-        }
-        
-        attributedText = [[NSAttributedString alloc]
-                          initWithString:[event content]
-                          attributes:@{NSFontAttributeName: [UIFont customContentLight:12]}];
-        rect = [attributedText boundingRectWithSize:(CGSize){rightViewWidth, CGFLOAT_MAX}
-                                            options:NSStringDrawingUsesLineFragmentOrigin
-                                            context:nil];
-        current_height += rect.size.height;
-    }
-    
+    current_height += 9 + 28 + 16;
+    current_height += [EventAmountView getHeightForEvent:event];
     
     // Attachment
     if([event attachmentThumbURL]){
-        current_height += 13 + 80;
+        current_height += 80 + 14;
     }
     
     // Social
-    current_height += 14 + 15;
+    current_height += 15;
     
     current_height += MARGE_TOP_BOTTOM;
     
@@ -77,21 +50,11 @@
 
 - (void)createViews{
     height = 0;
-    isSwipable = NO;
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor clearColor]; // WARNING
     
-    [self createSlideView];
     [self createRightViews];
-    [self createActionViews];
-}
-
-- (void)createSlideView{
-    slideView = [[UIView alloc] initWithFrame:CGRectMakeSize(2, 0)];
-    slideView.backgroundColor = [UIColor customYellow];
-    
-    [self.contentView addSubview:slideView];
 }
 
 - (void)createRightViews{
@@ -102,56 +65,49 @@
     [self createDetailView];
     [self createAttachmentView];
     [self createSocialView];
-}
-
-- (void)createActionViews{
-    {
-        actionView = [[UIView alloc] initWithFrame:CGRectMake(- CGRectGetWidth(self.frame), 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
-        
-        actionView.backgroundColor = [UIColor customBackgroundHeader];
-        
-        [self.contentView addSubview:actionView];
-    }
-    
-    {
-        JTImageLabel *text = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(actionView.frame) - 30, CGRectGetHeight(actionView.frame))];
-        
-        [text setImageOffset:CGPointMake(-10, 0)];
-        text.textAlignment = NSTextAlignmentRight;
-        
-        [actionView addSubview:text];
-    }
-    
-    {
-        FLSocialView *socialView = [[rightView subviews] objectAtIndex:2];
-        
-        UIPanGestureRecognizer *swipeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipe:)];
-        swipeGesture.delegate = self;
-        [swipeGesture requireGestureRecognizerToFail:[socialView gesture]];
-        [self addGestureRecognizer:swipeGesture];
-        
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCellTouch)];
-        tapGesture.delegate = self;
-        [tapGesture requireGestureRecognizerToFail:swipeGesture];
-        [self addGestureRecognizer:tapGesture];
-    }
+    [self createScopeView];
 }
 
 - (void)createDetailView{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, height + 9, CGRectGetWidth(rightView.frame), 0)];
-    UILabel *text = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
-    UILabel *content = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, height + 9, CGRectGetWidth(rightView.frame), 28 + 16 + 63)];
     
-    text.textColor = [UIColor whiteColor];
-    text.font = [UIFont customContentRegular:13];
-    text.numberOfLines = 0;
+    {
+        FLUserView *userView = [[FLUserView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
+        [view addSubview:userView];
+    }
     
-    content.textColor = [UIColor customPlaceholder];
-    content.font = [UIFont customContentLight:12];
-    content.numberOfLines = 0;
+    {
+        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(37, -2, CGRectGetWidth(view.frame) - 37, 14)];
+        text.textColor = [UIColor whiteColor];
+        text.font = [UIFont customContentRegular:13];
+        
+        [view addSubview:text];
+    }
     
-    [view addSubview:text];
-    [view addSubview:content];
+    {
+        UILabel *content = [[UILabel alloc] initWithFrame:CGRectMake(37, 15, CGRectGetWidth(view.frame) - 37, 14)];
+        
+        content.textColor = [UIColor customPlaceholder];
+        content.font = [UIFont customContentLight:12];
+        
+        [view addSubview:content];
+    }
+    
+    {
+        UIView *dot = [[UIView alloc] initWithFrame:CGRectMakeSize(6, 6)];
+        CGRectSetY(dot.frame, 1.5);
+        dot.backgroundColor = [UIColor customBlue];
+        dot.layer.cornerRadius = CGRectGetHeight(dot.frame) / 2.;
+        
+        [view addSubview:dot];
+    }
+    
+    {
+        EventAmountView *amountView = [[EventAmountView alloc] initWithFrame:CGRectMake(0, 28 + 16, CGRectGetWidth(view.frame), 0)];
+        [amountView hideBottomBar];
+        [view addSubview:amountView];
+    }
+    
     [rightView addSubview:view];
     
     height = CGRectGetMaxY(view.frame);
@@ -166,57 +122,62 @@
     FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
     [view addTargetForLike:self action:@selector(didLikeButtonTouch)];
     [rightView addSubview:view];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCellTouch)];
+    tapGesture.delegate = self;
+    [tapGesture requireGestureRecognizerToFail:[view gesture]];
+    [self addGestureRecognizer:tapGesture];
+}
+
+- (void)createScopeView
+{
+    JTImageLabel *view = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 15)];
+    
+    view.textAlignment = NSTextAlignmentRight;
+    view.textColor = [UIColor customPlaceholder];
+    view.font = [UIFont customContentLight:11];
+    
+    [view setImageOffset:CGPointMake(-4, -1)];
+    
+    [rightView addSubview:view];
 }
 
 #pragma mark - Prepare Views
 
 - (void)prepareViews{
     height = 0;
-//    isSwipable = [_transaction isCancelable] || [_transaction isAcceptable];
-    
-    [self prepareSlideView];
     
     [self prepareDetailView];
     [self prepareAttachmentView];
     [self prepareSocialView];
+    [self prepareScopeView];
     
     CGRectSetHeight(rightView.frame, height);
     
     height += MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM;
     
-    CGRectSetHeight(slideView.frame, height);
-    CGRectSetHeight(actionView.frame, height);
     CGRectSetHeight(self.frame, height);
-}
-
-- (void)prepareSlideView{
-    if(isSwipable){
-        slideView.hidden = NO;
-    }else{
-        slideView.hidden = YES;
-    }
 }
 
 - (void)prepareDetailView{
     UIView *view = [[rightView subviews] objectAtIndex:0];
     
-    UILabel *text = [[view subviews] objectAtIndex:0];
-    UILabel *content = [[view subviews] objectAtIndex:1];
+    FLUserView *userView = [[view subviews] objectAtIndex:0];
+    UILabel *text = [[view subviews] objectAtIndex:1];
+    UILabel *content = [[view subviews] objectAtIndex:2];
+    UIView *dot = [[view subviews] objectAtIndex:3];
+    EventAmountView *amountView = [[view subviews] objectAtIndex:4];
     
+    [userView setImageFromUser:[_event creator]];
     text.text = [_event title];
-    [text setHeightToFit];
+    content.text = [NSString stringWithFormat:NSLocalizedString(@"EVENT_START_BY", nil), [[_event creator] fullname]];
+    amountView.event = _event;
     
-    CGFloat offset = 0.;
-    if([_event title] && [_event content]){
-        offset = 4.;
-    }
+    dot.hidden = !_event.isNew;
     
-    content.text = [_event content];
-    CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
-    [content setHeightToFit];
-    
-    CGRectSetY(view.frame, height);
-    CGRectSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + offset);
+    [text setWidthToFit];
+    CGRectSetX(dot.frame, CGRectGetMaxX(text.frame) + 7);
+    CGRectSetHeight(view.frame, CGRectGetMaxY(amountView.frame));
     height = CGRectGetMaxY(view.frame);
 }
 
@@ -226,9 +187,9 @@
     if([_event attachmentThumbURL]){
         [view setImageWithURL:[NSURL URLWithString:[_event attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_event attachmentURL]]];
         
-        CGRectSetY(view.frame, height + 13);
+        CGRectSetY(view.frame, height);
         CGRectSetHeight(view.frame, 80);
-        height = CGRectGetMaxY(view.frame);
+        height = CGRectGetMaxY(view.frame) + 14;
     }
     else{
         CGRectSetHeight(view.frame, 0);
@@ -238,130 +199,27 @@
 - (void)prepareSocialView{
     FLSocialView *view = [[rightView subviews] objectAtIndex:2];
     [view prepareView:_event.social];
-    CGRectSetY(view.frame, height + 14);
     
+    CGRectSetY(view.frame, height);
+}
+
+- (void)prepareScopeView{
+    JTImageLabel *view = [[rightView subviews] objectAtIndex:3];
+    
+    if([_event scope] == TransactionScopeFriend){
+        [view setImage:[UIImage imageNamed:@"scope-friend"]];
+        view.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
+    }
+    else{
+        [view setImage:[UIImage imageNamed:@"scope-invite"]];
+        view.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
+    }
+    
+    [view setWidthToFit];
+    CGRectSetX(view.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(view.frame));
+    
+    CGRectSetY(view.frame, height);
     height = CGRectGetMaxY(view.frame);
-}
-
-#pragma mark - Swipe
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    if([gestureRecognizer class] == [UIPanGestureRecognizer class]){
-        UIPanGestureRecognizer *gesture = (UIPanGestureRecognizer *)gestureRecognizer;
-        
-        CGPoint translation = [gesture translationInView:self];
-        if(isSwipable && translation.x > 0.){
-            return YES;
-        }
-    }
-    else if([gestureRecognizer class] == [UITapGestureRecognizer class]){
-        return YES;
-    }
-    
-    NSLog(@"EventCell: gesture invalid");
-    
-    return NO;
-}
-
-- (void)respondToSwipe:(UIPanGestureRecognizer *)recognizer
-{
-    CGPoint translation = [recognizer translationInView:self];
-    CGFloat progress = fabs(translation.x / CGRectGetWidth(self.frame));
-    
-    switch (recognizer.state) {
-        case UIGestureRecognizerStateBegan:
-            lastTranslation = CGPointZero;
-            totalTranslation = CGPointZero;
-            break;
-        case UIGestureRecognizerStateChanged:{
-            if(translation.x < 0.){
-                return;
-            }
-            
-            CGPoint diffTranslation = translation;
-            diffTranslation.x -= lastTranslation.x;
-            lastTranslation = translation;
-            
-            totalTranslation.x += diffTranslation.x;
-            
-            [self moveViews:diffTranslation.x];
-            [self updateValidView:progress];
-            break;
-        }
-        case UIGestureRecognizerStateEnded:
-            [self completeTranslation:progress];
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)moveViews:(CGFloat)offsetX
-{
-    for(UIView *view in self.contentView.subviews){
-        view.frame = CGRectOffset(view.frame, offsetX, 0);
-    }
-}
-
-- (void)completeTranslation:(CGFloat)progress
-{
-//    if(isSwipable && progress >= 0.50){
-//        if([_event isCancelable]){
-//            [self cancelTransaction];
-//        }
-//        else{
-//            if(progress < 0.75){
-//                [self acceptTransaction];
-//            }
-//            else{
-//                [self refuseTransaction];
-//            }
-//        }
-//    }
-    
-    totalTranslation.x = - totalTranslation.x;
-    
-    [UIView animateWithDuration:.3 animations:^{
-        [self moveViews:totalTranslation.x];
-    }];
-}
-
-- (void)updateValidView:(CGFloat)progress
-{
-    JTImageLabel *text = [[actionView subviews] objectAtIndex:0];
-//    
-//    if([_event isCancelable]){
-//        if(progress < 0.50){
-//            text.text = NSLocalizedString(@"TRANSACTION_ACTION_CANCEL", nil);
-//            text.textColor = [UIColor whiteColor];
-//            [text setImage:[UIImage imageNamed:@"transaction-cell-cross"]];
-//        }
-//        else{
-//            text.text = NSLocalizedString(@"TRANSACTION_ACTION_CANCEL", nil);
-//            text.textColor = [UIColor customRed];
-//            [text setImage:[UIImage imageNamed:@"transaction-cell-cross"]];
-//        }
-//    }
-//    else{
-//        if(progress < 0.50){
-//            text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);
-//            text.textColor = [UIColor whiteColor];
-//            [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
-//        }
-//        else if(progress < 0.75){
-//            text.text = NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil);
-//            text.textColor = [UIColor customGreen];
-//            [text setImage:[UIImage imageNamed:@"transaction-cell-check"]];
-//        }
-//        else{
-//            text.text = NSLocalizedString(@"TRANSACTION_ACTION_REFUSE", nil);
-//            text.textColor = [UIColor customRed];
-//            [text setImage:[UIImage imageNamed:@"transaction-cell-cross"]];
-//        }
-//    }
-    
-    text.center = CGPointMake(text.center.x, actionView.center.y);
 }
 
 #pragma mark -

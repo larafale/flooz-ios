@@ -36,6 +36,10 @@
 
 - (void)setFullScreenMode
 {
+    if(!fullScreenImageURL){
+        return;
+    }
+    
     IDMPhotoBrowser *controller = [[IDMPhotoBrowser alloc] initWithPhotoURLs:@[fullScreenImageURL]];
     
     UIViewController *rootController = appDelegate.window.rootViewController;

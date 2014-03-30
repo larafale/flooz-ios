@@ -22,6 +22,8 @@
     
     NSString *currentFilter;
     UIRefreshControl *refreshControl;
+    
+    NSMutableDictionary *transactionsCache;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

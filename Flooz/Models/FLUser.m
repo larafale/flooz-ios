@@ -21,6 +21,8 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
+    _notificationsCount = @0;
+    
     if([json objectForKey:@"userId"]){
         _userId = [json objectForKey:@"userId"];
         
@@ -50,8 +52,9 @@
     if([_avatarURL isEqualToString:@"/img/nopic.png"]){
         _avatarURL = nil;
     }
-    
+        
     _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
+    _eventsCount = [[[json objectForKey:@"stats"] objectForKey:@"event"] objectForKey:@"created"];
     _transactionsCount = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"total"];
     
     _haveStatsPending = NO;

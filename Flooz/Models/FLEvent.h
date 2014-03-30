@@ -50,6 +50,8 @@ typedef NS_ENUM(NSInteger, EventAction) {
 @property NSString *attachmentThumbURL;
 
 @property BOOL isPrivate;
+@property BOOL isNew;
+@property TransactionScope scope;
 
 @property BOOL isInvited;
 

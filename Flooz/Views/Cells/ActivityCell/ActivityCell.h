@@ -10,6 +10,12 @@
 
 @interface ActivityCell : UITableViewCell{
     CGFloat height;
+    
+    FLUserView *userView;
+    UILabel *contentView;
+    
+    UIView *horizontalSeparator;
+    UIView *verticalSeparator;
 }
 
 + (CGFloat)getHeightForActivity:(FLActivity *)activity;

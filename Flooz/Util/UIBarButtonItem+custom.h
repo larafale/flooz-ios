@@ -13,5 +13,6 @@
 + (id)createBackButtonWithTarget:(id)target action:(SEL)action;
 + (id)createCheckButtonWithTarget:(id)target action:(SEL)action;
 + (id)createCloseButtonWithTarget:(id)target action:(SEL)action;
++ (id)createSearchButtonWithTarget:(id)target action:(SEL)action;
 
 @end

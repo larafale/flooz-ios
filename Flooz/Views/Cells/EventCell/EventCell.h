@@ -12,18 +12,12 @@
 #import "EventCellDelegate.h"
 
 #import "FLSocialView.h"
+#import "EventAmountView.h"
 
 @interface EventCell : UITableViewCell{
     CGFloat height;
     
-    UIView *actionView;
     UIView *rightView;
-    UIView *slideView;
-    
-    CGPoint totalTranslation;
-    CGPoint lastTranslation;
-    
-    BOOL isSwipable;
 }
 
 + (CGFloat)getHeightForEvent:(FLEvent *)event;

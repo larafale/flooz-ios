@@ -24,6 +24,8 @@
         transactions = [NSMutableArray new];
         rowsWithPaymentField = [NSMutableSet new];
         nextPageIsLoading = NO;
+        
+        transactionsCache = [NSMutableDictionary new];
     }
     return self;
 }
@@ -155,8 +157,19 @@
 {
     currentFilter = @"public";
 
-    [[Flooz sharedInstance] timeline:@"public" success:^(id result, NSString *nextPageUrl) {
+    if(transactionsCache[currentFilter]){
+        transactions = [transactionsCache[currentFilter] mutableCopy];
+        [self didFilterChange];
+    }
+    
+    [[Flooz sharedInstance] timeline:currentFilter success:^(id result, NSString *nextPageUrl) {
+        if(![currentFilter isEqualToString:@"public"]){
+            return;
+        }
+        
         transactions = [result mutableCopy];
+        transactionsCache[currentFilter] = result;
+        
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
         [self didFilterChange];
@@ -167,8 +180,19 @@
 {
     currentFilter = @"friend";
 
-    [[Flooz sharedInstance] timeline:@"friend" success:^(id result, NSString *nextPageUrl) {
+    if(transactionsCache[currentFilter]){
+        transactions = [transactionsCache[currentFilter] mutableCopy];
+        [self didFilterChange];
+    }
+    
+    [[Flooz sharedInstance] timeline:currentFilter success:^(id result, NSString *nextPageUrl) {
+        if(![currentFilter isEqualToString:@"friend"]){
+            return;
+        }
+        
         transactions = [result mutableCopy];
+        transactionsCache[currentFilter] = result;
+        
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
         [self didFilterChange];
@@ -179,8 +203,19 @@
 {
     currentFilter = @"private";
     
-    [[Flooz sharedInstance] timeline:@"private" state:@"" success:^(id result, NSString *nextPageUrl) {
+    if(transactionsCache[currentFilter]){
+        transactions = [transactionsCache[currentFilter] mutableCopy];
+        [self didFilterChange];
+    }
+    
+    [[Flooz sharedInstance] timeline:currentFilter state:@"" success:^(id result, NSString *nextPageUrl) {
+        if(![currentFilter isEqualToString:@"private"]){
+            return;
+        }
+        
         transactions = [result mutableCopy];
+        transactionsCache[currentFilter] = result;
+        
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
         [self didFilterChange];

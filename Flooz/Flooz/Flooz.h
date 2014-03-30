@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <AFHTTPRequestOperationManager.h>
 
+#import <SocketIO.h>
+#import <SocketIOPacket.h>
+
 #import "FLFriendRequest.h"
 #import "FLUser.h"
 #import "FLEvent.h"
@@ -17,13 +20,16 @@
 #import "FLCreditCard.h"
 #import "FLActivity.h"
 
-@interface Flooz : NSObject{
+@interface Flooz : NSObject<SocketIODelegate>{
     AFHTTPRequestOperationManager *manager;
     NSString *access_token;
     FLLoadView *loadView;
+    
+    SocketIO *_socket;
 }
 
 @property (strong, readonly) FLUser *currentUser;
+@property (strong, nonatomic) NSString *facebook_token;
 
 + (Flooz *)sharedInstance;
 
@@ -49,7 +55,8 @@
 - (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
 - (void)transactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 
-- (void)activitiesWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
 
 - (void)events:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)eventsNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
@@ -86,5 +93,7 @@
 - (void)connectFacebook;
 - (void)didConnectFacebook;
 - (void)facebokSearchFriends:(void (^)(id result))success;
+
+- (void)startSocket;
 
 @end

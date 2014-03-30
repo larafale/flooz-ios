@@ -8,6 +8,9 @@
 
 #import "FLNavbarView.h"
 
+#import "AppDelegate.h"
+#import "AcitvitiesViewController.h"
+
 #define STATUSBAR_HEIGHT 20.
 #define NAVBAR_HEIGHT 44.
 #define HEIGHT (STATUSBAR_HEIGHT + NAVBAR_HEIGHT)
@@ -24,6 +27,8 @@
     if (self) {
         self.backgroundColor = [UIColor customBackgroundHeader];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshFloozView) name:@"newNotifications" object:nil];
+        
         [self preparePanGesture];
         [self prepareSwipeGesture];
         _viewControllers = viewControllers;
@@ -34,8 +39,16 @@
 
 - (void)preparePanGesture
 {
+    floozGesture1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadActivitiesController)];
+    floozGesture1.delegate = self;
+    
+    floozGesture2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadActivitiesController)];
+    floozGesture2.delegate = self;
+    
     panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToPanGesture:)];
     panGesture.delegate = self;
+    [panGesture requireGestureRecognizerToFail:floozGesture1];
+    [panGesture requireGestureRecognizerToFail:floozGesture2];
     [self addGestureRecognizer:panGesture];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
@@ -65,16 +78,7 @@
     [self addSubview:_titlesView];
     
     for(UIViewController *controller in _viewControllers){
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, STATUSBAR_HEIGHT - 4, CGRectGetWidth(self.frame), NAVBAR_HEIGHT)];
-        
-        label.font = [UIFont customTitleExtraLight:28];
-        label.textColor = [UIColor customBlue];
-        label.textAlignment = NSTextAlignmentCenter;
-        
-        label.text = controller.title;
-        label.tag = [[_titlesView subviews] count];
-
-        [_titlesView addSubview:label];
+        [self createLabelForController:controller];
     }
     
     selectedTitleIndex = 1;
@@ -87,9 +91,74 @@
     }
 }
 
+- (void)createLabelForController:(UIViewController *)controller
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, STATUSBAR_HEIGHT - 4, CGRectGetWidth(self.frame), NAVBAR_HEIGHT)];
+    
+    label.font = [UIFont customTitleExtraLight:28];
+    label.textColor = [UIColor customBlue];
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    label.text = controller.title;
+    
+    [_titlesView addSubview:label];
+    
+    if([[_titlesView subviews] count] == 2){
+        floozContianerView = label;
+        floozContianerView.userInteractionEnabled = YES;
+    
+        {
+            floozCountView = [[UILabel alloc] initWithFrame:CGRectMakeSize(22, 22)];
+            CGRectSetY(floozCountView.frame, ((CGRectGetHeight(floozContianerView.frame) - CGRectGetHeight(floozCountView.frame)) / 2.) + 1);
+            
+            floozCountView.backgroundColor = [UIColor customBlue];
+            floozCountView.textColor = [UIColor whiteColor];
+            floozCountView.textAlignment = NSTextAlignmentCenter;
+            floozCountView.font = [UIFont customTitleExtraLight:13];
+            
+            floozCountView.clipsToBounds = YES;
+//            floozCountView.layer.borderColor = [UIColor whiteColor].CGColor;
+//            floozCountView.layer.borderWidth = 1;
+            floozCountView.layer.cornerRadius = CGRectGetHeight(floozCountView.frame) / 2.;
+            
+            [floozContianerView addSubview:floozCountView];
+        }
+        
+        {
+            floozTextView = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(floozContianerView.frame.size)];
+            floozTextView.text = floozContianerView.text;
+            floozContianerView.text = nil;
+            floozTextView.font = floozContianerView.font;
+            
+            [floozContianerView addSubview:floozTextView];
+        }
+        
+        {
+            [floozTextView setWidthToFit];
+
+            CGFloat spacing = 5.;
+            CGFloat width = CGRectGetWidth(floozCountView.frame) + CGRectGetWidth(floozTextView.frame);
+            
+            CGRectSetX(floozCountView.frame, (CGRectGetWidth(floozContianerView.frame) - width - spacing) / 2.);
+            CGRectSetX(floozTextView.frame, CGRectGetMaxX(floozCountView.frame) + spacing);
+        }
+        
+        {
+            floozCountView.userInteractionEnabled = YES;
+            [floozCountView addGestureRecognizer:floozGesture1];
+            
+            floozTextView.userInteractionEnabled = YES;
+            [floozTextView addGestureRecognizer:floozGesture2];
+        }
+    }
+}
+
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]){
+    if([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]){
+        return selectedTitleIndex == 1;
+    }
+    else if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]){
         UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
         CGPoint translation = [recognizer translationInView:_titlesView];
         
@@ -179,6 +248,14 @@
     
     UILabel *selectedTitleView = [[_titlesView subviews] objectAtIndex:selectedTitleIndex];
     selectedTitleView.textColor = [UIColor customBlue];
+    
+    [self refreshFloozView];
+}
+
+- (void)refreshFloozView
+{
+    floozCountView.text = [[[[Flooz sharedInstance] currentUser] notificationsCount] stringValue];
+    floozTextView.textColor = floozContianerView.textColor;
 }
 
 - (void)completeTranslation
@@ -210,7 +287,7 @@
     }
     
     selectedTitleIndex = index;
-        
+ 
     [UIView animateWithDuration:0.3
                           delay:0
                         options:0
@@ -221,6 +298,19 @@
 //                             [controller endAppearanceTransition];
 //                         }
                      } completion:NULL];
+}
+
+- (void)loadActivitiesController
+{
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[AcitvitiesViewController new]];
+//    AcitvitiesViewController *controller = [AcitvitiesViewController new];
+    UIViewController *rootController = appDelegate.window.rootViewController;
+    
+    rootController.modalPresentationStyle = UIModalPresentationCurrentContext;
+
+    [rootController presentViewController:controller animated:NO completion:^{
+        rootController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }];
 }
 
 @end

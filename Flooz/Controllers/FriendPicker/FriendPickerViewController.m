@@ -38,6 +38,9 @@
 {
     [super viewDidLoad];
     
+    // Sinon contentInset de tableview mauvais
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    
     self.view.backgroundColor = [UIColor customBackgroundHeader];
     
     [self registerForKeyboardNotifications];
@@ -47,7 +50,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [[[self navigationController] navigationBar] setHidden:YES];
 }
 
@@ -363,8 +366,8 @@
 
 - (void)didTableDataChanged
 {
-    [self.tableView setContentOffset:CGPointZero animated:YES];
-    [self.tableView reloadData];
+    [_tableView setContentOffset:CGPointZero animated:YES];
+    [_tableView reloadData];
 }
 
 #pragma mark - Contacts

@@ -24,10 +24,10 @@
 {
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    navbarView = [[FLNavbarView alloc] initWithViewControllers:_viewControllers];
-    [self.view addSubview:navbarView];
+    _navbarView = [[FLNavbarView alloc] initWithViewControllers:_viewControllers];
+    [self.view addSubview:_navbarView];
     
-    contentView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(navbarView.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - CGRectGetMaxY(navbarView.frame))];
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_navbarView.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - CGRectGetMaxY(_navbarView.frame))];
     [self.view addSubview:contentView];
     
     [self prepareViewControllers];

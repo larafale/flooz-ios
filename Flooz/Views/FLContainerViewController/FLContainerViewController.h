@@ -10,12 +10,12 @@
 #import "FLNavbarView.h"
 
 @interface FLContainerViewController : UIViewController{
-    FLNavbarView *navbarView;
     UIView *contentView;
 }
 
 - (id)initWithControllers:(NSArray *)controllers;
 
 @property (strong, nonatomic) NSArray *viewControllers;
+@property (strong, readonly) FLNavbarView *navbarView;
 
 @end

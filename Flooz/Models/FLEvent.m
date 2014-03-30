@@ -33,6 +33,15 @@
         _status = EventStatusRefused;
     }
     
+    if([[json objectForKey:@"scope"] intValue] == 1){
+        _scope = TransactionScopeFriend;
+    }
+    else{
+        _scope = TransactionScopePrivate;
+    }
+    
+    _isNew = [[json objectForKey:@"isAttending"] boolValue];
+    
     _amount = [json objectForKey:@"amount"];
     _amountCollected = [json objectForKey:@"total"];
     _amountExpected = [json objectForKey:@"goal"];
@@ -43,7 +52,7 @@
         
     _dayLeft = [json objectForKey:@"endWhen"];
     _pourcentage = [json objectForKey:@"fulfilled"];
-
+    
     _isInvited = NO;
     if([json objectForKey:@"isInvited"] && [[json objectForKey:@"isInvited"] boolValue]){
         _isInvited = YES;

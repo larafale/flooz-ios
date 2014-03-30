@@ -55,7 +55,9 @@
 {
     _currentUser = nil;
     access_token = nil;
+    _facebook_token = nil;
     
+    [self closeSocket];
     [appDelegate didDisconnected];
 }
 
@@ -200,7 +202,7 @@
     [self requestPath:path method:@"GET" params:nil success:success failure:NULL];
 }
 
-- (void)activitiesWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+- (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
         NSMutableArray *activities = [NSMutableArray new];
@@ -212,11 +214,30 @@
         }
 
         if(success){
-            success(activities);
+            success(activities, [result objectForKey:@"next"]);
         }
     };
     
     [self requestPath:@"feeds" method:@"GET" params:@{ @"scope": @"private" } success:successBlock failure:failure];
+}
+
+- (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success
+{
+    id successBlock = ^(id result) {
+        NSMutableArray *activities = [NSMutableArray new];
+        NSArray *activitiesJSON = [result objectForKey:@"items"];
+        
+        for(NSDictionary *json in activitiesJSON){
+            FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
+            [activities addObject:activity];
+        }
+        
+        if(success){
+            success(activities, [result objectForKey:@"next"]);
+        }
+    };
+    
+    [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
 - (void)events:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
@@ -510,6 +531,8 @@
 //        NSLog(@"JSON: %@", responseObject);
         [loadView hide];
         
+        [self displayPopupMessage:responseObject];
+        
         if(success){
             success(responseObject);
         }
@@ -534,26 +557,15 @@
             DISPLAY_ERROR(FLBadLoginError);
             [self logout];
         }
-        else if(![path isEqualToString:@"/login/basic"] && operation.responseObject){
-            id statusCode = [operation.responseObject objectForKey:@"statusCode"];
+        else if(operation.responseObject){
+            [self displayPopupMessage:operation.responseObject];
             
-            NSString *errorTitle;
-            NSString *errorContent;
-            if([operation.responseObject respondsToSelector:@selector(objectForKey:)]){
-                NSDictionary *error = [operation.responseObject objectForKey:@"item"];
-                if(error && [error objectForKey:@"visible"] && [[error objectForKey:@"visible"] boolValue]){
-                    errorTitle = [[error objectForKey:@"err"] objectForKey:@"title"];
-                    errorContent = [[error objectForKey:@"err"] objectForKey:@"text"];
-                }
-            }
-                
-            if([statusCode respondsToSelector:@selector(intValue)] && [statusCode intValue] == 401){
-                // Token expire
-                DISPLAY_ERROR(FLBadLoginError);
-                [self logout];
-            }else if(errorContent){
-                [appDelegate displayErrorMessage:errorTitle content:errorContent];
-            }
+//            id statusCode = [operation.responseObject objectForKey:@"statusCode"];
+//            if(access_token && [statusCode respondsToSelector:@selector(intValue)] && [statusCode intValue] == 401){
+//                // Token expire
+//                DISPLAY_ERROR(FLBadLoginError);
+//                [self logout];
+//            }
         }
         
         if(failure){
@@ -585,14 +597,16 @@
 {    
     access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
     _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
+    
     [appDelegate didConnected];
+    [self startSocket];
 }
 
 #pragma mark - Facebook
 
 - (void)connectFacebook
 {
-    [FBSession openActiveSessionWithReadPermissions:@[@"basic_info,email,user_friends"]
+    [FBSession openActiveSessionWithReadPermissions:@[@"basic_info,email,user_friends,publish_actions"]
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
@@ -603,9 +617,9 @@
 
 - (void)didConnectFacebook
 {
-    NSString *accessToken = [[[FBSession activeSession] accessTokenData] accessToken];
+    _facebook_token = [[[FBSession activeSession] accessTokenData] accessToken];
     
-    [self requestPath:@"/login/facebook" method:@"POST" params:@{@"token": accessToken} success:^(id result) {
+    [self requestPath:@"/login/facebook" method:@"POST" params:@{@"token": _facebook_token} success:^(id result) {
         [self updateCurrentUserAfterConnect:result];
     } failure:^(NSError *error) {
         
@@ -624,7 +638,7 @@
                                                @"id": [result objectForKey:@"id"],
                                                @"name": [result objectForKey:@"name"],
                                                @"username": [result objectForKey:@"username"],
-                                               @"token": accessToken
+                                               @"token": _facebook_token
                                            } mutableCopy]
                                        };
 
@@ -649,6 +663,72 @@
             NSLog(@"facebokSearchFriends: %@", [error description]);
         }
     }];
+}
+
+- (void)displayPopupMessage:(id)responseObject
+{
+    NSString *title;
+    NSString *content;
+    if([responseObject respondsToSelector:@selector(objectForKey:)]){
+        NSDictionary *error = [responseObject objectForKey:@"popup"];
+        
+        if(!error){
+            error = [responseObject objectForKey:@"item"];
+        }
+        
+        if(error && [error respondsToSelector:@selector(objectForKey:)] && [error objectForKey:@"visible"] && [[error objectForKey:@"visible"] boolValue] && [[error objectForKey:@"text"] respondsToSelector:@selector(length)]){
+            title = [error objectForKey:@"title"];
+            content = [error objectForKey:@"text"];
+        }
+    }
+    
+    if(content && ![content isBlank]){
+        [appDelegate displayMessage:title content:content style:FLAlertViewStyleSuccess];
+    }
+}
+
+#pragma mark - WebSocket
+
+- (void)startSocket
+{
+    if(!_currentUser){
+        return;
+    }
+    
+    _socket = [[SocketIO alloc] initWithDelegate:self];
+    _socket.useSecure = YES;
+    [_socket connectToHost:@"api.flooz.me" onPort:443];
+}
+
+- (void)closeSocket
+{
+    _socket = nil;
+}
+
+- (void)socketIODidConnect:(SocketIO *)socket
+{
+    [socket sendEvent:@"subscribe" withData:@{ @"room": [_currentUser username] }];
+}
+
+- (void)socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
+{
+    if(packet.name && [packet.name respondsToSelector:@selector(isEqualToString:)]){
+        if([packet.name isEqualToString:@"popup"]){
+            [self displayPopupMessage:packet.dataAsJSON[@"args"][0]];
+        }
+        else if([packet.name isEqualToString:@"newNotification"]){
+            NSNumber *count = packet.dataAsJSON[@"args"][0][@"total"];
+            
+            [[[Flooz sharedInstance] currentUser] setNotificationsCount:count];
+            
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"newNotifications" object:nil]];
+        }
+    }
+}
+
+- (void)socketIO:(SocketIO *)socket onError:(NSError *)error
+{
+    NSLog(@"WebSocket error: %@", error);
 }
 
 @end

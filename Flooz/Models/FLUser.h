@@ -23,6 +23,8 @@
 @property NSString *avatarURL;
 @property NSString *profileCompletion;
 @property NSNumber *friendsCount;
+@property NSNumber *eventsCount;
+@property NSNumber *notificationsCount;
 @property NSNumber *transactionsCount;
 @property BOOL haveStatsPending;
 

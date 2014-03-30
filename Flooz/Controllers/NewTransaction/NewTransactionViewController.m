@@ -22,7 +22,12 @@
 #import "TimelineViewController.h"
 #import "NewTransactionDatePicker.h"
 
+#import "AppDelegate.h"
+#import "FLContainerViewController.h"
+
 #import "SecureCodeViewController.h"
+
+#import "UIView+FindFirstResponder.h"
 
 @interface NewTransactionViewController (){
     NSMutableDictionary *transaction;
@@ -96,7 +101,7 @@
         }
         
         if(isEvent){
-            FLSelectAmount *selectAmount = [[FLSelectAmount alloc] initWithFrame:CGRectMakePosition(0, offset) for:transaction];
+            FLSelectAmount *selectAmount = [[FLSelectAmount alloc] initWithFrame:CGRectMakePosition(0, offset)];
             [_contentView addSubview:selectAmount];
             
             selectAmount.delegate = self;
@@ -166,6 +171,9 @@
     if(isEvent){
         [self didAmountFreeSelected];
     }
+    else if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+        [payementField didWalletTouch];
+    }
     
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), offset);
 }
@@ -229,6 +237,10 @@
 {
     [[self view] endEditing:YES];
     
+    // Car remit a zero par didTypeCollectSelected
+    [payementField didWalletTouch];
+    [self didWalletSelected];
+    
     if(CGRectGetHeight(payementField.frame) <= 1){
         [UIView animateWithDuration:.5 animations:^{
             CGRectSetHeight(payementField.frame, [FLPaymentField height]);
@@ -267,17 +279,11 @@
     if(isEvent){
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] createEvent:transaction success:^(id result) {
-            FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
-            EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
-            
-            __strong UIViewController *presentingViewController = [self presentingViewController];
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"UpdateEvents" object:nil]];
             
             [self dismissViewControllerAnimated:YES completion:^{
-                presentingViewController.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-                
-                [presentingViewController presentViewController:controller animated:NO completion:^{
-                    presentingViewController.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-                }];
+                FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
+                [rootController.navbarView loadControllerWithIndex:0];
             }];
         } failure:NULL];
     }
@@ -348,7 +354,13 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+    
+    UIView *firstResponder = [self.view findFirstResponder];
+    if([[firstResponder superview] isKindOfClass:[FLTextView class]]){
+        _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+        CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
+        [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
+    }
 }
 
 - (void)keyboardWillDisappear

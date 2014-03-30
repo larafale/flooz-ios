@@ -18,8 +18,15 @@
     UISwipeGestureRecognizer *swipeGestureLeft;
     UISwipeGestureRecognizer *swipeGestureRight;
     CGPoint lastTranslation;
+    
+    UITapGestureRecognizer *floozGesture1;
+    UITapGestureRecognizer *floozGesture2;
+    UILabel *floozContianerView;
+    UILabel *floozCountView;
+    UILabel *floozTextView;
 }
 
 - (id)initWithViewControllers:(NSArray *)viewControllers;
+- (void)loadControllerWithIndex:(NSInteger)index;
 
 @end
