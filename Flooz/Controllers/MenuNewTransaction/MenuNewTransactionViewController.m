@@ -46,15 +46,15 @@
     
     [crossButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     
-    eventButton = [[FLMenuNewTransactionButton alloc] initWithPosition:90 imageNamed:@"menu-new-transaction-event" title:@"MENU_NEW_TRANSACTION_EVENT"];
+    eventButton = [[FLMenuNewTransactionButton alloc] initWithPosition:(SCREEN_HEIGHT > 500 ? 90 : 20) imageNamed:@"menu-new-transaction-event" title:@"MENU_NEW_TRANSACTION_EVENT"];
     [self.view addSubview:eventButton];
     [eventButton addTarget:self action:@selector(presentNewTransactionControllerForEvent) forControlEvents:UIControlEventTouchUpInside];
     
-    collectionButton = [[FLMenuNewTransactionButton alloc] initWithPosition:215 imageNamed:@"menu-new-transaction-collect" title:@"MENU_NEW_TRANSACTION_COLLECT"];
+    collectionButton = [[FLMenuNewTransactionButton alloc] initWithPosition:(CGRectGetMaxY(eventButton.frame) + 24) imageNamed:@"menu-new-transaction-collect" title:@"MENU_NEW_TRANSACTION_COLLECT"];
     [self.view addSubview:collectionButton];
     [collectionButton addTarget:self action:@selector(presentNewTransactionControllerForCollect) forControlEvents:UIControlEventTouchUpInside];
     
-    paymentButton = [[FLMenuNewTransactionButton alloc] initWithPosition:340 imageNamed:@"menu-new-transaction-payment" title:@"MENU_NEW_TRANSACTION_PAYMENT"];
+    paymentButton = [[FLMenuNewTransactionButton alloc] initWithPosition:(CGRectGetMaxY(collectionButton.frame) + 24) imageNamed:@"menu-new-transaction-payment" title:@"MENU_NEW_TRANSACTION_PAYMENT"];
     [self.view addSubview:paymentButton];
     [paymentButton addTarget:self action:@selector(presentNewTransactionControllerForPayment) forControlEvents:UIControlEventTouchUpInside];
 }

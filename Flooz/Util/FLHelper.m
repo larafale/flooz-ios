@@ -7,6 +7,7 @@
 //
 
 #import "FLHelper.h"
+#import "YLMoment.h"
 
 @implementation FLHelper
 
@@ -79,7 +80,7 @@
     static NSDateFormatter *dateFormatter;
     if(!dateFormatter){
         dateFormatter = [NSDateFormatter new];
-        [dateFormatter setDateFormat:@"dd'/'MM'/'yy"];
+        [dateFormatter setDateFormat:@"dd MMM 'à' HH:mm"];
     }
     
     if(date){
@@ -87,6 +88,16 @@
     }
     
     return nil;
+}
+
++ (NSString *)formatedDateFromNow:(NSDate *)date
+{
+    if(!date){
+        return nil;
+    }
+    
+    YLMoment *moment = [YLMoment momentWithDate:date];
+    return [moment fromNow];
 }
 
 + (NSString *)formatedPhone:(NSString *)phone{

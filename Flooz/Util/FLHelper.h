@@ -16,6 +16,7 @@
 + (NSString *)formatedAmount:(NSNumber *)amount withCurrency:(BOOL)withCurrency withSymbol:(BOOL)withSymbol;
 
 + (NSString *)formatedDate:(NSDate *)date;
++ (NSString *)formatedDateFromNow:(NSDate *)date;
 + (NSString *)formatedPhone:(NSString *)phone;
 + (NSString *)formatedPhoneForDisplay:(NSString *)phone;
 

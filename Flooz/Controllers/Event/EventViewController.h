@@ -12,8 +12,9 @@
 #import "EventCellDelegate.h"
 #import "FLPaymentFieldDelegate.h"
 #import "FLNewTransactionAmountDelegate.h"
+#import "FLSwitchView.h"
 
-@interface EventViewController : UIViewController<EventActionViewDelegate, FLPaymentFieldDelegate, FLNewTransactionAmountDelegate>
+@interface EventViewController : UIViewController<EventActionViewDelegate, FLPaymentFieldDelegate, FLNewTransactionAmountDelegate, FLSwitchViewDelegate>
 
 - (id)initWithEvent:(FLEvent *)event indexPath:(NSIndexPath *)indexPath;
 

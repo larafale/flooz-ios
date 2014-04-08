@@ -26,4 +26,6 @@
 
 - (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey frame:(CGRect)frame placeholder2:(NSString *)placeholder2 key2:(NSString *)dictionaryKey2;
 
+- (void)seTsecureTextEntry:(BOOL)secureTextEntry;
+
 @end

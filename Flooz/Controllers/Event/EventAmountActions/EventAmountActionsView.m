@@ -22,13 +22,15 @@
 
 - (void)createViews{
     [self createLeftButton];
-    [self createRightButton];
-    [self createSeparatorView];
+//    [self createRightButton];
+//    [self createSeparatorView];
     [self createBottomBarView];
 }
 
 - (void)createLeftButton{
-    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame))];
+//    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame))];
+    
+        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     
     view.titleLabel.font = [UIFont customContentRegular:12];
     [view setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
@@ -39,6 +41,12 @@
     [view setTitleEdgeInsets:UIEdgeInsetsMake(3, 15, 0, 0)];
     
     [self addSubview:view];
+    
+    {
+        UIImageView *arrow = [UIImageView imageNamed:@"arrow-right"];
+        CGRectSetXY(arrow.frame, CGRectGetWidth(view.frame) - 15, (CGRectGetHeight(view.frame) / 2.) -2.5);
+        [view addSubview:arrow];
+    }
 }
 
 - (void)createRightButton{

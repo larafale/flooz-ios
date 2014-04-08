@@ -22,6 +22,9 @@
     
     FLTextFieldIcon *usernameField;
     FLTextFieldIcon *passwordField;
+    
+    SecureCodeMode currentSecureMode;
+    NSString *tempNewSecureCode;
 }
 
 @end
@@ -33,8 +36,11 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"NAV_SECURE_CODE", nil);
-        _isForChangeSecureCode = NO;
+        
         user = [NSMutableDictionary new];
+        
+        _isForChangeSecureCode = NO;
+        currentSecureMode = SecureCodeModeNormal;
     }
     return self;
 }
@@ -46,7 +52,7 @@
     self.view.backgroundColor = [UIColor customBackground];
     
     {
-        textCode = [[UILabel alloc] initWithFrame:CGRectMake(20, 25, 200, 20)];
+        textCode = [[UILabel alloc] initWithFrame:CGRectMake(20, 25, 300, 20)];
         
         textCode.textColor = [UIColor customBlueLight];
         textCode.font = [UIFont customContentRegular:14];
@@ -57,9 +63,7 @@
     {
         usernameField = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(20, 50)];
         passwordField = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(20, CGRectGetMaxY(usernameField.frame))];
-     
-        usernameField.hidden = YES;
-        passwordField.hidden = YES;
+        [passwordField seTsecureTextEntry:YES];
         
         [self.view addSubview:usernameField];
         [self.view addSubview:passwordField];
@@ -77,13 +81,17 @@
         [self.view addSubview:passwordForget];
     }
     
-    secureCodeField = [SecureCodeField new];
-    [self.view addSubview:secureCodeField];
-    CGRectSetY(secureCodeField.frame, 55);
+    {
+        secureCodeField = [SecureCodeField new];
+        [self.view addSubview:secureCodeField];
+        CGRectSetY(secureCodeField.frame, 55);
+    }
     
-    keyboardView = [FLKeyboardView new];
-    [self.view addSubview:keyboardView];
- 
+    {
+        keyboardView = [FLKeyboardView new];
+        [self.view addSubview:keyboardView];
+    }
+        
     keyboardView.delegate = secureCodeField;
     secureCodeField.delegate = self;
 }
@@ -93,9 +101,24 @@
     [super viewWillAppear:animated];
     CGRectSetY(keyboardView.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(keyboardView.frame));
     
-    [self checkBlockBackButton];
-    
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    if([[self class] secureCodeForCurrentUser] == nil){
+        currentSecureMode = SecureCodeModeChangeNew;
+    }
+    else if(_isForChangeSecureCode){
+        currentSecureMode = SecureCodeModeChangeOld;
+    }
+    
+    [self refreshController];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // Car bug uniquement apres autologin
+    CGRectSetY(keyboardView.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(keyboardView.frame));
 }
 
 - (void)didSecureCodeEnter:(NSString *)secureCode
@@ -104,38 +127,69 @@
  
     NSLog(@"currentCode: %@ %@", currentSecureCode, secureCode);
     
-    // 1ere fois qu un code est entré
-    if(!currentSecureCode){
-        [[self class] setSecureCodeForCurrentUser:secureCode];
-        [self dismissWithSuccess];
-    }
-    else if([currentSecureCode isEqual:secureCode]){
-        if(_isForChangeSecureCode){
-            [secureCodeField clean];
-            [[self class ] clearSecureCode];
-            [self checkBlockBackButton];
-        }
-        else{
+    if(currentSecureMode == SecureCodeModeNormal){
+        if([currentSecureCode isEqual:secureCode]){
             [self dismissWithSuccess];
         }
+        else{
+            [self startAnmiationBadCode];
+        }
     }
-    else{
-        CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-        anim.values = @[
-                        [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5., 0., 0.)],
-                        [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5., 0., 0.)]
-                        ];
-        anim.autoreverses = YES;
-        anim.repeatCount = 2.;
-        anim.delegate = self;
-        anim.duration = 0.07;
-        [secureCodeField.layer addAnimation:anim forKey:nil];
+    else if(currentSecureMode == SecureCodeModeChangeOld){
+        if([currentSecureCode isEqual:secureCode]){
+            [secureCodeField clean];
+            currentSecureMode = SecureCodeModeChangeNew;
+            [self refreshController];
+        }
+        else{
+            [self startAnmiationBadCode];
+        }
     }
+    else if(currentSecureMode == SecureCodeModeChangeNew){
+        tempNewSecureCode = secureCode;
+        currentSecureMode = SecureCodeModeChangeConfirm;
+        [secureCodeField clean];
+        [self refreshController];
+    }
+    else if(currentSecureMode == SecureCodeModeChangeConfirm){
+        if([tempNewSecureCode isEqual:secureCode]){
+            [[self class] setSecureCodeForCurrentUser:secureCode];
+            [self dismissWithSuccess];
+        }
+        else{
+            [self startAnmiationBadCode];
+            
+            currentSecureMode = SecureCodeModeChangeNew;
+            [self refreshController];
+        }
+    }
+}
+
+- (void)startAnmiationBadCode
+{
+    CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    anim.values = @[
+                    [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5., 0., 0.)],
+                    [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5., 0., 0.)]
+                    ];
+    anim.autoreverses = YES;
+    anim.repeatCount = 2.;
+    anim.delegate = self;
+    anim.duration = 0.07;
+    [secureCodeField.layer addAnimation:anim forKey:nil];
+}
+
+- (void)animationDidStart:(CAAnimation *)anim
+{
+    keyboardView.userInteractionEnabled = NO;
+    passwordForget.userInteractionEnabled = NO;
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     [secureCodeField clean];
+    keyboardView.userInteractionEnabled = YES;
+    passwordForget.userInteractionEnabled = YES; // Sinon peut appuyer sur le bouton derriere le clavier
 }
 
 - (void)dismissWithSuccess
@@ -157,33 +211,59 @@
     }
 }
 
-- (void)checkBlockBackButton
+- (void)didPasswordForgetTouch
 {
-    NSString *currentSecureCode = [UICKeyChainStore stringForKey:@"secureCode"];
+    currentSecureMode = SecureCodeModeForget;
+    [self refreshController];
+}
+
+- (void)refreshController
+{
+    NSString *currentSecureCode = [[self class] secureCodeForCurrentUser];
+    
+    // Visibilité
+    if(currentSecureMode == SecureCodeModeForget){
+        passwordForget.hidden = YES;
+        secureCodeField.hidden = YES;
+        keyboardView.hidden = YES;
+        
+        usernameField.hidden = NO;
+        passwordField.hidden = NO;
+        
+        self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(login)];
+    }
+    else{
+        passwordForget.hidden = NO;
+        secureCodeField.hidden = NO;
+        keyboardView.hidden = NO;
+        
+        usernameField.hidden = YES;
+        passwordField.hidden = YES;
+        
+        self.navigationItem.rightBarButtonItem = nil;
+    }
     
     if(!currentSecureCode){
-        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_2", nil);
-        passwordForget.hidden = YES;
-        
         [[self navigationItem] setHidesBackButton:YES];
         [[self navigationItem] setLeftBarButtonItem:nil];
     }
-    else{
-        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT", nil);
-        passwordForget.hidden = NO;
+    
+    // Textes
+    if(currentSecureMode == SecureCodeModeNormal){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_CURRENT", nil);
     }
-}
-
-- (void)didPasswordForgetTouch
-{
-    passwordForget.hidden = YES;
-    secureCodeField.hidden = YES;
-    keyboardView.hidden = YES;
-    
-    usernameField.hidden = NO;
-    passwordField.hidden = NO;
-    
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(login)];
+    else if(currentSecureMode == SecureCodeModeForget){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_LOGIN", nil);
+    }
+    else if(currentSecureMode == SecureCodeModeChangeOld){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_OLD", nil);
+    }
+    else if(currentSecureMode == SecureCodeModeChangeNew){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_NEW", nil);
+    }
+    else if(currentSecureMode == SecureCodeModeChangeConfirm){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_CONFIRM", nil);
+    }
 }
 
 - (void)login
@@ -195,30 +275,28 @@
         
         [secureCodeField clean];
         [[self class] clearSecureCode];
-        [self checkBlockBackButton];
-        
-        self.navigationItem.rightBarButtonItem = nil;
-        
-        passwordForget.hidden = NO;
-        secureCodeField.hidden = NO;
-        keyboardView.hidden = NO;
-        
-        usernameField.hidden = YES;
-        passwordField.hidden = YES;
+ 
+        currentSecureMode = SecureCodeModeChangeNew;
+        [self refreshController];
 
     } failure:NULL];
 }
 
 #pragma mark - SecureCode
 
++ (NSString *)keyForSecureCode
+{
+    return [NSString stringWithFormat:@"secureCode-%@", [[[Flooz sharedInstance] currentUser] userId]];
+}
+
 + (NSString *)secureCodeForCurrentUser
 {
-    return [UICKeyChainStore stringForKey:@"secureCode"];
+    return [UICKeyChainStore stringForKey:[self keyForSecureCode]];
 }
 
 + (void)setSecureCodeForCurrentUser:(NSString *)secureCode
 {
-    [UICKeyChainStore setString:secureCode forKey:@"secureCode"];
+    [UICKeyChainStore setString:secureCode forKey:[self keyForSecureCode]];
 }
 
 + (BOOL)hasSecureCodeForCurrentUser

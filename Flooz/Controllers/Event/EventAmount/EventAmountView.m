@@ -105,6 +105,13 @@
         [dayView addSubview:view];
     }
     
+    {
+        UIImageView *view = [UIImageView imageNamed:@"alertview-success"];
+        CGRectSetXY(view.frame, 0, -3);
+        CGRectSetWidthHeight(view.frame, CGRectGetWidth(view.frame) * .75, CGRectGetWidth(view.frame) * .75);
+        [dayView addSubview:view];
+    }
+    
     [self addSubview:dayView];
 }
 
@@ -128,7 +135,7 @@
 
 - (void)createSeparatorBottomView
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame), 1)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(- self.frame.origin.x, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame) + 2 * (self.frame.origin.x), 1)];
     
     {
         view.backgroundColor = [UIColor customSeparator:0.5];
@@ -200,8 +207,20 @@
 
 - (void)prepareDayView
 {
-    UILabel *view = [[dayView subviews] objectAtIndex:0];
-    view.text = [NSString stringWithFormat:@"%.2d", [[_event dayLeft] intValue]];
+    UILabel *dayTextView = [[dayView subviews] objectAtIndex:0];
+    UILabel *labelTextView = [[dayView subviews] objectAtIndex:1];
+    UIImageView *imageView = [[dayView subviews] objectAtIndex:2];
+    
+    if([_event isClosed]){
+        dayTextView.text = @"";
+        labelTextView.text = NSLocalizedString(@"EVENT_HEADER_DAY_LEFT_CLOSED", nil);
+        imageView.hidden = NO;
+    }
+    else{
+        dayTextView.text = [NSString stringWithFormat:@"%.2d", [[_event dayLeft] intValue]];
+        labelTextView.text = NSLocalizedString(@"EVENT_HEADER_DAY_LEFT", nil);
+        imageView.hidden = YES;
+    }
 }
 
 - (void)prepareProgressBarView

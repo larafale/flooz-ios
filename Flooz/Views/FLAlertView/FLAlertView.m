@@ -10,7 +10,11 @@
 
 #import "AppDelegate.h"
 
-#define HEIGHT 84.
+#define STATUSBAR_HEIGHT 22.
+
+#define MARGE_LEFT 78.
+#define MARGE_RIGHT 20.
+#define MARGE_BOTTOM 15.
 
 @implementation FLAlertView
 
@@ -32,22 +36,43 @@
     [self addGestureRecognizer:gesture];
     
     {
-        titleView = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 25)];
+        titleView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, 30, SCREEN_WIDTH - MARGE_LEFT - MARGE_RIGHT, 17)];
+        titleView.font = [UIFont customTitleExtraLight:17];
+        titleView.textColor = [UIColor whiteColor];
         
         [self addSubview:titleView];
     }
     
     {
-        contentView = [[UILabel alloc] initWithFrame:CGRectMake(0, 20 + 25, SCREEN_WIDTH, 25)];
+        contentView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, CGRectGetMaxY(titleView.frame) + 5, SCREEN_WIDTH - MARGE_LEFT - MARGE_RIGHT, 0)];
+        contentView.font = [UIFont customContentRegular:12];
+        contentView.textColor = [UIColor whiteColor];
+        contentView.numberOfLines = 0;
         
         [self addSubview:contentView];
     }
+    
+    {
+        iconView = [UIImageView imageNamed:@"alertview-success"];
+        CGRectSetX(iconView.frame, 20);
+        
+        [self addSubview:iconView];
+    }
 }
 
-- (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style;
+- (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style
 {
+    [self show:title content:content style:style time:nil];
+}
+
+- (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time
+{
+    if(!time){
+        time = @3;
+    }
+    
     [timer invalidate];
-    timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(hide) userInfo:nil repeats:NO];
+    timer = [NSTimer scheduledTimerWithTimeInterval:[time floatValue] target:self selector:@selector(hide) userInfo:nil repeats:NO];
     
     if(!self.superview){
         CGRectSetHeight(self.frame, 0);
@@ -57,11 +82,14 @@
     titleView.text = title;
     contentView.text = content;
     
+    [contentView setHeightToFit];
+    iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM + STATUSBAR_HEIGHT) / 2.);
+    
     [self setStyle:style];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:.4 animations:^{
-            CGRectSetHeight(self.frame, HEIGHT);
+            CGRectSetHeight(self.frame, CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM);
         }];
     });
 }
@@ -82,21 +110,25 @@
 - (void)setStyle:(FLAlertViewStyle)style
 {
     UIColor *backgroundColor;
-    UIColor *fontColor;
+    NSString *imageName;
     
     switch (style) {
         case FLAlertViewStyleError:
             backgroundColor = [UIColor customRed];
-            fontColor = [UIColor whiteColor];
+            imageName = @"alertview-error";
             break;
         case FLAlertViewStyleSuccess:
             backgroundColor = [UIColor customGreen];
-            fontColor = [UIColor whiteColor];
+            imageName = @"alertview-success";
+            break;
+        case FLAlertViewStyleInfo:
+            backgroundColor = [UIColor customBlue];
+            imageName = @"alertview-info";
             break;
     }
     
     self.backgroundColor = backgroundColor;
-    titleView.textColor = contentView.textColor = fontColor;
+    iconView.image = [UIImage imageNamed:imageName];
 }
 
 @end

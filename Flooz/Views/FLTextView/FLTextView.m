@@ -18,6 +18,7 @@
         _dictionaryKey = dictionaryKey;
         
         [self createTextView:placeholder];
+        [self createTopBar];
     }
     return self;
 }
@@ -49,6 +50,15 @@
     _placeholder.attributedText = attributedText;
     [_textView addSubview:_placeholder];
 }
+
+- (void)createTopBar
+{
+    UIView *createTopBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), 1)];
+    createTopBar.backgroundColor = [UIColor customSeparator];
+    
+    [self addSubview:createTopBar];
+}
+
 
 #pragma mark - UITextViewDelegate
 

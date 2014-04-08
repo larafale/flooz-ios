@@ -8,6 +8,8 @@
 
 #import "NewTransactionSelectTypeView.h"
 
+#define RADIANS(degrees) ((degrees * M_PI) / 180.0)
+
 @implementation NewTransactionSelectTypeView
 
 - (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary
@@ -16,8 +18,8 @@
     if (self) {
         _dictionary = dictionary;
         
-        [self createSeparator];
         [self createButtons];
+        [self createSeparator];
         
         if([[_dictionary objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
             [self didButtonLeftTouch];
@@ -31,10 +33,38 @@
 
 - (void)createSeparator
 {
-    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 1)];
-    bottomBar.backgroundColor = [UIColor customSeparator];
+    {
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 1)];
+        separator.backgroundColor = [UIColor customSeparator];
+        
+        [self addSubview:separator];
+    }
     
-    [self addSubview:bottomBar];
+    {
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, CGRectGetHeight(self.frame))];
+        separator.backgroundColor = [UIColor customSeparator];
+        
+        [self addSubview:separator];
+    }
+    
+    {
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 1, 0, 1, CGRectGetHeight(self.frame))];
+        separator.backgroundColor = [UIColor customSeparator];
+        
+        [self addSubview:separator];
+    }
+    
+    {
+        UIView *square = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetHeight(self.frame) / 3., CGRectGetHeight(self.frame) / 3.)];
+        
+        square.backgroundColor = [UIColor customBackgroundStatus];
+
+        square.transform = CGAffineTransformMakeRotation(RADIANS(45));
+        
+        square.center = CGRectGetCenter(self.frame);
+        
+        [self addSubview:square];
+    }
 }
 
 - (void)createButtons
@@ -42,8 +72,10 @@
     buttonLeft = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
     buttonRight = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(buttonLeft.frame), 0, CGRectGetWidth(self.frame) / 2, CGRectGetHeight(self.frame))];
     
-    [buttonLeft setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateSelected];
-    [buttonRight setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateSelected];
+    [buttonLeft setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateNormal];
+    [buttonRight setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateNormal];
+    [buttonLeft setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    [buttonRight setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]] forState:UIControlStateSelected];
     
     buttonLeft.titleLabel.font = buttonRight.titleLabel.font = [UIFont customContentRegular:13];
 

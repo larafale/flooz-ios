@@ -17,6 +17,7 @@
 
 - (id)initWithTransactionType:(TransactionType)transactionType;
 
+@property (weak, nonatomic) IBOutlet FLValidNavBar *navBar;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentView;
 
 @end

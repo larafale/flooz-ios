@@ -43,7 +43,7 @@
     
     [self addSubview:view];
     
-    view.on = NO;
+    view.on = YES;
     [self didSwitchChange:view];
 }
 

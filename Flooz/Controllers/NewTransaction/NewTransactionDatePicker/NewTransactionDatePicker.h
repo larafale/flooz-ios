@@ -17,5 +17,6 @@
 }
 
 - (id)initWithTitle:(NSString *)title for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position;
+- (void)setInputAccessoryView:(UIView *)accessoryView;
 
 @end

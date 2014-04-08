@@ -26,15 +26,23 @@
     self = [super initWithFrame:CGRectMakeSize(SCREEN_WIDTH, HEIGHT)];
     if (self) {
         self.backgroundColor = [UIColor customBackgroundHeader];
-        
+                
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshFloozView) name:@"newNotifications" object:nil];
         
         [self preparePanGesture];
-        [self prepareSwipeGesture];
         _viewControllers = viewControllers;
         [self prepareTitleViews];
+        
+        for(UIViewController *controller in viewControllers){
+            [self createPanGestureForController:controller];
+        }
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)preparePanGesture
@@ -56,22 +64,6 @@
     [self addGestureRecognizer:tapGesture];
 }
 
-- (void)prepareSwipeGesture
-{
-    {
-        swipeGestureLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(loadNextController)];
-        swipeGestureLeft.direction = UISwipeGestureRecognizerDirectionLeft;
-        [panGesture requireGestureRecognizerToFail:swipeGestureLeft];
-        [self addGestureRecognizer:swipeGestureLeft];
-    }
-    {
-        swipeGestureRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(loadPreviousController)];
-        swipeGestureRight.direction = UISwipeGestureRecognizerDirectionRight;
-        [panGesture requireGestureRecognizerToFail:swipeGestureRight];
-        [self addGestureRecognizer:swipeGestureRight];
-    }
-}
-
 - (void)prepareTitleViews
 {
     _titlesView = [[UIView alloc] initWithFrame:self.frame];
@@ -89,6 +81,8 @@
         CGRectSetY(shadow.frame, STATUSBAR_HEIGHT);
         [self addSubview:shadow];
     }
+    
+    [self refreshFloozView];
 }
 
 - (void)createLabelForController:(UIViewController *)controller
@@ -108,13 +102,13 @@
         floozContianerView.userInteractionEnabled = YES;
     
         {
-            floozCountView = [[UILabel alloc] initWithFrame:CGRectMakeSize(22, 22)];
-            CGRectSetY(floozCountView.frame, ((CGRectGetHeight(floozContianerView.frame) - CGRectGetHeight(floozCountView.frame)) / 2.) + 1);
+            floozCountView = [[UILabel alloc] initWithFrame:CGRectMakeSize(16, 16)];
+            CGRectSetY(floozCountView.frame, ((CGRectGetHeight(floozContianerView.frame) - CGRectGetHeight(floozCountView.frame)) / 2.) - 3);
             
             floozCountView.backgroundColor = [UIColor customBlue];
             floozCountView.textColor = [UIColor whiteColor];
             floozCountView.textAlignment = NSTextAlignmentCenter;
-            floozCountView.font = [UIFont customTitleExtraLight:13];
+            floozCountView.font = [UIFont customTitleExtraLight:9];
             
             floozCountView.clipsToBounds = YES;
 //            floozCountView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -136,11 +130,16 @@
         {
             [floozTextView setWidthToFit];
 
-            CGFloat spacing = 5.;
-            CGFloat width = CGRectGetWidth(floozCountView.frame) + CGRectGetWidth(floozTextView.frame);
+//            CGFloat spacing = 5.;
+//            CGFloat width = CGRectGetWidth(floozCountView.frame) + CGRectGetWidth(floozTextView.frame);
+//            CGRectSetX(floozCountView.frame, (CGRectGetWidth(floozContianerView.frame) - width - spacing) / 2.);
+//            CGRectSetX(floozTextView.frame, CGRectGetMaxX(floozCountView.frame) + spacing);
             
-            CGRectSetX(floozCountView.frame, (CGRectGetWidth(floozContianerView.frame) - width - spacing) / 2.);
-            CGRectSetX(floozTextView.frame, CGRectGetMaxX(floozCountView.frame) + spacing);
+            CGRectSetX(floozTextView.frame, (CGRectGetWidth(floozContianerView.frame) - CGRectGetWidth(floozTextView.frame)) / 2.);
+            CGRectSetX(floozCountView.frame, CGRectGetMaxX(floozTextView.frame) + 5);
+            
+            // Hack pour le click sous le rond bleu
+            CGRectSetWidth(floozTextView.frame, CGRectGetWidth(floozTextView.frame) + 30);
         }
         
         {
@@ -151,6 +150,13 @@
             [floozTextView addGestureRecognizer:floozGesture2];
         }
     }
+}
+
+- (void)createPanGestureForController:(UIViewController *)controller
+{
+    UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToPanGesture:)];
+    gesture.delegate = self;
+    [controller.view addGestureRecognizer:gesture];
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -204,9 +210,11 @@
             [self moveViews:diffTranslation];
             break;
         }
-        case UIGestureRecognizerStateEnded:
-            [self completeTranslation];
+        case UIGestureRecognizerStateEnded:{
+            CGPoint velocity = [recognizer velocityInView:_titlesView];
+            [self completeTranslation:velocity];
             break;
+        }
         default:
             break;
     }
@@ -254,19 +262,36 @@
 
 - (void)refreshFloozView
 {
-    floozCountView.text = [[[[Flooz sharedInstance] currentUser] notificationsCount] stringValue];
+    floozCountView.text = [[[Flooz sharedInstance] notificationsCount] stringValue];
     floozTextView.textColor = floozContianerView.textColor;
+    
+    if([[[Flooz sharedInstance] notificationsCount] isEqualToNumber:@0]){
+        floozCountView.hidden = YES;
+    }
+    else{
+        floozCountView.hidden = NO;
+    }
 }
 
-- (void)completeTranslation
+- (void)completeTranslation:(CGPoint)velocity
 {
     CGPoint positionFirstTitle = [[[_titlesView subviews] objectAtIndex:0] frame].origin;
     CGFloat screenWidth = CGRectGetWidth(self.frame);
     
     NSInteger newSelectedTitleIndex = roundf(((positionFirstTitle.x * -1.0) / (screenWidth / RATIO_TITLE_CONTENT)));
+    
+    if(selectedTitleIndex == newSelectedTitleIndex){
+        if(velocity.x > 150){
+            newSelectedTitleIndex--;
+        }
+        else if(velocity.x < -150){
+            newSelectedTitleIndex++;
+        }
+    }
+    
     newSelectedTitleIndex = MAX(newSelectedTitleIndex, 0);
     newSelectedTitleIndex = MIN(newSelectedTitleIndex, [[_titlesView subviews] count] - 1);
-
+    
     [self loadControllerWithIndex:newSelectedTitleIndex];
 }
 
@@ -303,7 +328,6 @@
 - (void)loadActivitiesController
 {
     FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[AcitvitiesViewController new]];
-//    AcitvitiesViewController *controller = [AcitvitiesViewController new];
     UIViewController *rootController = appDelegate.window.rootViewController;
     
     rootController.modalPresentationStyle = UIModalPresentationCurrentContext;

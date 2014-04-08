@@ -108,6 +108,12 @@
         [view addSubview:amountView];
     }
     
+    {
+        UIImageView *image = [UIImageView imageNamed:@"arrow-white-right"];
+        CGRectSetXY(image.frame, CGRectGetWidth(rightView.frame), 5);
+        [view addSubview:image];
+    }
+    
     [rightView addSubview:view];
     
     height = CGRectGetMaxY(view.frame);

@@ -16,6 +16,7 @@
 
 @property NSString *eventId;
 @property NSString *transactionId;
+@property BOOL isFriend;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

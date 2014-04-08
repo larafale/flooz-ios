@@ -60,6 +60,7 @@
     
     {
         UIDatePicker *datePicker = [UIDatePicker new];
+        datePicker.backgroundColor = [UIColor whiteColor];
         datePicker.date = [NSDate new];
         datePicker.datePickerMode = UIDatePickerModeDate;
         [datePicker addTarget:self action:@selector(updateTextField:) forControlEvents:UIControlEventValueChanged];
@@ -87,21 +88,25 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if([textField.text isBlank]){
-        [_dictionary setValue:nil forKey:_dictionaryKey];
-    }else{
-        [_dictionary setValue:textField.text forKey:_dictionaryKey];
-    }
     [textField resignFirstResponder];
 }
 
 -(void)updateTextField:(id)sender
 {
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"MM-dd-yyyy"];
+    NSDateFormatter *dateFormatterValue = [NSDateFormatter new];
+    NSDateFormatter *dateFormatterText = [NSDateFormatter new];
+    [dateFormatterValue setDateFormat:@"MM-dd-yyyy"];
+    [dateFormatterText setDateFormat:@"dd MMMM yyyy"];
     
     UIDatePicker *picker = (UIDatePicker *)_textfield.inputView;
-    _textfield.text = [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:picker.date]];
+    _textfield.text = [NSString stringWithFormat:@"%@", [dateFormatterText stringFromDate:picker.date]];
+    
+    [_dictionary setValue:[dateFormatterValue stringFromDate:picker.date] forKey:_dictionaryKey];
+}
+
+- (void)setInputAccessoryView:(UIView *)accessoryView
+{
+    _textfield.inputAccessoryView = accessoryView;
 }
 
 @end

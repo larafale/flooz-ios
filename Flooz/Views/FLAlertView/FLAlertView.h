@@ -10,16 +10,19 @@
 
 typedef NS_ENUM(NSInteger, FLAlertViewStyle) {
     FLAlertViewStyleSuccess,
-    FLAlertViewStyleError
+    FLAlertViewStyleError,
+    FLAlertViewStyleInfo
 };
 
 @interface FLAlertView : UIView{
     UILabel *titleView;
     UILabel *contentView;
+    UIImageView *iconView;
     
     NSTimer *timer;
 }
 
 - (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style;
+- (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time;
 
 @end

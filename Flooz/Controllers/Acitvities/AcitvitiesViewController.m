@@ -12,6 +12,7 @@
 
 #import "TransactionViewController.h"
 #import "EventViewController.h"
+#import "FriendsViewController.h"
 
 @interface AcitvitiesViewController ()
 
@@ -67,6 +68,7 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self refreshTableHeaderView];
     
     if(!isLoaded){
         isLoaded = YES;
@@ -168,6 +170,10 @@
             }];
         }];
     }
+    else if([activity isFriend]){
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
+        [self presentViewController:controller animated:YES completion:NULL];
+    }
 }
 
 - (void)handleRefresh
@@ -187,6 +193,8 @@
 
 - (void)dismiss
 {
+    [[Flooz sharedInstance] socketSendCloseActivities];
+    
     [UIView animateWithDuration:.4 animations:^{
         CGRectSetY(_tableView.frame, - CGRectGetHeight(_tableView.frame));
         tableViewShadow.frame = _tableView.frame;
@@ -211,18 +219,28 @@
     tableHeaderView.textColor = [UIColor whiteColor];
     tableHeaderView.font = [UIFont customTitleBook:14];
     
+    {
+        UIImageView *image = [UIImageView imageNamed:@"close-activities"];
+        CGRectSetXY(image.frame, CGRectGetWidth(tableHeaderView.frame) - 30, 10);
+        [tableHeaderView addSubview:image];
+        
+        UITapGestureRecognizer *close = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+        [image addGestureRecognizer:close];
+        image.userInteractionEnabled = YES;
+        tableHeaderView.userInteractionEnabled = YES;
+    }
+    
     return tableHeaderView;
 }
 
 - (void)refreshTableHeaderView
 {
-    if([[[[Flooz sharedInstance] currentUser] notificationsCount] intValue] == 0){
-        tableHeaderView.text = [NSString stringWithFormat:@"%d %@", [[[[Flooz sharedInstance] currentUser] notificationsCount] intValue], NSLocalizedString(@"ACTIVITIES_NOTIFICATIONS", nil)];
+    if([[[Flooz sharedInstance] notificationsCount] intValue] == 0){
+        tableHeaderView.text = NSLocalizedString(@"ACTIVITIES_NOTIFICATIONS", nil);
     }
     else{
-        tableHeaderView.text = [NSString stringWithFormat:@"%.2d %@", [[[[Flooz sharedInstance] currentUser] notificationsCount] intValue], NSLocalizedString(@"ACTIVITIES_NOTIFICATIONS", nil)];
+        tableHeaderView.text = [NSString stringWithFormat:@"%.2d %@", [[[Flooz sharedInstance] notificationsCount] intValue], NSLocalizedString(@"ACTIVITIES_NEW_NOTIFICATIONS", nil)];
     }
-    
 }
 
 - (void)loadNextPage{

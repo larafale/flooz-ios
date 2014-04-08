@@ -8,6 +8,8 @@
 
 #import "FLPaymentField.h"
 
+#define RADIANS(degrees) ((degrees * M_PI) / 180.0)
+
 @implementation FLPaymentField
 
 - (id)initWithFrame:(CGRect)frame for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey
@@ -19,7 +21,6 @@
         
         self.clipsToBounds = YES;
         
-        [self createSeparators];
         [self createButtons];
         [self createBottomBar];
     }
@@ -41,6 +42,16 @@
     [rightButton setImage:[UIImage imageNamed:@"payment-field-card"] forState:UIControlStateNormal];
     [rightButton setImage:[UIImage imageNamed:@"payment-field-card-selected"] forState:UIControlStateSelected];
     
+    [leftButton setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateNormal];
+    [rightButton setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundStatus]] forState:UIControlStateNormal];
+    [leftButton setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    [rightButton setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    
+    [leftButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
+    [rightButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
+    [leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    
     leftButton.imageEdgeInsets = rightButton.imageEdgeInsets = UIEdgeInsetsMake(- 60, 0, 0, 0);
     
     [leftButton addTarget:self action:@selector(didWalletTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -53,7 +64,6 @@
         leftText = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(leftButton.frame.size)];
         rightText = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(rightButton.frame.size)];
         
-        leftText.textColor = rightText.textColor = [UIColor whiteColor];
         leftText.textAlignment = rightText.textAlignment = NSTextAlignmentCenter;
         leftText.font = rightText.font = [UIFont customTitleExtraLight:14];
         
@@ -71,7 +81,6 @@
         
         amount.textAlignment = NSTextAlignmentCenter;
         amount.backgroundColor = [UIColor colorWithIntegerRed:45 green:58 blue:70];
-        amount.textColor = [UIColor whiteColor];
         amount.font = [UIFont customContentRegular:10];
         amount.layer.cornerRadius = 10.;
         
@@ -79,6 +88,9 @@
         
         [leftButton addSubview:amount];
     }
+    
+    amount.textColor = leftText.textColor = [leftButton titleColorForState:UIControlStateNormal];
+    rightText.textColor = [rightButton titleColorForState:UIControlStateNormal];
 }
 
 - (void)createBottomBar
@@ -87,29 +99,32 @@
     topBar.backgroundColor = [UIColor customSeparator:0.5];
     
     [self addSubview:topBar];
-}
-
-- (void)createSeparators
-{
-    CGFloat MARGE = 19;
-    CGFloat HEIGHT = 30.;
     
-    UIView *separator1 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., MARGE, 1, HEIGHT)];
-    UIView *separator2 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame) - HEIGHT - MARGE, 1, HEIGHT)];
+    {
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, CGRectGetHeight(self.frame))];
+        separator.backgroundColor = [UIColor customSeparator];
+        
+        [self addSubview:separator];
+    }
     
-    separator1.backgroundColor = separator2.backgroundColor = [UIColor customSeparator];
+    {
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 1, 0, 1, CGRectGetHeight(self.frame))];
+        separator.backgroundColor = [UIColor customSeparator];
+        
+        [self addSubview:separator];
+    }
     
-    [self addSubview:separator1];
-    [self addSubview:separator2];
-    
-    UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2. - 25, MARGE + HEIGHT, 50, CGRectGetHeight(self.frame) - 2 * (MARGE + HEIGHT))];
-    
-    text.textAlignment = NSTextAlignmentCenter;
-    text.textColor = [UIColor customBlueLight];
-    text.font = [UIFont customContentRegular:10];
-    text.text = NSLocalizedString(@"GLOBAL_OR", nil);
-    
-    [self addSubview:text];
+    {
+        UIView *square = [[UIView alloc] initWithFrame:CGRectMakeSize(14, 14)];
+        
+        square.backgroundColor = [UIColor customBackgroundStatus];
+        
+        square.transform = CGAffineTransformMakeRotation(RADIANS(45));
+        
+        square.center = CGRectGetCenter(self.frame);
+        
+        [self addSubview:square];
+    }
 }
 
 - (void)setStyleLight
@@ -127,11 +142,11 @@
         return;
     }
     
-    amount.textColor = leftText.textColor = [UIColor customBlue];
-    rightText.textColor = [UIColor whiteColor];
-    
     leftButton.selected = YES;
     rightButton.selected = NO;
+    
+    amount.textColor = leftText.textColor = [leftButton titleColorForState:UIControlStateSelected];
+    rightText.textColor = [rightButton titleColorForState:UIControlStateNormal];
     
     [_delegate didWalletSelected];
 }
@@ -147,11 +162,11 @@
         return;
     }
     
-    amount.textColor = leftText.textColor = [UIColor whiteColor];
-    rightText.textColor = [UIColor customBlue];
-    
     leftButton.selected = NO;
     rightButton.selected = YES;
+    
+    amount.textColor = leftText.textColor = [leftButton titleColorForState:UIControlStateNormal];
+    rightText.textColor = [rightButton titleColorForState:UIControlStateSelected];
     
     if(_dictionary){
         [_dictionary setValue:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodCreditCard] forKey:_dictionaryKey];

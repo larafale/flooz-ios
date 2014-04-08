@@ -47,6 +47,19 @@
     else{
         [self prepareViewForCreate];
     }
+    
+    [self refreshTitle];
+}
+
+- (void)refreshTitle
+{
+    FLUser *currentUser = [[Flooz sharedInstance] currentUser];
+    if([currentUser creditCard]){
+        self.title = NSLocalizedString(@"NAV_CREDIT_CARD", nil);
+    }
+    else{
+        self.title = NSLocalizedString(@"NAV_CREDIT_CARD_ADD", nil);
+    }
 }
 
 - (void)resetContentView
@@ -227,7 +240,7 @@
     [[Flooz sharedInstance] createCreditCard:_card success:^(id result) {
         FLUser *currentUser = [[Flooz sharedInstance] currentUser];
         creditCard = [currentUser creditCard];
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        [self dismiss];
     }];
 }
 
@@ -241,6 +254,21 @@
         [[[Flooz sharedInstance] currentUser] setCreditCard:nil];
         [self prepareViewForCreate];
     }];
+}
+
+- (void)dismiss
+{
+    if([self navigationController]){
+        if([[[self navigationController] viewControllers] count] == 1){
+            [[self navigationController] dismissViewControllerAnimated:YES completion:NULL];
+        }
+        else{
+            [[self navigationController] popViewControllerAnimated:YES];
+        }
+    }
+    else{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 #pragma mark - Keyboard Management

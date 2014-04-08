@@ -25,14 +25,18 @@
     _user = [[FLUser alloc] initWithJSON:json[@"emitter"]];
     
     // Si 0 alors pas lu
-    _isRead = json[@"state"] == 0;
+    _isRead = [json[@"state"] intValue] != 0;
     
+    _isFriend = NO;
     if(json[@"resource"]){
         if([json[@"resource"][@"type"] isEqualToString:@"line"]){
             _transactionId = json[@"resource"][@"resourceId"];
         }
         else if([json[@"resource"][@"type"] isEqualToString:@"event"]){
             _eventId = json[@"resource"][@"resourceId"];
+        }
+        else if([json[@"resource"][@"type"] isEqualToString:@"friend"]){
+            _isFriend = YES;
         }
     }
 }

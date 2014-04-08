@@ -45,7 +45,10 @@
     [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"UpdateEvents" object:nil];
+    // Padding pour que le dernier element au dessus du +
+    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMakeSize(SCREEN_WIDTH, 90)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"reloadEvents" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated

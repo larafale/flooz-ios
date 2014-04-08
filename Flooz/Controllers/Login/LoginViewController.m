@@ -71,7 +71,8 @@
     {
         FLTextFieldIcon *username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(MARGE, 140)];
         FLTextFieldIcon *password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame))];
-
+        [password seTsecureTextEntry:YES];
+        
         UIButton *passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(password.frame) + 20, CGRectGetWidth(self.view.frame), 50)];
         passwordForget.titleLabel.textAlignment = NSTextAlignmentCenter;
         passwordForget.titleLabel.font = [UIFont customContentRegular:12];
@@ -96,7 +97,7 @@
     [[self view] endEditing:YES];
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] login:user success:NULL failure:NULL];
+    [[Flooz sharedInstance] login:user];
 }
 
 - (void)didFacebookTouch

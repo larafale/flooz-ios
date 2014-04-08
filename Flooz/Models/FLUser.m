@@ -20,9 +20,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json
-{
-    _notificationsCount = @0;
-    
+{        
     if([json objectForKey:@"userId"]){
         _userId = [json objectForKey:@"userId"];
         

@@ -62,22 +62,34 @@
     
     {
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(filterView.frame) - 1)];
-        [button setTitle:NSLocalizedString(title, nil) forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont customContentLight:11];
+//        [button setTitle:NSLocalizedString(title, nil) forState:UIControlStateNormal];
+//        button.titleLabel.font = [UIFont customContentLight:11];
+//        
+//        if([filterViews count] > 0){
+//            [button setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
+//        }
+//        else{
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        }
         
-        if([filterViews count] > 0){
-            [button setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
-        }
-        else{
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        }
+        [button setImage:[UIImage imageNamed:title] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-selected", title]] forState:UIControlStateSelected];
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-selected", title]] forState:UIControlStateHighlighted];
         
         button.tag = [buttonColors count];
         [buttonColors addObject:colors];
         
         [button addTarget:self action:@selector(didButtonTouch:) forControlEvents:UIControlEventTouchUpInside];
         
+ 
         [filterView addSubview:button];
+        
+        if([filterViews count] == 0){
+            button.selected = YES;
+        }
+        else{
+            button.selected = NO;
+        }
     }
     
     {
@@ -121,6 +133,7 @@
     
     for(UIView *filterView in filterViews){
         UIButton *_button = [[filterView subviews] objectAtIndex:0];
+        _button.selected = NO;
         [_button setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
         
         UIView *line = [[filterView subviews] objectAtIndex:1];
@@ -134,6 +147,8 @@
             arrow_selected.hidden = YES;
         }
     }
+    
+    button.selected = YES;
     
     UIView *filterView = [filterViews objectAtIndex:button.tag];
     UIView *line = [[filterView subviews] objectAtIndex:1];

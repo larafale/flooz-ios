@@ -17,9 +17,8 @@
 #import "TimelineViewController.h"
 #import "AccountViewController.h"
 
-#import "TestFlight.h"
-
 #import "SecureCodeViewController.h"
+#import "Analytics/Analytics.h"
 
 @implementation AppDelegate
 
@@ -34,20 +33,32 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-    self.window.rootViewController = controller;
+    if([[Flooz sharedInstance] autologin]){
+        self.window.rootViewController = [UIViewController new];
+    }
+    else{
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+        
+        self.window.rootViewController = controller;
+    }
+    
+    [Analytics initializeWithSecret:@"q249i9oaer"];
 
-//    [[Flooz sharedInstance] login:nil success:NULL failure:NULL];
-    
-//    [TestFlight takeOff:@"bcb15527-05d2-46c9-8fc3-59693ee53ebe"];
-    
     return YES;
 }
 
 - (void)didConnected
 {
+    [[Analytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
+                                   traits:@{
+                                             @"email": [[[Flooz sharedInstance] currentUser] email],
+                                             @"nick": [[[Flooz sharedInstance] currentUser] username],
+                                             @"name": [[[Flooz sharedInstance] currentUser] fullname],
+                                             @"phone": [[[Flooz sharedInstance] currentUser] phone],
+                                              }];    
+    
     CompleteBlock completeBlock = ^{
-        FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[[EventsViewController new], [TimelineViewController new], [AccountViewController new]]];
+        FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [EventsViewController new]]];
         
         [UIView transitionWithView:self.window
                           duration:0.7
@@ -107,13 +118,13 @@
     });
 }
 
-- (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style;
+- (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time;
 {
     if(!title || [title isBlank]){
         title = NSLocalizedString(@"GLOBAL_ERROR", nil);
     }
 
-    [alertView show:title content:content style:style];
+    [alertView show:title content:content style:style time:time];
 }
 
 - (void)loadSignupWithUser:(NSDictionary *)user
@@ -151,11 +162,10 @@
 
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
 {
-    [[Flooz sharedInstance] hideLoadView];
-    
     // WARNING erreur code 2 http://stackoverflow.com/questions/20657780/ios-facebook-sdk-error-domain-com-facebook-sdk-code-2-and-code-7
     if(error){
-        [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError];
+        [[Flooz sharedInstance] hideLoadView];
+        [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError time:nil];
     }
     
     if (!error && state == FBSessionStateOpen){
@@ -170,6 +180,8 @@
         
         
     }
+    
+    [[Flooz sharedInstance] hideLoadView];
     
     // Handle errors
     if (error){
@@ -195,7 +207,7 @@
     
     // Handle the user leaving the app while the Facebook login dialog is being shown
     // For example: when the user presses the iOS "home" button while the login dialog is active
-    
+        
     [FBAppCall handleDidBecomeActive];
     [[Flooz sharedInstance] startSocket];
 }

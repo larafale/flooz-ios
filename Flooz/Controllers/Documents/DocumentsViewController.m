@@ -115,7 +115,7 @@
     UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
     NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
     
-    NSString *key = [NSString stringWithFormat:@"DOCUMENTS_%@", [[[documents objectAtIndex:currentDocumentIndex] allValues] firstObject]];
+    NSString *key = [[[documents objectAtIndex:currentDocumentIndex] allValues] firstObject];
         
     [picker dismissViewControllerAnimated:YES completion:^{
         [[Flooz sharedInstance] showLoadView];

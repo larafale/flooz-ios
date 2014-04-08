@@ -89,6 +89,7 @@
         FLTextFieldIcon *phone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" position:CGPointMake(MARGE, CGRectGetMaxY(name.frame))];
         FLTextFieldIcon *email = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:_user key:@"email" position:CGPointMake(MARGE, CGRectGetMaxY(phone.frame))];
         FLTextFieldIcon *password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:_user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(email.frame))];
+        [password seTsecureTextEntry:YES];
         
  
         [_contentView addSubview:username];

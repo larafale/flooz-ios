@@ -22,5 +22,6 @@
 - (void)reloadData;
 
 - (void)setKeyboardType:(UIKeyboardType)keyboardType;
+- (void)seTsecureTextEntry:(BOOL)secureTextEntry;
 
 @end

@@ -12,6 +12,14 @@
 
 typedef void (^CompleteBlock)();
 
+typedef NS_ENUM(NSInteger, SecureCodeMode) {
+    SecureCodeModeNormal, // Demande code pour avoir acces
+    SecureCodeModeForget, // Code perdu
+    SecureCodeModeChangeOld, // Ancien code pour le changer
+    SecureCodeModeChangeNew, // Nouveau code
+    SecureCodeModeChangeConfirm // Nouveau code confirmation
+};
+
 @interface SecureCodeViewController : UIViewController<SecureCodeFieldDelegate>
 
 @property BOOL isForChangeSecureCode;

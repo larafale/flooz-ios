@@ -32,8 +32,6 @@
 @interface NewTransactionViewController (){
     NSMutableDictionary *transaction;
     
-    FLValidNavBar *navBar;
-    
     FLNewTransactionBar *transactionBar;
     FLNewTransactionBar *transactionBarKeyboard;
     
@@ -65,25 +63,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- 
+    
     [self registerForKeyboardNotifications];
     
     self.view.backgroundColor = [UIColor customBackground];
     
     transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self];
     
+    {
+        [_navBar cancelAddTarget:self action:@selector(dismiss)];
+        [_navBar validAddTarget:self action:@selector(valid)];
+    }
+    
     CGFloat offset = 0;
     
-    {
-        navBar = [FLValidNavBar new];
-        [_contentView addSubview:navBar];
-        
-        [navBar cancelAddTarget:self action:@selector(dismiss)];
-        [navBar validAddTarget:self action:@selector(valid)];
-        
-        offset = CGRectGetMaxY(navBar.frame);
-    }
- 
     {
         if(isEvent){
             FLTextFieldTitle *title = [[FLTextFieldTitle alloc] initWithTitle:@"FIELD_TRANSACTION_TITLE" placeholder:@"FIELD_TRANSACTION_TITLE_PLACEHOLDER" for:transaction key:@"name" position:CGPointMake(0, offset)];
@@ -95,6 +88,7 @@
         
         if(isEvent){
             NewTransactionDatePicker *view = [[NewTransactionDatePicker alloc] initWithTitle:@"FIELD_TRANSACTION_DATE" for:transaction key:@"endAt" position:CGPointMake(0, offset)];
+            [view setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:view];
             
             offset = CGRectGetMaxY(view.frame);
@@ -109,59 +103,59 @@
             offset = CGRectGetMaxY(selectAmount.frame);
         }
         else{
-            NewTransactionSelectTypeView *view = [[NewTransactionSelectTypeView alloc] initWithFrame:CGRectMakePosition(0, offset) for:transaction];
-            [_contentView addSubview:view];
-            
-            view.delegate = self;
-            
-            offset = CGRectGetMaxY(view.frame);
+            //            NewTransactionSelectTypeView *view = [[NewTransactionSelectTypeView alloc] initWithFrame:CGRectMakePosition(0, offset) for:transaction];
+            //            [_contentView addSubview:view];
+            //
+            //            view.delegate = self;
+            //
+            //            offset = CGRectGetMaxY(view.frame);
         }
+        
         
         if(isEvent){
             amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"goal"];
-            [amountInput setInputAccessoryView:transactionBarKeyboard];
-            [_contentView addSubview:amountInput];
-            CGRectSetY(amountInput.frame, offset);
-            offset = CGRectGetMaxY(amountInput.frame);
+            [amountInput hideSeparatorTop];
         }
         else{
             amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
+        }
+        {
             [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
             CGRectSetY(amountInput.frame, offset);
             offset = CGRectGetMaxY(amountInput.frame);
         }
-
+        
         if(!isEvent){
             friend = [[FLSelectFriendButton alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(amountInput.frame)) dictionary:transaction];
             friend.delegate = self;
-
+            
             [_contentView addSubview:friend];
             
             offset = CGRectGetMaxY(friend.frame);
         }
         
-        if(!isEvent){
-            payementField = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, offset, CGRectGetWidth(_contentView.frame), 0) for:transaction key:@"source"];
-            payementField.delegate = self;
-            [_contentView addSubview:payementField];
-            
-            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeCollection]]){
-                CGRectSetHeight(payementField.frame, 1);
-            }
-            
-            offset = CGRectGetMaxY(payementField.frame);
-        }
+        //        if(!isEvent){
+        //            payementField = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, offset, CGRectGetWidth(_contentView.frame), 0) for:transaction key:@"source"];
+        //            payementField.delegate = self;
+        //            [_contentView addSubview:payementField];
+        //
+        //            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeCollection]]){
+        //                CGRectSetHeight(payementField.frame, 1);
+        //            }
+        //
+        //            offset = CGRectGetMaxY(payementField.frame);
+        //        }
         
         NSString *contentPlaceholder = @"FIELD_TRANSACTION_CONTENT_PLACEHOLDER";
         if(isEvent){
             contentPlaceholder = @"FIELD_TRANSACTION_EVENT_PLACEHOLDER";
         }
         
-        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" position:CGPointMake(0, offset)];
+        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" position:CGPointMake(0, offset - 1)];
         [content setInputAccessoryView:transactionBarKeyboard];
         [_contentView addSubview:content];
-
+        
         transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self];
         [_contentView addSubview:transactionBar];
         
@@ -169,7 +163,7 @@
     }
     
     if(isEvent){
-        [self didAmountFreeSelected];
+        //        [self didAmountFixSelected]; // Seulement si sur montant libre, utilise pour gerer les vues
     }
     else if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
         [payementField didWalletTouch];
@@ -182,7 +176,7 @@
 {
     [super viewWillAppear:animated];
     
-    CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _contentView.frame.origin.y);
+    CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
     
     [friend reloadData];
     [self reloadTransactionBarData];
@@ -195,7 +189,7 @@
                                              selector:@selector(reloadTransactionBarData)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-
+    
 }
 
 #pragma mark -
@@ -255,11 +249,11 @@
     [[self view] endEditing:YES];
     
     [transaction setValue:nil forKey:@"source"];
-        
+    
     if(CGRectGetHeight(payementField.frame) > 1){
         [UIView animateWithDuration:.5 animations:^{
-            CGRectSetHeight(payementField.frame, 1);
-            CGRectSetY(content.frame, content.frame.origin.y - [FLPaymentField height]);
+            CGRectSetHeight(payementField.frame, 0);
+            CGRectSetY(content.frame, content.frame.origin.y - [FLPaymentField height] - 1);
             _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), CGRectGetMaxY(content.frame));
         }];
     }
@@ -279,41 +273,48 @@
     if(isEvent){
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] createEvent:transaction success:^(id result) {
-            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"UpdateEvents" object:nil]];
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadEvents" object:nil]];
             
             [self dismissViewControllerAnimated:YES completion:^{
                 FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
-                [rootController.navbarView loadControllerWithIndex:0];
+                [rootController.navbarView loadControllerWithIndex:2];
             }];
         } failure:NULL];
     }
     else{
-        CompleteBlock completeBlock = ^{
-            [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
-                FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
-                TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
-                [self dismissViewControllerAnimated:YES completion:^{
-                    [[timelineController filterView] selectFilter:2];
-                }];
-            } failure:NULL];
-        };
-        
-        if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
-
-            SecureCodeViewController *controller = [SecureCodeViewController new];
-            controller.completeBlock = completeBlock;
-
-            [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
-        }
-        else{
-            completeBlock();
-        }
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] createTransactionValidate:transaction success:^(id result) {
+            
+            CompleteBlock completeBlock = ^{
+                [[Flooz sharedInstance] showLoadView];
+                [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
+                    FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
+                    TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [[timelineController filterView] selectFilter:2];
+                    }];
+                } failure:NULL];
+            };
+            
+            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+                
+                SecureCodeViewController *controller = [SecureCodeViewController new];
+                controller.completeBlock = completeBlock;
+                
+                [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+            }
+            else{
+                completeBlock();
+            }
+            
+        } noCreditCard:^(){
+            [self presentCreditCardController];
+        }];
     }
 }
 
 - (void)reloadTransactionBarData
-{    
+{
     [transactionBar reloadData];
     [transactionBarKeyboard reloadData];
 }
@@ -354,7 +355,7 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    
+    transactionBar.hidden = YES;
     UIView *firstResponder = [self.view findFirstResponder];
     if([[firstResponder superview] isKindOfClass:[FLTextView class]]){
         _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
@@ -367,7 +368,8 @@
 {
     _contentView.contentInset = UIEdgeInsetsZero;
     
-    CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _contentView.frame.origin.y);
+    transactionBar.hidden = NO;
+    CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
 }
 
 @end

@@ -21,6 +21,8 @@
     UITextField *amount2;
     
     UIView *buttonsView;
+    
+    UIView *separatorTop;
 }
 
 + (CGFloat)height;
@@ -31,5 +33,7 @@
 - (void)setInputAccessoryView:(UIView *)accessoryView;
 
 @property (weak, nonatomic) id<FLNewTransactionAmountDelegate> delegate;
+
+- (void)hideSeparatorTop;
 
 @end

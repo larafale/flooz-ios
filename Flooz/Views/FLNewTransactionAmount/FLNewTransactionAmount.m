@@ -47,8 +47,6 @@
 - (void)commontInit
 {
     self.clipsToBounds = YES;
-    self.layer.borderWidth = 1.;
-    self.layer.borderColor = [UIColor customSeparator].CGColor;
     
     currency = [[UILabel alloc] initWithFrame:CGRectMake(5, MARGE_TOP - 2.5, 49, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
     point = [[UILabel alloc] initWithFrame:CGRectMake(0, MARGE_TOP, 0, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
@@ -92,6 +90,16 @@
     
     if(_delegate){
         [self createButtonsView];
+    }
+    
+    {
+        separatorTop = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame), 1)];
+        UIView *separatorBottom = [[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT - 1, CGRectGetWidth(self.frame), 1)];
+        
+        separatorTop.backgroundColor = separatorBottom.backgroundColor = [UIColor customSeparator];
+        
+        [self addSubview:separatorTop];
+        [self addSubview:separatorBottom];
     }
 }
 
@@ -251,6 +259,11 @@
     [amount resignFirstResponder];
     [amount2 resignFirstResponder];
     [_delegate didAmountCancelTouch];
+}
+
+- (void)hideSeparatorTop
+{
+    separatorTop.hidden = YES;
 }
 
 @end

@@ -284,7 +284,7 @@
 }
 
 - (void)presentCreditCardController
-{
+{    
     CreditCardViewController *controller = [CreditCardViewController new];
     
     [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
@@ -294,8 +294,28 @@
 
 - (void)showPaymentField
 {
-    paymentFieldIsShown = YES;
-    [self reloadTransaction];
+//    paymentFieldIsShown = YES;
+//    [self reloadTransaction];
+    
+    id completeBlock = ^{
+        [[Flooz sharedInstance] showLoadView];
+        
+        NSDictionary *params = @{
+                                 @"id": [_transaction transactionId],
+                                 @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
+                                 };
+        
+        [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            paymentFieldIsShown = NO;
+            [self reloadTransaction];
+        } failure:NULL];
+    };
+    
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    controller.completeBlock = completeBlock;
+    
+    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)reloadTransaction
@@ -325,17 +345,32 @@
 
 - (void)acceptTransaction
 {
-    [[Flooz sharedInstance] showLoadView];
-    
     NSDictionary *params = @{
                              @"id": [_transaction transactionId],
                              @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
                              };
     
-    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-        [self reloadTransaction];
-    } failure:NULL];
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] updateTransactionValidate:params success:^(id result) {
+        
+        id completeBlock = ^{
+            [[Flooz sharedInstance] showLoadView];
+            
+            [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+                _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                paymentFieldIsShown = NO;
+                [self reloadTransaction];
+            } failure:NULL];
+        };
+        
+        SecureCodeViewController *controller = [SecureCodeViewController new];
+        controller.completeBlock = completeBlock;
+        
+        [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+        
+    } noCreditCard:^{
+        [self presentCreditCardController];
+    }];
 }
 
 - (void)refuseTransaction

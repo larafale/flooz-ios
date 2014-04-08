@@ -10,6 +10,7 @@
 
 #import "FLFilterView.h"
 #import "TransactionCellDelegate.h"
+#import "FLScrollViewIndicator.h"
 
 @interface TimelineViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, TransactionCellDelegate>{
     NSMutableArray *transactions;
@@ -24,6 +25,7 @@
     UIRefreshControl *refreshControl;
     
     NSMutableDictionary *transactionsCache;
+    FLScrollViewIndicator *scrollViewIndicator;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

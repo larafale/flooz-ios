@@ -20,7 +20,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json
-{    
+{
     _eventId = [json objectForKey:@"_id"];
     
     if([[json objectForKey:@"isInvited"] boolValue]){
@@ -52,6 +52,7 @@
         
     _dayLeft = [json objectForKey:@"endWhen"];
     _pourcentage = [json objectForKey:@"fulfilled"];
+    _isClosed = [[json objectForKey:@"closed"] boolValue];
     
     _isInvited = NO;
     if([json objectForKey:@"isInvited"] && [[json objectForKey:@"isInvited"] boolValue]){
@@ -145,6 +146,7 @@
         static NSDateFormatter *dateFormatter;
         if(!dateFormatter){
             dateFormatter = [NSDateFormatter new];
+            [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
             [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
         }
         
@@ -191,10 +193,10 @@
     NSString *key = nil;
     
     if(scope == TransactionScopeFriend){
-        key = @"scope-friend-large";
+        key = @"scope-friend-large-selected";
     }
     else{ // if(status == TransactionScopePrivate){
-        key = @"scope-invite-large";
+        key = @"scope-invite-large-selected";
     }
     
     return [UIImage imageNamed:key];

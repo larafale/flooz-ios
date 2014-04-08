@@ -23,6 +23,7 @@
 #import "FriendPickerViewController.h"
 
 #import "CreditCardViewController.h"
+#import "SecureCodeViewController.h"
 
 #import "UIView+FindFirstResponder.h"
 
@@ -34,8 +35,9 @@
     
     UIView *_mainView;
     
+    FLPaymentField *payementField;
+    
     BOOL paymentFieldIsShown;
-    BOOL amountFieldIsShown;
     
     FLNewTransactionAmount *amountInput;
     NSMutableDictionary *amount;
@@ -44,6 +46,8 @@
     
     BOOL firstView;
     BOOL needReloadEvent;
+    
+    BOOL participationHidden;
 }
 
 @end
@@ -57,11 +61,11 @@
         _event = event;
         _indexPath = indexPath;
         paymentFieldIsShown = NO;
-        amountFieldIsShown = NO;
         needReloadEvent = NO;
         
         amount = [NSMutableDictionary new];
         firstView = YES;
+        participationHidden = NO;
     }
     return self;
 }
@@ -211,18 +215,25 @@
     }
     
     if(paymentFieldIsShown){
-        FLPaymentField *view = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) for:nil key:nil];
-        view.delegate = self;
-        view.backgroundColor = [UIColor customBackground:0.4];
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
-    }
-    else if(amountFieldIsShown){
-        amountInput = [[FLNewTransactionAmount alloc] initFor:amount key:@"amount" width:CGRectGetWidth(_mainView.frame) delegate:self];
-        [_mainView addSubview:amountInput];
-        CGRectSetY(amountInput.frame, height - 1);
-        
-        height = CGRectGetMaxY(amountInput.frame);
+//        {
+//            payementField = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) for:nil key:nil];
+//            payementField.delegate = self;
+//            [_mainView addSubview:payementField];
+//            height = CGRectGetMaxY(payementField.frame);
+//        }
+        {
+            FLSwitchView *view = [[FLSwitchView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) title:@"FIELD_TRANSACTION_HIDE"];
+            [_mainView addSubview:view];
+            view.delegate = self;
+            height = CGRectGetMaxY(view.frame);
+        }
+        {
+            amountInput = [[FLNewTransactionAmount alloc] initFor:amount key:@"amount" width:CGRectGetWidth(_mainView.frame) delegate:self];
+            [_mainView addSubview:amountInput];
+            CGRectSetY(amountInput.frame, height - 1);
+            
+            height = CGRectGetMaxY(amountInput.frame);
+        }
     }
     else if([_event canParticipate] || [_event canCancelOffer] || [_event canAcceptOrDeclineOffer]){
         EventActionView *view = [[EventActionView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
@@ -232,17 +243,16 @@
         height = CGRectGetMaxY(view.frame);
     }
     
-    
-    {
-        EventUsersView *view = [[EventUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+    if([_event canGiveOrTakeOffer]){
+        EventAmountActionsView *view = [[EventAmountActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event = _event;
         view.delegate = self;
         [_mainView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
     
-    if([_event canGiveOrTakeOffer]){
-        EventAmountActionsView *view = [[EventAmountActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+    {
+        EventUsersView *view = [[EventUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.event = _event;
         view.delegate = self;
         [_mainView addSubview:view];
@@ -266,6 +276,8 @@
     
     CGRectSetHeight(_mainView.frame, height + 15);
     _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
+    
+    [payementField didWalletTouch];
 }
 
 #pragma mark - FLPaymentFieldDelegate
@@ -273,29 +285,17 @@
 - (void)didCreditCardSelected
 {
     [amount setObject:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodCreditCard] forKey:@"source"];
-    
-    if([[_event amount] floatValue] == 0){
-        [self showAmountField];
-    }
-    else{
-        [self acceptEvent];
-    }
 }
 
 - (void)didWalletSelected
 {
     [amount setObject:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodWallet] forKey:@"source"];
-    
-    if([[_event amount] floatValue] == 0){
-        [self showAmountField];
-    }
-    else{
-        [self acceptEvent];
-    }
 }
 
 - (void)presentCreditCardController
 {
+//    [amount setObject:[FLTransaction transactionPaymentMethodToParams:TransactionPaymentMethodCreditCard] forKey:@"source"]; // payementField disable
+    
     CreditCardViewController *controller = [CreditCardViewController new];
     
     [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
@@ -306,15 +306,6 @@
 - (void)showPaymentField
 {
     paymentFieldIsShown = YES;
-    amountFieldIsShown = NO;
-    
-    [self reloadEvent];
-}
-
-- (void)showAmountField
-{
-    paymentFieldIsShown = NO;
-    amountFieldIsShown = YES;
     
     [self reloadEvent];
 }
@@ -332,42 +323,66 @@
 
 - (void)didUpdateEventWithAction:(EventAction)action
 {
-    [[Flooz sharedInstance] showLoadView];
-    
-    [[Flooz sharedInstance] eventAction:_event action:action success:^(id result) {
+    CompleteBlock completeBlock = ^{
         [[Flooz sharedInstance] showLoadView];
         
-        [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
-            _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
-            paymentFieldIsShown = NO;
-            amountFieldIsShown = NO;
-            [self reloadEvent];
+        [[Flooz sharedInstance] eventAction:_event action:action success:^(id result) {
+            [[Flooz sharedInstance] showLoadView];
+            
+            [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
+                _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+                paymentFieldIsShown = NO;
+                [self reloadEvent];
+            }];
         }];
-    }];
+    };
+    
+    if(action == EventActionTakeOffer){
+        SecureCodeViewController *controller = [SecureCodeViewController new];
+        controller.completeBlock = completeBlock;
+        
+        [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    }
+    else{
+        completeBlock();
+    }
 }
 
 - (void)acceptEvent
 {
-    [[Flooz sharedInstance] showLoadView];
-    
     NSMutableDictionary *params = [@{
-                             @"id": [_event eventId],
-                             @"source": [amount objectForKey:@"source"]
-                             } mutableCopy];
-    
+                                     @"id": [_event eventId],
+                                     //                             @"source": [amount objectForKey:@"source"] // payementField disable
+                                     } mutableCopy];
     if([amount objectForKey:@"amount"]){
         [params setObject:[amount objectForKey:@"amount"] forKey:@"amount"];
     }
+    
+    
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] eventParticipateValidate:params success:^(id result) {
         
-    [[Flooz sharedInstance] eventParticipate:params success:^(id result) {
-        [[Flooz sharedInstance] showLoadView];
+        id completeBlock = ^{
+            [[Flooz sharedInstance] showLoadView];
+            
+            [[Flooz sharedInstance] eventParticipate:params success:^(id result) {
+                [[Flooz sharedInstance] showLoadView];
+                
+                [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
+                    _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+                    paymentFieldIsShown = NO;
+                    [self reloadEvent];
+                }];
+            }];
+        };
         
-        [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
-            _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
-            paymentFieldIsShown = NO;
-            amountFieldIsShown = NO;
-            [self reloadEvent];
-        }];
+        SecureCodeViewController *controller = [SecureCodeViewController new];
+        controller.completeBlock = completeBlock;
+        
+        [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+        
+    } noCreditCard:^{
+        [self presentCreditCardController];
     }];
 }
 
@@ -379,7 +394,6 @@
 - (void)didAmountCancelTouch
 {
     paymentFieldIsShown = NO;
-    amountFieldIsShown = NO;
     [self reloadEvent];
 }
 
@@ -407,10 +421,19 @@
         [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
             _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
             paymentFieldIsShown = NO;
-            amountFieldIsShown = NO;
             [self reloadEvent];
         }];
     }];
+}
+
+- (void)didSwitchViewSelected
+{
+    participationHidden = YES;
+}
+
+- (void)didSwitchViewUnselected
+{
+    participationHidden = NO;
 }
 
 #pragma mark - Keyboard Management
@@ -437,6 +460,10 @@
         _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
         CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
         [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
+    }
+    else if([[firstResponder superview] isKindOfClass:[FLNewTransactionAmount class]]){
+        _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+        [_contentView setContentOffset:CGPointMake(0, firstResponder.superview.frame.origin.y) animated:YES];
     }
 }
 

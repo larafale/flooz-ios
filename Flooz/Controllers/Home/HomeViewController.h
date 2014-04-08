@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
-    NSArray *transactions;
-}
-
-@property (strong, nonatomic) IBOutlet FLTableView *tableView;
+@interface HomeViewController : UIViewController<UIScrollViewDelegate>
 
 @end

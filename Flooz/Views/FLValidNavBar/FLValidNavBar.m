@@ -14,14 +14,35 @@
 
 @implementation FLValidNavBar
 
-- (id)init
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithFrame:CGRectMakeSize(SCREEN_WIDTH, HEIGHT)];
-    if (self){
-        self.backgroundColor = [UIColor customBackgroundHeader];
-        [self createViews];
+    self = [super initWithCoder:aDecoder];
+    if(!self){
+        return nil;
     }
+    
+    [self commonInit];
+    
     return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if(!self){
+        return nil;
+    }
+    
+    [self commonInit];
+    
+    return self;
+}
+
+- (void)commonInit
+{
+    self.frame = CGRectMakeSize(SCREEN_WIDTH, HEIGHT);
+    self.backgroundColor = [UIColor customBackgroundHeader];
+    [self createViews];
 }
 
 - (void)createViews
@@ -38,6 +59,17 @@
     [self addSubview:cancel];
     [self addSubview:valid];
     [self addSubview:separator];
+    
+    
+    {
+        UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame), CGRectGetWidth(self.frame), 1)];
+        borderView.backgroundColor = [UIColor colorWithRed:0. green:0. blue:0. alpha:.2];
+        [self addSubview:borderView];
+        
+        self.layer.shadowOffset = CGSizeMake(0, 3.5);
+        self.layer.shadowOpacity = .2;
+        self.layer.shadowRadius = 1;
+    }
 }
 
 - (void)cancelAddTarget:(id)target action:(SEL)action

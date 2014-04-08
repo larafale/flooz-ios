@@ -59,7 +59,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateUser:@{ @"settings": @{ @"sepa": _sepa }} success:^(id result) {
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        [self.navigationController popViewControllerAnimated:YES];
     } failure:NULL];
 }
 

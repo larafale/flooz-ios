@@ -14,6 +14,7 @@
 @interface SecureCodeField : UIView<FLKeyboardViewDelegate>{
     NSUInteger currentLabel;
     NSString *currentValue;
+    NSArray *dotViews;
 }
 
 @property (weak, nonatomic) id<SecureCodeFieldDelegate> delegate;

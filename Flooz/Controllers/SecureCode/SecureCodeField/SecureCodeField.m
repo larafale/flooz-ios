@@ -28,6 +28,7 @@
         [self addSubview:label];
     }
     
+    [self createDots];
     [self clean];
 }
 
@@ -45,6 +46,24 @@
     return label;
 }
 
+- (void)createDots
+{
+    dotViews = @[
+                 [UIView new],
+                 [UIView new],
+                 [UIView new],
+                 [UIView new]
+                 ];
+    
+    for(int i = 0; i < [dotViews count]; ++i){
+        UIView *dot = dotViews[i];
+        dot.frame = CGRectMake(i * 70 + 35, CGRectGetHeight(self.frame) / 2., 5, 5);
+        dot.layer.cornerRadius = CGRectGetHeight(dot.frame) / 2.;
+        dot.backgroundColor = [UIColor whiteColor];
+        [self addSubview:dot];
+    }
+}
+
 #pragma mark - FLKeyboardViewDelegate
 
 - (void)keyboardPress:(NSString *)touch
@@ -52,7 +71,7 @@
     currentValue = [currentValue stringByAppendingString:touch];
     [self reformatLabel];
         
-    if(currentLabel < [[self subviews] count] - 1){
+    if(currentLabel < 3){ // 4 labels - 1
         currentLabel++;
     }
     else{
@@ -81,14 +100,13 @@
     for(int i = 0; i < 4; ++i){
         UILabel *label = [[self subviews] objectAtIndex:i];
         
-        if(currentValue.length > 0 && i < currentValue.length - 1){
-            label.text = @".";
-        }
-        else if(currentValue.length > 0 && i == currentValue.length - 1){
-            label.text = [currentValue substringWithRange:NSMakeRange(i, 1)];
+        if(currentValue.length > 0 && i <= currentValue.length - 1){
+            label.text = @"";
+            [dotViews[i] setHidden:NO];
         }
         else{
             label.text = @"";
+            [dotViews[i] setHidden:YES];
         }
     }
 }
@@ -96,7 +114,12 @@
 - (void)clean
 {
     for(UILabel *subview in self.subviews){
-        subview.text = @"";
+        if([subview respondsToSelector:@selector(setText:)]){
+            subview.text = @"";
+        }
+        else{
+            subview.hidden = YES;
+        }
     }
     currentValue = @"";
     currentLabel = 0;

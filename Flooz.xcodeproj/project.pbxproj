@@ -11,6 +11,7 @@
 		AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB618E46861008E03FE /* libicucore.dylib */; };
 		AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB818E4686A008E03FE /* CFNetwork.framework */; };
 		AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBBA18E46872008E03FE /* Security.framework */; };
+		AB15DC0118E96FBD008E03FE /* Video in Resources */ = {isa = PBXBuildFile; fileRef = AB15DC0018E96FBD008E03FE /* Video */; };
 		AB2FB53318AD40580079AA1D /* CashOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53118AD40580079AA1D /* CashOutViewController.m */; };
 		AB2FB53418AD40580079AA1D /* CashOutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB53218AD40580079AA1D /* CashOutViewController.xib */; };
 		AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53718AD8C7A0079AA1D /* FLTextFieldTitle2.m */; };
@@ -69,6 +70,13 @@
 		AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2618D84F99002775BA /* SecureCodeField.m */; };
 		AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */; };
 		AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
+		ABA9B71A18F302C300A81929 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71918F302C300A81929 /* Analytics.framework */; };
+		ABA9B71C18F3034B00A81929 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71B18F3034B00A81929 /* CoreData.framework */; };
+		ABA9B71E18F3035700A81929 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71D18F3035700A81929 /* SystemConfiguration.framework */; };
+		ABA9B72018F3035E00A81929 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71F18F3035E00A81929 /* CoreTelephony.framework */; };
+		ABA9B72118F3036800A81929 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71318F300FB00A81929 /* AdSupport.framework */; };
+		ABA9B72218F3036F00A81929 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71118F300F200A81929 /* libz.dylib */; };
+		ABA9B72318F3037500A81929 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71718F3015800A81929 /* libsqlite3.dylib */; };
 		ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4618BCE805002FCAAE /* EventViewController.m */; };
 		ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D4718BCE805002FCAAE /* EventViewController.xib */; };
 		ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4D18BE60C5002FCAAE /* EventHeaderView.m */; };
@@ -97,6 +105,8 @@
 		ABC1115518ACE4B500C3C52D /* TransactionContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115418ACE4B500C3C52D /* TransactionContentView.m */; };
 		ABC1115B18ACE4C700C3C52D /* TransactionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */; };
 		ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115E18ACE4FE00C3C52D /* FriendPickerSelectionCell.m */; };
+		ABD0164918EC695500940F2D /* FLSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD0164818EC695500940F2D /* FLSwitchView.m */; };
+		ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD0164D18ECCCFA00940F2D /* FLScrollViewIndicator.m */; };
 		ABE9142018894385003AC722 /* NewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9141E18894385003AC722 /* NewTransactionViewController.m */; };
 		ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9141F18894385003AC722 /* NewTransactionViewController.xib */; };
 		ABE91424188944D5003AC722 /* FLValidNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91423188944D5003AC722 /* FLValidNavBar.m */; };
@@ -173,6 +183,7 @@
 		AB15DBB618E46861008E03FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		AB15DBB818E4686A008E03FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		AB15DBBA18E46872008E03FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		AB15DC0018E96FBD008E03FE /* Video */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Video; path = Resources/Video; sourceTree = "<group>"; };
 		AB2FB53018AD40580079AA1D /* CashOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashOutViewController.h; path = Controllers/CashOut/CashOutViewController.h; sourceTree = "<group>"; };
 		AB2FB53118AD40580079AA1D /* CashOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashOutViewController.m; path = Controllers/CashOut/CashOutViewController.m; sourceTree = "<group>"; };
 		AB2FB53218AD40580079AA1D /* CashOutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CashOutViewController.xib; path = Controllers/CashOut/CashOutViewController.xib; sourceTree = "<group>"; };
@@ -271,6 +282,14 @@
 		AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionDatePicker.m; path = Controllers/NewTransaction/NewTransactionDatePicker/NewTransactionDatePicker.m; sourceTree = "<group>"; };
 		AB8F9FA818E1EF93006039D0 /* FLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAlertView.h; path = Views/FLAlertView/FLAlertView.h; sourceTree = "<group>"; };
 		AB8F9FA918E1EF93006039D0 /* FLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAlertView.m; path = Views/FLAlertView/FLAlertView.m; sourceTree = "<group>"; };
+		ABA9B71118F300F200A81929 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		ABA9B71318F300FB00A81929 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		ABA9B71518F3014600A81929 /* libPods-Analytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Analytics.a"; path = "Pods/build/Release-iphoneos/libPods-Analytics.a"; sourceTree = "<group>"; };
+		ABA9B71718F3015800A81929 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		ABA9B71918F302C300A81929 /* Analytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Analytics.framework; path = Library/Analytics.framework; sourceTree = "<group>"; };
+		ABA9B71B18F3034B00A81929 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		ABA9B71D18F3035700A81929 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ABA9B71F18F3035E00A81929 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		ABB12D4518BCE805002FCAAE /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventViewController.h; path = Controllers/Event/EventViewController.h; sourceTree = "<group>"; };
 		ABB12D4618BCE805002FCAAE /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventViewController.m; path = Controllers/Event/EventViewController.m; sourceTree = "<group>"; };
 		ABB12D4718BCE805002FCAAE /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Controllers/Event/EventViewController.xib; sourceTree = "<group>"; };
@@ -333,6 +352,11 @@
 		ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionUsersView.m; path = Controllers/Transaction/TransactionUsers/TransactionUsersView.m; sourceTree = "<group>"; };
 		ABC1115D18ACE4FE00C3C52D /* FriendPickerSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendPickerSelectionCell.h; path = Controllers/FriendPicker/FriendPickerSelectionCell/FriendPickerSelectionCell.h; sourceTree = "<group>"; };
 		ABC1115E18ACE4FE00C3C52D /* FriendPickerSelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendPickerSelectionCell.m; path = Controllers/FriendPicker/FriendPickerSelectionCell/FriendPickerSelectionCell.m; sourceTree = "<group>"; };
+		ABD0164718EC695500940F2D /* FLSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSwitchView.h; path = Views/FLSwitchView/FLSwitchView.h; sourceTree = "<group>"; };
+		ABD0164818EC695500940F2D /* FLSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSwitchView.m; path = Views/FLSwitchView/FLSwitchView.m; sourceTree = "<group>"; };
+		ABD0164A18EC697200940F2D /* FLSwitchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLSwitchViewDelegate.h; path = Views/FLSwitchView/FLSwitchViewDelegate.h; sourceTree = "<group>"; };
+		ABD0164C18ECCCFA00940F2D /* FLScrollViewIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLScrollViewIndicator.h; path = Views/FLScrollViewIndicator/FLScrollViewIndicator.h; sourceTree = "<group>"; };
+		ABD0164D18ECCCFA00940F2D /* FLScrollViewIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLScrollViewIndicator.m; path = Views/FLScrollViewIndicator/FLScrollViewIndicator.m; sourceTree = "<group>"; };
 		ABE9141D18894385003AC722 /* NewTransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewTransactionViewController.h; path = Controllers/NewTransaction/NewTransactionViewController.h; sourceTree = "<group>"; };
 		ABE9141E18894385003AC722 /* NewTransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionViewController.m; path = Controllers/NewTransaction/NewTransactionViewController.m; sourceTree = "<group>"; };
 		ABE9141F18894385003AC722 /* NewTransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewTransactionViewController.xib; path = Controllers/NewTransaction/NewTransactionViewController.xib; sourceTree = "<group>"; };
@@ -446,6 +470,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABA9B72318F3037500A81929 /* libsqlite3.dylib in Frameworks */,
+				ABA9B72218F3036F00A81929 /* libz.dylib in Frameworks */,
+				ABA9B72118F3036800A81929 /* AdSupport.framework in Frameworks */,
+				ABA9B72018F3035E00A81929 /* CoreTelephony.framework in Frameworks */,
+				ABA9B71E18F3035700A81929 /* SystemConfiguration.framework in Frameworks */,
+				ABA9B71C18F3034B00A81929 /* CoreData.framework in Frameworks */,
+				ABA9B71A18F302C300A81929 /* Analytics.framework in Frameworks */,
 				AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */,
 				AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */,
 				AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */,
@@ -582,6 +613,13 @@
 		AB3D0890186CA11A00CF8380 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABA9B71F18F3035E00A81929 /* CoreTelephony.framework */,
+				ABA9B71D18F3035700A81929 /* SystemConfiguration.framework */,
+				ABA9B71B18F3034B00A81929 /* CoreData.framework */,
+				ABA9B71718F3015800A81929 /* libsqlite3.dylib */,
+				ABA9B71518F3014600A81929 /* libPods-Analytics.a */,
+				ABA9B71318F300FB00A81929 /* AdSupport.framework */,
+				ABA9B71118F300F200A81929 /* libz.dylib */,
 				AB15DBBA18E46872008E03FE /* Security.framework */,
 				AB15DBB818E4686A008E03FE /* CFNetwork.framework */,
 				AB15DBB618E46861008E03FE /* libicucore.dylib */,
@@ -694,9 +732,11 @@
 				ABE914841892AE3B003AC722 /* FLNewTransactionAmount */,
 				ABE914A11896D166003AC722 /* FLNewTransactionBar */,
 				ABE9149D18968E1A003AC722 /* FLPaymentField */,
+				ABD0164B18ECCCD800940F2D /* FLScrollViewIndicator */,
 				ABF7092218A2AF5F00517389 /* FLSelectAmount */,
 				ABF7092F18A3BEA400517389 /* FLSelectFriendButton */,
 				ABE9145A18928A75003AC722 /* FLSocialView */,
+				ABD0164618EC694100940F2D /* FLSwitchView */,
 				ABE9149418933900003AC722 /* FLTableView.h */,
 				AB5EB7011882157300D81AF6 /* FLTableView.m */,
 				ABE9148C189337C8003AC722 /* FLTextField */,
@@ -713,6 +753,7 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				ABA9B71918F302C300A81929 /* Analytics.framework */,
 				ABBB75D018B654CB0070C2A8 /* CardIO */,
 				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
 				AB3D08DC1871A5CB00CF8380 /* Flooz */,
@@ -1147,6 +1188,25 @@
 			name = FriendPickerSelectionCell;
 			sourceTree = "<group>";
 		};
+		ABD0164618EC694100940F2D /* FLSwitchView */ = {
+			isa = PBXGroup;
+			children = (
+				ABD0164718EC695500940F2D /* FLSwitchView.h */,
+				ABD0164818EC695500940F2D /* FLSwitchView.m */,
+				ABD0164A18EC697200940F2D /* FLSwitchViewDelegate.h */,
+			);
+			name = FLSwitchView;
+			sourceTree = "<group>";
+		};
+		ABD0164B18ECCCD800940F2D /* FLScrollViewIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				ABD0164C18ECCCFA00940F2D /* FLScrollViewIndicator.h */,
+				ABD0164D18ECCCFA00940F2D /* FLScrollViewIndicator.m */,
+			);
+			name = FLScrollViewIndicator;
+			sourceTree = "<group>";
+		};
 		ABE9141C1889436B003AC722 /* NewTransaction */ = {
 			isa = PBXGroup;
 			children = (
@@ -1360,6 +1420,7 @@
 		ABF46A201875BE9100E92A77 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB15DC0018E96FBD008E03FE /* Video */,
 				ABF46A211875BE9E00E92A77 /* Fonts */,
 			);
 			name = Resources;
@@ -1567,6 +1628,13 @@
 			knownRegions = (
 				en,
 				fr,
+				de,
+				es,
+				ja,
+				nl,
+				pt,
+				sq,
+				zh,
 			);
 			mainGroup = AB3D0885186CA11A00CF8380;
 			productRefGroup = AB3D088F186CA11A00CF8380 /* Products */;
@@ -1604,6 +1672,7 @@
 				AB5EB6EE188214F000D81AF6 /* MenuNewTransactionViewController.xib in Resources */,
 				AB2FB55818B234320079AA1D /* EventsViewController.xib in Resources */,
 				AB2FB53418AD40580079AA1D /* CashOutViewController.xib in Resources */,
+				AB15DC0118E96FBD008E03FE /* Video in Resources */,
 				AB4CB6E21886AE2D00D1C573 /* LoginViewController.xib in Resources */,
 				ABB12D6C18BF9F25002FCAAE /* EventParticipantsViewController.xib in Resources */,
 				ABF46A351875C1B400E92A77 /* Rene Bieder - Gentona Light.otf in Resources */,
@@ -1755,9 +1824,11 @@
 				ABE914441890A12C003AC722 /* FLEvent.m in Sources */,
 				ABE914341890A01F003AC722 /* FLNavbarView.m in Sources */,
 				ABE9144E18915E9F003AC722 /* FLUserView.m in Sources */,
+				ABD0164918EC695500940F2D /* FLSwitchView.m in Sources */,
 				ABF7094118A4D64300517389 /* TransactionCell.m in Sources */,
 				ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */,
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
+				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
@@ -1831,6 +1902,7 @@
 /* Begin XCBuildConfiguration section */
 		AB3D08B8186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1910,6 +1982,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jonathan/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/Flooz/Library",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
@@ -1918,23 +1991,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jonathan/Desktop/Codage/iOS/Flooz/Flooz/Library/CardIO,
+					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = (
+					"-lstdc++",
 					"-ObjC",
-					"-lTestFlight",
-					"-lz",
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					ImageIO,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-					"-framework",
-					UIKit,
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1955,6 +2016,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jonathan/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/Flooz/Library",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
@@ -1963,23 +2025,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jonathan/Desktop/Codage/iOS/Flooz/Flooz/Library/CardIO,
+					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = (
+					"-lstdc++",
 					"-ObjC",
-					"-lTestFlight",
-					"-lz",
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					ImageIO,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-					"-framework",
-					UIKit,
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1991,6 +2041,7 @@
 		};
 		AB3D08BE186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Flooz.app/Flooz";
 				FRAMEWORK_SEARCH_PATHS = (

@@ -42,18 +42,21 @@
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CURRENT_PASSWORD" placeholder:@"" for:_password key:@"password" position:CGPointMake(20, 30)];
         [_contentView addSubview:view];
+        [view seTsecureTextEntry:YES];
         height = CGRectGetMaxY(view.frame);
     }
         
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_NEW_PASSWORD" placeholder:@"" for:_password key:@"newPassword" position:CGPointMake(20, height + 50)];
         [_contentView  addSubview:view];
+        [view seTsecureTextEntry:YES];
         height = CGRectGetMaxY(view.frame);
     }
     
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_PASSWORD_CONFIRMATION" placeholder:@"" for:_password key:@"confirm" position:CGPointMake(20, height + 50)];
         [_contentView  addSubview:view];
+        [view seTsecureTextEntry:YES];
         height = CGRectGetMaxY(view.frame);
     }
     
@@ -66,7 +69,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updatePassword:_password success:^(id result) {
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        [self.navigationController popViewControllerAnimated:YES];
     } failure:NULL];
 }
 

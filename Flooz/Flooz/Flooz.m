@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 
 #import <Accounts/Accounts.h>
+#import <UICKeyChainStore.h>
 
 @implementation Flooz
 
@@ -35,6 +36,9 @@
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         
         loadView = [FLLoadView new];
+
+        _notificationsCount = @0;
+        _notifications = @[];
     }
     return self;
 }
@@ -57,6 +61,8 @@
     access_token = nil;
     _facebook_token = nil;
     
+    [UICKeyChainStore removeItemForKey:@"login-token"];
+    
     [self closeSocket];
     [appDelegate didDisconnected];
 }
@@ -74,7 +80,7 @@
     [self requestPath:@"signup" method:@"POST" params:user success:successBlock failure:failure];
 }
 
-- (void)login:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+- (void)login:(NSDictionary *)user
 {
     if(!user || ![user objectForKey:@"login"] || [[user objectForKey:@"login"] isBlank]){
         user = @{
@@ -85,13 +91,9 @@
     
     id successBlock = ^(id result) {
         [self updateCurrentUserAfterConnect:result];
-        
-        if(success){
-            success(result);
-        }
     };
     
-    [self requestPath:@"/login/basic" method:@"POST" params:user success:successBlock failure:failure];
+    [self requestPath:@"/login/basic" method:@"POST" params:user success:successBlock failure:NULL];
 }
 
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -106,6 +108,11 @@
 
 - (void)updateCurrentUserWithSuccess:(void (^)())success
 {
+    [self updateCurrentUserWithSuccess:success failure:nil];
+}
+
+- (void)updateCurrentUserWithSuccess:(void (^)())success failure:(void (^)(NSError *error))failure
+{
     id successBlock = ^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
@@ -115,7 +122,7 @@
         }
     };
     
-    [self requestPath:@"profile" method:@"GET" params:nil success:successBlock failure:NULL];
+    [self requestPath:@"profile" method:@"GET" params:nil success:successBlock failure:failure];
 }
 
 - (void)updateUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -137,7 +144,13 @@
 
 - (void)uploadDocument:(NSData *)data field:(NSString *)field success:(void (^)())success failure:(void (^)(NSError *error))failure
 {
-    [self requestPath:@"/profile/upload" method:@"POST" params:@{@"field": field} success:success failure:failure constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error){
+        if(failure){
+            failure(error);
+        }
+    };
+    
+    [self requestPath:@"/profile/upload" method:@"POST" params:@{@"field": field} success:success failure:failureBlock constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         NSLog(@"image size: %.2fMB", data.length / 1024. / 1024.);
         [formData appendPartWithFileData:data name:field fileName:@"image.jpg" mimeType:@"image/jpg"];
     }];
@@ -278,6 +291,21 @@
     [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
+- (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
+{
+    NSMutableDictionary *tempTransaction = [transaction mutableCopy];
+    [tempTransaction removeObjectForKey:@"image"];
+    tempTransaction[@"validate"] = @"true";
+    
+    id failure = ^(AFHTTPRequestOperation *operation, NSError *error){
+        if(operation && operation.responseObject && [[[operation.responseObject objectForKey:@"item"] objectForKey:@"code"] intValue] == 107){
+            noCreditCard();
+        }
+    };
+    
+    [self requestPath:@"flooz?validate=true" method:@"POST" params:tempTransaction success:success fullFailure:failure];
+}
+
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     void(^ failureBlock1)(NSError *error);
@@ -318,6 +346,29 @@
     else{
         [self requestPath:@"flooz" method:@"POST" params:transaction success:success failure:failureBlock1];
     }
+}
+
+- (void)updateTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
+{
+    id successBlock = ^(id result) {
+        [self updateCurrentUser];
+        
+        if(success){
+            success(result);
+        }
+    };
+    
+    NSMutableDictionary *tempTransaction = [transaction mutableCopy];
+    tempTransaction[@"validate"] = @"true";
+    
+    id failure = ^(AFHTTPRequestOperation *operation, NSError *error){
+        if(operation && operation.responseObject && [[[operation.responseObject objectForKey:@"item"] objectForKey:@"code"] intValue] == 107){
+            noCreditCard();
+        }
+    };
+ 
+    NSString *path = [NSString stringWithFormat:@"flooz/%@?validate=true", [transaction objectForKey:@"id"]];
+    [self requestPath:path method:@"POST" params:tempTransaction success:successBlock fullFailure:failure];
 }
 
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -470,6 +521,18 @@
     [self requestPath:path method:@"POST" params:nil success:success failure:NULL];
 }
 
+- (void)eventParticipateValidate:(NSDictionary *)dictionary success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
+{
+    id failure = ^(AFHTTPRequestOperation *operation, NSError *error){
+        if(operation && operation.responseObject && [[[operation.responseObject objectForKey:@"item"] objectForKey:@"code"] intValue] == 107){
+            noCreditCard();
+        }
+    };
+
+    NSString *path = [NSString stringWithFormat:@"pots/%@/participate?validate=true", [dictionary objectForKey:@"id"]];
+    [self requestPath:path method:@"POST" params:dictionary success:success fullFailure:failure];
+}
+
 - (void)eventParticipate:(NSDictionary *)dictionary success:(void (^)(id result))success
 {
     NSString *path = [NSString stringWithFormat:@"pots/%@/participate", [dictionary objectForKey:@"id"]];
@@ -511,10 +574,20 @@
 
 -(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
-    [self requestPath:path method:method params:params success:success failure:failure constructingBodyWithBlock:NULL];
+    id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error){
+        if(failure){
+            failure(error);
+        }
+    };
+    [self requestPath:path method:method params:params success:success failure:failureBlock constructingBodyWithBlock:NULL];
 }
 
--(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> formData))constructingBodyWithBlock
+-(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success fullFailure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))fullFailure
+{
+    [self requestPath:path method:method params:params success:success failure:fullFailure constructingBodyWithBlock:NULL];
+}
+
+-(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> formData))constructingBodyWithBlock
 {
     NSLog(@"%@ request: %@ - %@", method, path, params);
     
@@ -542,6 +615,8 @@
         NSLog(@"Error request: %@", operation.responseString);
         [loadView hide];
         
+        id statusCode = [operation.responseObject objectForKey:@"statusCode"];
+        
         if([path isEqualToString:@"/login/facebook"]){
             
         }
@@ -550,11 +625,11 @@
            error.code == kCFURLErrorNotConnectedToInternet ||
            error.code == kCFURLErrorNetworkConnectionLost
            ){
-            DISPLAY_ERROR(FLNetworkError);
+//            DISPLAY_ERROR(FLNetworkError);
         }
-        else if(error.code == kCFURLErrorUserCancelledAuthentication && access_token){
+        else if(([statusCode intValue] == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && access_token){
             // Token expire
-            DISPLAY_ERROR(FLBadLoginError);
+//            DISPLAY_ERROR(FLBadLoginError);
             [self logout];
         }
         else if(operation.responseObject){
@@ -569,7 +644,7 @@
         }
         
         if(failure){
-            failure(error);
+            failure(operation, error);
         }
     };
     
@@ -597,10 +672,30 @@
 {    
     access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
     _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
+    [UICKeyChainStore setString:access_token forKey:@"login-token"];
     
     [appDelegate didConnected];
     [self startSocket];
 }
+
+- (BOOL)autologin
+{
+    NSString *token = [UICKeyChainStore stringForKey:@"login-token"];
+    
+    if(!token){
+        return NO;
+    }
+    
+    access_token = token;
+    [self updateCurrentUserWithSuccess:^{
+        [appDelegate didConnected];
+        [self startSocket];
+    } failure:^(NSError *error) {
+        [self logout];
+    }];
+    return YES;
+}
+
 
 #pragma mark - Facebook
 
@@ -610,7 +705,6 @@
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
-         [self hideLoadView];
          [appDelegate facebookSessionStateChanged:session state:state error:error];
      }];
 }
@@ -667,8 +761,11 @@
 
 - (void)displayPopupMessage:(id)responseObject
 {
+    FLAlertViewStyle alertStyle;
     NSString *title;
     NSString *content;
+    NSNumber *time;
+    
     if([responseObject respondsToSelector:@selector(objectForKey:)]){
         NSDictionary *error = [responseObject objectForKey:@"popup"];
         
@@ -677,13 +774,41 @@
         }
         
         if(error && [error respondsToSelector:@selector(objectForKey:)] && [error objectForKey:@"visible"] && [[error objectForKey:@"visible"] boolValue] && [[error objectForKey:@"text"] respondsToSelector:@selector(length)]){
+
             title = [error objectForKey:@"title"];
             content = [error objectForKey:@"text"];
+            time = [error objectForKey:@"time"];
+            
+            NSString *alertStyleText = [error objectForKey:@"type"];
+            if([alertStyleText isEqualToString:@"green"]){
+                alertStyle = FLAlertViewStyleSuccess;
+            }
+            else if([alertStyleText isEqualToString:@"red"]){
+                alertStyle = FLAlertViewStyleError;
+            }
+            else{
+                alertStyle = FLAlertViewStyleInfo;
+            }
+            
+            if([error[@"resource"][@"type"] respondsToSelector:@selector(objectAtIndex:)]){
+                for(NSString *key in error[@"resource"][@"type"]){
+                    if([key isEqualToString:@"line"]){
+                        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadTimeline" object:nil]];
+                    }
+                    else if([key isEqualToString:@"event"]){
+                        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadEvents" object:nil]];
+                    }
+                    else if([key isEqualToString:@"profile"]){
+                        [self updateCurrentUser];
+                    }
+                }
+            }
         }
+        
     }
     
     if(content && ![content isBlank]){
-        [appDelegate displayMessage:title content:content style:FLAlertViewStyleSuccess];
+        [appDelegate displayMessage:title content:content style:alertStyle time:time];
     }
 }
 
@@ -707,28 +832,45 @@
 
 - (void)socketIODidConnect:(SocketIO *)socket
 {
-    [socket sendEvent:@"subscribe" withData:@{ @"room": [_currentUser username] }];
+    [socket sendEvent:@"subscribe" withData:@{ @"room": [_currentUser username], @"token": access_token }];
+}
+
+- (void)socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error
+{
+    [self startSocket];
 }
 
 - (void)socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
 {
-    if(packet.name && [packet.name respondsToSelector:@selector(isEqualToString:)]){
-        if([packet.name isEqualToString:@"popup"]){
-            [self displayPopupMessage:packet.dataAsJSON[@"args"][0]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(packet.name && [packet.name respondsToSelector:@selector(isEqualToString:)]){
+            if([packet.name isEqualToString:@"popup"]){
+                [self displayPopupMessage:packet.dataAsJSON[@"args"][0]];
+            }
+            else if([packet.name isEqualToString:@"feed"]){
+                NSNumber *count = packet.dataAsJSON[@"args"][0][@"total"];
+                
+                [self setNotificationsCount:count];
+                
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"newNotifications" object:nil]];
+            }
+            else{
+                NSLog(@"-------------------");
+                NSLog(@"Socket unknown event: %@", packet.name);
+                NSLog(@"-------------------");
+            }
         }
-        else if([packet.name isEqualToString:@"newNotification"]){
-            NSNumber *count = packet.dataAsJSON[@"args"][0][@"total"];
-            
-            [[[Flooz sharedInstance] currentUser] setNotificationsCount:count];
-            
-            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"newNotifications" object:nil]];
-        }
-    }
+    });
 }
 
 - (void)socketIO:(SocketIO *)socket onError:(NSError *)error
 {
     NSLog(@"WebSocket error: %@", error);
+}
+
+- (void)socketSendCloseActivities
+{
+    [_socket sendEvent:@"feed close" withData:@{ @"token": access_token }];
 }
 
 @end

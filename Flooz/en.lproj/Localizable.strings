@@ -7,53 +7,59 @@
  */
 
 "GLOBAL_OR" = "ou";
-"GLOBAL_OK" = "OK";
-"GLOBAL_ERROR" = "Error";
+"GLOBAL_OK" = "Ok";
+"GLOBAL_ERROR" =  "Erreur";
 "GLOBAL_CANCEL" = "Annuler";
 "GLOBAL_CAMERA" = "Appareil photo";
 "GLOBAL_ALBUMS" = "Albums";
 "GLOBAL_EURO" = "€";
-"GLOBAL_SEND" = "PUBLIER";
+"GLOBAL_SEND" = "Publier";
 
 "SEND_COMMENT" = "Écrire un commentaire...";
 
-"NAV_LOGIN" = "Log in";
-"NAV_SIGNUP" = "Sign up";
+"NAV_LOGIN" = "Se connecter";
+"NAV_SIGNUP" = "S'inscrire";
 "NAV_ACCOUNT" = "Mon profil";
-"NAV_SETTINGS" = "Settings";
+"NAV_SETTINGS" = "Paramètres";
 "NAV_SOCIAL" = "Cagnottes";
 "NAV_EVENTS" = "Cagnottes";
 "NAV_TIMELINE" = "Flooz";
-"NAV_EDIT_ACCOUNT" = "Edit";
+"NAV_EDIT_ACCOUNT" = "Modifier";
 "NAV_INFORMATIONS" = "Informations";
 "NAV_NOTIFICATIONS" = "Notifications";
-"NAV_CASHOUT" = "Cash Out";
+"NAV_CASHOUT" = "Virement";
 "NAV_RIB" = "RIB";
-"NAV_PASSWORD" = "Password";
-"NAV_CREDIT_CARD" = "Credit Card";
+"NAV_PASSWORD" = "Mot de passe";
+"NAV_CREDIT_CARD" = "Carte bancaire";
+"NAV_CREDIT_CARD_ADD" = "Ajouter une CB";
 "NAV_EVENT_PARTICIPANTS" = "Participants";
-"NAV_FRIENDS" = "FRIENDS";
+"NAV_FRIENDS" = "Amis";
 "NAV_DOCUMENTS" = "Documents";
-"NAV_SECURE_CODE" = "Secure Code";
+"NAV_SECURE_CODE" = "Code de sécurité";
 
-"HOME_LOGIN" = "Log in";
-"HOME_SIGNUP" = "Sign up";
-"HOME_PREVIEW" = "Take a tour";
+"HOME_LOGIN" = "Connexion";
+"HOME_SIGNUP" = "Inscription";
+"HOME_SLIDE_1_TITLE" = "Floozez vos amis!";
+"HOME_SLIDE_1_CONTENT" = "Envoyez ou recevez de l’argent gratuitement grâce à votre porte-monnaie Flooz ou votre CB. C'est simple, gratuit et sécurisé.";
+"HOME_SLIDE_2_TITLE" = "Créez des cagnottes";
+"HOME_SLIDE_2_CONTENT" = "Collectez et gérez de l’argent à plusieurs pour toutes les occasions (Anniversaires, voyages & co...).";
+"HOME_SLIDE_3_TITLE" = "Partagez vos paiements!";
+"HOME_SLIDE_3_CONTENT" = "Rejoignez vos amis pour partager, commenter ou encore liker leurs paiements.";
 
-"CREDIT_CARD_SCAN" = "SCANNER MA CARTE";
-"CREDIT_CARD_REMOVE" = "DELETE THIS CARD";
+"CREDIT_CARD_SCAN" = "Scanner ma carte, c'est plus rapide !";
+"CREDIT_CARD_REMOVE" = "Supprimer cette carte";
 
-"INFORMATIONS_WHY" = "POURQUOI FLOOZ EST SURE?";
+"INFORMATIONS_WHY" = "La sécurité selon Flooz";
 "INFORMATIONS_TERMS" = "CGU / CGV";
 "INFORMATIONS_FAQ" = "FAQ";
-"INFORMATIONS_PREVIEW" = "TOUR";
-"INFORMATIONS_WEBSITE" = "SITE WEB";
-"INFORMATIONS_ABOUT" = "A PROPOS";
-"INFORMATIONS_CONTACT" = "CONTACT";
+"INFORMATIONS_PREVIEW" = "Visite Guidée";
+"INFORMATIONS_WEBSITE" = "Site Web";
+"INFORMATIONS_ABOUT" = "A Propos";
+"INFORMATIONS_CONTACT" = "Contactez-nous";
 
 "NOTIFICATIONS_SECTION_FEED" = "Feed";
 "NOTIFICATIONS_SECTION_PUSH" = "Push";
-"NOTIFICATIONS_SECTION_PHONE" = "Phone";
+"NOTIFICATIONS_SECTION_PHONE" = "SMS";
 "NOTIFICATIONS_SECTION_EMAIL" = "Email";
 
 "NOTIFICATIONS_FLOOZ_REQUEST" = "Flooz request";
@@ -65,98 +71,96 @@
 "NOTIFICATIONS_LIKES" = "Likes";
 "NOTIFICATIONS_NEW_TRANSACTION" = "New flooz";
 
-"PAYEMENT_FIELD_WALLET" = "PORTE MONNAIE";
-"PAYEMENT_FIELD_CARD" = "CARTE BANCAIRE";
+"PAYEMENT_FIELD_WALLET" = "Porte-monnaie";
+"PAYEMENT_FIELD_CARD" = "Carte Bancaire";
 
-"SOCIAL_FILTER_FRIENDS" = "AMIS";
-"SOCIAL_FILTER_EVENTS" = "CAGNOTTE";
+"SOCIAL_FILTER_FRIENDS" = "Amis";
+"SOCIAL_FILTER_EVENTS" = "Cagnotte";
 "SOCIAL_FILTER_ACTIVITIES" = "ACTIVITE";
 
-"FIELD_USERNAME" = "Username";
-"FIELD_FIRSTNAME" = "First Name";
-"FIELD_LASTNAME" = "Last Name";
-"FIELD_PHONE" = "Phone";
+"FIELD_USERNAME" = "Pseudo";
+"FIELD_FIRSTNAME" = "Prénom";
+"FIELD_LASTNAME" = "Nom";
+"FIELD_PHONE" = "N° de mobile";
 "FIELD_EMAIL" = "Email";
-"FIELD_PASSWORD" = "Password";
-"FIELD_CODE" = "Code a 4 chiffres";
-"FIELD_ADDRESS" = "Address";
-"FIELD_ZIP_CODE" = "Zip code";
-"FIELD_CITY" = "City";
+"FIELD_PASSWORD" = "Mot de passe";
+"FIELD_CODE" = "Code secret";
+"FIELD_ADDRESS" = "Adresse";
+"FIELD_ZIP_CODE" = "Code postal";
+"FIELD_CITY" = "Ville";
 
-"FIELD_IBAN" = "CODE IBAN";
+"FIELD_IBAN" = "Code IBAN";
 "FIELD_IBAN_PLACEHOLDER" = "";
-"FIELD_BIC" = "CODE BIC";
+"FIELD_BIC" = "Code BIC";
 "FIELD_BIC_PLACEHOLDER" = "";
 
-"FIELD_CARD_OWNER" = "Nom du porteur";
+"FIELD_CARD_OWNER" = "Titulaire de la carte";
 "FIELD_CARD_OWNER_PLACEHOLDER" = "";
 "FIELD_CARD_NUMBER" = "Numero de carte";
 "FIELD_CARD_NUMBER_PLACEHOLDER" = "";
 "FIELD_CARD_EXPIRES" = "Date d'expiration";
 "FIELD_CARD_EXPIRES_PLACEHOLDER" = "MMYY";
-"FIELD_CARD_CVV" = "Code sécurité";
-"FIELD_CARD_CVV_PLACEHOLDER" = "XXX";
+"FIELD_CARD_CVV" = "Cryptogramme";
+"FIELD_CARD_CVV_PLACEHOLDER" = "Code à 3 chiffres au dos de la carte ";
 
-"FIELD_CURRENT_PASSWORD" = "CURRENT PASSWORD";
-"FIELD_NEW_PASSWORD" = "NEW PASSWORD";
-"FIELD_PASSWORD_CONFIRMATION" = "NEW PASSWORD CONFIRMATION";
+"FIELD_CURRENT_PASSWORD" = "Mot de passe actuel";
+"FIELD_NEW_PASSWORD" = "Nouveau mot de passe";
+"FIELD_PASSWORD_CONFIRMATION" = "Confirmation";
 
-"FIELD_TRANSACTION_DATE" = "DATE DE FIN:";
-"FIELD_TRANSACTION_TITLE" = "NOM :";
-"FIELD_TRANSACTION_TITLE_PLACEHOLDER" = "Par exemple : Anniversaire";
-"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Pour quelle occasion?";
-"FIELD_TRANSACTION_EVENT_PLACEHOLDER" = "Ajouter plus d'informations";
-"FIELD_TRANSACTION_SELECT_FRIEND" = "Pseudo, Nom, Téléphone ou Email";
+"FIELD_TRANSACTION_DATE" = "SE TERMINE LE :";
+"FIELD_TRANSACTION_TITLE" = "TITRE :";
+"FIELD_TRANSACTION_TITLE_PLACEHOLDER" = "ex: Anniversaire d'olivia";
+"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Ajouter une commentaire ...";
+"FIELD_TRANSACTION_EVENT_PLACEHOLDER" = "Description ...";
+"FIELD_TRANSACTION_SELECT_FRIEND" = "A qui ?";
+"FIELD_TRANSACTION_HIDE" = "Masquer ma participation";
 
-"SIGNUP_FACEBOOK" = "Register with Facebook";
+"SIGNUP_FACEBOOK" = "Inscription Facebook";
 
-"LOGIN_FACEBOOK" = "Login with Facebook";
-"LOGIN_OR" = "or";
-"LOGIN_PASSWORD_FORGOT" = "Mot de passe oublié?";
-
-"TIMELINE_FILTER_PUBLIC" = "PUBLIC";
-"TIMELINE_FILTER_FRIEND" = "FRIEND";
-"TIMELINE_FILTER_PERSO" = "PERSO";
+"LOGIN_FACEBOOK" = "Connexion Facebook";
+"LOGIN_OR" = "ou";
+"LOGIN_PASSWORD_FORGOT" = "Mot de passe oublié ?";
 
 "MENU_NEW_TRANSACTION_EVENT" = "Cagnotte";
 "MENU_NEW_TRANSACTION_PAYMENT" = "Payer";
 "MENU_NEW_TRANSACTION_COLLECT" = "Réclamer";
 
-"ACTIVITIES_NOTIFICATIONS" = "notifications";
+"ACTIVITIES_NOTIFICATIONS" = "Notifications";
+"ACTIVITIES_NEW_NOTIFICATIONS" = "Nouvelles notifications";
 
-"ACCOUNT_FRIENDS" = " amis";
-"ACCOUNT_TRANSACTIONS" = " flooz";
-"ACCOUNT_EVENTS" = " cagnottes";
+"ACCOUNT_FRIENDS" = " Amis";
+"ACCOUNT_TRANSACTIONS" = " Flooz";
+"ACCOUNT_EVENTS" = " Cagnottes";
 
-"ACCOUNT_BALANCE" = "Balance";
+"ACCOUNT_BALANCE" = "Porte-monnaie";
 
-"ACCOUNT_BUTTON_FRIENDS" = "AMIS";
-"ACCOUNT_BUTTON_CASH_OUT" = "CASH OUT";
-"ACCOUNT_BUTTON_SETTINGS" = "SETTINGS";
+"ACCOUNT_BUTTON_FRIENDS" = "MES AMIS";
+"ACCOUNT_BUTTON_CASH_OUT" = "VIRER A MA BANQUE";
+"ACCOUNT_BUTTON_SETTINGS" = "PARAMETRES";
 "ACCOUNT_BUTTON_INFORMATIONS" = "INFORMATIONS";
 
 "SETTINGS_NOTIFICATIONS" = "NOTIFICATIONS";
-"SETTINGS_CODE" = "SECURE CODE";
+"SETTINGS_CODE" = "CODE DE SECURITE";
 "SETTINGS_CARD" = "CARTE BANCAIRE";
 "SETTINGS_RIB" = "RIB";
-"SETTINGS_PRIVACY" = "SHARE & PRIVACY";
+"SETTINGS_PRIVACY" = "PARTAGE & CONFIDENTIALITE";
 "SETTINGS_DOCUMENTS" = "DOCUMENTS";
-"SETTINGS_PASSWORD" = "PASSWORD";
-"SETTINGS_LOGOUT" = "LOGOUT";
+"SETTINGS_PASSWORD" = "MOT DE PASSE";
+"SETTINGS_LOGOUT" = "DECONNEXION";
 
-"EDIT_ACCOUNT_PERSONAL_INFO" = "Personal informations";
-"EDIT_ACCOUNT_SOCIAL_INFO" = "Social informations";
+"EDIT_ACCOUNT_PERSONAL_INFO" = "Adresse Postale";
+"EDIT_ACCOUNT_SOCIAL_INFO" = "Réseaux sociaux";
 "EDIT_ACCOUNT_FACEBOOK" = "Lier a mon compte facebook";
 
 "CELL_SOCIAL_COMMENT" = "Comment";
 "CELL_SOCIAL_LIKE" = "Like";
 
-"FRIEND_PCIKER_SELECTION_CELL" = "Ajouter current selection";
+"FRIEND_PCIKER_SELECTION_CELL" = "Ajouter la sélection courante";
 
 "TRANSACTION_FIELD_GOAL" = "MONTANT A COLLECTER";
 
 "TRANSACTION_ACTION_ACCEPT" = "ACCEPTER";
-"TRANSACTION_ACTION_REFUSE" = "REFUSER";
+"TRANSACTION_ACTION_REFUSE" = "IGNORER";
 "TRANSACTION_ACTION_CANCEL" = "ANNULER";
 
 "TRANSACTION_STATUS_ACCEPTED" = "Accepted";
@@ -169,18 +173,18 @@
 "TRANSACTION_TYPE_COLLECTION" = "COLLECTION";
 
 "TRANSACTION_SCOPE_PUBLIC" = "Public";
-"TRANSACTION_SCOPE_FRIEND" = "Friend";
-"TRANSACTION_SCOPE_PRIVATE" = "Private";
+"TRANSACTION_SCOPE_FRIEND" = "Amis";
+"TRANSACTION_SCOPE_PRIVATE" = "Privé";
 
-"EVENT_SCOPE_FRIEND" = "Ouvert aux amis";
+"EVENT_SCOPE_FRIEND" = "Ouverte aux amis";
 "EVENT_SCOPE_PRIVATE" = "Sur invitation";
 
 "FRIENDS_SEARCH_FRIENDS" = "Recherche des amis sur Flooz";
-"FRIENDS_FRIENDS_REQUEST" = "Friend Requests";
-"FRIENDS_FRIENDS_SUGGESTION" = "Friend suggestions";
-"FRIENDS_FRIENDS" = "Friends";
+"FRIENDS_FRIENDS_REQUEST" = "Demande d’amis";
+"FRIENDS_FRIENDS_SUGGESTION" = "Suggestions d’amis";
+"FRIENDS_FRIENDS" = "Mes amis";
 
-"FRIEND_PCIKER_PLACEHOLDER" = "Rechercher un contact";
+"FRIEND_PCIKER_PLACEHOLDER" = "Nom, Email ou 06";
 "FRIEND_PICKER_FRIENDS_RECENT" = "Récent";
 "FRIEND_PICKER_FRIENDS" = "Mes amis";
 "FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";
@@ -190,10 +194,11 @@
 
 "EVENT_HEADER_MONEY_COLLECTED" = "Collectés";
 "EVENT_HEADER_DAY_LEFT" = "Jours restant";
+"EVENT_HEADER_DAY_LEFT_CLOSED" = "Clôturée";
 
 "EVENT_START_BY" = "Crée par %@";
 
-"EVENT_INVITE_PARTICIPANT" = "LISTE DES PARTICIPANTS";
+"EVENT_INVITE_PARTICIPANT" = "TOUS LES PARTICIPANTS";
 "EVENT_PARTICIPANTS_INVITED" = "%.2d AUTRES PARTICIPANTS";
 "EVENT_PARTICIPANT_INVITE" = "Inviter des amis";
 
@@ -203,16 +208,19 @@
 "EVENT_ACTION_PARTICIPATE" = "PARTICIPER";
 "EVENT_ACTION_ACCEPT" = "ACCEPTER";
 
-"EVENT_ACTION_COLLECT" = "ENCAISER";
+"EVENT_ACTION_COLLECT" = "Encaisser l'argent et clôturer";
 "EVENT_ACTION_OFFER" = "OFFRIR";
 
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_WAITING" = "Invité";
 
-"SECORE_CODE_TEXT" = "TAPER VOTRE CODE";
-"SECORE_CODE_TEXT_2" = "TAPER VOTRE NOUVEAU CODE";
-"SECURE_CODE_FORGOT" = "Code oublié?";
+"SECORE_CODE_TEXT_CURRENT" = "Entrez votre code";
+"SECORE_CODE_TEXT_OLD" = "Entrez votre ancien code :";
+"SECORE_CODE_TEXT_NEW" = "Entrez votre nouveau code :";
+"SECORE_CODE_TEXT_CONFIRM" = "Confirmez votre nouveau code :";
+"SECORE_CODE_TEXT_LOGIN" = "Identifiez vous pour réinitialiser votre code";
+"SECURE_CODE_FORGOT" = "Code de sécurité oublié ?";
 
-"DOCUMENTS_CARD_ID_RECTO" = "ID Card (Recto)";
-"DOCUMENTS_CARD_ID_VERSO" = "ID Card (Verso)";
-"DOCUMENTS_HOME" = "Jusificatif de domcile";
+"DOCUMENTS_CARD_ID_RECTO" = "Carte d’identité (Recto)";
+"DOCUMENTS_CARD_ID_VERSO" = "Carte d’identité (Verso)";
+"DOCUMENTS_HOME" = "Justificatif de domicile";

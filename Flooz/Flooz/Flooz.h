@@ -31,15 +31,19 @@
 @property (strong, readonly) FLUser *currentUser;
 @property (strong, nonatomic) NSString *facebook_token;
 
+@property (strong, nonatomic) NSNumber *notificationsCount;
+@property (strong, nonatomic) NSArray *notifications;
+
 + (Flooz *)sharedInstance;
 
 - (void)showLoadView;
 - (void)hideLoadView;
 
+- (BOOL)autologin;
 - (void)logout;
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
-- (void)login:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)login:(NSDictionary *)user;
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)updateCurrentUser;
@@ -62,9 +66,13 @@
 - (void)eventsNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
+
+- (void)updateTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createEvent:(NSDictionary *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
 
 - (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
@@ -86,6 +94,7 @@
 
 - (void)eventWithId:(NSString *)eventId success:(void (^)(id result))success;
 - (void)eventAction:(FLEvent *)event action:(EventAction)action success:(void (^)(id result))success;
+- (void)eventParticipateValidate:(NSDictionary *)dictionary success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
 - (void)eventParticipate:(NSDictionary *)dictionary success:(void (^)(id result))success;
 - (void)eventInvite:(FLEvent *)event friend:(NSDictionary *)friend success:(void (^)(id result))success;
 - (void)eventOffer:(FLEvent *)event friend:(NSDictionary *)friend success:(void (^)(id result))success;
@@ -95,5 +104,6 @@
 - (void)facebokSearchFriends:(void (^)(id result))success;
 
 - (void)startSocket;
+- (void)socketSendCloseActivities;
 
 @end

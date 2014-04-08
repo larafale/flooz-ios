@@ -139,7 +139,7 @@
 
 - (void)createSeparator
 {
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(facebookButton.frame), 0, 1, CGRectGetHeight(self.frame))];
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(facebookButton.frame) + 15, 11, 1, 15)];
     
     separator.backgroundColor = [UIColor customSeparator];
     

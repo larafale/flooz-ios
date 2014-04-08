@@ -47,9 +47,9 @@
     
     
     {
-        [_filterView addFilter:@"TIMELINE_FILTER_PUBLIC" target:self action:@selector(didFilterPublicTouch)];
-        [_filterView addFilter:@"TIMELINE_FILTER_FRIEND" target:self action:@selector(didFilterFriendTouch)];
-        [_filterView addFilter:@"TIMELINE_FILTER_PERSO" target:self action:@selector(didFilterPersoTouch)];
+        [_filterView addFilter:@"scope-public-large" target:self action:@selector(didFilterPublicTouch)];
+        [_filterView addFilter:@"scope-friend-large" target:self action:@selector(didFilterFriendTouch)];
+        [_filterView addFilter:@"scope-private-large" target:self action:@selector(didFilterPersoTouch)];
     }
     
 //    if([[[Flooz sharedInstance] currentUser] haveStatsPending]){
@@ -62,6 +62,17 @@
     refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
+    
+    {
+        scrollViewIndicator = [FLScrollViewIndicator new];
+        scrollViewIndicator.hidden = YES;
+        [self.view addSubview:scrollViewIndicator];
+    }
+    
+    // Padding pour que le dernier element au dessus du +
+    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMakeSize(SCREEN_WIDTH, 70)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"reloadTimeline" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,6 +86,18 @@
 {
     [super viewDidAppear:animated];
     crossButton.hidden = NO;
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    
+    NSLog(@"TimelineController unload");
+}
+
+- (void)dealloc
+{
+    NSLog(@"TimelineController dealloc");
 }
 
 #pragma mark - TableView
@@ -159,6 +182,7 @@
 
     if(transactionsCache[currentFilter]){
         transactions = [transactionsCache[currentFilter] mutableCopy];
+        _nextPageUrl = nil;
         [self didFilterChange];
     }
     
@@ -182,6 +206,7 @@
 
     if(transactionsCache[currentFilter]){
         transactions = [transactionsCache[currentFilter] mutableCopy];
+        _nextPageUrl = nil;
         [self didFilterChange];
     }
     
@@ -205,6 +230,7 @@
     
     if(transactionsCache[currentFilter]){
         transactions = [transactionsCache[currentFilter] mutableCopy];
+        _nextPageUrl = nil;
         [self didFilterChange];
     }
     
@@ -282,10 +308,12 @@
     [_tableView endUpdates];
 }
 
-- (void)loadNextPage{
+- (void)loadNextPage
+{
     if(!_nextPageUrl || [_nextPageUrl isBlank]){
         return;
     }
+
     nextPageIsLoading = YES;
     
     [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success:^(id result, NSString *nextPageUrl) {
@@ -293,6 +321,65 @@
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
         [_tableView reloadData];
+    }];
+}
+
+#pragma mark - ScrollViewIndicator
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    // Fin du scroll
+    [self hideScrollViewIndicator];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    // Lache d un coup
+    [self hideScrollViewIndicator];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if(_tableView.contentOffset.y > 0){
+        [self refreshScrollViewIndicator];
+    }
+}
+
+- (void)refreshScrollViewIndicator
+{
+    if([transactions count] == 0){
+        scrollViewIndicator.hidden = YES;
+        return;
+    }
+    
+    [scrollViewIndicator.layer removeAllAnimations];
+    scrollViewIndicator.hidden = NO;
+    scrollViewIndicator.layer.opacity = 1;
+    
+    CGFloat y = _tableView.frame.origin.y + (_tableView.contentOffset.y / _tableView.contentSize.height) * CGRectGetHeight(_tableView.frame);
+    
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + y - _tableView.frame.origin.y + CGRectGetHeight(scrollViewIndicator.frame) / 2.)];
+    
+    if(!indexPath){
+        [self hideScrollViewIndicator];
+        return;
+    }
+    
+    FLTransaction *transaction = transactions[indexPath.row];
+    
+    CGRectSetY(scrollViewIndicator.frame, y);
+    [scrollViewIndicator setText:[transaction when]];
+}
+
+- (void)hideScrollViewIndicator
+{
+    [UIView animateWithDuration:.3 animations:^{
+        scrollViewIndicator.layer.opacity = 0;
+    } completion:^(BOOL finished) {
+        if(finished){
+            scrollViewIndicator.hidden = YES;
+        }
+        scrollViewIndicator.layer.opacity = 1;
     }];
 }
 

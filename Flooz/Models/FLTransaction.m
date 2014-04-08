@@ -67,7 +67,7 @@
         
     _title = [json objectForKey:@"text"];
     _content = [json objectForKey:@"why"];
-
+    
     _attachmentURL = [json objectForKey:@"pic"];
     _attachmentThumbURL = [json objectForKey:@"picMini"];
     
@@ -100,6 +100,7 @@
         static NSDateFormatter *dateFormatter;
         if(!dateFormatter){
             dateFormatter = [NSDateFormatter new];
+            [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
             [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
         }
                 
@@ -117,6 +118,8 @@
     if([json objectForKey:@"event"] && [[json objectForKey:@"event"] objectForKey:@"_id"]){
         _eventId = [[json objectForKey:@"event"] objectForKey:@"_id"];
     }
+    
+    _when = [FLHelper formatedDateFromNow:_date];
 }
 
 - (NSString *)statusText
@@ -170,13 +173,13 @@
     NSString *key = nil;
     
     if(scope == TransactionScopePublic){
-        key = @"scope-public-large";
+        key = @"scope-public-large-selected";
     }
     else if(scope == TransactionScopeFriend){
-        key = @"scope-friend-large";
+        key = @"scope-friend-large-selected";
     }
     else{ // if(status == TransactionScopePrivate){
-        key = @"scope-private-large";
+        key = @"scope-private-large-selected";
     }
     
     return [UIImage imageNamed:key];

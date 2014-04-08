@@ -169,4 +169,9 @@
     [textField resignFirstResponder];
 }
 
+- (void)seTsecureTextEntry:(BOOL)secureTextEntry
+{
+    _textfield.secureTextEntry = secureTextEntry;
+}
+
 @end

@@ -111,4 +111,9 @@
     _textfield.keyboardType = keyboardType;
 }
 
+- (void)seTsecureTextEntry:(BOOL)secureTextEntry
+{
+    _textfield.secureTextEntry = secureTextEntry;
+}
+
 @end
