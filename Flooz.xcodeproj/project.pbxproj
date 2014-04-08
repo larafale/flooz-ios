@@ -158,7 +158,6 @@
 		ABF7092518A2AF7F00517389 /* FLSelectAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7092418A2AF7F00517389 /* FLSelectAmount.m */; };
 		ABF7092A18A2CA3500517389 /* TransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7092818A2CA3500517389 /* TransactionViewController.m */; };
 		ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
-		ABF7092D18A39ECF00517389 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF7092C18A39ECF00517389 /* FacebookSDK.framework */; };
 		ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093118A3BF5400517389 /* FLSelectFriendButton.m */; };
 		ABF7093718A3C52200517389 /* FriendPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093518A3C52200517389 /* FriendPickerViewController.m */; };
 		ABF7093818A3C52200517389 /* FriendPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7093618A3C52200517389 /* FriendPickerViewController.xib */; };
@@ -449,7 +448,6 @@
 		ABF7092718A2CA3500517389 /* TransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionViewController.h; path = Controllers/Transaction/TransactionViewController.h; sourceTree = "<group>"; };
 		ABF7092818A2CA3500517389 /* TransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionViewController.m; path = Controllers/Transaction/TransactionViewController.m; sourceTree = "<group>"; };
 		ABF7092918A2CA3500517389 /* TransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionViewController.xib; path = Controllers/Transaction/TransactionViewController.xib; sourceTree = "<group>"; };
-		ABF7092C18A39ECF00517389 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		ABF7092E18A3BBA000517389 /* FLSelectAmountDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLSelectAmountDelegate.h; path = Views/FLSelectAmount/FLSelectAmountDelegate.h; sourceTree = "<group>"; };
 		ABF7093018A3BF5400517389 /* FLSelectFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSelectFriendButton.h; path = Views/FLSelectFriendButton/FLSelectFriendButton.h; sourceTree = "<group>"; };
 		ABF7093118A3BF5400517389 /* FLSelectFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSelectFriendButton.m; path = Views/FLSelectFriendButton/FLSelectFriendButton.m; sourceTree = "<group>"; };
@@ -483,7 +481,6 @@
 				ABBB75DA18B656820070C2A8 /* AVFoundation.framework in Frameworks */,
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
 				ABBB75D818B654DA0070C2A8 /* libCardIO.a in Frameworks */,
-				ABF7092D18A39ECF00517389 /* FacebookSDK.framework in Frameworks */,
 				AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */,
 				20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */,
@@ -624,7 +621,6 @@
 				AB15DBB818E4686A008E03FE /* CFNetwork.framework */,
 				AB15DBB618E46861008E03FE /* libicucore.dylib */,
 				ABBB75D918B656820070C2A8 /* AVFoundation.framework */,
-				ABF7092C18A39ECF00517389 /* FacebookSDK.framework */,
 				AB3D0891186CA11A00CF8380 /* Foundation.framework */,
 				AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */,
 				AB3D0895186CA11A00CF8380 /* UIKit.framework */,

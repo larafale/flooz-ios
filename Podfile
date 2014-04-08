@@ -6,5 +6,6 @@ pod 'UICKeyChainStore'
 pod 'SocketRocket'
 pod 'socket.IO'
 pod 'YLMoment'
+pod 'Facebook-iOS-SDK'
 # pod 'Analytics' # Ne fonctionne pas
 pod 'JTHelper', :git => "https://github.com/jonathantribouharet/JTHelper.git"
