@@ -17,8 +17,8 @@
 
 "SEND_COMMENT" = "Écrire un commentaire...";
 
-"NAV_LOGIN" = "Se connecter";
-"NAV_SIGNUP" = "S'inscrire";
+"NAV_LOGIN" = "Connexion";
+"NAV_SIGNUP" = "Inscription";
 "NAV_ACCOUNT" = "Mon profil";
 "NAV_SETTINGS" = "Paramètres";
 "NAV_SOCIAL" = "Cagnottes";
@@ -30,6 +30,7 @@
 "NAV_CASHOUT" = "Virement";
 "NAV_RIB" = "RIB";
 "NAV_PASSWORD" = "Mot de passe";
+"NAV_PASSWORD_FORGET" = "MDP oublié";
 "NAV_CREDIT_CARD" = "Carte bancaire";
 "NAV_CREDIT_CARD_ADD" = "Ajouter une CB";
 "NAV_EVENT_PARTICIPANTS" = "Participants";
@@ -37,8 +38,8 @@
 "NAV_DOCUMENTS" = "Documents";
 "NAV_SECURE_CODE" = "Code de sécurité";
 
-"HOME_LOGIN" = "Connexion";
-"HOME_SIGNUP" = "Inscription";
+"HOME_LOGIN" = "Se connecter";
+"HOME_SIGNUP" = "S'inscrire";
 "HOME_SLIDE_1_TITLE" = "Floozez vos amis!";
 "HOME_SLIDE_1_CONTENT" = "Envoyez ou recevez de l’argent gratuitement grâce à votre porte-monnaie Flooz ou votre CB. C'est simple, gratuit et sécurisé.";
 "HOME_SLIDE_2_TITLE" = "Créez des cagnottes";
@@ -61,15 +62,6 @@
 "NOTIFICATIONS_SECTION_PUSH" = "Push";
 "NOTIFICATIONS_SECTION_PHONE" = "SMS";
 "NOTIFICATIONS_SECTION_EMAIL" = "Email";
-
-"NOTIFICATIONS_FLOOZ_REQUEST" = "Flooz request";
-"NOTIFICATIONS_FLOOZ_STATUS" = "Flooz status";
-"NOTIFICATIONS_FRIEND_REQUEST" = "Friend request";
-"NOTIFICATIONS_FRIEND_JOINED" = "Friend joined";
-"NOTIFICATIONS_EVENT" = "Event";
-"NOTIFICATIONS_COMMENTS" = "Comments";
-"NOTIFICATIONS_LIKES" = "Likes";
-"NOTIFICATIONS_NEW_TRANSACTION" = "New flooz";
 
 "PAYEMENT_FIELD_WALLET" = "Porte-monnaie";
 "PAYEMENT_FIELD_CARD" = "Carte Bancaire";
@@ -107,11 +99,11 @@
 "FIELD_NEW_PASSWORD" = "Nouveau mot de passe";
 "FIELD_PASSWORD_CONFIRMATION" = "Confirmation";
 
-"FIELD_TRANSACTION_DATE" = "SE TERMINE LE :";
-"FIELD_TRANSACTION_TITLE" = "TITRE :";
+"FIELD_TRANSACTION_DATE" = "Se termine le :";
+"FIELD_TRANSACTION_TITLE" = "Titre :";
 "FIELD_TRANSACTION_TITLE_PLACEHOLDER" = "ex: Anniversaire d'olivia";
-"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Ajouter une commentaire ...";
-"FIELD_TRANSACTION_EVENT_PLACEHOLDER" = "Description ...";
+"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Ajouter plus d'info ...";
+"FIELD_TRANSACTION_EVENT_PLACEHOLDER" = "Ajouter plus d'info ...";
 "FIELD_TRANSACTION_SELECT_FRIEND" = "A qui ?";
 "FIELD_TRANSACTION_HIDE" = "Masquer ma participation";
 
@@ -126,7 +118,7 @@
 "MENU_NEW_TRANSACTION_COLLECT" = "Réclamer";
 
 "ACTIVITIES_NOTIFICATIONS" = "Notifications";
-"ACTIVITIES_NEW_NOTIFICATIONS" = "Nouvelles notifications";
+"ACTIVITIES_NEW_NOTIFICATIONS" = "nouvelles notifications";
 
 "ACCOUNT_FRIENDS" = " Amis";
 "ACCOUNT_TRANSACTIONS" = " Flooz";
@@ -150,14 +142,14 @@
 
 "EDIT_ACCOUNT_PERSONAL_INFO" = "Adresse Postale";
 "EDIT_ACCOUNT_SOCIAL_INFO" = "Réseaux sociaux";
-"EDIT_ACCOUNT_FACEBOOK" = "Lier a mon compte facebook";
+"EDIT_ACCOUNT_FACEBOOK" = "Facebook";
 
 "CELL_SOCIAL_COMMENT" = "Comment";
 "CELL_SOCIAL_LIKE" = "Like";
 
-"FRIEND_PCIKER_SELECTION_CELL" = "Ajouter la sélection courante";
+"FRIEND_PCIKER_SELECTION_CELL" = "Sélectionner ce contact :";
 
-"TRANSACTION_FIELD_GOAL" = "MONTANT A COLLECTER";
+"TRANSACTION_FIELD_GOAL" = "Montant à collecter";
 
 "TRANSACTION_ACTION_ACCEPT" = "ACCEPTER";
 "TRANSACTION_ACTION_REFUSE" = "IGNORER";
@@ -205,16 +197,16 @@
 "EVENT_ACTION_REFUSE" = "REFUSER";
 "EVENT_ACTION_CANCEL" = "ANNULER";
 "EVENT_ACTION_DECLINE" = "DECLINER L'INVITATION";
-"EVENT_ACTION_PARTICIPATE" = "PARTICIPER";
+"EVENT_ACTION_PARTICIPATE" = "PARTICIPER À LA CAGNOTTE";
 "EVENT_ACTION_ACCEPT" = "ACCEPTER";
 
-"EVENT_ACTION_COLLECT" = "Encaisser l'argent et clôturer";
+"EVENT_ACTION_COLLECT" = "Clôturer et encaisser";
 "EVENT_ACTION_OFFER" = "OFFRIR";
 
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_WAITING" = "Invité";
 
-"SECORE_CODE_TEXT_CURRENT" = "Entrez votre code";
+"SECORE_CODE_TEXT_CURRENT" = "Entrez votre code :";
 "SECORE_CODE_TEXT_OLD" = "Entrez votre ancien code :";
 "SECORE_CODE_TEXT_NEW" = "Entrez votre nouveau code :";
 "SECORE_CODE_TEXT_CONFIRM" = "Confirmez votre nouveau code :";

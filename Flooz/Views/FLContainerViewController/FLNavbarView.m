@@ -11,8 +11,8 @@
 #import "AppDelegate.h"
 #import "AcitvitiesViewController.h"
 
-#define STATUSBAR_HEIGHT 20.
-#define NAVBAR_HEIGHT 44.
+#import "FLContainerViewController.h"
+
 #define HEIGHT (STATUSBAR_HEIGHT + NAVBAR_HEIGHT)
 
 #define RATIO_TITLE_CONTENT 2.
@@ -258,6 +258,7 @@
     selectedTitleView.textColor = [UIColor customBlue];
     
     [self refreshFloozView];
+    [self refreshCrossButton];
 }
 
 - (void)refreshFloozView
@@ -271,6 +272,18 @@
     else{
         floozCountView.hidden = NO;
     }
+}
+
+- (void)refreshCrossButton
+{
+    UIViewController *controller = _viewControllers[1];
+    CGFloat y = SCREEN_WIDTH / 2.;
+    
+    if(controller.view.frame.origin.x > 0){
+        y += controller.view.frame.origin.x;
+    }
+    
+    crossButton.center = CGPointMake(y, crossButton.center.y);
 }
 
 - (void)completeTranslation:(CGPoint)velocity
@@ -335,6 +348,31 @@
     [rootController presentViewController:controller animated:NO completion:^{
         rootController.modalPresentationStyle = UIModalPresentationFullScreen;
     }];
+}
+
+#pragma mark - Cross button
+
+- (void)prepapreCrossButton
+{
+    FLContainerViewController *controller = (FLContainerViewController *)appDelegate.window.rootViewController;
+    
+    UIImage *buttonImage = [UIImage imageNamed:@"menu-new-transaction"];
+    crossButton = [[UIButton alloc] initWithFrame:CGRectMakeSize(buttonImage.size.width, buttonImage.size.height)];
+    [crossButton setImage:buttonImage forState:UIControlStateNormal];
+    [controller.view addSubview:crossButton];
+    
+    CGFloat y = controller.view.frame.size.height - buttonImage.size.height - 20;
+    CGRectSetY(crossButton.frame, y);
+
+    [self refreshCrossButton];
+    
+    [crossButton addTarget:self action:@selector(didCrossButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)didCrossButtonTouch
+{
+    UIViewController<FLContainerViewControllerDelegate> *currentController = _viewControllers[selectedTitleIndex];
+    [currentController presentMenuTransactionController];
 }
 
 @end

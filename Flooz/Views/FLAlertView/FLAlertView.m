@@ -10,8 +10,6 @@
 
 #import "AppDelegate.h"
 
-#define STATUSBAR_HEIGHT 22.
-
 #define MARGE_LEFT 78.
 #define MARGE_RIGHT 20.
 #define MARGE_BOTTOM 15.
@@ -62,35 +60,43 @@
 
 - (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style
 {
-    [self show:title content:content style:style time:nil];
+    [self show:title content:content style:style time:nil delay:nil];
 }
 
-- (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time
+- (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay
 {
     if(!time){
         time = @3;
     }
     
-    [timer invalidate];
-    timer = [NSTimer scheduledTimerWithTimeInterval:[time floatValue] target:self selector:@selector(hide) userInfo:nil repeats:NO];
-    
-    if(!self.superview){
-        CGRectSetHeight(self.frame, 0);
-        [appDelegate.window addSubview:self];
+    if(!delay){
+        delay = @0;
     }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, [delay integerValue] * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
 
-    titleView.text = title;
-    contentView.text = content;
-    
-    [contentView setHeightToFit];
-    iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM + STATUSBAR_HEIGHT) / 2.);
-    
-    [self setStyle:style];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:.4 animations:^{
-            CGRectSetHeight(self.frame, CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM);
-        }];
+        [timer invalidate];
+        timer = [NSTimer scheduledTimerWithTimeInterval:[time floatValue] target:self selector:@selector(hide) userInfo:nil repeats:NO];
+        
+        if(!self.superview){
+            CGRectSetHeight(self.frame, 0);
+            [appDelegate.window addSubview:self];
+        }
+        
+        titleView.text = title;
+        contentView.text = content;
+        
+        [contentView setHeightToFit];
+        iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM + STATUSBAR_HEIGHT) / 2.);
+        
+        [self setStyle:style];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:.4 animations:^{
+                CGRectSetHeight(self.frame, CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM);
+            }];
+        });
+        
     });
 }
 

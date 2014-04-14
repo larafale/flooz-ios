@@ -22,8 +22,6 @@
 
 #import "SecureCodeViewController.h"
 
-#define STATUSBAR_HEIGHT 20.
-
 @interface TransactionViewController (){
     FLTransaction *_transaction;
     NSIndexPath *_indexPath;
@@ -325,7 +323,9 @@
     }
     [self buildView];
     
-    [_delegateController updateTransactionAtIndex:_indexPath transaction:_transaction];
+    if(_indexPath){
+        [_delegateController updateTransactionAtIndex:_indexPath transaction:_transaction];
+    }
 }
 
 - (void)cancelTransaction

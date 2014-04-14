@@ -36,9 +36,11 @@
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor customBackgroundHeader:0.8];
     
-    _tableView.tableHeaderView = [self createTableHeaderView];
+    [self createTableHeaderView];
+    CGRectSetX(tableHeaderView.frame, _tableView.frame.origin.x);
+    [self.view addSubview:tableHeaderView];
     
     {
         tableViewShadow = [UIView new];
@@ -74,13 +76,11 @@
         isLoaded = YES;
         
         _tableView.hidden = YES;
+        tableHeaderView.hidden = YES;
         
-        [[Flooz sharedInstance] showLoadView];
+        [self showTableView];
+        
         [[Flooz sharedInstance] activitiesWithSuccess:^(id result, NSString *nextPageUrl) {
-            CGFloat tableViewY = _tableView.frame.origin.y;
-            CGRectSetY(_tableView.frame, - CGRectGetWidth(_tableView.frame));
-            _tableView.hidden = NO;
-            
             activities = [result mutableCopy];;
             _nextPageUrl = nextPageUrl;
             [refreshControl endRefreshing];
@@ -88,19 +88,6 @@
             [self refreshTableHeaderView];
             [_tableView reloadData];
             [_tableView setContentOffset:CGPointZero animated:NO];
-            
-            tableViewShadow.frame = _tableView.frame;
-            [UIView animateWithDuration:.4 animations:^{
-                CGRectSetY(_tableView.frame, tableViewY);
-                tableViewShadow.frame = _tableView.frame;
-            }];
-
-            {
-                closeGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-                closeGesture.delegate = self;
-                
-                [self.view addGestureRecognizer:closeGesture];
-            }
         } failure:NULL];
         
     }
@@ -147,8 +134,8 @@
     if([activity transactionId]){
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] transactionWithId:[activity transactionId] success:^(id result) {
-            FLTransaction *event = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-            TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:event indexPath:indexPath];
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
             
             self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
             
@@ -198,6 +185,7 @@
     [UIView animateWithDuration:.4 animations:^{
         CGRectSetY(_tableView.frame, - CGRectGetHeight(_tableView.frame));
         tableViewShadow.frame = _tableView.frame;
+        CGRectSetY(tableHeaderView.frame, _tableView.frame.origin.y - CGRectGetHeight(tableHeaderView.frame));
     } completion:^(BOOL finished) {
         [self dismissViewControllerAnimated:NO completion:NULL];
     }];
@@ -255,6 +243,48 @@
         nextPageIsLoading = NO;
         [_tableView reloadData];
     }];
+}
+
+- (void)showTableView
+{
+    CGFloat tableViewY = _tableView.frame.origin.y;
+    CGRectSetY(_tableView.frame, - CGRectGetWidth(_tableView.frame));
+    CGRectSetY(tableHeaderView.frame, _tableView.frame.origin.y - CGRectGetHeight(tableHeaderView.frame));
+    _tableView.hidden = NO;
+    tableHeaderView.hidden = NO;
+    
+    tableViewShadow.frame = _tableView.frame;
+    
+    [UIView animateWithDuration:.4
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         CGRectSetY(_tableView.frame, tableViewY + 25);
+                         tableViewShadow.frame = _tableView.frame;
+                         CGRectSetY(tableHeaderView.frame, _tableView.frame.origin.y - CGRectGetHeight(tableHeaderView.frame));
+                     } completion:^(BOOL finished) {
+                         
+                         [UIView animateWithDuration:.3
+                                               delay:0
+                                             options:UIViewAnimationOptionCurveEaseOut
+                                          animations:^{
+                                              
+                                              CGRectSetY(_tableView.frame, tableViewY);
+                                              tableViewShadow.frame = _tableView.frame;
+                                              CGRectSetY(tableHeaderView.frame, _tableView.frame.origin.y - CGRectGetHeight(tableHeaderView.frame));
+                                              
+                                          } completion:nil];
+                     }];
+    
+    
+    
+    {
+        closeGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+        closeGesture.delegate = self;
+        
+        [self.view addGestureRecognizer:closeGesture];
+    }
+
 }
 
 @end

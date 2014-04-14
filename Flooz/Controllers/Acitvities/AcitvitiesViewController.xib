@@ -15,8 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EEc-JS-huZ" customClass="FLTableView">
-                    <rect key="frame" x="15" y="72" width="290" height="476"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EEc-JS-huZ" customClass="FLTableView">
+                    <rect key="frame" x="15" y="112" width="290" height="476"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -31,7 +31,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="EEc-JS-huZ" secondAttribute="bottom" constant="20" id="U2f-GJ-OAS"/>
-                <constraint firstItem="EEc-JS-huZ" firstAttribute="top" secondItem="1" secondAttribute="top" constant="72" id="c44-h9-lYo"/>
+                <constraint firstItem="EEc-JS-huZ" firstAttribute="top" secondItem="1" secondAttribute="top" constant="112" id="c44-h9-lYo" userLabel="Vertical Space - (112) - Table View - View"/>
                 <constraint firstAttribute="trailing" secondItem="EEc-JS-huZ" secondAttribute="trailing" constant="15" id="eKA-ZP-FOv"/>
                 <constraint firstItem="EEc-JS-huZ" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="15" id="tJD-p9-AGg"/>
             </constraints>

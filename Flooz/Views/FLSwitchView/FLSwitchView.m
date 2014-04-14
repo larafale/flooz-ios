@@ -12,8 +12,9 @@
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title
 {
-    self = [super initWithFrame:CGRectMake(0, frame.origin.y, frame.size.width, 50)];
+    self = [super initWithFrame:CGRectMake(0, frame.origin.y, frame.size.width, MAX(frame.size.height, 50))];
     if (self) {
+        alternativeStyle = NO;
         [self createTitle:title];
         [self createSwitchView];
     }
@@ -35,19 +36,19 @@
 
 - (void)createSwitchView
 {
-    UISwitch *view = [UISwitch new];
+    switchView = [UISwitch new];
     
-    CGRectSetXY(view.frame, CGRectGetWidth(self.frame) - 65, (CGRectGetHeight(self.frame) - CGRectGetHeight(view.frame)) / 2.);
+    CGRectSetXY(switchView.frame, CGRectGetWidth(self.frame) - 65, (CGRectGetHeight(self.frame) - CGRectGetHeight(switchView.frame)) / 2.);
     
-    [view addTarget:self action:@selector(didSwitchChange:) forControlEvents:UIControlEventValueChanged];
+    [switchView addTarget:self action:@selector(didSwitchChange) forControlEvents:UIControlEventValueChanged];
     
-    [self addSubview:view];
+    [self addSubview:switchView];
     
-    view.on = NO;
-    [self didSwitchChange:view];
+    switchView.on = NO;
+    [self didSwitchChange];
 }
 
-- (void)didSwitchChange:(UISwitch *)switchView
+- (void)didSwitchChange
 {
     if(switchView.on){
         [_delegate didSwitchViewSelected];
@@ -56,20 +57,41 @@
         [_delegate didSwitchViewUnselected];
     }
     
-    [self refreshSwitchViewColors:switchView];
+    [self refreshSwitchViewColors];
 }
 
-- (void)refreshSwitchViewColors:(UISwitch *)switchView{
+- (void)refreshSwitchViewColors
+{
     if(switchView.on){
         [switchView setThumbTintColor:[UIColor customBackground]]; // Curseur
         [switchView setTintColor:[UIColor customBlue]]; // Bordure
         [switchView setOnTintColor:[UIColor customBlue]]; // Couleur de fond
     }
     else{
-        [switchView setThumbTintColor:[UIColor customBackground]]; // Curseur
-        [switchView setTintColor:[UIColor customBackground]]; // Bordure
+
         [switchView setOnTintColor:[UIColor customBackgroundHeader]]; // Couleur de fond
+        
+        if(alternativeStyle){
+            [switchView setThumbTintColor:[UIColor customBackgroundHeader]]; // Curseur
+            [switchView setTintColor:[UIColor customBackgroundHeader]]; // Bordure
+        }
+        else{
+            [switchView setThumbTintColor:[UIColor customBackground]]; // Curseur
+            [switchView setTintColor:[UIColor customBackground]]; // Bordure
+        }
     }
+}
+
+- (void)setAlternativeStyle
+{
+    alternativeStyle = YES;
+    [self refreshSwitchViewColors];
+}
+
+- (void)setOn:(BOOL)on
+{
+    switchView.on = on;
+    [self refreshSwitchViewColors];
 }
 
 @end

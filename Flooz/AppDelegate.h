@@ -18,12 +18,13 @@
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) NSString *currentDeviceToken;
 
 - (void)didConnected;
 - (void)didDisconnected;
 
 - (void)displayError:(NSError *)error;
-- (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time;
+- (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;
 
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 - (void)loadSignupWithUser:(NSDictionary *)user;

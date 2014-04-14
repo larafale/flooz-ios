@@ -28,6 +28,8 @@
 		AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB55B18B2B4710079AA1D /* FriendsViewController.m */; };
 		AB2FB55E18B2B4710079AA1D /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB55C18B2B4710079AA1D /* FriendsViewController.xib */; };
 		AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB56218B63B5F0079AA1D /* FriendCell.m */; };
+		AB358F2A18F6EC6100EECE72 /* PasswordForgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB358F2818F6EC6100EECE72 /* PasswordForgetViewController.m */; };
+		AB358F2B18F6EC6100EECE72 /* PasswordForgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB358F2918F6EC6100EECE72 /* PasswordForgetViewController.xib */; };
 		AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0891186CA11A00CF8380 /* Foundation.framework */; };
 		AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */; };
 		AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0895186CA11A00CF8380 /* UIKit.framework */; };
@@ -211,6 +213,9 @@
 		AB2FB55F18B3B9180079AA1D /* EventCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EventCellDelegate.h; path = EventCell/EventCellDelegate.h; sourceTree = "<group>"; };
 		AB2FB56118B63B5F0079AA1D /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendCell.h; path = FriendCell/FriendCell.h; sourceTree = "<group>"; };
 		AB2FB56218B63B5F0079AA1D /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendCell.m; path = FriendCell/FriendCell.m; sourceTree = "<group>"; };
+		AB358F2718F6EC6100EECE72 /* PasswordForgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PasswordForgetViewController.h; path = Controllers/PasswordForget/PasswordForgetViewController.h; sourceTree = "<group>"; };
+		AB358F2818F6EC6100EECE72 /* PasswordForgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PasswordForgetViewController.m; path = Controllers/PasswordForget/PasswordForgetViewController.m; sourceTree = "<group>"; };
+		AB358F2918F6EC6100EECE72 /* PasswordForgetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PasswordForgetViewController.xib; path = Controllers/PasswordForget/PasswordForgetViewController.xib; sourceTree = "<group>"; };
 		AB3D088E186CA11A00CF8380 /* Flooz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flooz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3D0891186CA11A00CF8380 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -351,6 +356,7 @@
 		ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionUsersView.m; path = Controllers/Transaction/TransactionUsers/TransactionUsersView.m; sourceTree = "<group>"; };
 		ABC1115D18ACE4FE00C3C52D /* FriendPickerSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendPickerSelectionCell.h; path = Controllers/FriendPicker/FriendPickerSelectionCell/FriendPickerSelectionCell.h; sourceTree = "<group>"; };
 		ABC1115E18ACE4FE00C3C52D /* FriendPickerSelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendPickerSelectionCell.m; path = Controllers/FriendPicker/FriendPickerSelectionCell/FriendPickerSelectionCell.m; sourceTree = "<group>"; };
+		ABCAA39118FC151500069F8D /* FLContainerViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLContainerViewControllerDelegate.h; path = Views/FLContainerViewController/FLContainerViewControllerDelegate.h; sourceTree = "<group>"; };
 		ABD0164718EC695500940F2D /* FLSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSwitchView.h; path = Views/FLSwitchView/FLSwitchView.h; sourceTree = "<group>"; };
 		ABD0164818EC695500940F2D /* FLSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSwitchView.m; path = Views/FLSwitchView/FLSwitchView.m; sourceTree = "<group>"; };
 		ABD0164A18EC697200940F2D /* FLSwitchViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLSwitchViewDelegate.h; path = Views/FLSwitchView/FLSwitchViewDelegate.h; sourceTree = "<group>"; };
@@ -587,6 +593,16 @@
 			name = FriendCell;
 			sourceTree = "<group>";
 		};
+		AB358F2618F6EC4400EECE72 /* PasswordForget */ = {
+			isa = PBXGroup;
+			children = (
+				AB358F2718F6EC6100EECE72 /* PasswordForgetViewController.h */,
+				AB358F2818F6EC6100EECE72 /* PasswordForgetViewController.m */,
+				AB358F2918F6EC6100EECE72 /* PasswordForgetViewController.xib */,
+			);
+			name = PasswordForget;
+			sourceTree = "<group>";
+		};
 		AB3D0885186CA11A00CF8380 = {
 			isa = PBXGroup;
 			children = (
@@ -700,6 +716,7 @@
 				ABE9141C1889436B003AC722 /* NewTransaction */,
 				ABE9147518929A61003AC722 /* Notifications */,
 				AB2FB53F18AD9C660079AA1D /* Password */,
+				AB358F2618F6EC4400EECE72 /* PasswordForget */,
 				AB2FB53918AD8D370079AA1D /* RIB */,
 				AB7C9B1E18D73AD2002775BA /* SecureCode */,
 				AB5EB6DF188214F000D81AF6 /* Settings */,
@@ -814,6 +831,7 @@
 				ABE914301890A01F003AC722 /* FLContainerViewController.m */,
 				ABE914311890A01F003AC722 /* FLNavbarView.h */,
 				ABE914321890A01F003AC722 /* FLNavbarView.m */,
+				ABCAA39118FC151500069F8D /* FLContainerViewControllerDelegate.h */,
 			);
 			name = FLContainerViewController;
 			sourceTree = "<group>";
@@ -1674,6 +1692,7 @@
 				ABF46A351875C1B400E92A77 /* Rene Bieder - Gentona Light.otf in Resources */,
 				ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */,
 				AB2FB55E18B2B4710079AA1D /* FriendsViewController.xib in Resources */,
+				AB358F2B18F6EC6100EECE72 /* PasswordForgetViewController.xib in Resources */,
 				AB2FB53E18AD8D590079AA1D /* RIBViewController.xib in Resources */,
 				ABF7091E18A03D4600517389 /* Error.strings in Resources */,
 				ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */,
@@ -1746,6 +1765,7 @@
 				ABB12D6B18BF9F25002FCAAE /* EventParticipantsViewController.m in Sources */,
 				ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */,
 				ABB12D5518BE61A3002FCAAE /* EventAmountView.m in Sources */,
+				AB358F2A18F6EC6100EECE72 /* PasswordForgetViewController.m in Sources */,
 				ABE9145D18928AA3003AC722 /* FLSocialView.m in Sources */,
 				ABE9146E189294A0003AC722 /* FLMenuNewTransactionButton.m in Sources */,
 				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
@@ -1977,7 +1997,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jonathan/Documents/FacebookSDK,
 					"$(PROJECT_DIR)/Flooz/Library",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1995,7 +2014,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0A6D7A9E-879A-4131-A665-951C9EB6C3A6";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2007,11 +2026,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jonathan/Documents/FacebookSDK,
 					"$(PROJECT_DIR)/Flooz/Library",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2029,7 +2047,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0A6D7A9E-879A-4131-A665-951C9EB6C3A6";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

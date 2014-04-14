@@ -127,6 +127,9 @@
 
 - (void)didLikeTouch
 {
+    like.textColor = [UIColor customBlue];
+    [like setImage:[UIImage imageNamed:@"social-like-selected"]];
+    
     [_target performSelector:_action withObject:nil];
 }
 

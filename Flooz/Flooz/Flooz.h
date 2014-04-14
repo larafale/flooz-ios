@@ -45,6 +45,7 @@
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
 - (void)login:(NSDictionary *)user;
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)passwordLost:(NSString *)email success:(void (^)(id result))success;
 
 - (void)updateCurrentUser;
 - (void)updateCurrentUserWithSuccess:(void (^)())success;
@@ -100,6 +101,7 @@
 - (void)eventOffer:(FLEvent *)event friend:(NSDictionary *)friend success:(void (^)(id result))success;
 
 - (void)connectFacebook;
+- (void)disconnectFacebook;
 - (void)didConnectFacebook;
 - (void)facebokSearchFriends:(void (^)(id result))success;
 

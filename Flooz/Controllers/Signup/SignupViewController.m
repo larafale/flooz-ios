@@ -73,22 +73,26 @@
     }
     
     {
-        FLTextFieldIcon *username;
+        CGFloat offset = 190;
         
         if([_user objectForKey:@"fb"]){
             registerFacebook.hidden = YES;
-            
-            username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:_user key:@"nick" position:CGPointMake(MARGE, 137)];
-        }
-        else{
-            username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:_user key:@"nick" position:CGPointMake(MARGE, 190)];
+            offset = 137;
         }
         
+        FLTextFieldIcon *name = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" position:CGPointMake(MARGE, offset) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
+        offset = CGRectGetMaxY(name.frame);
         
-        FLTextFieldIcon *name = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame)) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
-        FLTextFieldIcon *phone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" position:CGPointMake(MARGE, CGRectGetMaxY(name.frame))];
-        FLTextFieldIcon *email = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:_user key:@"email" position:CGPointMake(MARGE, CGRectGetMaxY(phone.frame))];
-        FLTextFieldIcon *password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:_user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(email.frame))];
+        FLTextFieldIcon *email = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:_user key:@"email" position:CGPointMake(MARGE, offset)];
+        offset = CGRectGetMaxY(email.frame);
+        
+        FLTextFieldIcon *username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:_user key:@"nick" position:CGPointMake(MARGE, offset)];
+        offset = CGRectGetMaxY(username.frame);
+        
+        FLTextFieldIcon *phone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" position:CGPointMake(MARGE, offset)];
+        offset = CGRectGetMaxY(phone.frame);
+        
+        FLTextFieldIcon *password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:_user key:@"password" position:CGPointMake(MARGE, offset)];
         [password seTsecureTextEntry:YES];
         
  

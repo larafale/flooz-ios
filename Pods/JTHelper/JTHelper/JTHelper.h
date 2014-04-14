@@ -9,7 +9,6 @@
 	#import "UIImageView+JTHelper.h"
 	#import "UILabel+JTHelper.h"
 	#import "UITextField+JTHelper.h"
-	#import "UITextView+JTHelper.h"
 
 	#define CGRectMakePosition(x, y) CGRectMake(x, y, 0, 0)
 	#define CGRectMakeWithPosition(position) CGRectMake(position.x, position.y, 0, 0)
@@ -35,6 +34,8 @@
 	#define IS_IOS6 [[UIDevice currentDevice].systemVersion hasPrefix:@"6"]
 	#define IS_IOS7 [[UIDevice currentDevice].systemVersion hasPrefix:@"7"]
 
+	#define STATUSBAR_HEIGHT 20.
+	#define NAVBAR_HEIGHT 44.
 	#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 	#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 

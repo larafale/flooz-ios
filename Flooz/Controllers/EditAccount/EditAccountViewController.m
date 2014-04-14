@@ -10,12 +10,14 @@
 
 #import "AppDelegate.h"
 
+#import "FLSwitchView.h"
+
 #define MARGE 20.
 
 @interface EditAccountViewController (){
     NSMutableDictionary *_user;
     FLUserView *userView;
-    UIButton *registerFacebook;
+    FLSwitchView *facebookButton;
 }
 
 @end
@@ -143,36 +145,37 @@
     }
     
     {
-        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_contentView.frame), 56)];
-        
+        facebookButton = [[FLSwitchView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_contentView.frame), 56) title:@"EDIT_ACCOUNT_FACEBOOK"];
+                
         {
-            UIView *separatorTop = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.frame), 1)];
-            UIView *separatorBottom = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(view.frame) - 1, CGRectGetWidth(view.frame), 1)];
+            UIView *separatorTop = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(facebookButton.frame), 1)];
+            UIView *separatorBottom = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(facebookButton.frame) - 1, CGRectGetWidth(facebookButton.frame), 1)];
             
             separatorTop.backgroundColor = separatorBottom.backgroundColor = [UIColor customSeparator];
             
-            [view addSubview:separatorTop];
-            [view addSubview:separatorBottom];
-        }
-        
-        {
-            UIImageView *arrow = [UIImageView imageNamed:@"arrow-white-right"];
-            CGRectSetXY(arrow.frame, CGRectGetWidth(view.frame) - 24, 26);
-            [view addSubview:arrow];
+            [facebookButton addSubview:separatorTop];
+            [facebookButton addSubview:separatorBottom];
         }
         
         {
             UIImageView *fb = [UIImageView imageNamed:@"facebook2"];
             CGRectSetXY(fb.frame, 24, 21);
-            [view addSubview:fb];
+            [facebookButton addSubview:fb];
         }
         
-        [view setTitle:NSLocalizedString(@"EDIT_ACCOUNT_FACEBOOK", nil) forState:UIControlStateNormal];
-        [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        view.titleLabel.font = [UIFont customContentLight:14];
+        [facebookButton setAlternativeStyle];
+        facebookButton.delegate = self;
+        CGRectSetX(facebookButton.title.frame, 50);
         
-        [_contentView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+//        [facebookButton setTitle:NSLocalizedString(@"EDIT_ACCOUNT_FACEBOOK", nil) forState:UIControlStateNormal];
+//        [facebookButton setTitle:NSLocalizedString(@"EDIT_ACCOUNT_FACEBOOK_DISCNNECT", nil) forState:UIControlStateSelected];
+//        [facebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        facebookButton.titleLabel.font = [UIFont customContentLight:14];
+//        
+//        [facebookButton addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
+//        
+        [_contentView addSubview:facebookButton];
+        height = CGRectGetMaxY(facebookButton.frame);
     }
     
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), height);
@@ -183,6 +186,13 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    if([[Flooz sharedInstance] facebook_token]){
+        facebookButton.on = YES;
+    }
+    else{
+        facebookButton.on = NO;
+    }
 }
 
 - (void)didValidTouch
@@ -198,7 +208,25 @@
 - (void)didFacebookTouch
 {
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] connectFacebook];
+    
+    if([[Flooz sharedInstance] facebook_token]){
+        facebookButton.on = NO;
+        [[Flooz sharedInstance] disconnectFacebook];
+    }
+    else{
+        facebookButton.on = YES;
+        [[Flooz sharedInstance] connectFacebook];
+    }
+}
+
+- (void)didSwitchViewSelected
+{
+    [self didFacebookTouch];
+}
+
+- (void)didSwitchViewUnselected
+{
+    [self didFacebookTouch];
 }
 
 - (void)didEditAvatarTouch

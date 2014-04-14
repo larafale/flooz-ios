@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "PasswordForgetViewController.h"
 
 #define MARGE 20.
 
@@ -79,6 +80,8 @@
         [passwordForget setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
         [passwordForget setTitle:NSLocalizedString(@"LOGIN_PASSWORD_FORGOT", nil) forState:UIControlStateNormal];
         
+        [passwordForget addTarget:self action:@selector(didPasswordForget) forControlEvents:UIControlEventTouchUpInside];
+        
         [self.view addSubview:username];
         [self.view addSubview:password];
         [self.view addSubview:passwordForget];
@@ -104,6 +107,11 @@
 {
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] connectFacebook];
+}
+
+- (void)didPasswordForget
+{
+    [[self navigationController] pushViewController:[PasswordForgetViewController new] animated:YES];
 }
 
 @end

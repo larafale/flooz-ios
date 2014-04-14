@@ -154,4 +154,8 @@
     amount.text = [FLHelper formatedAmount:[[[Flooz sharedInstance] currentUser] amount]];
 }
 
+- (void)presentMenuTransactionController
+{
+}
+
 @end

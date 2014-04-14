@@ -22,9 +22,12 @@
     UILabel *floozContianerView;
     UILabel *floozCountView;
     UILabel *floozTextView;
+    
+    UIButton *crossButton;
 }
 
 - (id)initWithViewControllers:(NSArray *)viewControllers;
 - (void)loadControllerWithIndex:(NSInteger)index;
+- (void)prepapreCrossButton;
 
 @end

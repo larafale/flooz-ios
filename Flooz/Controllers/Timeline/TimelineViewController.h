@@ -11,10 +11,10 @@
 #import "FLFilterView.h"
 #import "TransactionCellDelegate.h"
 #import "FLScrollViewIndicator.h"
+#import "FLContainerViewControllerDelegate.h"
 
 @interface TimelineViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, TransactionCellDelegate>{
     NSMutableArray *transactions;
-    UIButton *crossButton;
     
     NSMutableSet *rowsWithPaymentField;
     

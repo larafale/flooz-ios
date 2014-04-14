@@ -11,7 +11,6 @@
 @interface NotificationsViewController (){
     NSMutableDictionary *_notifications;
     NSArray *_sections;
-    NSArray *_rows;
 }
 
 @end
@@ -35,17 +34,6 @@
                       @"email",
                       @"phone"
                       ];
-        
-        _rows = @[
-                  @{ @"floozRequest": @"flooz_request" },
-                  @{ @"floozStatus": @"flooz_status" },
-                  @{ @"friendRequest": @"friend_request" },
-                  @{ @"friendJoined": @"friend_joined" },
-                  @{ @"event": @"event" },
-                  @{ @"comments": @"comments" },
-                  @{ @"likes": @"likes" },
-                  @{ @"lineNew": @"new_transaction" }
-                  ];
     }
     return self;
 }
@@ -163,9 +151,9 @@
 - (NSString *)notificationTitleAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *notification = [self notificationAtIndexPath:indexPath];
-    NSString *rowLocalKey = [notification objectForKey:@"rowLocalKey"];
+    NSString *rowKey = [notification objectForKey:@"rowKey"];
     
-    return NSLocalizedString([@"NOTIFICATIONS_" stringByAppendingString:[rowLocalKey uppercaseString]], nil);
+    return [[[[Flooz sharedInstance] currentUser] notificationsText] objectForKey:rowKey];
 }
 
 - (BOOL)notificationValueAtIndexPath:(NSIndexPath *)indexPath
@@ -189,24 +177,11 @@
 - (NSDictionary *)notificationAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *sectionKey = [_sections objectAtIndex:indexPath.section];
-    
-    int indexRowNotification = 0;
-    for(indexRowNotification = 0; indexRowNotification < [_rows count]; ++indexRowNotification){
-        NSString *notificationKey = [[[_notifications objectForKey:sectionKey] allKeys] objectAtIndex:indexPath.row];
-        NSString *rowKey = [[[_rows objectAtIndex:indexRowNotification] allKeys] firstObject];
-        
-        if([notificationKey isEqualToString:rowKey]){
-            break;
-        }
-    }
-    
-    NSString *rowKey = [[[_rows objectAtIndex:indexRowNotification] allKeys] firstObject];
-    NSString *rowLocalKey = [[[_rows objectAtIndex:indexRowNotification] allValues] firstObject];
-    
+    NSString *rowKey = [[[_notifications objectForKey:sectionKey] allKeys] objectAtIndex:indexPath.row];
+
     return @{
              @"sectionKey": sectionKey,
-             @"rowKey": rowKey,
-             @"rowLocalKey": rowLocalKey
+             @"rowKey": rowKey
              };
 }
 

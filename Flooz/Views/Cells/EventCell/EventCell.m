@@ -179,7 +179,8 @@
     content.text = [NSString stringWithFormat:NSLocalizedString(@"EVENT_START_BY", nil), [[_event creator] fullname]];
     amountView.event = _event;
     
-    dot.hidden = !_event.isNew;
+//    dot.hidden = !_event.isNew;
+    dot.hidden = YES;
     
     [text setWidthToFit];
     CGRectSetX(dot.frame, CGRectGetMaxX(text.frame) + 7);

@@ -20,6 +20,10 @@
 #import "SecureCodeViewController.h"
 #import "Analytics/Analytics.h"
 
+#import "TransactionViewController.h"
+#import "EventViewController.h"
+#import "FriendsViewController.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -56,6 +60,9 @@
                                              @"name": [[[Flooz sharedInstance] currentUser] fullname],
                                              @"phone": [[[Flooz sharedInstance] currentUser] phone],
                                               }];    
+    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     CompleteBlock completeBlock = ^{
         FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [EventsViewController new]]];
@@ -118,13 +125,13 @@
     });
 }
 
-- (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time;
+- (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;
 {
     if(!title || [title isBlank]){
         title = NSLocalizedString(@"GLOBAL_ERROR", nil);
     }
 
-    [alertView show:title content:content style:style time:time];
+    [alertView show:title content:content style:style time:time delay:delay];
 }
 
 - (void)loadSignupWithUser:(NSDictionary *)user
@@ -165,7 +172,7 @@
     // WARNING erreur code 2 http://stackoverflow.com/questions/20657780/ios-facebook-sdk-error-domain-com-facebook-sdk-code-2-and-code-7
     if(error){
         [[Flooz sharedInstance] hideLoadView];
-        [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError time:nil];
+        [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError time:nil delay:nil];
     }
     
     if (!error && state == FBSessionStateOpen){
@@ -210,6 +217,72 @@
         
     [FBAppCall handleDidBecomeActive];
     [[Flooz sharedInstance] startSocket];
+}
+
+#pragma mark - Notifications Push
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    _currentDeviceToken  = [NSString stringWithFormat:@"%@", deviceToken];
+    NSLog(@"Notification token: %@", _currentDeviceToken);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"Notification push error in registration: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"Notification push: %@", userInfo);
+    
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive) {
+        return;
+    }
+    
+    NSDictionary *resource = userInfo[@"resource"];
+    if([[Flooz sharedInstance] currentUser] && resource){
+        NSString *resourceId = resource[@"resourceId"];
+        
+        FLContainerViewController *currentController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [EventsViewController new]]];
+        
+        self.window.rootViewController = currentController;
+        
+        if([resource[@"type"] isEqualToString:@"line"]){
+            
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] transactionWithId:resourceId success:^(id result) {
+                FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:nil];
+                
+                currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                [currentController presentViewController:controller animated:NO completion:^{
+                    currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+                }];
+            }];
+            
+        }
+        else if([resource[@"type"] isEqualToString:@"event"]){
+            
+            [[Flooz sharedInstance] eventWithId:resourceId success:^(id result) {
+                FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+                EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
+                
+                currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                [currentController presentViewController:controller animated:NO completion:^{
+                    currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+                }];
+            }];
+            
+        }
+        else if([resource[@"type"] isEqualToString:@"friend"]){
+            
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
+            [currentController presentViewController:controller animated:YES completion:NULL];
+            
+        }
+    }
 }
 
 @end

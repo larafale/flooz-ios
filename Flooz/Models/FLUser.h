@@ -27,9 +27,12 @@
 @property NSNumber *transactionsCount;
 @property BOOL haveStatsPending;
 
+@property NSString *deviceToken;
+
 @property NSMutableDictionary *address;
 @property NSMutableDictionary *sepa;
 @property NSMutableDictionary *notifications;
+@property NSMutableDictionary *notificationsText;
 @property NSDictionary *checkDocuments;
 @property FLCreditCard *creditCard;
 

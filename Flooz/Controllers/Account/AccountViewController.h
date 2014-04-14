@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AccountViewController : UIViewController
+#import "FLContainerViewControllerDelegate.h"
+
+@interface AccountViewController : UIViewController<FLContainerViewControllerDelegate>
 
 @end

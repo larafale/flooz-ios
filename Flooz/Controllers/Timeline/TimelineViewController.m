@@ -38,14 +38,6 @@
     CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
     [self.view addSubview:shadow];
     
-    UIImage *buttonImage = [UIImage imageNamed:@"menu-new-transaction"];
-    crossButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - buttonImage.size.width) / 2., self.view.frame.size.height - buttonImage.size.height - 20, buttonImage.size.width, buttonImage.size.height)];
-    [crossButton setImage:buttonImage forState:UIControlStateNormal];
-    [self.view addSubview:crossButton];
-    
-    [crossButton addTarget:self action:@selector(presentMenuTransactionController) forControlEvents:UIControlEventTouchUpInside];
-    
-    
     {
         [_filterView addFilter:@"scope-public-large" target:self action:@selector(didFilterPublicTouch)];
         [_filterView addFilter:@"scope-friend-large" target:self action:@selector(didFilterFriendTouch)];
@@ -79,13 +71,13 @@
 {
     [super viewWillAppear:animated];
     
-    crossButton.frame = CGRectMake((self.view.frame.size.width - crossButton.imageView.image.size.width) / 2., self.view.frame.size.height - crossButton.imageView.image.size.height - 20, crossButton.imageView.image.size.width, crossButton.imageView.image.size.height);
+//    crossButton.frame = CGRectMake((self.view.frame.size.width - crossButton.imageView.image.size.width) / 2., self.view.frame.size.height - crossButton.imageView.image.size.height - 20, crossButton.imageView.image.size.width, crossButton.imageView.image.size.height);
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    crossButton.hidden = NO;
+//    crossButton.hidden = NO;
 }
 
 - (void)viewDidUnload
@@ -152,7 +144,7 @@
 
 - (void)presentMenuTransactionController
 {
-    crossButton.hidden = YES;
+//    crossButton.hidden = YES;
  
     UIViewController *controller = [MenuNewTransactionViewController new];
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;

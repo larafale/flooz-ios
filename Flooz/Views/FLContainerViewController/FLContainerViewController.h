@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "FLNavbarView.h"
 
+#import "FLContainerViewControllerDelegate.h"
+
 @interface FLContainerViewController : UIViewController{
     UIView *contentView;
 }

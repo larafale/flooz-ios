@@ -8,8 +8,6 @@
 
 #import "FLValidNavBar.h"
 
-#define STATUSBAR_HEIGHT 20.
-#define NAVBAR_HEIGHT 44.
 #define HEIGHT (STATUSBAR_HEIGHT + NAVBAR_HEIGHT)
 
 @implementation FLValidNavBar

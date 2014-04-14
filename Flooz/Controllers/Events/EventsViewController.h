@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "EventCellDelegate.h"
+#import "FLContainerViewControllerDelegate.h"
 
-@interface EventsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, EventCellDelegate>{
-    UIButton *crossButton;
-    
+@interface EventsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, EventCellDelegate>{    
     NSMutableArray *events;
     
     NSString *_nextPageUrl;

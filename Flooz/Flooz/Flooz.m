@@ -101,6 +101,11 @@
     [self requestPath:@"/login/basic" method:@"POST" params:user success:success failure:failure];
 }
 
+- (void)passwordLost:(NSString *)email success:(void (^)(id result))success
+{
+    [self requestPath:@"password/lost" method:@"POST" params:@{@"q": email} success:success failure:NULL];
+}
+
 - (void)updateCurrentUser
 {
     [self updateCurrentUserWithSuccess:nil];
@@ -115,6 +120,8 @@
 {
     id successBlock = ^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
+        _facebook_token = result[@"item"][@"fb"][@"token"];
+        
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
         
         if(success){
@@ -671,11 +678,14 @@
 - (void)updateCurrentUserAfterConnect:(id)result
 {    
     access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
-    _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
     [UICKeyChainStore setString:access_token forKey:@"login-token"];
+    
+    _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
+    _facebook_token = result[@"items"][1][@"fb"][@"token"];
     
     [appDelegate didConnected];
     [self startSocket];
+    [self checkDeviceToken];
 }
 
 - (BOOL)autologin
@@ -690,6 +700,7 @@
     [self updateCurrentUserWithSuccess:^{
         [appDelegate didConnected];
         [self startSocket];
+        [self checkDeviceToken];
     } failure:^(NSError *error) {
         [self logout];
     }];
@@ -709,41 +720,74 @@
      }];
 }
 
+- (void)disconnectFacebook
+{
+    _facebook_token = nil;
+    [self updateUser:@{@"fb": @{}} success:nil failure:nil];
+}
+
 - (void)didConnectFacebook
 {
     _facebook_token = [[[FBSession activeSession] accessTokenData] accessToken];
     
-    [self requestPath:@"/login/facebook" method:@"POST" params:@{@"token": _facebook_token} success:^(id result) {
-        [self updateCurrentUserAfterConnect:result];
-    } failure:^(NSError *error) {
+    if(_currentUser){
         
         [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,username,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
             [self hideLoadView];
             
             if (!error) {
                 NSDictionary *user = @{
-                                       @"email": [result objectForKey:@"email"],
-                                       @"lastName": [result objectForKey:@"last_name"],
-                                       @"firstName": [result objectForKey:@"first_name"],
-                                       @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", [result objectForKey:@"id"]],
-                                           @"fb": [@{
-                                               @"devices": [result objectForKey:@"devices"],
-                                               @"email": [result objectForKey:@"email"],
-                                               @"id": [result objectForKey:@"id"],
-                                               @"name": [result objectForKey:@"name"],
-                                               @"username": [result objectForKey:@"username"],
-                                               @"token": _facebook_token
-                                           } mutableCopy]
+                                       @"fb": @{
+                                                 @"devices": [result objectForKey:@"devices"],
+                                                 @"email": [result objectForKey:@"email"],
+                                                 @"id": [result objectForKey:@"id"],
+                                                 @"name": [result objectForKey:@"name"],
+                                                 @"username": [result objectForKey:@"username"],
+                                                 @"token": _facebook_token
+                                                 }
                                        };
-
-                [appDelegate loadSignupWithUser:user];
+                
+                [self updateUser:user success:nil failure:nil];
             } else {
                 NSLog(@"didConnectFacebook error");
                 // An error occurred, we need to handle the error
                 // See: https://developers.facebook.com/docs/ios/errors
             }
         }];
-    }];
+    }
+    else{
+        [self requestPath:@"/login/facebook" method:@"POST" params:@{@"token": _facebook_token} success:^(id result) {
+            [self updateCurrentUserAfterConnect:result];
+        } failure:^(NSError *error) {
+            
+            [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,username,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                [self hideLoadView];
+                
+                if (!error) {
+                    NSDictionary *user = @{
+                                           @"email": [result objectForKey:@"email"],
+                                           @"lastName": [result objectForKey:@"last_name"],
+                                           @"firstName": [result objectForKey:@"first_name"],
+                                           @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", [result objectForKey:@"id"]],
+                                           @"fb": [@{
+                                                     @"devices": [result objectForKey:@"devices"],
+                                                     @"email": [result objectForKey:@"email"],
+                                                     @"id": [result objectForKey:@"id"],
+                                                     @"name": [result objectForKey:@"name"],
+                                                     @"username": [result objectForKey:@"username"],
+                                                     @"token": _facebook_token
+                                                     } mutableCopy]
+                                           };
+                    
+                    [appDelegate loadSignupWithUser:user];
+                } else {
+                    NSLog(@"didConnectFacebook error");
+                    // An error occurred, we need to handle the error
+                    // See: https://developers.facebook.com/docs/ios/errors
+                }
+            }];
+        }];
+    }
 }
 
 - (void)facebokSearchFriends:(void (^)(id result))success
@@ -765,6 +809,7 @@
     NSString *title;
     NSString *content;
     NSNumber *time;
+    NSNumber *delay;
     
     if([responseObject respondsToSelector:@selector(objectForKey:)]){
         NSDictionary *error = [responseObject objectForKey:@"popup"];
@@ -778,6 +823,9 @@
             title = [error objectForKey:@"title"];
             content = [error objectForKey:@"text"];
             time = [error objectForKey:@"time"];
+            delay = [error objectForKey:@"delay"];
+            
+            content = [content stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];
             
             NSString *alertStyleText = [error objectForKey:@"type"];
             if([alertStyleText isEqualToString:@"green"]){
@@ -808,8 +856,19 @@
     }
     
     if(content && ![content isBlank]){
-        [appDelegate displayMessage:title content:content style:alertStyle time:time];
+        [appDelegate displayMessage:title content:content style:alertStyle time:time delay:delay];
     }
+}
+
+- (void)checkDeviceToken
+{
+    if(!_currentUser || !appDelegate.currentDeviceToken || [[_currentUser deviceToken] isEqualToString:appDelegate.currentDeviceToken]){
+        return;
+    }
+
+    [self updateUser:@{ @"settings": @{@"device": appDelegate.currentDeviceToken }} success:^(id result) {
+        _currentUser.deviceToken = appDelegate.currentDeviceToken;
+    } failure:nil];
 }
 
 #pragma mark - WebSocket
@@ -850,6 +909,7 @@
             else if([packet.name isEqualToString:@"feed"]){
                 NSNumber *count = packet.dataAsJSON[@"args"][0][@"total"];
                 
+                [UIApplication sharedApplication].applicationIconBadgeNumber = [count intValue];
                 [self setNotificationsCount:count];
                 
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"newNotifications" object:nil]];

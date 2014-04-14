@@ -206,6 +206,9 @@
     
     if(facebookButton.selected){
         [_dictionary setValue:[[Flooz sharedInstance] facebook_token] forKey:@"share"];
+        if(![[Flooz sharedInstance] facebook_token]){
+            [[Flooz sharedInstance] connectFacebook];
+        }
     }
     else{
         [_dictionary setValue:nil forKey:@"share"];

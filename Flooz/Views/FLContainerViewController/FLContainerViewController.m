@@ -23,14 +23,17 @@
 - (void)loadView
 {
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.view.backgroundColor = [UIColor customBackground];
     
     _navbarView = [[FLNavbarView alloc] initWithViewControllers:_viewControllers];
     [self.view addSubview:_navbarView];
     
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_navbarView.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - CGRectGetMaxY(_navbarView.frame))];
     [self.view addSubview:contentView];
+    contentView.backgroundColor = [UIColor customBackground];
     
     [self prepareViewControllers];
+    [_navbarView prepapreCrossButton];
 }
 
 - (void)prepareViewControllers
@@ -42,6 +45,7 @@
         controller.view.frame = CGRectMake(controller.view.frame.origin.x, 0, CGRectGetWidth(contentView.frame), CGRectGetHeight(contentView.frame));
         
         [contentView addSubview:controller.view];
+        controller.view.backgroundColor = [UIColor customBackground];
         
         [controller didMoveToParentViewController:self];
         index++;

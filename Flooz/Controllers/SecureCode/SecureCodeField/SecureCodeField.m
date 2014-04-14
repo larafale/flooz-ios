@@ -81,9 +81,7 @@
 
 - (void)keyboardBackwardTouch
 {
-    UILabel *label = [[self subviews] objectAtIndex:currentLabel];
-    
-    if([label.text isBlank]){
+    if([dotViews[currentLabel] isHidden]){
         if(currentLabel > 0){
             currentLabel--;
             [self keyboardBackwardTouch];

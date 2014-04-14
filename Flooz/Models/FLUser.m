@@ -20,7 +20,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json
-{        
+{    
     if([json objectForKey:@"userId"]){
         _userId = [json objectForKey:@"userId"];
         
@@ -50,7 +50,9 @@
     if([_avatarURL isEqualToString:@"/img/nopic.png"]){
         _avatarURL = nil;
     }
-        
+    
+    _deviceToken = json[@"settings"][@"device"];
+    
     _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
     _eventsCount = [[[json objectForKey:@"stats"] objectForKey:@"event"] objectForKey:@"created"];
     _transactionsCount = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"total"];
@@ -87,6 +89,19 @@
             for(NSString *key in notificationsJSON){
                 NSDictionary *dictionary = [notificationsJSON objectForKey:key];
                 [_notifications setObject:[dictionary mutableCopy] forKey:key];
+            }
+        }
+    }
+    
+    {
+        _notificationsText = [NSMutableDictionary new];
+        
+        if([json objectForKey:@"notifications"]){
+            NSDictionary *notificationsJSON = [json objectForKey:@"notificationsText"];
+            
+            for(NSString *key in notificationsJSON){
+                NSString *text = [notificationsJSON objectForKey:key];
+                [_notificationsText setObject:text forKey:key];
             }
         }
     }

@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EditAccountViewController : UIViewController<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+#import "FLSwitchViewDelegate.h"
+
+@interface EditAccountViewController : UIViewController<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, FLSwitchViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentView;
 

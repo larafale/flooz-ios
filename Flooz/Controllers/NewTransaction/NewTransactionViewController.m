@@ -192,6 +192,12 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
+}
+
 #pragma mark -
 
 - (void)didAmountFixSelected
@@ -292,6 +298,8 @@
                     TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
                     [self dismissViewControllerAnimated:YES completion:^{
                         [[timelineController filterView] selectFilter:2];
+                        FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
+                        [rootController.navbarView loadControllerWithIndex:1];
                     }];
                 } failure:NULL];
             };
@@ -354,6 +362,8 @@
 {
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
     
     transactionBar.hidden = YES;
     UIView *firstResponder = [self.view findFirstResponder];

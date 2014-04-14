@@ -11,11 +11,16 @@
 #import "FLSwitchViewDelegate.h"
 
 @interface FLSwitchView : UIView{
-    UILabel *_title;
+    UISwitch *switchView;
+    BOOL alternativeStyle;
 }
+
+@property (strong, nonatomic) UILabel *title;
 
 @property (weak) id<FLSwitchViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
+- (void)setAlternativeStyle;
+- (void)setOn:(BOOL)on;
 
 @end

@@ -27,8 +27,6 @@
 
 #import "UIView+FindFirstResponder.h"
 
-#define STATUSBAR_HEIGHT 20.
-
 @interface EventViewController (){
     FLEvent *_event;
     NSIndexPath *_indexPath;
@@ -318,7 +316,9 @@
     }
     [self buildView];
     
-    [_delegateController updateEventAtIndex:_indexPath event:_event];
+    if(_indexPath){
+        [_delegateController updateEventAtIndex:_indexPath event:_event];
+    }
 }
 
 - (void)didUpdateEventWithAction:(EventAction)action
