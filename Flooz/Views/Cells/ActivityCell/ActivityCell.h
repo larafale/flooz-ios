@@ -16,6 +16,8 @@
     
     UIView *horizontalSeparator;
     UIView *verticalSeparator;
+    
+    UILabel *dateView;
 }
 
 + (CGFloat)getHeightForActivity:(FLActivity *)activity;

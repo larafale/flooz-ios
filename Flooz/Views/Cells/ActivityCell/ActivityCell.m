@@ -14,6 +14,7 @@
 #define MARGE_RIGHT 20.
 #define CELL_WIDTH 290.
 #define CONTENT_X 80.
+#define DATE_VIEW_HEIGHT 15.
 
 @implementation ActivityCell
 
@@ -37,6 +38,9 @@
                                         context:nil];
     height += rect.size.height;
     
+    // Date
+    height += DATE_VIEW_HEIGHT;
+    
     height += MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM;
     
     return MAX(MIN_HEIGHT, height);
@@ -52,11 +56,12 @@
 - (void)createViews{
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor customBackground];
-
+    
     [self createSeparatorViews];
     [self createReadView];
     [self createAvatarView];
     [self createContentView];
+    [self createDateView];
 }
 
 - (void)createReadView
@@ -67,14 +72,16 @@
     [self.contentView addSubview:view];
 }
 
-- (void)createAvatarView{
+- (void)createAvatarView
+{
     userView = [[FLUserView alloc] initWithFrame:CGRectMake(MARGE_LEFT + 5 + MARGE_LEFT, MARGE_TOP_BOTTOM, 30, 30)];
     [self.contentView addSubview:userView];
     
     CGRectSetX(horizontalSeparator.frame, userView.center.x);
 }
 
-- (void)createContentView{
+- (void)createContentView
+{
     contentView = [[UILabel alloc] initWithFrame:CGRectMake(CONTENT_X, 0, CELL_WIDTH - CONTENT_X - MARGE_RIGHT, 0)];
     
     contentView.textColor = [UIColor whiteColor];
@@ -101,6 +108,17 @@
     [self.contentView addSubview:verticalSeparator];
 }
 
+- (void)createDateView
+{
+    dateView = [[UILabel alloc] initWithFrame:CGRectMakeSize(0, DATE_VIEW_HEIGHT)];
+
+    dateView.textAlignment = NSTextAlignmentRight;
+    dateView.textColor = [UIColor whiteColor];
+    dateView.font = [UIFont customContentLight:11];
+    
+    [self.contentView addSubview:dateView];
+}
+
 #pragma mark - Prepare Views
 
 - (void)prepareViews{
@@ -109,6 +127,7 @@
     [self prepareContentView]; // Defini la hauteur du block
     [self prepareAvatarView];
     [self prepareReadView];
+    [self prepareDateView];
 
     CGRectSetHeight(horizontalSeparator.frame, height);
     CGRectSetY(verticalSeparator.frame, height - 1);
@@ -133,12 +152,21 @@
     
     [contentView setHeightToFit];
     
-    height = CGRectGetHeight(contentView.frame) + MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM;
+    height = CGRectGetHeight(contentView.frame) + MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM + DATE_VIEW_HEIGHT;
     if(height < MIN_HEIGHT){
         height = MIN_HEIGHT;
     }
     
     contentView.center = CGPointMake(contentView.center.x, height / 2.);
+}
+
+- (void)prepareDateView
+{
+    dateView.text = [_activity when];
+    [dateView setWidthToFit];
+    
+    CGRectSetX(dateView.frame, CELL_WIDTH - MARGE_RIGHT - CGRectGetWidth(dateView.frame));
+    CGRectSetY(dateView.frame, height - DATE_VIEW_HEIGHT - 2);
 }
 
 @end

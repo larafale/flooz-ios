@@ -18,6 +18,9 @@
 @property NSString *transactionId;
 @property BOOL isFriend;
 
+@property NSDate *date;
+@property NSString *when;
+
 - (id)initWithJSON:(NSDictionary *)json;
 
 @end

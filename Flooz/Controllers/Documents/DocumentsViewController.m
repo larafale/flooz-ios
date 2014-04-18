@@ -35,6 +35,14 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // Evite barre blanche pendant animation
+    self.view.backgroundColor = [UIColor customBackground];
+}
+
 #pragma mark - TableView
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
