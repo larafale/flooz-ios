@@ -80,16 +80,23 @@
         return;
     }
     
-    CompleteBlock completeBlock = ^{
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] cashout:[dictionary objectForKey:@"amount"] success:^(id result) {
-            [self dismissViewControllerAnimated:YES completion:NULL];
-        } failure:NULL];
-    };
+    NSNumber *amount = [dictionary objectForKey:@"amount"];
     
-    SecureCodeViewController *controller = [SecureCodeViewController new];
-    controller.completeBlock = completeBlock;
-    [[self navigationController] pushViewController:controller animated:YES];
+//    [[Flooz sharedInstance] showLoadView];
+//    [[Flooz sharedInstance] cashoutValidate:amount success:^(id result) {
+        CompleteBlock completeBlock = ^{
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] cashout:amount success:^(id result) {
+                [self dismissViewControllerAnimated:YES completion:NULL];
+            } failure:NULL];
+        };
+        
+        SecureCodeViewController *controller = [SecureCodeViewController new];
+        controller.completeBlock = completeBlock;
+        [[self navigationController] pushViewController:controller animated:YES];
+//    } failure:^(NSError *error) {
+    
+//    }];
 }
 
 @end

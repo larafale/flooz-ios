@@ -140,6 +140,8 @@
 "SETTINGS_PASSWORD" = "MOT DE PASSE";
 "SETTINGS_LOGOUT" = "DECONNEXION";
 
+"EDIT_ACCOUNT_SEND_SMS" = "Envoyer SMS de validation";
+"EDIT_ACCOUNT_SEND_MAIL" = "Envoyer Mail de validation";
 "EDIT_ACCOUNT_PERSONAL_INFO" = "Adresse Postale";
 "EDIT_ACCOUNT_SOCIAL_INFO" = "Réseaux sociaux";
 "EDIT_ACCOUNT_FACEBOOK" = "Facebook";
@@ -190,7 +192,7 @@
 
 "EVENT_START_BY" = "Crée par %@";
 
-"EVENT_INVITE_PARTICIPANT" = "TOUS LES PARTICIPANTS";
+"EVENT_INVITE_PARTICIPANT" = "Inviter des amis";
 "EVENT_PARTICIPANTS_INVITED" = "%.2d AUTRES PARTICIPANTS";
 "EVENT_PARTICIPANT_INVITE" = "Inviter des amis";
 
@@ -206,6 +208,7 @@
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_WAITING" = "Invité";
 
+"SECORE_CODE_TEXT_FIRST_TIME" = "Le code de sécurité permet d'éviter blablabla.";
 "SECORE_CODE_TEXT_CURRENT" = "Entrez votre code :";
 "SECORE_CODE_TEXT_OLD" = "Entrez votre ancien code :";
 "SECORE_CODE_TEXT_NEW" = "Entrez votre nouveau code :";

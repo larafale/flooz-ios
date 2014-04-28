@@ -68,6 +68,7 @@
         _address = [NSMutableDictionary new];
         
         if([json objectForKey:@"settings"] && [[json objectForKey:@"settings"] objectForKey:@"address"]){
+            NSLog(@"%@", json);
             _address = [[[json objectForKey:@"settings"] objectForKey:@"address"] mutableCopy];
         }
     }

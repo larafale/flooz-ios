@@ -196,6 +196,45 @@
 {
     [super viewDidAppear:animated];
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
+    
+    if([transaction objectForKey:@"toTitle"]){
+        [UIView animateWithDuration:.15
+                              delay:0
+                            options:UIViewAnimationOptionAllowUserInteraction
+                         animations:^{
+                             _navBar.validView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                         }
+                         completion:^(BOOL finished) {
+                             [UIView animateWithDuration:.15
+                                                   delay:0
+                                                 options:UIViewAnimationOptionAllowUserInteraction
+                                              animations:^{
+                                                  _navBar.validView.transform = CGAffineTransformIdentity;
+                                              }
+                                              completion:^(BOOL finished) {
+                                                  [UIView animateWithDuration:.15
+                                                                        delay:0
+                                                                      options:UIViewAnimationOptionAllowUserInteraction
+                                                                   animations:^{
+                                                                       _navBar.validView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                                                                   }
+                                                                   completion:^(BOOL finished) {
+                                                                       [UIView animateWithDuration:.15
+                                                                                             delay:0
+                                                                                           options:UIViewAnimationOptionAllowUserInteraction
+                                                                                        animations:^{
+                                                                                            _navBar.validView.transform = CGAffineTransformIdentity;
+                                                                                        }
+                                                                                        completion:^(BOOL finished) {
+                                                                                            [content becomeFirstResponder];
+                                                                                        }];
+                                                                   }];
+                                              }];
+                         }];
+    }
+    else if(!isEvent){
+        [amountInput becomeFirstResponder];
+    }
 }
 
 #pragma mark -

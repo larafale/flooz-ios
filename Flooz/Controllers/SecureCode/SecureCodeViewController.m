@@ -15,6 +15,7 @@
 
 @interface SecureCodeViewController (){
     UILabel *textCode;
+    UILabel *firstTimeText;
     SecureCodeField *secureCodeField;
     FLKeyboardView *keyboardView;
     UIButton *passwordForget;
@@ -79,6 +80,17 @@
         [passwordForget addTarget:self action:@selector(didPasswordForgetTouch) forControlEvents:UIControlEventTouchUpInside];
         
         [self.view addSubview:passwordForget];
+    }
+    
+    {
+        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 200, 280, 40)];
+        
+        firstTimeText.textColor = [UIColor customBlueLight];
+        firstTimeText.font = [UIFont customContentRegular:14];
+        firstTimeText.numberOfLines = 0;
+        firstTimeText.textAlignment = NSTextAlignmentCenter;
+        firstTimeText.text = NSLocalizedString(@"SECORE_CODE_TEXT_FIRST_TIME", nil);
+        [self.view addSubview:firstTimeText];
     }
     
     {
@@ -241,6 +253,14 @@
         passwordField.hidden = YES;
         
         self.navigationItem.rightBarButtonItem = nil;
+    }
+    
+    if(currentSecureMode == SecureCodeModeChangeNew){
+        firstTimeText.hidden = NO;
+        passwordForget.hidden = YES;
+    }
+    else{
+        firstTimeText.hidden = YES;
     }
     
     if(!currentSecureCode){

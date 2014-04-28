@@ -16,6 +16,9 @@
     UIImageView *icon;
     UITextField *_textfield;
     UITextField *_textfield2;
+    
+    id _target;
+    SEL _action;
 }
 
 - (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position;
@@ -27,5 +30,7 @@
 - (id)initWithIcon:(NSString *)iconName placeholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey frame:(CGRect)frame placeholder2:(NSString *)placeholder2 key2:(NSString *)dictionaryKey2;
 
 - (void)seTsecureTextEntry:(BOOL)secureTextEntry;
+
+- (void)addForNextClickTarget:(id)target action:(SEL)action;
 
 @end

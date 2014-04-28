@@ -15,6 +15,12 @@
 @interface SignupViewController (){
     NSMutableDictionary *_user;
     UIButton *registerFacebook;
+    
+    FLTextFieldIcon *name;
+    FLTextFieldIcon *email;
+    FLTextFieldIcon *username;
+    FLTextFieldIcon *phone;
+    FLTextFieldIcon *password;
 }
 
 @end
@@ -50,15 +56,19 @@
     self.view.backgroundColor = [UIColor customBackground];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(didSignupTouch)];
     
-    {
-        FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) / 2.) - (97. / 2.), 20, 97, 96.5)];
+    
+    CGFloat offset = 0;
+    
+    if([_user objectForKey:@"avatarURL"]){
+        FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) / 2.) - (50 / 2.), 10, 50, 50)];
                 
         [view setImageFromURL:[_user objectForKey:@"avatarURL"]];
         [_contentView addSubview:view];
+        
+        offset = CGRectGetMaxY(view.frame);
     }
-    
-    {
-        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(MARGE, 137, SCREEN_WIDTH - (2 * MARGE), 45)];
+    else{
+        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(MARGE, 20, SCREEN_WIDTH - (2 * MARGE), 45)];
         [registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
         
         [registerFacebook setTitle:NSLocalizedString(@"SIGNUP_FACEBOOK", nil) forState:UIControlStateNormal];
@@ -70,30 +80,35 @@
         [registerFacebook addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
         
         [_contentView addSubview:registerFacebook];
+        
+        offset = CGRectGetMaxY(registerFacebook.frame);
     }
     
     {
-        CGFloat offset = 190;
-        
         if([_user objectForKey:@"fb"]){
             registerFacebook.hidden = YES;
-            offset = 137;
         }
         
-        FLTextFieldIcon *name = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" position:CGPointMake(MARGE, offset) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
+        name = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" position:CGPointMake(MARGE, offset + 10) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
         offset = CGRectGetMaxY(name.frame);
+        [name addForNextClickTarget:self action:@selector(didNameEndEditing)];
         
-        FLTextFieldIcon *email = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:_user key:@"email" position:CGPointMake(MARGE, offset)];
+        email = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:_user key:@"email" position:CGPointMake(MARGE, offset)];
         offset = CGRectGetMaxY(email.frame);
+        [email addForNextClickTarget:self action:@selector(didEmailEndEditing)];
         
-        FLTextFieldIcon *username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:_user key:@"nick" position:CGPointMake(MARGE, offset)];
+        username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:_user key:@"nick" position:CGPointMake(MARGE, offset)];
         offset = CGRectGetMaxY(username.frame);
+        [username addForNextClickTarget:self action:@selector(didUsernameEndEditing)];
         
-        FLTextFieldIcon *phone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" position:CGPointMake(MARGE, offset)];
-        offset = CGRectGetMaxY(phone.frame);
-        
-        FLTextFieldIcon *password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:_user key:@"password" position:CGPointMake(MARGE, offset)];
+        password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:_user key:@"password" position:CGPointMake(MARGE, offset)];
+        offset = CGRectGetMaxY(password.frame);
         [password seTsecureTextEntry:YES];
+        [password addForNextClickTarget:self action:@selector(didPasswordEndEditing)];
+        
+        phone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" position:CGPointMake(MARGE, offset)];
+        offset = CGRectGetMaxY(phone.frame);
+        [phone addForNextClickTarget:self action:@selector(didPhoneEndEditing)];
         
  
         [_contentView addSubview:username];
@@ -111,6 +126,18 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if([_user objectForKey:@"avatarURL"]){
+        [username becomeFirstResponder];
+    }
+    else{
+        [name becomeFirstResponder];
+    }
 }
 
 - (void)didSignupTouch
@@ -146,12 +173,74 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
 
+    keyboardHeight += 50;
+    
     _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
 }
 
 - (void)keyboardWillDisappear
 {
     _contentView.contentInset = UIEdgeInsetsZero;
+}
+
+#pragma mark - Field callback
+
+- (void)didNameEndEditing
+{
+    [email becomeFirstResponder];
+}
+
+- (void)didEmailEndEditing
+{
+    [username becomeFirstResponder];
+}
+
+- (void)didUsernameEndEditing
+{
+    [password becomeFirstResponder];
+}
+
+- (void)didPasswordEndEditing
+{
+    [phone becomeFirstResponder];
+}
+
+- (void)didPhoneEndEditing
+{
+    UIView *validView = [[[self.navigationItem.rightBarButtonItem customView] subviews] firstObject];
+    CGFloat duration = .25;
+    
+    [UIView animateWithDuration:duration
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         validView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:duration
+                                               delay:0
+                                             options:UIViewAnimationOptionAllowUserInteraction
+                                          animations:^{
+                                              validView.transform = CGAffineTransformIdentity;
+                                          }
+                                          completion:^(BOOL finished) {
+                                              [UIView animateWithDuration:duration
+                                                                    delay:0
+                                                                  options:UIViewAnimationOptionAllowUserInteraction
+                                                               animations:^{
+                                                                   validView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                                                               }
+                                                               completion:^(BOOL finished) {
+                                                                   [UIView animateWithDuration:duration
+                                                                                         delay:0
+                                                                                       options:UIViewAnimationOptionAllowUserInteraction
+                                                                                    animations:^{
+                                                                                        validView.transform = CGAffineTransformIdentity;
+                                                                                    }
+                                                                                    completion:nil];
+                                                               }];
+                                          }];
+                     }];
 }
 
 @end

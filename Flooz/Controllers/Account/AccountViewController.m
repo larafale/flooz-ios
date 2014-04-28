@@ -23,6 +23,11 @@
     
     FLAccountUserView *userView;
     UILabel *amount;
+    
+    FLAccountButton *friends;
+    FLAccountButton *cashout;
+    FLAccountButton *settings;
+    FLAccountButton *informations;
 }
 
 @end
@@ -72,13 +77,13 @@
     }
     
     {
-        FLAccountButton *friends = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 246) title:NSLocalizedString(@"ACCOUNT_BUTTON_FRIENDS", nil) imageNamed:@"account-button-friends"];
+        friends = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 246) title:NSLocalizedString(@"ACCOUNT_BUTTON_FRIENDS", nil) imageNamed:@"account-button-friends"];
         
-        FLAccountButton *cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(friends.frame) - 1, friends.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-cashout"];
+        cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(friends.frame) - 1, friends.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-cashout"];
         
-        FLAccountButton *settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(friends.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
+        settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(friends.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
         
-        FLAccountButton *informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame) - 1, CGRectGetMaxY(friends.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
+        informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame) - 1, CGRectGetMaxY(friends.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
         
         [friends addTarget:self action:@selector(presentFriendsController) forControlEvents:UIControlEventTouchUpInside];
         [cashout addTarget:self action:@selector(presentCashOutController) forControlEvents:UIControlEventTouchUpInside];
@@ -125,8 +130,41 @@
 
 - (void)presentCashOutController
 {
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[CashOutViewController new]];
-    [self presentViewController:controller animated:YES completion:NULL];
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] cashoutValidate:^(id result) {
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[CashOutViewController new]];
+        [self presentViewController:controller animated:YES completion:NULL];
+    } failure:^(NSError *error) {
+        // animation
+        
+        CGFloat gradientWidth = 20;
+        CAGradientLayer *gradientMask = [CAGradientLayer layer];
+        gradientMask.frame = settings.bounds;
+        CGFloat gradientSize = gradientWidth / settings.frame.size.width;
+        UIColor *gradient = [UIColor colorWithWhite:1.0f alpha:.3];
+        UIView *superview = settings.superview;
+        NSArray *startLocations = @[[NSNumber numberWithFloat:0.0f], [NSNumber numberWithFloat:(gradientSize / 2)], [NSNumber numberWithFloat:gradientSize]];
+        NSArray *endLocations = @[[NSNumber numberWithFloat:(1.0f - gradientSize)], [NSNumber numberWithFloat:(1.0f -(gradientSize / 2))], [NSNumber numberWithFloat:1.0f]];
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"locations"];
+        
+        gradientMask.colors = @[(id)gradient.CGColor, (id)[UIColor whiteColor].CGColor, (id)gradient.CGColor];
+        gradientMask.locations = startLocations;
+        gradientMask.startPoint = CGPointMake(0 - (gradientSize * 2), .5);
+        gradientMask.endPoint = CGPointMake(1 + gradientSize, .5);
+        
+        [settings removeFromSuperview];
+        settings.layer.mask = gradientMask;
+        [superview addSubview:settings];
+        
+        animation.fromValue = startLocations;
+        animation.toValue = endLocations;
+        animation.repeatCount = 3;
+        animation.duration  = 2.0f;
+        
+        [gradientMask addAnimation:animation forKey:@"animateGradient"];
+        
+        
+    }];
 }
 
 - (void)presentSettingsController

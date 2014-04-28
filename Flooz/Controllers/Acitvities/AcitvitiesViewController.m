@@ -96,15 +96,32 @@
 #pragma mark - TableView
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if(_nextPageUrl && ![_nextPageUrl isBlank]){
+        return [activities count] + 1;
+    }
+    
     return [activities count];
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row >= [activities count]){
+        return [LoadingCell getHeight];
+    }
+    
     FLActivity *activity = [activities objectAtIndex:indexPath.row];
     return [ActivityCell getHeightForActivity:activity];
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == [activities count]){
+        static LoadingCell *footerView;
+        if(!footerView){
+            footerView = [LoadingCell new];
+        }
+        footerView.hidden = refreshControl.isRefreshing;
+        return footerView;
+    }
+    
     static NSString *cellIdentifier = @"ActivityCell";
     ActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     

@@ -31,7 +31,12 @@
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;
         
-        [_dictionary setValue:[NSNumber numberWithFloat:100.] forKey:_dictionaryKey];
+        isEmpty = NO;
+        
+        if(![_dictionary objectForKey:_dictionaryKey]){
+            isEmpty = YES;
+            [_dictionary setValue:[NSNumber numberWithFloat:100.] forKey:_dictionaryKey];
+        }
         
         _delegate = delegate;
         [self commontInit];
@@ -64,7 +69,7 @@
     point.text = @".";
     point.textAlignment = NSTextAlignmentCenter;
 
-    amount.text = @"100";
+    amount.text = [NSString stringWithFormat:@"%ld", (long)[[_dictionary objectForKey:_dictionaryKey] integerValue]];
     amount.textAlignment = NSTextAlignmentCenter;
     amount.delegate = self;
     FLKeyboardView *inputView = [FLKeyboardView new];
@@ -160,7 +165,7 @@
     offset = size.width;
     
     CGRectSetWidth(amount.frame, CGRectGetWidth(amount.frame) + offset + ([amount isEditing] ? 0 : 0));
-    CGRectSetX(point.frame, CGRectGetMaxX(amount.frame));
+    CGRectSetX(point.frame, CGRectGetMaxX(amount.frame) + 4);
     CGRectSetX(amount2.frame, CGRectGetMaxX(point.frame) + 5);
     CGRectSetWidth(amount2.frame, CGRectGetWidth(amount2.frame) + offset  + ([amount2 isEditing] ? 0 : 0));
 }
@@ -187,7 +192,14 @@
     if(r.location == NSNotFound){
         return NO;
     }
- 
+    
+    // test 1ere fois
+    if(textField == amount && isEmpty){
+        isEmpty = NO;
+        textField.text = @"";
+        return YES;
+    }
+    
     // Taille limite
     if(textField == amount && amount.text.length == 3){
         return NO;
@@ -207,9 +219,9 @@
 {
     [textField setBackgroundColor:[UIColor customBlue]];
     
-    if(textField == amount){
-        textField.text = @"";
-    }
+//    if(textField == amount){
+//        textField.text = @"";
+//    }
     
     [self resizeText];
 }
@@ -264,6 +276,11 @@
 - (void)hideSeparatorTop
 {
     separatorTop.hidden = YES;
+}
+
+- (BOOL)becomeFirstResponder
+{
+    return [amount becomeFirstResponder];
 }
 
 @end

@@ -44,6 +44,9 @@
     
     // Evite barre blanche pendant animation
     self.view.backgroundColor = [UIColor customBackground];
+    
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    [self setExtendedLayoutIncludesOpaqueBars:YES];
 }
 
 #pragma mark - TableView

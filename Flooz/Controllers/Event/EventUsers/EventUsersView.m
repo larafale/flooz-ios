@@ -61,7 +61,7 @@
     {
         FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMakeSize(88, 88)];
 
-        avatar.center = CGRectGetCenter(view.frame);
+        avatar.center = CGRectGetFrameCenter(view.frame);
         avatar.frame = CGRectOffset(avatar.frame, 0, - 20);
         
         [view addSubview:avatar];
@@ -204,6 +204,35 @@
         username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
         
         [view addSubview:contentView];
+        
+        
+        {
+            CGFloat gradientWidth = 20;
+            CAGradientLayer *gradientMask = [CAGradientLayer layer];
+            gradientMask.frame = username.bounds;
+            CGFloat gradientSize = gradientWidth / username.frame.size.width;
+            UIColor *gradient = [UIColor colorWithWhite:1.0f alpha:.3];
+            UIView *superview = username.superview;
+            NSArray *startLocations = @[[NSNumber numberWithFloat:0.0f], [NSNumber numberWithFloat:(gradientSize / 2)], [NSNumber numberWithFloat:gradientSize]];
+            NSArray *endLocations = @[[NSNumber numberWithFloat:(1.0f - gradientSize)], [NSNumber numberWithFloat:(1.0f -(gradientSize / 2))], [NSNumber numberWithFloat:1.0f]];
+            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"locations"];
+            
+            gradientMask.colors = @[(id)gradient.CGColor, (id)[UIColor whiteColor].CGColor, (id)gradient.CGColor];
+            gradientMask.locations = startLocations;
+            gradientMask.startPoint = CGPointMake(0 - (gradientSize * 2), .5);
+            gradientMask.endPoint = CGPointMake(1 + gradientSize, .5);
+            
+            [username removeFromSuperview];
+            username.layer.mask = gradientMask;
+            [superview addSubview:username];
+            
+            animation.fromValue = startLocations;
+            animation.toValue = endLocations;
+            animation.repeatCount = HUGE_VALF;
+            animation.duration  = 2.0f;
+            
+            [gradientMask addAnimation:animation forKey:@"animateGradient"];
+        }
     }
 }
 

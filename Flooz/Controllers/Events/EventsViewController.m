@@ -49,15 +49,32 @@
 #pragma mark - TableView
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if(_nextPageUrl && ![_nextPageUrl isBlank]){
+        return [events count] + 1;
+    }
+    
     return [events count];
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row >= [events count]){
+        return [LoadingCell getHeight];
+    }
+    
     FLEvent *event = [events objectAtIndex:indexPath.row];
     return [EventCell getHeightForEvent:event];
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == [events count]){
+        static LoadingCell *footerView;
+        if(!footerView){
+            footerView = [LoadingCell new];
+        }
+        footerView.hidden = refreshControl.isRefreshing;
+        return footerView;
+    }
+    
     static NSString *cellIdentifier = @"EventCell";
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     

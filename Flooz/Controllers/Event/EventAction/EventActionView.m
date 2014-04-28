@@ -55,10 +55,10 @@
     
     [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [view addTarget:self action:@selector(didAcceptTouch) forControlEvents:UIControlEventTouchUpInside];
+    [view addTarget:self action:@selector(didAcceptTouch:) forControlEvents:UIControlEventTouchUpInside];
     
     {
-        UIImageView *arrow = [UIImageView imageNamed:@"arrow-white-right"];
+        arrow = [UIImageView imageNamed:@"arrow-white-right"];
         CGRectSetXY(arrow.frame, CGRectGetWidth(self.frame) - 20, (CGRectGetHeight(view.frame) - arrow.image.size.height) / 2.);
         [view addSubview:arrow];
     }
@@ -133,9 +133,23 @@
 
 #pragma mark -
 
-- (void)didAcceptTouch{
+- (void)didAcceptTouch:(UIButton *)button
+{
     if([_event canParticipate]){
-        [_delegate showPaymentField];
+        if(button.selected){
+            button.selected = NO;
+            [UIView animateWithDuration:.5 animations:^{
+                [_delegate hidePaymentField];
+                arrow.transform = CGAffineTransformMakeRotation(0);
+            }];
+        }
+        else{
+            button.selected = YES;
+            [UIView animateWithDuration:.5 animations:^{
+                [_delegate showPaymentField];
+                arrow.transform = CGAffineTransformMakeRotation(M_PI_2);
+            }];
+        }
     }
     else if([_event canAcceptOrDeclineOffer]){
         [_delegate didUpdateEventWithAction:EventActionAcceptOffer];
@@ -151,6 +165,19 @@
     }
     else if([_event canCancelOffer]){
         [_delegate didUpdateEventWithAction:EventActionCancelOffer];
+    }
+}
+
+- (void)setSelected:(BOOL)selected
+{
+    UIButton *acceptView = [[self subviews] objectAtIndex:1];
+    acceptView.selected = selected;
+    
+    if(selected){
+        arrow.transform = CGAffineTransformMakeRotation(M_PI_2);
+    }
+    else{
+        arrow.transform = CGAffineTransformMakeRotation(0);
     }
 }
 

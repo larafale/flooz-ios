@@ -70,7 +70,7 @@
     {
         FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMakeSize(88, 88)];
         
-        avatar.center = CGRectGetCenter(view.frame);
+        avatar.center = CGRectGetFrameCenter(view.frame);
         avatar.frame = CGRectOffset(avatar.frame, 0, - 20);
                 
         [view addSubview:avatar];
@@ -83,6 +83,16 @@
         username.textAlignment = NSTextAlignmentCenter;
         username.textColor = [UIColor whiteColor];
         username.font = [UIFont customTitleExtraLight:12];
+        
+        [view addSubview:username];
+    }
+    
+    {
+        UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0, 124, CGRectGetWidth(view.frame), 30)];
+        
+        username.font = [UIFont customContentRegular:10];
+        username.textAlignment = NSTextAlignmentCenter;
+        username.textColor = [UIColor customBlueLight];
         
         [view addSubview:username];
     }
@@ -109,20 +119,24 @@
 {
     UIView *view = [[self subviews] objectAtIndex:0];
     FLUserView *avatar = [[view subviews] objectAtIndex:0];
-    UILabel *username = [[view subviews] objectAtIndex:1];
+    UILabel *fullname = [[view subviews] objectAtIndex:1];
+    UILabel *username = [[view subviews] objectAtIndex:2];
 
     [avatar setImageFromUser:[_transaction from]];
-    username.text = [[[_transaction from] fullname] uppercaseString];
+    fullname.text = [[[_transaction from] fullname] uppercaseString];
+    username.text = [@"@" stringByAppendingString:[[_transaction from] username]];
 }
 
 - (void)prepareRightUserView
 {
     UIView *view = [[self subviews] objectAtIndex:1];
     FLUserView *avatar = [[view subviews] objectAtIndex:0];
-    UILabel *username = [[view subviews] objectAtIndex:1];
+    UILabel *fullname = [[view subviews] objectAtIndex:1];
+    UILabel *username = [[view subviews] objectAtIndex:2];
     
     [avatar setImageFromUser:[_transaction to]];
-    username.text = [[[_transaction to] fullname] uppercaseString];
+    fullname.text = [[[_transaction to] fullname] uppercaseString];
+    username.text = [@"@" stringByAppendingString:[[_transaction to] username]];
 }
 
 @end

@@ -72,6 +72,8 @@
 		AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2618D84F99002775BA /* SecureCodeField.m */; };
 		AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */; };
 		AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
+		AB94FAC419053088007F8373 /* libCardIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBB75D718B654DA0070C2A8 /* libCardIO.a */; };
+		AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB94FAC71906B720007F8373 /* LoadingCell.m */; };
 		ABA9B71A18F302C300A81929 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71918F302C300A81929 /* Analytics.framework */; };
 		ABA9B71C18F3034B00A81929 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71B18F3034B00A81929 /* CoreData.framework */; };
 		ABA9B71E18F3035700A81929 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71D18F3035700A81929 /* SystemConfiguration.framework */; };
@@ -95,7 +97,6 @@
 		ABBB75CB18B63DB20070C2A8 /* CreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75C918B63DB20070C2A8 /* CreditCardViewController.m */; };
 		ABBB75CC18B63DB20070C2A8 /* CreditCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBB75CA18B63DB20070C2A8 /* CreditCardViewController.xib */; };
 		ABBB75CF18B64A0B0070C2A8 /* FLCreditCard.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75CE18B64A0B0070C2A8 /* FLCreditCard.m */; };
-		ABBB75D818B654DA0070C2A8 /* libCardIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBB75D718B654DA0070C2A8 /* libCardIO.a */; };
 		ABBB75DA18B656820070C2A8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBB75D918B656820070C2A8 /* AVFoundation.framework */; };
 		ABBB75DE18BA27E60070C2A8 /* FLFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75DD18BA27E60070C2A8 /* FLFriendRequest.m */; };
 		ABBB75E218BBADFA0070C2A8 /* FriendRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75E118BBADFA0070C2A8 /* FriendRequestCell.m */; };
@@ -286,6 +287,8 @@
 		AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionDatePicker.m; path = Controllers/NewTransaction/NewTransactionDatePicker/NewTransactionDatePicker.m; sourceTree = "<group>"; };
 		AB8F9FA818E1EF93006039D0 /* FLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAlertView.h; path = Views/FLAlertView/FLAlertView.h; sourceTree = "<group>"; };
 		AB8F9FA918E1EF93006039D0 /* FLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAlertView.m; path = Views/FLAlertView/FLAlertView.m; sourceTree = "<group>"; };
+		AB94FAC61906B720007F8373 /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingCell.h; path = LoadingCell/LoadingCell.h; sourceTree = "<group>"; };
+		AB94FAC71906B720007F8373 /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingCell.m; path = LoadingCell/LoadingCell.m; sourceTree = "<group>"; };
 		ABA9B71118F300F200A81929 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		ABA9B71318F300FB00A81929 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		ABA9B71518F3014600A81929 /* libPods-Analytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Analytics.a"; path = "Pods/build/Release-iphoneos/libPods-Analytics.a"; sourceTree = "<group>"; };
@@ -482,11 +485,11 @@
 				ABA9B71C18F3034B00A81929 /* CoreData.framework in Frameworks */,
 				ABA9B71A18F302C300A81929 /* Analytics.framework in Frameworks */,
 				AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */,
+				AB94FAC419053088007F8373 /* libCardIO.a in Frameworks */,
 				AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */,
 				AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */,
 				ABBB75DA18B656820070C2A8 /* AVFoundation.framework in Frameworks */,
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
-				ABBB75D818B654DA0070C2A8 /* libCardIO.a in Frameworks */,
 				AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */,
 				20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */,
@@ -927,6 +930,7 @@
 				AB2FB56018B63B300079AA1D /* FriendCell */,
 				ABBB75DF18BBADB40070C2A8 /* FriendRequestCell */,
 				ABB12D7518C0DECF002FCAAE /* FriendSuggestionCell */,
+				AB94FAC51906B6EB007F8373 /* LoadingCell */,
 				ABF7093918A4CEEC00517389 /* TransactionCell */,
 			);
 			name = Cells;
@@ -1039,6 +1043,15 @@
 				AB8F9FA918E1EF93006039D0 /* FLAlertView.m */,
 			);
 			name = FLAlertView;
+			sourceTree = "<group>";
+		};
+		AB94FAC51906B6EB007F8373 /* LoadingCell */ = {
+			isa = PBXGroup;
+			children = (
+				AB94FAC61906B720007F8373 /* LoadingCell.h */,
+				AB94FAC71906B720007F8373 /* LoadingCell.m */,
+			);
+			name = LoadingCell;
 			sourceTree = "<group>";
 		};
 		ABB12D4418BCE7E5002FCAAE /* Event */ = {
@@ -1846,6 +1859,7 @@
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
 				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
+				AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */,
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */,
@@ -2009,6 +2023,7 @@
 					"$(inherited)",
 					/Users/jonathan/Desktop/Codage/iOS/Flooz/Flooz/Library/CardIO,
 					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
+					"$(PROJECT_DIR)/Flooz/Library/CardIO",
 				);
 				OTHER_LDFLAGS = (
 					"-lstdc++",
@@ -2042,6 +2057,7 @@
 					"$(inherited)",
 					/Users/jonathan/Desktop/Codage/iOS/Flooz/Flooz/Library/CardIO,
 					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
+					"$(PROJECT_DIR)/Flooz/Library/CardIO",
 				);
 				OTHER_LDFLAGS = (
 					"-lstdc++",

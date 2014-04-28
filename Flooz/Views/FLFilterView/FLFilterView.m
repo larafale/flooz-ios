@@ -104,11 +104,11 @@
     
     if([colors count] > 1){
         UIImageView *arrow = [UIImageView imageNamed:@"filter-view-arrow"];
-        arrow.center = CGRectGetCenter(filterView.frame);
+        arrow.center = CGRectGetFrameCenter(filterView.frame);
         [filterView addSubview:arrow];
         
         UIImageView *arrow_selected = [UIImageView imageNamed:@"filter-view-arrow-selected"];
-        arrow_selected.center = CGRectGetCenter(filterView.frame);
+        arrow_selected.center = CGRectGetFrameCenter(filterView.frame);
         arrow_selected.hidden = YES;
         [filterView addSubview:arrow_selected];
     }

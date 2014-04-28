@@ -10,9 +10,13 @@
 
 #import "EventActionViewDelegate.h"
 
-@interface EventActionView : UIView
+@interface EventActionView : UIView{
+    UIImageView *arrow;
+}
 
 @property (weak, nonatomic) FLEvent *event;
 @property (weak, nonatomic) id<EventActionViewDelegate> delegate;
+
+- (void)setSelected:(BOOL)selected;
 
 @end

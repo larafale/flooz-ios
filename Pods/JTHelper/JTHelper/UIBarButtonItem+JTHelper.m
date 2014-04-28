@@ -2,6 +2,7 @@
 #import "JTHelper.h"
 
 @implementation UIBarButtonItem (JTHelper)
+
 + (UIBarButtonItem *)barButtonWithImageNamed:(NSString *)imageNamed target:(id)target action:(SEL)action
 {
     UIImage *image = [UIImage imageNamed:imageNamed];

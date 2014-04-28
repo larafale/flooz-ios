@@ -39,6 +39,7 @@
     [self createAvatarView];
     [self createNameView];
     [self createPhoneView];
+    [self createCheckView];
 }
 
 - (void)createAvatarView
@@ -65,6 +66,14 @@
     view.textColor = [UIColor customPlaceholder];
     
     [self.contentView addSubview:view];
+}
+
+- (void)createCheckView
+{
+    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 30, CGRectGetHeight(self.contentView.frame) / 2., 15, 10)];
+    [self.contentView addSubview:view];
+    
+    view.image = [UIImage imageNamed:@"navbar-check"];
 }
 
 #pragma mark - Prepare Views
@@ -111,6 +120,14 @@
     else{
         view.text = @"";
     }
+}
+
+- (void)setSelectedCheckView:(BOOL)selected
+{
+    [super setSelected:selected];
+    
+    UIImageView *checkView = [[self.contentView subviews] objectAtIndex:3];
+    checkView.hidden = !selected;
 }
 
 @end

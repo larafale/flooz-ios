@@ -70,10 +70,18 @@
 #pragma mark - TableView
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if(_nextPageUrl && ![_nextPageUrl isBlank]){
+        return [transactions count] + 1;
+    }
+    
     return [transactions count];
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row >= [transactions count]){
+        return [LoadingCell getHeight];
+    }
+    
     for(NSIndexPath *currentIndexPath in rowsWithPaymentField){
         if([currentIndexPath isEqual:indexPath]){
             return 122;
@@ -85,6 +93,15 @@
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == [transactions count]){
+        static LoadingCell *footerView;
+        if(!footerView){
+            footerView = [LoadingCell new];
+        }
+        footerView.hidden = refreshControl.isRefreshing;
+        return footerView;
+    }
+    
     static NSString *cellIdentifier = @"TransactionCell";
     TransactionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
@@ -119,8 +136,6 @@
 
 - (void)presentMenuTransactionController
 {
-//    crossButton.hidden = YES;
- 
     UIViewController *controller = [MenuNewTransactionViewController new];
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     
@@ -326,6 +341,11 @@
     CGFloat y = _tableView.frame.origin.y + (_tableView.contentOffset.y / _tableView.contentSize.height) * CGRectGetHeight(_tableView.frame);
     
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + y - _tableView.frame.origin.y + CGRectGetHeight(scrollViewIndicator.frame) / 2.)];
+    
+    // Loading view
+    if(indexPath.row >= [transactions count]){
+        return;
+    }
     
     if(!indexPath){
         [self hideScrollViewIndicator];

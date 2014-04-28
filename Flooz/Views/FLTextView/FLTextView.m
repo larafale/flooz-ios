@@ -94,4 +94,9 @@
     _textView.inputAccessoryView = accessoryView;
 }
 
+- (BOOL)becomeFirstResponder
+{
+    return [_textView becomeFirstResponder];
+}
+
 @end

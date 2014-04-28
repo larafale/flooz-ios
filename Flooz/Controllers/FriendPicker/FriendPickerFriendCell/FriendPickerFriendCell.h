@@ -14,4 +14,6 @@
 
 @property (weak, nonatomic) FLUser *user;
 
+- (void)setSelectedCheckView:(BOOL)selected;
+
 @end

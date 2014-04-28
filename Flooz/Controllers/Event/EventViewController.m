@@ -46,6 +46,18 @@
     BOOL needReloadEvent;
     
     BOOL participationHidden;
+    
+    
+    UIButton *closeButton;
+    JTImageLabel *scopeView;
+    EventHeaderView *headerView;
+    EventAmountView *amountView;
+    FLSwitchView *switchView;
+    EventActionView *actionView;
+    EventAmountActionsView *amountActionView;
+    EventUsersView *usersView;
+    EventContentView *eventContentView;
+    EventCommentsView *commentsView;
 }
 
 @end
@@ -115,8 +127,12 @@
 
 - (void)buildView
 {
+    for(UIView *view in [_contentView subviews]){
+        [view removeFromSuperview];
+    }
+    
     {
-        UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(134, 20, 52, 52)];
+        closeButton = [[UIButton alloc] initWithFrame:CGRectMake(134, 20, 52, 52)];
         
         [closeButton setImage:[UIImage imageNamed:@"transaction-close"] forState:UIControlStateNormal];
         [closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
@@ -125,61 +141,28 @@
     }
     
     {
-        JTImageLabel *view = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
+        scopeView = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
         
-        view.textAlignment = NSTextAlignmentRight;
-        view.textColor = [UIColor whiteColor];
-        view.font = [UIFont customContentLight:11];
+        scopeView.textAlignment = NSTextAlignmentRight;
+        scopeView.textColor = [UIColor whiteColor];
+        scopeView.font = [UIFont customContentLight:11];
     
         if([_event scope] == TransactionScopeFriend){
-            [view setImage:[UIImage imageNamed:@"scope-friend"]];
-            view.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
+            [scopeView setImage:[UIImage imageNamed:@"scope-friend"]];
+            scopeView.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
         }
         else{
-            [view setImage:[UIImage imageNamed:@"scope-invite"]];
-            view.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
+            [scopeView setImage:[UIImage imageNamed:@"scope-invite"]];
+            scopeView.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
         }
         
-        [view setImageOffset:CGPointMake(- 4, - 1)];
-        [view setWidthToFit];
-        CGRectSetX(view.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(view.frame) - 13);
+        [scopeView setImageOffset:CGPointMake(- 4, - 1)];
+        [scopeView setWidthToFit];
+        CGRectSetX(scopeView.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(scopeView.frame) - 13);
         
-        [_contentView addSubview:view];
+        [_contentView addSubview:scopeView];
     }
-    
-//    if([_event statusText]){
-//        UILabel *status = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, 0, 18)];
-//        status.backgroundColor = [UIColor customBackground];
-//        status.layer.borderColor = [UIColor customSeparator].CGColor;
-//        status.layer.borderWidth = 1.;
-//        status.layer.cornerRadius = 9.;
-//        status.font = [UIFont customTitleBook:10];
-//        status.textAlignment = NSTextAlignmentCenter;
-//        
-//        UIColor *textColor = [UIColor whiteColor];
-//        
-//        switch ([_event status]) {
-//            case EventStatusAccepted:
-//                textColor = [UIColor customGreen];
-//                break;
-//            case EventStatusPending:
-//                textColor = [UIColor customYellow];
-//                break;
-//            case EventStatusRefused:
-//                textColor = [UIColor customRed];
-//                break;
-//        }
-//        
-//        status.textColor = textColor;
-//        
-//        status.text = [NSString stringWithFormat:@"  %@", [_event statusText]]; // Hack pour mettre un padding
-//        [status setWidthToFit];
-//        CGRectSetWidth(status.frame, CGRectGetWidth(status.frame) + 30);
-//        CGRectSetX(status.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(status.frame) - 13);
-//        
-//        [_contentView addSubview:status];
-//    }
-    
+
     
     {
         _mainView = [[UIView alloc] initWithFrame:CGRectMake(13, 80, CGRectGetWidth(_contentView.frame) - (2 * 13), 0)];
@@ -198,84 +181,178 @@
     CGFloat height = 0;
     
     {
-        EventHeaderView *view = [[EventHeaderView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.event = _event;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+        headerView = [[EventHeaderView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        headerView.event = _event;
+        [_mainView addSubview:headerView];
+        height = CGRectGetMaxY(headerView.frame);
     }
     
     {
         CGFloat MARGE = 21.;
-        EventAmountView *view = [[EventAmountView alloc] initWithFrame:CGRectMake(MARGE, height, CGRectGetWidth(_mainView.frame) - 2 * MARGE, 0)];
-        view.event = _event;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+        amountView = [[EventAmountView alloc] initWithFrame:CGRectMake(MARGE, height, CGRectGetWidth(_mainView.frame) - 2 * MARGE, 0)];
+        amountView.event = _event;
+        [_mainView addSubview:amountView];
+        height = CGRectGetMaxY(amountView.frame);
+    }
+    
+    
+    {
+        actionView = [[EventActionView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        actionView.event = _event;
+        actionView.delegate = self;
+        [_mainView addSubview:actionView];
+        
+        [actionView setSelected:paymentFieldIsShown];
+        
+        actionView.hidden = YES;
+    }
+    {
+        switchView = [[FLSwitchView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) title:@"FIELD_TRANSACTION_HIDE"];
+        [_mainView addSubview:switchView];
+        switchView.delegate = self;
+
+//        switchView.hidden = YES;
+    }
+    {
+        amountInput = [[FLNewTransactionAmount alloc] initFor:amount key:@"amount" width:CGRectGetWidth(_mainView.frame) delegate:self];
+        [_mainView addSubview:amountInput];
+        CGRectSetY(amountInput.frame, height - 1);
+        
+//        amountInput.hidden = YES;
+    }
+    
+    if([_event canParticipate] || [_event canCancelOffer] || [_event canAcceptOrDeclineOffer]){
+        height = CGRectGetMaxY(actionView.frame);
+        actionView.hidden = NO;
+    }
+    else{
+        actionView.hidden = YES;
     }
     
     if(paymentFieldIsShown){
-//        {
-//            payementField = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) for:nil key:nil];
-//            payementField.delegate = self;
-//            [_mainView addSubview:payementField];
-//            height = CGRectGetMaxY(payementField.frame);
-//        }
-        {
-            FLSwitchView *view = [[FLSwitchView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0) title:@"FIELD_TRANSACTION_HIDE"];
-            [_mainView addSubview:view];
-            view.delegate = self;
-            height = CGRectGetMaxY(view.frame);
-        }
-        {
-            amountInput = [[FLNewTransactionAmount alloc] initFor:amount key:@"amount" width:CGRectGetWidth(_mainView.frame) delegate:self];
-            [_mainView addSubview:amountInput];
-            CGRectSetY(amountInput.frame, height - 1);
-            
-            height = CGRectGetMaxY(amountInput.frame);
-        }
+//        switchView.hidden = NO;
+//        amountInput.hidden = NO;
+        
+        CGRectSetY(switchView.frame, height);
+        height = CGRectGetMaxY(switchView.frame);
+        CGRectSetY(amountInput.frame, height - 1);
+        height = CGRectGetMaxY(amountInput.frame);
     }
-    else if([_event canParticipate] || [_event canCancelOffer] || [_event canAcceptOrDeclineOffer]){
-        EventActionView *view = [[EventActionView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.event = _event;
-        view.delegate = self;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+    else{
+//        switchView.hidden = YES;
+//        amountInput.hidden = YES;
+        
+        CGRectSetY(switchView.frame, height);
+        CGRectSetY(amountInput.frame, CGRectGetMaxY(switchView.frame) - 1);
+        
+        CGRectSetHeight(switchView.frame, 0);
+        CGRectSetHeight(amountInput.frame, 0);
+    }
+    
+    {
+        amountActionView = [[EventAmountActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        amountActionView.event = _event;
+        amountActionView.delegate = self;
+        [_mainView addSubview:amountActionView];
+        
+        amountActionView.hidden = YES;
     }
     
     if([_event canGiveOrTakeOffer]){
-        EventAmountActionsView *view = [[EventAmountActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.event = _event;
-        view.delegate = self;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+        height = CGRectGetMaxY(amountActionView.frame);
+        amountActionView.hidden = NO;
+    }
+
+    {
+        usersView = [[EventUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        usersView.event = _event;
+        usersView.delegate = self;
+        [_mainView addSubview:usersView];
+        height = CGRectGetMaxY(usersView.frame);
     }
     
     {
-        EventUsersView *view = [[EventUsersView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.event = _event;
-        view.delegate = self;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+        eventContentView = [[EventContentView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        eventContentView.event= _event;
+        [_mainView addSubview:eventContentView];
+        height = CGRectGetMaxY(eventContentView.frame);
+        
+        [eventContentView addTargetForLike:self action:@selector(didLikeEvent)];
     }
     
     {
-        EventContentView *view = [[EventContentView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.event= _event;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
-    }
-    
-    {
-        EventCommentsView *view = [[EventCommentsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
-        view.event= _event;
-        view.delegate = self;
-        [_mainView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+        commentsView = [[EventCommentsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
+        commentsView.event = _event;
+        commentsView.delegate = self;
+        [_mainView addSubview:commentsView];
+        height = CGRectGetMaxY(commentsView.frame);
     }
     
     CGRectSetHeight(_mainView.frame, height + 15);
     _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
     
     [payementField didWalletTouch];
+}
+
+- (void)reloadViewsForShowPayment
+{
+    CGFloat height = CGRectGetMaxY(amountView.frame);;
+    
+    if([_event canParticipate] || [_event canCancelOffer] || [_event canAcceptOrDeclineOffer]){
+        CGRectSetY(actionView.frame, height);
+        height = CGRectGetMaxY(actionView.frame);
+        actionView.hidden = NO;
+    }
+    else{
+        actionView.hidden = YES;
+    }
+    
+    if(paymentFieldIsShown){
+//        switchView.hidden = NO;
+//        amountInput.hidden = NO;
+        
+        CGRectSetY(switchView.frame, height);
+        CGRectSetHeight(switchView.frame, [FLSwitchView height]);
+        height = CGRectGetMaxY(switchView.frame);
+        
+        CGRectSetY(amountInput.frame, height - 1);
+        CGRectSetHeight(amountInput.frame, [FLNewTransactionAmount height]);
+        height = CGRectGetMaxY(amountInput.frame);
+    }
+    else{
+//        switchView.hidden = YES;
+//        amountInput.hidden = YES;
+        
+        CGRectSetHeight(switchView.frame, 0);
+        CGRectSetHeight(amountInput.frame, 0);
+    }
+    
+    if([_event canGiveOrTakeOffer]){
+        CGRectSetY(amountActionView.frame, height);
+        height = CGRectGetMaxY(amountActionView.frame);
+        amountActionView.hidden = NO;
+    }
+    else{
+        amountActionView.hidden = YES;
+    }
+    
+    {
+        CGRectSetY(usersView.frame, height);
+        height = CGRectGetMaxY(usersView.frame);
+    }
+    
+    {
+        CGRectSetY(eventContentView.frame, height);
+        height = CGRectGetMaxY(eventContentView.frame);
+    }
+    
+    {
+        CGRectSetY(commentsView.frame, height);
+        height = CGRectGetMaxY(commentsView.frame);
+    }
+    
+    CGRectSetHeight(_mainView.frame, height + 15);
+    _contentView.contentSize = CGSizeMake(0, CGRectGetMaxY(_mainView.frame) + 10);
 }
 
 #pragma mark - FLPaymentFieldDelegate
@@ -305,15 +382,20 @@
 {
     paymentFieldIsShown = YES;
     
-    [self reloadEvent];
+    [self reloadViewsForShowPayment];
+}
+
+- (void)hidePaymentField
+{
+    paymentFieldIsShown = NO;
+    
+    [self reloadViewsForShowPayment];
 }
 
 - (void)reloadEvent
 {
     needReloadEvent = NO;
-    for(UIView *view in [_contentView subviews]){
-        [view removeFromSuperview];
-    }
+ 
     [self buildView];
     
     if(_indexPath){
@@ -434,6 +516,13 @@
 - (void)didSwitchViewUnselected
 {
     participationHidden = NO;
+}
+
+- (void)didLikeEvent
+{
+    if(_indexPath){
+        [_delegateController updateEventAtIndex:_indexPath event:_event];
+    }
 }
 
 #pragma mark - Keyboard Management

@@ -33,6 +33,7 @@
 #import "UIFont+custom.h"
 #import "UIBarButtonItem+custom.h"
 
+#import "LoadingCell.h"
 #import "FLImageView.h"
 #import "FLNavigationController.h"
 #import "FLTableView.h"

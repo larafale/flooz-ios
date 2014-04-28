@@ -45,9 +45,9 @@
         
         self.window.rootViewController = controller;
     }
-    
-    [Analytics initializeWithSecret:@"2jcb70koii"];
 
+    [Analytics initializeWithSecret:@"2jcb70koii"];
+    
     return YES;
 }
 

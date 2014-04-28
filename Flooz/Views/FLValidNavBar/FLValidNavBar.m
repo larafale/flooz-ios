@@ -80,4 +80,9 @@
     [valid addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (UIButton *)validView
+{
+    return valid;
+}
+
 @end

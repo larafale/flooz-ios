@@ -14,11 +14,17 @@
 {
     self = [super initWithFrame:CGRectMake(0, frame.origin.y, frame.size.width, MAX(frame.size.height, 50))];
     if (self) {
+        self.clipsToBounds = YES;
         alternativeStyle = NO;
         [self createTitle:title];
         [self createSwitchView];
     }
     return self;
+}
+
++ (CGFloat)height
+{
+    return 50;
 }
 
 - (void)createTitle:(NSString *)title

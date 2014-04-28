@@ -14,4 +14,6 @@
 
 @property (weak, nonatomic) NSDictionary *contact;
 
+- (void)setSelectedCheckView:(BOOL)selected;
+
 @end

@@ -30,6 +30,8 @@
         
         _friendsFiltred = _friends;
         _friendsRecentFiltred = _friendsRecent;
+        
+        _selectedIndexPath = [NSMutableArray new];
     }
     return self;
 }
@@ -74,7 +76,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if(section == 0){
-        return @"";
+        return NSLocalizedString(@"FRIEND_PCIKER_SELECTION_CELL", nil);
     }
     else if(section == 1){
         return NSLocalizedString(@"FRIEND_PICKER_FRIENDS_RECENT", nil);
@@ -87,7 +89,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if(section == 0){
+    if(section == 0 && (!_selectionText || [_selectionText isBlank])){
         return 0;
     }
     else if(section == 1 && [_friendsRecentFiltred count] == 0){
@@ -109,7 +111,7 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), heigth)];
     
-    view.backgroundColor = [UIColor customBackground];
+    view.backgroundColor = [UIColor customBackgroundHeader];
     
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(24, 0, 0, CGRectGetHeight(view.frame))];
@@ -157,14 +159,27 @@
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 0){
+//        static NSString *cellIdentifierSelection = @"FriendPickerSelectionCell";
+//        FriendPickerSelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSelection];
+//        
+//        if(!cell){
+//            cell = [[FriendPickerSelectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
+//        }
+//        
+//        [cell setSelectionText:_selectionText];
+//        
+//        return cell;
+        
         static NSString *cellIdentifierSelection = @"FriendPickerSelectionCell";
-        FriendPickerSelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSelection];
+        FriendPickerContactCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSelection];
         
         if(!cell){
-            cell = [[FriendPickerSelectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
+            cell = [[FriendPickerContactCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
         }
         
-        [cell setSelectionText:_selectionText];
+        NSDictionary *contact = @{ @"name" : _selectionText };
+        [cell setContact:contact];
+        [cell setSelectedCheckView:NO];
         
         return cell;
     }
@@ -183,6 +198,7 @@
             [cell setUser:[_friendsFiltred objectAtIndex:indexPath.row]];
         }
         
+        [cell setSelectedCheckView:[_selectedIndexPath containsObject:indexPath]];
         return cell;
     }
     
@@ -196,6 +212,7 @@
     NSDictionary *contact = [_contacts objectAtIndex:indexPath.row];
     [cell setContact:contact];
     
+    [cell setSelectedCheckView:[_selectedIndexPath containsObject:indexPath]];
     return cell;
 }
 
@@ -282,6 +299,9 @@
     
     if(_event){
         [self inviteEvent:_dictionary];
+        id cell = [tableView cellForRowAtIndexPath:indexPath];
+        [cell setSelectedCheckView:YES];
+        [_selectedIndexPath addObject:indexPath];
     }
     else{
         [self dismiss];

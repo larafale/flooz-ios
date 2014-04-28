@@ -82,7 +82,7 @@
     
 //    CGFloat RATIO = .9;
 //    CGRectSetWidthHeight(avatar.frame, CGRectGetWidth(self.frame) * RATIO, CGRectGetHeight(self.frame) * RATIO);
-//    avatar.center = CGRectGetCenter(self.frame);
+//    avatar.center = CGRectGetFrameCenter(self.frame);
     
     avatar.layer.cornerRadius = 0;
 //    avatar.layer.borderWidth = 0;

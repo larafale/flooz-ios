@@ -22,6 +22,7 @@
     UILabel *floozContianerView;
     UILabel *floozCountView;
     UILabel *floozTextView;
+    UIImageView *floozArrowView;
     
     UIButton *crossButton;
 }

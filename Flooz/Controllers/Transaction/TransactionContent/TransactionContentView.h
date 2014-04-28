@@ -10,8 +10,13 @@
 
 @interface TransactionContentView : UIView{
     CGFloat height;
+    
+    id _target;
+    SEL _action;
 }
 
 @property (weak, nonatomic) FLTransaction *transaction;
+
+- (void)addTargetForLike:(id)target action:(SEL)action;
 
 @end

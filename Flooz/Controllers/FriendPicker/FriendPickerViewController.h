@@ -23,9 +23,9 @@
     NSArray *_currentContacts;
     NSArray *_contacts;
     
-
-    
     NSString *_selectionText;
+    
+    NSMutableArray *_selectedIndexPath;
 }
 
 @property (weak, nonatomic) IBOutlet FriendPickerSearchBar* searchBar;

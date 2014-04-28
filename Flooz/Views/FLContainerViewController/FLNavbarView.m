@@ -105,14 +105,14 @@
             floozCountView = [[UILabel alloc] initWithFrame:CGRectMakeSize(16, 16)];
             CGRectSetY(floozCountView.frame, ((CGRectGetHeight(floozContianerView.frame) - CGRectGetHeight(floozCountView.frame)) / 2.) - 3);
             
-            floozCountView.backgroundColor = [UIColor customBlue];
-            floozCountView.textColor = [UIColor whiteColor];
+            floozCountView.backgroundColor = [UIColor customBackgroundHeader];
+            floozCountView.textColor = [UIColor customBlue];
             floozCountView.textAlignment = NSTextAlignmentCenter;
             floozCountView.font = [UIFont customTitleExtraLight:9];
             
             floozCountView.clipsToBounds = YES;
-//            floozCountView.layer.borderColor = [UIColor whiteColor].CGColor;
-//            floozCountView.layer.borderWidth = 1;
+            floozCountView.layer.borderColor = [UIColor customBlue].CGColor;
+            floozCountView.layer.borderWidth = 1;
             floozCountView.layer.cornerRadius = CGRectGetHeight(floozCountView.frame) / 2.;
             
             [floozContianerView addSubview:floozCountView];
@@ -136,10 +136,16 @@
 //            CGRectSetX(floozTextView.frame, CGRectGetMaxX(floozCountView.frame) + spacing);
             
             CGRectSetX(floozTextView.frame, (CGRectGetWidth(floozContianerView.frame) - CGRectGetWidth(floozTextView.frame)) / 2.);
-            CGRectSetX(floozCountView.frame, CGRectGetMaxX(floozTextView.frame) + 5);
+            CGRectSetX(floozCountView.frame, CGRectGetMaxX(floozTextView.frame) + 3);
             
             // Hack pour le click sous le rond bleu
             CGRectSetWidth(floozTextView.frame, CGRectGetWidth(floozTextView.frame) + 30);
+        }
+        
+        {
+            floozArrowView = [UIImageView imageNamed:@"arrow-blue-down"];
+            [floozCountView addSubview:floozArrowView];
+            floozArrowView.center = CGRectGetFrameCenter(floozCountView.frame);
         }
         
         {
@@ -207,6 +213,15 @@
             
             diffTranslation.x = diffTranslation.x * 0.7;
             
+            {
+                UIView *firstView = [[_viewControllers firstObject] view];
+                UIView *lastView = [[_viewControllers lastObject] view];
+                
+                if(firstView.frame.origin.x > 0 || lastView.frame.origin.x < 0){
+                    diffTranslation.x = 0;
+                }
+            }
+            
             [self moveViews:diffTranslation];
             break;
         }
@@ -266,11 +281,19 @@
     floozCountView.text = [[[Flooz sharedInstance] notificationsCount] stringValue];
     floozTextView.textColor = floozContianerView.textColor;
     
+//    if([[[Flooz sharedInstance] notificationsCount] isEqualToNumber:@0]){
+//        floozCountView.hidden = YES;
+//    }
+//    else{
+//        floozCountView.hidden = NO;
+//    }
+    
     if([[[Flooz sharedInstance] notificationsCount] isEqualToNumber:@0]){
-        floozCountView.hidden = YES;
+        floozCountView.text = @"";
+        floozArrowView.hidden = NO;
     }
     else{
-        floozCountView.hidden = NO;
+        floozArrowView.hidden = YES;
     }
 }
 
@@ -326,7 +349,7 @@
     
     selectedTitleIndex = index;
  
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.4
                           delay:0
                         options:0
                      animations:^{

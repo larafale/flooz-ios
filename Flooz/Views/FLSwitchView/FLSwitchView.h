@@ -19,6 +19,8 @@
 
 @property (weak) id<FLSwitchViewDelegate> delegate;
 
++ (CGFloat)height;
+
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
 - (void)setAlternativeStyle;
 - (void)setOn:(BOOL)on;

@@ -13,6 +13,7 @@
 - (void)reloadEvent;
 
 - (void)showPaymentField;
+- (void)hidePaymentField;
 
 - (void)presentFriendPickerViewControllerForOffer;
 - (void)presentEventParticipantsController;

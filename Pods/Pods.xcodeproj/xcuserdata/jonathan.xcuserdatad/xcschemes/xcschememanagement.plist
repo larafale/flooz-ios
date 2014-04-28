@@ -9,11 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-Canvas.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-DACircularProgress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,72 +72,67 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>269D2A8657AE402E9FBB608C</key>
+		<key>0673406BB3314AD9AEA193F8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>42804CFED00649EAB43FE6C2</key>
+		<key>180DABCE73944EACB3B04C3E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5121D1BE21E34269B2264D0E</key>
+		<key>3E60F7DD4C874FE7B3D39DC4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5AC3176A890140ECA4A4868D</key>
+		<key>543AF9809F564102A127D690</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5ACFFB7BB2FF4709A20532E9</key>
+		<key>6020A15EB0EA499B9E207810</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>617D2FE6C3D34904A0808485</key>
+		<key>6C97ADAD18A048DCACB55EE1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7E01D759492A463588207486</key>
+		<key>9B89B234D5D14ECD9DFBD26F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>80023610317C4AA98C77444C</key>
+		<key>9E88EF8743C34420928EBA1F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A67D7BE492A7425DB4547BB9</key>
+		<key>AC00876669314351A9A18DB7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A70137348B2D4203937AA2B8</key>
+		<key>B0F6DE20010C47D0B6461474</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AB0EAE8486764E6B9BB7816C</key>
+		<key>E3F0681D8EE9451288985969</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BF68B1FCD9AB4A2A9F54826C</key>
+		<key>F35E36FE5F43483098DCED9B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E0997C8D67754CDD97AD3C6A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F590763AD07E4476A0AC22D3</key>
+		<key>FE4B7A43AC524AB482C4E3CE</key>
 		<dict>
 			<key>primary</key>
 			<true/>

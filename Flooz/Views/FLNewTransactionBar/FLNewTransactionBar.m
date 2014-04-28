@@ -188,16 +188,21 @@
 
 - (void)didImageButtonTouch
 {
-    if(!imageButton.selected){
+//    if(!imageButton.selected){
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"GLOBAL_CAMERA", nil), NSLocalizedString(@"GLOBAL_ALBUMS", nil), nil];
         
         // WARNING
         [actionSheet showInView:self];
-    }
-    else{
-        [_dictionary setValue:nil forKey:@"image"];
-        imageButton.selected = NO;
-    }
+//    }
+//    else{
+//        [_dictionary setValue:nil forKey:@"image"];
+//        imageButton.selected = NO;
+    
+//        UIImagePickerController *cameraUI = [UIImagePickerController new];
+//        cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//        cameraUI.delegate = self;
+//        [currentController presentViewController:cameraUI animated:YES completion:nil];
+//    }
 }
 
 - (void)didFacebookButtonTouch

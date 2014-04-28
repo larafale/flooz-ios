@@ -41,6 +41,8 @@
 @property NSArray *friendsRecent;
 @property NSArray *friendsRequest;
 
+@property BOOL needDocuments;
+
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)updateStatsPending:(NSDictionary *)json;
 

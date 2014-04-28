@@ -16,4 +16,6 @@
 - (void)cancelAddTarget:(id)target action:(SEL)action;
 - (void)validAddTarget:(id)target action:(SEL)action;
 
+- (UIButton *)validView;
+
 @end

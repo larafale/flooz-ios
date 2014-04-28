@@ -17,20 +17,19 @@
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;
         
+        _style = FLTextFieldTitle2StyleNormal;
         [self createTitle:title];
         [self createTextField:placeholder];
         [self createBottomBar];
         
         _textfield.text = [_dictionary objectForKey:_dictionaryKey];
-        
-        _maxLength = 50;
     }
     return self;
 }
 
 - (void)reloadData
 {
-    _textfield.text = [_dictionary objectForKey:_dictionaryKey];
+    [self setTextFieldValueForStyle];
 }
 
 - (void)createTitle:(NSString *)title
@@ -68,6 +67,8 @@
     
     _textfield.attributedPlaceholder = attributedText;
     
+    [_textfield addTarget:self action:@selector(setDictionaryValueForStyle) forControlEvents:UIControlEventEditingChanged];
+    
     [self addSubview:_textfield];
 }
 
@@ -81,29 +82,21 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSUInteger newLength = [textField.text length] + [string length] - range.length;
-    return (newLength > _maxLength) ? NO : YES;
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    [_target performSelector:_action];
     return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if([textField.text isBlank]){
-        [_dictionary setValue:nil forKey:_dictionaryKey];
-    }else{
-        [_dictionary setValue:textField.text forKey:_dictionaryKey];
-    }
+    [self setDictionaryValueForStyle];
     [textField resignFirstResponder];
 }
 
-- (BOOL)becomeFirstResponder{
+- (BOOL)becomeFirstResponder
+{
     return [_textfield becomeFirstResponder];
 }
 
@@ -114,6 +107,84 @@
 - (void)seTsecureTextEntry:(BOOL)secureTextEntry
 {
     _textfield.secureTextEntry = secureTextEntry;
+}
+
+#pragma mark -
+
+- (void)addForNextClickTarget:(id)target action:(SEL)action
+{
+    _target = target;
+    _action = action;
+}
+
+- (void)setDictionaryValueForStyle
+{
+    if([_textfield.text isBlank]){
+        [_dictionary setValue:nil forKey:_dictionaryKey];
+    }
+    else if(_style == FLTextFieldTitle2StyleCardNumber){
+        [_dictionary setValue:[_textfield.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:_dictionaryKey];
+    }
+    else{
+        [_dictionary setValue:_textfield.text forKey:_dictionaryKey];
+    }
+    
+    [self setTextFieldValueForStyle];
+    
+    if([_textfield isFirstResponder]){
+        if(_style == FLTextFieldTitle2StyleCardNumber && [[_dictionary objectForKey:_dictionaryKey] length] == 16){
+            [_textfield resignFirstResponder];
+            [_target performSelector:_action];
+        }
+        else if(_style == FLTextFieldTitle2StyleCardExpire && [[_dictionary objectForKey:_dictionaryKey] length] == 5){
+            [_textfield resignFirstResponder];
+            [_target performSelector:_action];
+        }
+        else if(_style == FLTextFieldTitle2StyleCVV && [[_dictionary objectForKey:_dictionaryKey] length] == 3){
+            [_textfield resignFirstResponder];
+            [_target performSelector:_action];
+        }
+    }
+}
+
+- (void)setTextFieldValueForStyle
+{
+    NSString *text = @"";
+    
+    if(_style == FLTextFieldTitle2StyleCardNumber){
+        for(int i = 0; i < [[_dictionary objectForKey:_dictionaryKey] length]; ++i){
+            text = [text stringByAppendingString:[[_dictionary objectForKey:_dictionaryKey] substringWithRange:NSMakeRange(i, 1)]];
+            
+            if(i % 4 == 3 && i != [[_dictionary objectForKey:_dictionaryKey] length] - 1){
+                text = [text stringByAppendingString:@" "];
+            }
+        }
+    }
+    else if(_style == FLTextFieldTitle2StyleCardExpire){
+        for(int i = 0; i < [[_dictionary objectForKey:_dictionaryKey] length]; ++i){
+            text = [text stringByAppendingString:[[_dictionary objectForKey:_dictionaryKey] substringWithRange:NSMakeRange(i, 1)]];
+            
+            if(i == 1
+               &&
+               i != [[_dictionary objectForKey:_dictionaryKey] length] - 1
+               &&
+               (
+               ([[_dictionary objectForKey:_dictionaryKey] length] == 2)
+               ||
+               
+               ([[_dictionary objectForKey:_dictionaryKey] length] > 2 && ![[[_dictionary objectForKey:_dictionaryKey] substringWithRange:NSMakeRange(2, 1)] isEqualToString:@"-"])
+               )
+               )
+            {
+                text = [text stringByAppendingString:@"-"];
+            }
+        }
+    }
+    else{
+        text = [_dictionary objectForKey:_dictionaryKey];
+    }
+
+    _textfield.text = text;
 }
 
 @end

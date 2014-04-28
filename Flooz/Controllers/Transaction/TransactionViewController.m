@@ -217,6 +217,8 @@
         view.transaction = _transaction;
         [_mainView addSubview:view];
         height = CGRectGetMaxY(view.frame);
+        
+        [view addTargetForLike:self action:@selector(didLikeTransaction)];
     }
     
     {
@@ -386,6 +388,13 @@
         _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
         [self reloadTransaction];
     } failure:NULL];
+}
+
+- (void)didLikeTransaction
+{
+    if(_indexPath){
+        [_delegateController updateTransactionAtIndex:_indexPath transaction:_transaction];
+    }
 }
 
 #pragma mark - Keyboard Management

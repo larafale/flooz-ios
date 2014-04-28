@@ -63,6 +63,16 @@
         datePicker.backgroundColor = [UIColor whiteColor];
         datePicker.date = [NSDate new];
         datePicker.datePickerMode = UIDatePickerModeDate;
+   
+        {
+            datePicker.minimumDate = [NSDate new];
+            
+            NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+            NSDateComponents *offsetComponents = [NSDateComponents new];
+            [offsetComponents setYear:+1];
+            datePicker.maximumDate = [gregorian dateByAddingComponents:offsetComponents toDate:[NSDate new] options:0];
+        }
+        
         [datePicker addTarget:self action:@selector(updateTextField:) forControlEvents:UIControlEventValueChanged];
         _textfield.inputView = datePicker;
     }

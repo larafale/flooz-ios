@@ -34,7 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     [self registerForKeyboardNotifications];
     
     self.view.backgroundColor = [UIColor customBackground];
@@ -69,6 +69,8 @@
     for(UIView *view in [_contentView subviews]){
         [view removeFromSuperview];
     }
+    
+    _card[@"holder"] = [[[Flooz sharedInstance] currentUser] fullname];
 }
 
 - (void)prepareViewForCreate
@@ -106,36 +108,44 @@
         height = CGRectGetMaxY(view.frame);
         
         [fieldsView addObject:view];
+        
+        [view addForNextClickTarget:self action:@selector(didOwnerEndEditing)];
     }
     
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_NUMBER" placeholder:@"FIELD_CARD_NUMBER_PLACEHOLDER" for:_card key:@"number" position:CGPointMake(20, height + OFFSET)];
-        view.maxLength = 16;
         [view setKeyboardType:UIKeyboardTypeDecimalPad];
         [_contentView  addSubview:view];
         height = CGRectGetMaxY(view.frame);
         
         [fieldsView addObject:view];
+        
+        [view setStyle:FLTextFieldTitle2StyleCardNumber];
+        [view addForNextClickTarget:self action:@selector(didNumberEndEditing)];
     }
     
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_EXPIRES" placeholder:@"FIELD_CARD_EXPIRES_PLACEHOLDER" for:_card key:@"expires" position:CGPointMake(20, height + OFFSET)];
-        view.maxLength = 5;
         [view setKeyboardType:UIKeyboardTypeDecimalPad];
         [_contentView  addSubview:view];
         height = CGRectGetMaxY(view.frame);
         
         [fieldsView addObject:view];
+        
+        [view setStyle:FLTextFieldTitle2StyleCardExpire];
+        [view addForNextClickTarget:self action:@selector(didExpiresEndEditing)];
     }
     
     {
         FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_CVV" placeholder:@"FIELD_CARD_CVV_PLACEHOLDER" for:_card key:@"cvv" position:CGPointMake(20, height + OFFSET)];
-        view.maxLength = 3;
         [view setKeyboardType:UIKeyboardTypeDecimalPad];
         [_contentView  addSubview:view];
         height = CGRectGetMaxY(view.frame);
         
+        [view setStyle:FLTextFieldTitle2StyleCVV];
         [fieldsView addObject:view];
+        
+        [view addForNextClickTarget:self action:@selector(didCVVEndEditing)];
     }
     
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), height);
@@ -219,7 +229,7 @@
     [_card setValue:cardInfo.cardNumber forKey:@"number"];
     [_card setValue:cardInfo.cvv forKey:@"cvv"];
     
-    NSString *expires = [NSString stringWithFormat:@"%.2ld-%.2u", cardInfo.expiryMonth, cardInfo.expiryYear - 2000];
+    NSString *expires = [NSString stringWithFormat:@"%.2ld-%.2lu", cardInfo.expiryMonth, cardInfo.expiryYear - 2000];
     
     [_card setValue:expires forKey:@"expires"];
     
@@ -296,6 +306,61 @@
 - (void)keyboardWillDisappear
 {
     _contentView.contentInset = UIEdgeInsetsZero;
+}
+
+#pragma mark - Field callback
+
+- (void)didOwnerEndEditing
+{
+    [fieldsView[1] becomeFirstResponder];
+}
+
+- (void)didNumberEndEditing
+{
+    [fieldsView[2] becomeFirstResponder];
+}
+
+- (void)didExpiresEndEditing
+{
+    [fieldsView[3] becomeFirstResponder];
+}
+
+- (void)didCVVEndEditing
+{
+    UIView *validView = [[[self.navigationItem.rightBarButtonItem customView] subviews] firstObject];
+    CGFloat duration = .2;
+    
+    [UIView animateWithDuration:duration
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         validView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:duration
+                                               delay:0
+                                             options:UIViewAnimationOptionAllowUserInteraction
+                                          animations:^{
+                                              validView.transform = CGAffineTransformIdentity;
+                                          }
+                                          completion:^(BOOL finished) {
+                                              [UIView animateWithDuration:duration
+                                                                    delay:0
+                                                                  options:UIViewAnimationOptionAllowUserInteraction
+                                                               animations:^{
+                                                                   validView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                                                               }
+                                                               completion:^(BOOL finished) {
+                                                                   [UIView animateWithDuration:duration
+                                                                                         delay:0
+                                                                                       options:UIViewAnimationOptionAllowUserInteraction
+                                                                                    animations:^{
+                                                                                        validView.transform = CGAffineTransformIdentity;
+                                                                                    }
+                                                                                    completion:nil];
+                                                               }];
+                                          }];
+                     }];
 }
 
 @end

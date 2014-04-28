@@ -425,6 +425,11 @@
     [self requestPath:@"cashout" method:@"POST" params:@{ @"amount": amount } success:success failure:failure];
 }
 
+- (void)cashoutValidate:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+        [self requestPath:@"cashout?validate=true" method:@"POST" params:@{ @"validate": @"true" } success:success failure:failure];
+}
+
 - (void)updateNotification:(NSDictionary *)notification success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     [self requestPath:@"alerts" method:@"PUT" params:notification success:success failure:failure];
@@ -594,6 +599,7 @@
     [self requestPath:path method:method params:params success:success failure:fullFailure constructingBodyWithBlock:NULL];
 }
 
+// WARNING si passe constructingBodyWithBlock, alors les donnees ne sont pas en JSON
 -(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> formData))constructingBodyWithBlock
 {
     NSLog(@"%@ request: %@ - %@", method, path, params);
@@ -658,8 +664,11 @@
     if([method isEqualToString:@"GET"]){
         [manager GET:path parameters:params success:successBlock failure:failureBlock];
     }
-    else if([method isEqualToString:@"POST"]){
+    else if([method isEqualToString:@"POST"] && constructingBodyWithBlock != NULL){
         [manager POST:path parameters:params constructingBodyWithBlock:constructingBodyWithBlock success:successBlock failure:failureBlock];
+    }
+    else if([method isEqualToString:@"POST"]){
+        [manager POST:path parameters:params success:successBlock failure:failureBlock];
     }
     else if([method isEqualToString:@"PUT"]){
         [manager PUT:path parameters:params success:successBlock failure:failureBlock];
@@ -680,6 +689,8 @@
     access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
     [UICKeyChainStore setString:access_token forKey:@"login-token"];
     
+    NSLog(@"%@", [[result objectForKey:@"items"] objectAtIndex:1]);
+    
     _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
     _facebook_token = result[@"items"][1][@"fb"][@"token"];
     
@@ -692,7 +703,7 @@
 {
     NSString *token = [UICKeyChainStore stringForKey:@"login-token"];
     
-    if(!token){
+    if(!token || [token isBlank]){
         return NO;
     }
     
@@ -704,6 +715,7 @@
     } failure:^(NSError *error) {
         [self logout];
     }];
+    
     return YES;
 }
 

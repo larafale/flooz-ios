@@ -10,8 +10,13 @@
 
 @interface EventContentView : UIView{
     CGFloat height;
+    
+    id _target;
+    SEL _action;
 }
 
 @property (weak, nonatomic) FLEvent *event;
+
+- (void)addTargetForLike:(id)target action:(SEL)action;
 
 @end

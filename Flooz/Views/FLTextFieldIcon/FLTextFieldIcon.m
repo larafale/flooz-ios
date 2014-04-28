@@ -77,6 +77,7 @@
     
     if([_dictionaryKey isEqualToString:@"phone"]){
         _textfield.keyboardType = UIKeyboardTypeNumberPad;
+        [_textfield addTarget:self action:@selector(checkPhoneValue) forControlEvents:UIControlEventEditingChanged];
     }
     
     _textfield.font = [UIFont customContentLight:12];
@@ -147,6 +148,19 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    
+    if(_textfield2){
+        if(textField == _textfield2){
+            [_target performSelector:_action];
+        }
+        else{
+            [_textfield2 becomeFirstResponder];
+        }
+    }
+    else{
+        [_target performSelector:_action];
+    }
+    
     return YES;
 }
 
@@ -167,11 +181,32 @@
     }
     
     [textField resignFirstResponder];
-}
+ }
 
 - (void)seTsecureTextEntry:(BOOL)secureTextEntry
 {
     _textfield.secureTextEntry = secureTextEntry;
+}
+
+#pragma mark -
+
+- (BOOL)becomeFirstResponder
+{
+    return [_textfield becomeFirstResponder];
+}
+
+- (void)addForNextClickTarget:(id)target action:(SEL)action
+{
+    _target = target;
+    _action = action;
+}
+
+- (void)checkPhoneValue
+{
+    if([_textfield.text length] == 10){
+        [_textfield resignFirstResponder];
+        [_target performSelector:_action];
+    }
 }
 
 @end

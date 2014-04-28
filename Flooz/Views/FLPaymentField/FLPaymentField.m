@@ -121,7 +121,7 @@
         
         square.transform = CGAffineTransformMakeRotation(RADIANS(45));
         
-        square.center = CGRectGetCenter(self.frame);
+        square.center = CGRectGetFrameCenter(self.frame);
         
         [self addSubview:square];
     }

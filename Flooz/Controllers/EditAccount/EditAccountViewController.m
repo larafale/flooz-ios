@@ -18,6 +18,9 @@
     NSMutableDictionary *_user;
     FLUserView *userView;
     FLSwitchView *facebookButton;
+    
+    UIButton *sendValidationSMS;
+    UIButton *sendValidationEmail;
 }
 
 @end
@@ -106,6 +109,32 @@
         height = CGRectGetMaxY(view.frame);
     }
 
+    {
+        sendValidationSMS = [[UIButton alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_contentView.frame) / 2., 50)];
+        
+        sendValidationSMS.titleLabel.textAlignment = NSTextAlignmentCenter;
+        sendValidationSMS.titleLabel.font = [UIFont customContentRegular:12];
+        [sendValidationSMS setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
+        [sendValidationSMS setTitle:NSLocalizedString(@"EDIT_ACCOUNT_SEND_SMS", nil) forState:UIControlStateNormal];
+        [_contentView addSubview:sendValidationSMS];
+        
+        [sendValidationSMS addTarget:self action:@selector(didSendSMSValidationTouch) forControlEvents:UIControlEventTouchUpInside];
+        
+        height = CGRectGetMaxY(sendValidationSMS.frame);
+    }
+    
+    {
+        sendValidationEmail = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_contentView.frame) / 2., sendValidationSMS.frame.origin.y, CGRectGetWidth(_contentView.frame) / 2., CGRectGetHeight(sendValidationSMS.frame))];
+        
+        sendValidationEmail.titleLabel.textAlignment = NSTextAlignmentCenter;
+        sendValidationEmail.titleLabel.font = [UIFont customContentRegular:12];
+        [sendValidationEmail setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
+        [sendValidationEmail setTitle:NSLocalizedString(@"EDIT_ACCOUNT_SEND_MAIL", nil) forState:UIControlStateNormal];
+        [_contentView addSubview:sendValidationEmail];
+        
+        [sendValidationEmail addTarget:self action:@selector(didSendEmailValidationTouch) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     {
         UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(MARGE, height + 40, CGRectGetWidth(self.view.frame) - MARGE, 15)];
         view.font = [UIFont customContentRegular:12];
@@ -304,6 +333,16 @@
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] uploadDocument:imageData field:@"picId" success:NULL failure:NULL];
     }];
+}
+
+- (void)didSendSMSValidationTouch
+{
+    
+}
+
+- (void)didSendEmailValidationTouch
+{
+    
 }
 
 @end

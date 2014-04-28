@@ -127,8 +127,17 @@
 
 - (void)didLikeTouch
 {
-    like.textColor = [UIColor customBlue];
-    [like setImage:[UIImage imageNamed:@"social-like-selected"]];
+    if(![like.textColor isEqual:[UIColor customBlue]]){
+        [UIView animateWithDuration:.1 animations:^{
+            like.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        } completion:^(BOOL finished) {
+            like.textColor = [UIColor customBlue];
+            [like setImage:[UIImage imageNamed:@"social-like-selected"]];
+            [UIView animateWithDuration:.1 animations:^{
+                like.transform = CGAffineTransformIdentity;
+            }];
+        }];
+    }
     
     [_target performSelector:_action withObject:nil];
 }

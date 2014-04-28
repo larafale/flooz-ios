@@ -152,7 +152,15 @@
         
         FLSocialView *view = [[self subviews] objectAtIndex:3];
         [view prepareView:_transaction.social];
+        
+        [_target performSelector:_action];
     } failure:NULL];
+}
+
+- (void)addTargetForLike:(id)target action:(SEL)action
+{
+    _target = target;
+    _action = action;
 }
 
 @end

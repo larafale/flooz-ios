@@ -101,10 +101,10 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), heigth)];
     
 //    if(section == 1){
-//        view.backgroundColor = [UIColor customBackgroundHeader];
+        view.backgroundColor = [UIColor customBackgroundHeader];
 //    }
 //    else{
-        view.backgroundColor = [UIColor customBackground];
+//        view.backgroundColor = [UIColor customBackground];
 //    }
     
     {

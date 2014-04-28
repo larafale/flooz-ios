@@ -22,8 +22,10 @@
 	#define CGRectSetWidth(frame, width) frame = CGRectMake(frame.origin.x, frame.origin.y, width, frame.size.height)
 	#define CGRectSetHeight(frame, height) frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, height)
 	#define CGRectSetWidthHeight(frame, width, height) frame = CGRectMake(frame.origin.x, frame.origin.y, width, height)
+	#define CGRectSetXWidth(frame, x, width) frame = CGRectMake(x, frame.origin.y, width, frame.size.height)
+	#define CGRectSetYHeight(frame, y, height) frame = CGRectMake(frame.origin.x, y, frame.size.width, height)
 
-	#define CGRectGetCenter(frame) CGPointMake(frame.size.width / 2., frame.size.height / 2.)
+	#define CGRectGetFrameCenter(frame) CGPointMake(frame.size.width / 2., frame.size.height / 2.)
 
 	#define NSLogFrame(frame) NSLog(@"%@", NSStringFromCGRect(frame))
 	#define NSLogPoint(point) NSLog(@"%@", NSStringFromCGPoint(point))

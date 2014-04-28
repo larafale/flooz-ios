@@ -113,8 +113,8 @@
     dateView = [[UILabel alloc] initWithFrame:CGRectMakeSize(0, DATE_VIEW_HEIGHT)];
 
     dateView.textAlignment = NSTextAlignmentRight;
-    dateView.textColor = [UIColor whiteColor];
-    dateView.font = [UIFont customContentLight:11];
+    dateView.textColor = [UIColor customPlaceholder];
+    dateView.font = [UIFont customContentLight:9];
     
     [self.contentView addSubview:dateView];
 }

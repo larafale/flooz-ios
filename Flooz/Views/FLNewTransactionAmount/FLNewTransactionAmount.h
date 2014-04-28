@@ -23,6 +23,7 @@
     UIView *buttonsView;
     
     UIView *separatorTop;
+    BOOL isEmpty;
 }
 
 + (CGFloat)height;

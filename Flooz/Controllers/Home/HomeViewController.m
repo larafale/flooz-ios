@@ -22,6 +22,8 @@
     
     UIScrollView *scrollView;
     UIPageControl *pageControl;
+    
+    UIImageView *logo;
 }
 
 @end
@@ -56,9 +58,16 @@
     }
     
     {
+        logo = [UIImageView imageNamed:@"home-logo"];
+        CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.image.size.width) / 2., 100);
+        [self.view addSubview:logo];
+    }
+    
+    {
         scrollView = [UIScrollView new];
         scrollView.delegate = self;
         scrollView.pagingEnabled = YES;
+        scrollView.showsVerticalScrollIndicator = NO;
         
         [self.view addSubview:scrollView];
     }
