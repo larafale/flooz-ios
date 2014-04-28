@@ -32,12 +32,14 @@
 
 - (void)createViews{
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.backgroundColor = [UIColor customBackgroundHeader];
+    self.backgroundColor = [UIColor customBackground];
     
     [self createAvatarView];
     [self createTextView];
-    [self createSlideView];
-    [self createActionViews];
+//    [self createSlideView];
+//    [self createActionViews];
+    
+    [self createButtons];
 }
 
 - (void)createAvatarView{
@@ -84,6 +86,31 @@
         UIPanGestureRecognizer *swipeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(respondToSwipe:)];
         swipeGesture.delegate = self;
         [self addGestureRecognizer:swipeGesture];
+    }
+}
+
+- (void)createButtons
+{
+    {
+        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 100, 21, 37, 28)];
+        [view setImage:[UIImage imageNamed:@"friend-decline"] forState:UIControlStateNormal];
+        view.backgroundColor = [UIColor customBackgroundStatus];
+        view.layer.cornerRadius = 14;
+        
+        [view addTarget:self action:@selector(refuse) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.contentView addSubview:view];
+    }
+    
+    {
+        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 21, 37, 28)];
+        [view setImage:[UIImage imageNamed:@"friend-accept"] forState:UIControlStateNormal];
+        view.backgroundColor = [UIColor customBackgroundStatus];
+        view.layer.cornerRadius = 14;
+        
+        [view addTarget:self action:@selector(accept) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.contentView addSubview:view];
     }
 }
 
@@ -166,14 +193,10 @@
 {
     if(progress >= 0.50){
         if(progress < 0.75){
-            [[Flooz sharedInstance] updateFriendRequest:@{ @"id": [_friendRequest requestId], @"action": @"accept" } success:^{
-                [_delegate didReloadData];
-            }];
+            [self accept];
         }
         else{
-            [[Flooz sharedInstance] updateFriendRequest:@{ @"id": [_friendRequest requestId], @"action": @"decline" } success:^{
-                [_delegate didReloadData];
-            }];
+            [self refuse];
         }
     }
     
@@ -205,6 +228,20 @@
     }
     
     text.center = CGPointMake(text.center.x, actionView.center.y);
+}
+
+- (void)accept
+{
+    [[Flooz sharedInstance] updateFriendRequest:@{ @"id": [_friendRequest requestId], @"action": @"accept" } success:^{
+        [_delegate didReloadData];
+    }];
+}
+
+- (void)refuse
+{
+    [[Flooz sharedInstance] updateFriendRequest:@{ @"id": [_friendRequest requestId], @"action": @"decline" } success:^{
+        [_delegate didReloadData];
+    }];
 }
 
 @end

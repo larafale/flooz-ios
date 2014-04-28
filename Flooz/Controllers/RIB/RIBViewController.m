@@ -44,11 +44,11 @@
         height = CGRectGetMaxY(view.frame);
     }
     
-    {
-        FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_BIC" placeholder:@"FIELD_BIC_PLACEHOLDER" for:_sepa key:@"bic" position:CGPointMake(20, height + 50)];
-        [self.view  addSubview:view];
-        height = CGRectGetMaxY(view.frame);
-    }
+//    {
+//        FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_BIC" placeholder:@"FIELD_BIC_PLACEHOLDER" for:_sepa key:@"bic" position:CGPointMake(20, height + 50)];
+//        [self.view  addSubview:view];
+//        height = CGRectGetMaxY(view.frame);
+//    }
 }
 
 #pragma mark -

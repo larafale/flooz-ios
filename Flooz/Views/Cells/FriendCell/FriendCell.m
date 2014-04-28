@@ -55,7 +55,7 @@
 
 - (void)createButtonView{
     UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 21, 37, 28)];
-    [view setImage:[UIImage imageNamed:@"friends-remove"] forState:UIControlStateNormal];
+    [view setImage:[UIImage imageNamed:@"friend-decline"] forState:UIControlStateNormal];
     view.backgroundColor = [UIColor customBackgroundStatus];
     view.layer.cornerRadius = 14;
 
@@ -68,7 +68,8 @@
 
 - (void)prepareViews{
     [self prepareAvatarView];
-    [self prepapreTextView];
+    [self prepareTextView];
+    [self prepareButton];
 }
 
 - (void)prepareAvatarView{
@@ -76,9 +77,14 @@
     [view setImageFromUser:_friend];
 }
 
-- (void)prepapreTextView{
+- (void)prepareTextView{
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
     view.text = [[_friend fullname] uppercaseString];
+}
+
+- (void)prepareButton{
+    UIButton *view = [[self.contentView subviews] objectAtIndex:2];
+    view.hidden = [_friend isFriendWaiting];
 }
 
 - (void)didButtonTouch{

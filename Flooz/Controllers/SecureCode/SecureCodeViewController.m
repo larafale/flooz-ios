@@ -83,7 +83,7 @@
     }
     
     {
-        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 200, 280, 40)];
+        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 180, 280, 60)];
         
         firstTimeText.textColor = [UIColor customBlueLight];
         firstTimeText.font = [UIFont customContentRegular:14];
@@ -268,6 +268,8 @@
         [[self navigationItem] setLeftBarButtonItem:nil];
     }
     
+    BOOL isFirstView = textCode.text == nil || [textCode.text isBlank];
+    
     // Textes
     if(currentSecureMode == SecureCodeModeNormal){
         textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_CURRENT", nil);
@@ -283,6 +285,21 @@
     }
     else if(currentSecureMode == SecureCodeModeChangeConfirm){
         textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_CONFIRM", nil);
+    }
+    
+    
+    if(!isFirstView){
+        CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+        animation.values = @[
+                                  @1,
+                                  @0,
+                                  @1
+                                  ];
+        
+        animation.repeatCount = 1;
+        animation.duration  = .8;
+        
+        [textCode.layer addAnimation:animation forKey:@"opacity"];
     }
 }
 
@@ -326,7 +343,7 @@
 
 + (void)clearSecureCode
 {
-    [UICKeyChainStore removeAllItems];
+    [UICKeyChainStore removeItemForKey:[self keyForSecureCode]];
 }
 
 @end

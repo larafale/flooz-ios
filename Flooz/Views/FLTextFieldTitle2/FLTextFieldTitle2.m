@@ -82,6 +82,28 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    // Si backward
+    if((!string || [string isBlank]) && range.length == 1){
+        return YES;
+    }
+    
+    NSUInteger length = [_textfield.text length];
+    
+    if(_style == FLTextFieldTitle2StyleCardNumber && length >= 19){
+        return NO;
+    }
+    else if(_style == FLTextFieldTitle2StyleCardExpire && length >= 5){
+        return NO;
+    }
+    else if(_style == FLTextFieldTitle2StyleCVV && length >= 3){
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];

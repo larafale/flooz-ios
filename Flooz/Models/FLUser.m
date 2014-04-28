@@ -68,7 +68,6 @@
         _address = [NSMutableDictionary new];
         
         if([json objectForKey:@"settings"] && [[json objectForKey:@"settings"] objectForKey:@"address"]){
-            NSLog(@"%@", json);
             _address = [[[json objectForKey:@"settings"] objectForKey:@"address"] mutableCopy];
         }
     }
@@ -153,6 +152,11 @@
     _checkDocuments = @{};
     if([json objectForKey:@"check"]){
         _checkDocuments = [json objectForKey:@"check"];
+    }
+    
+    _isFriendWaiting = NO;
+    if(json[@"state"] && ![json[@"state"] isEqualToNumber:@1]){
+        _isFriendWaiting = YES;
     }
 }
 

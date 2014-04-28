@@ -158,6 +158,16 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    if([[Flooz sharedInstance] currentUser]){
+        [[Analytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
+                                       traits:@{
+                                                @"email": [[[Flooz sharedInstance] currentUser] email],
+                                                @"nick": [[[Flooz sharedInstance] currentUser] username],
+                                                @"name": [[[Flooz sharedInstance] currentUser] fullname],
+                                                @"phone": [[[Flooz sharedInstance] currentUser] phone],
+                                                }];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

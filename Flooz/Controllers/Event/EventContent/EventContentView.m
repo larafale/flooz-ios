@@ -53,6 +53,7 @@
 - (void)createSocialView
 {
     FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 0, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 0)];
+    view.isEvent = YES;
     [view addTargetForLike:self action:@selector(didLikeButtonTouch)];
     [self addSubview:view];
 }

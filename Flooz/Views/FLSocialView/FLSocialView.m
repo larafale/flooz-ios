@@ -15,6 +15,7 @@
     CGRectSetHeight(frame, 15);
     self = [super initWithFrame:frame];
     if (self) {
+        _isEvent = NO;
         _gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeTouch)];
         [self createView];
     }
@@ -26,15 +27,18 @@
     comment = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     like = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     separator = [[UIView alloc] initWithFrame:CGRectMakeSize(1, CGRectGetHeight(self.frame))];
-    scope = [[UIImageView alloc] initWithFrame:CGRectMake(0, 1, 13, 10)];
+    scope = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     
     comment.font = [UIFont customContentRegular:11];
     like.font = [UIFont customContentRegular:11];
+    scope.font = [UIFont customContentRegular:11];
     
     separator.backgroundColor = [UIColor customSeparator];
     
     like.userInteractionEnabled = YES;
     [like addGestureRecognizer:_gesture];
+    
+    scope.textColor = [UIColor customPlaceholder];
     
     
     [self addSubview:comment];
@@ -113,6 +117,22 @@
                 break;
         }
         
+        scope.text = @"";
+        
+        if(_isEvent){
+            if(social.scope == SocialScopeFriend){
+                scope.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
+                scope.image = [UIImage imageNamed:@"scope-friend"];
+            }
+            else{
+                scope.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
+                scope.image = [UIImage imageNamed:@"scope-invite"];
+            }
+        }
+        
+        [scope setImageOffset:CGPointMake(-2.5, -1)];
+        [scope setWidthToFit];
+        CGRectSetWidth(scope.frame, CGRectGetWidth(scope.frame) + 18);
         CGRectSetX(scope.frame, CGRectGetMaxX(comment.frame) + 7);
     }
     

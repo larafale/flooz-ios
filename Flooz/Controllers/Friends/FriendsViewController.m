@@ -42,6 +42,10 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createSearchButtonWithTarget:self action:@selector(presentFriendAddController)];
+    
+    refreshControl = [UIRefreshControl new];
+    [refreshControl addTarget:self action:@selector(didReloadData) forControlEvents:UIControlEventValueChanged];
+    [_tableView addSubview:refreshControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -50,16 +54,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
-        [[Flooz sharedInstance] friendsSuggestion:^(id result) {
-            friendsRequest = [[[[Flooz sharedInstance] currentUser] friendsRequest] copy];
-            friends = [[[[Flooz sharedInstance] currentUser] friends] copy];
-            friendsSuggestion = result;
-            
-            [_tableView reloadData];
-            [_tableView setContentOffset:CGPointZero animated:YES];
-        }];
-    }];
+    [self didReloadData];
 }
 
 #pragma mark - TableView
@@ -197,10 +192,14 @@
     }
 }
 
-- (void)didReloadData{
-    [[Flooz sharedInstance] showLoadView];
+- (void)didReloadData
+{
+    [refreshControl beginRefreshing];
+    
     [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
         [[Flooz sharedInstance] friendsSuggestion:^(id result) {
+            [refreshControl endRefreshing];
+            
             friendsRequest = [[[[Flooz sharedInstance] currentUser] friendsRequest] copy];
             friends = [[[[Flooz sharedInstance] currentUser] friends] copy];
             friendsSuggestion = result;

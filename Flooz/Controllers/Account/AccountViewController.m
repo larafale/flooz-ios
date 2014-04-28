@@ -18,6 +18,8 @@
 
 #import "SecureCodeViewController.h"
 
+#import "FLWaveAnimation.h"
+
 @interface AccountViewController (){
     UIScrollView *_contentView;
     
@@ -28,6 +30,8 @@
     FLAccountButton *cashout;
     FLAccountButton *settings;
     FLAccountButton *informations;
+    
+    FLWaveAnimation *settingsAnimation;
 }
 
 @end
@@ -52,7 +56,8 @@
     
     {
         userView = [FLAccountUserView new];
-        [userView addTarget:self action:@selector(presentEditAccountController)];
+        [userView addEditTarget:self action:@selector(presentEditAccountController)];
+        [userView addFriendsTarget:self action:@selector(presentFriendsController)];
         [_contentView addSubview:userView];
     }
     
@@ -96,6 +101,11 @@
         [_contentView addSubview:informations];
         
         _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetMaxY(informations.frame));
+        
+        {
+            settingsAnimation = [FLWaveAnimation new];
+            settingsAnimation.view = settings;
+        }
     }
 }
 
@@ -134,41 +144,15 @@
     [[Flooz sharedInstance] cashoutValidate:^(id result) {
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[CashOutViewController new]];
         [self presentViewController:controller animated:YES completion:NULL];
-    } failure:^(NSError *error) {
-        // animation
-        
-        CGFloat gradientWidth = 20;
-        CAGradientLayer *gradientMask = [CAGradientLayer layer];
-        gradientMask.frame = settings.bounds;
-        CGFloat gradientSize = gradientWidth / settings.frame.size.width;
-        UIColor *gradient = [UIColor colorWithWhite:1.0f alpha:.3];
-        UIView *superview = settings.superview;
-        NSArray *startLocations = @[[NSNumber numberWithFloat:0.0f], [NSNumber numberWithFloat:(gradientSize / 2)], [NSNumber numberWithFloat:gradientSize]];
-        NSArray *endLocations = @[[NSNumber numberWithFloat:(1.0f - gradientSize)], [NSNumber numberWithFloat:(1.0f -(gradientSize / 2))], [NSNumber numberWithFloat:1.0f]];
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"locations"];
-        
-        gradientMask.colors = @[(id)gradient.CGColor, (id)[UIColor whiteColor].CGColor, (id)gradient.CGColor];
-        gradientMask.locations = startLocations;
-        gradientMask.startPoint = CGPointMake(0 - (gradientSize * 2), .5);
-        gradientMask.endPoint = CGPointMake(1 + gradientSize, .5);
-        
-        [settings removeFromSuperview];
-        settings.layer.mask = gradientMask;
-        [superview addSubview:settings];
-        
-        animation.fromValue = startLocations;
-        animation.toValue = endLocations;
-        animation.repeatCount = 3;
-        animation.duration  = 2.0f;
-        
-        [gradientMask addAnimation:animation forKey:@"animateGradient"];
-        
-        
+    } failure:^(NSError *error) {        
+        [settingsAnimation start];
     }];
 }
 
 - (void)presentSettingsController
 {
+    [settingsAnimation stop];
+    
     CompleteBlock completeBlock = ^{
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];
         [self presentViewController:controller animated:YES completion:NULL];

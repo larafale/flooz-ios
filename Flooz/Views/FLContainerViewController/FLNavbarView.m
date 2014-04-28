@@ -149,11 +149,21 @@
         }
         
         {
+            
+            
             floozCountView.userInteractionEnabled = YES;
             [floozCountView addGestureRecognizer:floozGesture1];
             
             floozTextView.userInteractionEnabled = YES;
             [floozTextView addGestureRecognizer:floozGesture2];
+        }
+        
+        {
+            notificationsAnimation = [FLWaveAnimation new];
+            notificationsAnimation.view = floozTextView;
+            notificationsAnimation.backgroundColor = [UIColor customBlue:.3];
+            notificationsAnimation.foregroundColor = [UIColor customBlue];
+            notificationsAnimation.repeatCount = HUGE_VALF;
         }
     }
 }
@@ -288,12 +298,18 @@
 //        floozCountView.hidden = NO;
 //    }
     
+    // WARNING Test hack, bug sur ios 7.0 click ne fonctionne pas
+    floozTextView.userInteractionEnabled = YES;
+    
+    [notificationsAnimation stop];
+    
     if([[[Flooz sharedInstance] notificationsCount] isEqualToNumber:@0]){
         floozCountView.text = @"";
         floozArrowView.hidden = NO;
     }
     else{
         floozArrowView.hidden = YES;
+        [notificationsAnimation start];
     }
 }
 

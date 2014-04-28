@@ -25,6 +25,7 @@
     [self createRefuseView];
     [self createAcceptView];
     [self createCancelView];
+    [self createWaitingView];
     [self createBottomBar];
 }
 
@@ -79,6 +80,20 @@
     [self addSubview:view];
 }
 
+- (void)createWaitingView
+{
+    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
+    
+    view.titleLabel.textAlignment = NSTextAlignmentCenter;
+    view.titleLabel.font = [UIFont customTitleExtraLight:14];
+    [view setImageEdgeInsets:UIEdgeInsetsMake(2, -10, 0, 0)];
+    
+    [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_WAITING", nil) forState:UIControlStateNormal];
+    [view setTitleColor:[UIColor customYellow] forState:UIControlStateNormal];
+    
+    [self addSubview:view];
+}
+
 - (void)createBottomBar
 {
     UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame), 1)];
@@ -101,14 +116,18 @@
     UIView *refuseView = [[self subviews] objectAtIndex:0];
     UIView *acceptView = [[self subviews] objectAtIndex:1];
     UIView *cancelView = [[self subviews] objectAtIndex:2];
+    UIView *waitingView = [[self subviews] objectAtIndex:3];
     
-    refuseView.hidden = acceptView.hidden = cancelView.hidden = YES;
+    refuseView.hidden = acceptView.hidden = cancelView.hidden = waitingView.hidden = YES;
     
     if([_transaction isCancelable]){
         cancelView.hidden = NO;;
     }
     else if([_transaction isAcceptable]){
         refuseView.hidden = acceptView.hidden = NO;
+    }
+    else{
+        waitingView.hidden = NO;
     }
 }
 

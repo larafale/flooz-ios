@@ -92,7 +92,7 @@
         
         username.font = [UIFont customContentRegular:10];
         username.textAlignment = NSTextAlignmentCenter;
-        username.textColor = [UIColor customBlueLight];
+        username.textColor = [UIColor customBlue];
         
         [view addSubview:username];
     }

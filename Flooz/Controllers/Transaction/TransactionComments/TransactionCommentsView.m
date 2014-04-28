@@ -176,6 +176,8 @@
         NSMutableArray *comments = [[_transaction comments] mutableCopy];
         [comments addObject:comment];
         _transaction.comments = comments;
+        _transaction.social.commentsCount = [comments count];
+        _transaction.social.isCommented = YES;
         
         [_delegate reloadTransaction];
     } failure:NULL];

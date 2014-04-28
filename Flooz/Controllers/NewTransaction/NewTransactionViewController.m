@@ -42,6 +42,7 @@
     FLTextView *content;
     
     FLSelectFriendButton *friend;
+    BOOL infoDisplayed;
 }
 
 @end
@@ -53,9 +54,11 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         transaction = [NSMutableDictionary new];
-        
+
         isEvent = (transactionType == TransactionTypeEvent);
         [transaction setValue:[FLTransaction transactionTypeToParams:transactionType] forKey:@"method"];
+        
+        infoDisplayed = NO;
     }
     return self;
 }
@@ -226,7 +229,11 @@
                                                                                             _navBar.validView.transform = CGAffineTransformIdentity;
                                                                                         }
                                                                                         completion:^(BOOL finished) {
-                                                                                            [content becomeFirstResponder];
+                                                                                            if(!infoDisplayed){
+                                                                                                [content becomeFirstResponder];
+                                                                                                infoDisplayed = YES;
+                                                                                            }
+                                                                                            
                                                                                         }];
                                                                    }];
                                               }];
@@ -336,9 +343,11 @@
                     FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
                     TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
                     [self dismissViewControllerAnimated:YES completion:^{
-                        [[timelineController filterView] selectFilter:2];
-                        FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
-                        [rootController.navbarView loadControllerWithIndex:1];
+                        if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+                            [[timelineController filterView] selectFilter:2];
+                            FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
+                            [rootController.navbarView loadControllerWithIndex:1];
+                        }
                     }];
                 } failure:NULL];
             };

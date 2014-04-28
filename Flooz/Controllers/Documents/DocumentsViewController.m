@@ -66,10 +66,14 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    NSString *key = [NSString stringWithFormat:@"DOCUMENTS_%@", [[[documents objectAtIndex:indexPath.row] allKeys] firstObject]];
-    cell.textLabel.text = NSLocalizedString(key, nil);
+    NSDictionary *dictionary = documents[indexPath.row];
     
-    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:key] boolValue]){
+    NSString *key = [[dictionary allKeys] firstObject];
+    NSString *value = [[dictionary allValues] firstObject];
+    
+    cell.textLabel.text = NSLocalizedString(([NSString stringWithFormat:@"DOCUMENTS_%@", key]), nil);
+    
+    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] boolValue]){
         cell.accessoryView = [UIImageView imageNamed:@"document-check"];
     }
     else{

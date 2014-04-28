@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FLWaveAnimation.h"
+
 @interface FLNavbarView : UIView<UIGestureRecognizerDelegate>{
     UIView *_titlesView;
     NSArray *_viewControllers;
@@ -25,6 +27,7 @@
     UIImageView *floozArrowView;
     
     UIButton *crossButton;
+    FLWaveAnimation *notificationsAnimation;
 }
 
 - (id)initWithViewControllers:(NSArray *)viewControllers;

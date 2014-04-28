@@ -65,7 +65,7 @@
     [self createDetailView];
     [self createAttachmentView];
     [self createSocialView];
-    [self createScopeView];
+//    [self createScopeView];
 }
 
 - (void)createDetailView{
@@ -126,6 +126,7 @@
 
 - (void)createSocialView{
     FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
+    view.isEvent = YES;
     [view addTargetForLike:self action:@selector(didLikeButtonTouch)];
     [rightView addSubview:view];
     
@@ -156,7 +157,7 @@
     [self prepareDetailView];
     [self prepareAttachmentView];
     [self prepareSocialView];
-    [self prepareScopeView];
+//    [self prepareScopeView];
     
     CGRectSetHeight(rightView.frame, height);
     
@@ -208,6 +209,9 @@
     [view prepareView:_event.social];
     
     CGRectSetY(view.frame, height);
+    
+    
+    height = CGRectGetMaxY(view.frame); // pck comment prepareScopeView
 }
 
 - (void)prepareScopeView{

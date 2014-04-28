@@ -8,6 +8,9 @@
 
 #import "FLAccountUserView.h"
 
+#import "FLContainerViewController.h"
+#import "AppDelegate.h"
+
 @implementation FLAccountUserView
 
 - (id)init
@@ -43,7 +46,7 @@
         
         username.font = [UIFont customContentRegular:10];
         username.textAlignment = NSTextAlignmentCenter;
-        username.textColor = [UIColor customBlueLight];
+        username.textColor = [UIColor customBlue];
         
         [self addSubview:username];
     }
@@ -99,6 +102,20 @@
         CGRectSetXY(arrow.frame, CGRectGetWidth(self.frame) - 10, (CGRectGetHeight(self.frame) - arrow.image.size.height) / 2.);
         [self addSubview:arrow];
     }
+    
+    {
+        UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadFloozController)];
+        gesture.numberOfTapsRequired = 1;
+        flooz.userInteractionEnabled = YES;
+        [flooz addGestureRecognizer:gesture];
+    }
+    
+    {
+        UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadEventsController)];
+        gesture.numberOfTapsRequired = 1;
+        profilCompletion.userInteractionEnabled = YES;
+        [profilCompletion addGestureRecognizer:gesture];
+    }
 }
 
 - (void)reloadData
@@ -147,11 +164,31 @@
     }
 }
 
-- (void)addTarget:(id)target action:(SEL)action
+- (void)addEditTarget:(id)target action:(SEL)action
 {
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
     gesture.numberOfTapsRequired = 1;
     [self addGestureRecognizer:gesture];
+}
+
+- (void)addFriendsTarget:(id)target action:(SEL)action
+{
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
+    gesture.numberOfTapsRequired = 1;
+    friends.userInteractionEnabled = YES;
+    [friends addGestureRecognizer:gesture];
+}
+
+- (void)loadFloozController
+{
+    FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
+    [rootController.navbarView loadControllerWithIndex:1];
+}
+
+- (void)loadEventsController
+{
+    FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
+    [rootController.navbarView loadControllerWithIndex:2];
 }
 
 @end

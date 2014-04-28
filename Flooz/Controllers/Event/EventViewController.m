@@ -140,27 +140,44 @@
         [_contentView addSubview:closeButton];
     }
     
-    {
-        scopeView = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
-        
-        scopeView.textAlignment = NSTextAlignmentRight;
-        scopeView.textColor = [UIColor whiteColor];
-        scopeView.font = [UIFont customContentLight:11];
+//    {
+//        scopeView = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
+//        
+//        scopeView.textAlignment = NSTextAlignmentRight;
+//        scopeView.textColor = [UIColor whiteColor];
+//        scopeView.font = [UIFont customContentLight:11];
+//    
+//        if([_event scope] == TransactionScopeFriend){
+//            [scopeView setImage:[UIImage imageNamed:@"scope-friend"]];
+//            scopeView.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
+//        }
+//        else{
+//            [scopeView setImage:[UIImage imageNamed:@"scope-invite"]];
+//            scopeView.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
+//        }
+//        
+//        [scopeView setImageOffset:CGPointMake(- 4, - 1)];
+//        [scopeView setWidthToFit];
+//        CGRectSetX(scopeView.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(scopeView.frame) - 13);
+//        
+//        [_contentView addSubview:scopeView];
+//    }
     
-        if([_event scope] == TransactionScopeFriend){
-            [scopeView setImage:[UIImage imageNamed:@"scope-friend"]];
-            scopeView.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
-        }
-        else{
-            [scopeView setImage:[UIImage imageNamed:@"scope-invite"]];
-            scopeView.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
-        }
+    {
+        JTImageLabel *view = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
         
-        [scopeView setImageOffset:CGPointMake(- 4, - 1)];
-        [scopeView setWidthToFit];
-        CGRectSetX(scopeView.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(scopeView.frame) - 13);
+        view.textAlignment = NSTextAlignmentRight;
+        view.textColor = [UIColor whiteColor];
+        view.font = [UIFont customContentLight:11];
         
-        [_contentView addSubview:scopeView];
+        view.text = [FLHelper formatedDate:[_event date]];
+        [view setImage:[UIImage imageNamed:@"transaction-content-clock"]];
+        [view setImageOffset:CGPointMake(- 4, 0)];
+        
+        [view setWidthToFit];
+        CGRectSetX(view.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(view.frame) - 13);
+        
+        [_contentView addSubview:view];
     }
 
     
@@ -437,7 +454,8 @@
                                      //                             @"source": [amount objectForKey:@"source"] // payementField disable
                                      } mutableCopy];
     if([amount objectForKey:@"amount"]){
-        [params setObject:[amount objectForKey:@"amount"] forKey:@"amount"];
+        params[@"amount"] = [amount objectForKey:@"amount"];
+        params[@"hide"] = [NSNumber numberWithBool:participationHidden];
     }
     
     

@@ -24,6 +24,7 @@
 }
 
 - (void)reloadData;
-- (void)addTarget:(id)target action:(SEL)action;
+- (void)addEditTarget:(id)target action:(SEL)action;
+- (void)addFriendsTarget:(id)target action:(SEL)action;
 
 @end

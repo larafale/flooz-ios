@@ -43,6 +43,8 @@
 
 @property BOOL needDocuments;
 
+@property BOOL isFriendWaiting;
+
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)updateStatsPending:(NSDictionary *)json;
 

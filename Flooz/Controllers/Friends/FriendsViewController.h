@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "FriendRequestCellDelegate.h"
 
-@interface FriendsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FriendRequestCellDelegate>
+@interface FriendsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FriendRequestCellDelegate>{
+    UIRefreshControl *refreshControl;
+}
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
 

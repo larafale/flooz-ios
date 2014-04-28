@@ -11,13 +11,14 @@
 @interface FLSocialView : UIView{
     JTImageLabel *comment;
     JTImageLabel *like;
-    UIImageView *scope;
+    JTImageLabel *scope;
     UIView *separator;
     
     __weak id _target;
     SEL _action;
 }
 
+@property BOOL isEvent;
 @property (strong, nonatomic) UITapGestureRecognizer *gesture;
 
 - (void)prepareView:(FLSocial *)social;

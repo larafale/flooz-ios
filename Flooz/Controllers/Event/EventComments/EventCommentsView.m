@@ -175,6 +175,8 @@
         NSMutableArray *comments = [[_event comments] mutableCopy];
         [comments addObject:comment];
         _event.comments = comments;
+        _event.social.commentsCount = [comments count];
+        _event.social.isCommented = YES;
         
         [_delegate reloadEvent];
     } failure:NULL];

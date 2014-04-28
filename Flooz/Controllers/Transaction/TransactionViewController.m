@@ -324,7 +324,7 @@
         [view removeFromSuperview];
     }
     [self buildView];
-    
+        
     if(_indexPath){
         [_delegateController updateTransactionAtIndex:_indexPath transaction:_transaction];
     }

@@ -33,13 +33,6 @@
         _status = EventStatusRefused;
     }
     
-    if([[json objectForKey:@"scope"] intValue] == 1){
-        _scope = TransactionScopeFriend;
-    }
-    else{
-        _scope = TransactionScopePrivate;
-    }
-    
     _isNew = [[json objectForKey:@"isAttending"] boolValue];
     
     _amount = [json objectForKey:@"amount"];
@@ -66,7 +59,16 @@
     _attachmentThumbURL = [json objectForKey:@"picMini"];
     
     _social = [[FLSocial alloc] initWithJSON:json];
-    _social.scope = SocialScopeNone;
+//    _social.scope = SocialScopeNone;
+    
+    if([[json objectForKey:@"scope"] intValue] == 1){
+        _scope = TransactionScopeFriend;
+        _social.scope = SocialScopeFriend;
+    }
+    else{
+        _scope = TransactionScopePrivate;
+        _social.scope = SocialScopePrivate;
+    }
     
     {
         _isPrivate = NO;

@@ -72,6 +72,7 @@
 		AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2618D84F99002775BA /* SecureCodeField.m */; };
 		AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */; };
 		AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
+		AB931C0C190E4FBD00E70742 /* FLWaveAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = AB931C0B190E4FBD00E70742 /* FLWaveAnimation.m */; };
 		AB94FAC419053088007F8373 /* libCardIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBB75D718B654DA0070C2A8 /* libCardIO.a */; };
 		AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB94FAC71906B720007F8373 /* LoadingCell.m */; };
 		ABA9B71A18F302C300A81929 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71918F302C300A81929 /* Analytics.framework */; };
@@ -287,6 +288,8 @@
 		AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewTransactionDatePicker.m; path = Controllers/NewTransaction/NewTransactionDatePicker/NewTransactionDatePicker.m; sourceTree = "<group>"; };
 		AB8F9FA818E1EF93006039D0 /* FLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAlertView.h; path = Views/FLAlertView/FLAlertView.h; sourceTree = "<group>"; };
 		AB8F9FA918E1EF93006039D0 /* FLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAlertView.m; path = Views/FLAlertView/FLAlertView.m; sourceTree = "<group>"; };
+		AB931C0A190E4FBD00E70742 /* FLWaveAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLWaveAnimation.h; path = Animations/FLWave/FLWaveAnimation.h; sourceTree = "<group>"; };
+		AB931C0B190E4FBD00E70742 /* FLWaveAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLWaveAnimation.m; path = Animations/FLWave/FLWaveAnimation.m; sourceTree = "<group>"; };
 		AB94FAC61906B720007F8373 /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingCell.h; path = LoadingCell/LoadingCell.h; sourceTree = "<group>"; };
 		AB94FAC71906B720007F8373 /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingCell.m; path = LoadingCell/LoadingCell.m; sourceTree = "<group>"; };
 		ABA9B71118F300F200A81929 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -652,6 +655,7 @@
 		AB3D0897186CA11A00CF8380 /* Flooz */ = {
 			isa = PBXGroup;
 			children = (
+				AB931C08190E4F8C00E70742 /* Animations */,
 				ABF46A201875BE9100E92A77 /* Resources */,
 				AB3D08E11871BEC300CF8380 /* Util */,
 				AB3D08DB1871A5BE00CF8380 /* Library */,
@@ -1043,6 +1047,23 @@
 				AB8F9FA918E1EF93006039D0 /* FLAlertView.m */,
 			);
 			name = FLAlertView;
+			sourceTree = "<group>";
+		};
+		AB931C08190E4F8C00E70742 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				AB931C09190E4F9200E70742 /* FLWaveAnimation */,
+			);
+			name = Animations;
+			sourceTree = "<group>";
+		};
+		AB931C09190E4F9200E70742 /* FLWaveAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				AB931C0A190E4FBD00E70742 /* FLWaveAnimation.h */,
+				AB931C0B190E4FBD00E70742 /* FLWaveAnimation.m */,
+			);
+			name = FLWaveAnimation;
 			sourceTree = "<group>";
 		};
 		AB94FAC51906B6EB007F8373 /* LoadingCell */ = {
@@ -1848,6 +1869,7 @@
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
 				AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */,
+				AB931C0C190E4FBD00E70742 /* FLWaveAnimation.m in Sources */,
 				ABE9147F18929B7D003AC722 /* EditAccountViewController.m in Sources */,
 				AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */,
 				ABE914441890A12C003AC722 /* FLEvent.m in Sources */,

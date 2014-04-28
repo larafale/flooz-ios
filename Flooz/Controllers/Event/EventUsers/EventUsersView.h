@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "EventActionViewDelegate.h"
 
-@interface EventUsersView : UIView
+#import "FLWaveAnimation.h"
+
+@interface EventUsersView : UIView{
+    FLWaveAnimation *userAnimation;
+}
 
 @property (weak, nonatomic) FLEvent *event;
 @property (weak, nonatomic) id<EventActionViewDelegate> delegate;

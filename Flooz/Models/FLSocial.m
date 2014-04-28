@@ -21,7 +21,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json
-{
+{    
     _commentsCount = [[json objectForKey:@"comments"] count];
     _likesCount = [[json objectForKey:@"likes"] count];
     _likeText = [json objectForKey:@"likesString"];

@@ -156,6 +156,7 @@
 "TRANSACTION_ACTION_ACCEPT" = "ACCEPTER";
 "TRANSACTION_ACTION_REFUSE" = "IGNORER";
 "TRANSACTION_ACTION_CANCEL" = "ANNULER";
+"TRANSACTION_ACTION_WAITING" = "EN ATTENTE";
 
 "TRANSACTION_STATUS_ACCEPTED" = "Accepted";
 "TRANSACTION_STATUS_REFUSED" = "Refused";
@@ -208,7 +209,7 @@
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_WAITING" = "Invité";
 
-"SECORE_CODE_TEXT_FIRST_TIME" = "Le code de sécurité permet d'éviter blablabla.";
+"SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser votre application en cas de perte ou de vol de votre mobile.";
 "SECORE_CODE_TEXT_CURRENT" = "Entrez votre code :";
 "SECORE_CODE_TEXT_OLD" = "Entrez votre ancien code :";
 "SECORE_CODE_TEXT_NEW" = "Entrez votre nouveau code :";
