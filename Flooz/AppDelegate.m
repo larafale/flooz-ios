@@ -61,6 +61,9 @@
                                              @"phone": [[[Flooz sharedInstance] currentUser] phone],
                                               }];    
     
+    [[Analytics sharedAnalytics] track:@"onBoard"];
+    [[Analytics sharedAnalytics] screen:@"firstScreen"];
+    
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     

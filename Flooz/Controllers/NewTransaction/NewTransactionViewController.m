@@ -230,7 +230,7 @@
                                                                                         }
                                                                                         completion:^(BOOL finished) {
                                                                                             if(!infoDisplayed){
-                                                                                                [content becomeFirstResponder];
+//                                                                                                [content becomeFirstResponder];
                                                                                                 infoDisplayed = YES;
                                                                                             }
                                                                                             

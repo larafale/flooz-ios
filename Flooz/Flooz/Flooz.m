@@ -302,6 +302,7 @@
 {
     NSMutableDictionary *tempTransaction = [transaction mutableCopy];
     [tempTransaction removeObjectForKey:@"image"];
+    [tempTransaction removeObjectForKey:@"toImage"];
     tempTransaction[@"validate"] = @"true";
     
     id failure = ^(AFHTTPRequestOperation *operation, NSError *error){
@@ -309,7 +310,7 @@
             noCreditCard();
         }
     };
-    
+        
     [self requestPath:@"flooz?validate=true" method:@"POST" params:tempTransaction success:success fullFailure:failure];
 }
 
