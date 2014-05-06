@@ -45,6 +45,9 @@
 
 @property BOOL isFriendWaiting;
 
+@property NSString *record;
+@property NSString *device;
+
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)updateStatsPending:(NSDictionary *)json;
 

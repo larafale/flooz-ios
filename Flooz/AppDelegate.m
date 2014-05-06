@@ -53,16 +53,24 @@
 
 - (void)didConnected
 {
-    [[Analytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
-                                   traits:@{
-                                             @"email": [[[Flooz sharedInstance] currentUser] email],
-                                             @"nick": [[[Flooz sharedInstance] currentUser] username],
-                                             @"name": [[[Flooz sharedInstance] currentUser] fullname],
-                                             @"phone": [[[Flooz sharedInstance] currentUser] phone],
-                                              }];    
+    NSMutableDictionary *params = [@{
+                             @"firstName": [[[Flooz sharedInstance] currentUser] firstname],
+                             @"lastName": [[[Flooz sharedInstance] currentUser] lastname],
+                             @"email": [[[Flooz sharedInstance] currentUser] email],
+                             @"record":[[[Flooz sharedInstance] currentUser] record],
+                             @"id": [[[Flooz sharedInstance] currentUser] userId],
+                             @"username": [[[Flooz sharedInstance] currentUser] username],
+                             @"phone": [[[Flooz sharedInstance] currentUser] phone],
+                             @"$ios_devices": @[]
+                             } mutableCopy];
     
-    [[Analytics sharedAnalytics] track:@"onBoard"];
-    [[Analytics sharedAnalytics] screen:@"firstScreen"];
+    if([[[Flooz sharedInstance] currentUser] device]){
+        params[@"$ios_devices"] = @[[[[Flooz sharedInstance] currentUser] device]];
+    }
+    
+    [[Analytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
+                                   traits:params];
+    
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -156,6 +164,8 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [[Flooz sharedInstance] socketSendSessionEnd];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

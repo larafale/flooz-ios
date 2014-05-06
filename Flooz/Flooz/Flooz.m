@@ -17,6 +17,8 @@
 #import <Accounts/Accounts.h>
 #import <UICKeyChainStore.h>
 
+#import "Analytics/Analytics.h"
+
 @implementation Flooz
 
 + (Flooz *)sharedInstance
@@ -71,6 +73,10 @@
 {
     id successBlock = ^(id result) {
         [self updateCurrentUserAfterConnect:result];
+        
+        [[Analytics sharedAnalytics] track:@"signup" properties:@{
+                                                                  @"userId": [[[Flooz sharedInstance] currentUser] userId]
+                                                                  }];
         
         if(success){
             success(result);
@@ -613,6 +619,14 @@
             path = [path stringByAppendingFormat:@"&token=%@", access_token];
         }
     }
+    
+    if([path rangeOfString:@"?"].location == NSNotFound){
+        path = [path stringByAppendingString:@"?via=ios"];
+    }
+    else{
+        path = [path stringByAppendingString:@"&via=ios"];
+    }
+    
 
     id successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"JSON: %@", responseObject);
@@ -905,6 +919,7 @@
 - (void)socketIODidConnect:(SocketIO *)socket
 {
     [socket sendEvent:@"subscribe" withData:@{ @"room": [_currentUser username], @"token": access_token }];
+    [_socket sendEvent:@"session start" withData:@{ @"token": access_token, @"nick": [_currentUser username] }];
 }
 
 - (void)socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error
@@ -944,6 +959,11 @@
 - (void)socketSendCloseActivities
 {
     [_socket sendEvent:@"feed close" withData:@{ @"token": access_token }];
+}
+
+- (void)socketSendSessionEnd
+{
+    [_socket sendEvent:@"session end" withData:@{ @"token": access_token, @"nick": [_currentUser username] }];
 }
 
 @end

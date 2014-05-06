@@ -108,5 +108,6 @@
 
 - (void)startSocket;
 - (void)socketSendCloseActivities;
+- (void)socketSendSessionEnd;
 
 @end

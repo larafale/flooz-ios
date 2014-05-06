@@ -158,6 +158,12 @@
     if(json[@"state"] && ![json[@"state"] isEqualToNumber:@1]){
         _isFriendWaiting = YES;
     }
+    
+    _record = json[@"record"];
+    
+    if(json[@"settings"]){
+        _device = json[@"settings"][@"device"];
+    }
 }
 
 - (void)updateStatsPending:(NSDictionary *)json
