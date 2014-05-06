@@ -36,6 +36,8 @@
     alertView = [FLAlertView new];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     if([[Flooz sharedInstance] autologin]){
         self.window.rootViewController = [UIViewController new];
@@ -70,10 +72,6 @@
     
     [[Analytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
                                    traits:params];
-    
-    
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     CompleteBlock completeBlock = ^{
         FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [EventsViewController new]]];
@@ -171,16 +169,6 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    
-    if([[Flooz sharedInstance] currentUser]){
-        [[Analytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
-                                       traits:@{
-                                                @"email": [[[Flooz sharedInstance] currentUser] email],
-                                                @"nick": [[[Flooz sharedInstance] currentUser] username],
-                                                @"name": [[[Flooz sharedInstance] currentUser] fullname],
-                                                @"phone": [[[Flooz sharedInstance] currentUser] phone],
-                                                }];
-    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -247,6 +235,10 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     _currentDeviceToken  = [NSString stringWithFormat:@"%@", deviceToken];
+    _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@">" withString:@""];
+    
     NSLog(@"Notification token: %@", _currentDeviceToken);
 }
 

@@ -51,7 +51,9 @@
         _avatarURL = nil;
     }
     
-    _deviceToken = json[@"settings"][@"device"];
+    if(json[@"settings"]){
+        _deviceToken = json[@"settings"][@"device"];
+    }
     
     _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
     _eventsCount = [[[json objectForKey:@"stats"] objectForKey:@"event"] objectForKey:@"created"];

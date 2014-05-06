@@ -892,7 +892,7 @@
     if(!_currentUser || !appDelegate.currentDeviceToken || [[_currentUser deviceToken] isEqualToString:appDelegate.currentDeviceToken]){
         return;
     }
-
+    
     [self updateUser:@{ @"settings": @{@"device": appDelegate.currentDeviceToken }} success:^(id result) {
         _currentUser.deviceToken = appDelegate.currentDeviceToken;
     } failure:nil];
@@ -918,8 +918,10 @@
 
 - (void)socketIODidConnect:(SocketIO *)socket
 {
-    [socket sendEvent:@"subscribe" withData:@{ @"room": [_currentUser username], @"token": access_token }];
-    [_socket sendEvent:@"session start" withData:@{ @"token": access_token, @"nick": [_currentUser username] }];
+    if(_socket && access_token){
+        [socket sendEvent:@"subscribe" withData:@{ @"room": [_currentUser username], @"token": access_token }];
+        [_socket sendEvent:@"session start" withData:@{ @"token": access_token, @"nick": [_currentUser username] }];
+    }
 }
 
 - (void)socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error
@@ -963,7 +965,9 @@
 
 - (void)socketSendSessionEnd
 {
-    [_socket sendEvent:@"session end" withData:@{ @"token": access_token, @"nick": [_currentUser username] }];
+    if(_socket && access_token){
+        [_socket sendEvent:@"session end" withData:@{ @"token": access_token, @"nick": [_currentUser username] }];
+    }
 }
 
 @end
