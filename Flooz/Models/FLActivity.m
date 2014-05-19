@@ -40,6 +40,11 @@
         }
     }
     
+    _isForCompleteProfil = NO;
+    if([json[@"type"] isEqualToString:@"completeProfile"]){
+        _isForCompleteProfil = YES;
+    }
+    
     {
         static NSDateFormatter *dateFormatter;
         if(!dateFormatter){

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
+		AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0857FC1923AB13007C1927 /* SplashViewController.m */; };
+		AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
 		AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB618E46861008E03FE /* libicucore.dylib */; };
 		AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB818E4686A008E03FE /* CFNetwork.framework */; };
 		AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBBA18E46872008E03FE /* Security.framework */; };
@@ -183,6 +185,9 @@
 /* Begin PBXFileReference section */
 		1686D3DC8F1E47F8A8972682 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		AB0857FB1923AB13007C1927 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashViewController.h; path = Controllers/Splash/SplashViewController.h; sourceTree = "<group>"; };
+		AB0857FC1923AB13007C1927 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashViewController.m; path = Controllers/Splash/SplashViewController.m; sourceTree = "<group>"; };
+		AB0857FD1923AB13007C1927 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashViewController.xib; path = Controllers/Splash/SplashViewController.xib; sourceTree = "<group>"; };
 		AB15DBB618E46861008E03FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		AB15DBB818E4686A008E03FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		AB15DBBA18E46872008E03FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -512,6 +517,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB0857FA1923AAF9007C1927 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				AB0857FB1923AB13007C1927 /* SplashViewController.h */,
+				AB0857FC1923AB13007C1927 /* SplashViewController.m */,
+				AB0857FD1923AB13007C1927 /* SplashViewController.xib */,
+			);
+			name = Splash;
+			sourceTree = "<group>";
+		};
 		AB2FB52F18AD40120079AA1D /* CashOut */ = {
 			isa = PBXGroup;
 			children = (
@@ -728,6 +743,7 @@
 				AB7C9B1E18D73AD2002775BA /* SecureCode */,
 				AB5EB6DF188214F000D81AF6 /* Settings */,
 				AB4CB6F41886C1B000D1C573 /* Signup */,
+				AB0857FA1923AAF9007C1927 /* Splash */,
 				AB5EB6E9188214F000D81AF6 /* Timeline */,
 				ABF7092618A2CA1300517389 /* Transaction */,
 				AB6DA50718C4A5BC0073B947 /* Web */,
@@ -1703,6 +1719,7 @@
 				AB5EB6F0188214F000D81AF6 /* SettingsViewController.xib in Resources */,
 				AB5EB6F81882151000D81AF6 /* TimelineViewController.xib in Resources */,
 				ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */,
+				AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */,
 				AB6DA50C18C4A5D80073B947 /* WebViewController.xib in Resources */,
 				ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */,
 				ABEC02A118D20DA300C03025 /* DocumentsViewController.xib in Resources */,
@@ -1825,6 +1842,7 @@
 				ABF7093E18A4D63300517389 /* EventCell.m in Sources */,
 				ABC1115218ACE4AA00C3C52D /* TransactionCommentsView.m in Sources */,
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
+				AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */,
 				AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */,
 				ABE9149818967670003AC722 /* FLTextFieldIcon.m in Sources */,
 				ABB12D7018BFA2D2002FCAAE /* EventParticipantCell.m in Sources */,
@@ -2053,7 +2071,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5641C55A-6724-4CE3-803F-1AC40A819DB3";
+				PROVISIONING_PROFILE = "2E54E687-448D-43AA-A8A3-43C19464731C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2087,7 +2105,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5641C55A-6724-4CE3-803F-1AC40A819DB3";
+				PROVISIONING_PROFILE = "2E54E687-448D-43AA-A8A3-43C19464731C";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

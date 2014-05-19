@@ -201,7 +201,7 @@
     }
     
     // Taille limite
-    if(textField == amount && amount.text.length == 3){
+    if(textField == amount && amount.text.length == 4){
         return NO;
     }
     

@@ -45,6 +45,8 @@
         [self createTextField2:placeholder2];
         [self createBottomBar];
         
+        _readOnly = NO;
+        
         _textfield.text = [_dictionary objectForKey:_dictionaryKey];
         _textfield2.text = [_dictionary objectForKey:_dictionaryKey2];
     }
@@ -162,6 +164,11 @@
     }
     
     return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return !_readOnly;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField

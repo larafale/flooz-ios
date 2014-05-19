@@ -49,7 +49,7 @@
 
 - (void)createNameView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 17, CGRectGetWidth(self.frame) - 75, 11)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 17, CGRectGetWidth(self.frame) - 75, 13)];
     
     view.font = [UIFont customContentBold:13];
     view.textColor = [UIColor whiteColor];

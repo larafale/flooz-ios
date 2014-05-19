@@ -116,11 +116,12 @@
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(42, 0, 1, 0)];
     FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMake(25, 0, 34, 34)];
     UILabel *content = [[UILabel alloc] initWithFrame:CGRectMake(70, 00, 210, 0)];
+    UILabel *dateView = [[UILabel alloc] initWithFrame:CGRectMakeSize(0, 15)];
     
     separator.backgroundColor = [UIColor customSeparator];
     
     content.font = [UIFont customContentLight:12];
-    content.textColor = [UIColor customPlaceholder];
+    content.textColor = [UIColor whiteColor];
     content.numberOfLines = 0;
     
     [avatar setImageFromUser:comment.user];
@@ -138,9 +139,22 @@
     CGRectSetHeight(separator.frame, CGRectGetHeight(view.frame));
     CGRectSetY(avatar.frame, (CGRectGetHeight(view.frame) - CGRectGetHeight(avatar.frame)) / 2);
     
+    {
+        dateView.textAlignment = NSTextAlignmentRight;
+        dateView.textColor = [UIColor customPlaceholder];
+        dateView.font = [UIFont customContentLight:9];
+        
+        dateView.text = [NSString stringWithFormat:@"%@ %@ @%@", [comment when], NSLocalizedString(@"GLOBAL_BY", nil), [[comment user] username]];
+        [dateView setWidthToFit];
+        
+        CGRectSetX(dateView.frame, CGRectGetWidth(view.frame) - CGRectGetWidth(dateView.frame) - MARGIN_LEFT_RIGHT);
+        CGRectSetY(dateView.frame, CGRectGetHeight(view.frame) - 15 - 2);
+    }
+    
     [view addSubview:separator];
     [view addSubview:avatar];
     [view addSubview:content];
+    [view addSubview:dateView];
     
     return  view;
 }

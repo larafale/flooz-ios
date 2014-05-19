@@ -36,6 +36,7 @@
     
     [self createAvatarView];
     [self createTextView];
+    [self createUsernameView];
     [self createAmountView];
 }
 
@@ -45,10 +46,20 @@
 }
 
 - (void)createTextView{
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, CGRectGetWidth(self.frame) - 70 - 60 - 15, [[self class] getHeight])];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, CGRectGetWidth(self.frame) - 70 - 60 - 15, [[self class] getHeight])];
     
     view.textColor = [UIColor whiteColor];
     view.font = [UIFont customTitleLight:13];
+    
+    [self.contentView addSubview:view];
+}
+
+
+- (void)createUsernameView{
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, CGRectGetWidth(self.frame) - 70 - 60 - 15, [[self class] getHeight])];
+    
+    view.font = [UIFont customContentRegular:10];
+    view.textColor = [UIColor customBlue];
     
     [self.contentView addSubview:view];
 }
@@ -68,6 +79,7 @@
 - (void)prepareViews{
     [self prepareAvatarView];
     [self prepapreTextView];
+    [self prepapreUsernameView];
     [self prepapreAmountView];
 }
 
@@ -79,17 +91,25 @@
 - (void)prepapreTextView{
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
     view.text = [[_user fullname] uppercaseString];
+    [view setWidthToFit];
+}
+
+- (void)prepapreUsernameView{
+    UILabel *view = [[self.contentView subviews] objectAtIndex:2];
+    view.text = [NSString stringWithFormat:@"@%@", [_user username]];
+    
+    UILabel *titleLabel = [[self.contentView subviews] objectAtIndex:1];
+    CGRectSetX(view.frame, CGRectGetMaxX(titleLabel.frame) + 5);
 }
 
 - (void)prepapreAmountView{
-    UILabel *view = [[self.contentView subviews] objectAtIndex:2];
+    UILabel *view = [[self.contentView subviews] objectAtIndex:3];
     
     if([[_user amount] floatValue] > 0){
         view.text = [FLHelper formatedAmount:[_user amount] withSymbol:NO];
-        view.hidden = NO;
     }
     else{
-        view.hidden = YES;
+        view.text = @"-";
     }
 }
 

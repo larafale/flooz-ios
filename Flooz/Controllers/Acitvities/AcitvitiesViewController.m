@@ -14,6 +14,9 @@
 #import "EventViewController.h"
 #import "FriendsViewController.h"
 
+#import "FLContainerViewController.h"
+#import "AppDelegate.h"
+
 @interface AcitvitiesViewController ()
 
 @end
@@ -79,17 +82,8 @@
         tableHeaderView.hidden = YES;
         
         [self showTableView];
-        
-        [[Flooz sharedInstance] activitiesWithSuccess:^(id result, NSString *nextPageUrl) {
-            activities = [result mutableCopy];;
-            _nextPageUrl = nextPageUrl;
-            [refreshControl endRefreshing];
-            
-            [self refreshTableHeaderView];
-            [_tableView reloadData];
-            [_tableView setContentOffset:CGPointZero animated:NO];
-        } failure:NULL];
-        
+        [self loadCachedActivities];
+        [self handleRefresh];
     }
 }
 
@@ -178,6 +172,14 @@
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
         [self presentViewController:controller animated:YES completion:NULL];
     }
+    else if([activity isForCompleteProfil]){
+        id complete = ^{
+            FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
+            [rootController.navbarView loadControllerWithIndex:0];
+        };
+        
+        [self dismiss:complete];
+    }
 }
 
 - (void)handleRefresh
@@ -185,7 +187,7 @@
     [refreshControl beginRefreshing];
     
     [[Flooz sharedInstance] activitiesWithSuccess:^(id result, NSString *nextPageUrl) {
-        activities = [result mutableCopy];;
+        activities = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
         [refreshControl endRefreshing];
         
@@ -197,6 +199,11 @@
 
 - (void)dismiss
 {
+    [self dismiss:nil];
+}
+
+- (void)dismiss:(id)complete
+{
     [[Flooz sharedInstance] socketSendCloseActivities];
     
     [UIView animateWithDuration:.4 animations:^{
@@ -204,7 +211,7 @@
         tableViewShadow.frame = _tableView.frame;
         CGRectSetY(tableHeaderView.frame, _tableView.frame.origin.y - CGRectGetHeight(tableHeaderView.frame));
     } completion:^(BOOL finished) {
-        [self dismissViewControllerAnimated:NO completion:NULL];
+        [self dismissViewControllerAnimated:NO completion:complete];
     }];
 }
 
@@ -302,6 +309,15 @@
         [self.view addGestureRecognizer:closeGesture];
     }
 
+}
+
+- (void)loadCachedActivities
+{
+    activities = [[[Flooz sharedInstance] activitiesCached] mutableCopy];
+        
+    [self refreshTableHeaderView];
+    [_tableView reloadData];
+    [_tableView setContentOffset:CGPointZero animated:YES];
 }
 
 @end

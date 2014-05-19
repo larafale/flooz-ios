@@ -53,8 +53,9 @@
     self.view.backgroundColor = [UIColor customBackground];
     
     {
-        textCode = [[UILabel alloc] initWithFrame:CGRectMake(20, 25, 300, 20)];
+        textCode = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 320, 20)];
         
+        textCode.textAlignment = NSTextAlignmentCenter;
         textCode.textColor = [UIColor customBlueLight];
         textCode.font = [UIFont customContentRegular:14];
         
@@ -71,7 +72,7 @@
     }
     
     {
-        passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, 150, CGRectGetWidth(self.view.frame), 50)];
+        passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, 110, CGRectGetWidth(self.view.frame), 50)];
         passwordForget.titleLabel.textAlignment = NSTextAlignmentCenter;
         passwordForget.titleLabel.font = [UIFont customContentRegular:12];
         [passwordForget setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
@@ -83,7 +84,7 @@
     }
     
     {
-        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 180, 280, 60)];
+        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 140, 280, 60)];
         
         firstTimeText.textColor = [UIColor customBlueLight];
         firstTimeText.font = [UIFont customContentRegular:14];
@@ -128,6 +129,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    // Sinon le bouton retour ne disparait pas
+    [self refreshController];
     
     // Car bug uniquement apres autologin
     CGRectSetY(keyboardView.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(keyboardView.frame));
@@ -263,11 +267,15 @@
         firstTimeText.hidden = YES;
     }
     
-    if(!currentSecureCode){
-        [[self navigationItem] setHidesBackButton:YES];
-        [[self navigationItem] setLeftBarButtonItem:nil];
+    if(currentSecureMode == SecureCodeModeChangeNew || currentSecureMode == SecureCodeModeChangeConfirm){
+        passwordForget.hidden = YES;
     }
     
+    if(!currentSecureCode){        
+        self.navigationItem.hidesBackButton = YES;
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+
     BOOL isFirstView = textCode.text == nil || [textCode.text isBlank];
     
     // Textes

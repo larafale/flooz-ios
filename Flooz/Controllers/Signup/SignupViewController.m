@@ -134,6 +134,7 @@
     
     if([_user objectForKey:@"avatarURL"]){
         [username becomeFirstResponder];
+        [[Flooz sharedInstance] socketSendSignupFocusUsername];
     }
     else{
         [name becomeFirstResponder];
@@ -193,6 +194,7 @@
 - (void)didEmailEndEditing
 {
     [username becomeFirstResponder];
+    [[Flooz sharedInstance] socketSendSignupFocusUsername];
 }
 
 - (void)didUsernameEndEditing

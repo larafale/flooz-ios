@@ -48,6 +48,14 @@
     
     [button addTarget:self action:@selector(didButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     
+    {
+        usernameView = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(button.frame.size)];
+        [button addSubview:usernameView];
+        
+        usernameView.font = [UIFont customContentRegular:10];
+        usernameView.textColor = [UIColor customBlue];
+    }
+    
     [self addSubview:button];
 }
 
@@ -82,6 +90,19 @@
     }
     else{
         [userView setImageFromData:nil];
+    }
+    
+    if(_dictionary[@"toUsername"] && ![_dictionary[@"toUsername"] isBlank]){
+        usernameView.hidden = NO;
+        usernameView.text = [NSString stringWithFormat:@"@%@", _dictionary[@"toUsername"]];
+        
+        CGFloat width = CGRectGetWidth(button.titleLabel.frame);
+        [button.titleLabel setWidthToFit];
+        CGRectSetX(usernameView.frame, CGRectGetWidth(button.titleLabel.frame) + 5);
+        CGRectSetWidth(button.titleLabel.frame, width);
+    }
+    else{
+        usernameView.hidden = YES;
     }
 }
 

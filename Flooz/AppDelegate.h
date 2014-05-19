@@ -29,4 +29,6 @@
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 - (void)loadSignupWithUser:(NSDictionary *)user;
 
+- (void)showPreviewImage:(NSString *)imageNamed;
+
 @end

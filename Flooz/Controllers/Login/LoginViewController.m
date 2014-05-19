@@ -62,7 +62,7 @@
         [self.view addSubview:right];
         
         UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(left.frame), 105, CGRectGetWidth(self.view.frame) - 2 * (CGRectGetWidth(left.frame) + MARGE), 15)];
-        text.text = NSLocalizedString(@"LOGIN_OR", nil);;
+        text.text = NSLocalizedString(@"LOGIN_OR", nil);
         text.textColor = [UIColor whiteColor];
         text.textAlignment = NSTextAlignmentCenter;
         text.font = [UIFont customContentLight:14];

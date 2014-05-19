@@ -54,6 +54,8 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         transaction = [NSMutableDictionary new];
+        
+        transaction[@"random"] = [FLHelper generateRandomString];
 
         isEvent = (transactionType == TransactionTypeEvent);
         [transaction setValue:[FLTransaction transactionTypeToParams:transactionType] forKey:@"method"];

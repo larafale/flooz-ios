@@ -23,6 +23,19 @@
 {    
     _content = [json objectForKey:@"comment"];
     _user = [[FLUser alloc] initWithJSON:json];
+    
+    {
+        static NSDateFormatter *dateFormatter;
+        if(!dateFormatter){
+            dateFormatter = [NSDateFormatter new];
+            [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+            [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
+        }
+        
+        _date = [dateFormatter dateFromString:[json objectForKey:@"cAt"]];
+    }
+    
+    _when = [FLHelper formatedDateFromNow:_date];
 }
 
 @end

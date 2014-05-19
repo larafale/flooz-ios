@@ -28,7 +28,6 @@
                   @"why",
                   @"terms",
                   @"faq",
-                  @"website",
                   @"contact"
                   ];
     }
@@ -90,9 +89,6 @@
             url = @"n/faq";
             break;
         case 3:
-            url = @"";
-            break;
-        case 4:
             url = @"n/contact";
             break;
         default:

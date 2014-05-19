@@ -8,11 +8,13 @@
 
 #import "SecureCodeField.h"
 
+#define WIDTH 62.
+
 @implementation SecureCodeField
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectMake(20, frame.origin.y, 280, 100);
+    frame = CGRectMake(0, frame.origin.y, 320, 70);
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInit];
@@ -24,7 +26,7 @@
 {
     for(int i = 0; i < 4; ++i){
         UILabel *label = [self createLabel];
-        CGRectSetX(label.frame, i * CGRectGetWidth(self.frame) / 4.);
+        CGRectSetX(label.frame, i * (WIDTH + 14) + 14);
         [self addSubview:label];
     }
     
@@ -34,9 +36,11 @@
 
 - (UILabel *)createLabel
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMakeSize(WIDTH, WIDTH)];
     
     label.layer.borderWidth = 1.;
+    label.layer.cornerRadius = 3;
+    label.clipsToBounds = YES;
     label.layer.borderColor = [[UIColor customSeparator] CGColor];
     label.backgroundColor = [UIColor customBackgroundHeader];
     label.font = [UIFont customTitleThin:44];
@@ -57,7 +61,7 @@
     
     for(int i = 0; i < [dotViews count]; ++i){
         UIView *dot = dotViews[i];
-        dot.frame = CGRectMake(i * 70 + 35, CGRectGetHeight(self.frame) / 2., 5, 5);
+        dot.frame = CGRectMake(i * (WIDTH + 14) + 14 + (WIDTH / 2.) - 2, CGRectGetHeight(self.frame) / 2., 5, 5);
         dot.layer.cornerRadius = CGRectGetHeight(dot.frame) / 2.;
         dot.backgroundColor = [UIColor whiteColor];
         [self addSubview:dot];

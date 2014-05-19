@@ -73,7 +73,7 @@
         CGRectSetHeight(self.frame, 0);
     }
     
-    view.text = [FLHelper formatedAmount:[_transaction amount]];
+    view.text = [FLHelper formatedAmount:[_transaction amount] withSymbol:NO];
     CGRectSetHeight(self.frame, HEIGHT);
 }
 

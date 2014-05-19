@@ -42,6 +42,7 @@ typedef NS_ENUM(NSInteger, EventAction) {
 @property NSNumber *dayLeft;
 @property NSNumber *pourcentage;
 @property BOOL isClosed;
+@property BOOL isCreator;
 
 @property NSString *avatarURL;
 

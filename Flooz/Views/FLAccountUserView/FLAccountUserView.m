@@ -52,9 +52,9 @@
     }
     
     {
-        CGFloat WIDTH = 90.;
+        CGFloat WIDTH = SCREEN_WIDTH / 3.;
         CGFloat HEIGHT = 17.;
-        CGFloat MARGE = (CGRectGetWidth(self.frame) - (3 * WIDTH)) / 2.;
+        CGFloat MARGE = 0; // (CGRectGetWidth(self.frame) - (3 * WIDTH)) / 2.;
         CGFloat Y = 150.;
         
         friends = [[UILabel alloc] initWithFrame:CGRectMake(MARGE, Y, WIDTH, HEIGHT)];

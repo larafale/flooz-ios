@@ -19,6 +19,9 @@
     FLUserView *userView;
     FLSwitchView *facebookButton;
     
+    FLTextFieldIcon *fieldPhone;
+    FLTextFieldIcon *fieldEmail;
+    
     UIButton *sendValidationSMS;
     UIButton *sendValidationEmail;
 }
@@ -98,17 +101,17 @@
     }
     
     {
-        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" frame:CGRectMake(MARGE, height, 225, 0)];
-        [_contentView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+        fieldPhone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" frame:CGRectMake(MARGE, height, 225, 0)];
+        [_contentView addSubview:fieldPhone];
+        height = CGRectGetMaxY(fieldPhone.frame);
     }
     
     {
-        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:_user key:@"email" position:CGPointMake(MARGE, height)];
-        [_contentView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+        fieldEmail = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:_user key:@"email" position:CGPointMake(MARGE, height)];
+        [_contentView addSubview:fieldEmail];
+        height = CGRectGetMaxY(fieldEmail.frame);
     }
-
+        
     {
         sendValidationSMS = [[UIButton alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_contentView.frame) / 2., 50)];
         
@@ -118,7 +121,7 @@
         [sendValidationSMS setTitle:NSLocalizedString(@"EDIT_ACCOUNT_SEND_SMS", nil) forState:UIControlStateNormal];
         [_contentView addSubview:sendValidationSMS];
         
-        [sendValidationSMS addTarget:self action:@selector(didSendSMSValidationTouch) forControlEvents:UIControlEventTouchUpInside];
+        [sendValidationSMS addTarget:self action:@selector(didSendSMSValidationTouch:) forControlEvents:UIControlEventTouchUpInside];
         
         height = CGRectGetMaxY(sendValidationSMS.frame);
     }
@@ -132,8 +135,23 @@
         [sendValidationEmail setTitle:NSLocalizedString(@"EDIT_ACCOUNT_SEND_MAIL", nil) forState:UIControlStateNormal];
         [_contentView addSubview:sendValidationEmail];
         
-        [sendValidationEmail addTarget:self action:@selector(didSendEmailValidationTouch) forControlEvents:UIControlEventTouchUpInside];
+        [sendValidationEmail addTarget:self action:@selector(didSendEmailValidationTouch:) forControlEvents:UIControlEventTouchUpInside];
     }
+    
+    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:@"phone"] boolValue]){
+        sendValidationSMS.hidden = YES;
+    }
+    else{
+        [fieldPhone setReadOnly:YES];
+    }
+    
+    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:@"email"] boolValue]){
+        sendValidationEmail.hidden = YES;
+    }
+    else{
+        [fieldEmail setReadOnly:YES];
+    }
+    
     
     {
         UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(MARGE, height + 40, CGRectGetWidth(self.view.frame) - MARGE, 15)];
@@ -335,14 +353,16 @@
     }];
 }
 
-- (void)didSendSMSValidationTouch
+- (void)didSendSMSValidationTouch:(UIButton *)sender
 {
-    
+    [[Flooz sharedInstance] sendSMSValidation];
+    sender.hidden = YES;
 }
 
-- (void)didSendEmailValidationTouch
+- (void)didSendEmailValidationTouch:(UIButton *)sender
 {
-    
+    [[Flooz sharedInstance] sendEmailValidation];
+    sender.hidden = YES;
 }
 
 @end

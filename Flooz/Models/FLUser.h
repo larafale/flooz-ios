@@ -47,6 +47,7 @@
 
 @property NSString *record;
 @property NSString *device;
+@property NSDictionary *settings;
 
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)updateStatsPending:(NSDictionary *)json;

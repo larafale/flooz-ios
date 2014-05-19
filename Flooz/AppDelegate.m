@@ -10,6 +10,8 @@
 
 #import "FLContainerViewController.h"
 
+#import "SplashViewController.h"
+
 #import "HomeViewController.h"
 #import "SignupViewController.h"
 
@@ -39,13 +41,11 @@
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
-    if([[Flooz sharedInstance] autologin]){
-        self.window.rootViewController = [UIViewController new];
-    }
-    else{
-        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-        
-        self.window.rootViewController = controller;
+    // Doit etre un FLNavigationController, sinon dans le cas ou appel secureCode la vue ne peut pas etre push
+    self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[SplashViewController new]];
+    
+    if(![[Flooz sharedInstance] autologin]){
+        self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     }
 
     [Analytics initializeWithSecret:@"2jcb70koii"];
@@ -55,20 +55,15 @@
 
 - (void)didConnected
 {
-    NSMutableDictionary *params = [@{
+    NSDictionary *params = @{
                              @"firstName": [[[Flooz sharedInstance] currentUser] firstname],
                              @"lastName": [[[Flooz sharedInstance] currentUser] lastname],
                              @"email": [[[Flooz sharedInstance] currentUser] email],
                              @"record":[[[Flooz sharedInstance] currentUser] record],
                              @"id": [[[Flooz sharedInstance] currentUser] userId],
                              @"username": [[[Flooz sharedInstance] currentUser] username],
-                             @"phone": [[[Flooz sharedInstance] currentUser] phone],
-                             @"$ios_devices": @[]
-                             } mutableCopy];
-    
-    if([[[Flooz sharedInstance] currentUser] device]){
-        params[@"$ios_devices"] = @[[[[Flooz sharedInstance] currentUser] device]];
-    }
+                             @"phone": [[[Flooz sharedInstance] currentUser] phone]
+                             };
     
     [[Analytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
                                    traits:params];
@@ -91,7 +86,7 @@
         controller.completeBlock = completeBlock;
         
         FLNavigationController *rootController = (FLNavigationController *)self.window.rootViewController;
-        [rootController pushViewController:controller animated:YES];
+        [rootController pushViewController:controller animated:NO];
     }
     else{
         completeBlock();
@@ -298,6 +293,30 @@
             
         }
     }
+}
+
+#pragma mark - Image fullscreen
+
+- (void)showPreviewImage:(NSString *)imageNamed
+{
+    NSString *key = [NSString stringWithFormat:@"preview-%@", imageNamed];
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:key]){
+        return;
+    }
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:key];
+    
+    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(self.window.frame.size)];
+    [view addTarget:self action:@selector(removePreviewImage:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [view setImage:[UIImage imageNamed:imageNamed] forState:UIControlStateNormal];
+    
+    [self.window addSubview:view];
+}
+
+- (void)removePreviewImage:(UIView *)view
+{
+    [view removeFromSuperview];
 }
 
 @end

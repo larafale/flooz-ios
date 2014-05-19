@@ -51,7 +51,7 @@
         return nil;
     }
     
-    return [NSString stringWithFormat:@"%ld %@", (unsigned long)[[_event participants] count], NSLocalizedString(@"NAV_EVENT_PARTICIPANTS", nil)];
+    return [NSString stringWithFormat:@"%ld %@", (unsigned long)[[_event participants] count], NSLocalizedString(@"EVENT_PARTICIPANTS_S", nil)];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -75,7 +75,7 @@
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(24, 0, 0, CGRectGetHeight(view.frame))];
         
-        label.textColor = [UIColor customBlueLight];
+        label.textColor = [UIColor customBlue];
         
         label.font = [UIFont customContentRegular:10];
         label.text = [self tableView:tableView titleForHeaderInSection:section];

@@ -246,6 +246,10 @@
             [contact setValue:[friend lastname] forKeyPath:@"lastname"];
         }
         
+        if([friend username] && ![[friend username] isBlank]){
+            [contact setValue:[friend username] forKeyPath:@"username"];
+        }
+        
         if([friend avatarURL] && ![[friend avatarURL] isBlank]){
             [contact setValue:[friend avatarURL] forKeyPath:@"image_url"];
         }
@@ -297,6 +301,10 @@
         }
     }
     
+    if(![[contact objectForKey:@"username"] isBlank]){
+        [_dictionary setValue:[contact objectForKey:@"username"] forKey:@"toUsername"];
+    }
+        
     if(_event){
         [self inviteEvent:_dictionary];
         id cell = [tableView cellForRowAtIndexPath:indexPath];

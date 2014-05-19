@@ -149,15 +149,25 @@
                                    @"value": [NSNumber numberWithBool:(!switchView.on)]
                                    };
     
-    [[Flooz sharedInstance] showLoadView];
+    BOOL nextValue = !switchView.on;
+    
+//    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateNotification:notificationAPI success:^(id result) {
-        [switchView setOn:(!switchView.on) animated:YES];
+        [switchView setOn:nextValue animated:YES];
         [self notificationValue:switchView.on indexPath:indexPath];
         [self refreshSwitchViewColors:switchView];
-    } failure:NULL];
+    } failure:^(NSError *error) {
+        [switchView setOn:!nextValue animated:YES];
+        [self notificationValue:switchView.on indexPath:indexPath];
+        [self refreshSwitchViewColors:switchView];
+    }];
+    
+    [switchView setOn:nextValue animated:YES];
+    [self notificationValue:switchView.on indexPath:indexPath];
+    [self refreshSwitchViewColors:switchView];
 }
 
-#pragma mark - 
+#pragma mark -
 
 - (NSString *)notificationTitleAtIndexPath:(NSIndexPath *)indexPath
 {

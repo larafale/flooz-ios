@@ -12,6 +12,8 @@
 
 @property FLUser *user;
 @property NSString *content;
+@property NSDate *date;
+@property NSString *when;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

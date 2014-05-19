@@ -17,6 +17,7 @@
 @property NSString *eventId;
 @property NSString *transactionId;
 @property BOOL isFriend;
+@property BOOL isForCompleteProfil;
 
 @property NSDate *date;
 @property NSString *when;

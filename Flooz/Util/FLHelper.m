@@ -11,6 +11,19 @@
 
 @implementation FLHelper
 
++ (NSString *)generateRandomString
+{
+    const int randomStringLength = 16;
+    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    NSMutableString *randomString = [NSMutableString stringWithCapacity:randomStringLength];
+    
+    for(int i = 0; i < randomStringLength; i++){
+        [randomString appendFormat: @"%C", [letters characterAtIndex:(arc4random() % [letters length])]];
+    }
+    
+    return randomString;
+}
+
 + (NSString *)formatedAmount:(NSNumber *)amount
 {
     return [self formatedAmount:amount withCurrency:YES withSymbol:YES];

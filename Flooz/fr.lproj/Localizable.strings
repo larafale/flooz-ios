@@ -8,6 +8,7 @@
 
 "GLOBAL_OR" = "ou";
 "GLOBAL_OK" = "Ok";
+"GLOBAL_BY" = "par";
 "GLOBAL_ERROR" =  "Erreur";
 "GLOBAL_CANCEL" = "Annuler";
 "GLOBAL_CAMERA" = "Appareil photo";
@@ -35,8 +36,10 @@
 "NAV_CREDIT_CARD_ADD" = "Ajouter une CB";
 "NAV_EVENT_PARTICIPANTS" = "Participants";
 "NAV_FRIENDS" = "Amis";
-"NAV_DOCUMENTS" = "Documents";
-"NAV_SECURE_CODE" = "Code de sécurité";
+"NAV_DOCUMENTS" = "Justificatifs";
+"NAV_SECURE_CODE" = "Sécurité";
+
+"SPLASH_TEXT" = "FLOOZ\n\nPartagez et simplifiez vos paiements";
 
 "HOME_LOGIN" = "Se connecter";
 "HOME_SIGNUP" = "S'inscrire";
@@ -50,11 +53,10 @@
 "CREDIT_CARD_SCAN" = "Scanner ma carte, c'est plus rapide !";
 "CREDIT_CARD_REMOVE" = "Supprimer cette carte";
 
-"INFORMATIONS_WHY" = "La sécurité selon Flooz";
+"INFORMATIONS_WHY" = "Sécurité";
 "INFORMATIONS_TERMS" = "CGU / CGV";
 "INFORMATIONS_FAQ" = "FAQ";
 "INFORMATIONS_PREVIEW" = "Visite Guidée";
-"INFORMATIONS_WEBSITE" = "Site Web";
 "INFORMATIONS_ABOUT" = "A Propos";
 "INFORMATIONS_CONTACT" = "Contactez-nous";
 
@@ -136,12 +138,12 @@
 "SETTINGS_CARD" = "CARTE BANCAIRE";
 "SETTINGS_RIB" = "RIB";
 "SETTINGS_PRIVACY" = "PARTAGE & CONFIDENTIALITE";
-"SETTINGS_DOCUMENTS" = "DOCUMENTS";
+"SETTINGS_DOCUMENTS" = "JUSTIFICATIFS";
 "SETTINGS_PASSWORD" = "MOT DE PASSE";
 "SETTINGS_LOGOUT" = "DECONNEXION";
 
-"EDIT_ACCOUNT_SEND_SMS" = "Envoyer SMS de validation";
-"EDIT_ACCOUNT_SEND_MAIL" = "Envoyer Mail de validation";
+"EDIT_ACCOUNT_SEND_SMS" = "Renvoyer SMS";
+"EDIT_ACCOUNT_SEND_MAIL" = "Renvoyer email";
 "EDIT_ACCOUNT_PERSONAL_INFO" = "Adresse Postale";
 "EDIT_ACCOUNT_SOCIAL_INFO" = "Réseaux sociaux";
 "EDIT_ACCOUNT_FACEBOOK" = "Facebook";
@@ -179,7 +181,7 @@
 "FRIENDS_FRIENDS_SUGGESTION" = "Suggestions d’amis";
 "FRIENDS_FRIENDS" = "Mes amis";
 
-"FRIEND_PCIKER_PLACEHOLDER" = "Nom, Email ou 06";
+"FRIEND_PCIKER_PLACEHOLDER" = "Pseudo, Email ou 06";
 "FRIEND_PICKER_FRIENDS_RECENT" = "Récent";
 "FRIEND_PICKER_FRIENDS" = "Mes amis";
 "FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";
@@ -188,12 +190,14 @@
 "EVENT_AMOUNT_FREE" = "Montant libre";
 
 "EVENT_HEADER_MONEY_COLLECTED" = "Collectés";
-"EVENT_HEADER_DAY_LEFT" = "Jours restant";
+"EVENT_HEADER_DAY_LEFT" = "Jours restants";
 "EVENT_HEADER_DAY_LEFT_CLOSED" = "Clôturée";
 
-"EVENT_START_BY" = "Crée par %@";
+"EVENT_START_BY" = "Créée par %@";
 
 "EVENT_INVITE_PARTICIPANT" = "Inviter des amis";
+"EVENT_PARTICIPANTS" = "Participants";
+"EVENT_PARTICIPANTS_S" = "Participant(s)";
 "EVENT_PARTICIPANTS_INVITED" = "%.2d AUTRES PARTICIPANTS";
 "EVENT_PARTICIPANT_INVITE" = "Inviter des amis";
 
@@ -210,12 +214,12 @@
 "EVENT_STATUS_WAITING" = "Invité";
 
 "SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser votre application en cas de perte ou de vol de votre mobile.";
-"SECORE_CODE_TEXT_CURRENT" = "Entrez votre code :";
+"SECORE_CODE_TEXT_CURRENT" = "Entrez votre code secret :";
 "SECORE_CODE_TEXT_OLD" = "Entrez votre ancien code :";
 "SECORE_CODE_TEXT_NEW" = "Entrez votre nouveau code :";
-"SECORE_CODE_TEXT_CONFIRM" = "Confirmez votre nouveau code :";
+"SECORE_CODE_TEXT_CONFIRM" = "Confirmez votre nouveau code:";
 "SECORE_CODE_TEXT_LOGIN" = "Identifiez vous pour réinitialiser votre code";
-"SECURE_CODE_FORGOT" = "Code de sécurité oublié ?";
+"SECURE_CODE_FORGOT" = "Code oublié ?";
 
 "DOCUMENTS_CARD_ID_RECTO" = "Carte d’identité (Recto)";
 "DOCUMENTS_CARD_ID_VERSO" = "Carte d’identité (Verso)";

@@ -93,7 +93,6 @@
         [login addTarget:self action:@selector(presentLoginController) forControlEvents:UIControlEventTouchUpInside];
         
         [self.view addSubview:login];
-        
     }
     
     {
@@ -134,6 +133,13 @@
     player.view.frame = self.view.frame;
     
     [player play];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [player stop];
 }
 
 - (void)presentLoginController

@@ -41,6 +41,7 @@
 
         _notificationsCount = @0;
         _notifications = @[];
+        _activitiesCached = @[];
     }
     return self;
 }
@@ -62,6 +63,7 @@
     _currentUser = nil;
     access_token = nil;
     _facebook_token = nil;
+    _activitiesCached = @[];
     
     [UICKeyChainStore removeItemForKey:@"login-token"];
     
@@ -91,7 +93,7 @@
     if(!user || ![user objectForKey:@"login"] || [[user objectForKey:@"login"] isBlank]){
         user = @{
                  @"login": @"louis.grellet@gmail.com",
-                 @"password": @"bob"
+                 @"password": @"bobb"
                  };
     }
     
@@ -240,6 +242,7 @@
         }
 
         if(success){
+            _activitiesCached = activities;
             success(activities, [result objectForKey:@"next"]);
         }
     };
@@ -264,6 +267,11 @@
     };
     
     [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:NULL];
+}
+
+- (NSArray *)activitiesCached
+{
+    return _activitiesCached;
 }
 
 - (void)events:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
@@ -589,6 +597,17 @@
     [self requestPath:path method:@"POST" params:params success:success failure:NULL];
 }
 
+
+- (void)sendSMSValidation
+{
+    [self requestPath:@"verify/phone" method:@"POST" params:nil success:nil failure:nil];
+}
+
+- (void)sendEmailValidation
+{
+    [self requestPath:@"verify/email" method:@"POST" params:nil success:nil failure:nil];
+}
+
 #pragma mark -
 
 -(void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -627,7 +646,6 @@
         path = [path stringByAppendingString:@"&via=ios"];
     }
     
-
     id successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"JSON: %@", responseObject);
         [loadView hide];
@@ -655,7 +673,10 @@
            ){
 //            DISPLAY_ERROR(FLNetworkError);
         }
-        else if(([statusCode intValue] == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && access_token){
+        else if(([statusCode intValue] == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && access_token && ![path isEqualToString:@"/login/basic"]){
+            
+            // [path isEqualToString:@"/login/basic"] utilisé pour le code oublié
+            
             // Token expire
 //            DISPLAY_ERROR(FLBadLoginError);
             [self logout];
@@ -721,7 +742,7 @@
     if(!token || [token isBlank]){
         return NO;
     }
-    
+ 
     access_token = token;
     [self updateCurrentUserWithSuccess:^{
         [appDelegate didConnected];
@@ -902,10 +923,6 @@
 
 - (void)startSocket
 {
-    if(!_currentUser){
-        return;
-    }
-    
     _socket = [[SocketIO alloc] initWithDelegate:self];
     _socket.useSecure = YES;
     [_socket connectToHost:@"api.flooz.me" onPort:443];
@@ -918,7 +935,7 @@
 
 - (void)socketIODidConnect:(SocketIO *)socket
 {
-    if(_socket && access_token){
+    if(_socket && access_token && _currentUser){
         [socket sendEvent:@"subscribe" withData:@{ @"room": [_currentUser username], @"token": access_token }];
         [_socket sendEvent:@"session start" withData:@{ @"token": access_token, @"nick": [_currentUser username] }];
     }
@@ -956,6 +973,11 @@
 - (void)socketIO:(SocketIO *)socket onError:(NSError *)error
 {
     NSLog(@"WebSocket error: %@", error);
+}
+
+- (void)socketSendSignupFocusUsername
+{
+    [_socket sendEvent:@"focus nick" withData:nil];
 }
 
 - (void)socketSendCloseActivities

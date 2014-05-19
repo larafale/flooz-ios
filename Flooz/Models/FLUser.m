@@ -20,7 +20,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json
-{    
+{
     if([json objectForKey:@"userId"]){
         _userId = [json objectForKey:@"userId"];
         
@@ -65,6 +65,8 @@
     if([statsPending intValue] > 0){
         _haveStatsPending = YES;
     }
+    
+    _settings = json[@"settings"];
     
     {
         _address = [NSMutableDictionary new];
@@ -166,6 +168,10 @@
     if(json[@"settings"]){
         _device = json[@"settings"][@"device"];
     }
+    
+    if(json[@"cactus"]){
+        _username = nil;
+    }
 }
 
 - (void)updateStatsPending:(NSDictionary *)json
@@ -179,7 +185,8 @@
 - (NSString *)avatarURL:(CGSize)size
 {
     if(_avatarURL){
-        return [_avatarURL stringByAppendingFormat:@"?width=%d&height=%d", 2 * (int)floorf(size.width), 2 * (int)floorf(size.height)];
+        return _avatarURL;
+//        return [_avatarURL stringByAppendingFormat:@"?width=%d&height=%d", 2 * (int)floorf(size.width), 2 * (int)floorf(size.height)];
     }
     else{
         return nil;

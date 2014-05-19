@@ -79,6 +79,16 @@
         [view addSubview:username];
     }
     
+    {
+        UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0, 124, CGRectGetWidth(view.frame), 30)];
+        
+        username.font = [UIFont customContentRegular:10];
+        username.textAlignment = NSTextAlignmentCenter;
+        username.textColor = [UIColor customBlue];
+        
+        [view addSubview:username];
+    }
+    
     return view;
 }
 
@@ -125,10 +135,18 @@
 {
     UIView *view = [[self subviews] objectAtIndex:0];
     FLUserView *avatar = [[view subviews] objectAtIndex:0];
-    UILabel *username = [[view subviews] objectAtIndex:1];
+    UILabel *fullname = [[view subviews] objectAtIndex:1];
+    UILabel *username = [[view subviews] objectAtIndex:2];
     
     [avatar setImageFromUser:[_event creator]];
-    username.text = [[[_event creator] fullname] uppercaseString];
+    fullname.text = [[[_event creator] fullname] uppercaseString];
+    
+    if([[_event creator] username]){
+        username.text = [@"@" stringByAppendingString:[[_event creator] username]];
+    }
+    else{
+        username.text = nil;
+    }
 }
 
 - (void)prepareRightUserView
@@ -187,7 +205,12 @@
                  username.text = [NSString stringWithFormat:[NSLocalizedString(@"EVENT_PARTICIPANTS_INVITED", nil) uppercaseString], [[_event participants] count] - 2];
             }
             else{
-                username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
+                if([_event isCreator]){
+                    username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
+                }
+                else{
+                    username.text = [NSLocalizedString(@"EVENT_PARTICIPANTS", nil) uppercaseString];
+                }
             }
         }
         
@@ -203,7 +226,12 @@
         
         [avatar setImageFromData:UIImagePNGRepresentation([UIImage imageNamed:@"avatar-participants"])];
     
-        username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
+        if([_event isCreator]){
+            username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
+        }
+        else{
+            username.text = [NSLocalizedString(@"EVENT_PARTICIPANTS", nil) uppercaseString];
+        }
         
         [view addSubview:contentView];
         

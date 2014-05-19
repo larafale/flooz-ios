@@ -121,7 +121,7 @@
     refuseView.hidden = acceptView.hidden = cancelView.hidden = waitingView.hidden = YES;
     
     if([_transaction isCancelable]){
-        cancelView.hidden = NO;;
+        cancelView.hidden = NO;
     }
     else if([_transaction isAcceptable]){
         refuseView.hidden = acceptView.hidden = NO;

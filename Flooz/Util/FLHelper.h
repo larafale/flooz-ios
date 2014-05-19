@@ -10,6 +10,8 @@
 
 @interface FLHelper : NSObject
 
++ (NSString *)generateRandomString;
+
 + (NSString *)formatedAmount:(NSNumber *)amount;
 + (NSString *)formatedAmount:(NSNumber *)amount withSymbol:(BOOL)withSymbol;
 + (NSString *)formatedAmount:(NSNumber *)amount withCurrency:(BOOL)withCurrency;

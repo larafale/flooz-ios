@@ -26,6 +26,8 @@
     FLLoadView *loadView;
     
     SocketIO *_socket;
+    
+    NSArray *_activitiesCached;
 }
 
 @property (strong, readonly) FLUser *currentUser;
@@ -62,6 +64,7 @@
 
 - (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
+- (NSArray *)activitiesCached;
 
 - (void)events:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)eventsNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
@@ -101,12 +104,16 @@
 - (void)eventInvite:(FLEvent *)event friend:(NSDictionary *)friend success:(void (^)(id result))success;
 - (void)eventOffer:(FLEvent *)event friend:(NSDictionary *)friend success:(void (^)(id result))success;
 
+- (void)sendSMSValidation;
+- (void)sendEmailValidation;
+
 - (void)connectFacebook;
 - (void)disconnectFacebook;
 - (void)didConnectFacebook;
 - (void)facebokSearchFriends:(void (^)(id result))success;
 
 - (void)startSocket;
+- (void)socketSendSignupFocusUsername;
 - (void)socketSendCloseActivities;
 - (void)socketSendSessionEnd;
 

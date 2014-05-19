@@ -72,8 +72,10 @@
     NSString *value = [[dictionary allValues] firstObject];
     
     cell.textLabel.text = NSLocalizedString(([NSString stringWithFormat:@"DOCUMENTS_%@", key]), nil);
-    
-    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] boolValue]){
+        
+    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] boolValue] ||
+       [[[[Flooz sharedInstance] currentUser] settings] objectForKey:value]
+       ){
         cell.accessoryView = [UIImageView imageNamed:@"document-check"];
     }
     else{

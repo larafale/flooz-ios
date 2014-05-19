@@ -61,6 +61,8 @@
     _social = [[FLSocial alloc] initWithJSON:json];
 //    _social.scope = SocialScopeNone;
     
+    _isCreator = [json[@"isCreator"] boolValue];
+    
     if([[json objectForKey:@"scope"] intValue] == 1){
         _scope = TransactionScopeFriend;
         _social.scope = SocialScopeFriend;

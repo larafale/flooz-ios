@@ -313,7 +313,7 @@
 
 - (void)reloadViewsForShowPayment
 {
-    CGFloat height = CGRectGetMaxY(amountView.frame);;
+    CGFloat height = CGRectGetMaxY(amountView.frame);
     
     if([_event canParticipate] || [_event canCancelOffer] || [_event canAcceptOrDeclineOffer]){
         CGRectSetY(actionView.frame, height);

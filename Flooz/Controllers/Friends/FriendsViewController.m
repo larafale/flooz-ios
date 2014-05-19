@@ -46,6 +46,9 @@
     refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(didReloadData) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
+    
+    _tableView.backgroundView = [UIImageView imageNamed:@"background-friends"];
+    _tableView.backgroundView.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -53,6 +56,11 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
     [self didReloadData];
 }
@@ -196,6 +204,12 @@
 {
     [refreshControl beginRefreshing];
     
+    // bug au rechargement
+    friendsRequest = @[];
+    friends = @[];
+    friendsSuggestion = @[];
+    [_tableView reloadData];
+    
     [[Flooz sharedInstance] updateCurrentUserWithSuccess:^() {
         [[Flooz sharedInstance] friendsSuggestion:^(id result) {
             [refreshControl endRefreshing];
@@ -203,6 +217,8 @@
             friendsRequest = [[[[Flooz sharedInstance] currentUser] friendsRequest] copy];
             friends = [[[[Flooz sharedInstance] currentUser] friends] copy];
             friendsSuggestion = result;
+            
+            _tableView.backgroundView.hidden = [friendsRequest count] > 0 || [friends count] > 0 || [friendsSuggestion count] > 0;
             
             [_tableView reloadData];
             [_tableView setContentOffset:CGPointZero animated:YES];

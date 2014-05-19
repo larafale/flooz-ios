@@ -14,6 +14,8 @@
 #import "TransactionViewController.h"
 #import "EventViewController.h"
 
+#import "AppDelegate.h"
+
 @implementation TimelineViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -65,6 +67,13 @@
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMakeSize(SCREEN_WIDTH, 70)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"reloadTimeline" object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [appDelegate showPreviewImage:@"preview-1"];
 }
 
 #pragma mark - TableView
