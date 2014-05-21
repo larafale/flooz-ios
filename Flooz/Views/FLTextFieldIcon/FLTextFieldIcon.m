@@ -81,6 +81,9 @@
         _textfield.keyboardType = UIKeyboardTypeNumberPad;
         [_textfield addTarget:self action:@selector(checkPhoneValue) forControlEvents:UIControlEventEditingChanged];
     }
+    else if([_dictionaryKey isEqualToString:@"email"]){
+        _textfield.keyboardType = UIKeyboardTypeEmailAddress;
+    }
     
     _textfield.font = [UIFont customContentLight:12];
     _textfield.textColor = [UIColor whiteColor];

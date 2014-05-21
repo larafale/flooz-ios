@@ -63,7 +63,7 @@
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackground:[UIImage imageWithColor:[UIColor customBackground]]];
-    
+        
     // Hack pour supprimer bordure noir
     [[[[[view subviews] firstObject] subviews] firstObject] removeFromSuperview];
     

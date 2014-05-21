@@ -205,7 +205,7 @@
                  username.text = [NSString stringWithFormat:[NSLocalizedString(@"EVENT_PARTICIPANTS_INVITED", nil) uppercaseString], [[_event participants] count] - 2];
             }
             else{
-                if([_event isCreator]){
+                if([_event isCreator] && ![_event isClosed]){
                     username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
                 }
                 else{
@@ -226,7 +226,7 @@
         
         [avatar setImageFromData:UIImagePNGRepresentation([UIImage imageNamed:@"avatar-participants"])];
     
-        if([_event isCreator]){
+        if([_event isCreator] && ![_event isClosed]){
             username.text = [NSLocalizedString(@"EVENT_INVITE_PARTICIPANT", nil) uppercaseString];
         }
         else{
@@ -235,7 +235,7 @@
         
         [view addSubview:contentView];
         
-        {
+        if(![_event isClosed]){
             userAnimation = [FLWaveAnimation new];
             userAnimation.view = username;
             userAnimation.repeatCount = HUGE_VALF;
