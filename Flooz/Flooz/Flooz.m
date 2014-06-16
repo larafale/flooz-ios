@@ -17,7 +17,7 @@
 #import <Accounts/Accounts.h>
 #import <UICKeyChainStore.h>
 
-#import "Analytics/Analytics.h"
+#import <Analytics/Analytics.h>
 
 @implementation Flooz
 
@@ -58,7 +58,7 @@
 
 #pragma mark -
 
-- (void)logout
+- (void)clearLogin
 {
     _currentUser = nil;
     access_token = nil;
@@ -66,6 +66,11 @@
     _activitiesCached = @[];
     
     [UICKeyChainStore removeItemForKey:@"login-token"];
+}
+
+- (void)logout
+{
+    [self clearLogin];
     
     [self closeSocket];
     [appDelegate didDisconnected];
@@ -76,7 +81,7 @@
     id successBlock = ^(id result) {
         [self updateCurrentUserAfterConnect:result];
         
-        [[Analytics sharedAnalytics] track:@"signup" properties:@{
+        [[SEGAnalytics sharedAnalytics] track:@"signup" properties:@{
                                                                   @"userId": [[[Flooz sharedInstance] currentUser] userId]
                                                                   }];
         
@@ -102,6 +107,23 @@
     };
     
     [self requestPath:@"/login/basic" method:@"POST" params:user success:successBlock failure:NULL];
+}
+
+- (void)loginWithPhone:(NSString *)phone
+{
+    // Remove useless characters
+    NSString *formatedPhone = [[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                stringByReplacingOccurrencesOfString:@"." withString:@""]
+                               stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    
+    // Replace +33 with 0
+    if([formatedPhone hasPrefix:@"+33"]){
+        formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
+    }
+    
+    [self requestPath:@"/login/quick" method:@"GET" params:@{ @"q": formatedPhone } success:^(id result) {
+        [self updateCurrentUserAfterConnect:result];
+    } failure:NULL];
 }
 
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
@@ -673,6 +695,30 @@
            ){
 //            DISPLAY_ERROR(FLNetworkError);
         }
+        else if([statusCode intValue] == 306){ // Code arbitraire
+            [self clearLogin];
+            if([operation.responseObject[@"item"] isEqualToString:@"login"]){
+                NSMutableDictionary *user = [NSMutableDictionary new];
+                
+                if(operation.responseObject[@"nick"]){
+                    user[@"login"] = operation.responseObject[@"nick"];
+                }
+                
+                [appDelegate showLoginWithUser:user];
+            }
+            else{ // Signup
+                NSMutableDictionary *user = [NSMutableDictionary new];
+                
+                if(operation.responseObject[@"invitationCode"]){
+                    user[@"invitationCode"] = operation.responseObject[@"invitationCode"];
+                }
+                if(operation.responseObject[@"phone"]){
+                    user[@"phone"] = operation.responseObject[@"phone"];
+                }
+                
+                [appDelegate showSignupWithUser:user];
+            }
+        }
         else if(([statusCode intValue] == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && access_token && ![path isEqualToString:@"/login/basic"]){
             
             // [path isEqualToString:@"/login/basic"] utilisé pour le code oublié
@@ -725,12 +771,11 @@
     access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
     [UICKeyChainStore setString:access_token forKey:@"login-token"];
     
-    NSLog(@"%@", [[result objectForKey:@"items"] objectAtIndex:1]);
-    
     _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
     _facebook_token = result[@"items"][1][@"fb"][@"token"];
-    
+        
     [appDelegate didConnected];
+    
     [self startSocket];
     [self checkDeviceToken];
 }
@@ -760,7 +805,9 @@
 
 - (void)connectFacebook
 {
-    [FBSession openActiveSessionWithReadPermissions:@[@"basic_info,email,user_friends,publish_actions"]
+    [[FBSession activeSession] closeAndClearTokenInformation];
+    
+    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile,email,user_friends,publish_actions"]
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
@@ -776,11 +823,13 @@
 
 - (void)didConnectFacebook
 {
+    NSLog(@"didConnectFacebook");
+    
     _facebook_token = [[[FBSession activeSession] accessTokenData] accessToken];
     
     if(_currentUser){
         
-        [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,username,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
             [self hideLoadView];
             
             if (!error) {
@@ -790,7 +839,6 @@
                                                  @"email": [result objectForKey:@"email"],
                                                  @"id": [result objectForKey:@"id"],
                                                  @"name": [result objectForKey:@"name"],
-                                                 @"username": [result objectForKey:@"username"],
                                                  @"token": _facebook_token
                                                  }
                                        };
@@ -808,7 +856,7 @@
             [self updateCurrentUserAfterConnect:result];
         } failure:^(NSError *error) {
             
-            [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,username,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+            [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                 [self hideLoadView];
                 
                 if (!error) {
@@ -822,14 +870,13 @@
                                                      @"email": [result objectForKey:@"email"],
                                                      @"id": [result objectForKey:@"id"],
                                                      @"name": [result objectForKey:@"name"],
-                                                     @"username": [result objectForKey:@"username"],
                                                      @"token": _facebook_token
                                                      } mutableCopy]
                                            };
                     
-                    [appDelegate loadSignupWithUser:user];
+                    [appDelegate showSignupWithUser:user];
                 } else {
-                    NSLog(@"didConnectFacebook error");
+                    NSLog(@"didConnectFacebook error: %@", error);
                     // An error occurred, we need to handle the error
                     // See: https://developers.facebook.com/docs/ios/errors
                 }

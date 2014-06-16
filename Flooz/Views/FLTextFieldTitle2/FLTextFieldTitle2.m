@@ -86,7 +86,12 @@
 {
     // Si backward
     if((!string || [string isBlank]) && range.length == 1){
-        return YES;
+        if(_style == FLTextFieldTitle2StyleRIB){
+            return [_textfield.text length] > 2;
+        }
+        else{
+            return YES;
+        }
     }
     
     NSUInteger length = [_textfield.text length];
@@ -98,6 +103,9 @@
         return NO;
     }
     else if(_style == FLTextFieldTitle2StyleCVV && length >= 3){
+        return NO;
+    }
+    else if(_style == FLTextFieldTitle2StyleRIB && length >= 27){
         return NO;
     }
     
@@ -142,9 +150,14 @@
 - (void)setDictionaryValueForStyle
 {
     if([_textfield.text isBlank]){
-        [_dictionary setValue:nil forKey:_dictionaryKey];
+        if(_style == FLTextFieldTitle2StyleRIB){
+            [_dictionary setValue:@"FR" forKey:_dictionaryKey];
+        }
+        else{
+            [_dictionary setValue:nil forKey:_dictionaryKey];
+        }
     }
-    else if(_style == FLTextFieldTitle2StyleCardNumber){
+    else if(_style == FLTextFieldTitle2StyleCardNumber || _style == FLTextFieldTitle2StyleRIB){
         [_dictionary setValue:[_textfield.text stringByReplacingOccurrencesOfString:@" " withString:@""] forKey:_dictionaryKey];
     }
     else{

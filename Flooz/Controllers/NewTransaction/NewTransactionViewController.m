@@ -43,6 +43,8 @@
     
     FLSelectFriendButton *friend;
     BOOL infoDisplayed;
+    BOOL firstView;
+    BOOL firstViewAmount;
 }
 
 @end
@@ -61,6 +63,8 @@
         [transaction setValue:[FLTransaction transactionTypeToParams:transactionType] forKey:@"method"];
         
         infoDisplayed = NO;
+        firstView = YES;
+        firstViewAmount = YES;
     }
     return self;
 }
@@ -200,6 +204,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
     
     if([transaction objectForKey:@"toTitle"]){
@@ -240,9 +245,21 @@
                                                                    }];
                                               }];
                          }];
+        
+        if(firstViewAmount){
+            [amountInput becomeFirstResponder];
+            firstViewAmount = NO;
+        }
     }
     else if(!isEvent){
-        [amountInput becomeFirstResponder];
+        if(firstView){
+            [friend didButtonTouch];
+            firstView = NO;
+        }
+        else if(firstViewAmount){
+            [amountInput becomeFirstResponder];
+            firstViewAmount = NO;
+        }
     }
 }
 
@@ -327,11 +344,21 @@
     if(isEvent){
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] createEvent:transaction success:^(id result) {
+            FLEvent *event = [[FLEvent alloc] initWithJSON:result[@"item"]];
+            
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadEvents" object:nil]];
             
             [self dismissViewControllerAnimated:YES completion:^{
                 FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
                 [rootController.navbarView loadControllerWithIndex:2];
+                
+                EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
+                
+                rootController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                
+                [rootController presentViewController:controller animated:NO completion:^{
+                    rootController.modalPresentationStyle = UIModalPresentationFullScreen;
+                }];                
             }];
         } failure:NULL];
     }

@@ -156,6 +156,14 @@
 
 - (void)resizeInputs
 {
+    // Revoir resizeText
+    if([amount.text length] > 3){
+        amount.font = amount2.font = [UIFont customTitleThin:FONT_SIZE_MAX - 4];
+    }
+    else{
+        amount.font = amount2.font = [UIFont customTitleThin:FONT_SIZE_MAX];
+    }
+    
     [amount setWidthToFit];
     [point setWidthToFit];
     [amount2 setWidthToFit];

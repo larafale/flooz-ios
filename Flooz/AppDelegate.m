@@ -14,13 +14,14 @@
 
 #import "HomeViewController.h"
 #import "SignupViewController.h"
+#import "LoginViewController.h"
 
 #import "EventsViewController.h"
 #import "TimelineViewController.h"
 #import "AccountViewController.h"
 
 #import "SecureCodeViewController.h"
-#import "Analytics/Analytics.h"
+#import <Analytics/Analytics.h>
 
 #import "TransactionViewController.h"
 #import "EventViewController.h"
@@ -48,24 +49,34 @@
         self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     }
 
-    [Analytics initializeWithSecret:@"2jcb70koii"];
+    [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
     
     return YES;
 }
 
 - (void)didConnected
-{
-    NSDictionary *params = @{
-                             @"firstName": [[[Flooz sharedInstance] currentUser] firstname],
-                             @"lastName": [[[Flooz sharedInstance] currentUser] lastname],
-                             @"email": [[[Flooz sharedInstance] currentUser] email],
+{    
+    NSMutableDictionary *params = [@{
                              @"record":[[[Flooz sharedInstance] currentUser] record],
                              @"id": [[[Flooz sharedInstance] currentUser] userId],
                              @"username": [[[Flooz sharedInstance] currentUser] username],
                              @"phone": [[[Flooz sharedInstance] currentUser] phone]
-                             };
+                             } mutableCopy];
     
-    [[Analytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
+    if([[[Flooz sharedInstance] currentUser] email]){
+        params[@"email"] = [[[Flooz sharedInstance] currentUser] email];
+    }
+    
+    if([[[Flooz sharedInstance] currentUser] firstname]){
+        params[@"firstName"] = [[[Flooz sharedInstance] currentUser] firstname];
+    }
+    
+    if([[[Flooz sharedInstance] currentUser] lastname]){
+        params[@"lastName"] = [[[Flooz sharedInstance] currentUser] lastname];
+    }
+    
+   
+    [[SEGAnalytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
                                    traits:params];
     
     CompleteBlock completeBlock = ^{
@@ -91,6 +102,22 @@
     else{
         completeBlock();
     }
+}
+
+- (void)showLoginWithUser:(NSDictionary *)user
+{
+    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    self.window.rootViewController = navController;
+    
+    [navController pushViewController:[[LoginViewController  alloc] initWithUser:user] animated:YES];
+}
+
+- (void)showSignupWithUser:(NSDictionary *)user
+{
+    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    self.window.rootViewController = navController;
+    
+    [navController pushViewController:[[SignupViewController alloc] initWithUser:user] animated:YES];
 }
 
 - (void)didDisconnected
@@ -138,13 +165,6 @@
     [alertView show:title content:content style:style time:time delay:delay];
 }
 
-- (void)loadSignupWithUser:(NSDictionary *)user
-{
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-    [controller setViewControllers:@[[HomeViewController new], [[SignupViewController alloc] initWithUser:user]]];
-    self.window.rootViewController = controller;
-}
-
 #pragma mark -
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -177,6 +197,7 @@
 {
     // WARNING erreur code 2 http://stackoverflow.com/questions/20657780/ios-facebook-sdk-error-domain-com-facebook-sdk-code-2-and-code-7
     if(error){
+        NSLog(@"Facebook connect error: %@", error);
         [[Flooz sharedInstance] hideLoadView];
         [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError time:nil delay:nil];
     }
@@ -187,15 +208,14 @@
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
         // If the session is closed
-        NSLog(@"Session closed");
+        NSLog(@"Facebook session closed");
         // Show the user the logged-out UI
         //        [self userLoggedOut];
-        
-        
     }
     
     [[Flooz sharedInstance] hideLoadView];
     
+    // 2 fois if error ?
     // Handle errors
     if (error){
         NSLog(@"Error");
@@ -317,6 +337,29 @@
 - (void)removePreviewImage:(UIView *)view
 {
     [view removeFromSuperview];
+}
+
+#pragma mark -
+
+- (void)showMenuForUserId:(NSString *)userId
+{
+    if(userId == [[[Flooz sharedInstance] currentUser] userId]) {
+        return;
+    }
+    
+    currentUserIdForMenu = userId;
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_ADD_FRIENDS", nil), nil];
+    
+    [actionSheet showInView:self.window];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0){
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] friendAcceptSuggestion:currentUserIdForMenu success:nil];
+    }
 }
 
 @end

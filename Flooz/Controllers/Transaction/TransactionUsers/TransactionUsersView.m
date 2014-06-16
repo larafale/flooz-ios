@@ -8,6 +8,7 @@
 
 #import "TransactionUsersView.h"
 #import "FLUserView.h"
+#import "AppDelegate.h"
 
 @implementation TransactionUsersView
 
@@ -32,6 +33,9 @@
 {
     UIView *view = [self createUserView];
     [self addSubview:view];
+    
+    UITapGestureRecognizer *touch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didUserLeftViewTouch)];
+    [view addGestureRecognizer:touch];
 }
 
 - (void)createRightUserView
@@ -39,6 +43,9 @@
     UIView *view = [self createUserView];
     CGRectSetX(view.frame, CGRectGetWidth(self.frame) / 2);
     [self addSubview:view];
+    
+    UITapGestureRecognizer *touch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didUserRightViewTouch)];
+    [view addGestureRecognizer:touch];
 }
 
 - (void)createSeparators
@@ -143,6 +150,26 @@
     else{
         username.text = nil;
     }
+}
+
+#pragma mark - 
+
+- (void)didUserLeftViewTouch
+{
+    if([[_transaction from] userId] == [[[Flooz sharedInstance] currentUser] userId]) {
+        return;
+    }
+    
+    [appDelegate showMenuForUserId:[[_transaction from] userId]];
+}
+
+- (void)didUserRightViewTouch
+{
+    if([[_transaction to] userId] == [[[Flooz sharedInstance] currentUser] userId]) {
+        return;
+    }
+    
+    [appDelegate showMenuForUserId:[[_transaction to] userId]];
 }
 
 @end

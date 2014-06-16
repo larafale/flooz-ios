@@ -10,4 +10,6 @@
 
 @interface LoginViewController : UIViewController
 
+- (id)initWithUser:(NSDictionary *)user;
+
 @end

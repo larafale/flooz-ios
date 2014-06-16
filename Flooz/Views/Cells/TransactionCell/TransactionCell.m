@@ -300,11 +300,11 @@
 - (void)prepareFooterView{
     UILabel *view = [[rightView subviews] objectAtIndex:3];
     
-    if(![_transaction isPrivate]){
-        view.hidden = YES;
-        return;
-    }
-    view.hidden = NO;
+//    if(![_transaction isPrivate]){
+//        view.hidden = YES;
+//        return;
+//    }
+//    view.hidden = NO;
     
     view.text = [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
     [view setWidthToFit];

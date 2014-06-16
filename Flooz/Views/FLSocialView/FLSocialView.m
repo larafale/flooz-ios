@@ -120,14 +120,16 @@
         scope.text = @"";
         
         if(_isEvent){
-            if(social.scope == SocialScopeFriend){
-                scope.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
-                scope.image = [UIImage imageNamed:@"scope-friend"];
-            }
-            else{
-                scope.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
-                scope.image = [UIImage imageNamed:@"scope-invite"];
-            }
+            scope.text = nil;
+            scope.image = nil;
+//            if(social.scope == SocialScopeFriend){
+//                scope.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
+//                scope.image = [UIImage imageNamed:@"scope-friend"];
+//            }
+//            else{
+//                scope.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
+//                scope.image = [UIImage imageNamed:@"scope-invite"];
+//            }
         }
         
         [scope setImageOffset:CGPointMake(-2.5, -1)];

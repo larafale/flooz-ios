@@ -7,5 +7,5 @@ pod 'SocketRocket'
 pod 'socket.IO'
 pod 'YLMoment'
 pod 'Facebook-iOS-SDK'
-# pod 'Analytics' # Ne fonctionne pas
+pod 'Analytics', '~> 1.2.0'
 pod 'JTHelper', '~> 0.1.0'

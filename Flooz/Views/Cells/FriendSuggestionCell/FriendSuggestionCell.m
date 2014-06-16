@@ -37,6 +37,7 @@
     
     [self createAvatarView];
     [self createTextView];
+    [self createPhoneView];
     [self createButtonView];
 }
 
@@ -46,13 +47,24 @@
 }
 
 - (void)createTextView{
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, CGRectGetWidth(self.frame) - 70, [[self class] getHeight])];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, - 5, CGRectGetWidth(self.frame) - 75, [[self class] getHeight])];
     
     view.textColor = [UIColor whiteColor];
     view.font = [UIFont customTitleLight:13];
     
     [self.contentView addSubview:view];
 }
+
+- (void)createPhoneView
+{
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 38, CGRectGetWidth(self.frame) - 75, 9)];
+    
+    view.font = [UIFont customContentBold:11];
+    view.textColor = [UIColor customPlaceholder];
+    
+    [self.contentView addSubview:view];
+}
+
 
 - (void)createButtonView{
     UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 21, 37, 28)];
@@ -80,6 +92,9 @@
 - (void)prepapreTextView{
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
     view.text = [[_friend fullname] uppercaseString];
+    
+    UILabel *view2 = [[self.contentView subviews] objectAtIndex:2];
+    view2.text = [NSString stringWithFormat:@"@%@", [_friend username]];
 }
 
 - (void)didButtonTouch{

@@ -8,22 +8,17 @@
 
 #import "HomeViewController.h"
 
-#import "LoginViewController.h"
-#import "SignupViewController.h"
-
-#import <MediaPlayer/MediaPlayer.h>
-
 #import "AppDelegate.h"
 
 @interface HomeViewController (){
-    MPMoviePlayerController *player;
-    UIButton *login;
-    UIButton *signup;
-    
-    UIScrollView *scrollView;
-    UIPageControl *pageControl;
+    UIButton *loginButton;
+    UIButton *facebookbButton;
     
     UIImageView *logo;
+    
+    NSMutableDictionary *phone;
+    
+    FLTextField *phoneField;
 }
 
 @end
@@ -34,7 +29,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        phone = [NSMutableDictionary new];
     }
     return self;
 }
@@ -46,69 +41,54 @@
     self.view.backgroundColor = [UIColor customBackgroundHeader];
     
     {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"home-background" ofType:@"mp4" inDirectory:@"Video"];
-        
-        player = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:path]];
-
-        player.controlStyle = MPMovieControlStyleNone;
-        player.scalingMode = MPMovieScalingModeAspectFill;
-        player.repeatMode = MPMovieRepeatModeOne;
-        
-        [self.view addSubview:player.view];
-    }
-    
-    {
         logo = [UIImageView imageNamed:@"home-logo"];
-        CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.image.size.width) / 2., 100);
-        [self.view addSubview:logo];
+        CGRectSetWidthHeight(logo.frame, 105, 105);
+        CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
+        [_contentView addSubview:logo];
     }
     
     {
-        scrollView = [UIScrollView new];
-        scrollView.delegate = self;
-        scrollView.pagingEnabled = YES;
-        scrollView.showsVerticalScrollIndicator = NO;
+        loginButton = [UIButton new];
         
-        [self.view addSubview:scrollView];
+        loginButton.backgroundColor = [UIColor customBlue];
+        loginButton.titleLabel.font = [UIFont customTitleLight:14];
+        [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        loginButton.layer.opacity = 0.7;
+        loginButton.layer.cornerRadius = 2.;
+        [loginButton setTitle:NSLocalizedString(@"HOME_LOGIN", nil) forState:UIControlStateNormal];
+        [loginButton addTarget:self action:@selector(didConnectTouch) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_contentView addSubview:loginButton];
     }
     
     {
-        pageControl = [UIPageControl new];
-        pageControl.numberOfPages = 3;
-        [self.view addSubview:pageControl];
-        
-        for(int i = 0; i < pageControl.numberOfPages; ++i){
-            [self prepapreTextForScrollView:i];
-        }
+//        facebookbButton = [UIButton new];
+//        
+//        facebookbButton.backgroundColor = [UIColor customBlue];
+//        facebookbButton.titleLabel.font = loginButton.titleLabel.font;
+//        facebookbButton.layer.opacity = loginButton.layer.opacity;
+//        facebookbButton.layer.cornerRadius = loginButton.layer.cornerRadius;
+//        [facebookbButton setTitle:@"Facebook" forState:UIControlStateNormal];
+//        [facebookbButton addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        [_contentView addSubview:facebookbButton];
     }
     
     {
-        login = [UIButton new];
+        phoneField = [[FLTextField alloc] initWithPlaceholder:@"N° de mobile ou Code invitation" for:phone key:@"phone" position:CGPointMake(20, 220)];
         
-        login.backgroundColor = [UIColor customBackgroundStatus];
-        login.titleLabel.font = [UIFont customTitleLight:14];
-        login.layer.opacity = 0.7;
-        login.layer.cornerRadius = 2.;
-        [login setTitle:NSLocalizedString(@"HOME_LOGIN", nil) forState:UIControlStateNormal];
-        [login addTarget:self action:@selector(presentLoginController) forControlEvents:UIControlEventTouchUpInside];
+        phoneField.backgroundColor = [UIColor whiteColor];
+        phoneField.layer.cornerRadius = 2.;
+        phoneField.clipsToBounds = YES;
+        phoneField.textfield.textColor = [UIColor customBackground];
         
-        [self.view addSubview:login];
+        [_contentView addSubview:phoneField];
     }
     
-    {
-        signup = [UIButton new];
-        
-        signup.backgroundColor = [UIColor customBlue];
-        signup.titleLabel.font = login.titleLabel.font;
-        signup.layer.opacity = login.layer.opacity;
-        signup.layer.cornerRadius = login.layer.cornerRadius;
-        [signup setTitle:NSLocalizedString(@"HOME_SIGNUP", nil) forState:UIControlStateNormal];
-        [signup addTarget:self action:@selector(presentSignupController) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.view addSubview:signup];
-    }
+    loginButton.frame = CGRectMake(20, 270, SCREEN_WIDTH - 40, 39);
+    _contentView.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(loginButton.frame));
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [self registerForKeyboardNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,87 +96,51 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    _contentView.contentInset = UIEdgeInsetsZero;
+    
+    [phoneField becomeFirstResponder];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)didConnectTouch
 {
-    [super viewDidAppear:animated];
+    [[self view] endEditing:YES];
     
-    login.frame = CGRectMake(23, CGRectGetHeight(self.view.frame) - 30 - 35, 134, 45);
-    signup.frame = CGRectMake(CGRectGetMaxX(login.frame) + 6, login.frame.origin.y, login.frame.size.width, login.frame.size.height);
-    
-    pageControl.frame = CGRectMake(0, CGRectGetHeight(self.view.frame) - 120, SCREEN_WIDTH, 45);
-    
-    scrollView.frame = self.view.frame;
-    scrollView.contentSize = CGSizeMake(CGRectGetWidth(scrollView.frame) * pageControl.numberOfPages, CGRectGetHeight(scrollView.frame));
-    
-    player.view.frame = self.view.frame;
-    
-    [player play];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    [player stop];
-}
-
-- (void)presentLoginController
-{
-    [self.navigationController pushViewController:[LoginViewController new] animated:YES];
-}
-
-- (void)presentSignupController
-{
-    [self.navigationController pushViewController:[SignupViewController new] animated:YES];
-}
-
-- (void)applicationWillEnterForeground:(NSNotification *)notification
-{
-    [player play];
-}
-
-#pragma mark - UIScrollView Delegate
-
-- (void)prepapreTextForScrollView:(NSInteger)index
-{
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(index * SCREEN_WIDTH, SCREEN_HEIGHT - 250, SCREEN_WIDTH, 0)];
-    
-    CGFloat MARGE = 15;
-    UILabel *content = [[UILabel alloc] initWithFrame:CGRectMake((index * SCREEN_WIDTH) + MARGE, 0, SCREEN_WIDTH - MARGE - MARGE, 0)];
-    
-    {
-        title.font = [UIFont customTitleBook:28];
-        title.textColor = [UIColor whiteColor];
-        title.textAlignment = NSTextAlignmentCenter;
-        
-        title.text = NSLocalizedString(([NSString stringWithFormat:@"HOME_SLIDE_%ld_TITLE", index + 1]), nil);
-        
-        [title setHeightToFit];
+    if(phone[@"phone"] && ![phone[@"phone"] isBlank]){
+        [[Flooz sharedInstance] loginWithPhone:phone[@"phone"]];
     }
-    
-    {
-        content.font = [UIFont customContentRegular:17];
-        content.textColor = [UIColor whiteColor];
-        content.numberOfLines = 0;
-        content.textAlignment = NSTextAlignmentCenter;
-        
-        content.text = NSLocalizedString(([NSString stringWithFormat:@"HOME_SLIDE_%ld_CONTENT", index + 1]), nil);
-        
-        [content setHeightToFit];
-        CGRectSetY(content.frame, CGRectGetMaxY(title.frame) + 10);
-    }
-    
-    [scrollView addSubview:title];
-    [scrollView addSubview:content];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)sender
+- (void)didFacebookTouch
 {
-    CGFloat pageWidth = scrollView.frame.size.width;
-    int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    pageControl.currentPage = page;
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] connectFacebook];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+}
+
+- (void)keyboardWillDisappear
+{
+    _contentView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

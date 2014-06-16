@@ -14,6 +14,9 @@
 @interface LoginViewController (){
     NSMutableDictionary *user;
     UIButton *registerFacebook;
+    
+    FLTextFieldIcon *username;
+    FLTextFieldIcon *password;
 }
 
 @end
@@ -22,10 +25,20 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    return [self initWithUser:nil];
+}
+
+- (id)initWithUser:(NSDictionary *)_user
+{
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
         self.title = NSLocalizedString(@"NAV_LOGIN", nil);
-        user = [NSMutableDictionary new];
+        if(_user){
+            user = [_user mutableCopy];
+        }
+        else{
+            user = [NSMutableDictionary new];
+        }
     }
     return self;
 }
@@ -70,8 +83,8 @@
     }
     
     {
-        FLTextFieldIcon *username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(MARGE, 140)];
-        FLTextFieldIcon *password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame))];
+        username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(MARGE, 140)];
+        password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame))];
         [password seTsecureTextEntry:YES];
         
         UIButton *passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(password.frame) + 20, CGRectGetWidth(self.view.frame), 50)];
@@ -93,6 +106,15 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if(user[@"login"] && ![user[@"login"] isBlank]){
+        [password becomeFirstResponder];
+    }
 }
 
 - (void)presentTimelineController

@@ -36,7 +36,7 @@
 {
     self.backgroundColor = [UIColor customBackgroundHeader];
     
-    [self createBackView];
+//    [self createBackView];
     [self createSearchView];
 }
 
@@ -52,7 +52,12 @@
 
 - (void)createSearchView
 {
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(42, 0, 240, CGRectGetHeight(self.frame))];
+//    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(42, 0, 240, CGRectGetHeight(self.frame))];
+    
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 0, 300, CGRectGetHeight(self.frame))];
+    
+    
+    _searchBar.placeholder = NSLocalizedString(@"SEARCH_FRIENDS", nil);
     
     _searchBar.delegate = self;
     
@@ -66,6 +71,15 @@
     
     // Hack pour supprimer bordure noir
     [[[[[_searchBar subviews] firstObject] subviews] firstObject] removeFromSuperview];
+    
+    {
+        _searchBar.barTintColor = [UIColor customBackground];
+        
+        [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:self.backgroundColor];
+        [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackground:[UIImage imageWithColor:self.backgroundColor]];
+        
+        self.backgroundColor = [UIColor customBackground];
+    }
     
     [self addSubview:_searchBar];
 }

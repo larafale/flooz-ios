@@ -44,8 +44,13 @@
     
     UIViewController *rootController = appDelegate.window.rootViewController;
     
-    if([rootController presentedViewController]){
-        [[rootController presentedViewController] presentViewController:controller animated:YES completion:NULL];
+    if([rootController presentedViewController]){        
+        if([[rootController presentedViewController] presentedViewController]){
+            [[[rootController presentedViewController] presentedViewController] presentViewController:controller animated:YES completion:NULL];
+        }
+        else{
+            [[rootController presentedViewController] presentViewController:controller animated:YES completion:NULL];
+        }
     }
     else{
         [rootController presentViewController:controller animated:YES completion:NULL];

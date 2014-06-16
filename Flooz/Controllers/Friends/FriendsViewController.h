@@ -9,10 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "FriendRequestCellDelegate.h"
 
-@interface FriendsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FriendRequestCellDelegate>{
+#import "FriendAddSearchBar.h"
+#import "FriendAddCell.h"
+
+@interface FriendsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FriendRequestCellDelegate, FriendAddSearchBarDelegate>{
     UIRefreshControl *refreshControl;
 }
 
+@property (weak, nonatomic) IBOutlet FriendAddSearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
 
 @end

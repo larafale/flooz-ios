@@ -57,7 +57,7 @@
 }
 
 - (void)dismiss
-{
+{    
     if([self navigationController]){
         [[self navigationController] popViewControllerAnimated:YES];
     }
@@ -304,7 +304,7 @@
     if(![[contact objectForKey:@"username"] isBlank]){
         [_dictionary setValue:[contact objectForKey:@"username"] forKey:@"toUsername"];
     }
-        
+    
     if(_event){
         [self inviteEvent:_dictionary];
         id cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -472,20 +472,21 @@
             name = [firstName stringByAppendingFormat:@" %@", lastName];
         }
 
-        ABMultiValueRef emailList = ABRecordCopyValue(ref, kABPersonEmailProperty);
-        for (CFIndex i = 0; i < ABMultiValueGetCount(emailList); ++i) {
-            NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
-
-            NSMutableDictionary *contact = [NSMutableDictionary new];
-            
-            [contact setValue:firstName forKey:@"firstname"];
-            [contact setValue:lastName forKey:@"lastname"];
-            [contact setValue:name forKey:@"name"];
-            [contact setValue:email forKey:@"email"];
-            [contact setValue:image forKey:@"image"];
-            
-            [_contactsFromAdressBook addObject:contact];
-        }
+        // Desactivé pour le moment
+//        ABMultiValueRef emailList = ABRecordCopyValue(ref, kABPersonEmailProperty);
+//        for (CFIndex i = 0; i < ABMultiValueGetCount(emailList); ++i) {
+//            NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
+//
+//            NSMutableDictionary *contact = [NSMutableDictionary new];
+//            
+//            [contact setValue:firstName forKey:@"firstname"];
+//            [contact setValue:lastName forKey:@"lastname"];
+//            [contact setValue:name forKey:@"name"];
+//            [contact setValue:email forKey:@"email"];
+//            [contact setValue:image forKey:@"image"];
+//            
+//            [_contactsFromAdressBook addObject:contact];
+//        }
         
         ABMultiValueRef phoneNumbers = ABRecordCopyValue(ref, kABPersonPhoneProperty);
         for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); ++i) {

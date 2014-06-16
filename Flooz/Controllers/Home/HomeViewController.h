@@ -10,4 +10,6 @@
 
 @interface HomeViewController : UIViewController<UIScrollViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIScrollView *contentView;
+
 @end

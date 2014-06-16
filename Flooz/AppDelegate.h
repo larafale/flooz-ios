@@ -10,11 +10,13 @@
 
 #import "FLAlertView.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIActionSheetDelegate>{
     NSDate *lastErrorDate;
     NSInteger lastErrorCode;
     
     FLAlertView *alertView;
+    
+    NSString *currentUserIdForMenu;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -22,13 +24,15 @@
 
 - (void)didConnected;
 - (void)didDisconnected;
+- (void)showLoginWithUser:(NSDictionary *)user;
+- (void)showSignupWithUser:(NSDictionary *)user;
 
 - (void)displayError:(NSError *)error;
 - (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;
 
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
-- (void)loadSignupWithUser:(NSDictionary *)user;
 
 - (void)showPreviewImage:(NSString *)imageNamed;
+- (void)showMenuForUserId:(NSString *)user;
 
 @end

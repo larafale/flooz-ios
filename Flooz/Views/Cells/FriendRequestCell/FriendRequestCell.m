@@ -48,7 +48,7 @@
 }
 
 - (void)createTextView{
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, CGRectGetWidth(self.contentView.frame) - 70, [[self class] getHeight])];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, - 5, CGRectGetWidth(self.frame) - 75, [[self class] getHeight])];
     
     view.textColor = [UIColor whiteColor];
     view.font = [UIFont customTitleLight:13];

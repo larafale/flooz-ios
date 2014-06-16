@@ -406,6 +406,8 @@
 {
     paymentFieldIsShown = NO;
     
+    [amountInput resignFirstResponder];
+
     [self reloadViewsForShowPayment];
 }
 

@@ -12,8 +12,10 @@
     __weak NSMutableDictionary *_dictionary;
     NSString *_dictionaryKey;
     
-    UITextField *_textfield;
+//    UITextField *_textfield;
 }
+
+@property UITextField *textfield;
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position;
 

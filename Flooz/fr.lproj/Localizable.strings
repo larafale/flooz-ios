@@ -39,16 +39,8 @@
 "NAV_DOCUMENTS" = "Justificatifs";
 "NAV_SECURE_CODE" = "Sécurité";
 
-"SPLASH_TEXT" = "FLOOZ\n\nPartagez et simplifiez vos paiements";
-
-"HOME_LOGIN" = "Se connecter";
+"HOME_LOGIN" = "Connexion";
 "HOME_SIGNUP" = "S'inscrire";
-"HOME_SLIDE_1_TITLE" = "Floozez vos amis!";
-"HOME_SLIDE_1_CONTENT" = "Envoyez ou recevez de l’argent gratuitement grâce à votre porte-monnaie Flooz ou votre CB. C'est simple, gratuit et sécurisé.";
-"HOME_SLIDE_2_TITLE" = "Créez des cagnottes";
-"HOME_SLIDE_2_CONTENT" = "Collectez et gérez de l’argent à plusieurs pour toutes les occasions (Anniversaires, voyages & co...).";
-"HOME_SLIDE_3_TITLE" = "Partagez vos paiements!";
-"HOME_SLIDE_3_CONTENT" = "Rejoignez vos amis pour partager, commenter ou encore liker leurs paiements.";
 
 "CREDIT_CARD_SCAN" = "Scanner ma carte, c'est plus rapide !";
 "CREDIT_CARD_REMOVE" = "Supprimer cette carte";
@@ -115,9 +107,11 @@
 "LOGIN_OR" = "ou";
 "LOGIN_PASSWORD_FORGOT" = "Mot de passe oublié ?";
 
-"MENU_NEW_TRANSACTION_EVENT" = "Cagnotte";
+"MENU_NEW_TRANSACTION_EVENT" = "Collecter";
 "MENU_NEW_TRANSACTION_PAYMENT" = "Payer";
 "MENU_NEW_TRANSACTION_COLLECT" = "Réclamer";
+
+"MENU_ADD_FRIENDS" = "Ajouter aux amis";
 
 "ACTIVITIES_NOTIFICATIONS" = "Notifications";
 "ACTIVITIES_NEW_NOTIFICATIONS" = "nouvelles notifications";
@@ -176,12 +170,14 @@
 "EVENT_SCOPE_FRIEND" = "Ouverte aux amis";
 "EVENT_SCOPE_PRIVATE" = "Sur invitation";
 
+"FRIENDS_FRIENDS_SEARCH" = "Recherche";
+"SEARCH_FRIENDS" = "Rechercher des amis";
 "FRIENDS_SEARCH_FRIENDS" = "Recherche des amis sur Flooz";
 "FRIENDS_FRIENDS_REQUEST" = "Demande d’amis";
 "FRIENDS_FRIENDS_SUGGESTION" = "Suggestions d’amis";
 "FRIENDS_FRIENDS" = "Mes amis";
 
-"FRIEND_PCIKER_PLACEHOLDER" = "Pseudo, Email ou 06";
+"FRIEND_PCIKER_PLACEHOLDER" = "Pseudo ou 06";
 "FRIEND_PICKER_FRIENDS_RECENT" = "Récent";
 "FRIEND_PICKER_FRIENDS" = "Mes amis";
 "FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";

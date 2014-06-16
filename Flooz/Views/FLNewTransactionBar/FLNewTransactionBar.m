@@ -29,28 +29,60 @@
             isEvent = YES;
         }
         
-        [self createLocalizeButton];
-        [self createImageButton];
-        [self createFacebookButton];
-        [self createSeparator];
-        [self createPrivacyButton];
+//        [self createLocalizeButton];
+//        [self createImageButton];
+//        [self createFacebookButton];
+//        [self createSeparator];
+//        [self createPrivacyButton];
+//        
+//        if(isEvent){
+//            [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopeFriend] forKey:@"scope"];
+//             [privacyButton setTitle:[FLEvent eventScopeToText:TransactionScopeFriend] forState:UIControlStateNormal];
+//            [privacyButton setImage:[FLEvent eventScopeToImage:TransactionScopeFriend] forState:UIControlStateNormal];
+//        }
+//        else{
+//            [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
+//            [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
+//            [privacyButton setImage:[FLTransaction transactionScopeToImage:TransactionScopePublic] forState:UIControlStateNormal];
+//        }
         
-        if(isEvent){
-            [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopeFriend] forKey:@"scope"];
-             [privacyButton setTitle:[FLEvent eventScopeToText:TransactionScopeFriend] forState:UIControlStateNormal];
-            [privacyButton setImage:[FLEvent eventScopeToImage:TransactionScopeFriend] forState:UIControlStateNormal];
+        
+        if(!isEvent){
+            [self createLocalizeButton];
+            [self createImageButton];
+            [self createFacebookButton];
+            [self createSeparator];
+            [self createPrivacyButton];
+            
+            if(isEvent){
+         
+                [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
+                [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
+                [privacyButton setImage:[FLTransaction transactionScopeToImage:TransactionScopePublic] forState:UIControlStateNormal];
+            }
         }
         else{
-            [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
-            [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
-            [privacyButton setImage:[FLTransaction transactionScopeToImage:TransactionScopePublic] forState:UIControlStateNormal];
+            [self createImageButton];
         }
     }
     return self;
 }
 
 - (void)reloadData
-{    
+{
+    if(isEvent){
+        imageButton.selected = NO;
+        
+        if([_dictionary objectForKey:@"image"]){
+            imageButton.selected = YES;
+            
+            [[imageButton imageView] setContentMode:UIViewContentModeScaleAspectFit]; // Permet de garder proportion
+            [imageButton setImage:[UIImage imageWithData:[_dictionary objectForKey:@"image"]] forState:UIControlStateSelected];
+        }
+        
+        return;
+    }
+    
     localizeButton.selected = NO;
     imageButton.selected = NO;
     facebookButton.selected = NO;

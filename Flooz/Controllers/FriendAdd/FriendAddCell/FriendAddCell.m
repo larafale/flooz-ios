@@ -20,7 +20,7 @@
 
 + (CGFloat)getHeight
 {
-    return 54;
+    return 70;
 }
 
 - (void)setUser:(FLUser *)user
@@ -39,19 +39,20 @@
     [self createAvatarView];
     [self createNameView];
     [self createPhoneView];
+    [self createButtons];
 }
 
 - (void)createAvatarView
 {
-    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 8, 38, 38)];
+    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 15, 40, 40)];
     [self.contentView addSubview:view];
 }
 
 - (void)createNameView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 17, CGRectGetWidth(self.frame) - 75, 13)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, - 5, CGRectGetWidth(self.frame) - 75, [[self class] getHeight])];
     
-    view.font = [UIFont customContentBold:13];
+    view.font = [UIFont customTitleLight:13];
     view.textColor = [UIColor whiteColor];
     
     [self.contentView addSubview:view];
@@ -59,10 +60,24 @@
 
 - (void)createPhoneView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 31, CGRectGetWidth(self.frame) - 75, 9)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 38, CGRectGetWidth(self.frame) - 75, 9)];
     
     view.font = [UIFont customContentBold:11];
     view.textColor = [UIColor customPlaceholder];
+    
+    [self.contentView addSubview:view];
+}
+
+- (void)createButtons
+{
+    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 21, 37, 28)];
+    view.backgroundColor = [UIColor customBackgroundStatus];
+    view.layer.cornerRadius = 14;
+    
+    [view setImage:[UIImage imageNamed:@"friends-add"] forState:UIControlStateNormal];
+    [view setImage:[UIImage imageNamed:@"friend-accept"] forState:UIControlStateSelected];
+    
+    [view addTarget:self action:@selector(accept) forControlEvents:UIControlEventTouchUpInside];
     
     [self.contentView addSubview:view];
 }
@@ -74,6 +89,8 @@
     [self prepareAvatarView];
     [self prepareNameView];
     [self preparePhoneView];
+    
+    [self prepareCheckView];
 }
 
 - (void)prepareAvatarView
@@ -94,5 +111,22 @@
     UILabel *view = [[self.contentView subviews] objectAtIndex:2];
     view.text = [NSString stringWithFormat:@"@%@", [_user username]];
 }
+
+- (void)prepareCheckView
+{
+    UIButton *view = [[self.contentView subviews] objectAtIndex:3];
+    view.selected = NO;
+}
+
+#pragma mark -
+
+- (void)accept
+{
+    [[Flooz sharedInstance] friendAcceptSuggestion:[_user userId] success:nil];
+    
+    UIButton *view = [[self.contentView subviews] objectAtIndex:3];
+    view.selected = YES;
+}
+
 
 @end

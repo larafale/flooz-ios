@@ -12,7 +12,8 @@ typedef NS_ENUM(NSInteger, FLTextFieldTitle2Style) {
     FLTextFieldTitle2StyleNormal,
     FLTextFieldTitle2StyleCardNumber,
     FLTextFieldTitle2StyleCardExpire,
-    FLTextFieldTitle2StyleCVV
+    FLTextFieldTitle2StyleCVV,
+    FLTextFieldTitle2StyleRIB
 };
 
 @interface FLTextFieldTitle2 : UIView<UITextFieldDelegate>{

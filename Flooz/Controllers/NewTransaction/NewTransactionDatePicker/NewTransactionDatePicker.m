@@ -61,9 +61,13 @@
     {
         UIDatePicker *datePicker = [UIDatePicker new];
         datePicker.backgroundColor = [UIColor whiteColor];
-        datePicker.date = [NSDate new];
         datePicker.datePickerMode = UIDatePickerModeDate;
    
+        NSDateComponents *dateComponents = [NSDateComponents new];
+        [dateComponents setMonth:1];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        datePicker.date = [calendar dateByAddingComponents:dateComponents toDate:[NSDate new] options:0];
+        
         {
             datePicker.minimumDate = [NSDate new];
             

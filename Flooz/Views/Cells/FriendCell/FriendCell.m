@@ -35,7 +35,8 @@
     self.backgroundColor = [UIColor customBackground];
     
     [self createAvatarView];
-    [self createTextView];
+    [self createNameView];
+    [self createPhoneView];
     [self createButtonView];
 }
 
@@ -44,11 +45,22 @@
     [self.contentView addSubview:view];
 }
 
-- (void)createTextView{
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, CGRectGetWidth(self.frame) - 70, [[self class] getHeight])];
+- (void)createNameView
+{
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, - 5, CGRectGetWidth(self.frame) - 75, [[self class] getHeight])];
     
-    view.textColor = [UIColor whiteColor];
     view.font = [UIFont customTitleLight:13];
+    view.textColor = [UIColor whiteColor];
+    
+    [self.contentView addSubview:view];
+}
+
+- (void)createPhoneView
+{
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 38, CGRectGetWidth(self.frame) - 75, 9)];
+    
+    view.font = [UIFont customContentBold:11];
+    view.textColor = [UIColor customPlaceholder];
     
     [self.contentView addSubview:view];
 }
@@ -80,10 +92,13 @@
 - (void)prepareTextView{
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
     view.text = [[_friend fullname] uppercaseString];
+    
+    UILabel *view2 = [[self.contentView subviews] objectAtIndex:2];
+    view2.text = [NSString stringWithFormat:@"@%@", [_friend username]];
 }
 
 - (void)prepareButton{
-    UIButton *view = [[self.contentView subviews] objectAtIndex:2];
+    UIButton *view = [[self.contentView subviews] objectAtIndex:3];
     view.hidden = [_friend isFriendWaiting];
 }
 

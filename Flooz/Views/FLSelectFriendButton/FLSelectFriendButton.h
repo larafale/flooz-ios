@@ -18,4 +18,6 @@
 - (id)initWithFrame:(CGRect)frame dictionary:(NSMutableDictionary *)dictionary;
 - (void)reloadData;
 
+- (void)didButtonTouch;
+
 @end
