@@ -62,7 +62,15 @@
         [[self navigationController] popViewControllerAnimated:YES];
     }
     else{
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        // WARNING enorme bug si arrive sur la vue attend 5s, click sur un contact, il y a une latence de 10s, mais uniquement la 1ere fois et seulement si choisit un contact (pas si bouton back)
+//        [self dismissViewControllerAnimated:YES completion:nil];
+        [UIView animateWithDuration:.3
+                         animations:^{
+                             CGRectSetY(self.view.frame, SCREEN_HEIGHT);
+                         }
+                         completion:^(BOOL finished) {
+                             [self dismissViewControllerAnimated:NO completion:NULL];
+                         }];
     }
 }
 

@@ -96,7 +96,7 @@
             
             button.titleLabel.font = [UIFont customTitleExtraLight:14];
             
-            [button addTarget:self action:@selector(presentCardIOViewController) forControlEvents:UIControlEventTouchUpInside];
+            [button addTarget:self action:@selector(presentScanPayViewController) forControlEvents:UIControlEventTouchUpInside];
             
             [view addSubview:button];
         }
@@ -209,35 +209,61 @@
 
 #pragma mark - CARDIO
 
-- (void)presentCardIOViewController
-{
-    CardIOPaymentViewController *controller = [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
-    controller.appToken = @"368ed39eca23472ab19ad62823e63cb0";
-    
-    [self presentViewController:controller animated:YES completion:NULL];
-}
+//- (void)presentCardIOViewController
+//{
+//    CardIOPaymentViewController *controller = [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
+//    controller.appToken = @"368ed39eca23472ab19ad62823e63cb0";
+//    
+//    [self presentViewController:controller animated:YES completion:NULL];
+//}
+//
+//- (void)userDidCancelPaymentViewController:(id *)paymentViewController
+//{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
+//
+//- (void)userDidProvideCreditCardInfo:(id *)cardInfo inPaymentViewController:(id *)paymentViewController
+//{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//    
+//    [_card setValue:cardInfo.cardNumber forKey:@"number"];
+//    [_card setValue:cardInfo.cvv forKey:@"cvv"];
+//    
+//    NSString *expires = [NSString stringWithFormat:@"%.2ld-%.2lu", cardInfo.expiryMonth, cardInfo.expiryYear - 2000];
+//    
+//    [_card setValue:expires forKey:@"expires"];
+//    
+//    for(FLTextFieldTitle2 *view in fieldsView){
+//        [view reloadData];
+//    }
+//    
+//    [[fieldsView objectAtIndex:0] becomeFirstResponder];
+//}
 
-- (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+#pragma mark - ScanPay
 
-- (void)userDidProvideCreditCardInfo:(CardIOCreditCardInfo *)cardInfo inPaymentViewController:(CardIOPaymentViewController *)paymentViewController
+- (void)presentScanPayViewController
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    ScanPayViewController * scanPayViewController = [[ScanPayViewController alloc] initWithToken:@"be38035037ed6ca3cba7089b" useConfirmationView:YES useManualEntry:YES];
     
-    [_card setValue:cardInfo.cardNumber forKey:@"number"];
-    [_card setValue:cardInfo.cvv forKey:@"cvv"];
-    
-    NSString *expires = [NSString stringWithFormat:@"%.2ld-%.2lu", cardInfo.expiryMonth, cardInfo.expiryYear - 2000];
-    
-    [_card setValue:expires forKey:@"expires"];
-    
-    for(FLTextFieldTitle2 *view in fieldsView){
-        [view reloadData];
-    }
-    
-    [[fieldsView objectAtIndex:0] becomeFirstResponder];
+    [scanPayViewController startScannerWithViewController:self success:^(SPCreditCard * card){
+        
+        [_card setValue:card.number forKey:@"number"];
+        [_card setValue:card.cvc forKey:@"cvv"];
+        
+        NSString *expires = [NSString stringWithFormat:@"%@-%@", card.month, card.year];
+        
+        [_card setValue:expires forKey:@"expires"];
+        
+        for(FLTextFieldTitle2 *view in fieldsView){
+            [view reloadData];
+        }
+        
+        [[fieldsView objectAtIndex:0] becomeFirstResponder];
+        
+    } cancel:^{
+       [[fieldsView objectAtIndex:0] becomeFirstResponder]; 
+    }];
 }
 
 #pragma mark -

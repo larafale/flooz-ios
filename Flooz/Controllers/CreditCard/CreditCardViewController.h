@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CardIO.h"
+#import "ScanPayViewController.h"
 
-@interface CreditCardViewController : UIViewController<CardIOPaymentViewControllerDelegate>
+@interface CreditCardViewController : UIViewController<ScanPayDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentView;
 

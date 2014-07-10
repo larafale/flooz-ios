@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7D1D874D-AEB4-4654-A995-21E1D0571B62</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Flooz</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>887D6D9A-EAB1-479B-B3B8-FC6E17D5D9FF</key>
+		<string>ssh://bitbucket.org/eviljojo22/eivo-flooz-ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Flooz.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>887D6D9A-EAB1-479B-B3B8-FC6E17D5D9FF</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://bitbucket.org/eviljojo22/eivo-flooz-ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>887D6D9A-EAB1-479B-B3B8-FC6E17D5D9FF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>887D6D9A-EAB1-479B-B3B8-FC6E17D5D9FF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>flooz</string>
+		</dict>
+	</array>
+</dict>
+</plist>

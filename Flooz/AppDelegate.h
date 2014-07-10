@@ -16,7 +16,7 @@
     
     FLAlertView *alertView;
     
-    NSString *currentUserIdForMenu;
+    FLUser *currentUserForMenu;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -33,6 +33,6 @@
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 
 - (void)showPreviewImage:(NSString *)imageNamed;
-- (void)showMenuForUserId:(NSString *)user;
+- (void)showMenuForUser:(FLUser *)user;
 
 @end

@@ -74,8 +74,13 @@
 		AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */; };
 		AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
 		AB931C0C190E4FBD00E70742 /* FLWaveAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = AB931C0B190E4FBD00E70742 /* FLWaveAnimation.m */; };
-		AB94FAC419053088007F8373 /* libCardIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBB75D718B654DA0070C2A8 /* libCardIO.a */; };
 		AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB94FAC71906B720007F8373 /* LoadingCell.m */; };
+		ABA96DAB196EED4D00B8B7C7 /* libScanpay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DA9196EED4D00B8B7C7 /* libScanpay.a */; };
+		ABA96DAC196EED4D00B8B7C7 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAA196EED4D00B8B7C7 /* opencv2.framework */; };
+		ABA96DAF196EF22300B8B7C7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAD196EF22300B8B7C7 /* CoreMedia.framework */; };
+		ABA96DB0196EF22300B8B7C7 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAE196EF22300B8B7C7 /* CoreVideo.framework */; };
+		ABA96DB2196EF23600B8B7C7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DB1196EF23600B8B7C7 /* AudioToolbox.framework */; };
+		ABA96DB4196EF24400B8B7C7 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DB3196EF24400B8B7C7 /* AssetsLibrary.framework */; };
 		ABA9B71C18F3034B00A81929 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71B18F3034B00A81929 /* CoreData.framework */; };
 		ABA9B71E18F3035700A81929 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71D18F3035700A81929 /* SystemConfiguration.framework */; };
 		ABA9B72018F3035E00A81929 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71F18F3035E00A81929 /* CoreTelephony.framework */; };
@@ -301,6 +306,16 @@
 		AB931C0B190E4FBD00E70742 /* FLWaveAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLWaveAnimation.m; path = Animations/FLWave/FLWaveAnimation.m; sourceTree = "<group>"; };
 		AB94FAC61906B720007F8373 /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingCell.h; path = LoadingCell/LoadingCell.h; sourceTree = "<group>"; };
 		AB94FAC71906B720007F8373 /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingCell.m; path = LoadingCell/LoadingCell.m; sourceTree = "<group>"; };
+		ABA96DA5196EED4D00B8B7C7 /* ScanPayDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanPayDelegate.h; sourceTree = "<group>"; };
+		ABA96DA6196EED4D00B8B7C7 /* ScanPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanPayViewController.h; sourceTree = "<group>"; };
+		ABA96DA7196EED4D00B8B7C7 /* ScanPayViewController_Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanPayViewController_Extras.h; sourceTree = "<group>"; };
+		ABA96DA8196EED4D00B8B7C7 /* SPCreditCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCreditCard.h; sourceTree = "<group>"; };
+		ABA96DA9196EED4D00B8B7C7 /* libScanpay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libScanpay.a; sourceTree = "<group>"; };
+		ABA96DAA196EED4D00B8B7C7 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		ABA96DAD196EF22300B8B7C7 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		ABA96DAE196EF22300B8B7C7 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		ABA96DB1196EF23600B8B7C7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		ABA96DB3196EF24400B8B7C7 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		ABA9B71118F300F200A81929 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		ABA9B71318F300FB00A81929 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		ABA9B71718F3015800A81929 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -338,13 +353,6 @@
 		ABBB75CA18B63DB20070C2A8 /* CreditCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreditCardViewController.xib; path = Controllers/CreditCard/CreditCardViewController.xib; sourceTree = "<group>"; };
 		ABBB75CD18B64A0B0070C2A8 /* FLCreditCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLCreditCard.h; path = Models/FLCreditCard.h; sourceTree = "<group>"; };
 		ABBB75CE18B64A0B0070C2A8 /* FLCreditCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLCreditCard.m; path = Models/FLCreditCard.m; sourceTree = "<group>"; };
-		ABBB75D118B654DA0070C2A8 /* CardIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardIO.h; path = Library/CardIO/CardIO.h; sourceTree = "<group>"; };
-		ABBB75D218B654DA0070C2A8 /* CardIOCreditCardInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardIOCreditCardInfo.h; path = Library/CardIO/CardIOCreditCardInfo.h; sourceTree = "<group>"; };
-		ABBB75D318B654DA0070C2A8 /* CardIOPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardIOPaymentViewController.h; path = Library/CardIO/CardIOPaymentViewController.h; sourceTree = "<group>"; };
-		ABBB75D418B654DA0070C2A8 /* CardIOPaymentViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardIOPaymentViewControllerDelegate.h; path = Library/CardIO/CardIOPaymentViewControllerDelegate.h; sourceTree = "<group>"; };
-		ABBB75D518B654DA0070C2A8 /* CardIOView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardIOView.h; path = Library/CardIO/CardIOView.h; sourceTree = "<group>"; };
-		ABBB75D618B654DA0070C2A8 /* CardIOViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardIOViewDelegate.h; path = Library/CardIO/CardIOViewDelegate.h; sourceTree = "<group>"; };
-		ABBB75D718B654DA0070C2A8 /* libCardIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCardIO.a; path = Library/CardIO/libCardIO.a; sourceTree = "<group>"; };
 		ABBB75D918B656820070C2A8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		ABBB75DB18B7B1710070C2A8 /* FLPaymentFieldDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLPaymentFieldDelegate.h; path = Views/FLPaymentField/FLPaymentFieldDelegate.h; sourceTree = "<group>"; };
 		ABBB75DC18BA27E60070C2A8 /* FLFriendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLFriendRequest.h; path = Models/FLFriendRequest.h; sourceTree = "<group>"; };
@@ -487,6 +495,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABA96DB4196EF24400B8B7C7 /* AssetsLibrary.framework in Frameworks */,
+				ABA96DB2196EF23600B8B7C7 /* AudioToolbox.framework in Frameworks */,
+				ABA96DAF196EF22300B8B7C7 /* CoreMedia.framework in Frameworks */,
+				ABA96DB0196EF22300B8B7C7 /* CoreVideo.framework in Frameworks */,
 				ABA9B72318F3037500A81929 /* libsqlite3.dylib in Frameworks */,
 				ABA9B72218F3036F00A81929 /* libz.dylib in Frameworks */,
 				ABA9B72118F3036800A81929 /* AdSupport.framework in Frameworks */,
@@ -494,13 +506,14 @@
 				ABA9B71E18F3035700A81929 /* SystemConfiguration.framework in Frameworks */,
 				ABA9B71C18F3034B00A81929 /* CoreData.framework in Frameworks */,
 				AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */,
-				AB94FAC419053088007F8373 /* libCardIO.a in Frameworks */,
 				AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */,
 				AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */,
 				ABBB75DA18B656820070C2A8 /* AVFoundation.framework in Frameworks */,
+				ABA96DAC196EED4D00B8B7C7 /* opencv2.framework in Frameworks */,
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
 				AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */,
+				ABA96DAB196EED4D00B8B7C7 /* libScanpay.a in Frameworks */,
 				20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -648,6 +661,10 @@
 		AB3D0890186CA11A00CF8380 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABA96DB3196EF24400B8B7C7 /* AssetsLibrary.framework */,
+				ABA96DB1196EF23600B8B7C7 /* AudioToolbox.framework */,
+				ABA96DAD196EF22300B8B7C7 /* CoreMedia.framework */,
+				ABA96DAE196EF22300B8B7C7 /* CoreVideo.framework */,
 				AB3CAE8D194BACE80081EB28 /* libPods-Analytics.a */,
 				AB3CAE8E194BACE80081EB28 /* libPods-CrittercismSDK.a */,
 				AB3CAE8F194BACE80081EB28 /* libPods-FlurrySDK.a */,
@@ -796,7 +813,7 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				ABBB75D018B654CB0070C2A8 /* CardIO */,
+				ABA96DA3196EED4D00B8B7C7 /* scanpay */,
 				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
 				AB3D08DC1871A5CB00CF8380 /* Flooz */,
 			);
@@ -1097,6 +1114,28 @@
 			name = LoadingCell;
 			sourceTree = "<group>";
 		};
+		ABA96DA3196EED4D00B8B7C7 /* scanpay */ = {
+			isa = PBXGroup;
+			children = (
+				ABA96DA4196EED4D00B8B7C7 /* include */,
+				ABA96DA9196EED4D00B8B7C7 /* libScanpay.a */,
+				ABA96DAA196EED4D00B8B7C7 /* opencv2.framework */,
+			);
+			name = scanpay;
+			path = Library/scanpay;
+			sourceTree = "<group>";
+		};
+		ABA96DA4196EED4D00B8B7C7 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				ABA96DA5196EED4D00B8B7C7 /* ScanPayDelegate.h */,
+				ABA96DA6196EED4D00B8B7C7 /* ScanPayViewController.h */,
+				ABA96DA7196EED4D00B8B7C7 /* ScanPayViewController_Extras.h */,
+				ABA96DA8196EED4D00B8B7C7 /* SPCreditCard.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 		ABB12D4418BCE7E5002FCAAE /* Event */ = {
 			isa = PBXGroup;
 			children = (
@@ -1214,20 +1253,6 @@
 				ABBB75CA18B63DB20070C2A8 /* CreditCardViewController.xib */,
 			);
 			name = CreditCard;
-			sourceTree = "<group>";
-		};
-		ABBB75D018B654CB0070C2A8 /* CardIO */ = {
-			isa = PBXGroup;
-			children = (
-				ABBB75D118B654DA0070C2A8 /* CardIO.h */,
-				ABBB75D218B654DA0070C2A8 /* CardIOCreditCardInfo.h */,
-				ABBB75D318B654DA0070C2A8 /* CardIOPaymentViewController.h */,
-				ABBB75D418B654DA0070C2A8 /* CardIOPaymentViewControllerDelegate.h */,
-				ABBB75D518B654DA0070C2A8 /* CardIOView.h */,
-				ABBB75D618B654DA0070C2A8 /* CardIOViewDelegate.h */,
-				ABBB75D718B654DA0070C2A8 /* libCardIO.a */,
-			);
-			name = CardIO;
 			sourceTree = "<group>";
 		};
 		ABBB75DF18BBADB40070C2A8 /* FriendRequestCell */ = {
@@ -2009,6 +2034,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = "";
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -2043,6 +2070,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -2059,72 +2087,23 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
-					"$(PROJECT_DIR)/Flooz/Library",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
-					"$(PROJECT_DIR)/Flooz/Library/CardIO",
 				);
 				OTHER_LDFLAGS = (
 					"-lstdc++",
-					"-ObjC",
-					"-lc++",
-					"-lCrittercism_v4_3_3",
-					"-lFlurry_4.4.0",
-					"-lGoogleAnalyticsServices",
-					"-licucore",
-					"-lsqlite3",
-					"-lz",
-					"-framework",
-					Accelerate,
-					"-framework",
-					CFNetwork,
-					"-framework",
-					CoreData,
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					CoreLocation,
-					"-framework",
-					CoreTelephony,
-					"-framework",
-					Foundation,
-					"-framework",
-					ImageIO,
-					"-framework",
-					MessageUI,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					QuartzCore,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-					"-framework",
-					Taplytics,
-					"-framework",
-					UIKit,
-					"-weak_framework",
-					Accounts,
-					"-weak_framework",
-					AdSupport,
-					"-weak_framework",
-					CoreData,
-					"-weak_framework",
-					CoreTelephony,
-					"-weak_framework",
-					Security,
-					"-weak_framework",
-					"Social\n",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BEB6DFBE-3FB5-45D7-8838-4A52A299084A";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2139,72 +2118,23 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
-					"$(PROJECT_DIR)/Flooz/Library",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
-					"$(PROJECT_DIR)/Flooz/Library/CardIO",
 				);
 				OTHER_LDFLAGS = (
 					"-lstdc++",
-					"-ObjC",
-					"-lc++",
-					"-lCrittercism_v4_3_3",
-					"-lFlurry_4.4.0",
-					"-lGoogleAnalyticsServices",
-					"-licucore",
-					"-lsqlite3",
-					"-lz",
-					"-framework",
-					Accelerate,
-					"-framework",
-					CFNetwork,
-					"-framework",
-					CoreData,
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					CoreLocation,
-					"-framework",
-					CoreTelephony,
-					"-framework",
-					Foundation,
-					"-framework",
-					ImageIO,
-					"-framework",
-					MessageUI,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					QuartzCore,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-					"-framework",
-					Taplytics,
-					"-framework",
-					UIKit,
-					"-weak_framework",
-					Accounts,
-					"-weak_framework",
-					AdSupport,
-					"-weak_framework",
-					CoreData,
-					"-weak_framework",
-					CoreTelephony,
-					"-weak_framework",
-					Security,
-					"-weak_framework",
-					"Social\n",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BEB6DFBE-3FB5-45D7-8838-4A52A299084A";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

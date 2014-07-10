@@ -27,12 +27,14 @@
 #import "EventViewController.h"
 #import "FriendsViewController.h"
 
+#import "NewTransactionViewController.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+        
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
     
@@ -341,15 +343,15 @@
 
 #pragma mark -
 
-- (void)showMenuForUserId:(NSString *)userId
+- (void)showMenuForUser:(FLUser *)user
 {
-    if(userId == [[[Flooz sharedInstance] currentUser] userId]) {
+    if(user && [user userId] == [[[Flooz sharedInstance] currentUser] userId]) {
         return;
     }
     
-    currentUserIdForMenu = userId;
+    currentUserForMenu = user;
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_ADD_FRIENDS", nil), nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_PAYMENT", nil), NSLocalizedString(@"MENU_COLLECT", nil), NSLocalizedString(@"MENU_ADD_FRIENDS", nil), nil];
     
     [actionSheet showInView:self.window];
 }
@@ -357,9 +359,24 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == 0){
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] friendAcceptSuggestion:currentUserIdForMenu success:nil];
+        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
     }
+    else if(buttonIndex == 1){
+        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypeCollection];
+    }
+    else if(buttonIndex == 2){
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:nil];
+    }
+}
+
+// WARNING gros gros hack
+- (void)showNewTransactionController:(FLUser *)user transactionType:(NSUInteger)transactionType
+{
+    [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+        NewTransactionViewController *controller = [[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu];
+        [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
+    }];
 }
 
 @end

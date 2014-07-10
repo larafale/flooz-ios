@@ -16,6 +16,7 @@
 @interface NewTransactionViewController : UIViewController<FLSelectAmountDelegate, FLPaymentFieldDelegate, NewTransactionSelectTypeDelegate>
 
 - (id)initWithTransactionType:(TransactionType)transactionType;
+- (id)initWithTransactionType:(TransactionType)transactionType user:(FLUser *)user;
 
 @property (weak, nonatomic) IBOutlet FLValidNavBar *navBar;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentView;

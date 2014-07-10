@@ -111,6 +111,8 @@
 "MENU_NEW_TRANSACTION_PAYMENT" = "Payer";
 "MENU_NEW_TRANSACTION_COLLECT" = "Réclamer";
 
+"MENU_PAYMENT" = "Payer";
+"MENU_COLLECT" = "Réclamer";
 "MENU_ADD_FRIENDS" = "Ajouter aux amis";
 
 "ACTIVITIES_NOTIFICATIONS" = "Notifications";

@@ -51,7 +51,12 @@
 
 @implementation NewTransactionViewController
 
-- (id)initWithTransactionType:(TransactionType)transactionType;
+- (id)initWithTransactionType:(TransactionType)transactionType
+{
+    return [self initWithTransactionType:transactionType user:nil];
+}
+
+- (id)initWithTransactionType:(TransactionType)transactionType user:(FLUser *)user
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -65,6 +70,15 @@
         infoDisplayed = NO;
         firstView = YES;
         firstViewAmount = YES;
+        
+        if(user){
+            transaction[@"to"] = [user username];
+            transaction[@"toTitle"] = [user fullname];
+            
+            if([user avatarURL]){
+                transaction[@"toImageUrl"] = [user avatarURL];
+            }
+        }
     }
     return self;
 }

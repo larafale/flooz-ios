@@ -19,6 +19,8 @@
 
 #import <Analytics/Analytics.h>
 
+#define FLOOZ_DEBUG_API YES
+
 @implementation Flooz
 
 + (Flooz *)sharedInstance
@@ -33,7 +35,13 @@
 {
     self = [super init];
     if(self){
-        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
+        if(FLOOZ_DEBUG_API){
+            manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://dev.flooz.me"]];
+        }
+        else{
+            manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
+        }
+        
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         
@@ -95,13 +103,6 @@
 
 - (void)login:(NSDictionary *)user
 {
-    if(!user || ![user objectForKey:@"login"] || [[user objectForKey:@"login"] isBlank]){
-        user = @{
-                 @"login": @"louis.grellet@gmail.com",
-                 @"password": @"bobb"
-                 };
-    }
-    
     id successBlock = ^(id result) {
         [self updateCurrentUserAfterConnect:result];
     };
@@ -971,8 +972,16 @@
 - (void)startSocket
 {
     _socket = [[SocketIO alloc] initWithDelegate:self];
-    _socket.useSecure = YES;
-    [_socket connectToHost:@"api.flooz.me" onPort:443];
+    
+    
+    if(FLOOZ_DEBUG_API){
+//        _socket.useSecure = NO;
+//        [_socket connectToHost:@"api.flooz.me" onPort:80];
+    }
+    else{
+        _socket.useSecure = YES;
+        [_socket connectToHost:@"api.flooz.me" onPort:443];
+    }
 }
 
 - (void)closeSocket

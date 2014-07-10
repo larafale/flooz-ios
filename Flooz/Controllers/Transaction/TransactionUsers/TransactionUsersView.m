@@ -160,7 +160,7 @@
         return;
     }
     
-    [appDelegate showMenuForUserId:[[_transaction from] userId]];
+    [appDelegate showMenuForUser:[_transaction from]];
 }
 
 - (void)didUserRightViewTouch
@@ -169,7 +169,7 @@
         return;
     }
     
-    [appDelegate showMenuForUserId:[[_transaction to] userId]];
+    [appDelegate showMenuForUser:[_transaction to]];
 }
 
 @end
