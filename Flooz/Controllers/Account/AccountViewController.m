@@ -153,15 +153,15 @@
 {
     [settingsAnimation stop];
     
-    CompleteBlock completeBlock = ^{
+//    CompleteBlock completeBlock = ^{
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];
         [self presentViewController:controller animated:YES completion:NULL];
-    };
-
-    SecureCodeViewController *controller = [SecureCodeViewController new];
-    controller.completeBlock = completeBlock;
-    
-    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+//    };
+//
+//    SecureCodeViewController *controller = [SecureCodeViewController new];
+//    controller.completeBlock = completeBlock;
+//    
+//    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)presentInformationsController

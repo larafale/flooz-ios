@@ -41,8 +41,10 @@
     // Padding pour que le dernier element au dessus du +
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMakeSize(SCREEN_WIDTH, 90)];
     
-    _tableView.backgroundView = [UIImageView imageNamed:@"background-events"];
-    _tableView.backgroundView.hidden = YES;
+    self.view.backgroundColor = _tableView.backgroundColor;
+    _tableView.backgroundColor = [UIColor clearColor];
+    _backgroundView.image = [UIImage imageNamed:@"background-events"];
+    _backgroundView.hidden = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"reloadEvents" object:nil];
     
@@ -142,7 +144,7 @@
         nextPageIsLoading = NO;
         [refreshControl endRefreshing];
         
-        _tableView.backgroundView.hidden = [events count] > 0;
+        _backgroundView.hidden = [events count] > 0;
         
         [_tableView reloadData];
         [_tableView setContentOffset:CGPointZero animated:YES];

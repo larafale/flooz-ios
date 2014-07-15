@@ -41,6 +41,8 @@
         UIButton *button = [self createButtonWithPosition:CGPointMake(1, 4) title:@""];
         [button setImage:[UIImage imageNamed:@"keyboard-close"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(didButtonCloseTouch:) forControlEvents:UIControlEventTouchUpInside];
+        
+        closeButton = button;
     }
     
     {
@@ -48,6 +50,14 @@
         [button setImage:[UIImage imageNamed:@"keyboard-backward"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(didButtonReturnTouch:) forControlEvents:UIControlEventTouchUpInside];
     }
+}
+
+- (void)setKeyboardChangeable
+{
+    [closeButton setTitle:@"ABC" forState:UIControlStateNormal];
+    [closeButton setImage:nil forState:UIControlStateNormal];
+    [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    [closeButton addTarget:self action:@selector(didNormalKeyboardTouch) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (UIButton *)createButtonWithPosition:(CGPoint)position title:(NSString *)title
@@ -79,7 +89,14 @@
     
     NSRange offsetRange = NSMakeRange(startOffset, endOffset - startOffset);
     
-    if([[_textField delegate] textField:_textField shouldChangeCharactersInRange:offsetRange replacementString:sender.titleLabel.text]){
+    
+    if(
+       ([_textField delegate] &&
+       [[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)] &&
+       [[_textField delegate] textField:_textField shouldChangeCharactersInRange:offsetRange replacementString:sender.titleLabel.text]) ||
+       [_textField delegate] == nil ||
+       ![[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]
+       ){
         [_textField insertText:sender.titleLabel.text];
     }
 }
@@ -98,10 +115,23 @@
     
     NSRange offsetRange = NSMakeRange(startOffset, endOffset - startOffset);
     
-    if([[_textField delegate] textField:_textField shouldChangeCharactersInRange:offsetRange replacementString:@"\r"]){
+    if(
+       ([_textField delegate] &&
+        [[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)] &&
+        [[_textField delegate] textField:_textField shouldChangeCharactersInRange:offsetRange replacementString:@"\r"]) ||
+       [_textField delegate] == nil ||
+       ![[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]
+       ){
         [_textField deleteBackward];
     }
 }
 
+- (void)didNormalKeyboardTouch
+{
+    _textField.inputView = nil;
+    [_textField resignFirstResponder];
+    [_textField becomeFirstResponder];
+    _textField.inputView = self;
+}
 
 @end

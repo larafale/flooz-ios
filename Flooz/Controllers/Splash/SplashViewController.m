@@ -8,7 +8,9 @@
 
 #import "SplashViewController.h"
 
-@interface SplashViewController ()
+@interface SplashViewController (){
+    UIImageView *logo;
+}
 
 @end
 
@@ -29,7 +31,7 @@
     
     self.view.backgroundColor = [UIColor customBackground];
     
-    UIImageView *logo = [UIImageView imageNamed:@"home-logo"];
+    logo = [UIImageView imageNamed:@"home-logo"];
     logo.center = self.view.center;
     [self.view addSubview:logo];
 }
@@ -39,6 +41,14 @@
     [super viewWillAppear:animated];
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    logo.center = self.view.center;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    logo.center = self.view.center;
 }
 
 @end

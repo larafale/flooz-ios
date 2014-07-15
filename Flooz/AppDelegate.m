@@ -51,7 +51,9 @@
         self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     }
 
-    [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
+    if(!FLOOZ_DEBUG_API){
+        [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
+    }
     
     return YES;
 }
@@ -77,9 +79,10 @@
         params[@"lastName"] = [[[Flooz sharedInstance] currentUser] lastname];
     }
     
-   
-    [[SEGAnalytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
+   if(!FLOOZ_DEBUG_API){
+        [[SEGAnalytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
                                    traits:params];
+   }
     
     CompleteBlock completeBlock = ^{
         FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [EventsViewController new]]];
@@ -94,33 +97,61 @@
          ];
     };
     
-    if(![SecureCodeViewController hasSecureCodeForCurrentUser]){
-        SecureCodeViewController *controller = [SecureCodeViewController new];
-        controller.completeBlock = completeBlock;
-        
-        FLNavigationController *rootController = (FLNavigationController *)self.window.rootViewController;
-        [rootController pushViewController:controller animated:NO];
+    
+    FLNavigationController *navController = nil;
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    controller.completeBlock = completeBlock;
+    
+    // Sortie de mise en vieille cas ou on est deja connecté
+    if([self.window.rootViewController isKindOfClass:[FLContainerViewController class]]){
+        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+        self.window.rootViewController = navController;
     }
     else{
-        completeBlock();
+        navController = (FLNavigationController *)self.window.rootViewController;
     }
+    
+    // Cas ou fait retour sur le splashscreen
+    if([[[navController viewControllers] firstObject] isKindOfClass:[SplashViewController class]]){
+        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+        self.window.rootViewController = navController;
+    }
+    
+    if([[[navController viewControllers] lastObject] presentedViewController]){
+        [[[[navController viewControllers] lastObject] presentedViewController] dismissViewControllerAnimated:NO completion:nil];
+    }
+    
+    [navController pushViewController:controller animated:NO];
 }
 
 - (void)showLoginWithUser:(NSDictionary *)user
 {
-    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-    self.window.rootViewController = navController;
-    
-    [navController pushViewController:[[LoginViewController  alloc] initWithUser:user] animated:YES];
+    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[[LoginViewController  alloc] initWithUser:user]];
+
+    [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
+    [[self currentController] presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user
-{
-    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-    self.window.rootViewController = navController;
-    
-    [navController pushViewController:[[SignupViewController alloc] initWithUser:user] animated:YES];
+{    
+    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[[SignupViewController alloc] initWithUser:user]];
+
+    [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
+    [[self currentController] presentViewController:navController animated:YES completion:nil];
 }
+
+- (UIViewController *)currentController
+{
+    UIViewController *currentController = self.window.rootViewController;
+    
+    while([currentController presentedViewController]){
+        currentController = [currentController presentedViewController];
+    }
+    
+    return currentController;
+}
+
+#pragma mark -
 
 - (void)didDisconnected
 {
@@ -186,6 +217,10 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    if([[Flooz sharedInstance] currentUser]){
+        [self didConnected];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -345,7 +380,8 @@
 
 - (void)showMenuForUser:(FLUser *)user
 {
-    if(user && [user userId] == [[[Flooz sharedInstance] currentUser] userId]) {
+    if(!user || [user userId] == [[[Flooz sharedInstance] currentUser] userId] ||
+       ![user username] || ![user fullname]) {
         return;
     }
     

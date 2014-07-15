@@ -10,9 +10,13 @@
 
 #import "FLKeyboardViewDelegate.h"
 
-@interface FLKeyboardView : UIView
+@interface FLKeyboardView : UIView{
+    UIButton *closeButton;
+}
 
 @property (weak, nonatomic) UITextField *textField;
 @property (weak, nonatomic) id<FLKeyboardViewDelegate> delegate;
+
+- (void)setKeyboardChangeable;
 
 @end

@@ -8,6 +8,8 @@
 
 #import "FLSocialView.h"
 
+#define OFFSET 23.
+
 @implementation FLSocialView
 
 - (id)initWithFrame:(CGRect)frame
@@ -26,29 +28,56 @@
 {
     comment = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     like = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
-    separator = [[UIView alloc] initWithFrame:CGRectMakeSize(1, CGRectGetHeight(self.frame))];
     scope = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     
     comment.font = [UIFont customContentRegular:11];
     like.font = [UIFont customContentRegular:11];
     scope.font = [UIFont customContentRegular:11];
     
-    separator.backgroundColor = [UIColor customSeparator];
-    
+
     like.userInteractionEnabled = YES;
     [like addGestureRecognizer:_gesture];
     
     scope.textColor = [UIColor customPlaceholder];
     
-    
     [self addSubview:comment];
     [self addSubview:like];
-//    [self addSubview:separator];
     [self addSubview:scope];
 }
 
 - (void)prepareView:(FLSocial *)social
 {
+    CGFloat x = 0;
+    
+    if(_isEvent){
+        scope.hidden = YES;
+        scope.image = nil;
+    }
+    else{
+        scope.hidden = NO;
+        
+        switch ([social scope]) {
+            case SocialScopePrivate:
+                scope.image = [UIImage imageNamed:@"scope-private"];
+                break;
+            case SocialScopeFriend:
+                scope.image = [UIImage imageNamed:@"scope-friend"];
+                break;
+            case SocialScopePublic:
+                scope.image = [UIImage imageNamed:@"scope-public"];
+                break;
+            default:
+                scope.image = nil;
+                break;
+        }
+        
+        [scope setImageOffset:CGPointMake(-2.5, -1)];
+        [scope setWidthToFit];
+        CGRectSetWidth(scope.frame, CGRectGetWidth(scope.frame) + OFFSET);
+        
+        x = CGRectGetMaxX(scope.frame);
+    }
+    
     {
         if(social.likesCount == 0){
             like.text = NSLocalizedString(@"CELL_SOCIAL_LIKE", nil);
@@ -69,15 +98,14 @@
         [like setImageOffset:CGPointMake(-2.5, -1)];
         [like setWidthToFit];
         
-        CGRectSetWidth(like.frame, CGRectGetWidth(like.frame) + 18);
+        CGRectSetX(like.frame, x);
+        CGRectSetWidth(like.frame, CGRectGetWidth(like.frame) + OFFSET);
+        x = CGRectGetMaxX(like.frame);
     }
     
     {
         if(social.commentsCount == 0){
             comment.hidden = YES;
-            
-            CGRectSetWidth(comment.frame, 0);
-            CGRectSetX(comment.frame, CGRectGetMaxX(like.frame));
         }
         else{
             comment.hidden = NO;
@@ -96,49 +124,14 @@
             [comment setImageOffset:CGPointMake(-2.5, -1)];
             [comment setWidthToFit];
             
-            CGRectSetWidth(comment.frame, CGRectGetWidth(comment.frame) + 18);
-            CGRectSetX(comment.frame, CGRectGetMaxX(like.frame) + 5);
+            
+            CGRectSetX(comment.frame, x);
+            CGRectSetWidth(comment.frame, CGRectGetWidth(comment.frame) + OFFSET);
+            x = CGRectGetMaxX(comment.frame);
         }
     }
     
-    {
-        switch ([social scope]) {
-            case SocialScopePrivate:
-                scope.image = [UIImage imageNamed:@"scope-private"];
-                break;
-            case SocialScopeFriend:
-                scope.image = [UIImage imageNamed:@"scope-friend"];
-                break;
-            case SocialScopePublic:
-                scope.image = [UIImage imageNamed:@"scope-public"];
-                break;
-            default:
-                scope.image = nil;
-                break;
-        }
-        
-        scope.text = @"";
-        
-        if(_isEvent){
-            scope.text = nil;
-            scope.image = nil;
-//            if(social.scope == SocialScopeFriend){
-//                scope.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
-//                scope.image = [UIImage imageNamed:@"scope-friend"];
-//            }
-//            else{
-//                scope.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
-//                scope.image = [UIImage imageNamed:@"scope-invite"];
-//            }
-        }
-        
-        [scope setImageOffset:CGPointMake(-2.5, -1)];
-        [scope setWidthToFit];
-        CGRectSetWidth(scope.frame, CGRectGetWidth(scope.frame) + 18);
-        CGRectSetX(scope.frame, CGRectGetMaxX(comment.frame) + 7);
-    }
-    
-    CGRectSetWidth(self.frame, CGRectGetMaxX(scope.frame));
+    CGRectSetWidth(self.frame, x);
 }
 
 - (void)addTargetForLike:(id)target action:(SEL)action

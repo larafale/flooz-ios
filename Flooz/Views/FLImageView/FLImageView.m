@@ -30,7 +30,7 @@
 
 - (void)setImageWithURL:(NSURL *)url fullScreenURL:(NSURL *)fullScreenURL
 {
-    [super setImageWithURL:url];
+    [super sd_setImageWithURL:url];
     fullScreenImageURL = fullScreenURL;
 }
 

@@ -16,6 +16,7 @@
     UIRefreshControl *refreshControl;
 }
 
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundView;
 @property (weak, nonatomic) IBOutlet FriendAddSearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;
 

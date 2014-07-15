@@ -50,7 +50,7 @@
     }
     else{
         [self hidePlaceholder];
-        [avatar setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
+        [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
     }
 }
 
@@ -58,7 +58,7 @@
 {
     if([user avatarURL:avatar.frame.size]){
         [self hidePlaceholder];
-        [avatar setImageWithURL:[NSURL URLWithString:[user avatarURL:avatar.frame.size]] placeholderImage:placeholder];
+        [avatar sd_setImageWithURL:[NSURL URLWithString:[user avatarURL:avatar.frame.size]] placeholderImage:placeholder];
     }
     else{
         [self showPlaceholder];

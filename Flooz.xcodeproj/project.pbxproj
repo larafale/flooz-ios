@@ -1708,7 +1708,7 @@
 				ORGANIZATIONNAME = "Jonathan Tribouharet";
 				TargetAttributes = {
 					AB3D088D186CA11A00CF8380 = {
-						DevelopmentTeam = 239CFKQ3YB;
+						DevelopmentTeam = QU87Q423GH;
 					};
 					AB3D08A8186CA11A00CF8380 = {
 						TestTargetID = AB3D088D186CA11A00CF8380;

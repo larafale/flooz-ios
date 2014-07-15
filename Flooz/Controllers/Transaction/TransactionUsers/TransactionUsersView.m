@@ -131,7 +131,13 @@
 
     [avatar setImageFromUser:[_transaction from]];
     fullname.text = [[[_transaction from] fullname] uppercaseString];
-    username.text = [@"@" stringByAppendingString:[[_transaction from] username]];
+    
+    if([[_transaction from] username]){
+        username.text = [@"@" stringByAppendingString:[[_transaction from] username]];
+    }
+    else{
+        username.text = @"";
+    }
 }
 
 - (void)prepareRightUserView

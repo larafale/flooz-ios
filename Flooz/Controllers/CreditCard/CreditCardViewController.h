@@ -10,7 +10,7 @@
 
 #import "ScanPayViewController.h"
 
-@interface CreditCardViewController : UIViewController<ScanPayDelegate>
+@interface CreditCardViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contentView;
 

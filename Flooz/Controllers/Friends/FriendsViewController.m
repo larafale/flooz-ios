@@ -53,8 +53,10 @@
     [refreshControl addTarget:self action:@selector(didReloadData) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
     
-    _tableView.backgroundView = [UIImageView imageNamed:@"background-friends"];
-    _tableView.backgroundView.hidden = YES;
+    self.view.backgroundColor = _tableView.backgroundColor;
+    _tableView.backgroundColor = [UIColor clearColor];
+    _backgroundView.image = [UIImage imageNamed:@"background-friends"];
+    _backgroundView.hidden = YES;
     
     [self registerForKeyboardNotifications];
 }
@@ -256,7 +258,7 @@
             friends = [[[[Flooz sharedInstance] currentUser] friends] copy];
             friendsSuggestion = result;
             
-            _tableView.backgroundView.hidden = [friendsRequest count] > 0 || [friends count] > 0 || [friendsSuggestion count] > 0;
+            _backgroundView.hidden = [friendsRequest count] > 0 || [friends count] > 0 || [friendsSuggestion count] > 0;
             
             [_tableView reloadData];
             [_tableView setContentOffset:CGPointZero animated:YES];

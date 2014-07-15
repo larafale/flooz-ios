@@ -9,6 +9,7 @@
 #import "HomeViewController.h"
 
 #import "AppDelegate.h"
+#import "FLKeyboardView.h"
 
 @interface HomeViewController (){
     UIButton *loginButton;
@@ -19,6 +20,7 @@
     NSMutableDictionary *phone;
     
     FLTextField *phoneField;
+    FLKeyboardView *inputView;
 }
 
 @end
@@ -45,6 +47,13 @@
         CGRectSetWidthHeight(logo.frame, 105, 105);
         CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
         [_contentView addSubview:logo];
+    }
+    
+    if(SCREEN_HEIGHT < 500){
+        CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 90);
+    }
+    else{
+        CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
     }
     
     {
@@ -75,7 +84,7 @@
     }
     
     {
-        phoneField = [[FLTextField alloc] initWithPlaceholder:@"N° de mobile ou Code invitation" for:phone key:@"phone" position:CGPointMake(20, 220)];
+        phoneField = [[FLTextField alloc] initWithPlaceholder:@"N° de mobile ou Code invitation" for:phone key:@"phone" position:CGPointMake(20, 200)];
         
         phoneField.backgroundColor = [UIColor whiteColor];
         phoneField.layer.cornerRadius = 2.;
@@ -83,10 +92,15 @@
         phoneField.textfield.textColor = [UIColor customBackground];
         
         [_contentView addSubview:phoneField];
+        
+        inputView = [FLKeyboardView new];
+        [inputView setKeyboardChangeable];
+        inputView.textField = phoneField.textfield;
+        phoneField.textfield.inputView = inputView;
     }
     
-    loginButton.frame = CGRectMake(20, 270, SCREEN_WIDTH - 40, 39);
-    _contentView.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(loginButton.frame));
+    loginButton.frame = CGRectMake(20, CGRectGetMaxY(phoneField.frame) + 5, SCREEN_WIDTH - 40, 39);
+    _contentView.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(loginButton.frame) + 5);
     
     [self registerForKeyboardNotifications];
 }
@@ -107,6 +121,7 @@
     [[self view] endEditing:YES];
     
     if(phone[@"phone"] && ![phone[@"phone"] isBlank]){
+        [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] loginWithPhone:phone[@"phone"]];
     }
 }
@@ -135,7 +150,7 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight + 55, 0);
 }
 
 - (void)keyboardWillDisappear

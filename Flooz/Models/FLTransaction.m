@@ -52,19 +52,12 @@
     if(_amount && [[json objectForKey:@"payer"] isEqualToNumber:@1]){
         _amount = [NSNumber numberWithFloat:([_amount floatValue] * -1.)];
     }
-        
-    if([[json objectForKey:@"currentScope"] isEqualToString:@"private"]){
-        _avatarURL = [[json objectForKey:[json objectForKey:@"myFriend"]] objectForKey:@"pic"];
+    
+    
+    if([json objectForKey:@"avatar"]){
+        _avatarURL = json[@"avatar"];
     }
-    else{
-        if([[[json objectForKey:@"starter"] objectForKey:@"field"] isEqualToString:@"from"]){
-            _avatarURL = [[json objectForKey:@"from"] objectForKey:@"pic"];
-        }
-        else{
-            _avatarURL = [[json objectForKey:@"to"] objectForKey:@"pic"];
-        }
-    }
-        
+    
     _title = [json objectForKey:@"text"];
     _content = [json objectForKey:@"why"];
     

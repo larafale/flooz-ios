@@ -84,7 +84,7 @@
     }
     
     {
-        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 140, 280, 60)];
+        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 120, 280, 50)];
         
         firstTimeText.textColor = [UIColor customBlueLight];
         firstTimeText.font = [UIFont customContentRegular:14];

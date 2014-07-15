@@ -395,16 +395,18 @@
                 } failure:NULL];
             };
             
-            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
-                
-                SecureCodeViewController *controller = [SecureCodeViewController new];
-                controller.completeBlock = completeBlock;
-                
-                [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
-            }
-            else{
-                completeBlock();
-            }
+//            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+//                
+//                SecureCodeViewController *controller = [SecureCodeViewController new];
+//                controller.completeBlock = completeBlock;
+//                
+//                [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+//            }
+//            else{
+//                completeBlock();
+//            }
+            
+            completeBlock();
             
         } noCreditCard:^(){
             [self presentCreditCardController];

@@ -19,8 +19,6 @@
 
 #import <Analytics/Analytics.h>
 
-#define FLOOZ_DEBUG_API YES
-
 @implementation Flooz
 
 + (Flooz *)sharedInstance
@@ -89,9 +87,11 @@
     id successBlock = ^(id result) {
         [self updateCurrentUserAfterConnect:result];
         
-        [[SEGAnalytics sharedAnalytics] track:@"signup" properties:@{
-                                                                  @"userId": [[[Flooz sharedInstance] currentUser] userId]
-                                                                  }];
+        if(!FLOOZ_DEBUG_API){
+            [[SEGAnalytics sharedAnalytics] track:@"signup" properties:@{
+                                                                         @"userId": [[[Flooz sharedInstance] currentUser] userId]
+                                                                         }];
+        }
         
         if(success){
             success(result);
@@ -686,7 +686,7 @@
         
         id statusCode = [operation.responseObject objectForKey:@"statusCode"];
         
-        if([path isEqualToString:@"/login/facebook"]){
+        if([path isEqualToString:@"/login/facebook"] || [path isEqualToString:@"/login/basic"]){
             
         }
         else if(error.code == kCFURLErrorTimedOut ||
@@ -704,7 +704,7 @@
                 if(operation.responseObject[@"nick"]){
                     user[@"login"] = operation.responseObject[@"nick"];
                 }
-                
+    
                 [appDelegate showLoginWithUser:user];
             }
             else{ // Signup

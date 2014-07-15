@@ -12,7 +12,6 @@
     JTImageLabel *comment;
     JTImageLabel *like;
     JTImageLabel *scope;
-    UIView *separator;
     
     __weak id _target;
     SEL _action;
