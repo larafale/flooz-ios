@@ -51,30 +51,34 @@
     }
 }
 
-- (void)addFilter:(NSString *)title target:(id)target action:(SEL)action
+- (void)addFilter:(NSString *)image title:(NSString *)title target:(id)target action:(SEL)action
 {
-    [self addFilter:title target:target action:action colors:@[[UIColor customBlue]]];
+    [self addFilter:image title:title target:target action:action colors:@[[UIColor customBlue]]];
 }
 
-- (void)addFilter:(NSString *)title target:(id)target action:(SEL)action colors:(NSArray *)colors
+- (void)addFilter:(NSString *)image title:(NSString *)title target:(id)target action:(SEL)action colors:(NSArray *)colors
 {
     UIView *filterView = [[UIView alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
     
     {
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(filterView.frame) - 1)];
-//        [button setTitle:NSLocalizedString(title, nil) forState:UIControlStateNormal];
-//        button.titleLabel.font = [UIFont customContentLight:11];
-//        
-//        if([filterViews count] > 0){
-//            [button setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
-//        }
-//        else{
-//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        }
+        [button setTitle:NSLocalizedString(title, nil) forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont customContentLight:11];
+
+        if([filterViews count] > 0){
+            [button setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
+        }
+        else{
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }
         
-        [button setImage:[UIImage imageNamed:title] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-selected", title]] forState:UIControlStateSelected];
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-selected", title]] forState:UIControlStateHighlighted];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+        
+        [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-selected", image]] forState:UIControlStateSelected];
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-selected", image]] forState:UIControlStateHighlighted];
+        
+
         
         button.tag = [buttonColors count];
         [buttonColors addObject:colors];
@@ -98,7 +102,7 @@
         if([filterViews count] > 0){
             line.hidden = YES;
         }
-        
+    
         [filterView addSubview:line];
     }
     
@@ -116,6 +120,7 @@
     if([[contentView subviews] count] > 0){
         UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, ((CGRectGetHeight(self.frame) - 15) / 2.), 1, 15)];
         separator.backgroundColor = [UIColor customSeparator];
+        separator.hidden = YES;
 
         [contentView addSubview:separator];
     }

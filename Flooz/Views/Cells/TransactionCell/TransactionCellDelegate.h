@@ -15,4 +15,6 @@
 - (FLTableView *)tableView;
 - (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath;
 
+- (BOOL)transactionAlreadyLoaded:(FLTransaction *)transaction;
+
 @end

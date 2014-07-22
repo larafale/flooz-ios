@@ -30,8 +30,6 @@
     FLAccountButton *cashout;
     FLAccountButton *settings;
     FLAccountButton *informations;
-    
-    FLWaveAnimation *settingsAnimation;
 }
 
 @end
@@ -94,6 +92,7 @@
         [cashout addTarget:self action:@selector(presentCashOutController) forControlEvents:UIControlEventTouchUpInside];
         [settings addTarget:self action:@selector(presentSettingsController) forControlEvents:UIControlEventTouchUpInside];
         [informations addTarget:self action:@selector(presentInformationsController) forControlEvents:UIControlEventTouchUpInside];
+                
         
         [_contentView addSubview:friends];
         [_contentView addSubview:cashout];
@@ -101,11 +100,6 @@
         [_contentView addSubview:informations];
         
         _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetMaxY(informations.frame));
-        
-        {
-            settingsAnimation = [FLWaveAnimation new];
-            settingsAnimation.view = settings;
-        }
     }
 }
 
@@ -116,6 +110,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCurrentUser) name:@"reloadCurrentUser" object:nil];
     _contentView.frame = CGRectMakeWithSize(self.view.frame.size);
     
+    [self reloadCurrentUser];
     [[Flooz sharedInstance] updateCurrentUser];
 }
 
@@ -145,13 +140,12 @@
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[CashOutViewController new]];
         [self presentViewController:controller animated:YES completion:NULL];
     } failure:^(NSError *error) {        
-        [settingsAnimation start];
+        [self presentEditAccountController];
     }];
 }
 
 - (void)presentSettingsController
 {
-    [settingsAnimation stop];
     
 //    CompleteBlock completeBlock = ^{
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];

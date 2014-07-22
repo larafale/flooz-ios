@@ -173,7 +173,9 @@
         _username = nil;
     }
     
-    _invitCode = @"EIHGTAA54";
+    if([[json objectForKey:@"invitation"] objectForKey:@"code"]){
+        _invitCode = [[json objectForKey:@"invitation"] objectForKey:@"code"];
+    }
 }
 
 - (void)updateStatsPending:(NSDictionary *)json

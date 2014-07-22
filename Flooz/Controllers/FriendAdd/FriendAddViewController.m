@@ -77,6 +77,11 @@
     }];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_searchBar close];
+}
+
 #pragma -
 
 - (void)dismiss{

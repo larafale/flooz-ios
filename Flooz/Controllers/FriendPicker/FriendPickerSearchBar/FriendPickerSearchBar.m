@@ -52,22 +52,22 @@
 
 - (void)createSearchView
 {
-    UISearchBar *view = [[UISearchBar alloc] initWithFrame:CGRectMake(42, 0, CGRectGetWidth(self.frame) - 42, CGRectGetHeight(self.frame))];
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(42, 0, CGRectGetWidth(self.frame) - 42, CGRectGetHeight(self.frame))];
     
-    view.delegate = self;
-    view.placeholder = NSLocalizedString(@"FRIEND_PCIKER_PLACEHOLDER", nil);
-    view.translucent = NO;
-    view.barTintColor = self.backgroundColor;
-    view.tintColor = [UIColor whiteColor]; // Curseur
+    _searchBar.delegate = self;
+    _searchBar.placeholder = NSLocalizedString(@"FRIEND_PCIKER_PLACEHOLDER", nil);
+    _searchBar.translucent = NO;
+    _searchBar.barTintColor = self.backgroundColor;
+    _searchBar.tintColor = [UIColor whiteColor]; // Curseur
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor customBackground]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackground:[UIImage imageWithColor:[UIColor customBackground]]];
         
     // Hack pour supprimer bordure noir
-    [[[[[view subviews] firstObject] subviews] firstObject] removeFromSuperview];
+    [[[[[_searchBar subviews] firstObject] subviews] firstObject] removeFromSuperview];
     
-    [self addSubview:view];
+    [self addSubview:_searchBar];
 }
 
 - (void)createFacebookView
@@ -105,6 +105,11 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
+}
+
+- (void)close
+{
+    [_searchBar resignFirstResponder];
 }
 
 @end

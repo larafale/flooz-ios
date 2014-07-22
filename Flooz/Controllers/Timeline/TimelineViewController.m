@@ -28,6 +28,7 @@
         nextPageIsLoading = NO;
         
         transactionsCache = [NSMutableDictionary new];
+        transactionsLoaded = [NSMutableArray new];
     }
     return self;
 }
@@ -41,17 +42,13 @@
     [self.view addSubview:shadow];
     
     {
-        [_filterView addFilter:@"scope-public-large" target:self action:@selector(didFilterPublicTouch)];
-        [_filterView addFilter:@"scope-friend-large" target:self action:@selector(didFilterFriendTouch)];
-        [_filterView addFilter:@"scope-private-large" target:self action:@selector(didFilterPersoTouch)];
+        [_filterView addFilter:@"scope-public-large" title:@"FILTER_SCOPE_PUBLIC" target:self action:@selector(didFilterPublicTouch)];
+        [_filterView addFilter:@"scope-friend-large" title:@"FILTER_SCOPE_FRIEND" target:self action:@selector(didFilterFriendTouch)];
+        [_filterView addFilter:@"scope-private-large" title:@"FILTER_SCOPE_PRIVATE" target:self action:@selector(didFilterPersoTouch)];
     }
     
-//    if([[[Flooz sharedInstance] currentUser] haveStatsPending]){
-//        [self didFilterPersoTouch:@1];
-//    }
-//    else{
-        [self didFilterPublicTouch];
-//    }
+//    [self didFilterPersoTouch];
+    [_filterView selectFilter:2];
     
     refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
@@ -171,6 +168,7 @@
 {
     currentFilter = @"public";
 
+    [self resetTransactionsLoaded];
     if(transactionsCache[currentFilter]){
         transactions = [transactionsCache[currentFilter] mutableCopy];
         _nextPageUrl = nil;
@@ -195,6 +193,7 @@
 {
     currentFilter = @"friend";
 
+    [self resetTransactionsLoaded];
     if(transactionsCache[currentFilter]){
         transactions = [transactionsCache[currentFilter] mutableCopy];
         _nextPageUrl = nil;
@@ -219,6 +218,7 @@
 {
     currentFilter = @"private";
     
+    [self resetTransactionsLoaded];
     if(transactionsCache[currentFilter]){
         transactions = [transactionsCache[currentFilter] mutableCopy];
         _nextPageUrl = nil;
@@ -297,6 +297,22 @@
     [_tableView beginUpdates];
     [_tableView reloadRowsAtIndexPaths:[rowsToReload allObjects] withRowAnimation:UITableViewRowAnimationNone];
     [_tableView endUpdates];
+}
+
+- (BOOL)transactionAlreadyLoaded:(FLTransaction *)transaction
+{
+    if([transactionsLoaded containsObject:[transaction transactionId]]){
+        return YES;
+    }
+    
+    [transactionsLoaded addObject:[transaction transactionId]];
+    
+    return NO;
+}
+
+- (void)resetTransactionsLoaded
+{
+    [transactionsLoaded removeAllObjects];
 }
 
 - (void)loadNextPage

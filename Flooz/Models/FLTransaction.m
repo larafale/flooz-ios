@@ -118,6 +118,10 @@
     }
     
     _when = [FLHelper formatedDateFromNow:_date];
+    
+    if([json objectForKey:@"text3d"]){
+        _text3d = [json objectForKey:@"text3d"];
+    }
 }
 
 - (NSString *)statusText

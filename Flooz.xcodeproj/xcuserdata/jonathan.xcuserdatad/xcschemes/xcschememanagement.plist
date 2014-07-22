@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Flooz dev.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>28</integer>
+		</dict>
 		<key>Flooz.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>AB3D08A8186CA11A00CF8380</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ABAA3F7D197E96BF009F29EF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

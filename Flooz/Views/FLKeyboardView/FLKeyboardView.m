@@ -25,6 +25,8 @@
 
 - (void)commonInit
 {
+    self.backgroundColor = [UIColor customBackgroundHeader];
+    
     for(int i = 1; i <= 3; ++i){
         for(int j = 1; j <= 3; ++j){
             UIButton *button = [self createButtonWithPosition:CGPointMake(j, i) title:[NSString stringWithFormat:@"%d", j + (3 * (i - 1))]];
@@ -55,6 +57,7 @@
 - (void)setKeyboardChangeable
 {
     [closeButton setTitle:@"ABC" forState:UIControlStateNormal];
+    closeButton.titleLabel.font = [UIFont customTitleThin:20];
     [closeButton setImage:nil forState:UIControlStateNormal];
     [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     [closeButton addTarget:self action:@selector(didNormalKeyboardTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -64,6 +67,7 @@
 {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake((position.x - 1) * BUTTON_WIDTH, (position.y - 1) * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT)];
     
+    button.backgroundColor = [UIColor customBackgroundHeader];
     [button setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundHeader]] forState:UIControlStateNormal];
     [button setBackgroundImage:[UIImage imageWithColor:[UIColor customBackground]] forState:UIControlStateHighlighted];
     
@@ -72,8 +76,8 @@
     
     button.titleLabel.font = [UIFont customTitleThin:40];
     
-    button.layer.borderWidth = .5;
-    button.layer.borderColor = [UIColor customSeparator].CGColor;
+//    button.layer.borderWidth = .5;
+//    button.layer.borderColor = [UIColor customSeparator].CGColor;
     
     [self addSubview:button];
     

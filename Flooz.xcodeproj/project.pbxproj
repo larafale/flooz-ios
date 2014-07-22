@@ -18,8 +18,6 @@
 		AB2FB53318AD40580079AA1D /* CashOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53118AD40580079AA1D /* CashOutViewController.m */; };
 		AB2FB53418AD40580079AA1D /* CashOutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB53218AD40580079AA1D /* CashOutViewController.xib */; };
 		AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53718AD8C7A0079AA1D /* FLTextFieldTitle2.m */; };
-		AB2FB53D18AD8D590079AA1D /* RIBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53B18AD8D590079AA1D /* RIBViewController.m */; };
-		AB2FB53E18AD8D590079AA1D /* RIBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB53C18AD8D590079AA1D /* RIBViewController.xib */; };
 		AB2FB54318AD9C7A0079AA1D /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54118AD9C7A0079AA1D /* PasswordViewController.m */; };
 		AB2FB54418AD9C7A0079AA1D /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB54218AD9C7A0079AA1D /* PasswordViewController.xib */; };
 		AB2FB54818AE798D0079AA1D /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54718AE798D0079AA1D /* FLActivity.m */; };
@@ -89,6 +87,166 @@
 		ABA9B72118F3036800A81929 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71318F300FB00A81929 /* AdSupport.framework */; };
 		ABA9B72218F3036F00A81929 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71118F300F200A81929 /* libz.dylib */; };
 		ABA9B72318F3037500A81929 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71718F3015800A81929 /* libsqlite3.dylib */; };
+		ABAA3F80197E96BF009F29EF /* CreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75C918B63DB20070C2A8 /* CreditCardViewController.m */; };
+		ABAA3F81197E96BF009F29EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08A1186CA11A00CF8380 /* AppDelegate.m */; };
+		ABAA3F82197E96BF009F29EF /* FriendPickerFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B1618D71884002775BA /* FriendPickerFriendCell.m */; };
+		ABAA3F83197E96BF009F29EF /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9148E189337E4003AC722 /* FLTextField.m */; };
+		ABAA3F84197E96BF009F29EF /* FriendPickerContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114418ACE44800C3C52D /* FriendPickerContactCell.m */; };
+		ABAA3F85197E96BF009F29EF /* FriendPickerSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114718ACE45A00C3C52D /* FriendPickerSearchBar.m */; };
+		ABAA3F86197E96BF009F29EF /* EventParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D6918BF9F25002FCAAE /* EventParticipantsViewController.m */; };
+		ABAA3F87197E96BF009F29EF /* FLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A31896D2D9003AC722 /* FLHelper.m */; };
+		ABAA3F88197E96BF009F29EF /* EventAmountView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D5418BE61A3002FCAAE /* EventAmountView.m */; };
+		ABAA3F89197E96BF009F29EF /* PasswordForgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB358F2818F6EC6100EECE72 /* PasswordForgetViewController.m */; };
+		ABAA3F8A197E96BF009F29EF /* FLSocialView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9145C18928AA3003AC722 /* FLSocialView.m */; };
+		ABAA3F8B197E96BF009F29EF /* FLMenuNewTransactionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9146D189294A0003AC722 /* FLMenuNewTransactionButton.m */; };
+		ABAA3F8C197E96BF009F29EF /* TransactionActionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114B18ACE47F00C3C52D /* TransactionActionsView.m */; };
+		ABAA3F8D197E96BF009F29EF /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
+		ABAA3F90197E96BF009F29EF /* MenuNewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6DD188214F000D81AF6 /* MenuNewTransactionViewController.m */; };
+		ABAA3F91197E96BF009F29EF /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4618BCE805002FCAAE /* EventViewController.m */; };
+		ABAA3F92197E96BF009F29EF /* FLAccountButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9146518929402003AC722 /* FLAccountButton.m */; };
+		ABAA3F93197E96BF009F29EF /* TransactionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */; };
+		ABAA3F94197E96BF009F29EF /* FriendAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51E18C8CEF70073B947 /* FriendAddViewController.m */; };
+		ABAA3F95197E96BF009F29EF /* FLPaymentField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149F18968E52003AC722 /* FLPaymentField.m */; };
+		ABAA3F96197E96BF009F29EF /* EventContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D6118BE64B3002FCAAE /* EventContentView.m */; };
+		ABAA3F97197E96BF009F29EF /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6F61886C1C600D1C573 /* SignupViewController.m */; };
+		ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
+		ABAA3F99197E96BF009F29EF /* FriendPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093518A3C52200517389 /* FriendPickerViewController.m */; };
+		ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
+		ABAA3F9B197E96BF009F29EF /* EventActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D5018BE618D002FCAAE /* EventActionView.m */; };
+		ABAA3F9C197E96BF009F29EF /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54B18B231B90079AA1D /* ActivityCell.m */; };
+		ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9148A1892C734003AC722 /* FLKeyboardView.m */; };
+		ABAA3F9E197E96BF009F29EF /* InformationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9147118929A5C003AC722 /* InformationsViewController.m */; };
+		ABAA3F9F197E96BF009F29EF /* FLValidNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91423188944D5003AC722 /* FLValidNavBar.m */; };
+		ABAA3FA0197E96BF009F29EF /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093D18A4D63300517389 /* EventCell.m */; };
+		ABAA3FA1197E96BF009F29EF /* TransactionCommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115118ACE4AA00C3C52D /* TransactionCommentsView.m */; };
+		ABAA3FA2197E96BF009F29EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D089D186CA11A00CF8380 /* main.m */; };
+		ABAA3FA3197E96BF009F29EF /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0857FC1923AB13007C1927 /* SplashViewController.m */; };
+		ABAA3FA4197E96BF009F29EF /* NewTransactionDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */; };
+		ABAA3FA5197E96BF009F29EF /* FLTextFieldIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149718967670003AC722 /* FLTextFieldIcon.m */; };
+		ABAA3FA6197E96BF009F29EF /* EventParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D6F18BFA2D2002FCAAE /* EventParticipantCell.m */; };
+		ABAA3FA7197E96BF009F29EF /* FLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914391890A034003AC722 /* FLNavigationController.m */; };
+		ABAA3FA8197E96BF009F29EF /* EventHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4D18BE60C5002FCAAE /* EventHeaderView.m */; };
+		ABAA3FA9197E96BF009F29EF /* SecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2018D73AE9002775BA /* SecureCodeViewController.m */; };
+		ABAA3FAA197E96BF009F29EF /* JTImageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A1E1875B54600E92A77 /* JTImageLabel.m */; };
+		ABAA3FAB197E96BF009F29EF /* InvitCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D88F1197978F400A37630 /* InvitCodeViewController.m */; };
+		ABAA3FAC197E96BF009F29EF /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB55B18B2B4710079AA1D /* FriendsViewController.m */; };
+		ABAA3FAD197E96BF009F29EF /* EventCommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D6418BE66D7002FCAAE /* EventCommentsView.m */; };
+		ABAA3FAE197E96BF009F29EF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6DF1886AE2D00D1C573 /* LoginViewController.m */; };
+		ABAA3FAF197E96BF009F29EF /* FLFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75DD18BA27E60070C2A8 /* FLFriendRequest.m */; };
+		ABAA3FB0197E96BF009F29EF /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB55518B234320079AA1D /* EventsViewController.m */; };
+		ABAA3FB1197E96BF009F29EF /* FLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914431890A12C003AC722 /* FLUser.m */; };
+		ABAA3FB2197E96BF009F29EF /* FLNewTransactionAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914861892AE59003AC722 /* FLNewTransactionAmount.m */; };
+		ABAA3FB3197E96BF009F29EF /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA52418C8D0AF0073B947 /* FriendAddSearchBar.m */; };
+		ABAA3FB4197E96BF009F29EF /* AcitvitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54F18B232B10079AA1D /* AcitvitiesViewController.m */; };
+		ABAA3FB5197E96BF009F29EF /* EventUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D5818BE61BC002FCAAE /* EventUsersView.m */; };
+		ABAA3FB6197E96BF009F29EF /* FLLoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914361890A029003AC722 /* FLLoadView.m */; };
+		ABAA3FB7197E96BF009F29EF /* SecureCodeField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B2618D84F99002775BA /* SecureCodeField.m */; };
+		ABAA3FB8197E96BF009F29EF /* FLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914301890A01F003AC722 /* FLContainerViewController.m */; };
+		ABAA3FB9197E96BF009F29EF /* TransactionContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115418ACE4B500C3C52D /* TransactionContentView.m */; };
+		ABAA3FBA197E96BF009F29EF /* CashOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53118AD40580079AA1D /* CashOutViewController.m */; };
+		ABAA3FBB197E96BF009F29EF /* FLNewTransactionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */; };
+		ABAA3FBC197E96BF009F29EF /* FLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914AA1898558E003AC722 /* FLTextView.m */; };
+		ABAA3FBD197E96BF009F29EF /* TransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7092818A2CA3500517389 /* TransactionViewController.m */; };
+		ABAA3FBE197E96BF009F29EF /* FLTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914411890A12C003AC722 /* FLTransaction.m */; };
+		ABAA3FBF197E96BF009F29EF /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54718AE798D0079AA1D /* FLActivity.m */; };
+		ABAA3FC0197E96BF009F29EF /* FriendAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA52918C8D4CE0073B947 /* FriendAddCell.m */; };
+		ABAA3FC1197E96BF009F29EF /* UIBarButtonItem+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9143C1890A08A003AC722 /* UIBarButtonItem+custom.m */; };
+		ABAA3FC2197E96BF009F29EF /* Flooz.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08DF1871AAB400CF8380 /* Flooz.m */; };
+		ABAA3FC3197E96BF009F29EF /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9147718929AC8003AC722 /* NotificationsViewController.m */; };
+		ABAA3FC4197E96BF009F29EF /* FLCreditCard.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75CE18B64A0B0070C2A8 /* FLCreditCard.m */; };
+		ABAA3FC5197E96BF009F29EF /* NewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9141E18894385003AC722 /* NewTransactionViewController.m */; };
+		ABAA3FC6197E96BF009F29EF /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9146018929168003AC722 /* AccountViewController.m */; };
+		ABAA3FC7197E96BF009F29EF /* EventAmountActionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D7318C0C42D002FCAAE /* EventAmountActionsView.m */; };
+		ABAA3FC8197E96BF009F29EF /* FriendSuggestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D7718C0DEE8002FCAAE /* FriendSuggestionCell.m */; };
+		ABAA3FC9197E96BF009F29EF /* FriendRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75E118BBADFA0070C2A8 /* FriendRequestCell.m */; };
+		ABAA3FCA197E96BF009F29EF /* NewTransactionSelectTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C9B1118D7049B002775BA /* NewTransactionSelectTypeView.m */; };
+		ABAA3FCB197E96BF009F29EF /* TransactionAmountView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114E18ACE48900C3C52D /* TransactionAmountView.m */; };
+		ABAA3FCC197E96BF009F29EF /* FLSelectAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7092418A2AF7F00517389 /* FLSelectAmount.m */; };
+		ABAA3FCD197E96BF009F29EF /* FLAccountUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914681892940A003AC722 /* FLAccountUserView.m */; };
+		ABAA3FCE197E96BF009F29EF /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6F51882151000D81AF6 /* TimelineViewController.m */; };
+		ABAA3FCF197E96BF009F29EF /* FLSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9145418927CE0003AC722 /* FLSocial.m */; };
+		ABAA3FD0197E96BF009F29EF /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB56218B63B5F0079AA1D /* FriendCell.m */; };
+		ABAA3FD1197E96BF009F29EF /* FLWaveAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = AB931C0B190E4FBD00E70742 /* FLWaveAnimation.m */; };
+		ABAA3FD2197E96BF009F29EF /* EditAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9147D18929B7D003AC722 /* EditAccountViewController.m */; };
+		ABAA3FD3197E96BF009F29EF /* FLTextFieldTitle2.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53718AD8C7A0079AA1D /* FLTextFieldTitle2.m */; };
+		ABAA3FD4197E96BF009F29EF /* FLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9143F1890A12C003AC722 /* FLEvent.m */; };
+		ABAA3FD5197E96BF009F29EF /* FLNavbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914321890A01F003AC722 /* FLNavbarView.m */; };
+		ABAA3FD6197E96BF009F29EF /* FLUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9144D18915E9F003AC722 /* FLUserView.m */; };
+		ABAA3FD7197E96BF009F29EF /* FLSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD0164818EC695500940F2D /* FLSwitchView.m */; };
+		ABAA3FD8197E96BF009F29EF /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7094018A4D64300517389 /* TransactionCell.m */; };
+		ABAA3FD9197E96BF009F29EF /* FLFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91426188C5D1A003AC722 /* FLFilterView.m */; };
+		ABAA3FDA197E96BF009F29EF /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEC02A718D3165600C03025 /* UIView+FindFirstResponder.m */; };
+		ABAA3FDB197E96BF009F29EF /* FLScrollViewIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD0164D18ECCCFA00940F2D /* FLScrollViewIndicator.m */; };
+		ABAA3FDC197E96BF009F29EF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6E1188214F000D81AF6 /* SettingsViewController.m */; };
+		ABAA3FDD197E96BF009F29EF /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB94FAC71906B720007F8373 /* LoadingCell.m */; };
+		ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
+		ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */; };
+		ABAA3FE0197E96BF009F29EF /* FLSelectFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093118A3BF5400517389 /* FLSelectFriendButton.m */; };
+		ABAA3FE1197E96BF009F29EF /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50918C4A5D80073B947 /* WebViewController.m */; };
+		ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115E18ACE4FE00C3C52D /* FriendPickerSelectionCell.m */; };
+		ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6D9188214F000D81AF6 /* HomeViewController.m */; };
+		ABAA3FE4197E96BF009F29EF /* FLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50F18C4DDFD0073B947 /* FLImageView.m */; };
+		ABAA3FE5197E96BF009F29EF /* FLTextFieldTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149B18968C30003AC722 /* FLTextFieldTitle.m */; };
+		ABAA3FE6197E96BF009F29EF /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54118AD9C7A0079AA1D /* PasswordViewController.m */; };
+		ABAA3FE8197E96BF009F29EF /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DB3196EF24400B8B7C7 /* AssetsLibrary.framework */; };
+		ABAA3FE9197E96BF009F29EF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DB1196EF23600B8B7C7 /* AudioToolbox.framework */; };
+		ABAA3FEA197E96BF009F29EF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAD196EF22300B8B7C7 /* CoreMedia.framework */; };
+		ABAA3FEB197E96BF009F29EF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAE196EF22300B8B7C7 /* CoreVideo.framework */; };
+		ABAA3FEC197E96BF009F29EF /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71718F3015800A81929 /* libsqlite3.dylib */; };
+		ABAA3FED197E96BF009F29EF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71118F300F200A81929 /* libz.dylib */; };
+		ABAA3FEE197E96BF009F29EF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71318F300FB00A81929 /* AdSupport.framework */; };
+		ABAA3FEF197E96BF009F29EF /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71F18F3035E00A81929 /* CoreTelephony.framework */; };
+		ABAA3FF0197E96BF009F29EF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71D18F3035700A81929 /* SystemConfiguration.framework */; };
+		ABAA3FF1197E96BF009F29EF /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9B71B18F3034B00A81929 /* CoreData.framework */; };
+		ABAA3FF2197E96BF009F29EF /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBBA18E46872008E03FE /* Security.framework */; };
+		ABAA3FF3197E96BF009F29EF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB818E4686A008E03FE /* CFNetwork.framework */; };
+		ABAA3FF4197E96BF009F29EF /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB618E46861008E03FE /* libicucore.dylib */; };
+		ABAA3FF5197E96BF009F29EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBB75D918B656820070C2A8 /* AVFoundation.framework */; };
+		ABAA3FF6197E96BF009F29EF /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAA196EED4D00B8B7C7 /* opencv2.framework */; };
+		ABAA3FF7197E96BF009F29EF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */; };
+		ABAA3FF8197E96BF009F29EF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0895186CA11A00CF8380 /* UIKit.framework */; };
+		ABAA3FF9197E96BF009F29EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0891186CA11A00CF8380 /* Foundation.framework */; };
+		ABAA3FFA197E96BF009F29EF /* libScanpay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DA9196EED4D00B8B7C7 /* libScanpay.a */; };
+		ABAA3FFB197E96BF009F29EF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
+		ABAA3FFD197E96BF009F29EF /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6E2188214F000D81AF6 /* SettingsViewController.xib */; };
+		ABAA3FFE197E96BF009F29EF /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */; };
+		ABAA3FFF197E96BF009F29EF /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */; };
+		ABAA4000197E96BF009F29EF /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
+		ABAA4001197E96BF009F29EF /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA50A18C4A5D80073B947 /* WebViewController.xib */; };
+		ABAA4002197E96BF009F29EF /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2A1875C0B100E92A77 /* ProximaNova-Regular.otf */; };
+		ABAA4004197E96BF009F29EF /* SecureCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C9B2118D73AE9002775BA /* SecureCodeViewController.xib */; };
+		ABAA4005197E96BF009F29EF /* FriendPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7093618A3C52200517389 /* FriendPickerViewController.xib */; };
+		ABAA4006197E96BF009F29EF /* InformationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9147218929A5C003AC722 /* InformationsViewController.xib */; };
+		ABAA4007197E96BF009F29EF /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2B1875C0B100E92A77 /* ProximaNova-Semibold.otf */; };
+		ABAA4008197E96BF009F29EF /* Rene Bieder - Gentona Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2C1875C0B100E92A77 /* Rene Bieder - Gentona Book.otf */; };
+		ABAA4009197E96BF009F29EF /* EditAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9147E18929B7D003AC722 /* EditAccountViewController.xib */; };
+		ABAA400A197E96BF009F29EF /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
+		ABAA400B197E96BF009F29EF /* NotificationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9147818929AC8003AC722 /* NotificationsViewController.xib */; };
+		ABAA400C197E96BF009F29EF /* SignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */; };
+		ABAA400D197E96BF009F29EF /* Rene Bieder - Gentona ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2D1875C0B100E92A77 /* Rene Bieder - Gentona ExtraLight.otf */; };
+		ABAA400E197E96BF009F29EF /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB54218AD9C7A0079AA1D /* PasswordViewController.xib */; };
+		ABAA400F197E96BF009F29EF /* MenuNewTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DE188214F000D81AF6 /* MenuNewTransactionViewController.xib */; };
+		ABAA4010197E96BF009F29EF /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB55618B234320079AA1D /* EventsViewController.xib */; };
+		ABAA4011197E96BF009F29EF /* CashOutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB53218AD40580079AA1D /* CashOutViewController.xib */; };
+		ABAA4012197E96BF009F29EF /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6E01886AE2D00D1C573 /* LoginViewController.xib */; };
+		ABAA4013197E96BF009F29EF /* EventParticipantsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D6A18BF9F25002FCAAE /* EventParticipantsViewController.xib */; };
+		ABAA4014197E96BF009F29EF /* Rene Bieder - Gentona Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2E1875C0B100E92A77 /* Rene Bieder - Gentona Light.otf */; };
+		ABAA4015197E96BF009F29EF /* Rene Bieder - Gentona Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2F1875C0B100E92A77 /* Rene Bieder - Gentona Thin.otf */; };
+		ABAA4016197E96BF009F29EF /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB55C18B2B4710079AA1D /* FriendsViewController.xib */; };
+		ABAA4017197E96BF009F29EF /* PasswordForgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB358F2918F6EC6100EECE72 /* PasswordForgetViewController.xib */; };
+		ABAA4019197E96BF009F29EF /* Error.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092018A03D4600517389 /* Error.strings */; };
+		ABAA401A197E96BF009F29EF /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D4718BCE805002FCAAE /* EventViewController.xib */; };
+		ABAA401B197E96BF009F29EF /* NewTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9141F18894385003AC722 /* NewTransactionViewController.xib */; };
+		ABAA401C197E96BF009F29EF /* FriendAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA51F18C8CEF70073B947 /* FriendAddViewController.xib */; };
+		ABAA401D197E96BF009F29EF /* InvitCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0D88F2197978F400A37630 /* InvitCodeViewController.xib */; };
+		ABAA401E197E96BF009F29EF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB3D089A186CA11A00CF8380 /* InfoPlist.strings */; };
+		ABAA401F197E96BF009F29EF /* CreditCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBB75CA18B63DB20070C2A8 /* CreditCardViewController.xib */; };
+		ABAA4020197E96BF009F29EF /* AcitvitiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB55018B232B10079AA1D /* AcitvitiesViewController.xib */; };
+		ABAA4021197E96BF009F29EF /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9146118929168003AC722 /* AccountViewController.xib */; };
+		ABAA4022197E96BF009F29EF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB3D08A3186CA11A00CF8380 /* Images.xcassets */; };
+		ABAA4023197E96BF009F29EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
+		ABAA4024197E96BF009F29EF /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */; };
+		ABAFEE22197F150800D39C62 /* FLHomeTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC02657197EB5A5000BA5B9 /* FLHomeTextField.m */; };
 		ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4618BCE805002FCAAE /* EventViewController.m */; };
 		ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D4718BCE805002FCAAE /* EventViewController.xib */; };
 		ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4D18BE60C5002FCAAE /* EventHeaderView.m */; };
@@ -108,6 +266,7 @@
 		ABBB75DA18B656820070C2A8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBB75D918B656820070C2A8 /* AVFoundation.framework */; };
 		ABBB75DE18BA27E60070C2A8 /* FLFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75DD18BA27E60070C2A8 /* FLFriendRequest.m */; };
 		ABBB75E218BBADFA0070C2A8 /* FriendRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75E118BBADFA0070C2A8 /* FriendRequestCell.m */; };
+		ABC02658197EB5A5000BA5B9 /* FLHomeTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC02657197EB5A5000BA5B9 /* FLHomeTextField.m */; };
 		ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114418ACE44800C3C52D /* FriendPickerContactCell.m */; };
 		ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114718ACE45A00C3C52D /* FriendPickerSearchBar.m */; };
 		ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114B18ACE47F00C3C52D /* TransactionActionsView.m */; };
@@ -153,8 +312,6 @@
 		ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A31896D2D9003AC722 /* FLHelper.m */; };
 		ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */; };
 		ABE914AB1898558E003AC722 /* FLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914AA1898558E003AC722 /* FLTextView.m */; };
-		ABEC02A018D20DA300C03025 /* DocumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEC029E18D20DA300C03025 /* DocumentsViewController.m */; };
-		ABEC02A118D20DA300C03025 /* DocumentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABEC029F18D20DA300C03025 /* DocumentsViewController.xib */; };
 		ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEC02A718D3165600C03025 /* UIView+FindFirstResponder.m */; };
 		ABF46A10187575C600E92A77 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
 		ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF46A1E1875B54600E92A77 /* JTImageLabel.m */; };
@@ -204,9 +361,6 @@
 		AB2FB53218AD40580079AA1D /* CashOutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CashOutViewController.xib; path = Controllers/CashOut/CashOutViewController.xib; sourceTree = "<group>"; };
 		AB2FB53618AD8C7A0079AA1D /* FLTextFieldTitle2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextFieldTitle2.h; path = Views/FLTextFieldTitle2/FLTextFieldTitle2.h; sourceTree = "<group>"; };
 		AB2FB53718AD8C7A0079AA1D /* FLTextFieldTitle2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextFieldTitle2.m; path = Views/FLTextFieldTitle2/FLTextFieldTitle2.m; sourceTree = "<group>"; };
-		AB2FB53A18AD8D590079AA1D /* RIBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RIBViewController.h; path = Controllers/RIB/RIBViewController.h; sourceTree = "<group>"; };
-		AB2FB53B18AD8D590079AA1D /* RIBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RIBViewController.m; path = Controllers/RIB/RIBViewController.m; sourceTree = "<group>"; };
-		AB2FB53C18AD8D590079AA1D /* RIBViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RIBViewController.xib; path = Controllers/RIB/RIBViewController.xib; sourceTree = "<group>"; };
 		AB2FB54018AD9C7A0079AA1D /* PasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PasswordViewController.h; path = Controllers/Password/PasswordViewController.h; sourceTree = "<group>"; };
 		AB2FB54118AD9C7A0079AA1D /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PasswordViewController.m; path = Controllers/Password/PasswordViewController.m; sourceTree = "<group>"; };
 		AB2FB54218AD9C7A0079AA1D /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PasswordViewController.xib; path = Controllers/Password/PasswordViewController.xib; sourceTree = "<group>"; };
@@ -327,6 +481,7 @@
 		ABA9B71B18F3034B00A81929 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		ABA9B71D18F3035700A81929 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		ABA9B71F18F3035E00A81929 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		ABAA4029197E96BF009F29EF /* Flooz dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flooz dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABB12D4518BCE805002FCAAE /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventViewController.h; path = Controllers/Event/EventViewController.h; sourceTree = "<group>"; };
 		ABB12D4618BCE805002FCAAE /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventViewController.m; path = Controllers/Event/EventViewController.m; sourceTree = "<group>"; };
 		ABB12D4718BCE805002FCAAE /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Controllers/Event/EventViewController.xib; sourceTree = "<group>"; };
@@ -365,6 +520,8 @@
 		ABBB75E018BBADFA0070C2A8 /* FriendRequestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendRequestCell.h; path = FriendRequestCell/FriendRequestCell.h; sourceTree = "<group>"; };
 		ABBB75E118BBADFA0070C2A8 /* FriendRequestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendRequestCell.m; path = FriendRequestCell/FriendRequestCell.m; sourceTree = "<group>"; };
 		ABBB75E318BC1CDA0070C2A8 /* FriendRequestCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FriendRequestCellDelegate.h; path = FriendRequestCell/FriendRequestCellDelegate.h; sourceTree = "<group>"; };
+		ABC02656197EB5A5000BA5B9 /* FLHomeTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLHomeTextField.h; path = Views/FLHomeTextField/FLHomeTextField.h; sourceTree = "<group>"; };
+		ABC02657197EB5A5000BA5B9 /* FLHomeTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLHomeTextField.m; path = Views/FLHomeTextField/FLHomeTextField.m; sourceTree = "<group>"; };
 		ABC1114318ACE44800C3C52D /* FriendPickerContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendPickerContactCell.h; path = Controllers/FriendPicker/FriendPickerContactCell/FriendPickerContactCell.h; sourceTree = "<group>"; };
 		ABC1114418ACE44800C3C52D /* FriendPickerContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendPickerContactCell.m; path = Controllers/FriendPicker/FriendPickerContactCell/FriendPickerContactCell.m; sourceTree = "<group>"; };
 		ABC1114618ACE45A00C3C52D /* FriendPickerSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendPickerSearchBar.h; path = Controllers/FriendPicker/FriendPickerSearchBar/FriendPickerSearchBar.h; sourceTree = "<group>"; };
@@ -454,9 +611,6 @@
 		ABE914A61896D4C3003AC722 /* FLNewTransactionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionBar.m; path = Views/FLNewTransactionBar/FLNewTransactionBar.m; sourceTree = "<group>"; };
 		ABE914A91898558E003AC722 /* FLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextView.h; path = Views/FLTextView/FLTextView.h; sourceTree = "<group>"; };
 		ABE914AA1898558E003AC722 /* FLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextView.m; path = Views/FLTextView/FLTextView.m; sourceTree = "<group>"; };
-		ABEC029D18D20DA300C03025 /* DocumentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DocumentsViewController.h; path = Controllers/Documents/DocumentsViewController.h; sourceTree = "<group>"; };
-		ABEC029E18D20DA300C03025 /* DocumentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DocumentsViewController.m; path = Controllers/Documents/DocumentsViewController.m; sourceTree = "<group>"; };
-		ABEC029F18D20DA300C03025 /* DocumentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DocumentsViewController.xib; path = Controllers/Documents/DocumentsViewController.xib; sourceTree = "<group>"; };
 		ABEC02A618D3165600C03025 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+FindFirstResponder.h"; path = "Util/UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
 		ABEC02A718D3165600C03025 /* UIView+FindFirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+FindFirstResponder.m"; path = "Util/UIView+FindFirstResponder.m"; sourceTree = "<group>"; };
 		ABF46A11187575C600E92A77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -533,6 +687,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ABAA3FE7197E96BF009F29EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABAA3FE8197E96BF009F29EF /* AssetsLibrary.framework in Frameworks */,
+				ABAA3FE9197E96BF009F29EF /* AudioToolbox.framework in Frameworks */,
+				ABAA3FEA197E96BF009F29EF /* CoreMedia.framework in Frameworks */,
+				ABAA3FEB197E96BF009F29EF /* CoreVideo.framework in Frameworks */,
+				ABAA3FEC197E96BF009F29EF /* libsqlite3.dylib in Frameworks */,
+				ABAA3FED197E96BF009F29EF /* libz.dylib in Frameworks */,
+				ABAA3FEE197E96BF009F29EF /* AdSupport.framework in Frameworks */,
+				ABAA3FEF197E96BF009F29EF /* CoreTelephony.framework in Frameworks */,
+				ABAA3FF0197E96BF009F29EF /* SystemConfiguration.framework in Frameworks */,
+				ABAA3FF1197E96BF009F29EF /* CoreData.framework in Frameworks */,
+				ABAA3FF2197E96BF009F29EF /* Security.framework in Frameworks */,
+				ABAA3FF3197E96BF009F29EF /* CFNetwork.framework in Frameworks */,
+				ABAA3FF4197E96BF009F29EF /* libicucore.dylib in Frameworks */,
+				ABAA3FF5197E96BF009F29EF /* AVFoundation.framework in Frameworks */,
+				ABAA3FF6197E96BF009F29EF /* opencv2.framework in Frameworks */,
+				ABAA3FF7197E96BF009F29EF /* CoreGraphics.framework in Frameworks */,
+				ABAA3FF8197E96BF009F29EF /* UIKit.framework in Frameworks */,
+				ABAA3FF9197E96BF009F29EF /* Foundation.framework in Frameworks */,
+				ABAA3FFA197E96BF009F29EF /* libScanpay.a in Frameworks */,
+				ABAA3FFB197E96BF009F29EF /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -573,16 +754,6 @@
 				AB2FB53718AD8C7A0079AA1D /* FLTextFieldTitle2.m */,
 			);
 			name = FLTextFieldTitle2;
-			sourceTree = "<group>";
-		};
-		AB2FB53918AD8D370079AA1D /* RIB */ = {
-			isa = PBXGroup;
-			children = (
-				AB2FB53A18AD8D590079AA1D /* RIBViewController.h */,
-				AB2FB53B18AD8D590079AA1D /* RIBViewController.m */,
-				AB2FB53C18AD8D590079AA1D /* RIBViewController.xib */,
-			);
-			name = RIB;
 			sourceTree = "<group>";
 		};
 		AB2FB53F18AD9C660079AA1D /* Password */ = {
@@ -669,6 +840,7 @@
 			children = (
 				AB3D088E186CA11A00CF8380 /* Flooz.app */,
 				AB3D08A9186CA11A00CF8380 /* FloozTests.xctest */,
+				ABAA4029197E96BF009F29EF /* Flooz dev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -762,7 +934,6 @@
 				AB2FB54D18B2328D0079AA1D /* Activities */,
 				AB2FB52F18AD40120079AA1D /* CashOut */,
 				ABBB75C718B63D930070C2A8 /* CreditCard */,
-				ABEC029C18D20D8E00C03025 /* Documents */,
 				ABE9147B18929B6D003AC722 /* EditAccount */,
 				ABB12D4418BCE7E5002FCAAE /* Event */,
 				ABB12D6718BF9F03002FCAAE /* EventParticipants */,
@@ -779,7 +950,6 @@
 				ABE9147518929A61003AC722 /* Notifications */,
 				AB2FB53F18AD9C660079AA1D /* Password */,
 				AB358F2618F6EC4400EECE72 /* PasswordForget */,
-				AB2FB53918AD8D370079AA1D /* RIB */,
 				AB7C9B1E18D73AD2002775BA /* SecureCode */,
 				AB5EB6DF188214F000D81AF6 /* Settings */,
 				AB4CB6F41886C1B000D1C573 /* Signup */,
@@ -800,6 +970,7 @@
 				AB8F9FA718E1EF76006039D0 /* FLAlertView */,
 				AB46C66E18803421006C8334 /* FLContainerViewController */,
 				ABE91428188C5D20003AC722 /* FLFilterView */,
+				ABC02655197EB584000BA5B9 /* FLHomeTextField */,
 				AB6DA50D18C4DDE80073B947 /* FLImageView */,
 				ABE914881892C721003AC722 /* FLKeyboardView */,
 				AB4CB703188829DA00D1C573 /* FLLoadView */,
@@ -1281,6 +1452,15 @@
 			name = FriendRequestCell;
 			sourceTree = "<group>";
 		};
+		ABC02655197EB584000BA5B9 /* FLHomeTextField */ = {
+			isa = PBXGroup;
+			children = (
+				ABC02656197EB5A5000BA5B9 /* FLHomeTextField.h */,
+				ABC02657197EB5A5000BA5B9 /* FLHomeTextField.m */,
+			);
+			name = FLHomeTextField;
+			sourceTree = "<group>";
+		};
 		ABC1113F18AA922B00C3C52D /* FriendPickerContactCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1508,16 +1688,6 @@
 			name = FLTextView;
 			sourceTree = "<group>";
 		};
-		ABEC029C18D20D8E00C03025 /* Documents */ = {
-			isa = PBXGroup;
-			children = (
-				ABEC029D18D20DA300C03025 /* DocumentsViewController.h */,
-				ABEC029E18D20DA300C03025 /* DocumentsViewController.m */,
-				ABEC029F18D20DA300C03025 /* DocumentsViewController.xib */,
-			);
-			name = Documents;
-			sourceTree = "<group>";
-		};
 		ABF46A1C1875B54600E92A77 /* JTImageLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1714,6 +1884,25 @@
 			productReference = AB3D08A9186CA11A00CF8380 /* FloozTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		ABAA3F7D197E96BF009F29EF /* Flooz dev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABAA4026197E96BF009F29EF /* Build configuration list for PBXNativeTarget "Flooz dev" */;
+			buildPhases = (
+				ABAA3F7E197E96BF009F29EF /* Check Pods Manifest.lock */,
+				ABAA3F7F197E96BF009F29EF /* Sources */,
+				ABAA3FE7197E96BF009F29EF /* Frameworks */,
+				ABAA3FFC197E96BF009F29EF /* Resources */,
+				ABAA4025197E96BF009F29EF /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Flooz dev";
+			productName = Flooz;
+			productReference = ABAA4029197E96BF009F29EF /* Flooz dev.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1728,6 +1917,9 @@
 					};
 					AB3D08A8186CA11A00CF8380 = {
 						TestTargetID = AB3D088D186CA11A00CF8380;
+					};
+					ABAA3F7D197E96BF009F29EF = {
+						DevelopmentTeam = QU87Q423GH;
 					};
 				};
 			};
@@ -1753,6 +1945,7 @@
 			targets = (
 				AB3D088D186CA11A00CF8380 /* Flooz */,
 				AB3D08A8186CA11A00CF8380 /* FloozTests */,
+				ABAA3F7D197E96BF009F29EF /* Flooz dev */,
 			);
 		};
 /* End PBXProject section */
@@ -1768,7 +1961,6 @@
 				AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */,
 				AB6DA50C18C4A5D80073B947 /* WebViewController.xib in Resources */,
 				ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */,
-				ABEC02A118D20DA300C03025 /* DocumentsViewController.xib in Resources */,
 				AB7C9B2318D73AE9002775BA /* SecureCodeViewController.xib in Resources */,
 				ABF7093818A3C52200517389 /* FriendPickerViewController.xib in Resources */,
 				ABE9147418929A5C003AC722 /* InformationsViewController.xib in Resources */,
@@ -1789,7 +1981,6 @@
 				ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */,
 				AB2FB55E18B2B4710079AA1D /* FriendsViewController.xib in Resources */,
 				AB358F2B18F6EC6100EECE72 /* PasswordForgetViewController.xib in Resources */,
-				AB2FB53E18AD8D590079AA1D /* RIBViewController.xib in Resources */,
 				ABF7091E18A03D4600517389 /* Error.strings in Resources */,
 				ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */,
 				ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */,
@@ -1813,10 +2004,85 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ABAA3FFC197E96BF009F29EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABAA3FFD197E96BF009F29EF /* SettingsViewController.xib in Resources */,
+				ABAA3FFE197E96BF009F29EF /* TimelineViewController.xib in Resources */,
+				ABAA3FFF197E96BF009F29EF /* ProximaNova-Light.otf in Resources */,
+				ABAA4000197E96BF009F29EF /* SplashViewController.xib in Resources */,
+				ABAA4001197E96BF009F29EF /* WebViewController.xib in Resources */,
+				ABAA4002197E96BF009F29EF /* ProximaNova-Regular.otf in Resources */,
+				ABAA4004197E96BF009F29EF /* SecureCodeViewController.xib in Resources */,
+				ABAA4005197E96BF009F29EF /* FriendPickerViewController.xib in Resources */,
+				ABAA4006197E96BF009F29EF /* InformationsViewController.xib in Resources */,
+				ABAA4007197E96BF009F29EF /* ProximaNova-Semibold.otf in Resources */,
+				ABAA4008197E96BF009F29EF /* Rene Bieder - Gentona Book.otf in Resources */,
+				ABAA4009197E96BF009F29EF /* EditAccountViewController.xib in Resources */,
+				ABAA400A197E96BF009F29EF /* TransactionViewController.xib in Resources */,
+				ABAA400B197E96BF009F29EF /* NotificationsViewController.xib in Resources */,
+				ABAA400C197E96BF009F29EF /* SignupViewController.xib in Resources */,
+				ABAA400D197E96BF009F29EF /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
+				ABAA400E197E96BF009F29EF /* PasswordViewController.xib in Resources */,
+				ABAA400F197E96BF009F29EF /* MenuNewTransactionViewController.xib in Resources */,
+				ABAA4010197E96BF009F29EF /* EventsViewController.xib in Resources */,
+				ABAA4011197E96BF009F29EF /* CashOutViewController.xib in Resources */,
+				ABAA4012197E96BF009F29EF /* LoginViewController.xib in Resources */,
+				ABAA4013197E96BF009F29EF /* EventParticipantsViewController.xib in Resources */,
+				ABAA4014197E96BF009F29EF /* Rene Bieder - Gentona Light.otf in Resources */,
+				ABAA4015197E96BF009F29EF /* Rene Bieder - Gentona Thin.otf in Resources */,
+				ABAA4016197E96BF009F29EF /* FriendsViewController.xib in Resources */,
+				ABAA4017197E96BF009F29EF /* PasswordForgetViewController.xib in Resources */,
+				ABAA4019197E96BF009F29EF /* Error.strings in Resources */,
+				ABAA401A197E96BF009F29EF /* EventViewController.xib in Resources */,
+				ABAA401B197E96BF009F29EF /* NewTransactionViewController.xib in Resources */,
+				ABAA401C197E96BF009F29EF /* FriendAddViewController.xib in Resources */,
+				ABAA401D197E96BF009F29EF /* InvitCodeViewController.xib in Resources */,
+				ABAA401E197E96BF009F29EF /* InfoPlist.strings in Resources */,
+				ABAA401F197E96BF009F29EF /* CreditCardViewController.xib in Resources */,
+				ABAA4020197E96BF009F29EF /* AcitvitiesViewController.xib in Resources */,
+				ABAA4021197E96BF009F29EF /* AccountViewController.xib in Resources */,
+				ABAA4022197E96BF009F29EF /* Images.xcassets in Resources */,
+				ABAA4023197E96BF009F29EF /* Localizable.strings in Resources */,
+				ABAA4024197E96BF009F29EF /* HomeViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		836A9764AB864657A1C519EB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ABAA3F7E197E96BF009F29EF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		ABAA4025197E96BF009F29EF /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1853,6 +2119,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABC02658197EB5A5000BA5B9 /* FLHomeTextField.m in Sources */,
 				ABBB75CB18B63DB20070C2A8 /* CreditCardViewController.m in Sources */,
 				AB3D08A2186CA11A00CF8380 /* AppDelegate.m in Sources */,
 				AB7C9B1718D71884002775BA /* FriendPickerFriendCell.m in Sources */,
@@ -1867,8 +2134,6 @@
 				ABE9146E189294A0003AC722 /* FLMenuNewTransactionButton.m in Sources */,
 				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
 				ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */,
-				AB2FB53D18AD8D590079AA1D /* RIBViewController.m in Sources */,
-				ABEC02A018D20DA300C03025 /* DocumentsViewController.m in Sources */,
 				AB5EB6ED188214F000D81AF6 /* MenuNewTransactionViewController.m in Sources */,
 				ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */,
 				ABE9146618929402003AC722 /* FLAccountButton.m in Sources */,
@@ -1964,6 +2229,115 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB3D08B7186CA11A00CF8380 /* FloozTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABAA3F7F197E96BF009F29EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABAA3F80197E96BF009F29EF /* CreditCardViewController.m in Sources */,
+				ABAA3F81197E96BF009F29EF /* AppDelegate.m in Sources */,
+				ABAFEE22197F150800D39C62 /* FLHomeTextField.m in Sources */,
+				ABAA3F82197E96BF009F29EF /* FriendPickerFriendCell.m in Sources */,
+				ABAA3F83197E96BF009F29EF /* FLTextField.m in Sources */,
+				ABAA3F84197E96BF009F29EF /* FriendPickerContactCell.m in Sources */,
+				ABAA3F85197E96BF009F29EF /* FriendPickerSearchBar.m in Sources */,
+				ABAA3F86197E96BF009F29EF /* EventParticipantsViewController.m in Sources */,
+				ABAA3F87197E96BF009F29EF /* FLHelper.m in Sources */,
+				ABAA3F88197E96BF009F29EF /* EventAmountView.m in Sources */,
+				ABAA3F89197E96BF009F29EF /* PasswordForgetViewController.m in Sources */,
+				ABAA3F8A197E96BF009F29EF /* FLSocialView.m in Sources */,
+				ABAA3F8B197E96BF009F29EF /* FLMenuNewTransactionButton.m in Sources */,
+				ABAA3F8C197E96BF009F29EF /* TransactionActionsView.m in Sources */,
+				ABAA3F8D197E96BF009F29EF /* FLComment.m in Sources */,
+				ABAA3F90197E96BF009F29EF /* MenuNewTransactionViewController.m in Sources */,
+				ABAA3F91197E96BF009F29EF /* EventViewController.m in Sources */,
+				ABAA3F92197E96BF009F29EF /* FLAccountButton.m in Sources */,
+				ABAA3F93197E96BF009F29EF /* TransactionUsersView.m in Sources */,
+				ABAA3F94197E96BF009F29EF /* FriendAddViewController.m in Sources */,
+				ABAA3F95197E96BF009F29EF /* FLPaymentField.m in Sources */,
+				ABAA3F96197E96BF009F29EF /* EventContentView.m in Sources */,
+				ABAA3F97197E96BF009F29EF /* SignupViewController.m in Sources */,
+				ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */,
+				ABAA3F99197E96BF009F29EF /* FriendPickerViewController.m in Sources */,
+				ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */,
+				ABAA3F9B197E96BF009F29EF /* EventActionView.m in Sources */,
+				ABAA3F9C197E96BF009F29EF /* ActivityCell.m in Sources */,
+				ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */,
+				ABAA3F9E197E96BF009F29EF /* InformationsViewController.m in Sources */,
+				ABAA3F9F197E96BF009F29EF /* FLValidNavBar.m in Sources */,
+				ABAA3FA0197E96BF009F29EF /* EventCell.m in Sources */,
+				ABAA3FA1197E96BF009F29EF /* TransactionCommentsView.m in Sources */,
+				ABAA3FA2197E96BF009F29EF /* main.m in Sources */,
+				ABAA3FA3197E96BF009F29EF /* SplashViewController.m in Sources */,
+				ABAA3FA4197E96BF009F29EF /* NewTransactionDatePicker.m in Sources */,
+				ABAA3FA5197E96BF009F29EF /* FLTextFieldIcon.m in Sources */,
+				ABAA3FA6197E96BF009F29EF /* EventParticipantCell.m in Sources */,
+				ABAA3FA7197E96BF009F29EF /* FLNavigationController.m in Sources */,
+				ABAA3FA8197E96BF009F29EF /* EventHeaderView.m in Sources */,
+				ABAA3FA9197E96BF009F29EF /* SecureCodeViewController.m in Sources */,
+				ABAA3FAA197E96BF009F29EF /* JTImageLabel.m in Sources */,
+				ABAA3FAB197E96BF009F29EF /* InvitCodeViewController.m in Sources */,
+				ABAA3FAC197E96BF009F29EF /* FriendsViewController.m in Sources */,
+				ABAA3FAD197E96BF009F29EF /* EventCommentsView.m in Sources */,
+				ABAA3FAE197E96BF009F29EF /* LoginViewController.m in Sources */,
+				ABAA3FAF197E96BF009F29EF /* FLFriendRequest.m in Sources */,
+				ABAA3FB0197E96BF009F29EF /* EventsViewController.m in Sources */,
+				ABAA3FB1197E96BF009F29EF /* FLUser.m in Sources */,
+				ABAA3FB2197E96BF009F29EF /* FLNewTransactionAmount.m in Sources */,
+				ABAA3FB3197E96BF009F29EF /* FriendAddSearchBar.m in Sources */,
+				ABAA3FB4197E96BF009F29EF /* AcitvitiesViewController.m in Sources */,
+				ABAA3FB5197E96BF009F29EF /* EventUsersView.m in Sources */,
+				ABAA3FB6197E96BF009F29EF /* FLLoadView.m in Sources */,
+				ABAA3FB7197E96BF009F29EF /* SecureCodeField.m in Sources */,
+				ABAA3FB8197E96BF009F29EF /* FLContainerViewController.m in Sources */,
+				ABAA3FB9197E96BF009F29EF /* TransactionContentView.m in Sources */,
+				ABAA3FBA197E96BF009F29EF /* CashOutViewController.m in Sources */,
+				ABAA3FBB197E96BF009F29EF /* FLNewTransactionBar.m in Sources */,
+				ABAA3FBC197E96BF009F29EF /* FLTextView.m in Sources */,
+				ABAA3FBD197E96BF009F29EF /* TransactionViewController.m in Sources */,
+				ABAA3FBE197E96BF009F29EF /* FLTransaction.m in Sources */,
+				ABAA3FBF197E96BF009F29EF /* FLActivity.m in Sources */,
+				ABAA3FC0197E96BF009F29EF /* FriendAddCell.m in Sources */,
+				ABAA3FC1197E96BF009F29EF /* UIBarButtonItem+custom.m in Sources */,
+				ABAA3FC2197E96BF009F29EF /* Flooz.m in Sources */,
+				ABAA3FC3197E96BF009F29EF /* NotificationsViewController.m in Sources */,
+				ABAA3FC4197E96BF009F29EF /* FLCreditCard.m in Sources */,
+				ABAA3FC5197E96BF009F29EF /* NewTransactionViewController.m in Sources */,
+				ABAA3FC6197E96BF009F29EF /* AccountViewController.m in Sources */,
+				ABAA3FC7197E96BF009F29EF /* EventAmountActionsView.m in Sources */,
+				ABAA3FC8197E96BF009F29EF /* FriendSuggestionCell.m in Sources */,
+				ABAA3FC9197E96BF009F29EF /* FriendRequestCell.m in Sources */,
+				ABAA3FCA197E96BF009F29EF /* NewTransactionSelectTypeView.m in Sources */,
+				ABAA3FCB197E96BF009F29EF /* TransactionAmountView.m in Sources */,
+				ABAA3FCC197E96BF009F29EF /* FLSelectAmount.m in Sources */,
+				ABAA3FCD197E96BF009F29EF /* FLAccountUserView.m in Sources */,
+				ABAA3FCE197E96BF009F29EF /* TimelineViewController.m in Sources */,
+				ABAA3FCF197E96BF009F29EF /* FLSocial.m in Sources */,
+				ABAA3FD0197E96BF009F29EF /* FriendCell.m in Sources */,
+				ABAA3FD1197E96BF009F29EF /* FLWaveAnimation.m in Sources */,
+				ABAA3FD2197E96BF009F29EF /* EditAccountViewController.m in Sources */,
+				ABAA3FD3197E96BF009F29EF /* FLTextFieldTitle2.m in Sources */,
+				ABAA3FD4197E96BF009F29EF /* FLEvent.m in Sources */,
+				ABAA3FD5197E96BF009F29EF /* FLNavbarView.m in Sources */,
+				ABAA3FD6197E96BF009F29EF /* FLUserView.m in Sources */,
+				ABAA3FD7197E96BF009F29EF /* FLSwitchView.m in Sources */,
+				ABAA3FD8197E96BF009F29EF /* TransactionCell.m in Sources */,
+				ABAA3FD9197E96BF009F29EF /* FLFilterView.m in Sources */,
+				ABAA3FDA197E96BF009F29EF /* UIView+FindFirstResponder.m in Sources */,
+				ABAA3FDB197E96BF009F29EF /* FLScrollViewIndicator.m in Sources */,
+				ABAA3FDC197E96BF009F29EF /* SettingsViewController.m in Sources */,
+				ABAA3FDD197E96BF009F29EF /* LoadingCell.m in Sources */,
+				ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */,
+				ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */,
+				ABAA3FE0197E96BF009F29EF /* FLSelectFriendButton.m in Sources */,
+				ABAA3FE1197E96BF009F29EF /* WebViewController.m in Sources */,
+				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
+				ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */,
+				ABAA3FE4197E96BF009F29EF /* FLImageView.m in Sources */,
+				ABAA3FE5197E96BF009F29EF /* FLTextFieldTitle.m in Sources */,
+				ABAA3FE6197E96BF009F29EF /* PasswordViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2199,6 +2573,78 @@
 			};
 			name = Release;
 		};
+		ABAA4027197E96BF009F29EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Flooz/Library/scanpay",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					FLOOZ_DEV_API,
+				);
+				INFOPLIST_FILE = "Flooz dev-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Flooz/Library/scanpay",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "Flooz dev";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		ABAA4028197E96BF009F29EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Flooz/Library/scanpay",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					FLOOZ_DEV_API,
+				);
+				INFOPLIST_FILE = "Flooz dev-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Flooz/Library/scanpay",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "Flooz dev";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2225,6 +2671,15 @@
 			buildConfigurations = (
 				AB3D08BE186CA11A00CF8380 /* Debug */,
 				AB3D08BF186CA11A00CF8380 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABAA4026197E96BF009F29EF /* Build configuration list for PBXNativeTarget "Flooz dev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABAA4027197E96BF009F29EF /* Debug */,
+				ABAA4028197E96BF009F29EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -115,4 +115,9 @@
     return [_searchBar becomeFirstResponder];
 }
 
+- (void)close
+{
+    [_searchBar resignFirstResponder];
+}
+
 @end

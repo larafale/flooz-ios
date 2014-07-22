@@ -35,12 +35,11 @@
 {
     self = [super init];
     if(self){
-        if(FLOOZ_DEBUG_API){
+#ifdef FLOOZ_DEV_API
             manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://dev.flooz.me"]];
-        }
-        else{
+#else
             manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
-        }
+#endif
         
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -89,11 +88,11 @@
     id successBlock = ^(id result) {
         [self updateCurrentUserAfterConnect:result];
         
-        if(!FLOOZ_DEBUG_API){
+#ifndef FLOOZ_DEV_API
             [[SEGAnalytics sharedAnalytics] track:@"signup" properties:@{
                                                                          @"userId": [[[Flooz sharedInstance] currentUser] userId]
                                                                          }];
-        }
+#endif
         
         if(success){
             success(result);
@@ -671,7 +670,10 @@
         path = [path stringByAppendingString:@"&via=ios"];
     }
     
-    path = [path stringByAppendingString:[NSString stringWithFormat:@"&version=%@", APP_VERSION]];
+    // Pour le nextUrl
+    if([path rangeOfString:@"&version="].location == NSNotFound){
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"&version=%@", APP_VERSION]];
+    }
     
     id successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"JSON: %@", responseObject);
@@ -691,7 +693,7 @@
         id statusCode = [operation.responseObject objectForKey:@"statusCode"];
         
         if([statusCode intValue] == 426){
-            [appDelegate lockForUpdate:[operation.responseObject objectForKey:@"upgradeUri"]];
+            [appDelegate lockForUpdate:[[operation.responseObject objectForKey:@"item"] objectForKey:@"upgradeUri"]];
         }
         else if([path isEqualToString:@"/login/facebook"] || [path isEqualToString:@"/login/basic"]){
             
@@ -701,7 +703,7 @@
            error.code == kCFURLErrorNotConnectedToInternet ||
            error.code == kCFURLErrorNetworkConnectionLost
            ){
-//            DISPLAY_ERROR(FLNetworkError);
+            DISPLAY_ERROR(FLNetworkError);
         }
         else if([statusCode intValue] == 306){ // Code arbitraire
             [self clearLogin];
@@ -981,14 +983,13 @@
     _socket = [[SocketIO alloc] initWithDelegate:self];
     
     
-    if(FLOOZ_DEBUG_API){
+#ifdef FLOOZ_DEV_API
 //        _socket.useSecure = NO;
 //        [_socket connectToHost:@"api.flooz.me" onPort:80];
-    }
-    else{
+#else
         _socket.useSecure = YES;
         [_socket connectToHost:@"api.flooz.me" onPort:443];
-    }
+#endif
 }
 
 - (void)closeSocket

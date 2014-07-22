@@ -170,7 +170,7 @@
     text.numberOfLines = 0;
     
     content.textColor = [UIColor customPlaceholder];
-    content.font = [UIFont customContentLight:12];
+    content.font = [UIFont customContentLight:13];
     content.numberOfLines = 0;
     
     [view addSubview:text];
@@ -237,7 +237,13 @@
 
 - (void)prepareAvatarView{
     FLUserView *view = [[leftView subviews] objectAtIndex:0];
-    [view setImageFromURL:_transaction.avatarURL];
+    
+    if([_delegate transactionAlreadyLoaded:_transaction]){
+        [view setImageFromURL:_transaction.avatarURL];
+    }
+    else{
+        [view setImageFromURLAnimate:_transaction.avatarURL];
+    }
 }
 
 - (void)prepareSlideView{
@@ -254,7 +260,42 @@
     UILabel *text = [[view subviews] objectAtIndex:0];
     UILabel *content = [[view subviews] objectAtIndex:1];
     
-    text.text = [[self transaction] title];
+    NSMutableAttributedString *attributedContent = [NSMutableAttributedString new];
+    
+    {
+        NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                              initWithString:_transaction.text3d[0]
+                                              attributes:@{
+                                                           NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                           NSFontAttributeName: [UIFont customContentBold:13]
+                                                           }];
+        
+        [attributedContent appendAttributedString:attributedText];
+    }
+    
+    {
+        NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                              initWithString:_transaction.text3d[1]
+                                              attributes:@{
+                                                           NSForegroundColorAttributeName: [UIColor customBlue]
+                                                           }];
+        
+        [attributedContent appendAttributedString:attributedText];
+    }
+    
+    {
+        NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                              initWithString:_transaction.text3d[2]
+                                              attributes:@{
+                                                           NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                           NSFontAttributeName: [UIFont customContentBold:13]
+                                                           }];
+        
+        [attributedContent appendAttributedString:attributedText];
+    }
+    
+//    text.text = [[self transaction] title];
+    text.attributedText = attributedContent;
     [text setHeightToFit];
 
     CGFloat offset = 4.;
@@ -264,6 +305,7 @@
 //       && ![[[self transaction] content] isBlank]){
 //        offset = 4.;
 //    }
+    
     
     content.text = [[self transaction] content];
     CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);

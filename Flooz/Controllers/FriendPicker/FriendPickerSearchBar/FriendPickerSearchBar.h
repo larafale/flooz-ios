@@ -10,8 +10,12 @@
 
 #import "FriendPickerSearchBarDelegate.h"
 
-@interface FriendPickerSearchBar : UIView<UISearchBarDelegate>
+@interface FriendPickerSearchBar : UIView<UISearchBarDelegate>{
+    UISearchBar *_searchBar;
+}
 
 @property (weak) IBOutlet id<FriendPickerSearchBarDelegate> delegate;
+
+- (void)close;
 
 @end

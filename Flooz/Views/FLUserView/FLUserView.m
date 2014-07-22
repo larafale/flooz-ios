@@ -43,6 +43,16 @@
     [self showPlaceholder];
 }
 
++ (dispatch_queue_t)animationQueue
+{
+    static dispatch_queue_t queue;
+    if(!queue){
+        queue = dispatch_queue_create("me.flooz.avatar", DISPATCH_QUEUE_SERIAL);
+    }
+    
+    return queue;
+}
+
 - (void)setImageFromURL:(NSString *)url
 {
     if(!url || [url isBlank] || [url isEqualToString:@"/img/nopic.png"]){
@@ -54,11 +64,44 @@
     }
 }
 
+- (void)setImageFromURLAnimate:(NSString *)url
+{
+    if(!url || [url isBlank] || [url isEqualToString:@"/img/nopic.png"]){
+        [self showPlaceholder];
+    }
+    else{
+        [self hidePlaceholder];
+        //        [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
+        
+        avatar.layer.opacity = 0;
+        
+        dispatch_queue_t queue = [[self  class] animationQueue];
+        
+        dispatch_async(queue, ^{
+            dispatch_suspend(queue);
+            
+            [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                
+                if(error){
+                    dispatch_resume(queue);
+                    return;
+                }
+                
+                [UIView animateWithDuration:.3 animations:^{
+                    avatar.layer.opacity = 1;
+                    
+                } completion:^(BOOL finished) {
+                    dispatch_resume(queue);
+                }];
+            }];
+        });
+    }
+}
+
 - (void)setImageFromUser:(FLUser *)user
 {
     if([user avatarURL:avatar.frame.size]){
-        [self hidePlaceholder];
-        [avatar sd_setImageWithURL:[NSURL URLWithString:[user avatarURL:avatar.frame.size]] placeholderImage:placeholder];
+        [self setImageFromURL:[user avatarURL:avatar.frame.size]];
     }
     else{
         [self showPlaceholder];

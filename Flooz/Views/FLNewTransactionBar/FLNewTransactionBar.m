@@ -51,7 +51,7 @@
             [self createLocalizeButton];
             [self createImageButton];
             [self createFacebookButton];
-            [self createSeparator];
+//            [self createSeparator];
             [self createPrivacyButton];
             
             if(isEvent){

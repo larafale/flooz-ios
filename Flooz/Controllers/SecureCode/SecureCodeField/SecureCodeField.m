@@ -38,10 +38,10 @@
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMakeSize(WIDTH, WIDTH)];
     
-    label.layer.borderWidth = 1.;
+//    label.layer.borderWidth = 1.;
     label.layer.cornerRadius = 3;
     label.clipsToBounds = YES;
-    label.layer.borderColor = [[UIColor customSeparator] CGColor];
+//    label.layer.borderColor = [[UIColor customSeparator] CGColor];
     label.backgroundColor = [UIColor customBackgroundHeader];
     label.font = [UIFont customTitleThin:44];
     label.textColor = [UIColor whiteColor];
@@ -59,9 +59,11 @@
                  [UIView new]
                  ];
     
+    CGFloat space = 14.;
+    
     for(int i = 0; i < [dotViews count]; ++i){
         UIView *dot = dotViews[i];
-        dot.frame = CGRectMake(i * (WIDTH + 14) + 14 + (WIDTH / 2.) - 2, CGRectGetHeight(self.frame) / 2., 5, 5);
+        dot.frame = CGRectMake(i * (WIDTH + space) + space + (WIDTH / 2.) - (10 / 2), CGRectGetHeight(self.frame) / 2. - 8, 10, 10);
         dot.layer.cornerRadius = CGRectGetHeight(dot.frame) / 2.;
         dot.backgroundColor = [UIColor whiteColor];
         [self addSubview:dot];
@@ -74,7 +76,7 @@
 {
     currentValue = [currentValue stringByAppendingString:touch];
     [self reformatLabel];
-        
+    
     if(currentLabel < 3){ // 4 labels - 1
         currentLabel++;
     }

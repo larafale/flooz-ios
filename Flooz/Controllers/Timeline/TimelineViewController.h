@@ -26,6 +26,8 @@
     
     NSMutableDictionary *transactionsCache;
     FLScrollViewIndicator *scrollViewIndicator;
+    
+    NSMutableArray *transactionsLoaded;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

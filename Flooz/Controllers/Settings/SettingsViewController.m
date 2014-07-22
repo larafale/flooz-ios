@@ -12,8 +12,6 @@
 #import "SecureCodeViewController.h"
 #import "CreditCardViewController.h"
 #import "CashOutViewController.h"
-#import "RIBViewController.h"
-#import "DocumentsViewController.h"
 #import "PasswordViewController.h"
 #import "InvitCodeViewController.h"
 
@@ -35,9 +33,7 @@
                  @"notifications",
                  @"code",
                  @"card",
-                 @"rib",
 //                 @"privacy",
-                 @"documents",
                  @"password",
                  @"logout",
                  @"invit_code"
@@ -91,15 +87,9 @@
         [[self navigationController] pushViewController:[CreditCardViewController new] animated:YES];
     }
     else if(indexPath.row == 3){
-        [[self navigationController] pushViewController:[RIBViewController new] animated:YES];
-    }
-    else if(indexPath.row == 4){
-        [[self navigationController] pushViewController:[DocumentsViewController new] animated:YES];
-    }
-    else if(indexPath.row == 5){
         [[self navigationController] pushViewController:[PasswordViewController new] animated:YES];
     }
-    else if(indexPath.row == 6){
+    else if(indexPath.row == 4){
         [[Flooz sharedInstance] logout];
     }
     else{

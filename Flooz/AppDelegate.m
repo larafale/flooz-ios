@@ -51,9 +51,12 @@
         self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     }
 
-    if(!FLOOZ_DEBUG_API){
-        [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
-    }
+#ifdef FLOOZ_DEV_API
+    NSLog(@"API DEV");
+#else
+    NSLog(@"API PROD");
+    [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
+#endif
     
     return YES;
 }
@@ -79,21 +82,25 @@
         params[@"lastName"] = [[[Flooz sharedInstance] currentUser] lastname];
     }
     
-   if(!FLOOZ_DEBUG_API){
+#ifndef FLOOZ_DEV_API
         [[SEGAnalytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
                                    traits:params];
-   }
+#endif
     
     CompleteBlock completeBlock = ^{
-        FLContainerViewController *controller = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [EventsViewController new]]];
+        if(!savedViewController){
+            savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [EventsViewController new]]];
+        }
         
         [UIView transitionWithView:self.window
                           duration:0.7
                            options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
                         animations:^{
-                            self.window.rootViewController = controller;
+                            self.window.rootViewController = savedViewController;
                         }
-                        completion:NULL
+                        completion:^(BOOL finished) {
+                            savedViewController = nil;
+                        }
          ];
     };
     
@@ -102,14 +109,18 @@
     SecureCodeViewController *controller = [SecureCodeViewController new];
     controller.completeBlock = completeBlock;
     
-    // Sortie de mise en vieille cas ou on est deja connecté
+    // Sortie de mise en vieille cas où on est deja connecté
     if([self.window.rootViewController isKindOfClass:[FLContainerViewController class]]){
+        savedViewController = self.window.rootViewController;
+        [[savedViewController presentedViewController] dismissViewControllerAnimated:NO completion:NULL];
+        
         navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
         self.window.rootViewController = navController;
     }
     else{
         navController = (FLNavigationController *)self.window.rootViewController;
     }
+    
     
     // Cas ou fait retour sur le splashscreen
     if([[[navController viewControllers] firstObject] isKindOfClass:[SplashViewController class]]){
@@ -122,6 +133,11 @@
     }
     
     [navController pushViewController:controller animated:NO];
+}
+
+- (void)clearSavedViewController
+{
+    savedViewController = nil;
 }
 
 - (void)showLoginWithUser:(NSDictionary *)user
@@ -169,8 +185,9 @@
 
 - (void)displayError:(NSError *)error
 {
-    if((lastErrorCode == FLNetworkError) && (error.code == FLNetworkError)){
-        lastErrorDate = [NSDate date];
+    NSTimeInterval seconds = [[NSDate date] timeIntervalSinceDate:lastErrorDate];
+        
+    if((lastErrorCode == FLNetworkError) && (error.code == FLNetworkError) && seconds < 30){
         return;
     }
     
@@ -407,7 +424,23 @@
     
     currentUserForMenu = user;
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_PAYMENT", nil), NSLocalizedString(@"MENU_COLLECT", nil), NSLocalizedString(@"MENU_ADD_FRIENDS", nil), nil];
+    BOOL isFriend = NO;
+    for(FLUser *friend in [[[Flooz sharedInstance] currentUser] friends]){
+        if([[friend userId] isEqualToString:[user userId]]){
+            isFriend = YES;
+            break;
+        }
+    }
+    
+    NSString *textFriend = nil;
+    if(isFriend){
+        textFriend = NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil);
+    }
+    else{
+        textFriend = NSLocalizedString(@"MENU_ADD_FRIENDS", nil);
+    }
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_PAYMENT", nil), NSLocalizedString(@"MENU_COLLECT", nil), textFriend, nil];
     
     [actionSheet showInView:self.window];
 }
@@ -422,7 +455,21 @@
     }
     else if(buttonIndex == 2){
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:nil];
+        
+        BOOL isFriend = NO;
+        for(FLUser *friend in [[[Flooz sharedInstance] currentUser] friends]){
+            if([[friend userId] isEqualToString:[currentUserForMenu userId]]){
+                isFriend = YES;
+                break;
+            }
+        }
+        
+        if(isFriend){
+            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success:nil];
+        }
+        else{
+            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:nil];
+        }
     }
 }
 

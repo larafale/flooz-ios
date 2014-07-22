@@ -15,6 +15,7 @@
 }
 
 - (void)setImageFromURL:(NSString *)url;
+- (void)setImageFromURLAnimate:(NSString *)url;
 - (void)setImageFromUser:(FLUser *)user;
 - (void)setImageFromData:(NSData *)data;
 

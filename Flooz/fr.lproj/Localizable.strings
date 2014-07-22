@@ -79,7 +79,7 @@
 "FIELD_CITY" = "Ville";
 
 "FIELD_IBAN" = "Code IBAN";
-"FIELD_IBAN_PLACEHOLDER" = "";
+"FIELD_IBAN_PLACEHOLDER" = "IBAN";
 "FIELD_BIC" = "Code BIC";
 "FIELD_BIC_PLACEHOLDER" = "";
 
@@ -117,6 +117,7 @@
 "MENU_PAYMENT" = "Payer";
 "MENU_COLLECT" = "Réclamer";
 "MENU_ADD_FRIENDS" = "Ajouter aux amis";
+"MENU_REMOVE_FRIENDS" = "Supprimer des amis";
 
 "ACTIVITIES_NOTIFICATIONS" = "Notifications";
 "ACTIVITIES_NEW_NOTIFICATIONS" = "nouvelles notifications";
@@ -173,6 +174,10 @@
 "TRANSACTION_SCOPE_FRIEND" = "Amis";
 "TRANSACTION_SCOPE_PRIVATE" = "Privé";
 
+"FILTER_SCOPE_PUBLIC" = "PUBLIC";
+"FILTER_SCOPE_FRIEND" = "AMIS";
+"FILTER_SCOPE_PRIVATE" = "MOI";
+
 "EVENT_SCOPE_FRIEND" = "Ouverte aux amis";
 "EVENT_SCOPE_PRIVATE" = "Sur invitation";
 
@@ -195,7 +200,7 @@
 "EVENT_HEADER_DAY_LEFT" = "Jours restants";
 "EVENT_HEADER_DAY_LEFT_CLOSED" = "Clôturée";
 
-"EVENT_START_BY" = "Créée par %@";
+"EVENT_START_BY" = "Créée par ";
 
 "EVENT_INVITE_PARTICIPANT" = "Inviter des amis";
 "EVENT_PARTICIPANTS" = "Participants";

@@ -12,7 +12,13 @@
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title imageNamed:(NSString *)imageNamed
 {
-    CGRectSetWidthHeight(frame, (SCREEN_WIDTH / 2.) + 2, 130);
+    if(SCREEN_HEIGHT < 568){
+        CGRectSetWidthHeight(frame, (SCREEN_WIDTH / 2.) + 2, 85);
+    }
+    else{
+        CGRectSetWidthHeight(frame, (SCREEN_WIDTH / 2.) + 2, 130);
+    }
+    
     self = [super initWithFrame:frame];
     if (self) {
         [self createViewWithTitle:title imageNamed:imageNamed];

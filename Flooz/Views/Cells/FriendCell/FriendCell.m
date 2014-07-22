@@ -20,7 +20,7 @@
 }
 
 + (CGFloat)getHeight{
-    return 70;
+    return 50;
 }
 
 - (void)setFriend:(FLUser *)friend{
@@ -37,11 +37,11 @@
     [self createAvatarView];
     [self createNameView];
     [self createPhoneView];
-    [self createButtonView];
+//    [self createButtonView];
 }
 
 - (void)createAvatarView{
-    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 15, 40, 40)];
+    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 5, 40, 40)];
     [self.contentView addSubview:view];
 }
 
@@ -57,7 +57,7 @@
 
 - (void)createPhoneView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 38, CGRectGetWidth(self.frame) - 75, 9)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 28, CGRectGetWidth(self.frame) - 75, 9)];
     
     view.font = [UIFont customContentBold:11];
     view.textColor = [UIColor customPlaceholder];
@@ -66,7 +66,7 @@
 }
 
 - (void)createButtonView{
-    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 21, 37, 28)];
+    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 11, 37, 28)];
     [view setImage:[UIImage imageNamed:@"friend-decline"] forState:UIControlStateNormal];
     view.backgroundColor = [UIColor customBackgroundStatus];
     view.layer.cornerRadius = 14;
@@ -81,7 +81,7 @@
 - (void)prepareViews{
     [self prepareAvatarView];
     [self prepareTextView];
-    [self prepareButton];
+//    [self prepareButton];
 }
 
 - (void)prepareAvatarView{

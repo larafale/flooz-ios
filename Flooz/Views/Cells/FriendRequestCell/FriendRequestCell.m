@@ -20,7 +20,7 @@
 }
 
 + (CGFloat)getHeight{
-    return 70;
+    return 50;
 }
 
 - (void)setFriendRequest:(FLFriendRequest *)friendRequest{
@@ -43,7 +43,7 @@
 }
 
 - (void)createAvatarView{
-    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 15, 40, 40)];
+    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 5, 40, 40)];
     [self.contentView addSubview:view];
 }
 
@@ -92,7 +92,7 @@
 - (void)createButtons
 {
     {
-        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 100, 21, 37, 28)];
+        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 100, 11, 37, 28)];
         [view setImage:[UIImage imageNamed:@"friend-decline"] forState:UIControlStateNormal];
         view.backgroundColor = [UIColor customBackgroundStatus];
         view.layer.cornerRadius = 14;
@@ -103,7 +103,7 @@
     }
     
     {
-        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 21, 37, 28)];
+        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 11, 37, 28)];
         [view setImage:[UIImage imageNamed:@"friend-accept"] forState:UIControlStateNormal];
         view.backgroundColor = [UIColor customBackgroundStatus];
         view.layer.cornerRadius = 14;

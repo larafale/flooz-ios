@@ -32,7 +32,7 @@
     if(frame.size.width == 0){
         CGRectSetWidth(frame, SCREEN_WIDTH - (2 * frame.origin.x));
     }
-    CGRectSetHeight(frame, 37);
+    CGRectSetHeight(frame, 45);
     
     self = [super initWithFrame:frame];
     if (self) {
@@ -56,7 +56,7 @@
 - (void)createIcon:(NSString *)iconName
 {
     icon = [UIImageView imageNamed:iconName];
-    CGRectSetXY(icon.frame, 6, 17);
+    CGRectSetXY(icon.frame, 16, 17);
     
     [self addSubview:icon];
 }
@@ -85,7 +85,7 @@
         _textfield.keyboardType = UIKeyboardTypeEmailAddress;
     }
     
-    _textfield.font = [UIFont customContentLight:12];
+    _textfield.font = [UIFont customContentLight:14];
     _textfield.textColor = [UIColor whiteColor];
         
     NSAttributedString *attributedText = [[NSAttributedString alloc]
@@ -125,7 +125,7 @@
     
     _textfield2.delegate = self;
     
-    _textfield2.font = [UIFont customContentLight:12];
+    _textfield2.font = [UIFont customContentLight:14];
     _textfield2.textColor = [UIColor whiteColor];
     
     NSAttributedString *attributedText = [[NSAttributedString alloc]

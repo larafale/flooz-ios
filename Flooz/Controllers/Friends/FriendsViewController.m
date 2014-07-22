@@ -13,6 +13,7 @@
 #import "FriendRequestCell.h"
 #import "FriendCell.h"
 #import "FriendSuggestionCell.h"
+#import "AppDelegate.h"
 
 @interface FriendsViewController (){
     NSArray *friendsSearch;
@@ -58,6 +59,7 @@
     _backgroundView.image = [UIImage imageNamed:@"background-friends"];
     _backgroundView.hidden = YES;
     
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self registerForKeyboardNotifications];
 }
 
@@ -178,6 +180,9 @@
     else if(indexPath.section == 1){
         return [FriendRequestCell getHeight];
     }
+    else if(indexPath.section == 2){
+        return [FriendSuggestionCell getHeight];
+    }
     
     return [FriendCell getHeight];
 }
@@ -238,6 +243,21 @@
         
         return cell;
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section != 3){
+        return;
+    }
+    
+    FLUser *user = [friends objectAtIndex:indexPath.row];
+    [appDelegate showMenuForUser:user];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_searchBar close];
 }
 
 - (void)didReloadData

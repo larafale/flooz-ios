@@ -17,4 +17,6 @@
 
 @property (weak, nonatomic) IBOutlet id<FriendAddSearchBarDelegate> delegate;
 
+- (void)close;
+
 @end

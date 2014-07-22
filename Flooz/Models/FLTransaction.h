@@ -52,6 +52,7 @@ typedef NS_ENUM(NSInteger, TransactionPaymentMethod) {
 @property NSString *attachmentURL;
 @property NSString *attachmentThumbURL;
 @property NSString *when;
+@property NSArray *text3d;
 
 @property BOOL isPrivate;
 @property BOOL isCancelable; // Si peut annuler la demande

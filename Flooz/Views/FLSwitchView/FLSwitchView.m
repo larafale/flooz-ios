@@ -12,7 +12,8 @@
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title
 {
-    self = [super initWithFrame:CGRectMake(0, frame.origin.y, frame.size.width, MAX(frame.size.height, 50))];
+//    self = [super initWithFrame:CGRectMake(0, frame.origin.y, frame.size.width, MAX(frame.size.height, 50))];
+        self = [super initWithFrame:CGRectMake(0, frame.origin.y, frame.size.width, MAX(frame.size.height, 45))];
     if (self) {
         self.clipsToBounds = YES;
         alternativeStyle = NO;
@@ -92,6 +93,9 @@
 {
     alternativeStyle = YES;
     [self refreshSwitchViewColors];
+    
+    _title.font = [UIFont customContentLight:14];
+    [_title setWidthToFit];
 }
 
 - (void)setOn:(BOOL)on

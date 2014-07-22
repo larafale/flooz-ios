@@ -10,6 +10,7 @@
 
 #import "FLContainerViewController.h"
 #import "AppDelegate.h"
+#import "TimelineViewController.h"
 
 @implementation FLAccountUserView
 
@@ -53,7 +54,7 @@
     
     {
         CGFloat WIDTH = SCREEN_WIDTH / 3.;
-        CGFloat HEIGHT = 17.;
+        CGFloat HEIGHT = 27.;
         CGFloat MARGE = 0; // (CGRectGetWidth(self.frame) - (3 * WIDTH)) / 2.;
         CGFloat Y = 150.;
         
@@ -61,19 +62,12 @@
         flooz = [[UILabel alloc] initWithFrame:CGRectMake(MARGE + WIDTH, Y, WIDTH, HEIGHT)];
         profilCompletion = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - MARGE - WIDTH, Y, WIDTH + MARGE, HEIGHT)];
                 
-        UIView *separator_1 = [[UIView alloc] initWithFrame:CGRectMake(MARGE + WIDTH, Y, 1, HEIGHT)];
-        UIView *separator_2 = [[UIView alloc] initWithFrame:CGRectMake(MARGE + WIDTH + WIDTH, Y, 1, HEIGHT)];
         
         friends.textAlignment = flooz.textAlignment = profilCompletion.textAlignment = NSTextAlignmentCenter;
-        
-        separator_1.backgroundColor = separator_2.backgroundColor = [UIColor customSeparator];
-        
+
         [self addSubview:friends];
         [self addSubview:flooz];
         [self addSubview:profilCompletion];
-        
-        [self addSubview:separator_1];
-        [self addSubview:separator_2];
         
         friendsTextStatic = [[NSAttributedString alloc]
                                      initWithString:NSLocalizedString(@"ACCOUNT_FRIENDS", nil)
@@ -182,6 +176,9 @@
 - (void)loadFloozController
 {
     FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
+    TimelineViewController *timelineController = [[rootController viewControllers] objectAtIndex:1];
+    [[timelineController filterView] selectFilter:2];
+    
     [rootController.navbarView loadControllerWithIndex:1];
 }
 

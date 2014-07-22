@@ -51,11 +51,11 @@
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(presentTimelineController)];
     
     {
-        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(MARGE, 27, SCREEN_WIDTH - (2 * MARGE), 45)];
+        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 45)];
         [registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
         
         [registerFacebook setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
-        registerFacebook.titleLabel.font = [UIFont customContentRegular:13];
+        registerFacebook.titleLabel.font = [UIFont customContentRegular:15];
         [registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateNormal];
         [registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateHighlighted];
         [registerFacebook setImageEdgeInsets:UIEdgeInsetsMake(-1, 0, 0, 12)];
@@ -66,24 +66,7 @@
     }
     
     {
-        UIView *left = [[UIView alloc] initWithFrame:CGRectMake(MARGE, 115, 120, .5)];
-        UIView *right = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - CGRectGetWidth(left.frame) - MARGE, left.frame.origin.y, CGRectGetWidth(left.frame), .5)];
-        
-        left.backgroundColor = right.backgroundColor = [UIColor whiteColor];
-        
-        [self.view addSubview:left];
-        [self.view addSubview:right];
-        
-        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(left.frame), 105, CGRectGetWidth(self.view.frame) - 2 * (CGRectGetWidth(left.frame) + MARGE), 15)];
-        text.text = NSLocalizedString(@"LOGIN_OR", nil);
-        text.textColor = [UIColor whiteColor];
-        text.textAlignment = NSTextAlignmentCenter;
-        text.font = [UIFont customContentLight:14];
-        [self.view addSubview:text];
-    }
-    
-    {
-        username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(MARGE, 140)];
+        username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(MARGE, 90)];
         password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame))];
         [password seTsecureTextEntry:YES];
         

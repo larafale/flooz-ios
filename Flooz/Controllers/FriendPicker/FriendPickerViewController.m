@@ -44,7 +44,8 @@
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
     self.view.backgroundColor = [UIColor customBackgroundHeader];
-    
+
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self registerForKeyboardNotifications];
     [self requestAddressBookPermission];
 }
@@ -322,6 +323,11 @@
     else{
         [self dismiss];
     }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_searchBar close];
 }
 
 #pragma mark -

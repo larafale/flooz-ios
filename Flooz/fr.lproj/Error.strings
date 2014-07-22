@@ -6,7 +6,7 @@
   Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
 */
 
-"1000" = "Network error";
+"1000" = "Aucune connexion Internet";
 "1001" = "Bad login";
 "1002" = "Albums access deny";
 "1003" = "No camera";

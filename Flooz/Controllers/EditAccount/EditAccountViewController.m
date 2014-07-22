@@ -12,10 +12,12 @@
 
 #import "FLSwitchView.h"
 
-#define MARGE 20.
+#define MARGE 0.
+#define MARGE_HEADER 20.
 
 @interface EditAccountViewController (){
     NSMutableDictionary *_user;
+    NSMutableDictionary *_sepa;
     FLUserView *userView;
     FLSwitchView *facebookButton;
     
@@ -24,6 +26,11 @@
     
     UIButton *sendValidationSMS;
     UIButton *sendValidationEmail;
+    
+    NSArray *documents;
+    
+    NSInteger registerButtonCount;
+    NSString *currentDocumentKey;
 }
 
 @end
@@ -54,6 +61,16 @@
         if([currentUser phone]){
             [_user setObject:[currentUser phone] forKey:@"phone"];
         }
+        
+        _sepa = [[currentUser sepa] mutableCopy];
+        
+        documents = @[
+                      @{@"CARD_ID_RECTO": @"cniRecto"},
+                      @{@"CARD_ID_VERSO": @"cniVerso"},
+                      @{@"HOME": @"justificatory"}
+                      ];
+        
+        registerButtonCount = 0;
     }
     return self;
 }
@@ -69,39 +86,28 @@
         
     CGFloat height = 0;
     
-    {
-        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 65, 0, 65, 80)];
-        
-        {
-            userView = [[FLUserView alloc] initWithFrame:CGRectMake(17, 25, 32, 32)];
-            [userView setImageFromUser:[[Flooz sharedInstance] currentUser]];
-            [view addSubview:userView];
-        }
-        
-        {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(view.frame) - 16, CGRectGetWidth(view.frame), 16)];
-            label.font = [UIFont customTitleBook:12];
-            label.textColor = [UIColor customBlueLight];
-            label.textAlignment = NSTextAlignmentCenter;
-            label.text = @"EDIT";
-            
-            [view addSubview:label];
-        }
-        
-        [view addTarget:self action:@selector(didEditAvatarTouch) forControlEvents:UIControlEventTouchUpInside];
-        
-        [_contentView addSubview:view];
-    }
-
     
     {
-        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" frame:CGRectMake(MARGE, 10, 225, 0) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
+        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" position:CGPointMake(MARGE, 10) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
         [_contentView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
     
     {
-        fieldPhone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" frame:CGRectMake(MARGE, height, 225, 0)];
+        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(8, 16, 32, 32)];
+        
+        {
+            userView = [[FLUserView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+            [userView setImageFromUser:[[Flooz sharedInstance] currentUser]];
+            [view addSubview:userView];
+        }
+        
+        [self registerButtonForAction:view];
+        [_contentView addSubview:view];
+    }
+    
+    {
+        fieldPhone = [[FLTextFieldIcon alloc] initWithIcon:@"field-phone" placeholder:@"FIELD_PHONE" for:_user key:@"phone" position:CGPointMake(MARGE, height)];
         [_contentView addSubview:fieldPhone];
         height = CGRectGetMaxY(fieldPhone.frame);
     }
@@ -113,9 +119,9 @@
     }
         
     {
-        sendValidationSMS = [[UIButton alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_contentView.frame) / 2., 50)];
+        sendValidationSMS = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 100 - 5, 53, 100, 50)];
         
-        sendValidationSMS.titleLabel.textAlignment = NSTextAlignmentCenter;
+        sendValidationSMS.titleLabel.textAlignment = NSTextAlignmentRight;
         sendValidationSMS.titleLabel.font = [UIFont customContentRegular:12];
         [sendValidationSMS setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
         [sendValidationSMS setTitle:NSLocalizedString(@"EDIT_ACCOUNT_SEND_SMS", nil) forState:UIControlStateNormal];
@@ -123,13 +129,13 @@
         
         [sendValidationSMS addTarget:self action:@selector(didSendSMSValidationTouch:) forControlEvents:UIControlEventTouchUpInside];
         
-        height = CGRectGetMaxY(sendValidationSMS.frame);
+//        height = CGRectGetMaxY(sendValidationSMS.frame);
     }
     
     {
-        sendValidationEmail = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_contentView.frame) / 2., sendValidationSMS.frame.origin.y, CGRectGetWidth(_contentView.frame) / 2., CGRectGetHeight(sendValidationSMS.frame))];
+        sendValidationEmail = [[UIButton alloc] initWithFrame:CGRectMake(sendValidationSMS.frame.origin.x, 98, 100, CGRectGetHeight(sendValidationSMS.frame))];
         
-        sendValidationEmail.titleLabel.textAlignment = NSTextAlignmentCenter;
+        sendValidationEmail.titleLabel.textAlignment = NSTextAlignmentRight;
         sendValidationEmail.titleLabel.font = [UIFont customContentRegular:12];
         [sendValidationEmail setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
         [sendValidationEmail setTitle:NSLocalizedString(@"EDIT_ACCOUNT_SEND_MAIL", nil) forState:UIControlStateNormal];
@@ -138,30 +144,47 @@
         [sendValidationEmail addTarget:self action:@selector(didSendEmailValidationTouch:) forControlEvents:UIControlEventTouchUpInside];
     }
     
-    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:@"phone"] boolValue]){
+    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:@"phone"] intValue] != 2){
         sendValidationSMS.hidden = YES;
     }
     else{
         [fieldPhone setReadOnly:YES];
     }
     
-    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:@"email"] boolValue]){
+    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:@"email"] intValue] != 2){
         sendValidationEmail.hidden = YES;
     }
     else{
         [fieldEmail setReadOnly:YES];
     }
     
-    
     {
-        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(MARGE, height + 40, CGRectGetWidth(self.view.frame) - MARGE, 15)];
-        view.font = [UIFont customContentRegular:12];
-        view.textColor = [UIColor customBlueLight];
-        view.text = NSLocalizedString(@"EDIT_ACCOUNT_PERSONAL_INFO", nil);
+        facebookButton = [[FLSwitchView alloc] initWithFrame:CGRectMake(0, height - 1, CGRectGetWidth(_contentView.frame), 45) title:@"EDIT_ACCOUNT_FACEBOOK"];
         
-        [_contentView addSubview:view];
-        height = CGRectGetMaxY(view.frame);
+        {
+            UIView *separatorTop = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(facebookButton.frame), 1)];
+            UIView *separatorBottom = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(facebookButton.frame) - 1, CGRectGetWidth(facebookButton.frame), 1)];
+            
+            separatorTop.backgroundColor = separatorBottom.backgroundColor = [UIColor customSeparator];
+            
+            [facebookButton addSubview:separatorTop];
+            [facebookButton addSubview:separatorBottom];
+        }
+        
+        {
+            UIImageView *fb = [UIImageView imageNamed:@"facebook2"];
+            CGRectSetXY(fb.frame, 18, 16);
+            [facebookButton addSubview:fb];
+        }
+        
+        [facebookButton setAlternativeStyle];
+        facebookButton.delegate = self;
+        CGRectSetX(facebookButton.title.frame, 50);
+        
+        [_contentView addSubview:facebookButton];
+        height = CGRectGetMaxY(facebookButton.frame);
     }
+    
     
     {
         FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-address" placeholder:@"FIELD_ADDRESS" for:[[_user objectForKey:@"settings"] objectForKey:@"address"] key:@"address" position:CGPointMake(MARGE, height)];
@@ -181,48 +204,56 @@
         height = CGRectGetMaxY(view.frame);
     }
     
+    
     {
-        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(MARGE, height + 40, 244, 20)];
-        view.font = [UIFont customContentRegular:12];
-        view.textColor = [UIColor customBlueLight];
-        view.text = NSLocalizedString(@"EDIT_ACCOUNT_SOCIAL_INFO", nil);
-        
+        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-rib" placeholder:@"FIELD_IBAN_PLACEHOLDER" for:_user key:@"iban" position:CGPointMake(MARGE, height)];
         [_contentView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
     
-    {
-        facebookButton = [[FLSwitchView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_contentView.frame), 56) title:@"EDIT_ACCOUNT_FACEBOOK"];
-                
+    for(NSDictionary *dic in documents){
+        NSString *key = [[dic allKeys] firstObject];
+        NSString *value = [[dic allValues] firstObject];
+        
+        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(0, height, SCREEN_WIDTH, 45)];
+        [_contentView addSubview:view];
+        height = CGRectGetMaxY(view.frame);
+        
+        
+        [self registerButtonForAction:view];
+        view.backgroundColor = [UIColor customBackground];
+        view.titleLabel.font = [UIFont customTitleExtraLight:16];
+        view.titleLabel.textColor = [UIColor whiteColor];
+        
+        [view setTitle:NSLocalizedString(([NSString stringWithFormat:@"DOCUMENTS_%@", key]), nil) forState:UIControlStateNormal];
+        view.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [view setTitleEdgeInsets:UIEdgeInsetsMake(0, 47, 0, 0)];
+        
+        UIImageView *imageView;
+        
+        if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] intValue] == 2 || ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] intValue] == 0 && [[[[Flooz sharedInstance] currentUser] settings] objectForKey:value])
+           ){
+            imageView = [UIImageView imageNamed:@"document-check"];
+        }
+        else{
+            imageView = [UIImageView imageNamed:@"arrow-white-right"];
+        }
+        
+        CGRectSetXY(imageView.frame, 290, 17);
+        
+        [view addSubview:imageView];
+        
         {
-            UIView *separatorTop = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(facebookButton.frame), 1)];
-            UIView *separatorBottom = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(facebookButton.frame) - 1, CGRectGetWidth(facebookButton.frame), 1)];
-            
-            separatorTop.backgroundColor = separatorBottom.backgroundColor = [UIColor customSeparator];
-            
-            [facebookButton addSubview:separatorTop];
-            [facebookButton addSubview:separatorBottom];
+            UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(view.frame) - 1, SCREEN_WIDTH, 1)];
+            separator.backgroundColor = [UIColor customSeparator];
+            [view addSubview:separator];
         }
         
         {
-            UIImageView *fb = [UIImageView imageNamed:@"facebook2"];
-            CGRectSetXY(fb.frame, 24, 21);
-            [facebookButton addSubview:fb];
+            UIImageView *icon = [UIImageView imageNamed:@"field-documents"];
+            CGRectSetXY(icon.frame, 16, 17);
+            [view addSubview:icon];
         }
-        
-        [facebookButton setAlternativeStyle];
-        facebookButton.delegate = self;
-        CGRectSetX(facebookButton.title.frame, 50);
-        
-//        [facebookButton setTitle:NSLocalizedString(@"EDIT_ACCOUNT_FACEBOOK", nil) forState:UIControlStateNormal];
-//        [facebookButton setTitle:NSLocalizedString(@"EDIT_ACCOUNT_FACEBOOK_DISCNNECT", nil) forState:UIControlStateSelected];
-//        [facebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        facebookButton.titleLabel.font = [UIFont customContentLight:14];
-//        
-//        [facebookButton addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
-//        
-        [_contentView addSubview:facebookButton];
-        height = CGRectGetMaxY(facebookButton.frame);
     }
     
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), height);
@@ -245,6 +276,8 @@
 - (void)didValidTouch
 {
     [[self view] endEditing:YES];
+    
+    _user[@"settings"] = @{ @"sepa": _sepa };
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateUser:_user success:^(id result) {
@@ -276,8 +309,65 @@
     [self didFacebookTouch];
 }
 
+- (void)registerButtonForAction:(UIButton *)button
+{
+    SEL action;
+    switch (registerButtonCount) {
+        case 0:
+            action = @selector(didEditAvatarTouch);
+            break;
+        case 1:
+            action = @selector(didDocumentTouch0);
+            break;
+        case 2:
+            action = @selector(didDocumentTouch1);
+            break;
+        case 3:
+            action = @selector(didDocumentTouch2);
+            break;
+        default:
+            action = nil;
+            NSLog(@"registerButtonForAction: unkown action");
+            break;
+    }
+    
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    registerButtonCount++;
+}
+
 - (void)didEditAvatarTouch
 {
+    currentDocumentKey = nil;
+    [self showImagePicker];
+}
+
+- (void)didDocumentTouch0
+{
+    currentDocumentKey = [[documents[0] allValues] firstObject];
+    [self showImagePicker];
+}
+
+- (void)didDocumentTouch1
+{
+    currentDocumentKey = [[documents[1] allValues] firstObject];
+    [self showImagePicker];
+}
+
+- (void)didDocumentTouch2
+{
+    currentDocumentKey = [[documents[2] allValues] firstObject];
+    [self showImagePicker];
+}
+
+- (void)showImagePicker
+{
+    if(
+        ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:currentDocumentKey] intValue] == 0 && [[[[Flooz sharedInstance] currentUser] settings] objectForKey:currentDocumentKey])
+        ){
+        return;
+    }
+    
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"GLOBAL_CAMERA", nil), NSLocalizedString(@"GLOBAL_ALBUMS", nil), nil];
     
     [actionSheet showInView:self.view];
@@ -341,16 +431,33 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
-    UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
-    NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
-
-    [userView setImageFromData:imageData];
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] uploadDocument:imageData field:@"picId" success:NULL failure:NULL];
-    }];
+    if(!currentDocumentKey){
+        UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+        UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
+        NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
+        
+        [userView setImageFromData:imageData];
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] uploadDocument:imageData field:@"picId" success:NULL failure:NULL];
+        }];
+    }
+    else{
+        
+        UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+        UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
+        NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
+        
+        NSString *key = currentDocumentKey;
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] uploadDocument:imageData field:key success:^{
+                // reload
+            } failure:NULL];
+        }];
+    }
 }
 
 - (void)didSendSMSValidationTouch:(UIButton *)sender

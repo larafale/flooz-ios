@@ -10,6 +10,7 @@
 
 #import "AppDelegate.h"
 #import "FLKeyboardView.h"
+#import "FLHomeTextField.h"
 
 @interface HomeViewController (){
     UIButton *loginButton;
@@ -19,7 +20,7 @@
     
     NSMutableDictionary *phone;
     
-    FLTextField *phoneField;
+    FLHomeTextField *phoneField;
     FLKeyboardView *inputView;
 }
 
@@ -59,37 +60,19 @@
     {
         loginButton = [UIButton new];
         
-        loginButton.backgroundColor = [UIColor customBlue];
-        loginButton.titleLabel.font = [UIFont customTitleLight:14];
+        loginButton.backgroundColor = [UIColor clearColor];
+        loginButton.titleLabel.font = [UIFont customTitleLight:20];
         [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        loginButton.layer.opacity = 0.7;
-        loginButton.layer.cornerRadius = 2.;
         [loginButton setTitle:NSLocalizedString(@"HOME_LOGIN", nil) forState:UIControlStateNormal];
         [loginButton addTarget:self action:@selector(didConnectTouch) forControlEvents:UIControlEventTouchUpInside];
         
-        [_contentView addSubview:loginButton];
+//        [_contentView addSubview:loginButton];
     }
     
     {
-//        facebookbButton = [UIButton new];
-//        
-//        facebookbButton.backgroundColor = [UIColor customBlue];
-//        facebookbButton.titleLabel.font = loginButton.titleLabel.font;
-//        facebookbButton.layer.opacity = loginButton.layer.opacity;
-//        facebookbButton.layer.cornerRadius = loginButton.layer.cornerRadius;
-//        [facebookbButton setTitle:@"Facebook" forState:UIControlStateNormal];
-//        [facebookbButton addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        [_contentView addSubview:facebookbButton];
-    }
-    
-    {
-        phoneField = [[FLTextField alloc] initWithPlaceholder:@"N° de mobile ou Code invitation" for:phone key:@"phone" position:CGPointMake(20, 200)];
+        phoneField = [[FLHomeTextField alloc] initWithPlaceholder:@"06 ou code" for:phone key:@"phone" position:CGPointMake(20, 200)];
         
-        phoneField.backgroundColor = [UIColor whiteColor];
-        phoneField.layer.cornerRadius = 2.;
-        phoneField.clipsToBounds = YES;
-        phoneField.textfield.textColor = [UIColor customBackground];
+        [phoneField addForNextClickTarget:self action:@selector(didConnectTouch)];
         
         [_contentView addSubview:phoneField];
         
@@ -97,6 +80,7 @@
         [inputView setKeyboardChangeable];
         inputView.textField = phoneField.textfield;
         phoneField.textfield.inputView = inputView;
+
     }
     
     loginButton.frame = CGRectMake(20, CGRectGetMaxY(phoneField.frame) + 5, SCREEN_WIDTH - 40, 39);
@@ -122,14 +106,9 @@
     
     if(phone[@"phone"] && ![phone[@"phone"] isBlank]){
         [[Flooz sharedInstance] showLoadView];
+        [appDelegate clearSavedViewController];
         [[Flooz sharedInstance] loginWithPhone:phone[@"phone"]];
     }
-}
-
-- (void)didFacebookTouch
-{
-    [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] connectFacebook];
 }
 
 #pragma mark - Keyboard Management

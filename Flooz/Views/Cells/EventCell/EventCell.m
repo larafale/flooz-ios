@@ -175,9 +175,33 @@
     UIView *dot = [[view subviews] objectAtIndex:3];
     EventAmountView *amountView = [[view subviews] objectAtIndex:4];
     
+    {
+        NSMutableAttributedString *attributedContent = [NSMutableAttributedString new];
+        
+        {
+            NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                                  initWithString:NSLocalizedString(@"EVENT_START_BY", nil)
+                                                  attributes:nil];
+            
+            [attributedContent appendAttributedString:attributedText];
+        }
+        
+        {
+            NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                                  initWithString:[NSString stringWithFormat:@"@%@", [[_event creator] username]]
+                                                  attributes:@{
+                                                               NSFontAttributeName: [UIFont customContentRegular:12]
+                                                               }];
+            
+            [attributedContent appendAttributedString:attributedText];
+        }
+        
+        content.attributedText = attributedContent;
+    }
+    
+    
     [userView setImageFromUser:[_event creator]];
     text.text = [_event title];
-    content.text = [NSString stringWithFormat:NSLocalizedString(@"EVENT_START_BY", nil), [[_event creator] fullname]];
     amountView.event = _event;
     
 //    dot.hidden = !_event.isNew;

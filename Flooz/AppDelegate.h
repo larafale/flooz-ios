@@ -19,6 +19,8 @@
     FLUser *currentUserForMenu;
     
     NSMutableArray *imagesForPreview;
+    
+    UIViewController *savedViewController;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -39,5 +41,7 @@
 - (void)showMenuForUser:(FLUser *)user;
 
 - (void)lockForUpdate:(NSString *)updateUrl;
+
+- (void)clearSavedViewController;
 
 @end
