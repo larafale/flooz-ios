@@ -15,6 +15,8 @@
 "GLOBAL_ALBUMS" = "Albums";
 "GLOBAL_EURO" = "€";
 "GLOBAL_SEND" = "Publier";
+"GLOBAL_YES" = "Oui";
+"GLOBAL_NO" = "Non";
 
 "SEND_COMMENT" = "Écrire un commentaire...";
 
@@ -38,6 +40,7 @@
 "NAV_FRIENDS" = "Amis";
 "NAV_DOCUMENTS" = "Justificatifs";
 "NAV_SECURE_CODE" = "Sécurité";
+"NAV_INVIT_CODE" = "Code";
 
 "HOME_LOGIN" = "Connexion";
 "HOME_SIGNUP" = "S'inscrire";
@@ -124,7 +127,7 @@
 
 "ACCOUNT_BALANCE" = "Porte-monnaie";
 
-"ACCOUNT_BUTTON_FRIENDS" = "MES AMIS";
+"ACCOUNT_BUTTON_FRIENDS" = "AMIS";
 "ACCOUNT_BUTTON_CASH_OUT" = "VIRER A MA BANQUE";
 "ACCOUNT_BUTTON_SETTINGS" = "PARAMETRES";
 "ACCOUNT_BUTTON_INFORMATIONS" = "INFORMATIONS";
@@ -137,6 +140,7 @@
 "SETTINGS_DOCUMENTS" = "JUSTIFICATIFS";
 "SETTINGS_PASSWORD" = "MOT DE PASSE";
 "SETTINGS_LOGOUT" = "DECONNEXION";
+"SETTINGS_INVIT_CODE" = "CODE";
 
 "EDIT_ACCOUNT_SEND_SMS" = "Renvoyer SMS";
 "EDIT_ACCOUNT_SEND_MAIL" = "Renvoyer email";
@@ -222,3 +226,7 @@
 "DOCUMENTS_CARD_ID_RECTO" = "Carte d’identité (Recto)";
 "DOCUMENTS_CARD_ID_VERSO" = "Carte d’identité (Verso)";
 "DOCUMENTS_HOME" = "Justificatif de domicile";
+
+"INVITE_CODE_TEXT" = "Invitez vos amis à utiliser Flooz en partageant votre code. Recevez 2€ dans votre porte-monnaie dès lors que l'un de vos invités effectue un premier paiement.";
+"INVITE_CODE_CODE" = "Votre code";
+"INVITE_CODE_SHARE" = "Partagez";

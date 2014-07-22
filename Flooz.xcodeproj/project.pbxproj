@@ -10,6 +10,8 @@
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
 		AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0857FC1923AB13007C1927 /* SplashViewController.m */; };
 		AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
+		AB0D88F3197978F400A37630 /* InvitCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D88F1197978F400A37630 /* InvitCodeViewController.m */; };
+		AB0D88F4197978F400A37630 /* InvitCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0D88F2197978F400A37630 /* InvitCodeViewController.xib */; };
 		AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB618E46861008E03FE /* libicucore.dylib */; };
 		AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB818E4686A008E03FE /* CFNetwork.framework */; };
 		AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBBA18E46872008E03FE /* Security.framework */; };
@@ -191,6 +193,9 @@
 		AB0857FB1923AB13007C1927 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashViewController.h; path = Controllers/Splash/SplashViewController.h; sourceTree = "<group>"; };
 		AB0857FC1923AB13007C1927 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashViewController.m; path = Controllers/Splash/SplashViewController.m; sourceTree = "<group>"; };
 		AB0857FD1923AB13007C1927 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashViewController.xib; path = Controllers/Splash/SplashViewController.xib; sourceTree = "<group>"; };
+		AB0D88F0197978F400A37630 /* InvitCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvitCodeViewController.h; path = Controllers/InvitCode/InvitCodeViewController.h; sourceTree = "<group>"; };
+		AB0D88F1197978F400A37630 /* InvitCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InvitCodeViewController.m; path = Controllers/InvitCode/InvitCodeViewController.m; sourceTree = "<group>"; };
+		AB0D88F2197978F400A37630 /* InvitCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InvitCodeViewController.xib; path = Controllers/InvitCode/InvitCodeViewController.xib; sourceTree = "<group>"; };
 		AB15DBB618E46861008E03FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		AB15DBB818E4686A008E03FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		AB15DBBA18E46872008E03FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -541,6 +546,16 @@
 			name = Splash;
 			sourceTree = "<group>";
 		};
+		AB0D88EF1979786100A37630 /* InvitCode */ = {
+			isa = PBXGroup;
+			children = (
+				AB0D88F0197978F400A37630 /* InvitCodeViewController.h */,
+				AB0D88F1197978F400A37630 /* InvitCodeViewController.m */,
+				AB0D88F2197978F400A37630 /* InvitCodeViewController.xib */,
+			);
+			name = InvitCode;
+			sourceTree = "<group>";
+		};
 		AB2FB52F18AD40120079AA1D /* CashOut */ = {
 			isa = PBXGroup;
 			children = (
@@ -757,6 +772,7 @@
 				AB2FB55918B2B4600079AA1D /* Friends */,
 				AB5EB6D7188214F000D81AF6 /* Home */,
 				ABE9146F18929A49003AC722 /* Informations */,
+				AB0D88EF1979786100A37630 /* InvitCode */,
 				AB4CB6DD1886AE1E00D1C573 /* Login */,
 				AB5EB6DB188214F000D81AF6 /* MenuNewTransaction */,
 				ABE9141C1889436B003AC722 /* NewTransaction */,
@@ -1778,6 +1794,7 @@
 				ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */,
 				ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */,
 				AB6DA52118C8CEF70073B947 /* FriendAddViewController.xib in Resources */,
+				AB0D88F4197978F400A37630 /* InvitCodeViewController.xib in Resources */,
 				AB3D089C186CA11A00CF8380 /* InfoPlist.strings in Resources */,
 				ABBB75CC18B63DB20070C2A8 /* CreditCardViewController.xib in Resources */,
 				AB2FB55218B232B10079AA1D /* AcitvitiesViewController.xib in Resources */,
@@ -1879,6 +1896,7 @@
 				ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */,
 				AB7C9B2218D73AE9002775BA /* SecureCodeViewController.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
+				AB0D88F3197978F400A37630 /* InvitCodeViewController.m in Sources */,
 				AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */,
 				ABB12D6518BE66D7002FCAAE /* EventCommentsView.m in Sources */,
 				AB4CB6E11886AE2D00D1C573 /* LoginViewController.m in Sources */,

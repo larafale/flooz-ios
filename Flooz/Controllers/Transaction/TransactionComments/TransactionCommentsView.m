@@ -112,51 +112,66 @@
 
 - (UIView *)createCommentView:(FLComment *)comment
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(self.frame), 50)];
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(42, 0, 1, 0)];
-    FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMake(25, 0, 34, 34)];
-    UILabel *content = [[UILabel alloc] initWithFrame:CGRectMake(70, 00, 210, 0)];
-    UILabel *dateView = [[UILabel alloc] initWithFrame:CGRectMakeSize(0, 15)];
-    
-    separator.backgroundColor = [UIColor customSeparator];
-    
-    content.font = [UIFont customContentLight:12];
-    content.textColor = [UIColor whiteColor];
-    content.numberOfLines = 0;
-    
-    [avatar setImageFromUser:comment.user];
-    
-    content.text = comment.content;
-    [content setHeightToFit];
-    
-    if(CGRectGetHeight(content.frame) > CGRectGetHeight(view.frame)){
-        CGRectSetHeight(view.frame, CGRectGetHeight(content.frame));
-    }
-    else{
-        CGRectSetHeight(content.frame, CGRectGetHeight(view.frame));
-    }
-    
-    CGRectSetHeight(separator.frame, CGRectGetHeight(view.frame));
-    CGRectSetY(avatar.frame, (CGRectGetHeight(view.frame) - CGRectGetHeight(avatar.frame)) / 2);
+    CGFloat MIN_HEIGHT = 50;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(self.frame), MIN_HEIGHT)];
     
     {
-        dateView.textAlignment = NSTextAlignmentRight;
+        CGFloat MARGE_TOP_BOTTOM = 10.;
+        CGFloat MARGE_LEFT = 70;
+        CGFloat WIDTH = 210;
+        
+        UILabel *content = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, 0, WIDTH, 0)];
+        UILabel *dateView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, 0, WIDTH, 15)];
+        
+        content.font = [UIFont customContentLight:12];
+        content.textColor = [UIColor whiteColor];
+        content.numberOfLines = 0;
+        content.text = comment.content;
+        
         dateView.textColor = [UIColor customPlaceholder];
         dateView.font = [UIFont customContentLight:9];
-        
         dateView.text = [NSString stringWithFormat:@"%@ %@ @%@", [comment when], NSLocalizedString(@"GLOBAL_BY", nil), [[comment user] username]];
-        [dateView setWidthToFit];
         
-        CGRectSetX(dateView.frame, CGRectGetWidth(view.frame) - CGRectGetWidth(dateView.frame) - MARGIN_LEFT_RIGHT);
-        CGRectSetY(dateView.frame, CGRectGetHeight(view.frame) - 15 - 2);
+        
+        [content setHeightToFit];
+        
+        CGFloat currentHeight = CGRectGetHeight(content.frame) + CGRectGetHeight(dateView.frame);
+        
+        if(currentHeight + MARGE_TOP_BOTTOM > CGRectGetHeight(view.frame)){
+            
+            CGRectSetY(content.frame, MARGE_TOP_BOTTOM / 2.);
+            CGRectSetY(dateView.frame, CGRectGetMaxY(content.frame));
+            
+            CGRectSetHeight(view.frame, currentHeight + MARGE_TOP_BOTTOM);
+        }
+        else{
+            
+            CGFloat y = (MIN_HEIGHT - currentHeight) / 2.;
+            
+            CGRectSetY(content.frame, y);
+            CGRectSetY(dateView.frame, CGRectGetMaxY(content.frame));
+        }
+        
+        [view addSubview:content];
+        [view addSubview:dateView];
     }
     
-    [view addSubview:separator];
-    [view addSubview:avatar];
-    [view addSubview:content];
-    [view addSubview:dateView];
+    {
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(42, 0, 1, 0)];
+        separator.backgroundColor = [UIColor customSeparator];
+        CGRectSetHeight(separator.frame, CGRectGetHeight(view.frame));
+        [view addSubview:separator];
+    }
+    
+    {
+        FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMake(25, 0, 34, 34)];
+        [avatar setImageFromUser:comment.user];
+        CGRectSetY(avatar.frame, (CGRectGetHeight(view.frame) - CGRectGetHeight(avatar.frame)) / 2);
+        [view addSubview:avatar];
+    }
     
     return  view;
+
 }
 
 #pragma mark - UITextFieldDelegate

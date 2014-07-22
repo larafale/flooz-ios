@@ -178,7 +178,7 @@
     lastErrorCode = error.code;
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
-                                                    message:ERROR_LOCALIZED_DESCRIPTION((long)error.code)
+                                                    message:ERROR_LOCALIZED_DESCRIPTION((int)error.code)
                                                    delegate:nil
                                           cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
                                           otherButtonTitles:nil
@@ -354,12 +354,12 @@
 
 #pragma mark - Image fullscreen
 
-- (void)showPreviewImage:(NSString *)imageNamed
+- (BOOL)showPreviewImage:(NSString *)imageNamed
 {
     NSString *key = [NSString stringWithFormat:@"preview-%@", imageNamed];
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:key]){
-        return;
+        return NO;
     }
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:key];
     
@@ -369,11 +369,31 @@
     [view setImage:[UIImage imageNamed:imageNamed] forState:UIControlStateNormal];
     
     [self.window addSubview:view];
+    
+    return YES;
+}
+
+- (void)showPreviewImages:(NSArray *)imagesNamed
+{
+    imagesForPreview = [imagesNamed mutableCopy];
+    [self showNextPreviewImage];
+}
+
+- (void)showNextPreviewImage
+{
+    NSString *imageNamed = [imagesForPreview firstObject];
+    [imagesForPreview removeObjectAtIndex:0];
+    
+    [self showPreviewImage:imageNamed];
 }
 
 - (void)removePreviewImage:(UIView *)view
 {
     [view removeFromSuperview];
+    
+    if(imagesForPreview && [imagesForPreview count] > 0){
+        [self showNextPreviewImage];
+    }
 }
 
 #pragma mark -
@@ -413,6 +433,34 @@
         NewTransactionViewController *controller = [[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu];
         [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
     }];
+}
+
+- (void)lockForUpdate:(NSString *)updateUrl
+{
+    if(updateUrl){
+        NSURL *url = [NSURL URLWithString:updateUrl];
+        [[UIApplication sharedApplication] openURL:url];
+    }
+    
+    [UIView transitionWithView:self.window
+                      duration:0.7
+                       options:(UIViewAnimationOptionTransitionFlipFromRight | UIViewAnimationOptionAllowAnimatedContent)
+                    animations:^{
+                        self.window.rootViewController = [SplashViewController new];
+                    }
+                    completion:^(BOOL finished) {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
+                                                                        message:ERROR_LOCALIZED_DESCRIPTION(FLNeedUpdateError)
+                                                                       delegate:nil
+                                                              cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
+                                                              otherButtonTitles:nil
+                                              ];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [alert show];
+                        });
+                    }
+     ];
 }
 
 @end

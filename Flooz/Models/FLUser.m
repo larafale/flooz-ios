@@ -172,6 +172,8 @@
     if(json[@"cactus"]){
         _username = nil;
     }
+    
+    _invitCode = @"EIHGTAA54";
 }
 
 - (void)updateStatsPending:(NSDictionary *)json

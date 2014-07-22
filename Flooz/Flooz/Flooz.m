@@ -19,6 +19,8 @@
 
 #import <Analytics/Analytics.h>
 
+#define APP_VERSION [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]
+
 @implementation Flooz
 
 + (Flooz *)sharedInstance
@@ -669,6 +671,8 @@
         path = [path stringByAppendingString:@"&via=ios"];
     }
     
+    path = [path stringByAppendingString:[NSString stringWithFormat:@"&version=%@", APP_VERSION]];
+    
     id successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"JSON: %@", responseObject);
         [loadView hide];
@@ -686,7 +690,10 @@
         
         id statusCode = [operation.responseObject objectForKey:@"statusCode"];
         
-        if([path isEqualToString:@"/login/facebook"] || [path isEqualToString:@"/login/basic"]){
+        if([statusCode intValue] == 426){
+            [appDelegate lockForUpdate:[operation.responseObject objectForKey:@"upgradeUri"]];
+        }
+        else if([path isEqualToString:@"/login/facebook"] || [path isEqualToString:@"/login/basic"]){
             
         }
         else if(error.code == kCFURLErrorTimedOut ||

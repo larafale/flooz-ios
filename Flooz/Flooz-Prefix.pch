@@ -43,4 +43,4 @@
 #import "FLTextFieldIcon.h"
 #import "FLValidNavBar.h"
 
-#define FLOOZ_DEBUG_API YES
+#define FLOOZ_DEBUG_API NO

@@ -73,7 +73,7 @@
 {
     [super viewDidAppear:animated];
     
-    [appDelegate showPreviewImage:@"preview-1"];
+    [appDelegate showPreviewImages:@[@"preview-1", @"preview-2", @"preview-3"]];
 }
 
 #pragma mark - TableView

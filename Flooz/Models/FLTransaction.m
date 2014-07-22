@@ -32,7 +32,11 @@
     }
     
     NSNumber *state = [json objectForKey:@"state"];
-    if([state integerValue] == 0){
+    
+    if(!state){
+        _status = TransactionStatusNone;
+    }
+    else if([state integerValue] == 0){
         _status = TransactionStatusPending;
     }
     else if([state integerValue] == 1){
@@ -47,6 +51,7 @@
     else if([state integerValue] == 4){
         _status = TransactionStatusExpired;
     }
+    
         
     _amount = [json objectForKey:@"amount"];
     if(_amount && [[json objectForKey:@"payer"] isEqualToNumber:@1]){

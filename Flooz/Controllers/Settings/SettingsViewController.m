@@ -15,6 +15,7 @@
 #import "RIBViewController.h"
 #import "DocumentsViewController.h"
 #import "PasswordViewController.h"
+#import "InvitCodeViewController.h"
 
 @interface SettingsViewController (){
     NSArray *links;
@@ -38,7 +39,8 @@
 //                 @"privacy",
                  @"documents",
                  @"password",
-                 @"logout"
+                 @"logout",
+                 @"invit_code"
                  ];
     }
     return self;
@@ -99,6 +101,9 @@
     }
     else if(indexPath.row == 6){
         [[Flooz sharedInstance] logout];
+    }
+    else{
+        [[self navigationController] pushViewController:[InvitCodeViewController new] animated:YES];
     }
 }
 

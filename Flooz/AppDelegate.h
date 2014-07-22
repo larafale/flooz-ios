@@ -17,6 +17,8 @@
     FLAlertView *alertView;
     
     FLUser *currentUserForMenu;
+    
+    NSMutableArray *imagesForPreview;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -32,7 +34,10 @@
 
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 
-- (void)showPreviewImage:(NSString *)imageNamed;
+- (BOOL)showPreviewImage:(NSString *)imageNamed;
+- (void)showPreviewImages:(NSArray *)imagesNamed;
 - (void)showMenuForUser:(FLUser *)user;
+
+- (void)lockForUpdate:(NSString *)updateUrl;
 
 @end

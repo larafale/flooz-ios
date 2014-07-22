@@ -188,7 +188,7 @@
         height = CGRectGetMaxY(view.frame);
     }
     
-    if([_transaction isPrivate]){
+    if([_transaction amount]){
         TransactionAmountView *view = [[TransactionAmountView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         view.transaction = _transaction;
         [_mainView addSubview:view];

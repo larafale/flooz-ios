@@ -24,7 +24,8 @@ typedef NS_ENUM(NSInteger, TransactionStatus) {
     TransactionStatusRefused,
     TransactionStatusPending,
     TransactionStatusCanceled,
-    TransactionStatusExpired
+    TransactionStatusExpired,
+    TransactionStatusNone
 };
 
 typedef NS_ENUM(NSInteger, TransactionScope) {

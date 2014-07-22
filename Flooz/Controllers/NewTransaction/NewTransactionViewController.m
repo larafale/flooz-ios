@@ -220,8 +220,11 @@
     [super viewDidAppear:animated];
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
-    
-    if([transaction objectForKey:@"toTitle"]){
+    if([appDelegate showPreviewImage:@"preview-4"]){
+        
+    }
+    else if([transaction objectForKey:@"toTitle"]){
+        
         [UIView animateWithDuration:.15
                               delay:0
                             options:UIViewAnimationOptionAllowUserInteraction
@@ -380,33 +383,19 @@
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] createTransactionValidate:transaction success:^(id result) {
             
-            CompleteBlock completeBlock = ^{
-                [[Flooz sharedInstance] showLoadView];
-                [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
-                    FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
-                    TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
-                            [[timelineController filterView] selectFilter:2];
-                            FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
-                            [rootController.navbarView loadControllerWithIndex:1];
-                        }
-                    }];
-                } failure:NULL];
-            };
-            
-//            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
-//                
-//                SecureCodeViewController *controller = [SecureCodeViewController new];
-//                controller.completeBlock = completeBlock;
-//                
-//                [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
-//            }
-//            else{
-//                completeBlock();
-//            }
-            
-            completeBlock();
+            if([result objectForKey:@"confirmationText"]){
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:nil
+                                          message:[result objectForKey:@"confirmationText"]
+                                          delegate:self
+                                          cancelButtonTitle:NSLocalizedString(@"GLOBAL_NO", nil)
+                                          otherButtonTitles:NSLocalizedString(@"GLOBAL_YES", nil), nil];
+                
+                [alertView show];
+            }
+            else{
+                [self didTransactionValidated];
+            }
             
         } noCreditCard:^(){
             [self presentCreditCardController];
@@ -473,6 +462,31 @@
     
     transactionBar.hidden = NO;
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
+}
+
+#pragma mark - AlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1){
+        [self didTransactionValidated];
+    }
+}
+
+- (void)didTransactionValidated
+{
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
+        FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
+        TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+                [[timelineController filterView] selectFilter:2];
+                FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
+                [rootController.navbarView loadControllerWithIndex:1];
+            }
+        }];
+    } failure:NULL];
 }
 
 @end

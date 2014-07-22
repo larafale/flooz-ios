@@ -48,6 +48,7 @@
 @property NSString *record;
 @property NSString *device;
 @property NSDictionary *settings;
+@property NSString *invitCode;
 
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)updateStatsPending:(NSDictionary *)json;
