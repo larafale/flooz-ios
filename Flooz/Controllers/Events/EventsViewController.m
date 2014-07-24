@@ -48,6 +48,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"reloadEvents" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
+    
     [self handleRefresh];
 }
 
@@ -161,6 +163,11 @@
     [self presentViewController:controller animated:YES completion:^{
         self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     }];
+}
+
+- (void)didReceiveNotificationConnectionError
+{
+    [refreshControl endRefreshing];
 }
 
 @end

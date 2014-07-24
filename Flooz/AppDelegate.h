@@ -17,6 +17,8 @@
     FLAlertView *alertView;
     
     FLUser *currentUserForMenu;
+    UIView *currentImageView;
+    BOOL haveMenuFriend;
     
     NSMutableArray *imagesForPreview;
     
@@ -38,7 +40,8 @@
 
 - (BOOL)showPreviewImage:(NSString *)imageNamed;
 - (void)showPreviewImages:(NSArray *)imagesNamed;
-- (void)showMenuForUser:(FLUser *)user;
+- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView;
+- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend;
 
 - (void)lockForUpdate:(NSString *)updateUrl;
 

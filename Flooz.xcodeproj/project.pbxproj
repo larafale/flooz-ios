@@ -247,6 +247,8 @@
 		ABAA4023197E96BF009F29EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
 		ABAA4024197E96BF009F29EF /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */; };
 		ABAFEE22197F150800D39C62 /* FLHomeTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC02657197EB5A5000BA5B9 /* FLHomeTextField.m */; };
+		ABAFEE27197FFE5000D39C62 /* FLPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEE26197FFE5000D39C62 /* FLPopup.m */; };
+		ABAFEE28198001BA00D39C62 /* FLPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEE26197FFE5000D39C62 /* FLPopup.m */; };
 		ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4618BCE805002FCAAE /* EventViewController.m */; };
 		ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB12D4718BCE805002FCAAE /* EventViewController.xib */; };
 		ABB12D4E18BE60C5002FCAAE /* EventHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB12D4D18BE60C5002FCAAE /* EventHeaderView.m */; };
@@ -482,6 +484,9 @@
 		ABA9B71D18F3035700A81929 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		ABA9B71F18F3035E00A81929 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		ABAA4029197E96BF009F29EF /* Flooz dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flooz dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABAFEE23197FB42A00D39C62 /* FLImageViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLImageViewDelegate.h; path = Views/FLImageView/FLImageViewDelegate.h; sourceTree = "<group>"; };
+		ABAFEE25197FFE5000D39C62 /* FLPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPopup.h; path = Views/FLPopup/FLPopup.h; sourceTree = "<group>"; };
+		ABAFEE26197FFE5000D39C62 /* FLPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPopup.m; path = Views/FLPopup/FLPopup.m; sourceTree = "<group>"; };
 		ABB12D4518BCE805002FCAAE /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventViewController.h; path = Controllers/Event/EventViewController.h; sourceTree = "<group>"; };
 		ABB12D4618BCE805002FCAAE /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventViewController.m; path = Controllers/Event/EventViewController.m; sourceTree = "<group>"; };
 		ABB12D4718BCE805002FCAAE /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventViewController.xib; path = Controllers/Event/EventViewController.xib; sourceTree = "<group>"; };
@@ -979,13 +984,13 @@
 				ABE914841892AE3B003AC722 /* FLNewTransactionAmount */,
 				ABE914A11896D166003AC722 /* FLNewTransactionBar */,
 				ABE9149D18968E1A003AC722 /* FLPaymentField */,
+				ABAFEE24197FFE3200D39C62 /* FLPopup */,
 				ABD0164B18ECCCD800940F2D /* FLScrollViewIndicator */,
 				ABF7092218A2AF5F00517389 /* FLSelectAmount */,
 				ABF7092F18A3BEA400517389 /* FLSelectFriendButton */,
 				ABE9145A18928A75003AC722 /* FLSocialView */,
 				ABD0164618EC694100940F2D /* FLSwitchView */,
-				ABE9149418933900003AC722 /* FLTableView.h */,
-				AB5EB7011882157300D81AF6 /* FLTableView.m */,
+				ABAFEE2919810B6900D39C62 /* FLTableView */,
 				ABE9148C189337C8003AC722 /* FLTextField */,
 				ABE9149518967657003AC722 /* FLTextFieldIcon */,
 				ABE9149918968C17003AC722 /* FLTextFieldTitle */,
@@ -1182,6 +1187,7 @@
 			children = (
 				AB6DA50E18C4DDFD0073B947 /* FLImageView.h */,
 				AB6DA50F18C4DDFD0073B947 /* FLImageView.m */,
+				ABAFEE23197FB42A00D39C62 /* FLImageViewDelegate.h */,
 			);
 			name = FLImageView;
 			sourceTree = "<group>";
@@ -1321,6 +1327,24 @@
 				ABA96DA8196EED4D00B8B7C7 /* SPCreditCard.h */,
 			);
 			path = include;
+			sourceTree = "<group>";
+		};
+		ABAFEE24197FFE3200D39C62 /* FLPopup */ = {
+			isa = PBXGroup;
+			children = (
+				ABAFEE25197FFE5000D39C62 /* FLPopup.h */,
+				ABAFEE26197FFE5000D39C62 /* FLPopup.m */,
+			);
+			name = FLPopup;
+			sourceTree = "<group>";
+		};
+		ABAFEE2919810B6900D39C62 /* FLTableView */ = {
+			isa = PBXGroup;
+			children = (
+				ABE9149418933900003AC722 /* FLTableView.h */,
+				AB5EB7011882157300D81AF6 /* FLTableView.m */,
+			);
+			name = FLTableView;
 			sourceTree = "<group>";
 		};
 		ABB12D4418BCE7E5002FCAAE /* Event */ = {
@@ -2189,6 +2213,7 @@
 				ABBB75CF18B64A0B0070C2A8 /* FLCreditCard.m in Sources */,
 				ABE9142018894385003AC722 /* NewTransactionViewController.m in Sources */,
 				ABE9146218929168003AC722 /* AccountViewController.m in Sources */,
+				ABAFEE27197FFE5000D39C62 /* FLPopup.m in Sources */,
 				ABB12D7418C0C42D002FCAAE /* EventAmountActionsView.m in Sources */,
 				ABB12D7818C0DEE8002FCAAE /* FriendSuggestionCell.m in Sources */,
 				ABBB75E218BBADFA0070C2A8 /* FriendRequestCell.m in Sources */,
@@ -2245,6 +2270,7 @@
 				ABAA3F85197E96BF009F29EF /* FriendPickerSearchBar.m in Sources */,
 				ABAA3F86197E96BF009F29EF /* EventParticipantsViewController.m in Sources */,
 				ABAA3F87197E96BF009F29EF /* FLHelper.m in Sources */,
+				ABAFEE28198001BA00D39C62 /* FLPopup.m in Sources */,
 				ABAA3F88197E96BF009F29EF /* EventAmountView.m in Sources */,
 				ABAA3F89197E96BF009F29EF /* PasswordForgetViewController.m in Sources */,
 				ABAA3F8A197E96BF009F29EF /* FLSocialView.m in Sources */,

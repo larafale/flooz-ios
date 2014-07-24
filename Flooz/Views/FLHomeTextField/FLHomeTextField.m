@@ -12,7 +12,7 @@
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position
 {
-    self = [super initWithFrame:CGRectMake(position.x, position.y, SCREEN_WIDTH - 2 * position.x, 39)];
+    self = [super initWithFrame:CGRectMake(position.x, position.y, SCREEN_WIDTH - 2 * position.x, 42)];
     if (self) {
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;

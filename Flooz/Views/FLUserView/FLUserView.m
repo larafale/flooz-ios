@@ -87,12 +87,14 @@
                     return;
                 }
                 
-                [UIView animateWithDuration:.3 animations:^{
-                    avatar.layer.opacity = 1;
-                    
-                } completion:^(BOOL finished) {
-                    dispatch_resume(queue);
-                }];
+                [UIView animateWithDuration:.3
+                                      delay:.1
+                                    options:0
+                                 animations:^{
+                                     avatar.layer.opacity = 1;
+                                 } completion:^(BOOL finished) {
+                                     dispatch_resume(queue);
+                                 }];
             }];
         });
     }

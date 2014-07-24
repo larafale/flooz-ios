@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FLImageViewDelegate.h"
 
 @interface FLImageView : UIImageView{
     NSURL *fullScreenImageURL;
+    UIProgressView *progressView;
 }
 
 @property (strong, nonatomic) UITapGestureRecognizer *imageGesture;
+@property (weak, nonatomic) id<FLImageViewDelegate> delegate;
 
 - (void)setImageWithURL:(NSURL *)url fullScreenURL:(NSURL *)fullScreenURL;
 

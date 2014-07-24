@@ -28,6 +28,7 @@
     UIButton *sendValidationEmail;
     
     NSArray *documents;
+    NSMutableArray *documentsButton;
     
     NSInteger registerButtonCount;
     NSString *currentDocumentKey;
@@ -69,6 +70,8 @@
                       @{@"CARD_ID_VERSO": @"cniVerso"},
                       @{@"HOME": @"justificatory"}
                       ];
+        
+        documentsButton = [NSMutableArray new];
         
         registerButtonCount = 0;
     }
@@ -219,7 +222,6 @@
         [_contentView addSubview:view];
         height = CGRectGetMaxY(view.frame);
         
-        
         [self registerButtonForAction:view];
         view.backgroundColor = [UIColor customBackground];
         view.titleLabel.font = [UIFont customTitleExtraLight:16];
@@ -231,6 +233,7 @@
         
         UIImageView *imageView;
         
+        
         if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] intValue] == 2 || ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] intValue] == 0 && [[[[Flooz sharedInstance] currentUser] settings] objectForKey:value])
            ){
             imageView = [UIImageView imageNamed:@"document-check"];
@@ -238,6 +241,7 @@
         else{
             imageView = [UIImageView imageNamed:@"arrow-white-right"];
         }
+        [documentsButton addObject:imageView];
         
         CGRectSetXY(imageView.frame, 290, 17);
         
@@ -444,7 +448,6 @@
         }];
     }
     else{
-        
         UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
         UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
         NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
@@ -454,7 +457,18 @@
         [picker dismissViewControllerAnimated:YES completion:^{
             [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] uploadDocument:imageData field:key success:^{
-                // reload
+                NSUInteger index = 0;
+                for(NSDictionary *dic in documents){
+                    if([[[dic allValues] firstObject] isEqualToString:currentDocumentKey]){
+                        break;
+                    }
+                    index++;
+                }
+                
+                UIImageView *imageView = [documentsButton objectAtIndex:index];
+                imageView.image = [UIImage imageNamed:@"document-check"];
+                CGRectSetWidthHeight(imageView.frame, imageView.image.size.width, imageView.image.size.height);
+
             } failure:NULL];
         }];
     }

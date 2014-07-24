@@ -45,7 +45,7 @@
     {
         username = [[UILabel alloc] initWithFrame:CGRectMake(0, 118, CGRectGetWidth(self.frame), 30)];
         
-        username.font = [UIFont customContentRegular:10];
+        username.font = [UIFont customContentBold:11];
         username.textAlignment = NSTextAlignmentCenter;
         username.textColor = [UIColor customBlue];
         

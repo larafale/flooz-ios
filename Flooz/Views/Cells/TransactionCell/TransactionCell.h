@@ -28,6 +28,8 @@
     CGPoint lastTranslation;
     
     BOOL isSwipable;
+    
+    FLImageView *imageThumbView;
 }
 
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction;

@@ -10,7 +10,7 @@
 
 #import "SecureCodeViewController.h"
 
-#define MARGE 20.
+#define MARGE 0.
 
 @interface SignupViewController (){
     NSMutableDictionary *_user;
@@ -68,11 +68,11 @@
         offset = CGRectGetMaxY(view.frame);
     }
     else{
-        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(MARGE, 20, SCREEN_WIDTH - (2 * MARGE), 45)];
+        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, SCREEN_WIDTH - 40, 45)];
         [registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
         
         [registerFacebook setTitle:NSLocalizedString(@"SIGNUP_FACEBOOK", nil) forState:UIControlStateNormal];
-        registerFacebook.titleLabel.font = [UIFont customContentRegular:13];
+        registerFacebook.titleLabel.font = [UIFont customContentRegular:15];
         [registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateNormal];
          [registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateHighlighted];
         [registerFacebook setImageEdgeInsets:UIEdgeInsetsMake(-1, 0, 0, 12)];
@@ -89,7 +89,7 @@
             registerFacebook.hidden = YES;
         }
         
-        name = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" position:CGPointMake(MARGE, offset + 10) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
+        name = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_user key:@"firstName" position:CGPointMake(MARGE, offset) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
         offset = CGRectGetMaxY(name.frame);
         [name addForNextClickTarget:self action:@selector(didNameEndEditing)];
         

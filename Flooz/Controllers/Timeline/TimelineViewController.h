@@ -28,6 +28,8 @@
     FLScrollViewIndicator *scrollViewIndicator;
     
     NSMutableArray *transactionsLoaded;
+    
+    NSMutableArray *cells;
 }
 
 @property (weak, nonatomic) IBOutlet FLTableView *tableView;

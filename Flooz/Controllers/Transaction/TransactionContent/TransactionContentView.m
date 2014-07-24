@@ -97,12 +97,47 @@
     UILabel *view = [[self subviews] objectAtIndex:0];
     CGRectSetY(view.frame, height);
     
-    if(![_transaction isPrivate]){
-        view.text = [_transaction title];
+//    if(![_transaction isPrivate]){
+        NSMutableAttributedString *attributedContent = [NSMutableAttributedString new];
+        
+        {
+            NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                                  initWithString:_transaction.text3d[0]
+                                                  attributes:@{
+                                                               NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                               NSFontAttributeName: [UIFont customContentBold:13]
+                                                               }];
+            
+            [attributedContent appendAttributedString:attributedText];
+        }
+        
+        {
+            NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                                  initWithString:_transaction.text3d[1]
+                                                  attributes:@{
+                                                               NSForegroundColorAttributeName: [UIColor customBlue]
+                                                               }];
+            
+            [attributedContent appendAttributedString:attributedText];
+        }
+        
+        {
+            NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                                  initWithString:_transaction.text3d[2]
+                                                  attributes:@{
+                                                               NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                               NSFontAttributeName: [UIFont customContentBold:13]
+                                                               }];
+            
+            [attributedContent appendAttributedString:attributedText];
+        }
+                
+//        view.text = [_transaction title];
+        view.attributedText = attributedContent;
         [view setHeightToFit];
         
         height = CGRectGetMaxY(view.frame);
-    }
+//    }
 }
 
 - (void)prepareContentView

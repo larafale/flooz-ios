@@ -217,11 +217,11 @@
     FLImageView *view = [[rightView subviews] objectAtIndex:1];
     
     if([_event attachmentThumbURL]){
-        [view setImageWithURL:[NSURL URLWithString:[_event attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_event attachmentURL]]];
-        
         CGRectSetY(view.frame, height);
         CGRectSetHeight(view.frame, 80);
         height = CGRectGetMaxY(view.frame) + 14;
+        
+        [view setImageWithURL:[NSURL URLWithString:[_event attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_event attachmentURL]]];
     }
     else{
         CGRectSetHeight(view.frame, 0);

@@ -96,10 +96,10 @@
 
 - (void)dismiss
 {
-    [UIView animateWithDuration:.2
+    [UIView animateWithDuration:.3
                      animations:^{
                          crossButton.transform = CGAffineTransformIdentity;
-                         self.view.layer.opacity = 0.5;
+                         self.view.layer.opacity = 0;
                      }
                      completion:^(BOOL finished) {
                          [self dismissViewControllerAnimated:NO completion:NULL];

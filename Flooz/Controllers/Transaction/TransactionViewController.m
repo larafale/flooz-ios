@@ -87,6 +87,7 @@
 {
     {
         UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(134, 20, 52, 52)];
+        [FLHelper addMotionEffect:closeButton];
         
         [closeButton setImage:[UIImage imageNamed:@"transaction-close"] forState:UIControlStateNormal];
         [closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
@@ -167,6 +168,8 @@
     
     {
         _mainView = [[UIView alloc] initWithFrame:CGRectMake(13, 80, CGRectGetWidth(_contentView.frame) - (2 * 13), 0)];
+        
+        [FLHelper addMotionEffect:_mainView];
         
         _mainView.backgroundColor = [UIColor customBackgroundHeader];
         _mainView.layer.borderWidth = 1.;
@@ -355,21 +358,23 @@
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateTransactionValidate:params success:^(id result) {
         
-        id completeBlock = ^{
-            [[Flooz sharedInstance] showLoadView];
+        if([result objectForKey:@"confirmationText"]){
+            FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept:^{
+                [self didTransactionValidated];
+            } refuse:NULL];
+            [popup show];
             
-            [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-                _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-                paymentFieldIsShown = NO;
-                [self reloadTransaction];
-            } failure:NULL];
-        };
-        
-        SecureCodeViewController *controller = [SecureCodeViewController new];
-        controller.completeBlock = completeBlock;
-        
-        [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
-        
+            
+//            UIAlertView *alertView = [[UIAlertView alloc]
+//                                      initWithTitle:nil
+//                                      message:[result objectForKey:@"confirmationText"]
+//                                      delegate:self
+//                                      cancelButtonTitle:NSLocalizedString(@"GLOBAL_NO", nil)
+//                                      otherButtonTitles:NSLocalizedString(@"GLOBAL_YES", nil), nil];
+//            
+//            [alertView show];
+        }
+                
     } noCreditCard:^{
         [self presentCreditCardController];
     }];
@@ -426,6 +431,31 @@
 - (void)keyboardWillDisappear
 {
     _contentView.contentInset = UIEdgeInsetsZero;
+}
+
+#pragma mark - AlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1){
+        [self didTransactionValidated];
+    }
+}
+
+- (void)didTransactionValidated
+{
+    NSDictionary *params = @{
+                             @"id": [_transaction transactionId],
+                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
+                             };
+    
+    [[Flooz sharedInstance] showLoadView];
+    
+    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        paymentFieldIsShown = NO;
+        [self reloadTransaction];
+    } failure:NULL];
 }
 
 @end

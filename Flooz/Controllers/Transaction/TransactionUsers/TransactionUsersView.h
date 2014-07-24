@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TransactionUsersView : UIView
+@interface TransactionUsersView : UIView{
+    UIView *leftUserView;
+    UIView *rightUserView;
+}
 
 @property (weak, nonatomic) FLTransaction *transaction;
 

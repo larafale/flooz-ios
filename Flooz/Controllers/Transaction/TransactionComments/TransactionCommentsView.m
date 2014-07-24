@@ -130,8 +130,7 @@
         
         dateView.textColor = [UIColor customPlaceholder];
         dateView.font = [UIFont customContentLight:9];
-        dateView.text = [NSString stringWithFormat:@"%@ %@ @%@", [comment when], NSLocalizedString(@"GLOBAL_BY", nil), [[comment user] username]];
-        
+        dateView.text = [NSString stringWithFormat:@"@%@ - %@", [[comment user] username], [comment dateText]];
         
         [content setHeightToFit];
         
@@ -157,13 +156,6 @@
     }
     
     {
-        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(42, 0, 1, 0)];
-        separator.backgroundColor = [UIColor customSeparator];
-        CGRectSetHeight(separator.frame, CGRectGetHeight(view.frame));
-        [view addSubview:separator];
-    }
-    
-    {
         FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMake(25, 0, 34, 34)];
         [avatar setImageFromUser:comment.user];
         CGRectSetY(avatar.frame, (CGRectGetHeight(view.frame) - CGRectGetHeight(avatar.frame)) / 2);
@@ -171,7 +163,6 @@
     }
     
     return  view;
-
 }
 
 #pragma mark - UITextFieldDelegate

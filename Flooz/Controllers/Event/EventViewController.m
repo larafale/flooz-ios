@@ -133,6 +133,7 @@
     
     {
         closeButton = [[UIButton alloc] initWithFrame:CGRectMake(134, 20, 52, 52)];
+        [FLHelper addMotionEffect:closeButton];
         
         [closeButton setImage:[UIImage imageNamed:@"transaction-close"] forState:UIControlStateNormal];
         [closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
@@ -183,6 +184,8 @@
     
     {
         _mainView = [[UIView alloc] initWithFrame:CGRectMake(13, 80, CGRectGetWidth(_contentView.frame) - (2 * 13), 0)];
+        
+        [FLHelper addMotionEffect:_mainView];
         
         _mainView.backgroundColor = [UIColor customBackgroundHeader];
         _mainView.layer.borderWidth = 1.;

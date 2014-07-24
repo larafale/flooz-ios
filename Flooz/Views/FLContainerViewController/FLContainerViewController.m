@@ -8,6 +8,8 @@
 
 #import "FLContainerViewController.h"
 
+#import <IDMPhotoBrowser.h>
+
 @implementation FLContainerViewController
 
 - (id)initWithControllers:(NSArray *)controllers
@@ -49,6 +51,31 @@
         
         [controller didMoveToParentViewController:self];
         index++;
+    }
+}
+
+#pragma mark - IDMPhotoBrowserDelegate
+
+- (void)didImageTouch:(UIView *)sender photoURL:(NSURL *)photoURL
+{
+    if(!photoURL){
+        return;
+    }
+    
+    IDMPhotoBrowser *controller = [[IDMPhotoBrowser alloc] initWithPhotoURLs:@[photoURL] animatedFromView:sender];
+    
+    controller.displayActionButton = NO;
+    
+    if([self presentedViewController]){
+        if([[self presentedViewController] presentedViewController]){
+            [[[self presentedViewController] presentedViewController] presentViewController:controller animated:YES completion:NULL];
+        }
+        else{
+            [[self presentedViewController] presentViewController:controller animated:YES completion:NULL];
+        }
+    }
+    else{
+        [self presentViewController:controller animated:YES completion:NULL];
     }
 }
 

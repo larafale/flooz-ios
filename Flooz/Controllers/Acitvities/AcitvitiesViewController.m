@@ -45,6 +45,9 @@
     CGRectSetX(tableHeaderView.frame, _tableView.frame.origin.x);
     [self.view addSubview:tableHeaderView];
     
+//    [FLHelper addMotionEffect:_tableView];
+//    [FLHelper addMotionEffect:tableHeaderView];
+    
     {
         tableViewShadow = [UIView new];
         [self.view insertSubview:tableViewShadow belowSubview:_tableView];

@@ -22,6 +22,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInit];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveRemoveWindowSubviews) name:kNotificationRemoveWindowSubviews object:nil];
     }
     return self;
 }
@@ -43,7 +44,7 @@
     
     {
         contentView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, CGRectGetMaxY(titleView.frame) + 5, SCREEN_WIDTH - MARGE_LEFT - MARGE_RIGHT, 0)];
-        contentView.font = [UIFont customContentRegular:12];
+        contentView.font = [UIFont customContentRegular:14];
         contentView.textColor = [UIColor whiteColor];
         contentView.numberOfLines = 0;
         
@@ -135,6 +136,11 @@
     
     self.backgroundColor = backgroundColor;
     iconView.image = [UIImage imageNamed:imageName];
+}
+
+- (void)didReceiveRemoveWindowSubviews
+{
+    [self removeFromSuperview];
 }
 
 @end

@@ -247,12 +247,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section != 3){
-        return;
+    FLUser *user;
+    
+    if(indexPath.section == 0){
+        user = [friendsSearch objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 3){
+        user = [friends objectAtIndex:indexPath.row];
     }
     
-    FLUser *user = [friends objectAtIndex:indexPath.row];
-    [appDelegate showMenuForUser:user];
+    if(user){
+        [appDelegate showMenuForUser:user imageView:nil canRemoveFriend:YES];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

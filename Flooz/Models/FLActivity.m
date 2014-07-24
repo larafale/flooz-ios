@@ -56,6 +56,17 @@
         _date = [dateFormatter dateFromString:[json objectForKey:@"cAt"]];
     }
     
+    {
+        static NSDateFormatter *dateFormatter;
+        if(!dateFormatter){
+            dateFormatter = [NSDateFormatter new];
+            [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+            [dateFormatter setDateFormat:@"dd' 'MMMM', 'HH':'mm"];
+        }
+        
+        _dateText = [dateFormatter stringFromDate:_date];
+    }
+    
     _when = [FLHelper formatedDateFromNow:_date];
 }
 

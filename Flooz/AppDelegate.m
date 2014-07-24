@@ -111,8 +111,7 @@
     
     // Sortie de mise en vieille cas où on est deja connecté
     if([self.window.rootViewController isKindOfClass:[FLContainerViewController class]]){
-        savedViewController = self.window.rootViewController;
-        [[savedViewController presentedViewController] dismissViewControllerAnimated:NO completion:NULL];
+//        savedViewController = self.window.rootViewController;
         
         navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
         self.window.rootViewController = navController;
@@ -415,7 +414,12 @@
 
 #pragma mark -
 
-- (void)showMenuForUser:(FLUser *)user
+- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView
+{
+    [self showMenuForUser:user imageView:imageView canRemoveFriend:NO];
+}
+
+- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend
 {
     if(!user || [user userId] == [[[Flooz sharedInstance] currentUser] userId] ||
        ![user username] || ![user fullname]) {
@@ -423,44 +427,66 @@
     }
     
     currentUserForMenu = user;
+    currentImageView = imageView;
+    haveMenuFriend = NO;
     
+     UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_PAYMENT", nil), NSLocalizedString(@"MENU_COLLECT", nil), nil];
+    NSMutableArray *menus = [NSMutableArray new];
+    
+
     BOOL isFriend = NO;
-    for(FLUser *friend in [[[Flooz sharedInstance] currentUser] friends]){
-        if([[friend userId] isEqualToString:[user userId]]){
-            isFriend = YES;
-            break;
+    if([[[[Flooz sharedInstance] currentUser] userId] isEqualToString:[user userId]]){
+        isFriend = YES;
+    }
+    else{
+        for(FLUser *friend in [[[Flooz sharedInstance] currentUser] friends]){
+            if([[friend userId] isEqualToString:[user userId]]){
+                isFriend = YES;
+                break;
+            }
         }
     }
     
-    NSString *textFriend = nil;
     if(isFriend){
-        textFriend = NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil);
+        if(canRemoveFriend){
+            [actionSheet addButtonWithTitle:NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil)];
+            haveMenuFriend = YES;
+        }
     }
     else{
-        textFriend = NSLocalizedString(@"MENU_ADD_FRIENDS", nil);
+        [actionSheet addButtonWithTitle:NSLocalizedString(@"MENU_ADD_FRIENDS", nil)];
+        haveMenuFriend = YES;
     }
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_PAYMENT", nil), NSLocalizedString(@"MENU_COLLECT", nil), textFriend, nil];
+    if([currentUserForMenu avatarURL]){
+        [menus addObject:NSLocalizedString(@"MENU_AVATAR", nil)];
+    }
+
+    for(NSString *menu in menus){
+        [actionSheet addButtonWithTitle:menu];
+    }
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
     
     [actionSheet showInView:self.window];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if(buttonIndex == 0){
-        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
-    }
-    else if(buttonIndex == 1){
-        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypeCollection];
-    }
-    else if(buttonIndex == 2){
+    void (^friendMenu)(void) = ^(void){
         [[Flooz sharedInstance] showLoadView];
         
         BOOL isFriend = NO;
-        for(FLUser *friend in [[[Flooz sharedInstance] currentUser] friends]){
-            if([[friend userId] isEqualToString:[currentUserForMenu userId]]){
-                isFriend = YES;
-                break;
+        if([[[[Flooz sharedInstance] currentUser] userId] isEqualToString:[currentUserForMenu userId]]){
+            isFriend = YES;
+        }
+        else{
+            for(FLUser *friend in [[[Flooz sharedInstance] currentUser] friends]){
+                if([[friend userId] isEqualToString:[currentUserForMenu userId]]){
+                    isFriend = YES;
+                    break;
+                }
             }
         }
         
@@ -470,6 +496,30 @@
         else{
             [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:nil];
         }
+    };
+    
+    void (^showAvatar)(void) = ^(void){
+        FLContainerViewController *controller = (FLContainerViewController *)appDelegate.window.rootViewController;
+        [controller didImageTouch:currentImageView photoURL:[NSURL URLWithString:[currentUserForMenu avatarURL]]];
+    };
+    
+    if(buttonIndex == 0){
+        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
+    }
+    else if(buttonIndex == 1){
+        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypeCollection];
+    }
+    else if(buttonIndex == 2 && haveMenuFriend){
+        friendMenu();
+    }
+    else if(buttonIndex == 2 && [currentUserForMenu avatarURL]){
+        showAvatar();
+    }
+    else if(buttonIndex == 2){
+        
+    }
+    else if(buttonIndex == 3 && haveMenuFriend && [currentUserForMenu avatarURL]){
+        showAvatar();
     }
 }
 

@@ -36,7 +36,7 @@
     textField.layer.cornerRadius = 15.;
     textField.font = [UIFont customContentLight:12];
     textField.textColor = [UIColor customPlaceholder];
-    
+     
     textField.attributedPlaceholder = [[NSAttributedString alloc]
                                                  initWithString:NSLocalizedString(@"SEND_COMMENT", nil)
                                                  attributes:@{
@@ -129,7 +129,7 @@
         
         dateView.textColor = [UIColor customPlaceholder];
         dateView.font = [UIFont customContentLight:9];
-        dateView.text = [NSString stringWithFormat:@"%@ %@ @%@", [comment when], NSLocalizedString(@"GLOBAL_BY", nil), [[comment user] username]];
+        dateView.text = [NSString stringWithFormat:@"@%@ - %@", [[comment user] username], [comment dateText]];
         
         
         [content setHeightToFit];
@@ -154,14 +154,7 @@
         [view addSubview:content];
         [view addSubview:dateView];
     }
-    
-    {
-        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(42, 0, 1, 0)];
-        separator.backgroundColor = [UIColor customSeparator];
-        CGRectSetHeight(separator.frame, CGRectGetHeight(view.frame));
-        [view addSubview:separator];
-    }
-    
+        
     {
         FLUserView *avatar = [[FLUserView alloc] initWithFrame:CGRectMake(25, 0, 34, 34)];
         [avatar setImageFromUser:comment.user];

@@ -31,21 +31,21 @@
 
 - (void)createLeftUserView
 {
-    UIView *view = [self createUserView];
-    [self addSubview:view];
+    leftUserView = [self createUserView];
+    [self addSubview:leftUserView];
     
     UITapGestureRecognizer *touch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didUserLeftViewTouch)];
-    [view addGestureRecognizer:touch];
+    [leftUserView addGestureRecognizer:touch];
 }
 
 - (void)createRightUserView
 {
-    UIView *view = [self createUserView];
-    CGRectSetX(view.frame, CGRectGetWidth(self.frame) / 2);
-    [self addSubview:view];
+    rightUserView = [self createUserView];
+    CGRectSetX(rightUserView.frame, CGRectGetWidth(self.frame) / 2);
+    [self addSubview:rightUserView];
     
     UITapGestureRecognizer *touch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didUserRightViewTouch)];
-    [view addGestureRecognizer:touch];
+    [rightUserView addGestureRecognizer:touch];
 }
 
 - (void)createSeparators
@@ -97,7 +97,7 @@
     {
         UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0, 124, CGRectGetWidth(view.frame), 30)];
         
-        username.font = [UIFont customContentRegular:10];
+        username.font = [UIFont customContentBold:11];
         username.textAlignment = NSTextAlignmentCenter;
         username.textColor = [UIColor customBlue];
         
@@ -166,7 +166,7 @@
         return;
     }
     
-    [appDelegate showMenuForUser:[_transaction from]];
+    [appDelegate showMenuForUser:[_transaction from] imageView:leftUserView];
 }
 
 - (void)didUserRightViewTouch
@@ -175,7 +175,7 @@
         return;
     }
     
-    [appDelegate showMenuForUser:[_transaction to]];
+    [appDelegate showMenuForUser:[_transaction to] imageView:rightUserView];
 }
 
 @end

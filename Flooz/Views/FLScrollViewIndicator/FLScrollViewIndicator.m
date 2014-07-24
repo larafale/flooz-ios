@@ -8,14 +8,16 @@
 
 #import "FLScrollViewIndicator.h"
 
-#define MIN_WIDTH 65
+#define WIDTH 265
 #define MARGIN_RIGHT 5
+
+#define LABEL_MARGIN 10.
 
 @implementation FLScrollViewIndicator
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectMake(SCREEN_WIDTH - (MIN_WIDTH + MARGIN_RIGHT), 0, MIN_WIDTH, 30);
+    frame = CGRectMake(SCREEN_WIDTH - (WIDTH + MARGIN_RIGHT), 0, WIDTH, 30);
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInit];
@@ -25,31 +27,45 @@
 
 - (void)commonInit
 {
-    self.clipsToBounds = YES;
-    
-    self.backgroundColor = [UIColor customBackgroundHeader:.5];
-    self.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;
-//    self.layer.borderColor = [UIColor customBlue].CGColor;
-//    self.layer.borderWidth = 1;
+    {
+        conainterView = [[UIView alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
+        
+        conainterView.backgroundColor = [UIColor customBackgroundHeader:.5];
+        conainterView.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;
+        conainterView.clipsToBounds = YES; // pour quand on anime que le texte ne depasse pas
+        
+        [self addSubview:conainterView];
+    }
     
     {
-        label = [[JTImageLabel alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(self.frame) - 10, CGRectGetHeight(self.frame))];
+        label = [[JTImageLabel alloc] initWithFrame:CGRectMake(LABEL_MARGIN, 0, 0, CGRectGetHeight(self.frame))];
         label.font = [UIFont customContentRegular:12];
         label.textColor = [UIColor whiteColor];
         
         [label setImage:[UIImage imageNamed:@"transaction-content-clock"]];
         [label setImageOffset:CGPointMake(-5, 0)];
         
-        [self addSubview:label];
+        [conainterView addSubview:label];
     }
 }
 
 - (void)setText:(NSString *)text
 {
+    if([label.text isEqualToString:text]){
+        return;
+    }
+    
     label.text = text;
-    CGRectSetWidth(label.frame, [label widthToFit] + 25);
-    CGRectSetWidth(self.frame, CGRectGetWidth(label.frame) + 10);
-    CGRectSetX(self.frame, SCREEN_WIDTH - (CGRectGetWidth(self.frame) + MARGIN_RIGHT));
+    CGFloat newLabelWidth = [label widthToFit] + LABEL_MARGIN + 25; // 25 icone
+    
+    [UIView animateWithDuration:.5
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         CGRectSetWidth(label.frame, newLabelWidth);
+                         CGRectSetWidth(conainterView.frame, newLabelWidth);
+                         CGRectSetX(conainterView.frame,  CGRectGetWidth(self.frame) - newLabelWidth);
+                     } completion:NULL];
 }
 
 @end

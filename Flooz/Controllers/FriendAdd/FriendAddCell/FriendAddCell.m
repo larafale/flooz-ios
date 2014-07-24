@@ -103,7 +103,7 @@
 {
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
     
-    view.text = [_user fullname];
+    view.text = [[_user fullname] uppercaseString];
 }
 
 - (void)preparePhoneView
@@ -115,16 +115,34 @@
 - (void)prepareCheckView
 {
     UIButton *view = [[self.contentView subviews] objectAtIndex:3];
-    view.selected = NO;
+    
+    BOOL isFriend = NO;
+    if([[[[Flooz sharedInstance] currentUser] userId] isEqualToString:[_user userId]]){
+        isFriend = YES;
+    }
+    else{
+        for(FLUser *friend in [[[Flooz sharedInstance] currentUser] friends]){
+            if([[friend userId] isEqualToString:[_user userId]]){
+                isFriend = YES;
+                break;
+            }
+        }
+    }
+    
+    view.selected = isFriend;
 }
 
 #pragma mark -
 
 - (void)accept
 {
-    [[Flooz sharedInstance] friendAcceptSuggestion:[_user userId] success:nil];
-    
     UIButton *view = [[self.contentView subviews] objectAtIndex:3];
+    
+    if(view.selected){
+        return;
+    }
+    
+    [[Flooz sharedInstance] friendAcceptSuggestion:[_user userId] success:nil];
     view.selected = YES;
 }
 

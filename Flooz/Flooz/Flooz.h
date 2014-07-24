@@ -20,6 +20,9 @@
 #import "FLCreditCard.h"
 #import "FLActivity.h"
 
+static NSString *kNotificationConnectionError = @"kNotificationConnectionError";
+static NSString *kNotificationRemoveWindowSubviews = @"kNotificationRemoveWindowSubviews";
+
 @interface Flooz : NSObject<SocketIODelegate>{
     AFHTTPRequestOperationManager *manager;
     NSString *access_token;
@@ -117,5 +120,7 @@
 - (void)socketSendSignupFocusUsername;
 - (void)socketSendCloseActivities;
 - (void)socketSendSessionEnd;
+
+- (void)sendContacts;
 
 @end

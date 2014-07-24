@@ -14,6 +14,7 @@
 @property NSString *content;
 @property NSDate *date;
 @property NSString *when;
+@property NSString *dateText;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

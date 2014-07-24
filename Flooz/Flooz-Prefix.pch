@@ -27,6 +27,7 @@
 
 #import "Flooz.h"
 
+#import "FLPopup.h"
 #import "FLHelper.h"
 #import "FLError.h"
 #import "UIColor+custom.h"

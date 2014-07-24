@@ -16,6 +16,7 @@
 
 #import <Accounts/Accounts.h>
 #import <UICKeyChainStore.h>
+#import <AddressBook/AddressBook.h>
 
 #import <Analytics/Analytics.h>
 
@@ -704,6 +705,7 @@
            error.code == kCFURLErrorNetworkConnectionLost
            ){
             DISPLAY_ERROR(FLNetworkError);
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationConnectionError object:nil];
         }
         else if([statusCode intValue] == 306){ // Code arbitraire
             [self clearLogin];
@@ -1054,6 +1056,73 @@
     if(_socket && access_token){
         [_socket sendEvent:@"session end" withData:@{ @"token": access_token, @"nick": [_currentUser username] }];
     }
+}
+
+#pragma mark - Contacts
+
+- (void)sendContacts
+{
+    [self requestAddressBookPermission];
+}
+
+- (void)requestAddressBookPermission
+{
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+            if (granted) {
+                [self didAddressBookPermissionGranted];
+            } else {
+                DISPLAY_ERROR(FLContactAccessDenyError);
+            }
+        });
+    }
+    else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        [self didAddressBookPermissionGranted];
+    }
+    else {
+        DISPLAY_ERROR(FLContactAccessDenyError);
+    }
+}
+
+- (void)didAddressBookPermissionGranted
+{
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+    
+    NSMutableArray *contactsEmail = [NSMutableArray new];
+    NSMutableArray *contactsPhone = [NSMutableArray new];
+    
+    for(int i = 0; i < nPeople; ++i){
+        ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
+        
+        ABMultiValueRef emailList = ABRecordCopyValue(ref, kABPersonEmailProperty);
+        for (CFIndex i = 0; i < ABMultiValueGetCount(emailList); ++i) {
+            NSString *_email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
+            
+            [contactsEmail addObject:_email];
+        }
+        
+        
+        ABMultiValueRef phoneNumbers = ABRecordCopyValue(ref, kABPersonPhoneProperty);
+        for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); ++i) {
+            NSString *_phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phoneNumbers, i);
+            NSString *formatedPhone = [FLHelper formatedPhone:_phone];
+            
+            if(formatedPhone){
+                [contactsPhone addObject:formatedPhone];
+            }
+        }
+    }
+    
+    NSDictionary *params = @{
+                             @"emails": contactsEmail,
+                             @"phones": contactsPhone
+                                 };
+    
+    [self requestPath:@"/contacts/import" method:@"POST" params:params success:NULL failure:NULL];
 }
 
 @end

@@ -216,12 +216,12 @@
             break;
         case UIGestureRecognizerStateChanged:{
             CGPoint translation = [recognizer translationInView:_titlesView];
-            
+                        
             CGPoint diffTranslation = translation;
             diffTranslation.x -= lastTranslation.x;
             lastTranslation = translation;
             
-            diffTranslation.x = diffTranslation.x * 0.7;
+            diffTranslation.x = diffTranslation.x * 0.5; // 0.5 permet de faire en sorte que la vue et le doigt se suivent, pb retina?
             
             {
                 UIView *firstView = [[_viewControllers firstObject] view];
@@ -344,7 +344,7 @@
     newSelectedTitleIndex = MAX(newSelectedTitleIndex, 0);
     newSelectedTitleIndex = MIN(newSelectedTitleIndex, [[_titlesView subviews] count] - 1);
     
-    [self loadControllerWithIndex:newSelectedTitleIndex];
+    [self loadControllerWithIndex:newSelectedTitleIndex velocity:velocity.x];
 }
 
 - (void)loadPreviousController
@@ -359,13 +359,29 @@
 
 - (void)loadControllerWithIndex:(NSInteger)index
 {
+    [self loadControllerWithIndex:index velocity:600];
+}
+
+- (void)loadControllerWithIndex:(NSInteger)index velocity:(CGFloat)velocity
+{
     if(index < 0 || index >= [[_titlesView subviews] count]){
         return;
     }
+  
+    UILabel *selectedTitleView = [[_titlesView subviews] objectAtIndex:index];
+    CGFloat distance = fabs(selectedTitleView.frame.origin.x);
+    velocity *= .5; // Voir au dessus pb retina
+    CGFloat duration = distance / velocity;
+    
+    duration = MIN(fabs(duration), .5); // fabs pck parfois devient negatif
+    
+    if(selectedTitleIndex == index){
+        duration = 0.2;
+    }
     
     selectedTitleIndex = index;
- 
-    [UIView animateWithDuration:0.4
+    
+    [UIView animateWithDuration:duration // .4
                           delay:0
                         options:0
                      animations:^{

@@ -10,8 +10,9 @@
 #import "FLNavbarView.h"
 
 #import "FLContainerViewControllerDelegate.h"
+#import "FLImageViewDelegate.h"
 
-@interface FLContainerViewController : UIViewController{
+@interface FLContainerViewController : UIViewController<FLImageViewDelegate>{
     UIView *contentView;
 }
 

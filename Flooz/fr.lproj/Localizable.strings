@@ -20,8 +20,8 @@
 
 "SEND_COMMENT" = "Écrire un commentaire...";
 
-"NAV_LOGIN" = "Connexion";
-"NAV_SIGNUP" = "Inscription";
+"NAV_LOGIN" = "Se connecter";
+"NAV_SIGNUP" = "S'inscire";
 "NAV_ACCOUNT" = "Mon profil";
 "NAV_SETTINGS" = "Paramètres";
 "NAV_SOCIAL" = "Cagnottes";
@@ -104,11 +104,11 @@
 "FIELD_TRANSACTION_SELECT_FRIEND" = "A qui ?";
 "FIELD_TRANSACTION_HIDE" = "Masquer ma participation";
 
-"SIGNUP_FACEBOOK" = "Inscription Facebook";
+"SIGNUP_FACEBOOK" = "Avec Facebook";
 
-"LOGIN_FACEBOOK" = "Connexion Facebook";
+"LOGIN_FACEBOOK" = "Avec Facebook";
 "LOGIN_OR" = "ou";
-"LOGIN_PASSWORD_FORGOT" = "Mot de passe oublié ?";
+"LOGIN_PASSWORD_FORGOT" = "Oublié ?";
 
 "MENU_NEW_TRANSACTION_EVENT" = "Collecter";
 "MENU_NEW_TRANSACTION_PAYMENT" = "Payer";
@@ -118,6 +118,7 @@
 "MENU_COLLECT" = "Réclamer";
 "MENU_ADD_FRIENDS" = "Ajouter aux amis";
 "MENU_REMOVE_FRIENDS" = "Supprimer des amis";
+"MENU_AVATAR" = "Voir la photo";
 
 "ACTIVITIES_NOTIFICATIONS" = "Notifications";
 "ACTIVITIES_NEW_NOTIFICATIONS" = "nouvelles notifications";

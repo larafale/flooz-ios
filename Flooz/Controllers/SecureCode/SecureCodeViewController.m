@@ -191,7 +191,7 @@
     anim.autoreverses = YES;
     anim.repeatCount = 2.;
     anim.delegate = self;
-    anim.duration = 0.07;
+    anim.duration = 0.08;
     [secureCodeField.layer addAnimation:anim forKey:nil];
 }
 

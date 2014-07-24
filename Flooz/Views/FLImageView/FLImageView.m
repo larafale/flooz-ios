@@ -10,6 +10,7 @@
 
 #import "AppDelegate.h"
 #import <IDMPhotoBrowser.h>
+#import "FLContainerViewController.h"
 
 @implementation FLImageView
 
@@ -17,6 +18,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor customBackgroundHeader];
         _imageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setFullScreenMode)];
         
         self.userInteractionEnabled = YES;
@@ -24,14 +26,59 @@
         
         self.layer.cornerRadius = 3.;
         self.clipsToBounds = YES;
+        
+        _delegate = (FLContainerViewController *)appDelegate.window.rootViewController;
+        
+        progressView = [[UIProgressView alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
+        progressView.hidden = YES;
+        [self addSubview:progressView];
     }
     return self;
 }
 
 - (void)setImageWithURL:(NSURL *)url fullScreenURL:(NSURL *)fullScreenURL
 {
-    [super sd_setImageWithURL:url];
+//    [super sd_setImageWithURL:url];
+
+    [self resetProgressBar];
+    
+    SDWebImageDownloaderProgressBlock progressBlock = ^(NSInteger receivedSize, NSInteger expectedSize){
+        CGFloat progress = ((CGFloat)receivedSize / (CGFloat)expectedSize);
+        [progressView setProgress:progress];
+    };
+    
+    SDWebImageCompletionBlock completedBlock = ^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        if(error){
+            NSLog(@"loadImage error: %@", error);
+            
+            [progressView setTintColor:[UIColor redColor]];
+            [progressView setProgress:1];
+        }
+        else{
+            [progressView setHidden:YES];
+        }
+    };
+    
+    
+    [self sd_setImageWithURL:url
+                         placeholderImage:nil
+                                  options:SDWebImageRetryFailed
+                                 progress:progressBlock
+                                completed:completedBlock];
+    
+
+    
     fullScreenImageURL = fullScreenURL;
+}
+
+-  (void)resetProgressBar
+{
+    [progressView setProgress:0];
+    progressView.trackTintColor = self.backgroundColor;
+    progressView.tintColor = [UIColor customBlue];
+    CGRectSetY(progressView.frame, CGRectGetHeight(self.frame) - 1);
+    progressView.hidden = NO;
 }
 
 - (void)setFullScreenMode
@@ -39,22 +86,8 @@
     if(!fullScreenImageURL){
         return;
     }
-    
-    IDMPhotoBrowser *controller = [[IDMPhotoBrowser alloc] initWithPhotoURLs:@[fullScreenImageURL]];
-    
-    UIViewController *rootController = appDelegate.window.rootViewController;
-    
-    if([rootController presentedViewController]){        
-        if([[rootController presentedViewController] presentedViewController]){
-            [[[rootController presentedViewController] presentedViewController] presentViewController:controller animated:YES completion:NULL];
-        }
-        else{
-            [[rootController presentedViewController] presentViewController:controller animated:YES completion:NULL];
-        }
-    }
-    else{
-        [rootController presentViewController:controller animated:YES completion:NULL];
-    }
+ 
+    [_delegate didImageTouch:self photoURL:fullScreenImageURL];
 }
 
 @end

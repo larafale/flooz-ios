@@ -317,17 +317,17 @@
 }
 
 - (void)prepareAttachmentView{
-    FLImageView *view = [[rightView subviews] objectAtIndex:1];
+    imageThumbView = [[rightView subviews] objectAtIndex:1];
     
     if([_transaction attachmentThumbURL]){
-        [view setImageWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
+        CGRectSetY(imageThumbView.frame, height + 13);
+        CGRectSetHeight(imageThumbView.frame, 80);
+        height = CGRectGetMaxY(imageThumbView.frame);
         
-        CGRectSetY(view.frame, height + 13);
-        CGRectSetHeight(view.frame, 80);
-        height = CGRectGetMaxY(view.frame);
+        [imageThumbView setImageWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
     }
     else{
-        CGRectSetHeight(view.frame, 0);
+        CGRectSetHeight(imageThumbView.frame, 0);
     }
 }
 

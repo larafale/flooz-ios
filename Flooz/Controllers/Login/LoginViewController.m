@@ -9,7 +9,7 @@
 #import "LoginViewController.h"
 #import "PasswordForgetViewController.h"
 
-#define MARGE 20.
+#define MARGE 0.
 
 @interface LoginViewController (){
     NSMutableDictionary *user;
@@ -51,7 +51,34 @@
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(presentTimelineController)];
     
     {
-        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 45)];
+        username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(MARGE, 0)];
+        password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame))];
+        [password seTsecureTextEntry:YES];
+        
+        UIButton *passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(270, password.frame.origin.y, 45, 50)];
+        passwordForget.titleLabel.textAlignment = NSTextAlignmentRight;
+        passwordForget.titleLabel.font = [UIFont customContentRegular:12];
+        [passwordForget setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
+        [passwordForget setTitle:NSLocalizedString(@"LOGIN_PASSWORD_FORGOT", nil) forState:UIControlStateNormal];
+        
+        [passwordForget addTarget:self action:@selector(didPasswordForget) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.view addSubview:username];
+        [self.view addSubview:password];
+        [self.view addSubview:passwordForget];
+    }
+    
+    {
+        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(0, 105, CGRectGetWidth(self.view.frame), 15)];
+        text.text = NSLocalizedString(@"LOGIN_OR", nil);
+        text.textColor = [UIColor whiteColor];
+        text.textAlignment = NSTextAlignmentCenter;
+        text.font = [UIFont customContentLight:14];
+        [self.view addSubview:text];
+    }
+    
+    {
+        registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(0, 135, SCREEN_WIDTH, 45)];
         [registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
         
         [registerFacebook setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
@@ -63,24 +90,6 @@
         [registerFacebook addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
         
         [self.view addSubview:registerFacebook];
-    }
-    
-    {
-        username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(MARGE, 90)];
-        password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame))];
-        [password seTsecureTextEntry:YES];
-        
-        UIButton *passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(password.frame) + 20, CGRectGetWidth(self.view.frame), 50)];
-        passwordForget.titleLabel.textAlignment = NSTextAlignmentCenter;
-        passwordForget.titleLabel.font = [UIFont customContentRegular:12];
-        [passwordForget setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
-        [passwordForget setTitle:NSLocalizedString(@"LOGIN_PASSWORD_FORGOT", nil) forState:UIControlStateNormal];
-        
-        [passwordForget addTarget:self action:@selector(didPasswordForget) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.view addSubview:username];
-        [self.view addSubview:password];
-        [self.view addSubview:passwordForget];
     }
 }
 

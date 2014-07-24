@@ -22,4 +22,6 @@
 + (NSString *)formatedPhone:(NSString *)phone;
 + (NSString *)formatedPhoneForDisplay:(NSString *)phone;
 
++ (void)addMotionEffect:(UIView *)view;
+
 @end

@@ -77,7 +77,6 @@
         [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-selected", image]] forState:UIControlStateSelected];
         [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-selected", image]] forState:UIControlStateHighlighted];
-        
 
         
         button.tag = [buttonColors count];

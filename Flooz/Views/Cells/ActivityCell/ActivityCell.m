@@ -162,7 +162,7 @@
 
 - (void)prepareDateView
 {
-    dateView.text = [_activity when];
+    dateView.text = [_activity dateText];
     [dateView setWidthToFit];
     
     CGRectSetX(dateView.frame, CELL_WIDTH - MARGE_RIGHT - CGRectGetWidth(dateView.frame));

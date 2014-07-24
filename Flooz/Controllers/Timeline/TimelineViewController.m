@@ -29,6 +29,7 @@
         
         transactionsCache = [NSMutableDictionary new];
         transactionsLoaded = [NSMutableArray new];
+        cells = [NSMutableArray new];
     }
     return self;
 }
@@ -42,9 +43,9 @@
     [self.view addSubview:shadow];
     
     {
-        [_filterView addFilter:@"scope-public-large" title:@"FILTER_SCOPE_PUBLIC" target:self action:@selector(didFilterPublicTouch)];
-        [_filterView addFilter:@"scope-friend-large" title:@"FILTER_SCOPE_FRIEND" target:self action:@selector(didFilterFriendTouch)];
-        [_filterView addFilter:@"scope-private-large" title:@"FILTER_SCOPE_PRIVATE" target:self action:@selector(didFilterPersoTouch)];
+        [_filterView addFilter:@"filter-scope-public-large" title:@"FILTER_SCOPE_PUBLIC" target:self action:@selector(didFilterPublicTouch)];
+        [_filterView addFilter:@"filter-scope-friend-large" title:@"FILTER_SCOPE_FRIEND" target:self action:@selector(didFilterFriendTouch)];
+        [_filterView addFilter:@"filter-scope-private-large" title:@"FILTER_SCOPE_PRIVATE" target:self action:@selector(didFilterPersoTouch)];
     }
     
 //    [self didFilterPersoTouch];
@@ -64,6 +65,8 @@
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMakeSize(SCREEN_WIDTH, 70)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"reloadTimeline" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -114,6 +117,8 @@
     if(!cell){
         cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.delegate = self;
+        
+        [cells addObject:cell];
     }
     
     FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
@@ -135,6 +140,7 @@
         [self loadNextPage];
     }
     
+    
     return cell;
 }
 
@@ -142,6 +148,9 @@
 
 - (void)presentMenuTransactionController
 {
+//    FLPopup *popup = [[FLPopup alloc] initWithMessage:@"Envoyez de l'argent à vos amis en quelques secondes, autorisez Flooz à accéder à vos contacts." accept:NULL refuse:NULL];
+//    [popup show];
+    
     UIViewController *controller = [MenuNewTransactionViewController new];
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     
@@ -167,6 +176,9 @@
 - (void)didFilterPublicTouch
 {
     currentFilter = @"public";
+    
+    [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [_tableView setContentOffset:CGPointZero animated:NO];
 
     [self resetTransactionsLoaded];
     if(transactionsCache[currentFilter]){
@@ -193,6 +205,9 @@
 {
     currentFilter = @"friend";
 
+    [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [_tableView setContentOffset:CGPointZero animated:NO];
+    
     [self resetTransactionsLoaded];
     if(transactionsCache[currentFilter]){
         transactions = [transactionsCache[currentFilter] mutableCopy];
@@ -217,6 +232,9 @@
 - (void)didFilterPersoTouch
 {
     currentFilter = @"private";
+    
+    [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [_tableView setContentOffset:CGPointZero animated:NO];
     
     [self resetTransactionsLoaded];
     if(transactionsCache[currentFilter]){
@@ -379,8 +397,10 @@
     
     FLTransaction *transaction = transactions[indexPath.row];
     
-    CGRectSetY(scrollViewIndicator.frame, y);
     [scrollViewIndicator setText:[transaction when]];
+    
+    CGRectSetY(scrollViewIndicator.frame, y);
+    
 }
 
 - (void)hideScrollViewIndicator
@@ -393,6 +413,11 @@
         }
         scrollViewIndicator.layer.opacity = 1;
     }];
+}
+
+- (void)didReceiveNotificationConnectionError
+{
+    [refreshControl endRefreshing];
 }
 
 @end

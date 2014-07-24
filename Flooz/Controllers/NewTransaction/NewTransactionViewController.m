@@ -384,14 +384,19 @@
         [[Flooz sharedInstance] createTransactionValidate:transaction success:^(id result) {
             
             if([result objectForKey:@"confirmationText"]){
-                UIAlertView *alertView = [[UIAlertView alloc]
-                                          initWithTitle:nil
-                                          message:[result objectForKey:@"confirmationText"]
-                                          delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"GLOBAL_NO", nil)
-                                          otherButtonTitles:NSLocalizedString(@"GLOBAL_YES", nil), nil];
+                FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept:^{
+                    [self didTransactionValidated];
+                } refuse:NULL];
+                [popup show];
                 
-                [alertView show];
+//                UIAlertView *alertView = [[UIAlertView alloc]
+//                                          initWithTitle:nil
+//                                          message:[result objectForKey:@"confirmationText"]
+//                                          delegate:self
+//                                          cancelButtonTitle:NSLocalizedString(@"GLOBAL_NO", nil)
+//                                          otherButtonTitles:NSLocalizedString(@"GLOBAL_YES", nil), nil];
+//                
+//                [alertView show];
             }
             else{
                 [self didTransactionValidated];
