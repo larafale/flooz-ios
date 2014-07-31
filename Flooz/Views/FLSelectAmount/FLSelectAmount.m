@@ -35,19 +35,25 @@
 
 - (void)createSwitchView
 {
-    UISwitch *view = [UISwitch new];
+    switchView = [UISwitch new];
     
-    CGRectSetXY(view.frame, CGRectGetWidth(self.frame) - 65, (CGRectGetHeight(self.frame) - CGRectGetHeight(view.frame)) / 2.);
+    CGRectSetXY(switchView.frame, CGRectGetWidth(self.frame) - 65, (CGRectGetHeight(self.frame) - CGRectGetHeight(switchView.frame)) / 2.);
     
-        [view addTarget:self action:@selector(didSwitchChange:) forControlEvents:UIControlEventValueChanged];
+    [switchView addTarget:self action:@selector(didSwitchChange) forControlEvents:UIControlEventValueChanged];
     
-    [self addSubview:view];
+    [self addSubview:switchView];
     
-    view.on = YES;
-    [self didSwitchChange:view];
+    // Ne pas toucher car dans le controller la vue est en mode ouvert par defaut
+    [self setSwitch:YES];
 }
 
-- (void)didSwitchChange:(UISwitch *)switchView
+- (void)setSwitch:(BOOL)value
+{
+    switchView.on = value;
+    [self didSwitchChange];
+}
+
+- (void)didSwitchChange
 {
     if(switchView.on){
          [_delegate didAmountFixSelected];
@@ -56,10 +62,11 @@
         [_delegate didAmountFreeSelected];
     }
     
-    [self refreshSwitchViewColors:switchView];
+    [self refreshSwitchViewColors];
 }
 
-- (void)refreshSwitchViewColors:(UISwitch *)switchView{
+- (void)refreshSwitchViewColors
+{
     if(switchView.on){
         [switchView setThumbTintColor:[UIColor customBackground]]; // Curseur
         [switchView setTintColor:[UIColor customBlue]]; // Bordure

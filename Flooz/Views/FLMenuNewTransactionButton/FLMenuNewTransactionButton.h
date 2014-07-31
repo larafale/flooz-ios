@@ -13,5 +13,6 @@
 - (id)initWithPosition:(CGFloat)positionY imageNamed:(NSString *)imageNamed title:(NSString *)title;
 
 - (void)startAnimationWithDelay:(NSTimeInterval)delay;
+- (void)startReverseAnimationWithDelay:(NSTimeInterval)delay;
 
 @end

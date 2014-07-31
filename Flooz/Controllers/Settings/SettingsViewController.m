@@ -13,7 +13,6 @@
 #import "CreditCardViewController.h"
 #import "CashOutViewController.h"
 #import "PasswordViewController.h"
-#import "InvitCodeViewController.h"
 
 @interface SettingsViewController (){
     NSArray *links;
@@ -35,8 +34,7 @@
                  @"card",
 //                 @"privacy",
                  @"password",
-                 @"logout",
-                 @"invit_code"
+                 @"logout"
                  ];
     }
     return self;
@@ -91,9 +89,6 @@
     }
     else if(indexPath.row == 4){
         [[Flooz sharedInstance] logout];
-    }
-    else{
-        [[self navigationController] pushViewController:[InvitCodeViewController new] animated:YES];
     }
 }
 

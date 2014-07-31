@@ -7,7 +7,6 @@
 //
 
 #import "CreditCardViewController.h"
-
 #import "FLTextFieldTitle2.h"
 
 #define OFFSET 30
@@ -49,6 +48,12 @@
     }
     
     [self refreshTitle];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)refreshTitle
@@ -311,14 +316,8 @@
 
 - (void)registerForKeyboardNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidAppear:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillDisappear)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification

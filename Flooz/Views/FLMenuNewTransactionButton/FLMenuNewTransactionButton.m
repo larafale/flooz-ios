@@ -71,6 +71,16 @@
     }];
 }
 
+- (void)startReverseAnimationWithDelay:(NSTimeInterval)delay
+{
+    [UIView animateWithDuration:0.2
+                          delay:delay
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0, 0);
+                     } completion:NULL];
+}
+
 - (void)setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];

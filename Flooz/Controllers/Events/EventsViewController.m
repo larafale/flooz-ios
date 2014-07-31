@@ -45,12 +45,18 @@
     _tableView.backgroundColor = [UIColor clearColor];
     _backgroundView.image = [UIImage imageNamed:@"background-events"];
     _backgroundView.hidden = YES;
+
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"reloadEvents" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
+    [self registerNotification:@selector(handleRefresh) name:@"reloadEvents" object:nil];
+    [self registerNotification:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
     
     [self handleRefresh];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - TableView

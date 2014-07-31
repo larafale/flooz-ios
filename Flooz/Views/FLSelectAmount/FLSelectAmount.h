@@ -11,10 +11,12 @@
 
 @interface FLSelectAmount : UIView{
     UILabel *_title;
+    UISwitch *switchView;
 }
 
 @property (weak) id<FLSelectAmountDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame;
+- (void)setSwitch:(BOOL)value;
 
 @end

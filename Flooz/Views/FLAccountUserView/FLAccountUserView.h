@@ -14,17 +14,9 @@
     FLUserView *userView;
     UILabel *username;
     UILabel *fullname;
-    UILabel *friends;
-    UILabel *flooz;
-    UILabel *profilCompletion;
-    
-    NSAttributedString *friendsTextStatic;
-    NSAttributedString *floozTextStatic;
-    NSAttributedString *profilCompletionTextStatic;
 }
 
 - (void)reloadData;
 - (void)addEditTarget:(id)target action:(SEL)action;
-- (void)addFriendsTarget:(id)target action:(SEL)action;
 
 @end

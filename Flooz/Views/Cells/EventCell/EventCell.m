@@ -34,7 +34,7 @@
     }
     
     // Social
-    current_height += 15;
+    current_height += [FLSocialView getHeight:event.social];
     
     current_height += MARGE_TOP_BOTTOM;
     
@@ -126,7 +126,6 @@
 
 - (void)createSocialView{
     FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
-    view.isEvent = YES;
     [view addTargetForLike:self action:@selector(didLikeButtonTouch)];
     [rightView addSubview:view];
     
@@ -234,7 +233,6 @@
     
     CGRectSetY(view.frame, height);
     
-    
     height = CGRectGetMaxY(view.frame); // pck comment prepareScopeView
 }
 
@@ -269,14 +267,10 @@
 
 - (void)didLikeButtonTouch
 {
-    if([[_event social] isLiked]){
-        return;
-    }
-    
-    [[_event social] setIsLiked:YES];
+    [[_event social] setIsLiked:![[_event social] isLiked]];
     [[Flooz sharedInstance] createLikeOnEvent:_event success:^(id result) {
         [[_event social] setLikeText:[result objectForKey:@"item"]];
-        [[_event social] setLikesCount:[[_event social] likesCount] + 1];
+
         FLSocialView *view = [[rightView subviews] objectAtIndex:2];
         [view prepareView:_event.social];
         

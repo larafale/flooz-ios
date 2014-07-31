@@ -22,9 +22,15 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInit];
+ 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveRemoveWindowSubviews) name:kNotificationRemoveWindowSubviews object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)commonInit

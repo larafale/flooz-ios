@@ -7,7 +7,6 @@
 //
 
 #import "FLNewTransactionAmount.h"
-
 #import "FLKeyboardView.h"
 
 #define HEIGHT 84.
@@ -42,6 +41,11 @@
         [self commontInit];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 + (CGFloat)height

@@ -28,7 +28,7 @@
 - (void)commonInit
 {
     {
-        conainterView = [[UIView alloc] initWithFrame:CGRectMakeSize(0, CGRectGetHeight(self.frame))];
+        conainterView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame), 0, 0, CGRectGetHeight(self.frame))];
         
         conainterView.backgroundColor = [UIColor customBackgroundHeader:.5];
         conainterView.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;

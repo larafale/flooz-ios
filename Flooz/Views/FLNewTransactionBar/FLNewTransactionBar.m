@@ -25,9 +25,9 @@
         locationManager.delegate = self;
         
         isEvent = NO;
-        if([[_dictionary objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeEvent]]){
-            isEvent = YES;
-        }
+//        if([[_dictionary objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeEvent]]){
+//            isEvent = YES;
+//        }
         
 //        [self createLocalizeButton];
 //        [self createImageButton];

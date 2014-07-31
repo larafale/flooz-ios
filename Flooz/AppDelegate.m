@@ -89,7 +89,7 @@
     
     CompleteBlock completeBlock = ^{
         if(!savedViewController){
-            savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [EventsViewController new]]];
+            savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
         }
         
         [UIView transitionWithView:self.window
@@ -328,7 +328,7 @@
     if([[Flooz sharedInstance] currentUser] && resource){
         NSString *resourceId = resource[@"resourceId"];
         
-        FLContainerViewController *currentController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [EventsViewController new]]];
+        FLContainerViewController *currentController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
         
         self.window.rootViewController = currentController;
         
@@ -491,7 +491,7 @@
         }
         
         if(isFriend){
-            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success:nil];
+            [[Flooz sharedInstance] friendRemove:[currentUserForMenu friendRelationId] success:nil];
         }
         else{
             [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:nil];
@@ -507,7 +507,7 @@
         [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
     }
     else if(buttonIndex == 1){
-        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypeCollection];
+        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypeCharge];
     }
     else if(buttonIndex == 2 && haveMenuFriend){
         friendMenu();
@@ -526,10 +526,16 @@
 // WARNING gros gros hack
 - (void)showNewTransactionController:(FLUser *)user transactionType:(NSUInteger)transactionType
 {
-    [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+    if([self.window.rootViewController presentedViewController]){
+        [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+            NewTransactionViewController *controller = [[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu];
+            [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
+        }];
+    }
+    else{
         NewTransactionViewController *controller = [[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu];
         [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
-    }];
+    }
 }
 
 - (void)lockForUpdate:(NSString *)updateUrl

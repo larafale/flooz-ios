@@ -38,7 +38,7 @@
     [self createAvatarView];
     [self createTextView];
     [self createPhoneView];
-    [self createButtonView];
+//    [self createButtonView];
 }
 
 - (void)createAvatarView{

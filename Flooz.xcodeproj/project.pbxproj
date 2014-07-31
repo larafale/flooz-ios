@@ -12,6 +12,14 @@
 		AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
 		AB0D88F3197978F400A37630 /* InvitCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D88F1197978F400A37630 /* InvitCodeViewController.m */; };
 		AB0D88F4197978F400A37630 /* InvitCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0D88F2197978F400A37630 /* InvitCodeViewController.xib */; };
+		AB119B39198A3EE100F05ECE /* NewEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B37198A3EE000F05ECE /* NewEventViewController.m */; };
+		AB119B3A198A3EE100F05ECE /* NewEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB119B38198A3EE100F05ECE /* NewEventViewController.xib */; };
+		AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */; };
+		AB119B41198A6E7C00F05ECE /* FLFriendsField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B40198A6E7C00F05ECE /* FLFriendsField.m */; };
+		AB119B42198A72A000F05ECE /* NewEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B37198A3EE000F05ECE /* NewEventViewController.m */; };
+		AB119B43198A73CC00F05ECE /* FLFriendsField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B40198A6E7C00F05ECE /* FLFriendsField.m */; };
+		AB119B44198A740600F05ECE /* UIViewController+RegisterNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */; };
+		AB119B45198A743B00F05ECE /* NewEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB119B38198A3EE100F05ECE /* NewEventViewController.xib */; };
 		AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB618E46861008E03FE /* libicucore.dylib */; };
 		AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB818E4686A008E03FE /* CFNetwork.framework */; };
 		AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBBA18E46872008E03FE /* Security.framework */; };
@@ -355,6 +363,13 @@
 		AB0D88F0197978F400A37630 /* InvitCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvitCodeViewController.h; path = Controllers/InvitCode/InvitCodeViewController.h; sourceTree = "<group>"; };
 		AB0D88F1197978F400A37630 /* InvitCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InvitCodeViewController.m; path = Controllers/InvitCode/InvitCodeViewController.m; sourceTree = "<group>"; };
 		AB0D88F2197978F400A37630 /* InvitCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InvitCodeViewController.xib; path = Controllers/InvitCode/InvitCodeViewController.xib; sourceTree = "<group>"; };
+		AB119B36198A3EE000F05ECE /* NewEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewEventViewController.h; path = Controllers/NewEvent/NewEventViewController.h; sourceTree = "<group>"; };
+		AB119B37198A3EE000F05ECE /* NewEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewEventViewController.m; path = Controllers/NewEvent/NewEventViewController.m; sourceTree = "<group>"; };
+		AB119B38198A3EE100F05ECE /* NewEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewEventViewController.xib; path = Controllers/NewEvent/NewEventViewController.xib; sourceTree = "<group>"; };
+		AB119B3B198A3FD200F05ECE /* UIViewController+RegisterNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+RegisterNotification.h"; path = "Util/UIViewController+RegisterNotification.h"; sourceTree = "<group>"; };
+		AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+RegisterNotification.m"; path = "Util/UIViewController+RegisterNotification.m"; sourceTree = "<group>"; };
+		AB119B3F198A6E7C00F05ECE /* FLFriendsField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLFriendsField.h; path = Views/FLFriendsField/FLFriendsField.h; sourceTree = "<group>"; };
+		AB119B40198A6E7C00F05ECE /* FLFriendsField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLFriendsField.m; path = Views/FLFriendsField/FLFriendsField.m; sourceTree = "<group>"; };
 		AB15DBB618E46861008E03FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		AB15DBB818E4686A008E03FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		AB15DBBA18E46872008E03FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -742,6 +757,25 @@
 			name = InvitCode;
 			sourceTree = "<group>";
 		};
+		AB119B35198A3EBF00F05ECE /* NewEvent */ = {
+			isa = PBXGroup;
+			children = (
+				AB119B36198A3EE000F05ECE /* NewEventViewController.h */,
+				AB119B37198A3EE000F05ECE /* NewEventViewController.m */,
+				AB119B38198A3EE100F05ECE /* NewEventViewController.xib */,
+			);
+			name = NewEvent;
+			sourceTree = "<group>";
+		};
+		AB119B3E198A6E6200F05ECE /* FLFriendsField */ = {
+			isa = PBXGroup;
+			children = (
+				AB119B3F198A6E7C00F05ECE /* FLFriendsField.h */,
+				AB119B40198A6E7C00F05ECE /* FLFriendsField.m */,
+			);
+			name = FLFriendsField;
+			sourceTree = "<group>";
+		};
 		AB2FB52F18AD40120079AA1D /* CashOut */ = {
 			isa = PBXGroup;
 			children = (
@@ -951,6 +985,7 @@
 				AB0D88EF1979786100A37630 /* InvitCode */,
 				AB4CB6DD1886AE1E00D1C573 /* Login */,
 				AB5EB6DB188214F000D81AF6 /* MenuNewTransaction */,
+				AB119B35198A3EBF00F05ECE /* NewEvent */,
 				ABE9141C1889436B003AC722 /* NewTransaction */,
 				ABE9147518929A61003AC722 /* Notifications */,
 				AB2FB53F18AD9C660079AA1D /* Password */,
@@ -975,6 +1010,7 @@
 				AB8F9FA718E1EF76006039D0 /* FLAlertView */,
 				AB46C66E18803421006C8334 /* FLContainerViewController */,
 				ABE91428188C5D20003AC722 /* FLFilterView */,
+				AB119B3E198A6E6200F05ECE /* FLFriendsField */,
 				ABC02655197EB584000BA5B9 /* FLHomeTextField */,
 				AB6DA50D18C4DDE80073B947 /* FLImageView */,
 				ABE914881892C721003AC722 /* FLKeyboardView */,
@@ -1058,6 +1094,8 @@
 				ABF7091B18A03B1D00517389 /* FLError.h */,
 				ABEC02A618D3165600C03025 /* UIView+FindFirstResponder.h */,
 				ABEC02A718D3165600C03025 /* UIView+FindFirstResponder.m */,
+				AB119B3B198A3FD200F05ECE /* UIViewController+RegisterNotification.h */,
+				AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -1985,6 +2023,7 @@
 				AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */,
 				AB6DA50C18C4A5D80073B947 /* WebViewController.xib in Resources */,
 				ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */,
+				AB119B3A198A3EE100F05ECE /* NewEventViewController.xib in Resources */,
 				AB7C9B2318D73AE9002775BA /* SecureCodeViewController.xib in Resources */,
 				ABF7093818A3C52200517389 /* FriendPickerViewController.xib in Resources */,
 				ABE9147418929A5C003AC722 /* InformationsViewController.xib in Resources */,
@@ -2038,6 +2077,7 @@
 				ABAA4000197E96BF009F29EF /* SplashViewController.xib in Resources */,
 				ABAA4001197E96BF009F29EF /* WebViewController.xib in Resources */,
 				ABAA4002197E96BF009F29EF /* ProximaNova-Regular.otf in Resources */,
+				AB119B45198A743B00F05ECE /* NewEventViewController.xib in Resources */,
 				ABAA4004197E96BF009F29EF /* SecureCodeViewController.xib in Resources */,
 				ABAA4005197E96BF009F29EF /* FriendPickerViewController.xib in Resources */,
 				ABAA4006197E96BF009F29EF /* InformationsViewController.xib in Resources */,
@@ -2149,6 +2189,7 @@
 				AB7C9B1718D71884002775BA /* FriendPickerFriendCell.m in Sources */,
 				ABE9148F189337E4003AC722 /* FLTextField.m in Sources */,
 				ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */,
+				AB119B39198A3EE100F05ECE /* NewEventViewController.m in Sources */,
 				ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */,
 				ABB12D6B18BF9F25002FCAAE /* EventParticipantsViewController.m in Sources */,
 				ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */,
@@ -2166,6 +2207,7 @@
 				ABE914A018968E52003AC722 /* FLPaymentField.m in Sources */,
 				ABB12D6218BE64B3002FCAAE /* EventContentView.m in Sources */,
 				AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */,
+				AB119B41198A6E7C00F05ECE /* FLFriendsField.m in Sources */,
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
 				ABF7093718A3C52200517389 /* FriendPickerViewController.m in Sources */,
 				AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */,
@@ -2232,6 +2274,7 @@
 				ABE9144E18915E9F003AC722 /* FLUserView.m in Sources */,
 				ABD0164918EC695500940F2D /* FLSwitchView.m in Sources */,
 				ABF7094118A4D64300517389 /* TransactionCell.m in Sources */,
+				AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */,
 				ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */,
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
 				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
@@ -2265,11 +2308,14 @@
 				ABAA3F81197E96BF009F29EF /* AppDelegate.m in Sources */,
 				ABAFEE22197F150800D39C62 /* FLHomeTextField.m in Sources */,
 				ABAA3F82197E96BF009F29EF /* FriendPickerFriendCell.m in Sources */,
+				AB119B44198A740600F05ECE /* UIViewController+RegisterNotification.m in Sources */,
 				ABAA3F83197E96BF009F29EF /* FLTextField.m in Sources */,
+				AB119B42198A72A000F05ECE /* NewEventViewController.m in Sources */,
 				ABAA3F84197E96BF009F29EF /* FriendPickerContactCell.m in Sources */,
 				ABAA3F85197E96BF009F29EF /* FriendPickerSearchBar.m in Sources */,
 				ABAA3F86197E96BF009F29EF /* EventParticipantsViewController.m in Sources */,
 				ABAA3F87197E96BF009F29EF /* FLHelper.m in Sources */,
+				AB119B43198A73CC00F05ECE /* FLFriendsField.m in Sources */,
 				ABAFEE28198001BA00D39C62 /* FLPopup.m in Sources */,
 				ABAA3F88197E96BF009F29EF /* EventAmountView.m in Sources */,
 				ABAA3F89197E96BF009F29EF /* PasswordForgetViewController.m in Sources */,

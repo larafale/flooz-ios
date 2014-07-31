@@ -116,7 +116,7 @@
     buttonLeft.selected = NO;
     buttonRight.selected = YES;
     
-    [_dictionary setValue:[FLTransaction transactionTypeToParams:TransactionTypeCollection] forKey:@"method"];
+    [_dictionary setValue:[FLTransaction transactionTypeToParams:TransactionTypeCharge] forKey:@"method"];
     [_delegate didTypeCollectSelected];
 }
 

@@ -9,16 +9,18 @@
 #import <UIKit/UIKit.h>
 
 @interface FLSocialView : UIView{
-    JTImageLabel *comment;
-    JTImageLabel *like;
-    JTImageLabel *scope;
+    JTImageLabel *likeText;
+    UILabel *like;
+    UILabel *comment;
+    JTImageLabel *commentText;
     
     __weak id _target;
     SEL _action;
 }
 
-@property BOOL isEvent;
 @property (strong, nonatomic) UITapGestureRecognizer *gesture;
+
++ (CGFloat)getHeight:(FLSocial *)social;
 
 - (void)prepareView:(FLSocial *)social;
 - (void)addTargetForLike:(id)target action:(SEL)action;

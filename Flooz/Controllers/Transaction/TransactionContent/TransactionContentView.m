@@ -176,14 +176,9 @@
 
 - (void)didLikeButtonTouch
 {
-    if([[_transaction social] isLiked]){
-        return;
-    }
-    
-    [[_transaction social] setIsLiked:YES];
+    [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
     [[Flooz sharedInstance] createLikeOnTransaction:_transaction success:^(id result) {
         [[_transaction social] setLikeText:[result objectForKey:@"item"]];
-        [[_transaction social] setLikesCount:[[_transaction social] likesCount] + 1];
         
         FLSocialView *view = [[self subviews] objectAtIndex:3];
         [view prepareView:_transaction.social];

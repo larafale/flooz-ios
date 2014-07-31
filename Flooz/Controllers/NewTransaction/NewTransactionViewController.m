@@ -64,7 +64,8 @@
         
         transaction[@"random"] = [FLHelper generateRandomString];
 
-        isEvent = (transactionType == TransactionTypeEvent);
+        isEvent = NO;
+//        isEvent = (transactionType == TransactionTypeEvent);
         [transaction setValue:[FLTransaction transactionTypeToParams:transactionType] forKey:@"method"];
         
         infoDisplayed = NO;
@@ -158,17 +159,7 @@
             offset = CGRectGetMaxY(friend.frame);
         }
         
-        //        if(!isEvent){
-        //            payementField = [[FLPaymentField alloc] initWithFrame:CGRectMake(0, offset, CGRectGetWidth(_contentView.frame), 0) for:transaction key:@"source"];
-        //            payementField.delegate = self;
-        //            [_contentView addSubview:payementField];
-        //
-        //            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeCollection]]){
-        //                CGRectSetHeight(payementField.frame, 1);
-        //            }
-        //
-        //            offset = CGRectGetMaxY(payementField.frame);
-        //        }
+
         
         NSString *contentPlaceholder = @"FIELD_TRANSACTION_CONTENT_PLACEHOLDER";
         if(isEvent){
@@ -195,6 +186,12 @@
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), offset);
 }
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -203,16 +200,9 @@
     
     [friend reloadData];
     [self reloadTransactionBarData];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadTransactionBarData)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadTransactionBarData)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
+
+    [self registerNotification:@selector(reloadTransactionBarData) name:UIKeyboardWillShowNotification object:nil];
+    [self registerNotification:@selector(reloadTransactionBarData) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -435,14 +425,8 @@
 
 - (void)registerForKeyboardNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidAppear:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillDisappear)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification

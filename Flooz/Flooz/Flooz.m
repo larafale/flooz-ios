@@ -54,6 +54,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)showLoadView
 {
     [loadView show];
@@ -131,7 +136,10 @@
 
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
-    [self requestPath:@"/login/basic" method:@"POST" params:user success:success failure:failure];
+    NSMutableDictionary *params = [user mutableCopy];
+    params[@"codeReset"] = @1;
+    
+    [self requestPath:@"/login/basic" method:@"POST" params:params success:success failure:failure];
 }
 
 - (void)passwordLost:(NSString *)email success:(void (^)(id result))success
@@ -169,6 +177,7 @@
 {
     [self requestPath:@"profile" method:@"PUT" params:user success:^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
+
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
         
         if(success){
@@ -452,6 +461,29 @@
     }
     else{
         [self requestPath:@"pots" method:@"POST" params:event success:success failure:failure];
+    }
+}
+
+- (void)createCollect:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    if([transaction objectForKey:@"image"]){
+        NSData *image = [transaction objectForKey:@"image"];
+        [transaction setValue:nil forKey:@"image"];
+        
+        id failureBlock = ^(NSError *error) {
+            [transaction setValue:image forKey:@"image"];
+            if(failure){
+                failure(error);
+            }
+        };
+        
+        [self requestPath:@"pots" method:@"POST" params:transaction success:success failure:failureBlock constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSLog(@"image size: %.2fMB", image.length / 1024. / 1024.);
+            [formData appendPartWithFileData:image name:@"image" fileName:@"image.jpg" mimeType:@"image/jpg"];
+        }];
+    }
+    else{
+        [self requestPath:@"collects" method:@"POST" params:transaction success:success failure:failure];
     }
 }
 

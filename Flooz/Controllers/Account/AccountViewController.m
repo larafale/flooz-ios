@@ -12,7 +12,7 @@
 
 #import "SettingsViewController.h"
 #import "EditAccountViewController.h"
-#import "FriendsViewController.h"
+#import "InvitCodeViewController.h"
 #import "InformationsViewController.h"
 #import "CashOutViewController.h"
 
@@ -26,7 +26,7 @@
     FLAccountUserView *userView;
     UILabel *amount;
     
-    FLAccountButton *friends;
+    FLAccountButton *inviteCode;
     FLAccountButton *cashout;
     FLAccountButton *settings;
     FLAccountButton *informations;
@@ -55,7 +55,6 @@
     {
         userView = [FLAccountUserView new];
         [userView addEditTarget:self action:@selector(presentEditAccountController)];
-        [userView addFriendsTarget:self action:@selector(presentFriendsController)];
         [_contentView addSubview:userView];
     }
     
@@ -80,21 +79,21 @@
     }
     
     {
-        friends = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 246) title:NSLocalizedString(@"ACCOUNT_BUTTON_FRIENDS", nil) imageNamed:@"account-button-friends"];
+        inviteCode = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 246) title:NSLocalizedString(@"ACCOUNT_BUTTON_CODE", nil) imageNamed:@"account-button-code"];
         
-        cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(friends.frame) - 1, friends.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-cashout"];
+        cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(inviteCode.frame) - 1, inviteCode.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-cashout"];
         
-        settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(friends.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
+        settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(inviteCode.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
         
-        informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame) - 1, CGRectGetMaxY(friends.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
+        informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame) - 1, CGRectGetMaxY(inviteCode.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
         
-        [friends addTarget:self action:@selector(presentFriendsController) forControlEvents:UIControlEventTouchUpInside];
+        [inviteCode addTarget:self action:@selector(presentInviteCodeController) forControlEvents:UIControlEventTouchUpInside];
         [cashout addTarget:self action:@selector(presentCashOutController) forControlEvents:UIControlEventTouchUpInside];
         [settings addTarget:self action:@selector(presentSettingsController) forControlEvents:UIControlEventTouchUpInside];
         [informations addTarget:self action:@selector(presentInformationsController) forControlEvents:UIControlEventTouchUpInside];
                 
         
-        [_contentView addSubview:friends];
+        [_contentView addSubview:inviteCode];
         [_contentView addSubview:cashout];
         [_contentView addSubview:settings];
         [_contentView addSubview:informations];
@@ -103,22 +102,21 @@
     }
 }
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCurrentUser) name:@"reloadCurrentUser" object:nil];
+
+    [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
     _contentView.frame = CGRectMakeWithSize(self.view.frame.size);
     
     [self reloadCurrentUser];
     [[Flooz sharedInstance] updateCurrentUser];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"reloadCurrentUser" object:nil];
 }
 
 - (void)presentEditAccountController
@@ -127,9 +125,9 @@
     [self presentViewController:controller animated:YES completion:NULL];
 }
 
-- (void)presentFriendsController
+- (void)presentInviteCodeController
 {
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[InvitCodeViewController new]];
     [self presentViewController:controller animated:YES completion:NULL];
 }
 
@@ -146,16 +144,8 @@
 
 - (void)presentSettingsController
 {
-    
-//    CompleteBlock completeBlock = ^{
-        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];
-        [self presentViewController:controller animated:YES completion:NULL];
-//    };
-//
-//    SecureCodeViewController *controller = [SecureCodeViewController new];
-//    controller.completeBlock = completeBlock;
-//    
-//    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[SettingsViewController new]];
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)presentInformationsController

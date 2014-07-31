@@ -61,6 +61,14 @@
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self registerForKeyboardNotifications];
+        
+    [self registerNotification:@selector(scrollViewDidScroll:) name:kNotificationCloseKeyboard object:nil];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -252,6 +260,12 @@
     if(indexPath.section == 0){
         user = [friendsSearch objectAtIndex:indexPath.row];
     }
+    else if(indexPath.section == 1){
+//        user = [friendsRequest objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 2){
+        user = [friendsSuggestion objectAtIndex:indexPath.row];
+    }
     else if(indexPath.section == 3){
         user = [friends objectAtIndex:indexPath.row];
     }
@@ -261,7 +275,7 @@
     }
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(id)scrollView
 {
     [_searchBar close];
 }
@@ -341,14 +355,8 @@
 
 - (void)registerForKeyboardNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidAppear:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillDisappear)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification

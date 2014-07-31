@@ -131,8 +131,8 @@
         dateView.font = [UIFont customContentLight:9];
         dateView.text = [NSString stringWithFormat:@"@%@ - %@", [[comment user] username], [comment dateText]];
         
-        
-        [content setHeightToFit];
+        CGRectSetHeight(content.frame, [content heightToFit] + 3); // + 3 car quand emoicone ca passe pas
+    
         
         CGFloat currentHeight = CGRectGetHeight(content.frame) + CGRectGetHeight(dateView.frame);
         

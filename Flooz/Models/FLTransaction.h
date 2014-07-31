@@ -15,8 +15,8 @@
 
 typedef NS_ENUM(NSInteger, TransactionType) {
     TransactionTypePayment,
-    TransactionTypeCollection,
-    TransactionTypeEvent
+    TransactionTypeCharge,
+    TransactionTypeCollect
 };
 
 typedef NS_ENUM(NSInteger, TransactionStatus) {
@@ -65,9 +65,10 @@ typedef NS_ENUM(NSInteger, TransactionPaymentMethod) {
 
 @property FLSocial *social;
 
-@property NSString *eventId;
-
 @property NSArray *comments;
+
+@property BOOL isCollect;
+@property NSArray *collectUsers;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

@@ -61,14 +61,18 @@
     
     _searchBar.delegate = self;
     
+    // WARNING Gros bordel
+    
+    self.backgroundColor = [UIColor customBackground];
+    
     _searchBar.translucent = NO;
     _searchBar.barTintColor = self.backgroundColor;
     _searchBar.tintColor = [UIColor whiteColor]; // Curseur
-    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor customBackground]];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:self.backgroundColor];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
-    
-    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackground:[UIImage imageWithColor:[UIColor customBackground]]];
-    
+//
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackground:[UIImage imageWithColor:self.backgroundColor]];
+//
     // Hack pour supprimer bordure noir
     [[[[[_searchBar subviews] firstObject] subviews] firstObject] removeFromSuperview];
     

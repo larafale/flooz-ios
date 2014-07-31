@@ -53,7 +53,6 @@
 - (void)createSocialView
 {
     FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, 0, CGRectGetWidth(self.frame) - (2 * MARGE_LEFT_RIGHT), 0)];
-    view.isEvent = YES;
     [view addTargetForLike:self action:@selector(didLikeButtonTouch)];
     [self addSubview:view];
 }
@@ -116,14 +115,9 @@
 
 - (void)didLikeButtonTouch
 {
-    if([[_event social] isLiked]){
-        return;
-    }
-    
-    [[_event social] setIsLiked:YES];
+    [[_event social] setIsLiked:![[_event social] isLiked]];
     [[Flooz sharedInstance] createLikeOnEvent:_event success:^(id result) {
         [[_event social] setLikeText:[result objectForKey:@"item"]];
-        [[_event social] setLikesCount:[[_event social] likesCount] + 1];
         
         FLSocialView *view = [[self subviews] objectAtIndex:2];
         [view prepareView:_event.social];

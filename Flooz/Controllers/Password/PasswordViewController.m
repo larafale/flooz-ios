@@ -63,6 +63,12 @@
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), height);
 }
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didValidTouch
 {
     [[self view] endEditing:YES];
@@ -77,14 +83,8 @@
 
 - (void)registerForKeyboardNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidAppear:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillDisappear)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification

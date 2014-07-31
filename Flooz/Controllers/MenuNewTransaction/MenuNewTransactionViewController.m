@@ -9,6 +9,7 @@
 #import "MenuNewTransactionViewController.h"
 
 #import "NewTransactionViewController.h"
+#import "NewEventViewController.h"
 
 @interface MenuNewTransactionViewController (){
     UIButton *crossButton;
@@ -38,6 +39,9 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor customBackgroundHeader:0.8];
+    
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+    [self.view addGestureRecognizer:gesture];
     
     UIImage *buttonImage = [UIImage imageNamed:@"menu-new-transaction"];
     crossButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - buttonImage.size.width) / 2., self.view.frame.size.height - buttonImage.size.height - 20, buttonImage.size.width, buttonImage.size.height)];
@@ -72,10 +76,13 @@
     
     if(firstView){
         
+        self.view.layer.opacity = 0;
+        
         [UIView animateWithDuration:.3
                               delay:0
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
+                             self.view.layer.opacity = 1;
                             crossButton.transform = CGAffineTransformMakeRotation(M_PI / 4. + (M_PI / 8.));
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:.4
@@ -96,7 +103,11 @@
 
 - (void)dismiss
 {
-    [UIView animateWithDuration:.3
+    [eventButton startReverseAnimationWithDelay:0];
+    [collectionButton startReverseAnimationWithDelay:0.1];
+    [paymentButton startReverseAnimationWithDelay:0.2];
+    
+    [UIView animateWithDuration:.4
                      animations:^{
                          crossButton.transform = CGAffineTransformIdentity;
                          self.view.layer.opacity = 0;
@@ -110,7 +121,7 @@
 {
     __strong UIViewController *presentingController = self.presentingViewController;
     [self dismissViewControllerAnimated:NO completion:^{
-        [presentingController presentViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeEvent] animated:YES completion:NULL];
+        [presentingController presentViewController:[NewEventViewController new] animated:YES completion:NULL];
     }];
 }
 
@@ -118,7 +129,7 @@
 {
     __strong UIViewController *presentingController = self.presentingViewController;
     [self dismissViewControllerAnimated:NO completion:^{
-        [presentingController presentViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeCollection] animated:YES completion:NULL];
+        [presentingController presentViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeCharge] animated:YES completion:NULL];
     }];
 }
 

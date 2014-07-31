@@ -10,6 +10,7 @@
 
 #import "AppDelegate.h"
 
+
 #define MARGE 30.
 #define PADDING_TOP_BOTTOM 30.
 #define PADDING_LEFT_RIGHT 30.
@@ -26,9 +27,15 @@
         acceptBlock = accept;
         refuseBlock = refuse;
         [self commmonInit:message];
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveRemoveWindowSubviews) name:kNotificationRemoveWindowSubviews object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)commmonInit:(NSString *)message

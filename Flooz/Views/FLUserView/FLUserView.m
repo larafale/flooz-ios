@@ -66,13 +66,17 @@
 
 - (void)setImageFromURLAnimate:(NSString *)url
 {
+    [avatar sd_cancelCurrentImageLoad];
+    [avatar.layer removeAllAnimations];
+    
     if(!url || [url isBlank] || [url isEqualToString:@"/img/nopic.png"]){
         [self showPlaceholder];
     }
     else{
         [self hidePlaceholder];
-        //        [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
+        [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
         
+        return;
         avatar.layer.opacity = 0;
         
         dispatch_queue_t queue = [[self  class] animationQueue];
@@ -123,6 +127,7 @@
 
 - (void)showPlaceholder
 {
+    avatar.layer.opacity = 1;
     avatar.image = placeholder;
     
 //    CGFloat RATIO = .9;

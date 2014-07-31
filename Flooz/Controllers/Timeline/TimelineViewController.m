@@ -64,16 +64,21 @@
     // Padding pour que le dernier element au dessus du +
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMakeSize(SCREEN_WIDTH, 70)];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefresh) name:@"reloadTimeline" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
+    [self registerNotification:@selector(handleRefresh) name:@"reloadTimeline" object:nil];
+    [self registerNotification:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    [appDelegate showPreviewImages:@[@"preview-1", @"preview-2", @"preview-3"]];
+    [appDelegate showPreviewImages:@[@"preview-3"]];
 }
 
 #pragma mark - TableView
@@ -269,29 +274,23 @@
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction
 {
-    if([transaction eventId]){
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] eventWithId:[transaction eventId] success:^(id result) {
-            FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
-            EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:indexPath];
-            
-            self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-            
-            [self presentViewController:controller animated:NO completion:^{
-                self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-            }];
-        }];
+    UIViewController *controller = nil;
+    
+    if([transaction isCollect]){
+        return;
+//        controller = [[EventViewController alloc] initWithEvent:transaction indexPath:indexPath];
+//        ((EventViewController *)controller).delegateController = self;
     }
     else{
-        TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
-        controller.delegateController = self;
-        
-        self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-        
-        [self presentViewController:controller animated:NO completion:^{
-            self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-        }];
+        controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
+        ((TransactionViewController *)controller).delegateController = self;
     }
+    
+    self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    
+    [self presentViewController:controller animated:NO completion:^{
+        self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }];
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction

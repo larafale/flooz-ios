@@ -26,7 +26,7 @@
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction{
     NSAttributedString *attributedText = nil;
     CGRect rect = CGRectZero;
-    CGFloat rightViewWidth = SCREEN_WIDTH - 60 - MARGE_LEFT_RIGHT;
+    CGFloat rightViewWidth = SCREEN_WIDTH - 60 - MARGE_LEFT_RIGHT - 10;
     
     CGFloat current_height = MARGE_TOP_BOTTOM;
     
@@ -65,7 +65,7 @@
     }
     
     // Social, Footer
-    current_height += 14 + 15;
+    current_height += 14 + [FLSocialView getHeight:transaction.social];;
     
     current_height += MARGE_TOP_BOTTOM;
     
@@ -116,6 +116,7 @@
     [self createAttachmentView];
     [self createSocialView];
     [self createFooterView];
+    [self createScopeView];
     [self createPaymentFieldView];
 }
 
@@ -161,15 +162,15 @@
 }
 
 - (void)createDetailView{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, height + 9, CGRectGetWidth(rightView.frame), 0)];
-    UILabel *text = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
-    UILabel *content = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, height + 9, CGRectGetWidth(rightView.frame) - 10, 0)];
+    UILabel *text = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(view.frame), 0)];
+    UILabel *content = [[UILabel alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(view.frame), 0)];
     
     text.textColor = [UIColor whiteColor];
     text.font = [UIFont customContentRegular:13];
     text.numberOfLines = 0;
     
-    content.textColor = [UIColor customPlaceholder];
+    content.textColor = [UIColor whiteColor];
     content.font = [UIFont customContentLight:13];
     content.numberOfLines = 0;
     
@@ -201,6 +202,12 @@
     [rightView addSubview:view];
 }
 
+- (void)createScopeView
+{
+    scopeView = [UIImageView imageNamed:@"scope-public"];
+    [rightView addSubview:scopeView];
+}
+
 - (void)createPaymentFieldView{
     paymentField = [[FLPaymentField alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame), 0) for:nil key:nil];
     
@@ -222,8 +229,9 @@
     
     [self prepareDetailView];
     [self prepareAttachmentView];
-    [self prepareFooterView];
     [self prepareSocialView];
+    [self prepareScopeView];
+    [self prepareFooterView];
     
     CGRectSetHeight(leftView.frame, height);
     CGRectSetHeight(rightView.frame, height);
@@ -309,7 +317,7 @@
     
     content.text = [[self transaction] content];
     CGRectSetY(content.frame, CGRectGetMaxY(text.frame) + offset);
-    [content setHeightToFit];
+    CGRectSetHeight(content.frame, [content heightToFit] + 3); // + 3 car quand emoicone ca passe pas
     
     CGRectSetY(view.frame, height);
     CGRectSetHeight(view.frame, CGRectGetHeight(text.frame) + CGRectGetHeight(content.frame) + offset);
@@ -339,6 +347,24 @@
     height = CGRectGetMaxY(view.frame);
 }
 
+- (void)prepareScopeView
+{
+    NSString *imageNamed = nil;
+    
+    if(_transaction.social.scope == SocialScopeFriend){
+        imageNamed = @"scope-friend";
+    }
+    else if(_transaction.social.scope == SocialScopePrivate){
+        imageNamed = @"scope-private";
+    }
+    else if(_transaction.social.scope == SocialScopePublic){
+        imageNamed = @"scope-public";
+    }
+    
+    scopeView.image = [UIImage imageNamed:imageNamed];
+    CGRectSetXY(scopeView.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(scopeView.frame), 0);
+}
+
 - (void)prepareFooterView{
     UILabel *view = [[rightView subviews] objectAtIndex:3];
     
@@ -351,7 +377,7 @@
     view.text = [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
     [view setWidthToFit];
     
-    CGRectSetXY(view.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(view.frame), height + 9.5);
+    CGRectSetXY(view.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(view.frame), height - 20);
 }
 
 #pragma mark - Swipe
@@ -526,15 +552,15 @@
 
 - (void)didLikeButtonTouch
 {
-    if([[_transaction social] isLiked] || ![[Flooz sharedInstance] currentUser]){
+    if(![[Flooz sharedInstance] currentUser]){
         return;
     }
 
-    [[_transaction social] setIsLiked:YES];
+    [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
 
     [[Flooz sharedInstance] createLikeOnTransaction:_transaction success:^(id result) {
         [[_transaction social] setLikeText:[result objectForKey:@"item"]];
-        [[_transaction social] setLikesCount:[[_transaction social] likesCount] + 1];
+
         FLSocialView *view = [[rightView subviews] objectAtIndex:2];
         [view prepareView:_transaction.social];
         

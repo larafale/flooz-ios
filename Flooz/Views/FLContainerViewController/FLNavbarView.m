@@ -26,7 +26,7 @@
     self = [super initWithFrame:CGRectMakeSize(SCREEN_WIDTH, HEIGHT)];
     if (self) {
         self.backgroundColor = [UIColor customBackgroundHeader];
-                
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshFloozView) name:@"newNotifications" object:nil];
         
         [self preparePanGesture];
@@ -198,9 +198,11 @@
 {
     CGPoint location = [recognizer locationInView:self];
     if(location.x < (CGRectGetWidth(self.frame) / 3.)){
+        [self beginTransition];
         [self loadPreviousController];
     }
     else if(location.x > (CGRectGetWidth(self.frame) / 3. * 2)){
+        [self beginTransition];
         [self loadNextController];
     }
 }
@@ -210,9 +212,7 @@
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:
             lastTranslation = CGPointZero;
-//            for(UIViewController *controller in _viewControllers){
-//                [controller beginAppearanceTransition:YES animated:YES];
-//            }
+            [self beginTransition];
             break;
         case UIGestureRecognizerStateChanged:{
             CGPoint translation = [recognizer translationInView:_titlesView];
@@ -321,6 +321,9 @@
     if(controller.view.frame.origin.x > 0){
         y += controller.view.frame.origin.x;
     }
+    else if(controller.view.frame.origin.x < 0){
+        y += controller.view.frame.origin.x;
+    }
     
     crossButton.center = CGPointMake(y, crossButton.center.y);
 }
@@ -386,10 +389,7 @@
                         options:0
                      animations:^{
                          [self updateViewsPositions];
-                         
-//                         for(UIViewController *controller in _viewControllers){
-//                             [controller endAppearanceTransition];
-//                         }
+                         [self endTransition];
                      } completion:NULL];
 }
 
@@ -428,6 +428,23 @@
 {
     UIViewController<FLContainerViewControllerDelegate> *currentController = _viewControllers[selectedTitleIndex];
     [currentController presentMenuTransactionController];
+}
+
+- (void)beginTransition
+{
+//    for(UIViewController *controller in _viewControllers){
+//        [controller beginAppearanceTransition:NO animated:NO];
+//    }
+}
+
+- (void)endTransition
+{
+//    for(UIViewController *controller in _viewControllers){
+//        [controller endAppearanceTransition];
+//    }
+    
+    // Si dans amis on a le clavier d ouvert
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCloseKeyboard object:nil];
 }
 
 @end

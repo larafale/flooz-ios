@@ -36,6 +36,7 @@
     
     [self createAvatarView];
     [self createTextView];
+    [self createPhoneView];
 //    [self createSlideView];
 //    [self createActionViews];
     
@@ -52,6 +53,16 @@
     
     view.textColor = [UIColor whiteColor];
     view.font = [UIFont customTitleLight:13];
+    
+    [self.contentView addSubview:view];
+}
+
+- (void)createPhoneView
+{
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 28, CGRectGetWidth(self.frame) - 75, 9)];
+    
+    view.font = [UIFont customContentBold:11];
+    view.textColor = [UIColor customPlaceholder];
     
     [self.contentView addSubview:view];
 }
@@ -129,6 +140,9 @@
 - (void)prepapreTextView{
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
     view.text = [[[_friendRequest user] fullname] uppercaseString];
+    
+    UILabel *view2 = [[self.contentView subviews] objectAtIndex:2];
+    view2.text = [NSString stringWithFormat:@"@%@", [[_friendRequest user] username]];
 }
 
 #pragma mark - Swipe

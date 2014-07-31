@@ -27,8 +27,11 @@
     if([method isEqualToString:@"pay"]){
         _type = TransactionTypePayment;
     }
+    else if([method isEqualToString:@"collect"]){
+        _type = TransactionTypeCollect;
+    }
     else{
-        _type = TransactionTypeCollection;
+        _type = TransactionTypeCharge;
     }
     
     NSNumber *state = [json objectForKey:@"state"];
@@ -112,15 +115,25 @@
         }
         _comments = comments;
     }
-    
-    if([json objectForKey:@"event"] && [[json objectForKey:@"event"] objectForKey:@"_id"]){
-        _eventId = [[json objectForKey:@"event"] objectForKey:@"_id"];
-    }
-    
+        
     _when = [FLHelper formatedDateFromNow:_date];
     
     if([json objectForKey:@"text3d"]){
         _text3d = [json objectForKey:@"text3d"];
+    }
+    
+    
+    _isCollect = NO;
+    if([json objectForKey:@"collect"]){
+        _isCollect = YES;
+        
+        NSMutableArray *colllectUsers = [NSMutableArray new];
+        
+        for(NSDictionary *userJSON in json[@"collect"][@"froms"]){
+            [colllectUsers addObject:[[FLUser alloc] initWithJSON:userJSON]];
+        }
+        
+        _collectUsers = colllectUsers;
     }
 }
 
@@ -222,7 +235,7 @@
     if(type == TransactionTypePayment){
         return @"pay";
     }
-    else if(type == TransactionTypeCollection){
+    else if(type == TransactionTypeCharge){
         return @"charge";
     }
     else{ // if(type == TransactionTypeEvent){
