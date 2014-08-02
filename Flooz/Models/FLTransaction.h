@@ -68,7 +68,11 @@ typedef NS_ENUM(NSInteger, TransactionPaymentMethod) {
 @property NSArray *comments;
 
 @property BOOL isCollect;
+@property BOOL collectCanParticipate;
 @property NSArray *collectUsers;
+@property NSString *collectTitle;
+
+@property BOOL haveAction;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

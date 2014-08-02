@@ -34,5 +34,6 @@
 + (UIColor *)customBlueHover:(CGFloat)alpha;
 
 + (UIColor *)customPlaceholder;
++ (UIColor *)customPlaceholder:(CGFloat)alpha;
 
 @end

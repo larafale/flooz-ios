@@ -24,8 +24,8 @@
 {
     [self createRefuseView];
     [self createAcceptView];
-    [self createCancelView];
     [self createWaitingView];
+    [self createParticipateView];
     [self createBottomBar];
 }
 
@@ -37,9 +37,12 @@
     view.titleLabel.font = [UIFont customTitleExtraLight:14];
     [view setImageEdgeInsets:UIEdgeInsetsMake(2, -10, 0, 0)];
     
-    [view setImage:[UIImage imageNamed:@"transaction-cell-cross"] forState:UIControlStateNormal];
+//    [view setImage:[UIImage imageNamed:@"transaction-cell-cross"] forState:UIControlStateNormal];
     [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_REFUSE", nil) forState:UIControlStateNormal];
     [view setTitleColor:[UIColor customRed] forState:UIControlStateNormal];
+    
+    [view setBackgroundColor:[UIColor customRed]];
+    [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [view addTarget:self action:@selector(didRefuseTouch) forControlEvents:UIControlEventTouchUpInside];
     
@@ -54,28 +57,14 @@
     view.titleLabel.font = [UIFont customTitleExtraLight:14];
     [view setImageEdgeInsets:UIEdgeInsetsMake(2, -10, 0, 0)];
     
-    [view setImage:[UIImage imageNamed:@"transaction-cell-check"] forState:UIControlStateNormal];
+//    [view setImage:[UIImage imageNamed:@"transaction-cell-check"] forState:UIControlStateNormal];
     [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil) forState:UIControlStateNormal];
     [view setTitleColor:[UIColor customGreen] forState:UIControlStateNormal];
     
+    [view setBackgroundColor:[UIColor customGreen]];
+    [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
     [view addTarget:self action:@selector(didAcceptTouch) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self addSubview:view];
-}
-
-- (void)createCancelView
-{
-    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
-    
-    view.titleLabel.textAlignment = NSTextAlignmentCenter;
-    view.titleLabel.font = [UIFont customTitleExtraLight:14];
-    [view setImageEdgeInsets:UIEdgeInsetsMake(2, -10, 0, 0)];
-    
-    [view setImage:[UIImage imageNamed:@"transaction-cell-cross"] forState:UIControlStateNormal];
-    [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_CANCEL", nil) forState:UIControlStateNormal];
-    [view setTitleColor:[UIColor customRed] forState:UIControlStateNormal];
-    
-    [view addTarget:self action:@selector(didCancelTouch) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:view];
 }
@@ -90,6 +79,31 @@
     
     [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_WAITING", nil) forState:UIControlStateNormal];
     [view setTitleColor:[UIColor customYellow] forState:UIControlStateNormal];
+    
+    [self addSubview:view];
+}
+
+- (void)createParticipateView
+{
+    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
+    
+    view.backgroundColor = [UIColor customBlue];
+    
+    view.titleLabel.textAlignment = NSTextAlignmentCenter;
+    view.titleLabel.font = [UIFont customTitleExtraLight:14];
+    [view setImageEdgeInsets:UIEdgeInsetsMake(2, -10, 0, 0)];
+    
+    [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [view addTarget:self action:@selector(didParticipateTouch:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [view setTitle:NSLocalizedString(@"EVENT_ACTION_PARTICIPATE", nil) forState:UIControlStateNormal];
+    
+    {
+        arrow = [UIImageView imageNamed:@"arrow-white-right"];
+        CGRectSetXY(arrow.frame, CGRectGetWidth(self.frame) - 20, (CGRectGetHeight(view.frame) - arrow.image.size.height) / 2.);
+        [view addSubview:arrow];
+    }
     
     [self addSubview:view];
 }
@@ -115,16 +129,16 @@
 {
     UIView *refuseView = [[self subviews] objectAtIndex:0];
     UIView *acceptView = [[self subviews] objectAtIndex:1];
-    UIView *cancelView = [[self subviews] objectAtIndex:2];
-    UIView *waitingView = [[self subviews] objectAtIndex:3];
+    UIView *waitingView = [[self subviews] objectAtIndex:2];
+    UIView *participateView = [[self subviews] objectAtIndex:3];
     
-    refuseView.hidden = acceptView.hidden = cancelView.hidden = waitingView.hidden = YES;
-    
-    if([_transaction isCancelable]){
-        cancelView.hidden = NO;
-    }
-    else if([_transaction isAcceptable]){
+    refuseView.hidden = acceptView.hidden = waitingView.hidden = participateView.hidden = YES;
+        
+    if([_transaction isAcceptable]){
         refuseView.hidden = acceptView.hidden = NO;
+    }
+    else if(_transaction.collectCanParticipate){
+        participateView.hidden = NO;
     }
     else{
         waitingView.hidden = NO;
@@ -133,15 +147,6 @@
 
 - (void)didAcceptTouch
 {
-//    if([_transaction type] == TransactionTypePayment &&
-//        [[[_transaction to] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]
-//       ){
-//        [_delegate acceptTransaction];
-//    }
-//    else{
-//        [_delegate showPaymentField];
-//    }
-    
     [_delegate acceptTransaction];
 }
 
@@ -150,9 +155,41 @@
     [_delegate refuseTransaction];
 }
 
-- (void)didCancelTouch
+- (void)didParticipateTouch:(UIButton *)button
 {
-    [_delegate cancelTransaction];
+    if(button.selected){
+        [self cancelParticipate];
+    }
+    else{
+        button.selected = YES;
+        [UIView animateWithDuration:.5 animations:^{
+            [_delegate showPaymentField];
+            arrow.transform = CGAffineTransformMakeRotation(M_PI_2);
+        }];
+    }
+}
+
+- (void)cancelParticipate
+{
+    UIButton *participateView = [[self subviews] objectAtIndex:3];
+    participateView.selected = NO;
+    [UIView animateWithDuration:.5 animations:^{
+        [_delegate hidePaymentField];
+        arrow.transform = CGAffineTransformMakeRotation(0);
+    }];
+}
+
+- (void)setParticipateSelected:(BOOL)selected
+{
+    UIButton *participateView = [[self subviews] objectAtIndex:3];
+    participateView.selected = selected;
+    
+    if(selected){
+        arrow.transform = CGAffineTransformMakeRotation(M_PI_2);
+    }
+    else{
+        arrow.transform = CGAffineTransformMakeRotation(0);
+    }
 }
 
 @end

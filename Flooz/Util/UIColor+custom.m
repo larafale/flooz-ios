@@ -99,7 +99,11 @@
 }
 
 + (UIColor *)customPlaceholder{
-    return [UIColor colorWithIntegerRed:135 green:147 blue:157 alpha:1.];
+    return [UIColor customPlaceholder:1.];
+}
+
++ (UIColor *)customPlaceholder:(CGFloat)alpha{
+    return [UIColor colorWithIntegerRed:135 green:147 blue:157 alpha:alpha];
 }
 
 @end

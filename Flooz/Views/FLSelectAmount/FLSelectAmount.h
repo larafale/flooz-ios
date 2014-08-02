@@ -12,6 +12,9 @@
 @interface FLSelectAmount : UIView{
     UILabel *_title;
     UISwitch *switchView;
+    
+    // Pour detecter si on slide et revient sur la position original
+    BOOL switchCurrentValue;
 }
 
 @property (weak) id<FLSelectAmountDelegate> delegate;

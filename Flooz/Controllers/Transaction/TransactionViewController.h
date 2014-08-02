@@ -10,9 +10,9 @@
 
 #import "TransactionActionsViewDelegate.h"
 #import "TransactionCellDelegate.h"
-#import "FLPaymentFieldDelegate.h"
+#import "FLNewTransactionAmountDelegate.h"
 
-@interface TransactionViewController : UIViewController<TransactionActionsViewDelegate, FLPaymentFieldDelegate>
+@interface TransactionViewController : UIViewController<TransactionActionsViewDelegate, FLNewTransactionAmountDelegate>
 
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;
 

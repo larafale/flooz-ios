@@ -487,6 +487,12 @@
     }
 }
 
+- (void)participateCollect:(NSString *)transactionId amount:(NSString *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    NSString *path = [NSString stringWithFormat:@"collects/%@/participate", transactionId];
+    [self requestPath:path method:@"POST" params:@{ @"amount": amount} success:success failure:failure];
+}
+
 - (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     [self requestPath:@"comments" method:@"POST" params:comment success:success failure:failure];
@@ -499,7 +505,7 @@
 
 - (void)cashoutValidate:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
-        [self requestPath:@"cashout?validate=true" method:@"POST" params:@{ @"validate": @"true" } success:success failure:failure];
+    [self requestPath:@"cashout?validate=true" method:@"POST" params:@{ @"validate": @"true" } success:success failure:failure];
 }
 
 - (void)updateNotification:(NSDictionary *)notification success:(void (^)(id result))success failure:(void (^)(NSError *error))failure

@@ -20,6 +20,10 @@
 		AB119B43198A73CC00F05ECE /* FLFriendsField.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B40198A6E7C00F05ECE /* FLFriendsField.m */; };
 		AB119B44198A740600F05ECE /* UIViewController+RegisterNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */; };
 		AB119B45198A743B00F05ECE /* NewEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB119B38198A3EE100F05ECE /* NewEventViewController.xib */; };
+		AB119B4A198CF6A300F05ECE /* TransactionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B49198CF6A300F05ECE /* TransactionHeaderView.m */; };
+		AB119B4B198CF6A300F05ECE /* TransactionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B49198CF6A300F05ECE /* TransactionHeaderView.m */; };
+		AB119B4F198CF8CB00F05ECE /* TransactionUsersCollectView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B4E198CF8CB00F05ECE /* TransactionUsersCollectView.m */; };
+		AB119B50198CF8CB00F05ECE /* TransactionUsersCollectView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B4E198CF8CB00F05ECE /* TransactionUsersCollectView.m */; };
 		AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB618E46861008E03FE /* libicucore.dylib */; };
 		AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB818E4686A008E03FE /* CFNetwork.framework */; };
 		AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBBA18E46872008E03FE /* Security.framework */; };
@@ -370,6 +374,10 @@
 		AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+RegisterNotification.m"; path = "Util/UIViewController+RegisterNotification.m"; sourceTree = "<group>"; };
 		AB119B3F198A6E7C00F05ECE /* FLFriendsField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLFriendsField.h; path = Views/FLFriendsField/FLFriendsField.h; sourceTree = "<group>"; };
 		AB119B40198A6E7C00F05ECE /* FLFriendsField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLFriendsField.m; path = Views/FLFriendsField/FLFriendsField.m; sourceTree = "<group>"; };
+		AB119B48198CF6A300F05ECE /* TransactionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionHeaderView.h; path = Controllers/Transaction/TransactionHeader/TransactionHeaderView.h; sourceTree = "<group>"; };
+		AB119B49198CF6A300F05ECE /* TransactionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionHeaderView.m; path = Controllers/Transaction/TransactionHeader/TransactionHeaderView.m; sourceTree = "<group>"; };
+		AB119B4D198CF8CB00F05ECE /* TransactionUsersCollectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionUsersCollectView.h; path = Controllers/Transaction/TransactionUsersCollect/TransactionUsersCollectView.h; sourceTree = "<group>"; };
+		AB119B4E198CF8CB00F05ECE /* TransactionUsersCollectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionUsersCollectView.m; path = Controllers/Transaction/TransactionUsersCollect/TransactionUsersCollectView.m; sourceTree = "<group>"; };
 		AB15DBB618E46861008E03FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		AB15DBB818E4686A008E03FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		AB15DBBA18E46872008E03FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -774,6 +782,24 @@
 				AB119B40198A6E7C00F05ECE /* FLFriendsField.m */,
 			);
 			name = FLFriendsField;
+			sourceTree = "<group>";
+		};
+		AB119B47198CF67300F05ECE /* TransactionHeader */ = {
+			isa = PBXGroup;
+			children = (
+				AB119B48198CF6A300F05ECE /* TransactionHeaderView.h */,
+				AB119B49198CF6A300F05ECE /* TransactionHeaderView.m */,
+			);
+			name = TransactionHeader;
+			sourceTree = "<group>";
+		};
+		AB119B4C198CF8AF00F05ECE /* TransactionUsersCollect */ = {
+			isa = PBXGroup;
+			children = (
+				AB119B4D198CF8CB00F05ECE /* TransactionUsersCollectView.h */,
+				AB119B4E198CF8CB00F05ECE /* TransactionUsersCollectView.m */,
+			);
+			name = TransactionUsersCollect;
 			sourceTree = "<group>";
 		};
 		AB2FB52F18AD40120079AA1D /* CashOut */ = {
@@ -1799,7 +1825,9 @@
 				ABF7094718A4DA9B00517389 /* TransactionAmount */,
 				ABF7095718A4FC9600517389 /* TransactionComments */,
 				ABF7094B18A4DB1C00517389 /* TransactionContent */,
+				AB119B47198CF67300F05ECE /* TransactionHeader */,
 				ABF7094F18A4E02700517389 /* TransactionUsers */,
+				AB119B4C198CF8AF00F05ECE /* TransactionUsersCollect */,
 				ABF7092718A2CA3500517389 /* TransactionViewController.h */,
 				ABF7092818A2CA3500517389 /* TransactionViewController.m */,
 				ABF7092918A2CA3500517389 /* TransactionViewController.xib */,
@@ -2273,8 +2301,10 @@
 				ABE914341890A01F003AC722 /* FLNavbarView.m in Sources */,
 				ABE9144E18915E9F003AC722 /* FLUserView.m in Sources */,
 				ABD0164918EC695500940F2D /* FLSwitchView.m in Sources */,
+				AB119B4A198CF6A300F05ECE /* TransactionHeaderView.m in Sources */,
 				ABF7094118A4D64300517389 /* TransactionCell.m in Sources */,
 				AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */,
+				AB119B4F198CF8CB00F05ECE /* TransactionUsersCollectView.m in Sources */,
 				ABE91427188C5D1A003AC722 /* FLFilterView.m in Sources */,
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
 				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
@@ -2394,8 +2424,10 @@
 				ABAA3FD4197E96BF009F29EF /* FLEvent.m in Sources */,
 				ABAA3FD5197E96BF009F29EF /* FLNavbarView.m in Sources */,
 				ABAA3FD6197E96BF009F29EF /* FLUserView.m in Sources */,
+				AB119B4B198CF6A300F05ECE /* TransactionHeaderView.m in Sources */,
 				ABAA3FD7197E96BF009F29EF /* FLSwitchView.m in Sources */,
 				ABAA3FD8197E96BF009F29EF /* TransactionCell.m in Sources */,
+				AB119B50198CF8CB00F05ECE /* TransactionUsersCollectView.m in Sources */,
 				ABAA3FD9197E96BF009F29EF /* FLFilterView.m in Sources */,
 				ABAA3FDA197E96BF009F29EF /* UIView+FindFirstResponder.m in Sources */,
 				ABAA3FDB197E96BF009F29EF /* FLScrollViewIndicator.m in Sources */,

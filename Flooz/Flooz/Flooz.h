@@ -84,6 +84,7 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 - (void)createEvent:(NSDictionary *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createCollect:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)participateCollect:(NSString *)transactionId amount:(NSString *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 

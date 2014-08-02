@@ -147,29 +147,6 @@
         [_contentView addSubview:closeButton];
     }
     
-//    {
-//        scopeView = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
-//        
-//        scopeView.textAlignment = NSTextAlignmentRight;
-//        scopeView.textColor = [UIColor whiteColor];
-//        scopeView.font = [UIFont customContentLight:11];
-//    
-//        if([_event scope] == TransactionScopeFriend){
-//            [scopeView setImage:[UIImage imageNamed:@"scope-friend"]];
-//            scopeView.text = NSLocalizedString(@"EVENT_SCOPE_FRIEND", nil);
-//        }
-//        else{
-//            [scopeView setImage:[UIImage imageNamed:@"scope-invite"]];
-//            scopeView.text = NSLocalizedString(@"EVENT_SCOPE_PRIVATE", nil);
-//        }
-//        
-//        [scopeView setImageOffset:CGPointMake(- 4, - 1)];
-//        [scopeView setWidthToFit];
-//        CGRectSetX(scopeView.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(scopeView.frame) - 13);
-//        
-//        [_contentView addSubview:scopeView];
-//    }
-    
     {
         JTImageLabel *view = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 55, 0, 15)];
         
@@ -220,7 +197,6 @@
         [_mainView addSubview:amountView];
         height = CGRectGetMaxY(amountView.frame);
     }
-    
     
     {
         actionView = [[EventActionView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];

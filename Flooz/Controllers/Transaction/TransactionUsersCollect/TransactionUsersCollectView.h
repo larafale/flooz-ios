@@ -1,8 +1,8 @@
 //
-//  TransactionActionsView.h
+//  TransactionUsersCollectView.h
 //  Flooz
 //
-//  Created by jonathan on 2/7/2014.
+//  Created by Jonathan on 02/08/14.
 //  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
 //
 
@@ -10,14 +10,9 @@
 
 #import "TransactionActionsViewDelegate.h"
 
-@interface TransactionActionsView : UIView{
-    CGFloat height;
-    UIImageView *arrow;
-}
+@interface TransactionUsersCollectView : UIView
 
 @property (weak, nonatomic) FLTransaction *transaction;
 @property (weak, nonatomic) id<TransactionActionsViewDelegate> delegate;
-
-- (void)cancelParticipate;
 
 @end

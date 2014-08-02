@@ -12,7 +12,6 @@
 
 #import "MenuNewTransactionViewController.h"
 #import "TransactionViewController.h"
-#import "EventViewController.h"
 
 #import "AppDelegate.h"
 
@@ -274,18 +273,10 @@
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction
 {
-    UIViewController *controller = nil;
+    TransactionViewController *controller = controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
     
-    if([transaction isCollect]){
-        return;
-//        controller = [[EventViewController alloc] initWithEvent:transaction indexPath:indexPath];
-//        ((EventViewController *)controller).delegateController = self;
-    }
-    else{
-        controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
-        ((TransactionViewController *)controller).delegateController = self;
-    }
-    
+    controller.delegateController = self;
+
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     
     [self presentViewController:controller animated:NO completion:^{
@@ -396,10 +387,9 @@
     
     FLTransaction *transaction = transactions[indexPath.row];
     
-    [scrollViewIndicator setText:[transaction when]];
+    [scrollViewIndicator setTransaction:transaction];
     
     CGRectSetY(scrollViewIndicator.frame, y);
-    
 }
 
 - (void)hideScrollViewIndicator

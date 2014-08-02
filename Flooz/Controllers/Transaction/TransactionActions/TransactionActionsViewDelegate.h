@@ -12,9 +12,11 @@
 
 - (void)reloadTransaction;
 
-- (void)showPaymentField;
 - (void)acceptTransaction;
 - (void)refuseTransaction;
-- (void)cancelTransaction;
+- (void)presentCollectParticipantsController;
+
+- (void)showPaymentField;
+- (void)hidePaymentField;
 
 @end

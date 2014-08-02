@@ -8,8 +8,6 @@
 
 #import "FriendsViewController.h"
 
-#import "FriendAddViewController.h"
-
 #import "FriendRequestCell.h"
 #import "FriendCell.h"
 #import "FriendSuggestionCell.h"
@@ -47,8 +45,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    self.navigationItem.rightBarButtonItem = [UIBarButtonItem createSearchButtonWithTarget:self action:@selector(presentFriendAddController)];
     
     refreshControl = [UIRefreshControl new];
     [refreshControl addTarget:self action:@selector(didReloadData) forControlEvents:UIControlEventValueChanged];
@@ -301,7 +297,7 @@
             _backgroundView.hidden = [friendsRequest count] > 0 || [friends count] > 0 || [friendsSuggestion count] > 0;
             
             [_tableView reloadData];
-            [_tableView setContentOffset:CGPointZero animated:YES];
+            [_tableView setContentOffset:CGPointZero animated:NO];
         }];
     }];
 }
@@ -340,15 +336,6 @@
     [[Flooz sharedInstance] friendRemove:friendId success:^{
         [self didReloadData];
     }];
-}
-
-- (void)presentFriendAddController{
-    if([self navigationController]){
-        [[self navigationController] pushViewController:[FriendAddViewController new] animated:YES];
-    }
-    else{
-        [self presentViewController:[FriendAddViewController new] animated:YES completion:NULL];
-    }
 }
 
 #pragma mark - Keyboard Management

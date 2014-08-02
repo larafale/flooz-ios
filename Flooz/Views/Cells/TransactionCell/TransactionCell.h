@@ -23,9 +23,7 @@
     UIView *leftView;
     UIView *rightView;
     UIView *slideView;
-    
-    UIImageView *scopeView;
-    
+        
     CGPoint totalTranslation;
     CGPoint lastTranslation;
     

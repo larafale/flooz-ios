@@ -116,7 +116,6 @@
     [self createAttachmentView];
     [self createSocialView];
     [self createFooterView];
-    [self createScopeView];
     [self createPaymentFieldView];
 }
 
@@ -202,12 +201,6 @@
     [rightView addSubview:view];
 }
 
-- (void)createScopeView
-{
-    scopeView = [UIImageView imageNamed:@"scope-public"];
-    [rightView addSubview:scopeView];
-}
-
 - (void)createPaymentFieldView{
     paymentField = [[FLPaymentField alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame), 0) for:nil key:nil];
     
@@ -230,7 +223,6 @@
     [self prepareDetailView];
     [self prepareAttachmentView];
     [self prepareSocialView];
-    [self prepareScopeView];
     [self prepareFooterView];
     
     CGRectSetHeight(leftView.frame, height);
@@ -345,24 +337,6 @@
     CGRectSetY(view.frame, height + 14);
 
     height = CGRectGetMaxY(view.frame);
-}
-
-- (void)prepareScopeView
-{
-    NSString *imageNamed = nil;
-    
-    if(_transaction.social.scope == SocialScopeFriend){
-        imageNamed = @"scope-friend";
-    }
-    else if(_transaction.social.scope == SocialScopePrivate){
-        imageNamed = @"scope-private";
-    }
-    else if(_transaction.social.scope == SocialScopePublic){
-        imageNamed = @"scope-public";
-    }
-    
-    scopeView.image = [UIImage imageNamed:imageNamed];
-    CGRectSetXY(scopeView.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(scopeView.frame), 0);
 }
 
 - (void)prepareFooterView{

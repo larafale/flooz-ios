@@ -127,7 +127,9 @@
     background = [[UIView alloc] initWithFrame:CGRectMakeWithSize(appDelegate.window.frame.size)];
     background.backgroundColor = [UIColor customBackground:.6];
     
+    CGAffineTransform tr = CGAffineTransformScale(self.transform, 1.1, 1.1);
     self.transform = CGAffineTransformScale(self.transform, 0, 0);
+    
     background.layer.opacity = 0;
     
     [appDelegate.window addSubview:background];
@@ -138,9 +140,15 @@
                          background.layer.opacity = 1;
                      }];
     
+    
     [UIView animateWithDuration:ANIMATION_DELAY
                      animations:^{
-                         self.transform = CGAffineTransformIdentity;
+                         self.transform = tr;
+                     } completion:^(BOOL finished) {
+                         [UIView animateWithDuration:.1
+                                          animations:^{
+                                              self.transform = CGAffineTransformIdentity;
+                                          }];
                      }];
 }
 

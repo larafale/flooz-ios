@@ -324,6 +324,11 @@
         return;
     }
     
+    if([[Flooz sharedInstance] currentUser]){
+        [self didConnected];
+    }
+    return;
+    
     NSDictionary *resource = userInfo[@"resource"];
     if([[Flooz sharedInstance] currentUser] && resource){
         NSString *resourceId = resource[@"resourceId"];

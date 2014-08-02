@@ -11,8 +11,9 @@
 @interface FLScrollViewIndicator : UIView{
     UIView *conainterView;
     JTImageLabel *label;
+    SocialScope currentScope;
 }
 
-- (void)setText:(NSString *)text;
+- (void)setTransaction:(FLTransaction *)transaction;
 
 @end

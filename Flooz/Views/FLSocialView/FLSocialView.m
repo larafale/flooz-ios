@@ -46,21 +46,29 @@
     {
         like = [[JTImageLabel alloc] initWithFrame:CGRectMakeSize(0, LINE_HEIGHT)];
         like.text = NSLocalizedString(@"CELL_SOCIAL_LIKE", nil);
-        [like setWidthToFit];
+        
+        like.textAlignment = NSTextAlignmentCenter;
+        like.layer.borderColor = [UIColor customPlaceholder:.3].CGColor;
+        like.layer.cornerRadius = 3;
+        like.layer.borderWidth = 1.;
         
         [self addSubview:like];
     }
     
     {
-        comment = [[JTImageLabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(like.frame) + 10, 0, 0, LINE_HEIGHT)];
+        comment = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 0, 0, LINE_HEIGHT)];
         comment.text = NSLocalizedString(@"CELL_SOCIAL_COMMENT", nil);
-        [comment setWidthToFit];
+        
+        comment.textAlignment = NSTextAlignmentCenter;
+        comment.layer.borderColor = [UIColor customPlaceholder:.3].CGColor;
+        comment.layer.cornerRadius = 3;
+        comment.layer.borderWidth = 1.;
         
         [self addSubview:comment];
     }
     
     {
-        commentText = [[JTImageLabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(comment.frame), 0, 0, LINE_HEIGHT)];
+        commentText = [[JTImageLabel alloc] initWithFrame:CGRectMake(0, 0, 0, LINE_HEIGHT)];
         [commentText setImage:[UIImage imageNamed:@"social-comment"]];
         [commentText setImageOffset:CGPointMake(-2.5, -1)];
         
@@ -69,8 +77,8 @@
     
     
     {
-        likeText.font = [UIFont customContentRegular:11];
-        like.font = comment.font = commentText.font = comment.font = [UIFont customContentRegular:13];
+        likeText.font = like.font = comment.font = [UIFont customContentRegular:11];
+        commentText.font = [UIFont customContentRegular:13];
         
         likeText.textColor = like.textColor = commentText.textColor = comment.textColor = [UIColor customPlaceholder];
     }
@@ -80,6 +88,14 @@
         _gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeTouch)];
         [like addGestureRecognizer:_gesture];
     }
+    
+    // Mise a jour de la largeur apres avoir mit la police
+    
+    CGRectSetWidth(like.frame, [like widthToFit] + 5);
+    CGRectSetWidth(comment.frame, [comment widthToFit] + 5);
+    
+    CGRectSetX(comment.frame, CGRectGetMaxX(like.frame) + 10);
+    CGRectSetX(commentText.frame, CGRectGetMaxX(comment.frame) + 10);
 }
 
 - (void)prepareView:(FLSocial *)social

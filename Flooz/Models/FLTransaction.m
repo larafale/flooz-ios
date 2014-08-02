@@ -20,7 +20,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json
-{    
+{
     _transactionId = [json objectForKey:@"_id"];
     
     NSString *method = [json objectForKey:@"method"];
@@ -122,11 +122,14 @@
         _text3d = [json objectForKey:@"text3d"];
     }
     
+    _isCollect = [[json objectForKey:@"isCollect"] boolValue];
     
-    _isCollect = NO;
+    _collectCanParticipate = YES;
+    if([[[[Flooz sharedInstance] currentUser] userId] isEqual:[_to userId]]){
+        _collectCanParticipate = NO;
+    }
+    
     if([json objectForKey:@"collect"]){
-        _isCollect = YES;
-        
         NSMutableArray *colllectUsers = [NSMutableArray new];
         
         for(NSDictionary *userJSON in json[@"collect"][@"froms"]){
@@ -134,6 +137,13 @@
         }
         
         _collectUsers = colllectUsers;
+    }
+    
+    _collectTitle = json[@"collect"][@"title"];
+    
+    _haveAction = NO;
+    if(_isPrivate && _status == TransactionStatusPending){
+        _haveAction = YES;
     }
 }
 

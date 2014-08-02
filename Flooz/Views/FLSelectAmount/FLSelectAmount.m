@@ -44,7 +44,8 @@
     [self addSubview:switchView];
     
     // Ne pas toucher car dans le controller la vue est en mode ouvert par defaut
-    [self setSwitch:YES];
+    switchCurrentValue = NO;
+    [self setSwitch:!switchCurrentValue];
 }
 
 - (void)setSwitch:(BOOL)value
@@ -55,6 +56,11 @@
 
 - (void)didSwitchChange
 {
+    if(switchCurrentValue == switchView.on){
+        return;
+    }
+    switchCurrentValue = switchView.on;
+    
     if(switchView.on){
          [_delegate didAmountFixSelected];
     }

@@ -49,13 +49,31 @@
     }
 }
 
-- (void)setText:(NSString *)text
+- (void)setTransaction:(FLTransaction *)transaction
 {
-    if([label.text isEqualToString:text]){
+    if(currentScope != transaction.social.scope){
+        currentScope = transaction.social.scope;
+        NSString *imageNamed = nil;
+        
+        if(transaction.social.scope == SocialScopeFriend){
+            imageNamed = @"scope-friend";
+        }
+        else if(transaction.social.scope == SocialScopePrivate){
+            imageNamed = @"scope-private";
+        }
+        else if(transaction.social.scope == SocialScopePublic){
+            imageNamed = @"scope-public";
+        }
+        
+        [label setImage:[UIImage imageNamed:imageNamed]];
+    }
+    
+    
+    if([label.text isEqualToString:[transaction when]]){
         return;
     }
     
-    label.text = text;
+    label.text = [transaction when];
     CGFloat newLabelWidth = [label widthToFit] + LABEL_MARGIN + 25; // 25 icone
     
     [UIView animateWithDuration:.5

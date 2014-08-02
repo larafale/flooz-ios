@@ -147,8 +147,8 @@
 "EDIT_ACCOUNT_SOCIAL_INFO" = "Réseaux sociaux";
 "EDIT_ACCOUNT_FACEBOOK" = "Facebook";
 
-"CELL_SOCIAL_COMMENT" = "Comment";
-"CELL_SOCIAL_LIKE" = "Like";
+"CELL_SOCIAL_COMMENT" = "Commenter";
+"CELL_SOCIAL_LIKE" = "J'aime";
 
 "FRIEND_PCIKER_SELECTION_CELL" = "Sélectionner ce contact :";
 
