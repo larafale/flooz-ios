@@ -176,7 +176,7 @@
         height = CGRectGetMaxY(view.frame);
     }
     
-    if([_transaction haveAction] || _transaction.collectCanParticipate){
+    if([_transaction haveAction] || (_transaction.isCollect && _transaction.collectCanParticipate)){
         actionsView = [[TransactionActionsView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(_mainView.frame), 0)];
         actionsView.transaction = _transaction;
         actionsView.delegate = self;
@@ -184,7 +184,7 @@
         height = CGRectGetMaxY(actionsView.frame);
     }
     
-    if(_transaction.collectCanParticipate){
+    if(_transaction.isCollect && _transaction.collectCanParticipate){
         amountInput = [[FLNewTransactionAmount alloc] initFor:paymentFieldAmountData key:@"amount" width:CGRectGetWidth(_mainView.frame) delegate:self];
         [_mainView addSubview:amountInput];
         CGRectSetY(amountInput.frame, height - 1);

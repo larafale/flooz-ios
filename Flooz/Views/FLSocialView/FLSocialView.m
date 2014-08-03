@@ -48,9 +48,9 @@
         like.text = NSLocalizedString(@"CELL_SOCIAL_LIKE", nil);
         
         like.textAlignment = NSTextAlignmentCenter;
-        like.layer.borderColor = [UIColor customPlaceholder:.3].CGColor;
-        like.layer.cornerRadius = 3;
-        like.layer.borderWidth = 1.;
+//        like.layer.borderColor = [UIColor customPlaceholder:.3].CGColor;
+//        like.layer.cornerRadius = 3;
+//        like.layer.borderWidth = 1.;
         
         [self addSubview:like];
     }
@@ -60,9 +60,9 @@
         comment.text = NSLocalizedString(@"CELL_SOCIAL_COMMENT", nil);
         
         comment.textAlignment = NSTextAlignmentCenter;
-        comment.layer.borderColor = [UIColor customPlaceholder:.3].CGColor;
-        comment.layer.cornerRadius = 3;
-        comment.layer.borderWidth = 1.;
+//        comment.layer.borderColor = [UIColor customPlaceholder:.3].CGColor;
+//        comment.layer.cornerRadius = 3;
+//        comment.layer.borderWidth = 1.;
         
         [self addSubview:comment];
     }
