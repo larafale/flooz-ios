@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
+		8B81C5AB1999442900765C63 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81C5AA1999442900765C63 /* Crashlytics.framework */; };
+		8B81C5AC1999442900765C63 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81C5AA1999442900765C63 /* Crashlytics.framework */; };
 		AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0857FC1923AB13007C1927 /* SplashViewController.m */; };
 		AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
 		AB0D88F3197978F400A37630 /* InvitCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0D88F1197978F400A37630 /* InvitCodeViewController.m */; };
@@ -360,6 +362,7 @@
 
 /* Begin PBXFileReference section */
 		1686D3DC8F1E47F8A8972682 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B81C5AA1999442900765C63 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		A6DB3651EEDD47E4B9F184AE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		AB0857FB1923AB13007C1927 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashViewController.h; path = Controllers/Splash/SplashViewController.h; sourceTree = "<group>"; };
 		AB0857FC1923AB13007C1927 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashViewController.m; path = Controllers/Splash/SplashViewController.m; sourceTree = "<group>"; };
@@ -695,6 +698,7 @@
 				AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */,
 				AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */,
 				AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */,
+				8B81C5AB1999442900765C63 /* Crashlytics.framework in Frameworks */,
 				ABBB75DA18B656820070C2A8 /* AVFoundation.framework in Frameworks */,
 				ABA96DAC196EED4D00B8B7C7 /* opencv2.framework in Frameworks */,
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
@@ -732,6 +736,7 @@
 				ABAA3FF2197E96BF009F29EF /* Security.framework in Frameworks */,
 				ABAA3FF3197E96BF009F29EF /* CFNetwork.framework in Frameworks */,
 				ABAA3FF4197E96BF009F29EF /* libicucore.dylib in Frameworks */,
+				8B81C5AC1999442900765C63 /* Crashlytics.framework in Frameworks */,
 				ABAA3FF5197E96BF009F29EF /* AVFoundation.framework in Frameworks */,
 				ABAA3FF6197E96BF009F29EF /* opencv2.framework in Frameworks */,
 				ABAA3FF7197E96BF009F29EF /* CoreGraphics.framework in Frameworks */,
@@ -915,6 +920,7 @@
 		AB3D0890186CA11A00CF8380 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B81C5AA1999442900765C63 /* Crashlytics.framework */,
 				ABA96DB3196EF24400B8B7C7 /* AssetsLibrary.framework */,
 				ABA96DB1196EF23600B8B7C7 /* AudioToolbox.framework */,
 				ABA96DAD196EF22300B8B7C7 /* CoreMedia.framework */,
@@ -1946,6 +1952,7 @@
 				AB3D088B186CA11A00CF8380 /* Frameworks */,
 				AB3D088C186CA11A00CF8380 /* Resources */,
 				836A9764AB864657A1C519EB /* Copy Pods Resources */,
+				8B81C5A91999438200765C63 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2158,6 +2165,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8B81C5A91999438200765C63 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
 		};
 		ABAA3F7E197E96BF009F29EF /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2541,6 +2561,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
@@ -2593,6 +2614,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
@@ -2707,6 +2729,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
@@ -2741,6 +2764,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
@@ -2811,6 +2835,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
@@ -2844,6 +2869,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";

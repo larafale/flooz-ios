@@ -22,6 +22,7 @@
 
 #import "SecureCodeViewController.h"
 #import <Analytics/Analytics.h>
+#import <Crashlytics/Crashlytics.h>
 
 #import "TransactionViewController.h"
 #import "EventViewController.h"
@@ -43,6 +44,8 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    [Crashlytics startWithAPIKey:@"4f18178e0b7894ec76bb6f01a60f34baf68acbf7"];
     
     // Doit etre un FLNavigationController, sinon dans le cas ou appel secureCode la vue ne peut pas etre push
     self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[SplashViewController new]];
