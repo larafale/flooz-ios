@@ -2736,6 +2736,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FLOOZ_DEV_API=1",
+					"PONY_D=1",
 				);
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

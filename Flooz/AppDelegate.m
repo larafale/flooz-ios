@@ -23,6 +23,7 @@
 #import "SecureCodeViewController.h"
 #import <Analytics/Analytics.h>
 #import <Crashlytics/Crashlytics.h>
+#import <PonyDebugger/PonyDebugger.h>
 
 #import "TransactionViewController.h"
 #import "EventViewController.h"
@@ -54,6 +55,16 @@
         self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     }
 
+    // initialisation de MagicalRecord
+    // Pony Debugger
+#ifdef PONY_D
+    PDDebugger *debugger = [PDDebugger defaultInstance];
+    [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+    [debugger enableNetworkTrafficDebugging];
+    [debugger forwardAllNetworkTraffic];
+    [debugger enableViewHierarchyDebugging];
+#endif
+    
 #ifdef FLOOZ_DEV_API
     NSLog(@"API DEV");
 #else
