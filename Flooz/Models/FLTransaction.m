@@ -124,7 +124,7 @@
     
     _isCollect = [[json objectForKey:@"isCollect"] boolValue];
     
-    _collectCanParticipate = YES;
+    _collectCanParticipate = NO; //Collect removed
     if([[[[Flooz sharedInstance] currentUser] userId] isEqual:[_to userId]]){
         _collectCanParticipate = NO;
     }
