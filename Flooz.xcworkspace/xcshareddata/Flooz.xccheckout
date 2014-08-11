@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>7D1D874D-AEB4-4654-A995-21E1D0571B62</string>
+	<string>15119413-2DC0-4461-AECD-606185139132</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Flooz</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>887D6D9A-EAB1-479B-B3B8-FC6E17D5D9FF</key>
-		<string>ssh://bitbucket.org/eviljojo22/eivo-flooz-ios.git</string>
+		<key>A4BAFD6D-4871-4FCE-B3A1-BC3B90E87179</key>
+		<string>ssh://github.com/larafale/flooz-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Flooz.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>887D6D9A-EAB1-479B-B3B8-FC6E17D5D9FF</key>
+		<key>A4BAFD6D-4871-4FCE-B3A1-BC3B90E87179</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://bitbucket.org/eviljojo22/eivo-flooz-ios.git</string>
+	<string>ssh://github.com/larafale/flooz-ios.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>887D6D9A-EAB1-479B-B3B8-FC6E17D5D9FF</string>
+	<string>A4BAFD6D-4871-4FCE-B3A1-BC3B90E87179</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>887D6D9A-EAB1-479B-B3B8-FC6E17D5D9FF</string>
+			<string>A4BAFD6D-4871-4FCE-B3A1-BC3B90E87179</string>
 			<key>IDESourceControlWCCName</key>
-			<string>flooz</string>
+			<string>flooz-ios</string>
 		</dict>
 	</array>
 </dict>

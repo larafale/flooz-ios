@@ -7,6 +7,7 @@
 //
 
 #import "TransactionViewController.h"
+#import "SecureCodeViewController.h"
 
 #import "TransactionHeaderView.h"
 #import "TransactionActionsView.h"
@@ -341,32 +342,44 @@
         return;
     }
     
-    [[Flooz sharedInstance] showLoadView];
-    
-    [[Flooz sharedInstance] participateCollect:_transaction.transactionId amount:paymentFieldAmountData[@"amount"] success:^(id result) {
-        
-        paymentFieldIsVisible = NO;
+    CompleteBlock completeBlock = ^{
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] transactionWithId:[_transaction transactionId] success:^(id result) {
-            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-            [self reloadTransaction];
-        }];
-    } failure:NULL];
+        
+        [[Flooz sharedInstance] participateCollect:_transaction.transactionId amount:paymentFieldAmountData[@"amount"] success:^(id result) {
+            
+            paymentFieldIsVisible = NO;
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] transactionWithId:[_transaction transactionId] success:^(id result) {
+                _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                [self reloadTransaction];
+            }];
+        } failure:NULL];
+    };
+    
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    controller.completeBlock = completeBlock;
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)didTransactionValidated
 {
-    NSDictionary *params = @{
-                             @"id": [_transaction transactionId],
-                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
-                             };
+    CompleteBlock completeBlock = ^{
+        NSDictionary *params = @{
+                                 @"id": [_transaction transactionId],
+                                 @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
+                                 };
+        
+        [[Flooz sharedInstance] showLoadView];
+        
+        [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            [self reloadTransaction];
+        } failure:NULL];
+    };
     
-    [[Flooz sharedInstance] showLoadView];
-    
-    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-        [self reloadTransaction];
-    } failure:NULL];
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    controller.completeBlock = completeBlock;
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)presentCollectParticipantsController

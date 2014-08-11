@@ -87,51 +87,65 @@
                                    traits:params];
 #endif
     
-    CompleteBlock completeBlock = ^{
-        if(!savedViewController){
-            savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
-        }
-        
-        [UIView transitionWithView:self.window
-                          duration:0.7
-                           options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
-                        animations:^{
-                            self.window.rootViewController = savedViewController;
-                        }
-                        completion:^(BOOL finished) {
-                            savedViewController = nil;
-                        }
-         ];
-    };
-    
-    
-    FLNavigationController *navController = nil;
-    SecureCodeViewController *controller = [SecureCodeViewController new];
-    controller.completeBlock = completeBlock;
-    
-    // Sortie de mise en vieille cas où on est deja connecté
-    if([self.window.rootViewController isKindOfClass:[FLContainerViewController class]]){
+    if(!savedViewController){
+        savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
+    }
+    [UIView transitionWithView:self.window
+                      duration:0.7
+                       options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
+                    animations:^{
+                        self.window.rootViewController = savedViewController;
+                    }
+                    completion:^(BOOL finished) {
+                        savedViewController = nil;
+                    }
+     ];
+//
+//    CompleteBlock completeBlock = ^{
+//        if(!savedViewController){
+//            savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
+//        }
+//        
+//        [UIView transitionWithView:self.window
+//                          duration:0.7
+//                           options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
+//                        animations:^{
+//                            self.window.rootViewController = savedViewController;
+//                        }
+//                        completion:^(BOOL finished) {
+//                            savedViewController = nil;
+//                        }
+//         ];
+//    };
+//
+//    
+//    FLNavigationController *navController = nil;
+//    SecureCodeViewController *controller = [SecureCodeViewController new];
+//    controller.completeBlock = completeBlock;
+//    
+//    // Sortie de mise en vieille cas où on est deja connecté
+//    if([self.window.rootViewController isKindOfClass:[FLContainerViewController class]]){
 //        savedViewController = self.window.rootViewController;
-        
-        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-        self.window.rootViewController = navController;
-    }
-    else{
-        navController = (FLNavigationController *)self.window.rootViewController;
-    }
-    
-    
-    // Cas ou fait retour sur le splashscreen
-    if([[[navController viewControllers] firstObject] isKindOfClass:[SplashViewController class]]){
-        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-        self.window.rootViewController = navController;
-    }
-    
-    if([[[navController viewControllers] lastObject] presentedViewController]){
-        [[[[navController viewControllers] lastObject] presentedViewController] dismissViewControllerAnimated:NO completion:nil];
-    }
-    
-    [navController pushViewController:controller animated:NO];
+//        
+//        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+//        self.window.rootViewController = navController;
+//    }
+//    else{
+//        navController = (FLNavigationController *)self.window.rootViewController;
+//    }
+//    
+//    
+//    // Cas ou fait retour sur le splashscreen
+//    if([[[navController viewControllers] firstObject] isKindOfClass:[SplashViewController class]]){
+//        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+//        self.window.rootViewController = navController;
+//    }
+//    
+//    if([[[navController viewControllers] lastObject] presentedViewController]){
+//        [[[[navController viewControllers] lastObject] presentedViewController] dismissViewControllerAnimated:NO completion:nil];
+//    }
+//    
+//    [navController pushViewController:controller animated:NO];
 }
 
 - (void)clearSavedViewController

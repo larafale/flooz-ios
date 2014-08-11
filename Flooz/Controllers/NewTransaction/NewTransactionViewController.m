@@ -464,18 +464,24 @@
 
 - (void)didTransactionValidated
 {
-    [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
-        FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
-        TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
-        [self dismissViewControllerAnimated:YES completion:^{
-            if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
-                [[timelineController filterView] selectFilter:2];
-                FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
-                [rootController.navbarView loadControllerWithIndex:1];
-            }
-        }];
-    } failure:NULL];
+    CompleteBlock completeBlock = ^{
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] createTransaction:transaction success:^(id result) {
+            FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
+            TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
+            [self dismissViewControllerAnimated:YES completion:^{
+                if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+                    [[timelineController filterView] selectFilter:2];
+                    FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
+                    [rootController.navbarView loadControllerWithIndex:1];
+                }
+            }];
+        } failure:NULL];
+    };
+    
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    controller.completeBlock = completeBlock;
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 @end
