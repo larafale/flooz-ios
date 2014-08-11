@@ -50,11 +50,12 @@
     
     [crossButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     
-    eventButton = [[FLMenuNewTransactionButton alloc] initWithPosition:(SCREEN_HEIGHT > 500 ? 90 : 20) imageNamed:@"menu-new-transaction-event" title:@"MENU_NEW_TRANSACTION_EVENT"];
-    [self.view addSubview:eventButton];
-    [eventButton addTarget:self action:@selector(presentNewTransactionControllerForEvent) forControlEvents:UIControlEventTouchUpInside];
+    // Collects disabled right now
+//    eventButton = [[FLMenuNewTransactionButton alloc] initWithPosition:(SCREEN_HEIGHT > 500 ? 90 : 20) imageNamed:@"menu-new-transaction-event" title:@"MENU_NEW_TRANSACTION_EVENT"];
+//    [self.view addSubview:eventButton];
+//    [eventButton addTarget:self action:@selector(presentNewTransactionControllerForEvent) forControlEvents:UIControlEventTouchUpInside];
     
-    collectionButton = [[FLMenuNewTransactionButton alloc] initWithPosition:(CGRectGetMaxY(eventButton.frame) + 24) imageNamed:@"menu-new-transaction-collect" title:@"MENU_NEW_TRANSACTION_COLLECT"];
+    collectionButton = [[FLMenuNewTransactionButton alloc] initWithPosition:(SCREEN_HEIGHT > 500 ? 210 : 140 + 24) imageNamed:@"menu-new-transaction-collect" title:@"MENU_NEW_TRANSACTION_COLLECT"];
     [self.view addSubview:collectionButton];
     [collectionButton addTarget:self action:@selector(presentNewTransactionControllerForCollect) forControlEvents:UIControlEventTouchUpInside];
     
