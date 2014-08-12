@@ -52,8 +52,13 @@
     
     self.view.backgroundColor = [UIColor customBackground];
     
+    CGFloat yMarginToAdd = 0.0f;
+    if(SCREEN_HEIGHT > 500){
+        yMarginToAdd = 40.0;
+    }
+    
     {
-        textCode = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 320, 20)];
+        textCode = [[UILabel alloc] initWithFrame:CGRectMake(0, 65 + yMarginToAdd*0.5f, 320, 20)];
         
         textCode.textAlignment = NSTextAlignmentCenter;
         textCode.textColor = [UIColor customBlueLight];
@@ -63,7 +68,7 @@
     }
     
     {
-        usernameField = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(20, 50)];
+        usernameField = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(20, 110 + yMarginToAdd)];
         passwordField = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(20, CGRectGetMaxY(usernameField.frame))];
         [passwordField seTsecureTextEntry:YES];
         
@@ -72,7 +77,7 @@
     }
     
     {
-        passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, 110, CGRectGetWidth(self.view.frame), 50)];
+        passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, 170 + yMarginToAdd, CGRectGetWidth(self.view.frame), 50)];
         passwordForget.titleLabel.textAlignment = NSTextAlignmentCenter;
         passwordForget.titleLabel.font = [UIFont customContentRegular:12];
         [passwordForget setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
@@ -84,7 +89,7 @@
     }
     
     {
-        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 120, 280, 50)];
+        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 180 + yMarginToAdd, 280, 50)];
         
         firstTimeText.textColor = [UIColor customBlueLight];
         firstTimeText.font = [UIFont customContentRegular:14];
@@ -97,7 +102,7 @@
     {
         secureCodeField = [SecureCodeField new];
         [self.view addSubview:secureCodeField];
-        CGRectSetY(secureCodeField.frame, 55);
+        CGRectSetY(secureCodeField.frame, 100 + yMarginToAdd);
     }
     
     {
