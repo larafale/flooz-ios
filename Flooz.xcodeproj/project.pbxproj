@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
+		8B102E06199A61C20040278F /* FLStartButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCB8D2A19996E6E00CE628F /* FLStartButton.m */; };
+		8B102E07199A61CA0040278F /* FLStartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2410E199975BC00AAE69E /* FLStartItem.m */; };
 		8B55B44119996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
 		8B55B44219996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
 		8B55B44319996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
@@ -435,7 +437,7 @@
 		AB3CAE90194BACE80081EB28 /* libPods-GoogleAnalytics-iOS-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-GoogleAnalytics-iOS-SDK.a"; path = "Pods/build/Release-iphoneos/libPods-GoogleAnalytics-iOS-SDK.a"; sourceTree = "<group>"; };
 		AB3CAE91194BACE80081EB28 /* libPods-Mixpanel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Mixpanel.a"; path = "Pods/build/Release-iphoneos/libPods-Mixpanel.a"; sourceTree = "<group>"; };
 		AB3CAE92194BACE80081EB28 /* libPods-Taplytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Taplytics.a"; path = "Pods/build/Release-iphoneos/libPods-Taplytics.a"; sourceTree = "<group>"; };
-		AB3D088E186CA11A00CF8380 /* Flooz Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flooz Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB3D088E186CA11A00CF8380 /* Flooz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flooz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3D0891186CA11A00CF8380 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AB3D0895186CA11A00CF8380 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -956,7 +958,7 @@
 		AB3D088F186CA11A00CF8380 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AB3D088E186CA11A00CF8380 /* Flooz Dev.app */,
+				AB3D088E186CA11A00CF8380 /* Flooz.app */,
 				AB3D08A9186CA11A00CF8380 /* FloozTests.xctest */,
 				ABAA4029197E96BF009F29EF /* Flooz dev.app */,
 			);
@@ -2009,7 +2011,7 @@
 			);
 			name = Flooz;
 			productName = Flooz;
-			productReference = AB3D088E186CA11A00CF8380 /* Flooz Dev.app */;
+			productReference = AB3D088E186CA11A00CF8380 /* Flooz.app */;
 			productType = "com.apple.product-type.application";
 		};
 		AB3D08A8186CA11A00CF8380 /* FloozTests */ = {
@@ -2039,6 +2041,7 @@
 				ABAA3FE7197E96BF009F29EF /* Frameworks */,
 				ABAA3FFC197E96BF009F29EF /* Resources */,
 				ABAA4025197E96BF009F29EF /* Copy Pods Resources */,
+				8B102E08199A627C0040278F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2214,6 +2217,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8B102E08199A627C0040278F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
 		};
 		8B81C5A91999438200765C63 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2464,6 +2480,7 @@
 				ABAA3FAF197E96BF009F29EF /* FLFriendRequest.m in Sources */,
 				ABAA3FB0197E96BF009F29EF /* EventsViewController.m in Sources */,
 				ABAA3FB1197E96BF009F29EF /* FLUser.m in Sources */,
+				8B102E07199A61CA0040278F /* FLStartItem.m in Sources */,
 				ABAA3FB2197E96BF009F29EF /* FLNewTransactionAmount.m in Sources */,
 				ABAA3FB3197E96BF009F29EF /* FriendAddSearchBar.m in Sources */,
 				ABAA3FB4197E96BF009F29EF /* AcitvitiesViewController.m in Sources */,
@@ -2517,6 +2534,7 @@
 				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
 				ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */,
 				ABAA3FE4197E96BF009F29EF /* FLImageView.m in Sources */,
+				8B102E06199A61C20040278F /* FLStartButton.m in Sources */,
 				ABAA3FE5197E96BF009F29EF /* FLTextFieldTitle.m in Sources */,
 				ABAA3FE6197E96BF009F29EF /* PasswordViewController.m in Sources */,
 			);
@@ -2588,7 +2606,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flooz (QU87Q423GH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mobile-D Group";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2601,7 +2619,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PROVISIONING_PROFILE = "D415D986-0729-4041-9648-458DD9707A37";
+				PROVISIONING_PROFILE = "12D947BF-ED33-4313-A70C-37E91E764AC5";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -2636,7 +2654,7 @@
 					"-lstdc++",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = "Flooz Dev";
+				PRODUCT_NAME = "Flooz dev";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2676,7 +2694,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					FLOOZ_DEV_API,
+					"FLOOZ_DEV_API=1",
 				);
 				INFOPLIST_FILE = "Flooz dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -2801,7 +2819,7 @@
 					"-lstdc++",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = "Flooz Dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2830,7 +2848,7 @@
 					"-lstdc++",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = Flooz;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
