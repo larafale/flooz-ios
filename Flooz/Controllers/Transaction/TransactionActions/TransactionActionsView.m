@@ -39,9 +39,9 @@
     
 //    [view setImage:[UIImage imageNamed:@"transaction-cell-cross"] forState:UIControlStateNormal];
     [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_REFUSE", nil) forState:UIControlStateNormal];
-    [view setTitleColor:[UIColor customRed] forState:UIControlStateNormal];
+    [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [view setBackgroundColor:[UIColor customRed]];
+    [view setBackgroundColor:[UIColor customBlueHover]];
     [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [view addTarget:self action:@selector(didRefuseTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -54,14 +54,14 @@
     UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., 0, CGRectGetWidth(self.frame) / 2., CGRectGetHeight(self.frame))];
     
     view.titleLabel.textAlignment = NSTextAlignmentCenter;
-    view.titleLabel.font = [UIFont customTitleExtraLight:14];
+    view.titleLabel.font = [UIFont customTitleLight:16];
     [view setImageEdgeInsets:UIEdgeInsetsMake(2, -10, 0, 0)];
     
 //    [view setImage:[UIImage imageNamed:@"transaction-cell-check"] forState:UIControlStateNormal];
     [view setTitle:NSLocalizedString(@"TRANSACTION_ACTION_ACCEPT", nil) forState:UIControlStateNormal];
-    [view setTitleColor:[UIColor customGreen] forState:UIControlStateNormal];
+    [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [view setBackgroundColor:[UIColor customGreen]];
+    [view setBackgroundColor:[UIColor customBlueLight]];
     [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [view addTarget:self action:@selector(didAcceptTouch) forControlEvents:UIControlEventTouchUpInside];
