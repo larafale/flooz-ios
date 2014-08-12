@@ -435,7 +435,7 @@
 		AB3CAE90194BACE80081EB28 /* libPods-GoogleAnalytics-iOS-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-GoogleAnalytics-iOS-SDK.a"; path = "Pods/build/Release-iphoneos/libPods-GoogleAnalytics-iOS-SDK.a"; sourceTree = "<group>"; };
 		AB3CAE91194BACE80081EB28 /* libPods-Mixpanel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Mixpanel.a"; path = "Pods/build/Release-iphoneos/libPods-Mixpanel.a"; sourceTree = "<group>"; };
 		AB3CAE92194BACE80081EB28 /* libPods-Taplytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Taplytics.a"; path = "Pods/build/Release-iphoneos/libPods-Taplytics.a"; sourceTree = "<group>"; };
-		AB3D088E186CA11A00CF8380 /* Flooz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flooz.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB3D088E186CA11A00CF8380 /* Flooz Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flooz Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3D0891186CA11A00CF8380 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AB3D0895186CA11A00CF8380 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -956,7 +956,7 @@
 		AB3D088F186CA11A00CF8380 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AB3D088E186CA11A00CF8380 /* Flooz.app */,
+				AB3D088E186CA11A00CF8380 /* Flooz Dev.app */,
 				AB3D08A9186CA11A00CF8380 /* FloozTests.xctest */,
 				ABAA4029197E96BF009F29EF /* Flooz dev.app */,
 			);
@@ -2009,7 +2009,7 @@
 			);
 			name = Flooz;
 			productName = Flooz;
-			productReference = AB3D088E186CA11A00CF8380 /* Flooz.app */;
+			productReference = AB3D088E186CA11A00CF8380 /* Flooz Dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		AB3D08A8186CA11A00CF8380 /* FloozTests */ = {
@@ -2614,7 +2614,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -2637,8 +2636,7 @@
 					"-lstdc++",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D415D986-0729-4041-9648-458DD9707A37";
+				PRODUCT_NAME = "Flooz Dev";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2781,8 +2779,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -2805,8 +2801,7 @@
 					"-lstdc++",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "70ED2344-83BB-4C19-B11E-DB43D7CB8A34";
+				PRODUCT_NAME = "Flooz Dev";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2818,7 +2813,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -2836,8 +2830,7 @@
 					"-lstdc++",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PRODUCT_NAME = Flooz;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
