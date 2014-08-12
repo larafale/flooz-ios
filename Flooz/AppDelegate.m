@@ -15,6 +15,7 @@
 #import "HomeViewController.h"
 #import "SignupViewController.h"
 #import "LoginViewController.h"
+#import "FirstLaunchViewController.h"
 
 #import "EventsViewController.h"
 #import "TimelineViewController.h"
@@ -54,7 +55,6 @@
     if(![[Flooz sharedInstance] autologin]){
         self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
     }
-
     // initialisation de MagicalRecord
     // Pony Debugger
 #ifdef PONY_D
@@ -109,6 +109,9 @@
                        options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
                     animations:^{
                         self.window.rootViewController = savedViewController;
+#ifdef SIMUL_FIRST_LAUNCH
+                        [self.window.rootViewController presentViewController:[FirstLaunchViewController new] animated:YES completion:NULL];
+#endif
                     }
                     completion:^(BOOL finished) {
                         savedViewController = nil;
