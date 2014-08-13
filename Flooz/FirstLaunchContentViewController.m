@@ -10,10 +10,21 @@
 #import "FLStartButton.h"
 #import "FLStartItem.h"
 
+#import "AppDelegate.h"
+#import "FLKeyboardView.h"
+#import "FLHomeTextField.h"
+
 @interface FirstLaunchContentViewController ()
 {
     CGFloat sizePicto;
     CGFloat ratioiPhones;
+    
+    //Screen 2
+    UIImageView *logo;
+    NSMutableDictionary *phone;
+    
+    FLHomeTextField *phoneField;
+    FLKeyboardView *inputView;
 }
 
 @end
@@ -25,7 +36,7 @@
     [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     CGRect frame    = [[UIScreen mainScreen] bounds];
     self.view.frame = frame;
-    self.view.backgroundColor = [UIColor customBackground];
+    self.view.backgroundColor = [UIColor customBackgroundHeader];
     
     //[self.view setFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - STATUSBAR_HEIGHT - NAVBAR_HEIGHT)];
 }
@@ -42,7 +53,6 @@
         sizePicto = sizePicto / ratioiPhones;
     }
     
-    
 	[self setContent];
 }
 
@@ -52,10 +62,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-    
+    /*
 	if ([self.delegate respondsToSelector:@selector(firstLaunchContentViewControllerDidDAppear:)]) {
 		[self.delegate firstLaunchContentViewControllerDidDAppear:self];
 	}
+    */
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -69,14 +80,14 @@
     label.font = [UIFont customTitleExtraLight:28];
     label.textColor = [UIColor customBlue];
     label.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:label];
     
     UIView *bar = [[UIView alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 - 25.0f, CGRectGetMaxY(label.frame) + 15.0f / ratioiPhones, 50.0f, 1.0f)];
     [bar setBackgroundColor:[UIColor customBlue]];
-    [self.view addSubview:bar];
     
     switch (_pageIndex) {
 		case 0: {
+            [self.view addSubview:label];
+            [self.view addSubview:bar];
             label.text = NSLocalizedString(@"SIGNUP_HEAD_TITLE", @"");
             
             UIView *item1 = [self placePictoAndText:@"friend.png" title:@"SIGNUP_VIEW_1_TITLE_1" subTitle:@"SIGNUP_VIEW_1_SUBTITLE_1" underView:bar];
@@ -90,7 +101,15 @@
         }
             break;
 		case 1: {
+            [self.view addSubview:label];
+            [self.view addSubview:bar];
             label.text = NSLocalizedString(@"SIGNUP_HEAD_TITLE_2", @"");
+            
+            UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(11, STATUSBAR_HEIGHT + 20 / ratioiPhones, 30, 30)];
+            [backButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
+            [backButton setCenter:CGPointMake(26, CGRectGetMidY(label.frame) + 1)];
+            [backButton addTarget:self action:@selector(goToPreviousPage:) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:backButton];
             
             UIView *item1 = [self placePictoAndText:@"friend.png" title:@"SIGNUP_VIEW_2_TITLE_1" subTitle:@"SIGNUP_VIEW_2_SUBTITLE_1" underView:bar];
             UIView *item2 = [self placePictoAndText:@"earth.png" title:@"SIGNUP_VIEW_2_TITLE_2" subTitle:@"SIGNUP_VIEW_2_SUBTITLE_2" underView:item1];
@@ -102,6 +121,36 @@
             [self.view addSubview:startButton];
         }
             break;
+        case 2: {
+            
+            UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(11, STATUSBAR_HEIGHT + 20 / ratioiPhones, 30, 30)];
+            [backButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
+            [backButton setCenter:CGPointMake(26, CGRectGetMidY(label.frame) + 1)];
+            [backButton addTarget:self action:@selector(goToPreviousPage:) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:backButton];
+            
+            phone = [NSMutableDictionary new];
+            logo = [UIImageView imageNamed:@"home-logo"];
+            CGRectSetWidthHeight(logo.frame, 105, 105);
+            CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
+            [self.view addSubview:logo];
+            
+            phoneField = [[FLHomeTextField alloc] initWithPlaceholder:@"06 ou code" for:phone key:@"phone" position:CGPointMake(20, 200)];
+            
+            if(SCREEN_HEIGHT < 500){
+                CGRectSetXY(phoneField.frame, (SCREEN_WIDTH - phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 5);
+            }
+            else{
+                CGRectSetXY(phoneField.frame, (SCREEN_WIDTH - phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 35);
+            }
+            [phoneField addForNextClickTarget:self action:@selector(didConnectTouch)];
+            
+            [self.view addSubview:phoneField];
+            
+            inputView = [FLKeyboardView new];
+            inputView.textField = phoneField.textfield;
+            phoneField.textfield.inputView = inputView;
+        }
         default: {
             label.text = [NSString stringWithFormat:@"%d", (int)_pageIndex];
         }
@@ -144,6 +193,20 @@
     [textView setCenter:CGPointMake(CGRectGetMidX(textView.frame), CGRectGetMidY(picto.frame))];
     
     [self.view addSubview:textView];
+}
+
+
+- (void)didConnectTouch
+{
+    [[self view] endEditing:YES];
+    
+    if(phone[@"phone"] && ![phone[@"phone"] isBlank]){
+        [inputView setKeyboardValidateWithTarget:self action:@selector(didConnectTouch)];
+        
+        [[Flooz sharedInstance] showLoadView];
+        [appDelegate clearSavedViewController];
+        [[Flooz sharedInstance] loginWithPhone:phone[@"phone"]];
+    }
 }
 
 #pragma mark - button methods

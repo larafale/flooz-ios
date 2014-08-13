@@ -53,7 +53,7 @@
     self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[SplashViewController new]];
     
     if(![[Flooz sharedInstance] autologin]){
-        self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+        self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[FirstLaunchViewController new]];
     }
     // initialisation de MagicalRecord
     // Pony Debugger
@@ -110,7 +110,7 @@
                     animations:^{
                         self.window.rootViewController = savedViewController;
 #ifdef SIMUL_FIRST_LAUNCH
-                        [self.window.rootViewController presentViewController:[FirstLaunchViewController new] animated:YES completion:NULL];
+                        [self.window.rootViewController presentViewController:[HomeViewController new] animated:YES completion:NULL];
 #endif
                     }
                     completion:^(BOOL finished) {
@@ -201,7 +201,8 @@
 
 - (void)didDisconnected
 {
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    //FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FirstLaunchViewController new]];
     
     [UIView transitionWithView:self.window
                       duration:0.7

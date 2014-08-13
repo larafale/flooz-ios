@@ -26,7 +26,7 @@
     [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     CGRect frame    = [[UIScreen mainScreen] bounds];
     self.view.frame = frame;
-    self.view.backgroundColor = [UIColor customBackground];
+    self.view.backgroundColor = [UIColor customBackgroundHeader];
 }
 
 #define NUMBER_OF_PAGES 3
@@ -50,7 +50,6 @@
     [self.view addSubview:_pageViewController.view];
     
     [self.navigationController setNavigationBarHidden:YES];
-    //__block FirstLaunchViewController *weakSelf = self;
     
     [self setScrollEnabled:NO forPageViewController:_pageViewController];
     [_pageViewController setViewControllers:[NSArray arrayWithObject:[self viewControllerAtIndex:0]]
