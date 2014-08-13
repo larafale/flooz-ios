@@ -58,13 +58,13 @@
     }
     
     {
-        loginButton = [UIButton new];
-        
-        loginButton.backgroundColor = [UIColor clearColor];
-        loginButton.titleLabel.font = [UIFont customTitleLight:20];
-        [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [loginButton setTitle:NSLocalizedString(@"HOME_LOGIN", nil) forState:UIControlStateNormal];
-        [loginButton addTarget:self action:@selector(didConnectTouch) forControlEvents:UIControlEventTouchUpInside];
+//        loginButton = [UIButton new];
+//        
+//        loginButton.backgroundColor = [UIColor clearColor];
+//        loginButton.titleLabel.font = [UIFont customTitleLight:20];
+//        [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [loginButton setTitle:NSLocalizedString(@"HOME_LOGIN", nil) forState:UIControlStateNormal];
+//        [loginButton addTarget:self action:@selector(didConnectTouch) forControlEvents:UIControlEventTouchUpInside];
         
 //        [_contentView addSubview:loginButton];
     }
@@ -77,13 +77,11 @@
         [_contentView addSubview:phoneField];
         
         inputView = [FLKeyboardView new];
-        [inputView setKeyboardChangeable];
         inputView.textField = phoneField.textfield;
         phoneField.textfield.inputView = inputView;
-
     }
     
-    loginButton.frame = CGRectMake(20, CGRectGetMaxY(phoneField.frame) + 5, SCREEN_WIDTH - 40, 39);
+//    loginButton.frame = CGRectMake(20, CGRectGetMaxY(phoneField.frame) + 5, SCREEN_WIDTH - 40, 39);
     _contentView.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(loginButton.frame) + 5);
     
     [self registerForKeyboardNotifications];
@@ -130,7 +128,7 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight + 55, 0);
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight + 15, 0);
 }
 
 - (void)keyboardWillDisappear
