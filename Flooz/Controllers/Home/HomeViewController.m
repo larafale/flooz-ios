@@ -109,6 +109,8 @@
     [[self view] endEditing:YES];
     
     if(phone[@"phone"] && ![phone[@"phone"] isBlank]){
+        [inputView setKeyboardValidateWithTarget:self action:@selector(didConnectTouch)];
+        
         [[Flooz sharedInstance] showLoadView];
         [appDelegate clearSavedViewController];
         [[Flooz sharedInstance] loginWithPhone:phone[@"phone"]];

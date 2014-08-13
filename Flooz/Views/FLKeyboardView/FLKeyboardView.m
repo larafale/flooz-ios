@@ -45,6 +45,7 @@
         [button addTarget:self action:@selector(didButtonCloseTouch:) forControlEvents:UIControlEventTouchUpInside];
         
         closeButton = button;
+        closeButtonState = CloseButtonTypeClose;
     }
     
     {
@@ -61,6 +62,25 @@
     [closeButton setImage:nil forState:UIControlStateNormal];
     [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     [closeButton addTarget:self action:@selector(didNormalKeyboardTouch) forControlEvents:UIControlEventTouchUpInside];
+    closeButtonState = CloseButtonTypeABC;
+}
+
+- (void)setKeyboardValidateWithTarget:(id)target action:(SEL)action
+{
+    [closeButton setTitle:@"Valider" forState:UIControlStateNormal];
+    closeButton.titleLabel.font = [UIFont customTitleThin:22];
+    [closeButton setImage:nil forState:UIControlStateNormal];
+    [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    [closeButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    closeButtonState = CloseButtonTypeValidate;
+}
+
+- (void)setCloseButton {
+    [closeButton setTitle:@"" forState:UIControlStateNormal];
+    [closeButton setImage:[UIImage imageNamed:@"keyboard-close"] forState:UIControlStateNormal];
+    [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    [closeButton addTarget:self action:@selector(didButtonCloseTouch:) forControlEvents:UIControlEventTouchUpInside];
+    closeButtonState = CloseButtonTypeClose;
 }
 
 - (UIButton *)createButtonWithPosition:(CGPoint)position title:(NSString *)title
@@ -76,8 +96,8 @@
     
     button.titleLabel.font = [UIFont customTitleThin:40];
     
-//    button.layer.borderWidth = .5;
-//    button.layer.borderColor = [UIColor customSeparator].CGColor;
+    //    button.layer.borderWidth = .5;
+    //    button.layer.borderColor = [UIColor customSeparator].CGColor;
     
     [self addSubview:button];
     
@@ -96,12 +116,15 @@
     
     if(
        ([_textField delegate] &&
-       [[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)] &&
-       [[_textField delegate] textField:_textField shouldChangeCharactersInRange:offsetRange replacementString:sender.titleLabel.text]) ||
+        [[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)] &&
+        [[_textField delegate] textField:_textField shouldChangeCharactersInRange:offsetRange replacementString:sender.titleLabel.text]) ||
        [_textField delegate] == nil ||
        ![[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]
        ){
         [_textField insertText:sender.titleLabel.text];
+        if ([_textField.text length] < 10 && closeButtonState != CloseButtonTypeClose) {
+            [self setCloseButton];
+        }
     }
 }
 
@@ -127,6 +150,9 @@
        ![[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]
        ){
         [_textField deleteBackward];
+        if ([_textField.text length] < 10 && closeButtonState != CloseButtonTypeClose) {
+            [self setCloseButton];
+        }
     }
 }
 
