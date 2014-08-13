@@ -29,7 +29,7 @@
     self.view.backgroundColor = [UIColor customBackground];
 }
 
-#define NUMBER_OF_PAGES 2
+#define NUMBER_OF_PAGES 3
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,37 +50,26 @@
     [self.view addSubview:_pageViewController.view];
     
     [self.navigationController setNavigationBarHidden:YES];
+    //__block FirstLaunchViewController *weakSelf = self;
+    
+    [self setScrollEnabled:NO forPageViewController:_pageViewController];
     [_pageViewController setViewControllers:[NSArray arrayWithObject:[self viewControllerAtIndex:0]]
                                   direction:UIPageViewControllerNavigationDirectionForward
                                    animated:YES
                                  completion:^(BOOL finished) {
+                                     if (finished) {
+                                     }
                                  }];
-    
-    [self enableSwipeBetweenPage:NO];
 }
 
-- (void) enableSwipeBetweenPage:(BOOL)enable {
-    for (UIView *view in _pageViewController.view.subviews ) {
-        if ([view isKindOfClass:[UIScrollView class]]) {
-            UIScrollView *scroll = (UIScrollView *)view;
-            scroll.bounces = enable;
+-(void)setScrollEnabled:(BOOL)enabled forPageViewController:(UIPageViewController*)pageViewController{
+    for(UIView* view in pageViewController.view.subviews){
+        if([view isKindOfClass:[UIScrollView class]]){
+            UIScrollView* scrollView=(UIScrollView*)view;
+            [scrollView setScrollEnabled:enabled];
+            return;
         }
     }
-}
-
-- (void) nextPageFrom:(FirstLaunchContentViewController *)viewController {
-    FirstLaunchContentViewController *next = [self viewControllerAtIndex:viewController.pageIndex+1];
-    [self.pageViewController setViewControllers:@[next]
-                                      direction:UIPageViewControllerNavigationDirectionForward
-                                       animated:YES
-                                     completion:^(BOOL finished) {
-                                     }];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (FirstLaunchContentViewController *)viewControllerAtIndex:(NSUInteger)index {
@@ -115,28 +104,40 @@
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
-
+    
 }
 
 - (void)firstLaunchContentViewControllerDidDAppear:(FirstLaunchContentViewController *)controller;
 {
 }
 
-- (void)goToNextPage:(FirstLaunchContentViewController *)controller {
-    FirstLaunchContentViewController *next = [self viewControllerAtIndex:controller.pageIndex+1];
+- (void)goToNextPage:(NSInteger)currentIndex {
+    if (currentIndex >= NUMBER_OF_PAGES) {
+        return;
+    }
+    FirstLaunchContentViewController *next = [self viewControllerAtIndex:currentIndex+1];
     [self.pageViewController setViewControllers:@[next]
                                       direction:UIPageViewControllerNavigationDirectionForward
                                        animated:YES
                                      completion:^(BOOL finished) {
+                                         if (finished) {
+                                         }
                                      }];
+    
 }
 
-- (void)goToPreviousPage:(FirstLaunchContentViewController *)controller {
-    FirstLaunchContentViewController *previous = [self viewControllerAtIndex:controller.pageIndex-1];
+- (void)goToPreviousPage:(NSInteger)currentIndex {
+    if (currentIndex == 0) {
+        return;
+    }
+    FirstLaunchContentViewController *previous = [self viewControllerAtIndex:currentIndex-1];
     [self.pageViewController setViewControllers:@[previous]
                                       direction:UIPageViewControllerNavigationDirectionReverse
                                        animated:YES
                                      completion:^(BOOL finished) {
+                                         if (finished) {
+                                         }
                                      }];
+    
 }
 @end

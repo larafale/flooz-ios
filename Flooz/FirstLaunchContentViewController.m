@@ -27,6 +27,7 @@
     self.view.frame = frame;
     self.view.backgroundColor = [UIColor customBackground];
     
+    //[self.view setFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - STATUSBAR_HEIGHT - NAVBAR_HEIGHT)];
 }
 
 - (void)viewDidLoad
@@ -36,16 +37,17 @@
     
     sizePicto = 100.0f;
     ratioiPhones = 1.0f;
-    if (PPScreenHeight() < 500) {
-        ratioiPhones = 1.2;
+    if (PPScreenHeight() < 568) {
+        ratioiPhones = 1.2f;
         sizePicto = sizePicto / ratioiPhones;
     }
+    
+    
+	[self setContent];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-    
-	[self setContent];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -83,12 +85,12 @@
             
             FLStartButton *startButton  = [[FLStartButton alloc] initWithFrame:CGRectMake(30, PPScreenHeight() - 60 / ratioiPhones, 180, 44) title:NSLocalizedString(@"SIGNUP_VIEW_1_BUTTON", @"")];
             [startButton setOrigin:CGPointMake(PPScreenWidth()/2 - startButton.frame.size.width/2, PPScreenHeight() - startButton.frame.size.height - 28 / ratioiPhones)];
-            [startButton addTarget:self action:@selector(goToNextPage) forControlEvents:UIControlEventTouchUpInside];
+            [startButton addTarget:self action:@selector(goToNextPage:) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:startButton];
         }
             break;
 		case 1: {
-            label.text = NSLocalizedString(@"SIGNUP_HEAD_TITLE", @"");
+            label.text = NSLocalizedString(@"SIGNUP_HEAD_TITLE_2", @"");
             
             UIView *item1 = [self placePictoAndText:@"friend.png" title:@"SIGNUP_VIEW_2_TITLE_1" subTitle:@"SIGNUP_VIEW_2_SUBTITLE_1" underView:bar];
             UIView *item2 = [self placePictoAndText:@"earth.png" title:@"SIGNUP_VIEW_2_TITLE_2" subTitle:@"SIGNUP_VIEW_2_SUBTITLE_2" underView:item1];
@@ -96,7 +98,7 @@
             
             FLStartButton *startButton  = [[FLStartButton alloc] initWithFrame:CGRectMake(30, PPScreenHeight() - 60 / ratioiPhones, 220, 44) title:NSLocalizedString(@"SIGNUP_VIEW_2_BUTTON", @"")];
             [startButton setOrigin:CGPointMake(PPScreenWidth()/2 - startButton.frame.size.width/2, PPScreenHeight() - startButton.frame.size.height - 28 / ratioiPhones)];
-            [startButton addTarget:self action:@selector(goToPreviousPage) forControlEvents:UIControlEventTouchUpInside];
+            [startButton addTarget:self action:@selector(goToNextPage:) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:startButton];
         }
             break;
@@ -145,11 +147,17 @@
 }
 
 #pragma mark - button methods
-- (void) goToNextPage {
-    [self.delegate goToNextPage:self];
+- (void) goToNextPage:(id)sender {
+    //FLStartButton *button = (FLStartButton *)sender;
+    if ([self.delegate respondsToSelector:@selector(goToNextPage:)]) {
+		[self.delegate goToNextPage:_pageIndex];
+	}
 }
-- (void) goToPreviousPage {
-    [self.delegate goToPreviousPage:self];
+- (void) goToPreviousPage:(id)sender {
+    //FLStartButton *button = (FLStartButton *)sender;
+    if ([self.delegate respondsToSelector:@selector(goToPreviousPage:)]) {
+		[self.delegate goToPreviousPage:_pageIndex];
+	}
 }
 
 @end

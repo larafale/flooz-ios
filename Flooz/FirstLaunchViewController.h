@@ -12,6 +12,4 @@
 
 @interface FirstLaunchViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, FirstLaunchContentViewControllerDelegate>
 
-- (void) nextPageFrom:(FirstLaunchContentViewController *)viewController;
-
 @end
