@@ -62,11 +62,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-    /*
+    
 	if ([self.delegate respondsToSelector:@selector(firstLaunchContentViewControllerDidDAppear:)]) {
 		[self.delegate firstLaunchContentViewControllerDidDAppear:self];
 	}
-    */
 }
 
 - (void) viewWillDisappear:(BOOL)animated
