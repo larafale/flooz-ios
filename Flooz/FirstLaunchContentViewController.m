@@ -83,6 +83,7 @@
             
             FLStartButton *startButton  = [[FLStartButton alloc] initWithFrame:CGRectMake(30, PPScreenHeight() - 60 / ratioiPhones, 180, 44) title:NSLocalizedString(@"SIGNUP_VIEW_1_BUTTON", @"")];
             [startButton setOrigin:CGPointMake(PPScreenWidth()/2 - startButton.frame.size.width/2, PPScreenHeight() - startButton.frame.size.height - 28 / ratioiPhones)];
+            [startButton addTarget:self action:@selector(goToNextPage) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:startButton];
         }
             break;
@@ -95,6 +96,7 @@
             
             FLStartButton *startButton  = [[FLStartButton alloc] initWithFrame:CGRectMake(30, PPScreenHeight() - 60 / ratioiPhones, 220, 44) title:NSLocalizedString(@"SIGNUP_VIEW_2_BUTTON", @"")];
             [startButton setOrigin:CGPointMake(PPScreenWidth()/2 - startButton.frame.size.width/2, PPScreenHeight() - startButton.frame.size.height - 28 / ratioiPhones)];
+            [startButton addTarget:self action:@selector(goToPreviousPage) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:startButton];
         }
             break;
@@ -140,6 +142,14 @@
     [textView setCenter:CGPointMake(CGRectGetMidX(textView.frame), CGRectGetMidY(picto.frame))];
     
     [self.view addSubview:textView];
+}
+
+#pragma mark - button methods
+- (void) goToNextPage {
+    [self.delegate goToNextPage:self];
+}
+- (void) goToPreviousPage {
+    [self.delegate goToPreviousPage:self];
 }
 
 @end

@@ -55,6 +55,26 @@
                                    animated:YES
                                  completion:^(BOOL finished) {
                                  }];
+    
+    [self enableSwipeBetweenPage:NO];
+}
+
+- (void) enableSwipeBetweenPage:(BOOL)enable {
+    for (UIView *view in _pageViewController.view.subviews ) {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scroll = (UIScrollView *)view;
+            scroll.bounces = enable;
+        }
+    }
+}
+
+- (void) nextPageFrom:(FirstLaunchContentViewController *)viewController {
+    FirstLaunchContentViewController *next = [self viewControllerAtIndex:viewController.pageIndex+1];
+    [self.pageViewController setViewControllers:@[next]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:YES
+                                     completion:^(BOOL finished) {
+                                     }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,5 +122,21 @@
 {
 }
 
+- (void)goToNextPage:(FirstLaunchContentViewController *)controller {
+    FirstLaunchContentViewController *next = [self viewControllerAtIndex:controller.pageIndex+1];
+    [self.pageViewController setViewControllers:@[next]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:YES
+                                     completion:^(BOOL finished) {
+                                     }];
+}
 
+- (void)goToPreviousPage:(FirstLaunchContentViewController *)controller {
+    FirstLaunchContentViewController *previous = [self viewControllerAtIndex:controller.pageIndex-1];
+    [self.pageViewController setViewControllers:@[previous]
+                                      direction:UIPageViewControllerNavigationDirectionReverse
+                                       animated:YES
+                                     completion:^(BOOL finished) {
+                                     }];
+}
 @end

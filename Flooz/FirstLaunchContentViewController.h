@@ -18,4 +18,6 @@
 @protocol FirstLaunchContentViewControllerDelegate <NSObject>
 @optional
 - (void)firstLaunchContentViewControllerDidDAppear:(FirstLaunchContentViewController *)controller;
+- (void)goToNextPage:(FirstLaunchContentViewController *)controller;
+- (void)goToPreviousPage:(FirstLaunchContentViewController *)controller;
 @end
