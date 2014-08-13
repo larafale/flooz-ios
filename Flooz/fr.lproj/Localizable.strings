@@ -21,7 +21,7 @@
 "SEND_COMMENT" = "Écrire un commentaire...";
 
 "NAV_LOGIN" = "Se connecter";
-"NAV_SIGNUP" = "S'inscire";
+"NAV_SIGNUP" = "S'inscrire";
 "NAV_ACCOUNT" = "Mon profil";
 "NAV_SETTINGS" = "Paramètres";
 "NAV_SOCIAL" = "Cagnottes";
@@ -233,3 +233,23 @@
 "INVITE_CODE_TEXT" = "Invitez vos amis à utiliser Flooz en partageant votre code. Recevez 2€ dans votre porte-monnaie dès lors que l'un de vos invités effectue un premier paiement.";
 "INVITE_CODE_CODE" = "Votre code";
 "INVITE_CODE_SHARE" = "Partagez";
+
+
+"SIGNUP_HEAD_TITLE" = "Bienvenue sur Flooz";
+"SIGNUP_VIEW_1_TITLE_1" = "PAYEZ VOS AMIS EN 4 CLICS";
+"SIGNUP_VIEW_1_SUBTITLE_1" = "Choisissez un ami par son 06 ou son @pseudo, entrez un montant et un bref message. En 10 secondes, c'est payé !";
+"SIGNUP_VIEW_1_TITLE_2" = "LA SÉCURITÉ EST UNE ÉVIDENCE";
+"SIGNUP_VIEW_1_SUBTITLE_2" = "Toutes vos transactions sont 100% sécurisées. Sur Flooz, conservez votre CB dans votre smartphone";
+"SIGNUP_VIEW_1_TITLE_3" = "COLLECTEZ DE L'ARGENT À PLUSIEURS";
+"SIGNUP_VIEW_1_SUBTITLE_3" = "Créez des cagnottes et invitez vos amis pour vos cadeaux commun ! Réunir de l'argent n'a jamais été aussi simple.";
+"SIGNUP_VIEW_1_BUTTON" = "Commencez";
+
+
+"SIGNUP_VIEW_2_TITLE_1" = "EN 2 TEMPS 3 MOUVEMENTS";
+"SIGNUP_VIEW_2_SUBTITLE_1" = "Choisissez votre @pseudo et un mot de passe. Il suffira de donner votre @pseudo à vos amis pour qu'ils vous envoient des paiements.";
+"SIGNUP_VIEW_2_TITLE_2" = "PRÉPAREZ VOTRE CARTE BANCAIRE";
+"SIGNUP_VIEW_2_SUBTITLE_2" = "Pour envoyer de l'argent, c'est votre porte-monnaie Flooz qui sera utilisé si vous disposez des fonds nécessaires. Sinon, c'est depuis votre CB que le paiement sera envoyé.";
+"SIGNUP_VIEW_2_TITLE_3" = "PARTAGEZ L'APPLICATION ET GAGNEZ 2€ CASH !";
+"SIGNUP_VIEW_2_SUBTITLE_3" = "Parrainez vos amis et gagnez 2€ immédiatement si 'lun de vos amis utilisez l'app. Partagez le code d'invitation qui vous a été fourni !";
+"SIGNUP_VIEW_2_BUTTON" = "Démarrez l'expérience Flooz";
+

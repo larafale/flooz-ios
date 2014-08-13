@@ -10,6 +10,6 @@
 
 @interface FLStartItem : UIView
 
-+ (FLStartItem*) newWithTitle:(NSString*)title imageImageName:(NSString*)imageName contentText:(NSString*)contentText;
++ (FLStartItem*) newWithTitle:(NSString*)title imageImageName:(NSString*)imageName contentText:(NSString*)contentText andSize:(CGFloat)size;
 
 @end

@@ -10,12 +10,12 @@
 
 @implementation FLStartItem
 
-+ (FLStartItem*) newWithTitle:(NSString*)title imageImageName:(NSString*)imageName contentText:(NSString*)contentText
++ (FLStartItem*) newWithTitle:(NSString*)title imageImageName:(NSString*)imageName contentText:(NSString*)contentText andSize:(CGFloat)size
 {
-    FLStartItem *startItem = [self newWithFrame:CGRectMake(0, 0, PPScreenWidth(), 100)];
+    FLStartItem *startItem = [self newWithFrame:CGRectMake(0, 0, PPScreenWidth(), size)];
     UIImageView *imageView = [UIImageView newWithImageName:imageName];
     imageView.contentMode = UIViewContentModeCenter;
-    [imageView setSize:CGSizeMake(100.0f, 100.0f)];
+    [imageView setSize:CGSizeMake(size, size)];
     [startItem addSubview:imageView];
     return startItem;
 }

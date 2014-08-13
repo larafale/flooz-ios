@@ -49,6 +49,7 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     
+    [self.navigationController setNavigationBarHidden:YES];
     [_pageViewController setViewControllers:[NSArray arrayWithObject:[self viewControllerAtIndex:0]]
                                   direction:UIPageViewControllerNavigationDirectionForward
                                    animated:YES
