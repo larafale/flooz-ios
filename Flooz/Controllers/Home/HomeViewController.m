@@ -49,14 +49,14 @@
         CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
         [_contentView addSubview:logo];
     }
-    
+    /*
     if(SCREEN_HEIGHT < 500){
-        CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 90);
+        CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 70);
     }
     else{
         CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
     }
-    
+    */
     {
 //        loginButton = [UIButton new];
 //        
@@ -72,6 +72,12 @@
     {
         phoneField = [[FLHomeTextField alloc] initWithPlaceholder:@"06 ou code" for:phone key:@"phone" position:CGPointMake(20, 200)];
         
+        if(SCREEN_HEIGHT < 500){
+            CGRectSetXY(phoneField.frame, (SCREEN_WIDTH - phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 5);
+        }
+        else{
+            CGRectSetXY(phoneField.frame, (SCREEN_WIDTH - phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 35);
+        }
         [phoneField addForNextClickTarget:self action:@selector(didConnectTouch)];
         
         [_contentView addSubview:phoneField];
