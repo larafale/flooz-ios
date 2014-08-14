@@ -1096,6 +1096,18 @@
     }
 }
 
+#pragma mark - signup
+
+- (void)verifyPseudo:(NSString *)pseudo success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"/signup/check" method:@"POST" params:@{@"nick": pseudo} success:success failure:failure];
+}
+
+- (void)verifyEmail:(NSString *)email success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    [self requestPath:@"/signup/check" method:@"POST" params:@{@"email": email} success:success failure:failure];
+}
+
 #pragma mark - Contacts
 
 - (void)sendContacts

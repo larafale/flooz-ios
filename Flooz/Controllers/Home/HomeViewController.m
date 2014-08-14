@@ -78,7 +78,7 @@
         else{
             CGRectSetXY(phoneField.frame, (SCREEN_WIDTH - phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 35);
         }
-        [phoneField addForNextClickTarget:self action:@selector(didConnectTouch)];
+        //[phoneField addForNextClickTarget:self action:@selector(didConnectTouch)];
         
         [_contentView addSubview:phoneField];
         
@@ -110,6 +110,7 @@
     [phoneField becomeFirstResponder];
 }
 
+/*
 - (void)didConnectTouch
 {
     [[self view] endEditing:YES];
@@ -122,6 +123,7 @@
         [[Flooz sharedInstance] loginWithPhone:phone[@"phone"]];
     }
 }
+ */
 
 #pragma mark - Keyboard Management
 

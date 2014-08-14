@@ -8,11 +8,30 @@
 
 #import <UIKit/UIKit.h>
 #import <SMPageControl/SMPageControl.h>
+
+#import "FLHomeTextField.h"
+
 @protocol FirstLaunchContentViewControllerDelegate;
 
+typedef enum {
+    SignupPageTuto = 0,
+    SignupPageExplication = 1,
+    SignupPagePhone = 2,
+    SignupPagePseudo = 3,
+    SignupPageInfo = 4,
+    SignupPagePassword = 5,
+    SignupPageCode = 6,
+    SignupPageCB = 7,
+    SignupPageFriends = 8
+} SignupOrderPage;
+
 @interface FirstLaunchContentViewController : UIViewController
+
 @property (nonatomic) NSInteger pageIndex;
 @property (nonatomic, weak) id<FirstLaunchContentViewControllerDelegate> delegate;
+@property (strong, nonatomic) FLHomeTextField *phoneField;
+@property (strong, nonatomic) FLTextFieldIcon *textFieldToFocus;
+@property (strong, nonatomic) FLTextFieldIcon *secondTextFieldToFocus;
 @end
 
 @protocol FirstLaunchContentViewControllerDelegate <NSObject>

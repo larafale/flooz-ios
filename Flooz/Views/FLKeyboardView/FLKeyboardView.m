@@ -65,7 +65,7 @@
     closeButtonState = CloseButtonTypeABC;
 }
 
-- (void)setKeyboardValidateWithTarget:(id)target action:(SEL)action
+- (FLKeyboardView *)setKeyboardValidateWithTarget:(id)target action:(SEL)action
 {
     [closeButton setTitle:@"Valider" forState:UIControlStateNormal];
     closeButton.titleLabel.font = [UIFont customTitleThin:22];
@@ -73,6 +73,7 @@
     [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     [closeButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     closeButtonState = CloseButtonTypeValidate;
+    return self;
 }
 
 - (void)setCloseButton {

@@ -37,7 +37,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        
+    
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
     
@@ -53,7 +53,8 @@
     self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[SplashViewController new]];
     
     if(![[Flooz sharedInstance] autologin]){
-        self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[FirstLaunchViewController new]];
+        firstVC = [FirstLaunchViewController new];
+        self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:firstVC];
     }
     // initialisation de MagicalRecord
     // Pony Debugger
@@ -76,13 +77,13 @@
 }
 
 - (void)didConnected
-{    
+{
     NSMutableDictionary *params = [@{
-                             @"record":[[[Flooz sharedInstance] currentUser] record],
-                             @"id": [[[Flooz sharedInstance] currentUser] userId],
-                             @"username": [[[Flooz sharedInstance] currentUser] username],
-                             @"phone": [[[Flooz sharedInstance] currentUser] phone]
-                             } mutableCopy];
+                                     @"record":[[[Flooz sharedInstance] currentUser] record],
+                                     @"id": [[[Flooz sharedInstance] currentUser] userId],
+                                     @"username": [[[Flooz sharedInstance] currentUser] username],
+                                     @"phone": [[[Flooz sharedInstance] currentUser] phone]
+                                     } mutableCopy];
     
     if([[[Flooz sharedInstance] currentUser] email]){
         params[@"email"] = [[[Flooz sharedInstance] currentUser] email];
@@ -97,8 +98,8 @@
     }
     
 #ifndef FLOOZ_DEV_API
-        [[SEGAnalytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
-                                   traits:params];
+    [[SEGAnalytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
+                                      traits:params];
 #endif
     
     if(!savedViewController){
@@ -117,52 +118,52 @@
                         savedViewController = nil;
                     }
      ];
-//
-//    CompleteBlock completeBlock = ^{
-//        if(!savedViewController){
-//            savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
-//        }
-//        
-//        [UIView transitionWithView:self.window
-//                          duration:0.7
-//                           options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
-//                        animations:^{
-//                            self.window.rootViewController = savedViewController;
-//                        }
-//                        completion:^(BOOL finished) {
-//                            savedViewController = nil;
-//                        }
-//         ];
-//    };
-//
-//    
-//    FLNavigationController *navController = nil;
-//    SecureCodeViewController *controller = [SecureCodeViewController new];
-//    controller.completeBlock = completeBlock;
-//    
-//    // Sortie de mise en vieille cas où on est deja connecté
-//    if([self.window.rootViewController isKindOfClass:[FLContainerViewController class]]){
-//        savedViewController = self.window.rootViewController;
-//        
-//        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-//        self.window.rootViewController = navController;
-//    }
-//    else{
-//        navController = (FLNavigationController *)self.window.rootViewController;
-//    }
-//    
-//    
-//    // Cas ou fait retour sur le splashscreen
-//    if([[[navController viewControllers] firstObject] isKindOfClass:[SplashViewController class]]){
-//        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-//        self.window.rootViewController = navController;
-//    }
-//    
-//    if([[[navController viewControllers] lastObject] presentedViewController]){
-//        [[[[navController viewControllers] lastObject] presentedViewController] dismissViewControllerAnimated:NO completion:nil];
-//    }
-//    
-//    [navController pushViewController:controller animated:NO];
+    //
+    //    CompleteBlock completeBlock = ^{
+    //        if(!savedViewController){
+    //            savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
+    //        }
+    //
+    //        [UIView transitionWithView:self.window
+    //                          duration:0.7
+    //                           options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
+    //                        animations:^{
+    //                            self.window.rootViewController = savedViewController;
+    //                        }
+    //                        completion:^(BOOL finished) {
+    //                            savedViewController = nil;
+    //                        }
+    //         ];
+    //    };
+    //
+    //
+    //    FLNavigationController *navController = nil;
+    //    SecureCodeViewController *controller = [SecureCodeViewController new];
+    //    controller.completeBlock = completeBlock;
+    //
+    //    // Sortie de mise en vieille cas où on est deja connecté
+    //    if([self.window.rootViewController isKindOfClass:[FLContainerViewController class]]){
+    //        savedViewController = self.window.rootViewController;
+    //
+    //        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    //        self.window.rootViewController = navController;
+    //    }
+    //    else{
+    //        navController = (FLNavigationController *)self.window.rootViewController;
+    //    }
+    //
+    //
+    //    // Cas ou fait retour sur le splashscreen
+    //    if([[[navController viewControllers] firstObject] isKindOfClass:[SplashViewController class]]){
+    //        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    //        self.window.rootViewController = navController;
+    //    }
+    //
+    //    if([[[navController viewControllers] lastObject] presentedViewController]){
+    //        [[[[navController viewControllers] lastObject] presentedViewController] dismissViewControllerAnimated:NO completion:nil];
+    //    }
+    //
+    //    [navController pushViewController:controller animated:NO];
 }
 
 - (void)clearSavedViewController
@@ -173,17 +174,24 @@
 - (void)showLoginWithUser:(NSDictionary *)user
 {
     FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[[LoginViewController  alloc] initWithUser:user]];
-
+    
     [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     [[self currentController] presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user
-{    
+{
+    [firstVC phoneNotRegistered:user];
+    /*
     FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[[SignupViewController alloc] initWithUser:user]];
-
+    
     [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     [[self currentController] presentViewController:navController animated:YES completion:nil];
+     */
+}
+
+- (void) phoneNotRegistered:(NSDictionary *)user {
+    
 }
 
 - (UIViewController *)currentController
@@ -201,8 +209,8 @@
 
 - (void)didDisconnected
 {
-    //FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FirstLaunchViewController new]];
+    firstVC = [FirstLaunchViewController new];
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:firstVC];
     
     [UIView transitionWithView:self.window
                       duration:0.7
@@ -217,14 +225,14 @@
 - (void)displayError:(NSError *)error
 {
     NSTimeInterval seconds = [[NSDate date] timeIntervalSinceDate:lastErrorDate];
-        
+    
     if((lastErrorCode == FLNetworkError) && (error.code == FLNetworkError) && seconds < 30){
         return;
     }
     
     lastErrorDate = [NSDate date];
     lastErrorCode = error.code;
-
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
                                                     message:ERROR_LOCALIZED_DESCRIPTION((int)error.code)
                                                    delegate:nil
@@ -242,7 +250,7 @@
     if(!title || [title isBlank]){
         title = NSLocalizedString(@"GLOBAL_ERROR", nil);
     }
-
+    
     [alertView show:title content:content style:style time:time delay:delay];
 }
 
@@ -256,7 +264,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     [[Flooz sharedInstance] socketSendSessionEnd];
@@ -303,7 +311,7 @@
         // Clear this token
         [FBSession.activeSession closeAndClearTokenInformation];
         // Show the user the logged-out UI
-//        [self userLoggedOut];
+        //        [self userLoggedOut];
     }
 }
 
@@ -320,7 +328,7 @@
     
     // Handle the user leaving the app while the Facebook login dialog is being shown
     // For example: when the user presses the iOS "home" button while the login dialog is active
-        
+    
     [FBAppCall handleDidBecomeActive];
     [[Flooz sharedInstance] startSocket];
 }
@@ -462,10 +470,10 @@
     currentImageView = imageView;
     haveMenuFriend = NO;
     
-     UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_PAYMENT", nil), NSLocalizedString(@"MENU_COLLECT", nil), nil];
+    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_PAYMENT", nil), NSLocalizedString(@"MENU_COLLECT", nil), nil];
     NSMutableArray *menus = [NSMutableArray new];
     
-
+    
     BOOL isFriend = NO;
     if([[[[Flooz sharedInstance] currentUser] userId] isEqualToString:[user userId]]){
         isFriend = YES;
@@ -493,7 +501,7 @@
     if([currentUserForMenu avatarURL]){
         [menus addObject:NSLocalizedString(@"MENU_AVATAR", nil)];
     }
-
+    
     for(NSString *menu in menus){
         [actionSheet addButtonWithTitle:menu];
     }

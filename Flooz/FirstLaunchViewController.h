@@ -12,4 +12,6 @@
 
 @interface FirstLaunchViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, FirstLaunchContentViewControllerDelegate>
 
+- (void)phoneNotRegistered:(NSDictionary *)user;
+
 @end

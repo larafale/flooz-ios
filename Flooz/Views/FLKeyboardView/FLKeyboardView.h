@@ -29,7 +29,7 @@ typedef enum
 @property (weak, nonatomic) id<FLKeyboardViewDelegate> delegate;
 
 - (void)setKeyboardChangeable;
-- (void)setKeyboardValidateWithTarget:(id)target action:(SEL)action;
+- (FLKeyboardView *)setKeyboardValidateWithTarget:(id)target action:(SEL)action;
 - (void)setCloseButton;
 
 @end

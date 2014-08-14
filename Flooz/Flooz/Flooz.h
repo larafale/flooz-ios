@@ -125,6 +125,9 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 - (void)socketSendCloseActivities;
 - (void)socketSendSessionEnd;
 
+- (void)verifyPseudo:(NSString *)pseudo success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)verifyEmail:(NSString *)email success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
 - (void)sendContacts;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FirstLaunchViewController.h"
 #import "FLAlertView.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UIActionSheetDelegate>{
@@ -23,6 +24,7 @@
     NSMutableArray *imagesForPreview;
     
     UIViewController *savedViewController;
+    FirstLaunchViewController *firstVC;
 }
 
 @property (strong, nonatomic) UIWindow *window;
