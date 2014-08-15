@@ -2707,6 +2707,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
+				PROVISIONING_PROFILE = "12D947BF-ED33-4313-A70C-37E91E764AC5";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
