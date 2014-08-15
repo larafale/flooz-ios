@@ -10,33 +10,55 @@
 #import <SMPageControl/SMPageControl.h>
 
 #import "FLHomeTextField.h"
+#import "SecureCodeField.h"
 
 @protocol FirstLaunchContentViewControllerDelegate;
 
 typedef enum {
     SignupPageTuto = 0,
-    SignupPageExplication = 1,
-    SignupPagePhone = 2,
-    SignupPagePseudo = 3,
-    SignupPageInfo = 4,
-    SignupPagePassword = 5,
-    SignupPageCode = 6,
-    SignupPageCB = 7,
-    SignupPageFriends = 8
+    SignupPageExplication,
+    SignupPagePhone,
+    SignupPagePseudo,
+    SignupPageInfo,
+    SignupPagePassword,
+    SignupPageCode,
+    SignupPageCodeVerif,
+    SignupPageCB,
+    SignupPageFriends
 } SignupOrderPage;
 
-@interface FirstLaunchContentViewController : UIViewController
+typedef enum {
+    SecureCodeModeNew, // Nouveau code
+    SecureCodeModeConfirm // Nouveau code confirmation
+} SecureCodeMode2;
+
+@interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate> {
+    FLUserView *_avatarView;
+}
 
 @property (nonatomic) NSInteger pageIndex;
 @property (nonatomic, weak) id<FirstLaunchContentViewControllerDelegate> delegate;
 @property (strong, nonatomic) FLHomeTextField *phoneField;
 @property (strong, nonatomic) FLTextFieldIcon *textFieldToFocus;
 @property (strong, nonatomic) FLTextFieldIcon *secondTextFieldToFocus;
+@property (strong, nonatomic) SecureCodeField *secureCodeField;
+@property (strong, nonatomic) FLTextFieldIcon *userName;
+@property (strong, nonatomic) UIButton *registerFacebook;
+@property (strong, nonatomic) FLTextFieldIcon *name;
+@property (strong, nonatomic) FLTextFieldIcon *email;
+@property (strong, nonatomic) FLTextFieldIcon *password;
+@property (strong, nonatomic) FLTextFieldIcon *passwordConfirm;
+
+@property (nonatomic, strong) NSMutableDictionary *userInfoDico;
+
+- (void)setUserInfoDico:(NSMutableDictionary *)userInfoDico;
+- (void)displayChanges;
+
 @end
 
 @protocol FirstLaunchContentViewControllerDelegate <NSObject>
 @optional
 - (void)firstLaunchContentViewControllerDidDAppear:(FirstLaunchContentViewController *)controller;
-- (void)goToNextPage:(NSInteger)currentIndex;
-- (void)goToPreviousPage:(NSInteger)currentIndex;
+- (void)goToNextPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico;
+- (void)goToPreviousPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico;
 @end

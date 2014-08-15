@@ -12,6 +12,9 @@
 
 @interface FirstLaunchViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, FirstLaunchContentViewControllerDelegate>
 
+@property (nonatomic, strong) NSMutableDictionary *userInfoDico;
+
 - (void)phoneNotRegistered:(NSDictionary *)user;
+- (void)signupWithFacebookUser:(NSDictionary *)user;
 
 @end

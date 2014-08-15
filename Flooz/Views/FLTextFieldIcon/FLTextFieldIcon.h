@@ -35,4 +35,8 @@
 
 - (void)addForNextClickTarget:(id)target action:(SEL)action;
 
+- (void)setTextFirstTextField:(NSString *)text;
+
+- (void)setTextSecondTextField:(NSString *)text;
+
 @end

@@ -19,6 +19,7 @@
     UIProgressView *_headProgress;
     
     NSInteger _indexPage;
+    UIButton *_closeButton;
 }
 
 @property (strong, nonatomic) UIButton              *nextArrow;
@@ -34,9 +35,11 @@
     CGRect frame    = [[UIScreen mainScreen] bounds];
     self.view.frame = frame;
     self.view.backgroundColor = [UIColor customBackgroundHeader];
+    
+    self.userInfoDico = [NSMutableDictionary new];
 }
 
-#define NUMBER_OF_PAGES 7
+#define NUMBER_OF_PAGES 9
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,13 +69,13 @@
     
     
     _headMenu = [[UIView alloc]initWithFrame:self.view.bounds];
-    [_headMenu setYOrigin:STATUSBAR_HEIGHT];
+    [_headMenu setYOrigin:-(height_nav_bar+STATUSBAR_HEIGHT)];
     [_headMenu setBackgroundColor:[UIColor customBackgroundHeader]];
-    [_headMenu setHeight:height_nav_bar];
+    [_headMenu setHeight:height_nav_bar+STATUSBAR_HEIGHT];
     [self.view addSubview:_headMenu];
     
     _headProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    [_headProgress setOrigin:CGPointMake(0, 38)];
+    [_headProgress setOrigin:CGPointMake(0, height_nav_bar+STATUSBAR_HEIGHT-2)];
     [_headProgress setSize:CGSizeMake(PPScreenWidth(), 2)];
     [_headProgress setProgressTintColor: [UIColor customBlueLight]];
     [_headProgress setTrackTintColor: [UIColor whiteColor]];
@@ -81,36 +84,36 @@
     
     CGFloat offset = PPScreenWidth() / 7.0f - height_nav_bar;
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(offset, 0, height_nav_bar, height_nav_bar)];
-    [backButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
-    [_headMenu addSubview:backButton];
+    _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(offset, STATUSBAR_HEIGHT, height_nav_bar, height_nav_bar)];
+    [_closeButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
+    [_closeButton addTarget:self action:@selector(closeSignup) forControlEvents:UIControlEventTouchUpInside];
+    [_headMenu addSubview:_closeButton];
     
     FLStartItem *item1 = [FLStartItem newWithTitle:@"" imageImageName:@"field-phone" contentText:@"" andSize:height_nav_bar];
-    [item1 setOrigin:CGPointMake(offset + height_nav_bar, 0)];
+    [item1 setOrigin:CGPointMake(offset + height_nav_bar, STATUSBAR_HEIGHT)];
     [_headMenu addSubview:item1];
     
     
     FLStartItem *item2 = [FLStartItem newWithTitle:@"" imageImageName:@"field-username" contentText:@"" andSize:height_nav_bar];
-    [item2 setOrigin:CGPointMake(2*(offset + height_nav_bar), 0)];
+    [item2 setOrigin:CGPointMake(2*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
     [_headMenu addSubview:item2];
     
     
     FLStartItem *item3 = [FLStartItem newWithTitle:@"" imageImageName:@"field-name" contentText:@"" andSize:height_nav_bar];
-    [item3 setOrigin:CGPointMake(3*(offset + height_nav_bar), 0)];
+    [item3 setOrigin:CGPointMake(3*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
     [_headMenu addSubview:item3];
     
     
     FLStartItem *item4 = [FLStartItem newWithTitle:@"" imageImageName:@"field-password" contentText:@"" andSize:height_nav_bar];
-    [item4 setOrigin:CGPointMake(4*(offset + height_nav_bar), 0)];
+    [item4 setOrigin:CGPointMake(4*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
     [_headMenu addSubview:item4];
     
     FLStartItem *item5 = [FLStartItem newWithTitle:@"" imageImageName:@"payment-field-card-selected" contentText:@"" andSize:height_nav_bar];
-    [item5 setOrigin:CGPointMake(5*(offset + height_nav_bar), 0)];
+    [item5 setOrigin:CGPointMake(5*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
     [_headMenu addSubview:item5];
     
     FLStartItem *item6 = [FLStartItem newWithTitle:@"" imageImageName:@"scope-friend" contentText:@"" andSize:height_nav_bar];
-    [item6 setOrigin:CGPointMake(6*(offset + height_nav_bar), 0)];
+    [item6 setOrigin:CGPointMake(6*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
     [_headMenu addSubview:item6];
     
     
@@ -148,7 +151,9 @@
     return controller;
 }
 
-- (void) previous {
+- (void) closeSignup {
+    [self.userInfoDico removeAllObjects];
+    [[Flooz sharedInstance] disconnectFacebook];
     _indexPage = SignupPagePhone;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionReverse];
 }
@@ -173,7 +178,8 @@
 {
 }
 
-- (void)goToNextPage:(NSInteger)currentIndex {
+- (void)goToNextPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico {
+    self.userInfoDico = userDico;
     if (_indexPage >= NUMBER_OF_PAGES) {
         return;
     }
@@ -181,7 +187,8 @@
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
 }
 
-- (void)goToPreviousPage:(NSInteger)currentIndex {
+- (void)goToPreviousPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico {
+    self.userInfoDico = userDico;
     if (_indexPage == 0) {
         return;
     }
@@ -190,16 +197,29 @@
 }
 
 - (void)phoneNotRegistered:(NSDictionary *)user {
+    [self.userInfoDico addEntriesFromDictionary:user];
+    [_headProgress setProgress:((SignupPagePhone-1) / 7.0f) animated:YES];
     _indexPage = SignupPagePseudo;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
 }
 
-- (void) presentNewViewSignup:(UIPageViewControllerNavigationDirection)direction {
-    if (direction == UIPageViewControllerNavigationDirectionForward)
-    [self manageProgressBar:1.0];
-    else
-        [self manageProgressBar:-1.0];
+- (void)signupWithFacebookUser:(NSDictionary *)user {
+    [self.userInfoDico addEntriesFromDictionary:user];
+    _indexPage = SignupPageInfo;
     FirstLaunchContentViewController *newView = [self viewControllerAtIndex:_indexPage];
+    [newView setUserInfoDico:self.userInfoDico];
+    [newView displayChanges];
+}
+
+- (void) presentNewViewSignup:(UIPageViewControllerNavigationDirection)direction {
+    if (direction == UIPageViewControllerNavigationDirectionForward) {
+        [self manageProgressBar];
+    }
+    else {
+        [self manageProgressBar];
+    }
+    FirstLaunchContentViewController *newView = [self viewControllerAtIndex:_indexPage];
+    [newView setUserInfoDico:self.userInfoDico];
     [self.pageViewController setViewControllers:@[newView]
                                       direction:direction
                                        animated:YES
@@ -209,24 +229,55 @@
                                      }];
 }
 
-- (void) manageProgressBar:(float)pos {
-    float pro = _headProgress.progress;
-    
-    if (_indexPage < SignupPagePhone) {
-        pro += 0.0f * pos;
+- (void) manageProgressBar {
+    float pro;
+    if (_indexPage == SignupPagePhone) {
+        pro = 1.0f / 7.0f;
     }
-    else if (_indexPage < SignupPageCode) {
-        pro += 1.0f / 7.0f * pos;
+    else if (_indexPage == SignupPagePseudo) {
+        pro = 2.0f / 7.0f;
     }
-    else if (_indexPage <= SignupPageCB) {
-        pro += 1.0f / 21.0f* pos;
+    else if (_indexPage == SignupPageInfo) {
+        pro = 3.0f / 7.0f;
+    }
+    else if (_indexPage == SignupPagePassword) {
+        pro = 4.0f / 7.0f;
+    }
+    else if (_indexPage == SignupPageCode) {
+        pro = 4.33f / 7.0f;
+    }
+    else if (_indexPage == SignupPageCodeVerif) {
+        pro = 4.66f / 7.0f;
+    }
+    else if (_indexPage == SignupPageCB) {
+        pro = 5.0f / 7.0f;
+        [_closeButton setHidden:YES];
+    }
+    else if (_indexPage == SignupPageFriends) {
+        pro = 6.0f / 7.0f;
+        [_closeButton setEnabled:YES];
     }
     else {
-        pro += 1.0f / 7.0f * pos;
+        pro = 1.0f;
+        [_closeButton setEnabled:YES];
     }
-    
     [_headProgress setProgress:pro animated:YES];
-    [_headMenu setHidden:(_indexPage < SignupPagePseudo)];
+    
+    if (_indexPage < SignupPagePseudo) {
+        if (CGRectGetMaxY(_headMenu.frame) > 0) {
+            [UIView animateWithDuration:.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                CGRectSetY(_headMenu.frame, -CGRectGetHeight(_headMenu.frame));
+            } completion:nil];
+        }
+    }
+    else {
+        if (CGRectGetMinY(_headMenu.frame) < 0) {
+            
+            [UIView animateWithDuration:.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                CGRectSetY(_headMenu.frame, 0);
+            } completion:nil];
+        }
+    }
 }
 
 @end

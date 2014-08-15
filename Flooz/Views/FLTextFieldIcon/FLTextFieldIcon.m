@@ -148,6 +148,13 @@
     [self addSubview:bottomBar];
 }
 
+- (void)setTextFirstTextField:(NSString *)text {
+    [_textfield setText:text];
+}
+- (void)setTextSecondTextField:(NSString *)text {
+    [_textfield2 setText:text];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
