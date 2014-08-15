@@ -92,7 +92,7 @@
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
-        [self updateCurrentUserAfterConnect:result];
+        [self updateCurrentUserAfterSignup:result];
         
 #ifndef FLOOZ_DEV_API
             [[SEGAnalytics sharedAnalytics] track:@"signup" properties:@{
@@ -816,6 +816,20 @@
 
 #pragma mark -
 
+- (void)updateCurrentUserAfterSignup:(id)result
+{
+    access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
+    [UICKeyChainStore setString:access_token forKey:@"login-token"];
+    
+    _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
+    _facebook_token = result[@"items"][1][@"fb"][@"token"];
+    
+    [appDelegate didConnected];
+    
+    [self startSocket];
+    [self checkDeviceToken];
+}
+
 - (void)updateCurrentUserAfterConnect:(id)result
 {    
     access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
@@ -823,8 +837,9 @@
     
     _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
     _facebook_token = result[@"items"][1][@"fb"][@"token"];
-        
+    
     [appDelegate didConnected];
+    [appDelegate goToAccountViewController];
     
     [self startSocket];
     [self checkDeviceToken];
@@ -841,6 +856,7 @@
     access_token = token;
     [self updateCurrentUserWithSuccess:^{
         [appDelegate didConnected];
+        [appDelegate goToAccountViewController];
         [self startSocket];
         [self checkDeviceToken];
     } failure:^(NSError *error) {
@@ -914,17 +930,17 @@
                                            @"email": [result objectForKey:@"email"],
                                            @"lastName": [result objectForKey:@"last_name"],
                                            @"firstName": [result objectForKey:@"first_name"],
-                                           @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", [result objectForKey:@"id"]],
+                                           @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", [result objectForKey:@"id"]]/*,
                                            @"fb": [@{
                                                      @"devices": [result objectForKey:@"devices"],
                                                      @"email": [result objectForKey:@"email"],
                                                      @"id": [result objectForKey:@"id"],
                                                      @"name": [result objectForKey:@"name"],
                                                      @"token": _facebook_token
-                                                     } mutableCopy]
+                                                     } mutableCopy]*/
                                            };
                     
-                    [appDelegate showSignupWithUser:user];
+                    [appDelegate showSignupAfterFacebookWithUser:user];
                 } else {
                     NSLog(@"didConnectFacebook error: %@", error);
                     // An error occurred, we need to handle the error

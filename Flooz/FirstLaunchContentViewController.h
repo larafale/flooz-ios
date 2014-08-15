@@ -11,6 +11,7 @@
 
 #import "FLHomeTextField.h"
 #import "SecureCodeField.h"
+#import "FLTextFieldTitle2.h"
 
 @protocol FirstLaunchContentViewControllerDelegate;
 
@@ -24,7 +25,8 @@ typedef enum {
     SignupPageCode,
     SignupPageCodeVerif,
     SignupPageCB,
-    SignupPageFriends
+    SignupPageFriends,
+    SignupPageOther
 } SignupOrderPage;
 
 typedef enum {
@@ -48,6 +50,8 @@ typedef enum {
 @property (strong, nonatomic) FLTextFieldIcon *email;
 @property (strong, nonatomic) FLTextFieldIcon *password;
 @property (strong, nonatomic) FLTextFieldIcon *passwordConfirm;
+
+@property (strong, nonatomic) UIScrollView *contentView;
 
 @property (nonatomic, strong) NSMutableDictionary *userInfoDico;
 

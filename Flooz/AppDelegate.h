@@ -31,9 +31,11 @@
 @property (strong, nonatomic) NSString *currentDeviceToken;
 
 - (void)didConnected;
+- (void)goToAccountViewController;
 - (void)didDisconnected;
 - (void)showLoginWithUser:(NSDictionary *)user;
 - (void)showSignupWithUser:(NSDictionary *)user;
+- (void)showSignupAfterFacebookWithUser:(NSDictionary *)user;
 
 - (void)displayError:(NSError *)error;
 - (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;

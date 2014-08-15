@@ -9,6 +9,7 @@
 #import "FirstLaunchViewController.h"
 
 #import "FLStartItem.h"
+#import "AppDelegate.h"
 
 #define height_nav_bar 40.0f
 
@@ -181,6 +182,7 @@
 - (void)goToNextPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico {
     self.userInfoDico = userDico;
     if (_indexPage >= NUMBER_OF_PAGES) {
+        [appDelegate goToAccountViewController];
         return;
     }
     _indexPage = currentIndex+1;

@@ -102,22 +102,6 @@
                                       traits:params];
 #endif
     
-    if(!savedViewController){
-        savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
-    }
-    [UIView transitionWithView:self.window
-                      duration:0.7
-                       options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
-                    animations:^{
-                        self.window.rootViewController = savedViewController;
-#ifdef SIMUL_FIRST_LAUNCH
-                        [self.window.rootViewController presentViewController:[HomeViewController new] animated:YES completion:NULL];
-#endif
-                    }
-                    completion:^(BOOL finished) {
-                        savedViewController = nil;
-                    }
-     ];
     //
     //    CompleteBlock completeBlock = ^{
     //        if(!savedViewController){
@@ -166,6 +150,25 @@
     //    [navController pushViewController:controller animated:NO];
 }
 
+- (void) goToAccountViewController {
+    if(!savedViewController){
+        savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
+    }
+    [UIView transitionWithView:self.window
+                      duration:0.7
+                       options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
+                    animations:^{
+                        self.window.rootViewController = savedViewController;
+#ifdef SIMUL_FIRST_LAUNCH
+                        [self.window.rootViewController presentViewController:[HomeViewController new] animated:YES completion:NULL];
+#endif
+                    }
+                    completion:^(BOOL finished) {
+                        savedViewController = nil;
+                    }
+     ];
+}
+
 - (void)clearSavedViewController
 {
     savedViewController = nil;
@@ -188,6 +191,11 @@
     [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     [[self currentController] presentViewController:navController animated:YES completion:nil];
      */
+}
+
+- (void)showSignupAfterFacebookWithUser:(NSDictionary *)user
+{
+    [firstVC signupWithFacebookUser:user];
 }
 
 - (void) phoneNotRegistered:(NSDictionary *)user {
@@ -361,6 +369,7 @@
     
     if([[Flooz sharedInstance] currentUser]){
         [self didConnected];
+        [self goToAccountViewController];
     }
     return;
     

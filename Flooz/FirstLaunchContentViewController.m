@@ -15,6 +15,7 @@
 #import "FLHomeTextField.h"
 
 #import <UICKeyChainStore.h>
+#import "ScanPayViewController.h"
 
 //#define CGRectSetYWidth(frame, y, width) frame = CGRectMake(frame.origin.x, y, width, frame.size.height)
 //#define CGRectSetYHeight(frame, y, height) frame = CGRectMake(frame.origin.x, y, frame.size.width, height)
@@ -38,6 +39,7 @@
     UIView *_mainBody;
     
     SecureCodeMode2 currentSecureMode;
+    NSMutableArray *fieldsView;
 }
 
 @end
@@ -66,6 +68,7 @@
     
     _userInfoDico = [NSMutableDictionary new];
     _userDic = [NSMutableDictionary new];
+    fieldsView = [NSMutableArray new];
     
     [self prepareHeader];
 	[self setContent];
@@ -373,8 +376,95 @@
             break;
         case SignupPageCB: {
             [_backButton setHidden:YES];
+            
+            UIImage *image = [UIImage imageNamed:@"navbar-check"];
+            UIButton *button = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(image.size)];
+            CGRectSetY(button.frame, CGRectGetMinY(_title.frame) + 12.0f);
+            CGRectSetX(button.frame, CGRectGetWidth(_headerView.frame) - 10 - CGRectGetWidth(button.frame));
+            
+            if (PPScreenHeight() < 500.0f) {
+                CGRectSetY(button.frame, CGRectGetMinY(_title.frame) + 7.0f);
+            }
+            [button setImage:image  forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(didValidTouch2) forControlEvents:UIControlEventTouchUpInside];
+            [_headerView addSubview:button];
+            
             _title.text = NSLocalizedString(@"Carte bancaire", @"");
             [self displayHeader];
+            
+            [self nextButtonWithText:NSLocalizedString(@"SIGNUP_VIEW_IGNORE_BUTTON", @"") andWidth:220];
+            
+            _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0 - 10.0f, CGRectGetWidth(_mainBody.frame), 300)];
+            [_mainBody addSubview:_contentView];
+            
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+            tapGesture.cancelsTouchesInView = NO;
+            [_contentView addGestureRecognizer:tapGesture];
+            [_headerView addGestureRecognizer:tapGesture];
+            [_mainBody addGestureRecognizer:tapGesture];
+            
+            [self registerForKeyboardNotifications];
+            
+            {
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(_mainBody.frame), 60)];
+                view.backgroundColor = [UIColor customBackgroundHeader];
+                [_contentView addSubview:view];
+                
+                {
+                    CGFloat MARGE_LEFT_RIGHT = 28;
+                    CGFloat MARGE_TOP_BOTTOM = 10;
+                    
+                    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, MARGE_TOP_BOTTOM, CGRectGetWidth(view.frame) - (2 * MARGE_LEFT_RIGHT), CGRectGetHeight(view.frame) - (2 * MARGE_TOP_BOTTOM))];
+                    
+                    button.backgroundColor = [UIColor customBackgroundStatus];
+                    [button setTitle:NSLocalizedString(@"CREDIT_CARD_SCAN", Nil) forState:UIControlStateNormal];
+                    
+                    button.titleLabel.font = [UIFont customTitleExtraLight:14];
+                    
+                    [button addTarget:self action:@selector(presentScanPayViewController) forControlEvents:UIControlEventTouchUpInside];
+                    
+                    [view addSubview:button];
+                }
+            }
+            
+            FLTextFieldTitle2 *view = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_OWNER" placeholder:@"FIELD_CARD_OWNER_PLACEHOLDER" for:_userDic key:@"holder" position:CGPointMake(20, 60)];
+            [_contentView addSubview:view];
+            
+            [fieldsView addObject:view];
+            [view addForNextClickTarget:self action:@selector(didOwnerEndEditing)];
+            
+            
+            FLTextFieldTitle2 *view2 = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_NUMBER" placeholder:@"FIELD_CARD_NUMBER_PLACEHOLDER" for:_userDic key:@"number" position:CGPointMake(20, CGRectGetMaxY(view.frame) + 2)];
+            [view2 setKeyboardType:UIKeyboardTypeDecimalPad];
+            [_contentView addSubview:view2];
+            
+            [fieldsView addObject:view2];
+            
+            [view2 setStyle:FLTextFieldTitle2StyleCardNumber];
+            [view2 addForNextClickTarget:self action:@selector(didNumberEndEditing)];
+            
+            
+            FLTextFieldTitle2 *view3 = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_EXPIRES" placeholder:@"FIELD_CARD_EXPIRES_PLACEHOLDER" for:_userDic key:@"expires" position:CGPointMake(20, CGRectGetMaxY(view2.frame) + 2)];
+            [view3 setKeyboardType:UIKeyboardTypeDecimalPad];
+            [_contentView addSubview:view3];
+            
+            [fieldsView addObject:view3];
+            
+            [view3 setStyle:FLTextFieldTitle2StyleCardExpire];
+            [view3 addForNextClickTarget:self action:@selector(didExpiresEndEditing)];
+            
+            
+            
+            FLTextFieldTitle2 *view4 = [[FLTextFieldTitle2 alloc] initWithTitle:@"FIELD_CARD_CVV" placeholder:@"FIELD_CARD_CVV_PLACEHOLDER" for:_userDic key:@"cvv" position:CGPointMake(20, CGRectGetMaxY(view3.frame) + 2)];
+            [view4 setKeyboardType:UIKeyboardTypeDecimalPad];
+            [_contentView addSubview:view4];
+            
+            [view4 setStyle:FLTextFieldTitle2StyleCVV];
+            [fieldsView addObject:view4];
+            
+            [view4 addForNextClickTarget:self action:@selector(didCVVEndEditing)];
+            
+            _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), CGRectGetMaxY(view4.frame));
             
         }
             break;
@@ -383,6 +473,7 @@
             _title.text = NSLocalizedString(@"Invitez des amis", @"");
             [self displayHeader];
             
+            [self nextButtonWithText:NSLocalizedString(@"SIGNUP_VIEW_IGNORE_BUTTON", @"") andWidth:220];
         }
             break;
         default: {
@@ -549,6 +640,7 @@
     else if(currentSecureMode == SecureCodeModeConfirm){
         if ([_userInfoDico[@"passcode"] isEqualToString:secureCode]) {
             [UICKeyChainStore setString:secureCode forKey:[self keyForSecureCode]];
+            [self goToNextPage];
         }
         else {
             [self startAnmiationBadCode];
@@ -576,6 +668,127 @@
 - (NSString *)keyForSecureCode
 {
     return [NSString stringWithFormat:@"secureCode-%@", [[[Flooz sharedInstance] currentUser] userId]];
+}
+
+#pragma mark - ScanPay
+
+- (void)presentScanPayViewController
+{
+    ScanPayViewController * scanPayViewController = [[ScanPayViewController alloc] initWithToken:@"be38035037ed6ca3cba7089b" useConfirmationView:YES useManualEntry:YES];
+    
+    [scanPayViewController startScannerWithViewController:self success:^(SPCreditCard * card){
+        
+        [_userDic setValue:card.number forKey:@"number"];
+        [_userDic setValue:card.cvc forKey:@"cvv"];
+        
+        NSString *expires = [NSString stringWithFormat:@"%@-%@", card.month, card.year];
+        
+        [_userDic setValue:expires forKey:@"expires"];
+        
+        [_userInfoDico addEntriesFromDictionary:_userDic];
+        for(FLTextFieldTitle2 *view in fieldsView){
+            [view reloadData];
+        }
+        
+        [fieldsView[0] becomeFirstResponder];
+        
+    } cancel:^{
+        [fieldsView[0] becomeFirstResponder];
+    }];
+}
+
+#pragma mark - Carte Bancaire
+
+- (void)didOwnerEndEditing
+{
+    [fieldsView[1] becomeFirstResponder];
+}
+
+- (void)didNumberEndEditing
+{
+    [fieldsView[2] becomeFirstResponder];
+}
+
+- (void)didExpiresEndEditing
+{
+    [fieldsView[3] becomeFirstResponder];
+}
+
+- (void)didCVVEndEditing
+{
+    UIView *validView = [[[self.navigationItem.rightBarButtonItem customView] subviews] firstObject];
+    CGFloat duration = .2;
+    
+    [UIView animateWithDuration:duration
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         validView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:duration
+                                               delay:0
+                                             options:UIViewAnimationOptionAllowUserInteraction
+                                          animations:^{
+                                              validView.transform = CGAffineTransformIdentity;
+                                          }
+                                          completion:^(BOOL finished) {
+                                              [UIView animateWithDuration:duration
+                                                                    delay:0
+                                                                  options:UIViewAnimationOptionAllowUserInteraction
+                                                               animations:^{
+                                                                   validView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                                                               }
+                                                               completion:^(BOOL finished) {
+                                                                   [UIView animateWithDuration:duration
+                                                                                         delay:0
+                                                                                       options:UIViewAnimationOptionAllowUserInteraction
+                                                                                    animations:^{
+                                                                                        validView.transform = CGAffineTransformIdentity;
+                                                                                    }
+                                                                                    completion:nil];
+                                                               }];
+                                          }];
+                     }];
+}
+
+#pragma mark -
+
+- (void)didValidTouch2
+{
+    [[self view] endEditing:YES];
+    
+    [[Flooz sharedInstance] showLoadView];
+    [_userInfoDico addEntriesFromDictionary:_userDic];
+    [[Flooz sharedInstance] createCreditCard:_userInfoDico success:^(id result) {
+        [self goToNextPage];
+    }];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications
+{
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+}
+
+- (void)keyboardWillDisappear
+{
+    _contentView.contentInset = UIEdgeInsetsZero;
+}
+
+-(void)hideKeyboard
+{
+    [self.view endEditing:YES];
 }
 
 @end
