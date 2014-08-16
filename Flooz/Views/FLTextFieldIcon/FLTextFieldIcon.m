@@ -155,13 +155,6 @@
     [self addSubview:bottomBar];
 }
 
-- (void)setTextFirstTextField:(NSString *)text {
-    [_textfield setText:text];
-}
-- (void)setTextSecondTextField:(NSString *)text {
-    [_textfield2 setText:text];
-}
-
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -250,6 +243,19 @@
         SEL selector = _action;
         ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
     }
+}
+
+#pragma mark - reload
+
+- (void)reloadTextField
+{
+    NSString *text = @"";
+    text = [_dictionary objectForKey:_dictionaryKey];
+    _textfield.text = text;
+
+    NSString *text2 = @"";
+    text2 = [_dictionary objectForKey:_dictionaryKey2];
+    _textfield2.text = text2;
 }
 
 @end
