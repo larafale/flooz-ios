@@ -17,6 +17,7 @@
 
 typedef enum {
     SignupPageTuto = 0,
+    SignupPageFriends,
     SignupPageExplication,
     SignupPagePhone,
     SignupPagePseudo,
@@ -25,7 +26,6 @@ typedef enum {
     SignupPageCode,
     SignupPageCodeVerif,
     SignupPageCB,
-    SignupPageFriends,
     SignupPageOther
 } SignupOrderPage;
 
@@ -34,26 +34,15 @@ typedef enum {
     SecureCodeModeConfirm // Nouveau code confirmation
 } SecureCodeMode2;
 
-@interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate> {
-    FLUserView *_avatarView;
-}
+@interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate>
 
 @property (nonatomic) NSInteger pageIndex;
 @property (nonatomic, weak) id<FirstLaunchContentViewControllerDelegate> delegate;
 @property (strong, nonatomic) FLHomeTextField *phoneField;
-@property (strong, nonatomic) FLTextFieldIcon *textFieldToFocus;
+@property (strong, nonatomic) FLTextFieldIcon *firstTextFieldToFocus;
 @property (strong, nonatomic) FLTextFieldIcon *secondTextFieldToFocus;
-@property (strong, nonatomic) SecureCodeField *secureCodeField;
-@property (strong, nonatomic) FLTextFieldIcon *userName;
-@property (strong, nonatomic) UIButton *registerFacebook;
-@property (strong, nonatomic) FLTextFieldIcon *name;
-@property (strong, nonatomic) FLTextFieldIcon *email;
-@property (strong, nonatomic) FLTextFieldIcon *password;
-@property (strong, nonatomic) FLTextFieldIcon *passwordConfirm;
 
 @property (strong, nonatomic) UIScrollView *contentView;
-
-@property (nonatomic, strong) NSMutableDictionary *userInfoDico;
 
 - (void)setUserInfoDico:(NSMutableDictionary *)userInfoDico;
 - (void)displayChanges;

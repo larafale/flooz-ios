@@ -25,23 +25,32 @@
     CGFloat sizePicto;
     CGFloat ratioiPhones;
     CGFloat firstItemY;
-    
-    UIImageView *logo;
+
     NSMutableDictionary *_userDic;
-    
-    FLKeyboardView *inputView;
+
     
     UIView *_headerView;
     UILabel *_title;
     UIView *_bar;
     UIButton *_backButton;
-    
     UIView *_mainBody;
-    
-    SecureCodeMode2 currentSecureMode;
-    NSMutableArray *fieldsView;
-
     UIButton *_validCBButton;
+    UIImageView *logo;
+    FLUserView *_avatarView;
+
+
+    UIButton *_registerFacebook;
+    FLTextFieldIcon *_userName;
+    FLTextFieldIcon *_name;
+    FLTextFieldIcon *_email;
+    FLTextFieldIcon *_password;
+    FLTextFieldIcon *_passwordConfirm;
+    SecureCodeField *_secureCodeField;
+
+    SecureCodeMode2 currentSecureMode;
+
+    NSMutableArray *fieldsView;
+    FLKeyboardView *inputView;
 }
 
 @end
@@ -59,7 +68,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 
     sizePicto = 110.0f;
     ratioiPhones = 1.0f;
@@ -68,12 +76,18 @@
         sizePicto = sizePicto / ratioiPhones;
     }
 
-    _userInfoDico = [NSMutableDictionary new];
     _userDic = [NSMutableDictionary new];
     fieldsView = [NSMutableArray new];
 
     [self prepareHeader];
     [self setContent];
+}
+
+- (void)setUserInfoDico:(NSMutableDictionary *)userInfoDico {
+    if (!_userDic) {
+        _userDic = [NSMutableDictionary new];
+    }
+    [_userDic addEntriesFromDictionary:userInfoDico];
 }
 
 - (void)prepareHeader {
@@ -101,6 +115,8 @@
     [_headerView addSubview:_bar];
     [_headerView addSubview:_backButton];
 
+    [self createValidButton];
+
     _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_headerView.frame), PPScreenWidth(), PPScreenHeight()-CGRectGetMaxY(_headerView.frame))];
     [self.view addSubview:_mainBody];
 }
@@ -119,6 +135,7 @@
         CGRectSetY(_title.frame, -5.0f);
         CGRectSetY(_bar.frame, CGRectGetMaxY(_title.frame)+2.0f);
         CGRectSetY(_backButton.frame, CGRectGetMinY(_title.frame) + 7.0f);
+        CGRectSetY(_validCBButton.frame, CGRectGetMinY(_title.frame) + 7.0f);
     }
 
     CGRectSetY(_mainBody.frame, CGRectGetMaxY(_headerView.frame));
@@ -140,38 +157,38 @@
 }
 
 - (void)displayChanges {
-    [_userDic addEntriesFromDictionary:_userInfoDico];
     switch (_pageIndex) {
         case SignupPageInfo: {
-            if(_userInfoDico[@"avatarURL"]){
-                [_avatarView setImageFromURL:_userInfoDico[@"avatarURL"]];
+            if(_userDic[@"avatarURL"]){
+                [_avatarView setImageFromURL:_userDic[@"avatarURL"]];
                 [_avatarView setHidden:NO];
                 [_registerFacebook setHidden:YES];
+                [self animateValidButton];
             }
             else {
                 [_avatarView setHidden:YES];
                 [_registerFacebook setHidden:NO];
             }
-            [_name setTextFirstTextField:_userInfoDico[@"firstName"]];
-            [_name setTextSecondTextField:_userInfoDico[@"lastName"]];
-            [_email setTextFirstTextField:_userInfoDico[@"email"]];
+            [_name reloadTextField];
+            [_email reloadTextField];
+        }
+            break;
+        case SignupPagePseudo: {
+            [_userName reloadTextField];
+        }
+            break;
+        case SignupPageCode: {
+            [_secureCodeField clean];
         }
             break;
         case SignupPagePassword: {
-            [_userInfoDico setValue:@"" forKey:@"password"];
-            [_userInfoDico setValue:@"" forKey:@"confirmation"];
             [_userDic setValue:@"" forKey:@"password"];
             [_userDic setValue:@"" forKey:@"confirmation"];
-            [_password setTextFirstTextField:@""];
-            [_passwordConfirm setTextFirstTextField:@""];
+            [_password reloadTextField];
+            [_passwordConfirm reloadTextField];
+            [_validCBButton setHidden:YES];
         }
-        default: {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                FirstLaunchContentViewController *strongSelf = self;
-                [strongSelf.userName setTextFirstTextField:_userInfoDico[@"nick"]];
-                [strongSelf.secureCodeField clean];
-            });
-        }
+        default:
             break;
     }
 }
@@ -186,7 +203,7 @@
         }
             break;
         case SignupPageInfo: {
-            if(_userInfoDico[@"avatarURL"]){
+            if(_userDic[@"avatarURL"]){
                 [self focusOnSecond];
             }
             else {
@@ -204,7 +221,7 @@
 - (void)focusOnFirst {
     dispatch_async(dispatch_get_main_queue(), ^{
         FirstLaunchContentViewController *strongSelf = self;
-        [strongSelf.textFieldToFocus becomeFirstResponder];
+        [strongSelf.firstTextFieldToFocus becomeFirstResponder];
     });
 }
 
@@ -250,45 +267,40 @@
             CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
             [self.view addSubview:logo];
 
-            self.phoneField = [[FLHomeTextField alloc] initWithPlaceholder:@"06 ou code" for:_userDic key:@"phone" position:CGPointMake(20, 200)];
+            _phoneField = [[FLHomeTextField alloc] initWithPlaceholder:@"06 ou code" for:_userDic key:@"phone" position:CGPointMake(20, 200)];
 
             if(SCREEN_HEIGHT < 500){
-                CGRectSetXY(self.phoneField.frame, (SCREEN_WIDTH - self.phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 5);
+                CGRectSetXY(_phoneField.frame, (SCREEN_WIDTH - _phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 5);
             }
             else{
-                CGRectSetXY(self.phoneField.frame, (SCREEN_WIDTH - self.phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 35);
+                CGRectSetXY(_phoneField.frame, (SCREEN_WIDTH - _phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 35);
             }
-            [self.phoneField addForNextClickTarget:self action:@selector(didConnectTouchr)];
-            [self.view addSubview:self.phoneField];
+            [_phoneField addForNextClickTarget:self action:@selector(didConnectTouchr)];
+            [self.view addSubview:_phoneField];
 
             inputView = [FLKeyboardView new];
-            inputView.textField = self.phoneField.textfield;
-            self.phoneField.textfield.inputView = inputView;
+            inputView.textField = _phoneField.textfield;
+            _phoneField.textfield.inputView = inputView;
         }
             break;
         case SignupPagePseudo: {
             [_backButton setHidden:YES];
             _title.text = NSLocalizedString(@"Pseudo", @"");
             [self displayHeader];
+            [_validCBButton addTarget:self action:@selector(checkPseudo) forControlEvents:UIControlEventTouchUpInside];
 
             _userName = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:_userDic key:@"nick" position:CGPointMake(0.0f, firstItemY)];
             [_userName addForNextClickTarget:self action:@selector(checkPseudo)];
-            self.textFieldToFocus = _userName;
+            _firstTextFieldToFocus = _userName;
             [_mainBody addSubview:_userName];
         }
             break;
         case SignupPageInfo: {
             _title.text = NSLocalizedString(@"Informations", @"");
             [self displayHeader];
+            [_validCBButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
 
-            _registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(20, -5, PPScreenWidth()-40.0f, 40)];
-            [_registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
-            [_registerFacebook setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
-            _registerFacebook.titleLabel.font = [UIFont customContentRegular:15];
-            [_registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateNormal];
-            [_registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateHighlighted];
-            [_registerFacebook setImageEdgeInsets:UIEdgeInsetsMake(-1, 0, 0, 12)];
-            [_registerFacebook addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
+            [self createFacebookButton];
             [_mainBody addSubview:_registerFacebook];
 
             _avatarView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(_mainBody.frame) / 2.0f) - (50 / 2.0f), -10, 50, 50)];
@@ -296,30 +308,31 @@
             [_avatarView setHidden:YES];
 
             _name = [[FLTextFieldIcon alloc] initWithIcon:@"field-name" placeholder:@"FIELD_FIRSTNAME" for:_userDic key:@"firstName" position:CGPointMake(0.0f, firstItemY+15.0f) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
-            self.textFieldToFocus = _name;
+            _firstTextFieldToFocus = _name;
             [_name addForNextClickTarget:self action:@selector(focusOnNext)];
             [_mainBody addSubview:_name];
 
             _email = [[FLTextFieldIcon alloc] initWithIcon:@"field-email" placeholder:@"FIELD_EMAIL" for:_userDic key:@"email" position:CGPointMake(0.0f, CGRectGetMaxY(_name.frame) + 5.0f / ratioiPhones)];
             [_email addForNextClickTarget:self action:@selector(checkEmail)];
-            self.secondTextFieldToFocus = _email;
+            _secondTextFieldToFocus = _email;
             [_mainBody addSubview:_email];
         }
             break;
         case SignupPagePassword: {
             _title.text = NSLocalizedString(@"Mot de passe", @"");
             [self displayHeader];
+            [_validCBButton addTarget:self action:@selector(checkPassword) forControlEvents:UIControlEventTouchUpInside];
 
             _password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:_userDic key:@"password" position:CGPointMake(0.0f, firstItemY)];
             [_password seTsecureTextEntry:YES];
             [_password addForNextClickTarget:self action:@selector(focusOnNext)];
-            self.textFieldToFocus = _password;
+            _firstTextFieldToFocus = _password;
             [_mainBody addSubview:_password];
 
             _passwordConfirm = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD_CONFIRMATION" for:_userDic key:@"confirmation" position:CGPointMake(0.0f, CGRectGetMaxY(_password.frame) + 10.0f / ratioiPhones)];
             [_passwordConfirm seTsecureTextEntry:YES];
             [_passwordConfirm addForNextClickTarget:self action:@selector(checkPassword)];
-            self.secondTextFieldToFocus = _passwordConfirm;
+            _secondTextFieldToFocus = _passwordConfirm;
             [_mainBody addSubview:_passwordConfirm];
         }
             break;
@@ -351,7 +364,7 @@
 
             currentSecureMode = SecureCodeModeNew;
 
-            CGRectSetY(self.secureCodeField.frame, CGRectGetMinY(firstTimeText.frame) - CGRectGetHeight(self.secureCodeField.frame) - 5);
+            CGRectSetY(_secureCodeField.frame, CGRectGetMinY(firstTimeText.frame) - CGRectGetHeight(_secureCodeField.frame) - 5);
         }
             break;
         case SignupPageCodeVerif: {
@@ -378,22 +391,9 @@
             break;
         case SignupPageCB: {
             [_backButton setHidden:YES];
-
-            UIImage *image = [UIImage imageNamed:@"navbar-check"];
-            _validCBButton = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(image.size)];
-            CGRectSetY(_validCBButton.frame, CGRectGetMinY(_title.frame) + 12.0f);
-            CGRectSetX(_validCBButton.frame, CGRectGetWidth(_headerView.frame) - 10 - CGRectGetWidth(_validCBButton.frame));
-
-            if (PPScreenHeight() < 500.0f) {
-                CGRectSetY(_validCBButton.frame, CGRectGetMinY(_title.frame) + 7.0f);
-            }
-            [_validCBButton setImage:image  forState:UIControlStateNormal];
-            [_validCBButton addTarget:self action:@selector(didValidTouch2) forControlEvents:UIControlEventTouchUpInside];
-            [_validCBButton setHidden:YES];
-            [_headerView addSubview:_validCBButton];
-
             _title.text = NSLocalizedString(@"Carte bancaire", @"");
             [self displayHeader];
+            [_validCBButton addTarget:self action:@selector(didValidTouch2) forControlEvents:UIControlEventTouchUpInside];
 
             [self nextButtonWithText:NSLocalizedString(@"SIGNUP_VIEW_IGNORE_BUTTON", @"") andWidth:220];
 
@@ -486,6 +486,20 @@
     }
 }
 
+- (void) createValidButton {
+    UIImage *image = [UIImage imageNamed:@"navbar-check"];
+    _validCBButton = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(image.size)];
+    CGRectSetY(_validCBButton.frame, CGRectGetMinY(_title.frame) + 12.0f);
+    CGRectSetX(_validCBButton.frame, CGRectGetWidth(_headerView.frame) - 10 - CGRectGetWidth(_validCBButton.frame));
+
+    if (PPScreenHeight() < 500.0f) {
+        CGRectSetY(_validCBButton.frame, CGRectGetMinY(_title.frame) + 7.0f);
+    }
+    [_validCBButton setImage:image  forState:UIControlStateNormal];
+    [_validCBButton setHidden:YES];
+    [_headerView addSubview:_validCBButton];
+}
+
 - (UIView *)placePictoAndText:(NSString *)pictoName title:(NSString *)title subTitle:(NSString *)subTitle underView:(UIView *)view {
     FLStartItem *item = [FLStartItem newWithTitle:@"" imageImageName:pictoName contentText:@"coucou" andSize:sizePicto];
     [item setSize:CGSizeMake(sizePicto, sizePicto)];
@@ -526,6 +540,16 @@
     [_mainBody addSubview:textView];
 }
 
+- (void)createFacebookButton {
+    _registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(20, -5, PPScreenWidth()-40.0f, 40)];
+    [_registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
+    [_registerFacebook setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
+    _registerFacebook.titleLabel.font = [UIFont customContentRegular:15];
+    [_registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateNormal];
+    [_registerFacebook setImage:[UIImage imageNamed:@"facebook"] forState:UIControlStateHighlighted];
+    [_registerFacebook setImageEdgeInsets:UIEdgeInsetsMake(-1, 0, 0, 12)];
+    [_registerFacebook addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
+}
 
 - (void)didConnectTouchr
 {
@@ -536,68 +560,68 @@
 
         [[Flooz sharedInstance] showLoadView];
         [appDelegate clearSavedViewController];
-        [_userInfoDico addEntriesFromDictionary:_userDic];
         [[Flooz sharedInstance] loginWithPhone:_userDic[@"phone"]];
     }
 }
 
 - (void)focusOnNext {
-    [self.secondTextFieldToFocus becomeFirstResponder];
+    [_secondTextFieldToFocus becomeFirstResponder];
 }
 
 - (void) checkPseudo {
+    NSLog(@"%@", _userDic[@"nick"]);
     if (_userDic[@"nick"] && ![_userDic[@"nick"] isBlank]) {
+        [self animateValidButton];
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] verifyPseudo:_userDic[@"nick"] success:^(id result) {
-            [_userInfoDico addEntriesFromDictionary:_userDic];
             [self goToNextPage];
         } failure:^(NSError *error) {
-            [self.textFieldToFocus becomeFirstResponder];
+            [_firstTextFieldToFocus becomeFirstResponder];
         }];
     }
 }
 
 - (void) checkEmail {
     if (!_userDic[@"lastName"] || !_userDic[@"firstName"] || [_userDic[@"lastName"] isBlank] || [_userDic[@"lastName"] isBlank]) {
-        [self.textFieldToFocus becomeFirstResponder];
+        [_firstTextFieldToFocus becomeFirstResponder];
         return;
     }
 
     if (_userDic[@"email"] && ![_userDic[@"email"] isBlank] && [self validateEmail:_userDic[@"email"]]) {
+        [self animateValidButton];
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] verifyEmail:_userDic[@"email"] success:^(id result) {
-            [_userInfoDico addEntriesFromDictionary:_userDic];
             [self goToNextPage];
         } failure:^(NSError *error) {
-            [self.secondTextFieldToFocus becomeFirstResponder];
+            [_secondTextFieldToFocus becomeFirstResponder];
         }];
     }
     else {
-        [self.secondTextFieldToFocus becomeFirstResponder];
+        [_secondTextFieldToFocus becomeFirstResponder];
     }
 }
 
 - (void) checkPassword {
     if (!_userDic[@"password"] || [_userDic[@"password"] isBlank]) {
-        [self.textFieldToFocus becomeFirstResponder];
+        [_firstTextFieldToFocus becomeFirstResponder];
         return;
     }
 
     if (!_userDic[@"confirmation"] || [_userDic[@"confirmation"] isBlank]) {
-        [self.secondTextFieldToFocus becomeFirstResponder];
+        [_secondTextFieldToFocus becomeFirstResponder];
         return;
     }
 
     if (_userDic[@"password"] && _userDic[@"confirmation"] && ![_userDic[@"password"] isBlank] && ![_userDic[@"confirmation"] isBlank] && [_userDic[@"password"] isEqualToString:_userDic[@"confirmation"]]) {
-        [_userInfoDico addEntriesFromDictionary:_userDic];
+        [self animateValidButton];
 
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] signup:_userInfoDico success:^(id result) {
+        [[Flooz sharedInstance] signup:_userDic success:^(id result) {
             [self goToNextPage];
         } failure:NULL];
     }
     else {
-        [self.textFieldToFocus becomeFirstResponder];
+        [_firstTextFieldToFocus becomeFirstResponder];
     }
 }
 
@@ -618,12 +642,12 @@
 #pragma mark - button methods
 - (void) goToNextPage {
     if ([self.delegate respondsToSelector:@selector(goToNextPage:withUser:)]) {
-        [self.delegate goToNextPage:_pageIndex withUser:_userInfoDico];
+        [self.delegate goToNextPage:_pageIndex withUser:_userDic];
     }
 }
 - (void) goToPreviousPage {
     if ([self.delegate respondsToSelector:@selector(goToPreviousPage:withUser:)]) {
-        [self.delegate goToPreviousPage:_pageIndex withUser:_userInfoDico];
+        [self.delegate goToPreviousPage:_pageIndex withUser:_userDic];
     }
 }
 
@@ -637,11 +661,11 @@
 
 - (void)didSecureCodeEnter:(NSString *)secureCode {
     if(currentSecureMode == SecureCodeModeNew){
-        [_userInfoDico setValue:secureCode forKey:@"passcode"];
+        [_userDic setValue:secureCode forKey:@"passcode"];
         [self goToNextPage];
     }
     else if(currentSecureMode == SecureCodeModeConfirm){
-        if ([_userInfoDico[@"passcode"] isEqualToString:secureCode]) {
+        if ([_userDic[@"passcode"] isEqualToString:secureCode]) {
             [UICKeyChainStore setString:secureCode forKey:[self keyForSecureCode]];
             [self goToNextPage];
         }
@@ -688,7 +712,6 @@
 
         [_userDic setValue:expires forKey:@"expires"];
 
-        [_userInfoDico addEntriesFromDictionary:_userDic];
         for(FLTextFieldTitle2 *view in fieldsView){
             [view reloadData];
         }
@@ -731,8 +754,11 @@
     if (!_userDic[@"number"] || !_userDic[@"cvv"] || !_userDic[@"expires"] || !_userDic[@"holder"] ||
         [_userDic[@"number"] isBlank] || [_userDic[@"cvv"] isBlank] || [_userDic[@"expires"] isBlank] || [_userDic[@"holder"] isBlank]) {
         verifOk = NO;
+        [_validCBButton setHidden:YES];
     }
-    [_validCBButton setHidden:!verifOk];
+    else {
+        [self animateValidButton];
+    }
     return verifOk;
 }
 
@@ -744,8 +770,7 @@
         [[self view] endEditing:YES];
 
         [[Flooz sharedInstance] showLoadView];
-        [_userInfoDico addEntriesFromDictionary:_userDic];
-        [[Flooz sharedInstance] createCreditCard:_userInfoDico success:^(id result) {
+        [[Flooz sharedInstance] createCreditCard:_userDic success:^(id result) {
             [self goToNextPage];
         }];
     }
@@ -775,6 +800,46 @@
 -(void)hideKeyboard
 {
     [self.view endEditing:YES];
+}
+
+#pragma mark - validButton
+
+- (void)animateValidButton
+{
+    [_validCBButton setHidden:NO];
+    CGFloat duration = .2;
+
+    [UIView animateWithDuration:duration
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         _validCBButton.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:duration
+                                               delay:0
+                                             options:UIViewAnimationOptionAllowUserInteraction
+                                          animations:^{
+                                              _validCBButton.transform = CGAffineTransformIdentity;
+                                          }
+                                          completion:^(BOOL finished) {
+                                              [UIView animateWithDuration:duration
+                                                                    delay:0
+                                                                  options:UIViewAnimationOptionAllowUserInteraction
+                                                               animations:^{
+                                                                   _validCBButton.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                                                               }
+                                                               completion:^(BOOL finished) {
+                                                                   [UIView animateWithDuration:duration
+                                                                                         delay:0
+                                                                                       options:UIViewAnimationOptionAllowUserInteraction
+                                                                                    animations:^{
+                                                                                        _validCBButton.transform = CGAffineTransformIdentity;
+                                                                                    }
+                                                                                    completion:nil];
+                                                               }];
+                                          }];
+                     }];
 }
 
 @end
