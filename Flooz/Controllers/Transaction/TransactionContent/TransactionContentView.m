@@ -183,7 +183,8 @@
         FLSocialView *view = [[self subviews] objectAtIndex:3];
         [view prepareView:_transaction.social];
         
-        [_target performSelector:_action];
+        SEL selector = _action;
+        ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
     } failure:NULL];
 }
 

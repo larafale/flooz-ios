@@ -122,7 +122,8 @@
         FLSocialView *view = [[self subviews] objectAtIndex:2];
         [view prepareView:_event.social];
         
-        [_target performSelector:_action];
+        SEL selector = _action;
+        ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
     } failure:NULL];
 }
 

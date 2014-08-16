@@ -122,7 +122,7 @@
     }
     else{
         commentText.hidden = NO;
-        commentText.text = [NSString stringWithFormat:@"%ld", social.commentsCount];
+        commentText.text = [NSString stringWithFormat:@"%ld", (unsigned long)social.commentsCount];
         
         CGRectSetWidth(commentText.frame, [commentText widthToFit] + 20);
     }
@@ -164,7 +164,8 @@
         }];
     }];
 
-    [_target performSelector:_action withObject:nil];
+    SEL selector = _action;
+    ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
 }
 
 @end
