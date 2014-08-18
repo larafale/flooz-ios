@@ -243,7 +243,6 @@
 "SIGNUP_VIEW_1_SUBTITLE_3" = "Créez des cagnottes et invitez vos amis pour vos cadeaux commun ! Réunir de l'argent n'a jamais été aussi simple.";
 "SIGNUP_VIEW_1_BUTTON" = "Commencez";
 
-
 "SIGNUP_HEAD_TITLE_2" = "Créer votre compte";
 "SIGNUP_VIEW_2_TITLE_1" = "EN 2 TEMPS 3 MOUVEMENTS";
 "SIGNUP_VIEW_2_SUBTITLE_1" = "Choisissez votre @pseudo et un mot de passe. Il suffira de donner votre @pseudo à vos amis pour qu'ils vous envoient des paiements.";
@@ -253,4 +252,21 @@
 "SIGNUP_VIEW_2_SUBTITLE_3" = "Parrainez vos amis et gagnez 2€ immédiatement si 'lun de vos amis utilisez l'app. Partagez le code d'invitation qui vous a été fourni !";
 "SIGNUP_VIEW_2_BUTTON" = "Démarrez l'expérience Flooz";
 
-"SIGNUP_VIEW_IGNORE_BUTTON" = "Ignorer";
+"SIGNUP_VIEW_IGNORE_BUTTON" = "Plus tard";
+
+"SIGNUP_PAGE_TITLE_Pseudo" = "Pseudo";
+"SIGNUP_PAGE_TITLE_Info" = "Inscription";
+"SIGNUP_PAGE_TITLE_Password" = "Mot de passe";
+"SIGNUP_PAGE_TITLE_Code" = "Code de sécurité";
+"SIGNUP_PAGE_TITLE_CodeVerif" = "Confirmation";
+"SIGNUP_PAGE_TITLE_CB" = "Carte bancaire";
+"SIGNUP_PAGE_TITLE_Friends" = "Invitez vos amis";
+
+"SIGNUP_PSEUDO_EXPLICATION" = "Votre pseudo est unique c'est comme ça que les gens vous voient sur Flooz. Donnez le à vos amis pour recevoir de l'argent.";
+
+"SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
+"SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";
+"SIGNUP_FIELD_CARD_EXPIRES_PLACEHOLDER" = "Date d'expiration (MMYY)";
+"SIGNUP_FIELD_CARD_CVV_PLACEHOLDER" = "CVV (3 chiffres au dos)";
+
+"SIGNUP_FRIENDS_MESSAGE" = "Gagnez 2€ cash à chaque fois que l'un de vos amis envoie son premier Flooz grâce à vous.";
