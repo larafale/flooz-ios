@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 
 #define height_nav_bar 40.0f
+#define NUMBER_STEP 5.0f
 
 @interface FirstLaunchViewController ()
 {
@@ -40,13 +41,13 @@
     self.userInfoDico = [NSMutableDictionary new];
 }
 
-#define NUMBER_OF_PAGES 9
+#define NUMBER_OF_PAGES (SignupPageFriends + 1)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _tutorialsView = [NSMutableArray array];
-    for (int i = 0 ; i < NUMBER_OF_PAGES ; i++) {
+    for (int i = 0 ; i <= NUMBER_OF_PAGES ; i++) {
         [_tutorialsView addObject:[NSNull null]];
     }
     
@@ -76,50 +77,55 @@
     [self.view addSubview:_headMenu];
     
     _headProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    [_headProgress setOrigin:CGPointMake(0, height_nav_bar+STATUSBAR_HEIGHT-2)];
-    [_headProgress setSize:CGSizeMake(PPScreenWidth(), 2)];
+    [_headProgress setSize:CGSizeMake(PPScreenWidth(), 1)];
+    [_headProgress setOrigin:CGPointMake(0, CGRectGetHeight(_headMenu.frame) - CGRectGetHeight(_headProgress.frame))];
     [_headProgress setProgressTintColor: [UIColor customBlueLight]];
     [_headProgress setTrackTintColor: [UIColor whiteColor]];
-    [_headProgress setProgress:0.0f / 7.0f animated:YES];
+    [_headProgress setProgress:0.0f / NUMBER_STEP animated:YES];
     [_headMenu addSubview: _headProgress];
     
-    CGFloat offset = PPScreenWidth() / 7.0f - height_nav_bar;
+    CGFloat offset = PPScreenWidth() / NUMBER_STEP;
+    float poXMid = offset / 2;
+    float midYPos = STATUSBAR_HEIGHT + height_nav_bar / 2;
     
     _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(offset, STATUSBAR_HEIGHT, height_nav_bar, height_nav_bar)];
+    CGRectSetSize(_closeButton.frame, CGSizeMake(height_nav_bar, height_nav_bar));
+    [_closeButton setCenter:CGPointMake(poXMid, midYPos)];
     [_closeButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
     [_closeButton addTarget:self action:@selector(closeSignup) forControlEvents:UIControlEventTouchUpInside];
     [_headMenu addSubview:_closeButton];
     
-    FLStartItem *item1 = [FLStartItem newWithTitle:@"" imageImageName:@"field-phone" contentText:@"" andSize:height_nav_bar];
-    [item1 setOrigin:CGPointMake(offset + height_nav_bar, STATUSBAR_HEIGHT)];
-    [_headMenu addSubview:item1];
-    
-    
-    FLStartItem *item2 = [FLStartItem newWithTitle:@"" imageImageName:@"field-username" contentText:@"" andSize:height_nav_bar];
-    [item2 setOrigin:CGPointMake(2*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
-    [_headMenu addSubview:item2];
-    
     
     FLStartItem *item3 = [FLStartItem newWithTitle:@"" imageImageName:@"field-name" contentText:@"" andSize:height_nav_bar];
-    [item3 setOrigin:CGPointMake(3*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
+    CGRectSetSize(item3.frame, CGSizeMake(height_nav_bar, height_nav_bar));
+    poXMid += offset;
+    [item3 setCenter:CGPointMake(poXMid, midYPos)];
     [_headMenu addSubview:item3];
     
-    
+
     FLStartItem *item4 = [FLStartItem newWithTitle:@"" imageImageName:@"field-password" contentText:@"" andSize:height_nav_bar];
-    [item4 setOrigin:CGPointMake(4*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
+    CGRectSetSize(item4.frame, CGSizeMake(height_nav_bar, height_nav_bar));
+    poXMid += offset;
+    [item4 setCenter:CGPointMake(poXMid, midYPos)];
     [_headMenu addSubview:item4];
+
     
     FLStartItem *item5 = [FLStartItem newWithTitle:@"" imageImageName:@"payment-field-card-selected" contentText:@"" andSize:height_nav_bar];
-    [item5 setOrigin:CGPointMake(5*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
+    CGRectSetSize(item5.frame, CGSizeMake(height_nav_bar, height_nav_bar));
+    poXMid += offset;
+    [item5 setCenter:CGPointMake(poXMid, midYPos)];
     [_headMenu addSubview:item5];
     
-    FLStartItem *item6 = [FLStartItem newWithTitle:@"" imageImageName:@"scope-friend" contentText:@"" andSize:height_nav_bar];
-    [item6 setOrigin:CGPointMake(6*(offset + height_nav_bar), STATUSBAR_HEIGHT)];
+    
+    FLStartItem *item6 = [FLStartItem newWithTitle:@"" imageImageName:@"field-rib" contentText:@"" andSize:height_nav_bar];
+    CGRectSetSize(item6.frame, CGSizeMake(height_nav_bar, height_nav_bar));
+    poXMid += offset;
+    [item6 setCenter:CGPointMake(poXMid, midYPos)];
     [_headMenu addSubview:item6];
     
     
     [self setScrollEnabled:NO forPageViewController:_pageViewController];
-    _indexPage = 0;
+    _indexPage = SignupPageTuto;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
 }
 
@@ -181,7 +187,7 @@
 
 - (void)goToNextPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico {
     self.userInfoDico = userDico;
-    if (_indexPage >= NUMBER_OF_PAGES) {
+    if (currentIndex+1 >= NUMBER_OF_PAGES) {
         [appDelegate goToAccountViewController];
         return;
     }
@@ -191,7 +197,7 @@
 
 - (void)goToPreviousPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico {
     self.userInfoDico = userDico;
-    if (_indexPage == 0) {
+    if (currentIndex-1 == 0) {
         return;
     }
     _indexPage = currentIndex-1;
@@ -221,49 +227,53 @@
         [self manageProgressBar];
     }
     FirstLaunchContentViewController *newView = [self viewControllerAtIndex:_indexPage];
-    [newView setUserInfoDico:self.userInfoDico];
-    [self.pageViewController setViewControllers:@[newView]
-                                      direction:direction
-                                       animated:YES
-                                     completion:^(BOOL finished) {
-                                         if (finished) {
-                                         }
-                                     }];
+    if (newView) {
+        [newView setUserInfoDico:self.userInfoDico];
+        [self.pageViewController setViewControllers:@[newView]
+                                          direction:direction
+                                           animated:YES
+                                         completion:^(BOOL finished) {
+                                             if (finished) {
+                                             }
+                                         }];
+    }
 }
 
 - (void) manageProgressBar {
     float pro;
     if (_indexPage == SignupPagePhone) {
-        pro = 1.0f / 7.0f;
+        pro = 1.0f / NUMBER_STEP;
     }
     else if (_indexPage == SignupPagePseudo) {
-        pro = 2.0f / 7.0f;
+        pro = 1.0f / NUMBER_STEP;
     }
     else if (_indexPage == SignupPageInfo) {
-        pro = 3.0f / 7.0f;
+        pro = 1.5f / NUMBER_STEP;
     }
     else if (_indexPage == SignupPagePassword) {
-        pro = 4.0f / 7.0f;
+        pro = 2.0f / NUMBER_STEP;
     }
     else if (_indexPage == SignupPageCode) {
-        pro = 4.33f / 7.0f;
+        pro = 2.5f / NUMBER_STEP;
     }
     else if (_indexPage == SignupPageCodeVerif) {
-        pro = 4.66f / 7.0f;
+        pro = 2.75f / NUMBER_STEP;
     }
     else if (_indexPage == SignupPageCB) {
-        pro = 5.0f / 7.0f;
-        [_closeButton setHidden:YES];
+        pro = 3.0f / NUMBER_STEP;
     }
     else if (_indexPage == SignupPageFriends) {
-        pro = 6.0f / 7.0f;
-        [_closeButton setEnabled:YES];
+        pro = 4.0f / NUMBER_STEP;
     }
     else {
-        pro = 1.0f;
-        [_closeButton setEnabled:YES];
+        pro = NUMBER_STEP / NUMBER_STEP;
     }
     [_headProgress setProgress:pro animated:YES];
+    
+    [_closeButton setEnabled:YES];
+    if (_indexPage > SignupPagePassword) {
+        [_closeButton setEnabled:NO];
+    }
     
     if (_indexPage < SignupPagePseudo) {
         if (CGRectGetMaxY(_headMenu.frame) > 0) {

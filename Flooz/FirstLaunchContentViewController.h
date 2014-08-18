@@ -13,11 +13,14 @@
 #import "SecureCodeField.h"
 #import "FLTextFieldTitle2.h"
 
+#import <AddressBookUI/AddressBookUI.h>
+
+#import "ContactCell.h"
+
 @protocol FirstLaunchContentViewControllerDelegate;
 
 typedef enum {
     SignupPageTuto = 0,
-    SignupPageFriends,
     SignupPageExplication,
     SignupPagePhone,
     SignupPagePseudo,
@@ -26,7 +29,7 @@ typedef enum {
     SignupPageCode,
     SignupPageCodeVerif,
     SignupPageCB,
-    SignupPageOther
+    SignupPageFriends
 } SignupOrderPage;
 
 typedef enum {
@@ -34,7 +37,7 @@ typedef enum {
     SecureCodeModeConfirm // Nouveau code confirmation
 } SecureCodeMode2;
 
-@interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate>
+@interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) NSInteger pageIndex;
 @property (nonatomic, weak) id<FirstLaunchContentViewControllerDelegate> delegate;
