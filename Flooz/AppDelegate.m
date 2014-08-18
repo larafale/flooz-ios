@@ -24,7 +24,9 @@
 #import "SecureCodeViewController.h"
 #import <Analytics/Analytics.h>
 #import <Crashlytics/Crashlytics.h>
+#ifdef TARGET_IPHONE_SIMULATOR
 #import <PonyDebugger/PonyDebugger.h>
+#endif
 
 #import "TransactionViewController.h"
 #import "EventViewController.h"
@@ -59,11 +61,13 @@
     // initialisation de MagicalRecord
     // Pony Debugger
 #ifdef PONY_D
+#ifdef TARGET_IPHONE_SIMULATOR
     PDDebugger *debugger = [PDDebugger defaultInstance];
     [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     [debugger enableNetworkTrafficDebugging];
     [debugger forwardAllNetworkTraffic];
     [debugger enableViewHierarchyDebugging];
+#endif
 #endif
     
 #ifdef FLOOZ_DEV_API
