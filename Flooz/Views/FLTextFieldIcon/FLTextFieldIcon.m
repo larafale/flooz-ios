@@ -163,16 +163,14 @@
 
     if(_textfield2){
         if(textField == _textfield2){
-            SEL selector = _action;
-            ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
+            [_target performSelector:_action];
         }
         else{
             [_textfield2 becomeFirstResponder];
         }
     }
     else{
-        SEL selector = _action;
-        ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
+        [_target performSelector:_action];
     }
 
     return YES;
@@ -221,6 +219,7 @@
     }else{
         [_dictionary setValue:textField.text forKey:currentDictionaryKey];
     }
+    [_targetTextChange performSelector:_actionTextChange withObject:self];
 }
 
 #pragma mark -
@@ -236,12 +235,17 @@
     _action = action;
 }
 
+- (void)addForTextChangeTarget:(id)target action:(SEL)action
+{
+    _targetTextChange = target;
+    _actionTextChange = action;
+}
+
 - (void)checkPhoneValue
 {
     if([_textfield.text length] == 10){
         [_textfield resignFirstResponder];
-        SEL selector = _action;
-        ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
+        [_target performSelector:_action];
     }
 }
 

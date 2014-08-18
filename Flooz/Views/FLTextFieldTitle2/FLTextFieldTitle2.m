@@ -115,8 +115,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    SEL selector = _action;
-    ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
+    [_target performSelector:_action];
     return YES;
 }
 
@@ -170,18 +169,15 @@
     if([_textfield isFirstResponder]){
         if(_style == FLTextFieldTitle2StyleCardNumber && [[_dictionary objectForKey:_dictionaryKey] length] == 16){
             [_textfield resignFirstResponder];
-            SEL selector = _action;
-            ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
+            [_target performSelector:_action];
         }
         else if(_style == FLTextFieldTitle2StyleCardExpire && [[_dictionary objectForKey:_dictionaryKey] length] == 5){
             [_textfield resignFirstResponder];
-            SEL selector = _action;
-            ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
+            [_target performSelector:_action];
         }
         else if(_style == FLTextFieldTitle2StyleCVV && [[_dictionary objectForKey:_dictionaryKey] length] == 3){
             [_textfield resignFirstResponder];
-            SEL selector = _action;
-            ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
+            [_target performSelector:_action];
         }
     }
 }

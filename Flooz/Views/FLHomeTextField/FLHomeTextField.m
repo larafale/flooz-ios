@@ -104,12 +104,10 @@
 - (void)checkValueForCallAction
 {
     if(_textfield.text.length >= 10){
-        SEL selector = _action;
-        ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
+        [_target performSelector:_action];
     }
     else if([_textfield.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location != NSNotFound && _textfield.text.length >= 8){
-        SEL selector = _action;
-        ((void (*)(id, SEL))[_target methodForSelector:selector])(_target, selector);
+        [_target performSelector:_action];
     }
     
 }
