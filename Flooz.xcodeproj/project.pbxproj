@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
+		2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FD2460219A29495008DCFB5 /* ContactCell.m */; };
+		2FD2460419A2983C008DCFB5 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FD2460219A29495008DCFB5 /* ContactCell.m */; };
 		8B102E06199A61C20040278F /* FLStartButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCB8D2A19996E6E00CE628F /* FLStartButton.m */; };
 		8B102E07199A61CA0040278F /* FLStartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2410E199975BC00AAE69E /* FLStartItem.m */; };
 		8B55B44119996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
@@ -372,6 +374,8 @@
 
 /* Begin PBXFileReference section */
 		1686D3DC8F1E47F8A8972682 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FD2460119A29495008DCFB5 /* ContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCell.h; path = ContactCell/ContactCell.h; sourceTree = "<group>"; };
+		2FD2460219A29495008DCFB5 /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactCell.m; path = ContactCell/ContactCell.m; sourceTree = "<group>"; };
 		8B55B43F19996283003F5A6C /* FirstLaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstLaunchViewController.h; sourceTree = "<group>"; };
 		8B55B44019996283003F5A6C /* FirstLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstLaunchViewController.m; sourceTree = "<group>"; };
 		8B55B444199962AE003F5A6C /* FirstLaunchContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstLaunchContentViewController.h; sourceTree = "<group>"; };
@@ -768,6 +772,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2FD2460019A24DC4008DCFB5 /* ContactCell */ = {
+			isa = PBXGroup;
+			children = (
+				2FD2460119A29495008DCFB5 /* ContactCell.h */,
+				2FD2460219A29495008DCFB5 /* ContactCell.m */,
+			);
+			name = ContactCell;
+			sourceTree = "<group>";
+		};
 		8B55B43E19996243003F5A6C /* FirstLaunch */ = {
 			isa = PBXGroup;
 			children = (
@@ -1280,6 +1293,7 @@
 		AB5EB6F91882157300D81AF6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				2FD2460019A24DC4008DCFB5 /* ContactCell */,
 				AB2FB54918B2319E0079AA1D /* ActivityCell */,
 				ABF7093B18A4D62800517389 /* EventCell */,
 				ABB12D6D18BFA2B0002FCAAE /* EventParticipantCell */,
@@ -2312,6 +2326,7 @@
 				ABE9146E189294A0003AC722 /* FLMenuNewTransactionButton.m in Sources */,
 				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
 				ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */,
+				2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */,
 				AB5EB6ED188214F000D81AF6 /* MenuNewTransactionViewController.m in Sources */,
 				ABB12D4818BCE805002FCAAE /* EventViewController.m in Sources */,
 				ABE9146618929402003AC722 /* FLAccountButton.m in Sources */,
@@ -2491,6 +2506,7 @@
 				ABAA3FB9197E96BF009F29EF /* TransactionContentView.m in Sources */,
 				ABAA3FBA197E96BF009F29EF /* CashOutViewController.m in Sources */,
 				ABAA3FBB197E96BF009F29EF /* FLNewTransactionBar.m in Sources */,
+				2FD2460419A2983C008DCFB5 /* ContactCell.m in Sources */,
 				ABAA3FBC197E96BF009F29EF /* FLTextView.m in Sources */,
 				ABAA3FBD197E96BF009F29EF /* TransactionViewController.m in Sources */,
 				ABAA3FBE197E96BF009F29EF /* FLTransaction.m in Sources */,
@@ -2808,7 +2824,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FLOOZ_DEV_API=1",
-					"PONY_D=1",
 				);
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
