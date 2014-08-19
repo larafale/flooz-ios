@@ -60,7 +60,7 @@
 - (void)setKeyboardChangeable
 {
     [closeButton setTitle:@"ABC" forState:UIControlStateNormal];
-    closeButton.titleLabel.font = [UIFont customTitleThin:20];
+    [closeButton.titleLabel setFont:[UIFont customTitleThin:20]];
     [closeButton setImage:nil forState:UIControlStateNormal];
     [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     [closeButton addTarget:self action:@selector(didNormalKeyboardTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -69,8 +69,8 @@
 
 - (FLKeyboardView *)setKeyboardValidateWithTarget:(id)target action:(SEL)action
 {
-    [closeButton setTitle:@"Valider" forState:UIControlStateNormal];
-    closeButton.titleLabel.font = [UIFont customTitleThin:22];
+    [closeButton setTitle:NSLocalizedString(@"Validate_Button", @"") forState:UIControlStateNormal];
+    [closeButton.titleLabel setFont: [UIFont customTitleThin:26]];
     [closeButton setImage:nil forState:UIControlStateNormal];
     [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     [closeButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
@@ -87,8 +87,8 @@
 }
 
 - (FLKeyboardView *)setKeyboardPhoneLoginWithTarget:(id)target action:(SEL)action {
-    [bottomRightButton setTitle:@"Valider" forState:UIControlStateNormal];
-    bottomRightButton.titleLabel.font = [UIFont customTitleThin:22];
+    [bottomRightButton setTitle:NSLocalizedString(@"Validate_Button", @"") forState:UIControlStateNormal];
+    [bottomRightButton.titleLabel setFont: [UIFont customTitleThin:26]];
     [bottomRightButton setImage:nil forState:UIControlStateNormal];
     [bottomRightButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     [bottomRightButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
