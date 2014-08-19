@@ -274,3 +274,7 @@
 "SEND" = "Envoyer";
 "ALERT_CONTACT_DENIES_ACCESS" = "Vous n'avez pas autorisé à lire les contacts!\nVous passez directement à l'étape suivante.";
 "ALERT_CONTACT_DENIES_ACCESS_PREVIOUS" = "Vous n'avez pas autorisé à lire les contacts précédemment!\nVous passez directement à l'étape suivante.";
+
+"Validate_Button" = "Inviter";
+"CONTACT_PICKER_NON_FLOOZ" = "Mes amis à inviter";
+"CONTACT_PICKER_FLOOZ" = "Mes amis de flooz";

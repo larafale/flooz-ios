@@ -253,8 +253,7 @@
 "SIGNUP_VIEW_2_SUBTITLE_3" = "Parrainez vos amis et gagnez 2€ immédiatement si 'lun de vos amis utilisez l'app. Partagez le code d'invitation qui vous a été fourni !";
 "SIGNUP_VIEW_2_BUTTON" = "Démarrez l'expérience Flooz";
 
-"SIGNUP_VIEW_IGNORE_BUTTON" = "Ignorer";
-
+"SIGNUP_VIEW_IGNORE_BUTTON" = "Plus tard";
 
 "SIGNUP_PAGE_TITLE_Pseudo" = "Pseudo";
 "SIGNUP_PAGE_TITLE_Info" = "Inscription";
@@ -274,3 +273,9 @@
 "SIGNUP_FRIENDS_MESSAGE" = "Gagnez 2€ cash à chaque fois que l'un de vos amis envoie son premier Flooz grâce à vous.";
 
 "SEND" = "Envoyer";
+"ALERT_CONTACT_DENIES_ACCESS" = "Vous n'avez pas autorisé à lire les contacts!\nVous passez directement à l'étape suivante.";
+"ALERT_CONTACT_DENIES_ACCESS_PREVIOUS" = "Vous n'avez pas autorisé à lire les contacts précédemment!\nVous passez directement à l'étape suivante.";
+
+"Validate_Button" = "Inviter";
+"CONTACT_PICKER_NON_FLOOZ" = "Mes amis à inviter";
+"CONTACT_PICKER_FLOOZ" = "Mes amis de flooz";
