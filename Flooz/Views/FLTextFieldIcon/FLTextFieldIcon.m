@@ -114,17 +114,19 @@
         return;
     }
 
-    {
-        UIView *middleBar = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_textfield.frame) + MARGE_MIDDLE_BAR, 10, 1, CGRectGetHeight(self.frame) - 10)];
-        middleBar.backgroundColor = [UIColor customSeparator];
-
-        [self addSubview:middleBar];
+    CGFloat posXSeparator = CGRectGetMaxX(_textfield.frame) + MARGE_MIDDLE_BAR;
+    if (icon) {
+        posXSeparator = CGRectGetWidth(self.frame) / 2;
     }
+    UIView *middleBar = [[UIView alloc] initWithFrame:CGRectMake(posXSeparator, 10, 1, CGRectGetHeight(self.frame) - 10)];
+    middleBar.backgroundColor = [UIColor customSeparator];
+    
+    [self addSubview:middleBar];
 
 
     CGFloat width = ((CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18) / 2.) - MARGE_MIDDLE_BAR;
 
-    _textfield2 = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_textfield.frame) + MARGE_MIDDLE_BAR + MARGE_MIDDLE_BAR, 8, width, 30)];
+    _textfield2 = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(middleBar.frame) + MARGE_MIDDLE_BAR, 8, width, 30)];
 
     _textfield2.autocorrectionType = UITextAutocorrectionTypeNo;
     _textfield2.autocapitalizationType = UITextAutocapitalizationTypeNone;
