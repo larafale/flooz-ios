@@ -48,10 +48,9 @@
     FLKeyboardView *inputView;
     
     NSMutableArray *_contactInfoArray;
+    NSMutableArray *_contactToInvite;
     UITableView *_contactsTableView;
-    
     UIView *_footerView;
-    int _numberSelected;
 }
 
 @end
@@ -1011,8 +1010,12 @@
     CGRectSetY(butt.frame, CGRectGetMaxY(firstTimeText.frame));
     CGRectSetHeight(butt.frame, [self sizeExpectedForView:butt].height + 10.0f);
     
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
+    if (_contactInfoArray == nil) {
+        _contactInfoArray = [NSMutableArray new];
+    }
+    _contactToInvite = [NSMutableArray new];
     
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
         ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
             if (granted) {
@@ -1021,19 +1024,7 @@
                 [self createTableContactUnderView: butt];
             } else {
                 // Show an alert here if user denies access telling that the contact cannot be added because you didn't allow it to access the contacts
-                
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
-                                                                message:@"Vous n'avez pas autorisé à lire les contacts!"
-                                                               delegate:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
-                                                      otherButtonTitles:nil
-                                      ];
-                
-                alert.delegate = self;
-                alert.tag = 25;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [alert show];
-                });
+                [self displayAlertWithText:NSLocalizedString(@"ALERT_CONTACT_DENIES_ACCESS_PREVIOUS", @"")];
             }
         });
     }
@@ -1044,25 +1035,28 @@
     }
     else {
         // If the user user has NOT earlier provided the access, create an alert to tell the user to go to Settings app and allow access
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
-                                                        message:@"Vous n'avez pas autorisé à lire les contacts!"
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
-                                              otherButtonTitles:nil
-                              ];
-        alert.delegate = self;
-        alert.tag = 25;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [alert show];
-        });
+        [self displayAlertWithText:NSLocalizedString(@"ALERT_CONTACT_DENIES_ACCESS", @"")];
     }
+}
+
+- (void) displayAlertWithText:(NSString *)alertMessage {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
+                                                    message:alertMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
+                                          otherButtonTitles:nil
+                          ];
+    alert.delegate = self;
+    alert.tag = 25;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alert show];
+    });
 }
 
 - (void) createTableContactUnderView:(UIView *)topView {
     _contactsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topView.frame), CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(topView.frame)) style:UITableViewStylePlain];
     [_contactsTableView setBackgroundColor:[UIColor customBackground]];
-    [_contactsTableView setSeparatorColor:[UIColor customBackground]];
+    [_contactsTableView setSeparatorColor:[UIColor customBackgroundHeader]];
     [_contactsTableView setSeparatorInset:UIEdgeInsetsZero];
     [_contactsTableView setAllowsMultipleSelection: YES];
     
@@ -1076,10 +1070,6 @@
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL,NULL);
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople( addressBook );
     CFIndex nPeople = ABAddressBookGetPersonCount( addressBook );
-    
-    if (_contactInfoArray == nil) {
-        _contactInfoArray = [[NSMutableArray alloc] init];
-    }
     
     for ( int i = 0; i < nPeople; i++ )
     {
@@ -1131,9 +1121,7 @@
             if (imageData) {
                 [personDic setObject:imageData forKey:@"imageData"];
             }
-            [personDic setValue:@"NO" forKey:@"selected"];
-            _numberSelected = 0;
-            
+            [personDic setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
             [_contactInfoArray addObject:personDic];
         }
     }
@@ -1160,14 +1148,14 @@
     if(!cell){
         cell = [[ContactCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = [UIColor customBackgroundHeader];
+        cell.backgroundColor = [UIColor customBackground];
     }
     
     NSDictionary *contact = _contactInfoArray[indexPath.row];
     [cell setCellWithFirstName:contact[@"firstName"] lastName:contact[@"lastName"] andDataImage:contact[@"imageData"]];
     
     cell.accessoryView = nil;
-    if ([contact[@"selected"] isEqualToString:@"YES"]) {
+    if ([contact[@"selected"] boolValue]) {
         cell.accessoryView = [UIImageView imageNamed:@"Contact_check"];
     }
     else {
@@ -1187,15 +1175,15 @@
     
     NSMutableDictionary *contact = [_contactInfoArray[indexPath.row] mutableCopy];
     
-    if ([contact[@"selected"] isEqualToString:@"NO"]) {
-        [contact setValue:@"YES" forKey:@"selected"];
+    if (![contact[@"selected"] boolValue]) {
+        [contact setValue:[NSNumber numberWithBool:YES] forKey:@"selected"];
         c.accessoryView = [UIImageView imageNamed:@"Contact_check"];
-        _numberSelected ++;
+        [_contactToInvite addObject:contact];
     }
     else {
-        [contact setValue:@"NO" forKey:@"selected"];
+        [_contactToInvite removeObject:contact];
+        [contact setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
         c.accessoryView = [UIImageView imageNamed:@"Contact_uncheck"];
-        _numberSelected --;
     }
     [_contactInfoArray replaceObjectAtIndex:indexPath.row withObject:contact];
     [self displaySendButtonOrNot];
@@ -1209,9 +1197,18 @@
         [b addTarget:self action:@selector(goToNextPage) forControlEvents:UIControlEventTouchUpInside];
         [_footerView addSubview:b];
         
+        FLStartItem *item = [FLStartItem newWithTitle:@"" imageImageName:@"arrow-right" contentText:@"" andSize:50.0f];
+        CGRectSetX(item.frame, CGRectGetWidth(_footerView.frame)-50.0f);
+        [_footerView addSubview:item];
+        
+        CALayer *TopBorder = [CALayer layer];
+        TopBorder.frame = CGRectMake(0.0f, 0.0f, _footerView.frame.size.width, 2.0f);
+        TopBorder.backgroundColor = [UIColor customBlueLight].CGColor;
+        [_footerView.layer addSublayer:TopBorder];
+        
         [_mainBody addSubview:_footerView];
     }
-    if (_numberSelected > 0) {
+    if (_contactToInvite.count > 0) {
         if (CGRectGetMinY(_footerView.frame) >= CGRectGetHeight(_mainBody.frame)) {
             [UIView animateWithDuration:.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 CGRectSetHeight(_contactsTableView.frame, CGRectGetHeight(_contactsTableView.frame) - 50.0f);

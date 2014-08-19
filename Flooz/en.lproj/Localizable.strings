@@ -272,3 +272,5 @@
 "SIGNUP_FRIENDS_MESSAGE" = "Gagnez 2€ cash à chaque fois que l'un de vos amis envoie son premier Flooz grâce à vous.";
 
 "SEND" = "Envoyer";
+"ALERT_CONTACT_DENIES_ACCESS" = "Vous n'avez pas autorisé à lire les contacts!\nVous passez directement à l'étape suivante.";
+"ALERT_CONTACT_DENIES_ACCESS_PREVIOUS" = "Vous n'avez pas autorisé à lire les contacts précédemment!\nVous passez directement à l'étape suivante.";

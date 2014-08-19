@@ -13,10 +13,8 @@
 		8B102E06199A61C20040278F /* FLStartButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCB8D2A19996E6E00CE628F /* FLStartButton.m */; };
 		8B102E07199A61CA0040278F /* FLStartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2410E199975BC00AAE69E /* FLStartItem.m */; };
 		8B55B44119996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
-		8B55B44219996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
 		8B55B44319996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
 		8B55B446199962AE003F5A6C /* FirstLaunchContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B445199962AE003F5A6C /* FirstLaunchContentViewController.m */; };
-		8B55B447199962AE003F5A6C /* FirstLaunchContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B445199962AE003F5A6C /* FirstLaunchContentViewController.m */; };
 		8B55B448199962AE003F5A6C /* FirstLaunchContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B445199962AE003F5A6C /* FirstLaunchContentViewController.m */; };
 		8B81C5AB1999442900765C63 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81C5AA1999442900765C63 /* Crashlytics.framework */; };
 		8B81C5AC1999442900765C63 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81C5AA1999442900765C63 /* Crashlytics.framework */; };
@@ -2430,8 +2428,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B55B44219996283003F5A6C /* FirstLaunchViewController.m in Sources */,
-				8B55B447199962AE003F5A6C /* FirstLaunchContentViewController.m in Sources */,
 				AB3D08B7186CA11A00CF8380 /* FloozTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
