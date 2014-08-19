@@ -46,6 +46,7 @@
     
     NSMutableArray *fieldsView;
     FLKeyboardView *inputView;
+    UIView *_viewButtonScan;
     
     NSMutableArray *_contactInfoArray;
     NSMutableArray *_contactToInvite;
@@ -840,19 +841,19 @@
     
     [self registerForKeyboardNotifications];
     
-    UIView *viewButtonScan = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(_mainBody.frame), 60)];
-    CGRectSetY(viewButtonScan.frame, 5.0f);
-    viewButtonScan.backgroundColor = [UIColor customBackgroundHeader];
-    [_contentView addSubview:viewButtonScan];
+    _viewButtonScan = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(_mainBody.frame), 60)];
+    CGRectSetY(_viewButtonScan.frame, 5.0f);
+    _viewButtonScan.backgroundColor = [UIColor customBackgroundHeader];
+    [_contentView addSubview:_viewButtonScan];
     {
         CGFloat MARGE_LEFT_RIGHT = 28;
         CGFloat MARGE_TOP_BOTTOM = 10;
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, MARGE_TOP_BOTTOM, CGRectGetWidth(viewButtonScan.frame) - (2 * MARGE_LEFT_RIGHT), CGRectGetHeight(viewButtonScan.frame) - (2 * MARGE_TOP_BOTTOM))];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, MARGE_TOP_BOTTOM, CGRectGetWidth(_viewButtonScan.frame) - (2 * MARGE_LEFT_RIGHT), CGRectGetHeight(_viewButtonScan.frame) - (2 * MARGE_TOP_BOTTOM))];
         button.backgroundColor = [UIColor customBackgroundStatus];
         [button setTitle:NSLocalizedString(@"CREDIT_CARD_SCAN", Nil) forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont customTitleExtraLight:14];
         [button addTarget:self action:@selector(presentScanPayViewController) forControlEvents:UIControlEventTouchUpInside];
-        [viewButtonScan addSubview:button];
+        [_viewButtonScan addSubview:button];
     }
     
     FLTextFieldTitle2 *ownerField = [[FLTextFieldTitle2 alloc] initWithTitle:@"" placeholder:@"SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" for:_userDic key:@"holder" position:CGPointMake(20, 60)];
@@ -953,8 +954,10 @@
         
         [_userDic setValue:expires forKey:@"expires"];
         
+        [_viewButtonScan setHidden:YES];
         for(FLTextFieldTitle2 *view in fieldsView){
             [view reloadData];
+            CGRectSetY(view.frame, CGRectGetMinY(view.frame)-CGRectGetHeight(_viewButtonScan.frame));
         }
     } cancel:^{
         [fieldsView[1] becomeFirstResponder];
