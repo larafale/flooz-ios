@@ -270,3 +270,5 @@
 "SIGNUP_FIELD_CARD_CVV_PLACEHOLDER" = "CVV (3 chiffres au dos)";
 
 "SIGNUP_FRIENDS_MESSAGE" = "Gagnez 2€ cash à chaque fois que l'un de vos amis envoie son premier Flooz grâce à vous.";
+
+"SEND" = "Envoyer";
