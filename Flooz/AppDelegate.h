@@ -51,4 +51,8 @@
 
 - (void)clearSavedViewController;
 
+
+//TODO: delete after testing friends
+- (void)showsignupFriendUser:(NSDictionary *)user;
+
 @end

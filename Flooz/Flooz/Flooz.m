@@ -856,6 +856,7 @@
     access_token = token;
     [self updateCurrentUserWithSuccess:^{
         [appDelegate didConnected];
+        //TODO: a demasquer avant envoi
         [appDelegate goToAccountViewController];
         [self startSocket];
         [self checkDeviceToken];
@@ -1189,6 +1190,10 @@
                                  };
     
     [self requestPath:@"/contacts/import" method:@"POST" params:params success:NULL failure:NULL];
+}
+
+- (void)sendContactsWithParams:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/contacts/flooz" method:@"POST" params:params success:success failure:failure];
 }
 
 @end

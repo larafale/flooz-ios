@@ -129,5 +129,6 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 - (void)verifyEmail:(NSString *)email success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)sendContacts;
+- (void)sendContactsWithParams:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 @end

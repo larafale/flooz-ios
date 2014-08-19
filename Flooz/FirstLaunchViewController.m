@@ -79,7 +79,7 @@
     _headProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     [_headProgress setSize:CGSizeMake(PPScreenWidth(), 1)];
     [_headProgress setOrigin:CGPointMake(0, CGRectGetHeight(_headMenu.frame) - CGRectGetHeight(_headProgress.frame))];
-    [_headProgress setProgressTintColor: [UIColor customBlueLight]];
+    [_headProgress setProgressTintColor: [UIColor customBlue]];
     [_headProgress setTrackTintColor: [UIColor whiteColor]];
     [_headProgress setProgress:0.0f / NUMBER_STEP animated:YES];
     [_headMenu addSubview: _headProgress];
@@ -214,6 +214,14 @@
 - (void)signupWithFacebookUser:(NSDictionary *)user {
     [self.userInfoDico addEntriesFromDictionary:user];
     _indexPage = SignupPageInfo;
+    FirstLaunchContentViewController *newView = [self viewControllerAtIndex:_indexPage];
+    [newView setUserInfoDico:self.userInfoDico];
+    [newView displayChanges];
+}
+
+- (void)signupFriendUser:(NSDictionary *)user {
+    [self.userInfoDico addEntriesFromDictionary:user];
+    _indexPage = SignupPageFriends;
     FirstLaunchContentViewController *newView = [self viewControllerAtIndex:_indexPage];
     [newView setUserInfoDico:self.userInfoDico];
     [newView displayChanges];

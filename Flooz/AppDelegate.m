@@ -152,6 +152,9 @@
     //    }
     //
     //    [navController pushViewController:controller animated:NO];
+    
+    //TODO: delete after testing friends
+    //[appDelegate showsignupFriendUser:nil];
 }
 
 - (void) goToAccountViewController {
@@ -195,6 +198,13 @@
     [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     [[self currentController] presentViewController:navController animated:YES completion:nil];
      */
+}
+
+//TODO: delete after testing friends
+- (void)showsignupFriendUser:(NSDictionary *)user
+{
+    firstVC = [FirstLaunchViewController new];
+    self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:firstVC];
 }
 
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user

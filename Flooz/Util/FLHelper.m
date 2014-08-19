@@ -114,12 +114,19 @@
 }
 
 + (NSString *)formatedPhone:(NSString *)phone{
-    NSString *formatedPhone = [[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""]
-        stringByReplacingOccurrencesOfString:@"." withString:@""]
-        stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    NSString *formatedPhone = [[[[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                  stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                stringByReplacingOccurrencesOfString:@"." withString:@""]
+                               stringByReplacingOccurrencesOfString:@"-" withString:@""]
+                               stringByReplacingOccurrencesOfString:@")" withString:@""]
+                               stringByReplacingOccurrencesOfString:@"(" withString:@""];
 
     if([formatedPhone hasPrefix:@"+33"]){
         formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
+    }
+    
+    if([formatedPhone hasPrefix:@"0033"]){
+        formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 4) withString:@"0"];
     }
     
     if([formatedPhone length] != 10){
@@ -128,6 +135,12 @@
 
     if(![formatedPhone hasPrefix:@"06"] && ![formatedPhone hasPrefix:@"07"]){
         formatedPhone = nil;
+    }
+    
+    if (formatedPhone) {
+        if([formatedPhone hasPrefix:@"06"] || [formatedPhone hasPrefix:@"07"]){
+            formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@"+33"];
+        }
     }
     
     return formatedPhone;

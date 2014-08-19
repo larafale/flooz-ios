@@ -16,6 +16,9 @@
 #import <AddressBookUI/AddressBookUI.h>
 
 #import "ContactCell.h"
+#import "FriendPickerContactCell.h"
+
+#import <MessageUI/MFMessageComposeViewController.h>
 
 @protocol FirstLaunchContentViewControllerDelegate;
 
@@ -37,7 +40,7 @@ typedef enum {
     SecureCodeModeConfirm // Nouveau code confirmation
 } SecureCodeMode2;
 
-@interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic) NSInteger pageIndex;
 @property (nonatomic, weak) id<FirstLaunchContentViewControllerDelegate> delegate;

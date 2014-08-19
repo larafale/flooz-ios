@@ -16,5 +16,6 @@
 
 - (void)phoneNotRegistered:(NSDictionary *)user;
 - (void)signupWithFacebookUser:(NSDictionary *)user;
+- (void)signupFriendUser:(NSDictionary *)user;
 
 @end

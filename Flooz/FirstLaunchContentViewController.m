@@ -50,6 +50,8 @@
     
     NSMutableArray *_contactInfoArray;
     NSMutableArray *_contactToInvite;
+    NSMutableArray *_contactFromFlooz;
+    
     UITableView *_contactsTableView;
     UIView *_footerView;
 }
@@ -1018,6 +1020,8 @@
     [_mainBody addSubview:firstTimeText];
     
     CGRectSetHeight(firstTimeText.frame, [self sizeExpectedForView:firstTimeText].height*3);
+    //TODO: supprimer si on veut le texte d'explication
+    CGRectSetHeight(firstTimeText.frame, 0);
     
     UIButton *butt = [self ignoreButtonWithText:NSLocalizedString(@"SIGNUP_VIEW_IGNORE_BUTTON", @"") superV:_mainBody];
     CGRectSetWidth(butt.frame, [self sizeExpectedForView:butt].width + 30.0f);
@@ -1029,6 +1033,7 @@
         _contactInfoArray = [NSMutableArray new];
     }
     _contactToInvite = [NSMutableArray new];
+    _contactFromFlooz = [NSMutableArray new];
     
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(nil, nil);
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
@@ -1086,6 +1091,7 @@
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople( addressBook );
     CFIndex nPeople = ABAddressBookGetPersonCount( addressBook );
     
+    NSMutableArray *arrayPhonesAskServer = [NSMutableArray new];
     for ( int i = 0; i < nPeople; i++ )
     {
         ABRecordRef person = CFArrayGetValueAtIndex( allPeople, i );
@@ -1120,6 +1126,7 @@
             NSString *_formatedPhone = [FLHelper formatedPhone:_phone];
             if (_formatedPhone) {
                 [contactsPhone addObject:_formatedPhone];
+                [arrayPhonesAskServer addObject:_formatedPhone];
             }
             CFRelease(currentPhoneValue);
         }
@@ -1130,6 +1137,7 @@
         }
         
         if (contactsPhone.count && (firstNameObject || lastNameObject)) {
+            
             NSMutableDictionary *personDic = [NSMutableDictionary new];
             [personDic setObject:contactsPhone forKey:@"phones"];
             
@@ -1148,6 +1156,19 @@
             [_contactInfoArray addObject:personDic];
         }
     }
+    
+    NSDictionary *params = @{
+                             @"phones": arrayPhonesAskServer// @[@"+33611111111"]
+                             };
+    
+    [[Flooz sharedInstance] sendContactsWithParams:params success:^(id result) {
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            NSArray *arrayFloozer = result[@"items"];
+            _contactFromFlooz = [arrayFloozer mutableCopy];
+            NSIndexSet *index = [[NSIndexSet alloc] initWithIndex:0];
+            [_contactsTableView reloadSections:index withRowAnimation:UITableViewRowAnimationTop];
+        }
+    } failure:NULL];
 }
 
 #pragma mark - UIAlertView Delegate
@@ -1161,7 +1182,10 @@
 #pragma mark - TableView Delegate & Datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _contactInfoArray.count;
+    if (section == 0)
+        return _contactFromFlooz.count;
+    else
+        return _contactInfoArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1174,42 +1198,116 @@
         cell.backgroundColor = [UIColor customBackground];
     }
     
-    NSDictionary *contact = _contactInfoArray[indexPath.row];
-    [cell setCellWithFirstName:contact[@"firstName"] lastName:contact[@"lastName"] andDataImage:contact[@"imageData"]];
-    
-    cell.accessoryView = nil;
-    if ([contact[@"selected"] boolValue]) {
-        cell.accessoryView = [UIImageView imageNamed:@"Contact_check"];
+    if (indexPath.section == 0) {
+        NSDictionary *contact = _contactFromFlooz[indexPath.row];
+        [cell setCellWithCompleteName:contact[@"name"] subText:contact[@"nick"] andImageUrl:contact[@"pic"]];
+        [cell.addFriendButton addTarget:self action:@selector(addFriend:) forControlEvents:UIControlEventTouchUpInside];
+        
+        cell.accessoryView = nil;
     }
     else {
-        cell.accessoryView = [UIImageView imageNamed:@"Contact_uncheck"];
+        NSDictionary *contact = _contactInfoArray[indexPath.row];
+        
+        NSString *phones = @"";
+        for (NSString *phone in contact[@"phones"]) {
+            phones = [phones stringByAppendingString:phone];
+            phones = [phones stringByAppendingString:@", "];
+        }
+        phones = [phones substringToIndex:phones.length-2];
+        
+        [cell setCellWithFirstName:contact[@"firstName"] lastName:contact[@"lastName"] subText:phones andDataImage:contact[@"imageData"]];
+        
+        cell.accessoryView = nil;
+        if ([contact[@"selected"] boolValue]) {
+            cell.accessoryView = [UIImageView imageNamed:@"Contact_check"];
+        }
+        else {
+            cell.accessoryView = [UIImageView imageNamed:@"Contact_uncheck"];
+        }
     }
     
     return cell;
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 50.0f;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if(section == 0){
+        return NSLocalizedString(@"CONTACT_PICKER_FLOOZ", nil);
+    }
+    return NSLocalizedString(@"CONTACT_PICKER_NON_FLOOZ", nil);
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if(section == 0 && !_contactFromFlooz.count){
+        return 0;
+    }
+    else if(section == 1 && !_contactInfoArray.count){
+        return 0;
+    }
+    return 28;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CGFloat heigth = [self tableView:tableView heightForHeaderInSection:section];
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), heigth)];
+    
+    view.backgroundColor = [UIColor customBackgroundHeader];
+    
+    {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(24, 0, 0, CGRectGetHeight(view.frame))];
+        
+        label.textColor = [UIColor customBlueLight];
+        
+        label.font = [UIFont customContentRegular:10];
+        label.text = [self tableView:tableView titleForHeaderInSection:section];
+        [label setWidthToFit];
+        
+        [view addSubview:label];
+    }
+    
+    {
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(view.frame), CGRectGetWidth(view.frame), 1)];
+        
+        separator.backgroundColor = [UIColor customSeparator];
+        
+        [view addSubview:separator];
+    }
+    
+    return view;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ContactCell *c = (ContactCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [c setSelected:![c isSelected]];
-    
-    NSMutableDictionary *contact = [_contactInfoArray[indexPath.row] mutableCopy];
-    
-    if (![contact[@"selected"] boolValue]) {
-        [contact setValue:[NSNumber numberWithBool:YES] forKey:@"selected"];
-        c.accessoryView = [UIImageView imageNamed:@"Contact_check"];
-        [_contactToInvite addObject:contact];
+    if (indexPath.section == 1) {
+        ContactCell *c = (ContactCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [c setSelected:![c isSelected]];
+        
+        NSMutableDictionary *contact = [_contactInfoArray[indexPath.row] mutableCopy];
+        
+        if (![contact[@"selected"] boolValue]) {
+            [contact setValue:[NSNumber numberWithBool:YES] forKey:@"selected"];
+            c.accessoryView = [UIImageView imageNamed:@"Contact_check"];
+            [_contactToInvite addObject:contact];
+        }
+        else {
+            [_contactToInvite removeObject:contact];
+            [contact setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
+            c.accessoryView = [UIImageView imageNamed:@"Contact_uncheck"];
+        }
+        [_contactInfoArray replaceObjectAtIndex:indexPath.row withObject:contact];
+        [self displaySendButtonOrNot];
     }
-    else {
-        [_contactToInvite removeObject:contact];
-        [contact setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
-        c.accessoryView = [UIImageView imageNamed:@"Contact_uncheck"];
-    }
-    [_contactInfoArray replaceObjectAtIndex:indexPath.row withObject:contact];
-    [self displaySendButtonOrNot];
 }
 
 - (void)displaySendButtonOrNot {
@@ -1217,7 +1315,7 @@
         _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame), CGRectGetWidth(_contactsTableView.frame), 50.0f)];
         UIButton *b = [UIButton newWithFrame:CGRectMake(0, 0, CGRectGetWidth(_contactsTableView.frame), 50.0f)];
         [b setTitle:NSLocalizedString(@"SEND", @"") forState:UIControlStateNormal];
-        [b addTarget:self action:@selector(goToNextPage) forControlEvents:UIControlEventTouchUpInside];
+        [b addTarget:self action:@selector(inviteFriends) forControlEvents:UIControlEventTouchUpInside];
         [_footerView addSubview:b];
         
         FLStartItem *item = [FLStartItem newWithTitle:@"" imageImageName:@"arrow-right" contentText:@"" andSize:50.0f];
@@ -1247,6 +1345,54 @@
             } completion:nil];
         }
     }
+}
+
+- (void) inviteFriends {
+    MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
+    if ([MFMessageComposeViewController canSendText]) {
+        message.messageComposeDelegate = self;
+        
+        NSMutableArray *a = [NSMutableArray new];
+        for (NSDictionary *d in _contactToInvite) {
+            for (NSString *p in d[@"phones"]) {
+                [a addObject:p];
+            }
+        }
+        NSArray *toRecipients = a;
+        [message setRecipients: toRecipients];
+        //[message setBody:[self createSMSBody]];
+        
+        message.modalPresentationStyle = UIModalPresentationPageSheet;
+        [self presentViewController:message animated:YES completion:nil];
+    }
+}
+
+- (void) addFriend:(UIButton *)button {
+    UITableViewCell *cell = (UITableViewCell *)[self findFirstViewInHierarchyOfClass:[UITableViewCell class] object:button];
+    NSIndexPath *indexPath = [_contactsTableView indexPathForCell:cell];
+    
+    NSDictionary *contact = _contactFromFlooz[indexPath.row];
+    [[Flooz sharedInstance] friendAcceptSuggestion:contact[@"_id"] success:^{
+        [_contactFromFlooz removeObjectAtIndex:indexPath.row];
+        [_contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+}
+
+- (UIView*)findFirstViewInHierarchyOfClass:(Class)classToLookFor object:(UIView *)v
+{
+    UIView *sView = v.superview;
+    while (sView) {
+        if ([sView isKindOfClass:classToLookFor]) {
+            return sView;
+        }
+        sView = [sView superview];
+    }
+    return sView;
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    //portraitView.alpha = 1-(self.portraitView.frame.origin.x/self.portraitView.frame.size.width);
 }
 
 @end

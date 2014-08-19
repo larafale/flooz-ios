@@ -10,6 +10,8 @@
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
 		2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FD2460219A29495008DCFB5 /* ContactCell.m */; };
 		2FD2460419A2983C008DCFB5 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FD2460219A29495008DCFB5 /* ContactCell.m */; };
+		2FD2460619A3F6CC008DCFB5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD2460519A3F6CC008DCFB5 /* MessageUI.framework */; };
+		2FD2460719A3F6D6008DCFB5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD2460519A3F6CC008DCFB5 /* MessageUI.framework */; };
 		8B102E06199A61C20040278F /* FLStartButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCB8D2A19996E6E00CE628F /* FLStartButton.m */; };
 		8B102E07199A61CA0040278F /* FLStartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2410E199975BC00AAE69E /* FLStartItem.m */; };
 		8B55B44119996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
@@ -374,6 +376,7 @@
 		1686D3DC8F1E47F8A8972682 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD2460119A29495008DCFB5 /* ContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCell.h; path = ContactCell/ContactCell.h; sourceTree = "<group>"; };
 		2FD2460219A29495008DCFB5 /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactCell.m; path = ContactCell/ContactCell.m; sourceTree = "<group>"; };
+		2FD2460519A3F6CC008DCFB5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8B55B43F19996283003F5A6C /* FirstLaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstLaunchViewController.h; sourceTree = "<group>"; };
 		8B55B44019996283003F5A6C /* FirstLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstLaunchViewController.m; sourceTree = "<group>"; };
 		8B55B444199962AE003F5A6C /* FirstLaunchContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstLaunchContentViewController.h; sourceTree = "<group>"; };
@@ -705,6 +708,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FD2460619A3F6CC008DCFB5 /* MessageUI.framework in Frameworks */,
 				ABA96DB4196EF24400B8B7C7 /* AssetsLibrary.framework in Frameworks */,
 				ABA96DB2196EF23600B8B7C7 /* AudioToolbox.framework in Frameworks */,
 				ABA96DAF196EF22300B8B7C7 /* CoreMedia.framework in Frameworks */,
@@ -743,6 +747,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FD2460719A3F6D6008DCFB5 /* MessageUI.framework in Frameworks */,
 				ABAA3FE8197E96BF009F29EF /* AssetsLibrary.framework in Frameworks */,
 				ABAA3FE9197E96BF009F29EF /* AudioToolbox.framework in Frameworks */,
 				ABAA3FEA197E96BF009F29EF /* CoreMedia.framework in Frameworks */,
@@ -979,6 +984,7 @@
 		AB3D0890186CA11A00CF8380 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2FD2460519A3F6CC008DCFB5 /* MessageUI.framework */,
 				8B81C5AA1999442900765C63 /* Crashlytics.framework */,
 				ABA96DB3196EF24400B8B7C7 /* AssetsLibrary.framework */,
 				ABA96DB1196EF23600B8B7C7 /* AudioToolbox.framework */,

@@ -12,8 +12,12 @@
 
 @property (strong, nonatomic) UILabel *firstNameLabel;
 @property (strong, nonatomic) UILabel *lastNameLabel;
+@property (strong, nonatomic) UILabel *subLabel;
+@property (strong, nonatomic) UIButton *addFriendButton;
+
 @property (strong, nonatomic) FLUserView *avatarContact;
 
-- (void) setCellWithFirstName :(NSString *)firstName lastName:(NSString *)lastName andDataImage:(NSData *)dataImage;
+- (void) setCellWithFirstName :(NSString *)firstName lastName:(NSString *)lastName subText:(NSString *)subText andDataImage:(NSData *)dataImage;
+- (void) setCellWithCompleteName:(NSString *)complete subText:(NSString *)subText andImageUrl:(NSString *)imageUrl ;
 
 @end
