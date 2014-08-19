@@ -139,6 +139,15 @@
             [_passwordConfirm reloadTextField];
             [_validCBButton setEnabled:NO];
         }
+            break;
+        case SignupPageCB: {
+            if (_userDic[@"firstName"] && _userDic[@"lastName"]) {
+                NSString *holder = [NSString stringWithFormat:@"%@ %@",_userDic[@"firstName"],_userDic[@"lastName"]];
+                [_userDic setObject:holder forKey:@"holder"];
+                [fieldsView[0] reloadData];
+            }
+        }
+            break;
         default:
             break;
     }
@@ -203,12 +212,12 @@
     
     _title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_headerView.frame), 50 / ratioiPhones)];
     _title.font = [UIFont customTitleExtraLight:28];
-    _title.textColor = [UIColor customBlueLight];
+    _title.textColor = [UIColor customBlue];
     _title.numberOfLines = 0;
     _title.textAlignment = NSTextAlignmentCenter;
     
     _bar = [[UIView alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 - 25.0f, CGRectGetMaxY(_title.frame) + 15.0f / ratioiPhones, 50.0f, 1.0f)];
-    [_bar setBackgroundColor:[UIColor customBlueLight]];
+    [_bar setBackgroundColor:[UIColor customBlue]];
     
     _backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, CGRectGetMinY(_title.frame) + 12.0f, 30, 30)];
     [_backButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
@@ -330,33 +339,32 @@
 #pragma mark - VALIDATION SECTION
 
 - (void) canValidate:(FLTextFieldIcon *)textIcon {
+    BOOL canValidate = NO;
     if ([textIcon isEqual:_userName]) {
-        if (_userDic[@"nick"] && ![_userDic[@"nick"] isBlank]) {
-            [self animateValidButton];
+        if (_userDic[@"nick"] && ((NSString *)_userDic[@"nick"]).length >= 3)
+        {
+            canValidate = YES;
         }
-        else {
-            [_validCBButton setEnabled:NO];
-        }
-    }
-    else if ([textIcon isEqual:_name] || [textIcon isEqual:_email]) {
+    } else if ([textIcon isEqual:_name] || [textIcon isEqual:_email]) {
         if ((_userDic[@"firstName"] && ![_userDic[@"firstName"] isBlank])
             && (_userDic[@"lastName"] && ![_userDic[@"lastName"] isBlank])
-            && (_userDic[@"email"] && ![_userDic[@"email"] isBlank] && [self validateEmail:_userDic[@"email"]])) {
-            [self animateValidButton];
+            && (_userDic[@"email"] && ![_userDic[@"email"] isBlank] && [self validateEmail:_userDic[@"email"]]))
+        {
+            canValidate = YES;
         }
-        else {
-            [_validCBButton setEnabled:NO];
-        }
-    }
-    else if ([textIcon isEqual:_password] || [textIcon isEqual:_passwordConfirm]) {
+    } else if ([textIcon isEqual:_password] || [textIcon isEqual:_passwordConfirm]) {
         if ((_userDic[@"password"] && [_userDic[@"password"] length] >= 6)
             && (_userDic[@"confirmation"] && [_userDic[@"confirmation"] length] >= 6)
-            && ([_userDic[@"password"] isEqualToString:_userDic[@"confirmation"]])) {
-            [self animateValidButton];
+            && ([_userDic[@"password"] isEqualToString:_userDic[@"confirmation"]]))
+        {
+            canValidate = YES;
         }
-        else {
-            [_validCBButton setEnabled:NO];
-        }
+    }
+    
+    if (canValidate) {
+        [self animateValidButton];
+    } else {
+        [_validCBButton setEnabled:NO];
     }
 }
 
@@ -558,7 +566,7 @@
 }
 
 - (void) checkPseudo {
-    if (_userDic[@"nick"] && ![_userDic[@"nick"] isBlank]) {
+    if (_userDic[@"nick"] && ((NSString *)_userDic[@"nick"]).length >= 3) {
         [self animateValidButton];
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] verifyPseudo:_userDic[@"nick"] success:^(id result) {
@@ -699,6 +707,7 @@
         
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] signup:_userDic success:^(id result) {
+            [[Flooz sharedInstance] hideLoadView];
             [self goToNextPage];
         } failure:NULL];
     }
@@ -947,11 +956,8 @@
         for(FLTextFieldTitle2 *view in fieldsView){
             [view reloadData];
         }
-        
-        [fieldsView[0] becomeFirstResponder];
-        
     } cancel:^{
-        [fieldsView[0] becomeFirstResponder];
+        [fieldsView[1] becomeFirstResponder];
     }];
 }
 
@@ -1089,6 +1095,15 @@
             CFRelease(lastnameRefObject);
         }
         
+        
+        NSMutableArray *contactsEmail = [NSMutableArray new];
+        ABMultiValueRef emailList = ABRecordCopyValue(person, kABPersonEmailProperty);
+        for (CFIndex i = 0; i < ABMultiValueGetCount(emailList); ++i) {
+            NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
+            [contactsEmail addObject:email];
+        }
+        
+        NSMutableArray *contactsPhone = [NSMutableArray new];
         NSString *phoneNumber;
         ABMultiValueRef phonesRef = ABRecordCopyValue(person, kABPersonPhoneProperty);
         for (int i=0; i<ABMultiValueGetCount(phonesRef); i++) {
@@ -1097,7 +1112,7 @@
             if ([(__bridge NSString *)currentPhoneValue hasPrefix:@"+336"] || [(__bridge NSString *)currentPhoneValue hasPrefix:@"06"] || [(__bridge NSString *)currentPhoneValue hasPrefix:@"00336"]
                 || [(__bridge NSString *)currentPhoneValue hasPrefix:@"+337"] || [(__bridge NSString *)currentPhoneValue hasPrefix:@"07"] || [(__bridge NSString *)currentPhoneValue hasPrefix:@"00337"]) {
                 phoneNumber = (__bridge NSString *)currentPhoneValue;
-                break;
+                [contactsPhone addObject:phoneNumber];
             }
             CFRelease(currentPhoneLabel);
             CFRelease(currentPhoneValue);
@@ -1108,9 +1123,9 @@
             imageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatThumbnail);
         }
         
-        if (phoneNumber && (firstNameObject || lastNameObject)) {
+        if (contactsPhone.count && (firstNameObject || lastNameObject)) {
             NSMutableDictionary *personDic = [NSMutableDictionary new];
-            [personDic setObject:phoneNumber forKey:@"mobileNumber"];
+            [personDic setObject:contactsPhone forKey:@"phones"];
             
             if (firstnameRefObject) {
                 [personDic setObject:firstNameObject forKey:@"firstName"];
@@ -1118,9 +1133,7 @@
             if (lastnameRefObject) {
                 [personDic setObject:lastNameObject forKey:@"lastName"];
             }
-            if (imageData) {
-                [personDic setObject:imageData forKey:@"imageData"];
-            }
+            [personDic setObject:contactsEmail forKey:@"emails"];
             [personDic setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
             [_contactInfoArray addObject:personDic];
         }
@@ -1203,7 +1216,7 @@
         
         CALayer *TopBorder = [CALayer layer];
         TopBorder.frame = CGRectMake(0.0f, 0.0f, _footerView.frame.size.width, 2.0f);
-        TopBorder.backgroundColor = [UIColor customBlueLight].CGColor;
+        TopBorder.backgroundColor = [UIColor customBlue].CGColor;
         [_footerView.layer addSublayer:TopBorder];
         
         [_mainBody addSubview:_footerView];
