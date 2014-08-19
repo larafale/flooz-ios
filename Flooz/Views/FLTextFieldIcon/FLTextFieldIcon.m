@@ -91,6 +91,9 @@
     else if([_dictionaryKey isEqualToString:@"email"]){
         _textfield.keyboardType = UIKeyboardTypeEmailAddress;
     }
+    else {
+        _textfield.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    }
 
     _textfield.font = [UIFont customContentLight:14];
     _textfield.textColor = [UIColor whiteColor];
@@ -129,7 +132,7 @@
     _textfield2 = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(middleBar.frame) + MARGE_MIDDLE_BAR, 8, width, 30)];
 
     _textfield2.autocorrectionType = UITextAutocorrectionTypeNo;
-    _textfield2.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    _textfield2.autocapitalizationType = UITextAutocapitalizationTypeWords;
     _textfield2.returnKeyType = UIReturnKeyNext;
 
     _textfield2.delegate = self;
