@@ -253,7 +253,7 @@
 }
 
 - (UIButton *)ignoreButtonWithText:(NSString *)text superV:(UIView *)superV {
-    UIButton *ignoreButton  = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(superV.frame) - 40 - 5, CGRectGetWidth(superV.frame) / 2, 40)];
+    UIButton *ignoreButton  = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(superV.frame) - 40 - 5, CGRectGetWidth(superV.frame), 40)];
     [ignoreButton setTitle:text forState:UIControlStateNormal];
     [ignoreButton setTitleColor:[UIColor customBlue] forState:UIControlStateNormal];
     [ignoreButton setTitleColor:[UIColor customBlueLight] forState:UIControlStateHighlighted];
