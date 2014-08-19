@@ -518,6 +518,9 @@
     [self.view addSubview:_phoneField];
     
     inputView = [FLKeyboardView new];
+    inputView = [inputView setKeyboardPhoneLoginWithTarget:self action:@selector(didConnectTouchr)];
+    [inputView enableValidateButton:NO];
+    
     inputView.textField = _phoneField.textfield;
     _phoneField.textfield.inputView = inputView;
 }
@@ -526,12 +529,15 @@
 {
     [[self view] endEditing:YES];
     
-    if(_userDic[@"phone"] && ![_userDic[@"phone"] isBlank]){
-        inputView = [inputView setKeyboardValidateWithTarget:self action:@selector(didConnectTouchr)];
+    if(_userDic[@"phone"] && ![_userDic[@"phone"] isBlank] && ((NSString*)_userDic[@"phone"]).length == 10){
+        [inputView enableValidateButton:YES];
         
         [[Flooz sharedInstance] showLoadView];
         [appDelegate clearSavedViewController];
         [[Flooz sharedInstance] loginWithPhone:_userDic[@"phone"]];
+    }
+    else {
+        [inputView enableValidateButton:NO];
     }
 }
 
@@ -1107,17 +1113,14 @@
         }
         
         NSMutableArray *contactsPhone = [NSMutableArray new];
-        NSString *phoneNumber;
         ABMultiValueRef phonesRef = ABRecordCopyValue(person, kABPersonPhoneProperty);
         for (int i=0; i<ABMultiValueGetCount(phonesRef); i++) {
-            CFStringRef currentPhoneLabel = ABMultiValueCopyLabelAtIndex(phonesRef, i);
             CFStringRef currentPhoneValue = ABMultiValueCopyValueAtIndex(phonesRef, i);
-            if ([(__bridge NSString *)currentPhoneValue hasPrefix:@"+336"] || [(__bridge NSString *)currentPhoneValue hasPrefix:@"06"] || [(__bridge NSString *)currentPhoneValue hasPrefix:@"00336"]
-                || [(__bridge NSString *)currentPhoneValue hasPrefix:@"+337"] || [(__bridge NSString *)currentPhoneValue hasPrefix:@"07"] || [(__bridge NSString *)currentPhoneValue hasPrefix:@"00337"]) {
-                phoneNumber = (__bridge NSString *)currentPhoneValue;
-                [contactsPhone addObject:phoneNumber];
+            NSString *_phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phonesRef, i);
+            NSString *_formatedPhone = [FLHelper formatedPhone:_phone];
+            if (_formatedPhone) {
+                [contactsPhone addObject:_formatedPhone];
             }
-            CFRelease(currentPhoneLabel);
             CFRelease(currentPhoneValue);
         }
         
@@ -1131,12 +1134,16 @@
             [personDic setObject:contactsPhone forKey:@"phones"];
             
             if (firstnameRefObject) {
-                [personDic setObject:firstNameObject forKey:@"firstName"];
+                [personDic setObject:[firstNameObject uppercaseString] forKey:@"firstName"];
             }
             if (lastnameRefObject) {
-                [personDic setObject:lastNameObject forKey:@"lastName"];
+                [personDic setObject:[lastNameObject uppercaseString] forKey:@"lastName"];
             }
             [personDic setObject:contactsEmail forKey:@"emails"];
+            
+            if (imageData) {
+                [personDic setObject:imageData forKey:@"imageData"];
+            }
             [personDic setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
             [_contactInfoArray addObject:personDic];
         }

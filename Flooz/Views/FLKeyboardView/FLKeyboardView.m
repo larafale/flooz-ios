@@ -52,6 +52,8 @@
         UIButton *button = [self createButtonWithPosition:CGPointMake(3, 4) title:@""];
         [button setImage:[UIImage imageNamed:@"keyboard-backward"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(didButtonReturnTouch:) forControlEvents:UIControlEventTouchUpInside];
+        
+        bottomRightButton = button;
     }
 }
 
@@ -82,6 +84,24 @@
     [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     [closeButton addTarget:self action:@selector(didButtonCloseTouch:) forControlEvents:UIControlEventTouchUpInside];
     closeButtonState = CloseButtonTypeClose;
+}
+
+- (FLKeyboardView *)setKeyboardPhoneLoginWithTarget:(id)target action:(SEL)action {
+    [bottomRightButton setTitle:@"Valider" forState:UIControlStateNormal];
+    bottomRightButton.titleLabel.font = [UIFont customTitleThin:22];
+    [bottomRightButton setImage:nil forState:UIControlStateNormal];
+    [bottomRightButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    [bottomRightButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    
+    [closeButton setImage:[UIImage imageNamed:@"keyboard-backward"] forState:UIControlStateNormal];
+    [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    [closeButton addTarget:self action:@selector(didButtonReturnTouch:) forControlEvents:UIControlEventTouchUpInside];
+    closeButtonState = CloseButtonTypeBackward;
+    return self;
+}
+
+- (void)enableValidateButton:(BOOL)enable {
+    [bottomRightButton setEnabled:enable];
 }
 
 - (UIButton *)createButtonWithPosition:(CGPoint)position title:(NSString *)title
@@ -123,7 +143,7 @@
        ![[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]
        ){
         [_textField insertText:sender.titleLabel.text];
-        if ([_textField.text length] < 10 && closeButtonState != CloseButtonTypeClose) {
+         if ([_textField.text length] < 10 && closeButtonState == CloseButtonTypeValidate) {
             [self setCloseButton];
         }
     }
@@ -151,7 +171,7 @@
        ![[_textField delegate] respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]
        ){
         [_textField deleteBackward];
-        if ([_textField.text length] < 10 && closeButtonState != CloseButtonTypeClose) {
+        if ([_textField.text length] < 10 && closeButtonState == CloseButtonTypeValidate) {
             [self setCloseButton];
         }
     }

@@ -14,11 +14,13 @@ typedef enum
 {
     CloseButtonTypeClose,
     CloseButtonTypeValidate,
-    CloseButtonTypeABC
+    CloseButtonTypeABC,
+    CloseButtonTypeBackward
 }CloseButtonType;
 
 @interface FLKeyboardView : UIView{
     UIButton *closeButton;
+    UIButton *bottomRightButton;
     CloseButtonType closeButtonState;
     
     __weak id _target;
@@ -31,5 +33,7 @@ typedef enum
 - (void)setKeyboardChangeable;
 - (FLKeyboardView *)setKeyboardValidateWithTarget:(id)target action:(SEL)action;
 - (void)setCloseButton;
+- (FLKeyboardView *)setKeyboardPhoneLoginWithTarget:(id)target action:(SEL)action;
+- (void)enableValidateButton:(BOOL)enable;
 
 @end
