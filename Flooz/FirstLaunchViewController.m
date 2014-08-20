@@ -22,6 +22,10 @@
     
     NSInteger _indexPage;
     UIButton *_closeButton;
+    FLStartItem *_infoItem;
+    FLStartItem *_secureItem;
+    FLStartItem *_CBItem;
+    FLStartItem *_friendsItem;
 }
 
 @property (strong, nonatomic) UIButton              *nextArrow;
@@ -91,41 +95,41 @@
     _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(offset, STATUSBAR_HEIGHT, height_nav_bar, height_nav_bar)];
     CGRectSetSize(_closeButton.frame, CGSizeMake(height_nav_bar, height_nav_bar));
     [_closeButton setCenter:CGPointMake(poXMid, midYPos)];
-    [_closeButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
+    [_closeButton setImage:[UIImage imageNamed:@"Signup_Close"] forState:UIControlStateNormal];
     [_closeButton addTarget:self action:@selector(closeSignup) forControlEvents:UIControlEventTouchUpInside];
     [_headMenu addSubview:_closeButton];
     
     
-    FLStartItem *item3 = [FLStartItem newWithTitle:@"" imageImageName:@"field-name" contentText:@"" andSize:height_nav_bar];
-    CGRectSetSize(item3.frame, CGSizeMake(height_nav_bar, height_nav_bar));
+    _infoItem = [[FLStartItem alloc] initWithImageName:@"Signup_Menu_Info" andSize:height_nav_bar];
+    CGRectSetSize(_infoItem.frame, CGSizeMake(height_nav_bar, height_nav_bar));
     poXMid += offset;
-    [item3 setCenter:CGPointMake(poXMid, midYPos)];
-    [_headMenu addSubview:item3];
+    [_infoItem setCenter:CGPointMake(poXMid, midYPos)];
+    [_headMenu addSubview:_infoItem];
     
 
-    FLStartItem *item4 = [FLStartItem newWithTitle:@"" imageImageName:@"field-password" contentText:@"" andSize:height_nav_bar];
-    CGRectSetSize(item4.frame, CGSizeMake(height_nav_bar, height_nav_bar));
+    _secureItem = [[FLStartItem alloc] initWithImageName:@"Signup_Menu_Lock" andSize:height_nav_bar];
+    CGRectSetSize(_secureItem.frame, CGSizeMake(height_nav_bar, height_nav_bar));
     poXMid += offset;
-    [item4 setCenter:CGPointMake(poXMid, midYPos)];
-    [_headMenu addSubview:item4];
+    [_secureItem setCenter:CGPointMake(poXMid, midYPos)];
+    [_headMenu addSubview:_secureItem];
 
     
-    FLStartItem *item5 = [FLStartItem newWithTitle:@"" imageImageName:@"payment-field-card-selected" contentText:@"" andSize:height_nav_bar];
-    CGRectSetSize(item5.frame, CGSizeMake(height_nav_bar, height_nav_bar));
+    _CBItem = [[FLStartItem alloc] initWithImageName:@"Signup_Menu_CB" andSize:height_nav_bar];
+    CGRectSetSize(_CBItem.frame, CGSizeMake(height_nav_bar, height_nav_bar));
     poXMid += offset;
-    [item5 setCenter:CGPointMake(poXMid, midYPos)];
-    [_headMenu addSubview:item5];
+    [_CBItem setCenter:CGPointMake(poXMid, midYPos)];
+    [_headMenu addSubview:_CBItem];
     
     
-    FLStartItem *item6 = [FLStartItem newWithTitle:@"" imageImageName:@"field-rib" contentText:@"" andSize:height_nav_bar];
-    CGRectSetSize(item6.frame, CGSizeMake(height_nav_bar, height_nav_bar));
+    _friendsItem = [[FLStartItem alloc] initWithImageName:@"Signup_Menu_Friends" andSize:height_nav_bar];
+    CGRectSetSize(_friendsItem.frame, CGSizeMake(height_nav_bar, height_nav_bar));
     poXMid += offset;
-    [item6 setCenter:CGPointMake(poXMid, midYPos)];
-    [_headMenu addSubview:item6];
+    [_friendsItem setCenter:CGPointMake(poXMid, midYPos)];
+    [_headMenu addSubview:_friendsItem];
     
     
     [self setScrollEnabled:NO forPageViewController:_pageViewController];
-    _indexPage = SignupPageTuto;
+    _indexPage = SignupPagePseudo;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
 }
 
@@ -248,7 +252,7 @@
 }
 
 - (void) manageProgressBar {
-    float pro;
+    CGFloat pro;
     if (_indexPage == SignupPagePhone) {
         pro = 1.0f / NUMBER_STEP;
     }
@@ -277,6 +281,7 @@
         pro = NUMBER_STEP / NUMBER_STEP;
     }
     [_headProgress setProgress:pro animated:YES];
+    [self modifyItem:pro];
     
     [_closeButton setEnabled:YES];
     if (_indexPage > SignupPagePassword) {
@@ -296,6 +301,25 @@
             [UIView animateWithDuration:.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 CGRectSetY(_headMenu.frame, 0);
             } completion:nil];
+        }
+    }
+}
+
+- (void)modifyItem:(CGFloat)av {
+    [_infoItem setImageWithImageName:@"Signup_Menu_Info"];
+    [_secureItem setImageWithImageName:@"Signup_Menu_Lock"];
+    [_CBItem setImageWithImageName:@"Signup_Menu_CB"];
+    [_friendsItem setImageWithImageName:@"Signup_Menu_Friends"];
+    if (av >= 2.0f / NUMBER_STEP) {
+        [_infoItem setImageWithImageName:@"Signup_Menu_Info_Disable"];
+        if (av >= 3.0f / NUMBER_STEP) {
+            [_secureItem setImageWithImageName:@"Signup_Menu_Lock_Disable"];
+            if (av >= 4.0f / NUMBER_STEP) {
+                [_CBItem setImageWithImageName:@"Signup_Menu_CB_Disable"];
+                if (av >= 5.0f / NUMBER_STEP) {
+                    [_friendsItem setImageWithImageName:@"Signup_Menu_Friends_Disable"];
+                }
+            }
         }
     }
 }

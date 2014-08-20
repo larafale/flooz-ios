@@ -10,6 +10,10 @@
 
 @interface FLStartItem : UIView
 
+@property (strong, nonatomic) UIImageView *imageViewIcon;
+
 + (FLStartItem*) newWithTitle:(NSString*)title imageImageName:(NSString*)imageName contentText:(NSString*)contentText andSize:(CGFloat)size;
+- (void) setImageWithImageName:(NSString *)imageName;
+- (id) initWithImageName:(NSString *)imageName andSize:(CGFloat)size;
 
 @end

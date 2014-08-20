@@ -20,4 +20,28 @@
     return startItem;
 }
 
+- (void) setImageWithImageName:(NSString *)imageName {
+    UIImage *image = [UIImage imageNamed:imageName];
+    if ([image isEqual:_imageViewIcon.image])
+        return;
+    
+    _imageViewIcon.image = image;
+    CATransition *transition = [CATransition animation];
+    transition.duration = 1.0f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade;
+    
+    [_imageViewIcon.layer addAnimation:transition forKey:nil];
+}
+
+- (id) initWithImageName:(NSString *)imageName andSize:(CGFloat)size {
+    self = [self initWithFrame:CGRectMake(0, 0, PPScreenWidth(), size)];
+    _imageViewIcon = [UIImageView newWithImageName:imageName];
+    _imageViewIcon.contentMode = UIViewContentModeCenter;
+    [_imageViewIcon setSize:CGSizeMake(size, size)];
+    [self addSubview:_imageViewIcon];
+    return self;
+}
+
+
 @end
