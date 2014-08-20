@@ -131,4 +131,9 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 - (void)sendContacts;
 - (void)sendContactsWithParams:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
+- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result;
+- (NSMutableArray *)createEventArrayFromResult:(NSDictionary *)result;
+- (NSMutableArray *)createActivityArrayFromResult:(NSDictionary *)result;
+- (NSMutableArray *)createTransactionArrayFromResult:(NSDictionary *)result;
+
 @end
