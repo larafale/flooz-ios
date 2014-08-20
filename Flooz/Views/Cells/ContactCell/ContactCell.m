@@ -33,7 +33,7 @@
         _subLabel.textColor = [UIColor lightGrayColor];
         _subLabel.font = [UIFont customContentRegular:12];
         
-        UIImage *imageB = [UIImage imageNamed:@"menu-new-transaction"];
+        UIImage *imageB = [UIImage imageNamed:@"Signup_Box_Plus"];
         _addFriendButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)-52, 0, 50, 50)];
         [_addFriendButton setImage:imageB forState:UIControlStateNormal];
         [_addFriendButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];

@@ -37,16 +37,16 @@
     self = [super init];
     if(self){
 #ifdef FLOOZ_DEV_API
-            manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://dev.flooz.me"]];
+        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://dev.flooz.me"]];
 #else
-            manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
+        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
 #endif
         
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         
         loadView = [FLLoadView new];
-
+        
         _notificationsCount = @0;
         _notifications = @[];
         _activitiesCached = @[];
@@ -95,9 +95,9 @@
         [self updateCurrentUserAfterSignup:result];
         
 #ifndef FLOOZ_DEV_API
-            [[SEGAnalytics sharedAnalytics] track:@"signup" properties:@{
-                                                                         @"userId": [[[Flooz sharedInstance] currentUser] userId]
-                                                                         }];
+        [[SEGAnalytics sharedAnalytics] track:@"signup" properties:@{
+                                                                     @"userId": [[[Flooz sharedInstance] currentUser] userId]
+                                                                     }];
 #endif
         
         if(success){
@@ -177,7 +177,7 @@
 {
     [self requestPath:@"profile" method:@"PUT" params:user success:^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
-
+        
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
         
         if(success){
@@ -318,7 +318,7 @@
             noCreditCard();
         }
     };
-        
+    
     [self requestPath:@"flooz?validate=true" method:@"POST" params:tempTransaction success:success fullFailure:failure];
 }
 
@@ -333,7 +333,7 @@
     };
     
     if([transaction objectForKey:@"toImage"]){
-         NSData *image = [transaction objectForKey:@"toImage"];
+        NSData *image = [transaction objectForKey:@"toImage"];
         [transaction setValue:nil forKey:@"toImage"];
         
         failureBlock1 = ^(NSError *error) {
@@ -382,7 +382,7 @@
             noCreditCard();
         }
     };
- 
+    
     NSString *path = [NSString stringWithFormat:@"flooz/%@?validate=true", [transaction objectForKey:@"id"]];
     [self requestPath:path method:@"POST" params:tempTransaction success:successBlock fullFailure:failure];
 }
@@ -402,7 +402,7 @@
 }
 
 - (void)createEvent:(NSDictionary *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
-{    
+{
     if([event objectForKey:@"image"]){
         NSData *image = [event objectForKey:@"image"];
         [event setValue:nil forKey:@"image"];
@@ -459,7 +459,7 @@
 }
 
 - (void)cashout:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
-{    
+{
     [self requestPath:@"cashout" method:@"POST" params:@{ @"amount": amount } success:success failure:failure];
 }
 
@@ -562,7 +562,7 @@
             noCreditCard();
         }
     };
-
+    
     NSString *path = [NSString stringWithFormat:@"pots/%@/participate?validate=true", [dictionary objectForKey:@"id"]];
     [self requestPath:path method:@"POST" params:dictionary success:success fullFailure:failure];
 }
@@ -659,7 +659,7 @@
     }
     
     id successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"JSON: %@", responseObject);
+        //        NSLog(@"JSON: %@", responseObject);
         [loadView hide];
         
         [self displayPopupMessage:responseObject];
@@ -682,10 +682,10 @@
             
         }
         else if(error.code == kCFURLErrorTimedOut ||
-           error.code == kCFURLErrorCannotConnectToHost ||
-           error.code == kCFURLErrorNotConnectedToInternet ||
-           error.code == kCFURLErrorNetworkConnectionLost
-           ){
+                error.code == kCFURLErrorCannotConnectToHost ||
+                error.code == kCFURLErrorNotConnectedToInternet ||
+                error.code == kCFURLErrorNetworkConnectionLost
+                ){
             DISPLAY_ERROR(FLNetworkError);
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationConnectionError object:nil];
         }
@@ -697,7 +697,7 @@
                 if(operation.responseObject[@"nick"]){
                     user[@"login"] = operation.responseObject[@"nick"];
                 }
-    
+                
                 [appDelegate showLoginWithUser:user];
             }
             else{ // Signup
@@ -718,18 +718,18 @@
             // [path isEqualToString:@"/login/basic"] utilisé pour le code oublié
             
             // Token expire
-//            DISPLAY_ERROR(FLBadLoginError);
+            //            DISPLAY_ERROR(FLBadLoginError);
             [self logout];
         }
         else if(operation.responseObject){
             [self displayPopupMessage:operation.responseObject];
             
-//            id statusCode = [operation.responseObject objectForKey:@"statusCode"];
-//            if(access_token && [statusCode respondsToSelector:@selector(intValue)] && [statusCode intValue] == 401){
-//                // Token expire
-//                DISPLAY_ERROR(FLBadLoginError);
-//                [self logout];
-//            }
+            //            id statusCode = [operation.responseObject objectForKey:@"statusCode"];
+            //            if(access_token && [statusCode respondsToSelector:@selector(intValue)] && [statusCode intValue] == 401){
+            //                // Token expire
+            //                DISPLAY_ERROR(FLBadLoginError);
+            //                [self logout];
+            //            }
         }
         
         if(failure){
@@ -775,7 +775,7 @@
 }
 
 - (void)updateCurrentUserAfterConnect:(id)result
-{    
+{
     access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
     [UICKeyChainStore setString:access_token forKey:@"login-token"];
     
@@ -796,7 +796,7 @@
     if(!token || [token isBlank]){
         return NO;
     }
- 
+    
     access_token = token;
     [self updateCurrentUserWithSuccess:^{
         [appDelegate didConnected];
@@ -846,12 +846,12 @@
             if (!error) {
                 NSDictionary *user = @{
                                        @"fb": @{
-                                                 @"devices": [result objectForKey:@"devices"],
-                                                 @"email": [result objectForKey:@"email"],
-                                                 @"id": [result objectForKey:@"id"],
-                                                 @"name": [result objectForKey:@"name"],
-                                                 @"token": _facebook_token
-                                                 }
+                                               @"devices": [result objectForKey:@"devices"],
+                                               @"email": [result objectForKey:@"email"],
+                                               @"id": [result objectForKey:@"id"],
+                                               @"name": [result objectForKey:@"name"],
+                                               @"token": _facebook_token
+                                               }
                                        };
                 
                 [self updateUser:user success:nil failure:nil];
@@ -876,13 +876,13 @@
                                            @"lastName": [result objectForKey:@"last_name"],
                                            @"firstName": [result objectForKey:@"first_name"],
                                            @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", [result objectForKey:@"id"]]/*,
-                                           @"fb": [@{
-                                                     @"devices": [result objectForKey:@"devices"],
-                                                     @"email": [result objectForKey:@"email"],
-                                                     @"id": [result objectForKey:@"id"],
-                                                     @"name": [result objectForKey:@"name"],
-                                                     @"token": _facebook_token
-                                                     } mutableCopy]*/
+                                                                                                                                                                                @"fb": [@{
+                                                                                                                                                                                @"devices": [result objectForKey:@"devices"],
+                                                                                                                                                                                @"email": [result objectForKey:@"email"],
+                                                                                                                                                                                @"id": [result objectForKey:@"id"],
+                                                                                                                                                                                @"name": [result objectForKey:@"name"],
+                                                                                                                                                                                @"token": _facebook_token
+                                                                                                                                                                                } mutableCopy]*/
                                            };
                     
                     [appDelegate showSignupAfterFacebookWithUser:user];
@@ -925,7 +925,7 @@
         }
         
         if(error && [error respondsToSelector:@selector(objectForKey:)] && [error objectForKey:@"visible"] && [[error objectForKey:@"visible"] boolValue] && [[error objectForKey:@"text"] respondsToSelector:@selector(length)]){
-
+            
             title = [error objectForKey:@"title"];
             content = [error objectForKey:@"text"];
             time = [error objectForKey:@"time"];
@@ -985,11 +985,11 @@
     
     
 #ifdef FLOOZ_DEV_API
-//        _socket.useSecure = NO;
-//        [_socket connectToHost:@"api.flooz.me" onPort:80];
+    //        _socket.useSecure = NO;
+    //        [_socket connectToHost:@"api.flooz.me" onPort:80];
 #else
-        _socket.useSecure = YES;
-        [_socket connectToHost:@"api.flooz.me" onPort:443];
+    _socket.useSecure = YES;
+    [_socket connectToHost:@"api.flooz.me" onPort:443];
 #endif
 }
 
@@ -1131,13 +1131,89 @@
     NSDictionary *params = @{
                              @"emails": contactsEmail,
                              @"phones": contactsPhone
-                                 };
+                             };
     
     [self requestPath:@"/contacts/import" method:@"POST" params:params success:NULL failure:NULL];
 }
 
 - (void)sendContactsWithParams:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     [self requestPath:@"/contacts/flooz" method:@"POST" params:params success:success failure:failure];
+}
+
+- (void) createContactList:(void (^)(NSMutableArray *arrayContacts, NSMutableArray *arrayServer))lists {
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL,NULL);
+    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople( addressBook );
+    CFIndex nPeople = ABAddressBookGetPersonCount( addressBook );
+    
+    NSMutableArray *arrayPhonesAskServer = [NSMutableArray new];
+    NSMutableArray *contactInfoArray = [NSMutableArray new];
+    for ( int i = 0; i < nPeople; i++ )
+    {
+        ABRecordRef person = CFArrayGetValueAtIndex( allPeople, i );
+        
+        CFTypeRef firstnameRefObject = ABRecordCopyValue(person, kABPersonFirstNameProperty);
+        NSString *firstNameObject;
+        if (firstnameRefObject) {
+            firstNameObject = (__bridge NSString *)firstnameRefObject;
+            CFRelease(firstnameRefObject);
+        }
+        
+        CFTypeRef lastnameRefObject = ABRecordCopyValue(person, kABPersonLastNameProperty);
+        NSString *lastNameObject;
+        if (lastnameRefObject) {
+            lastNameObject = (__bridge NSString *)lastnameRefObject;
+            CFRelease(lastnameRefObject);
+        }
+        
+        
+        NSMutableArray *contactsEmail = [NSMutableArray new];
+        ABMultiValueRef emailList = ABRecordCopyValue(person, kABPersonEmailProperty);
+        for (CFIndex i = 0; i < ABMultiValueGetCount(emailList); ++i) {
+            NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
+            [contactsEmail addObject:email];
+        }
+        
+        NSMutableArray *contactsPhone = [NSMutableArray new];
+        ABMultiValueRef phonesRef = ABRecordCopyValue(person, kABPersonPhoneProperty);
+        for (int i=0; i<ABMultiValueGetCount(phonesRef); i++) {
+            CFStringRef currentPhoneValue = ABMultiValueCopyValueAtIndex(phonesRef, i);
+            NSString *_phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phonesRef, i);
+            NSString *_formatedPhone = [FLHelper formatedPhone:_phone];
+            if (_formatedPhone) {
+                [contactsPhone addObject:_formatedPhone];
+                [arrayPhonesAskServer addObject:_formatedPhone];
+            }
+            CFRelease(currentPhoneValue);
+        }
+        
+        NSData *imageData;
+        if (ABPersonHasImageData(person)) {
+            imageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatThumbnail);
+        }
+        
+        if (contactsPhone.count && (firstNameObject || lastNameObject)) {
+            
+            NSMutableDictionary *personDic = [NSMutableDictionary new];
+            [personDic setObject:contactsPhone forKey:@"phones"];
+            
+            if (firstnameRefObject) {
+                [personDic setObject:[firstNameObject uppercaseString] forKey:@"firstName"];
+            }
+            if (lastnameRefObject) {
+                [personDic setObject:[lastNameObject uppercaseString] forKey:@"lastName"];
+            }
+            [personDic setObject:contactsEmail forKey:@"emails"];
+            
+            if (imageData) {
+                [personDic setObject:imageData forKey:@"imageData"];
+            }
+            [personDic setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
+            [contactInfoArray addObject:personDic];
+        }
+    }
+    if (lists) {
+        lists(contactInfoArray, arrayPhonesAskServer);
+    }
 }
 
 #pragma mark - array from result dictionnary

@@ -218,7 +218,7 @@
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_WAITING" = "Invité";
 
-"SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser votre application en cas de perte/vol de votre mobile.";
+"SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser vos paiements en cas de perte/vol de votre mobile.";
 "SECORE_CODE_TEXT_CURRENT" = "Entrez votre code secret :";
 "SECORE_CODE_TEXT_OLD" = "Entrez votre ancien code :";
 "SECORE_CODE_TEXT_NEW" = "Entrez votre nouveau code :";
@@ -277,8 +277,10 @@
 
 "Send_Button_Mobile" = "Suivant";
 "SEND" = "Envoyer";
+"Invite_Friends_Button" = "Inviter";
 "ALERT_CONTACT_DENIES_ACCESS" = "Vous n'avez pas autorisé à lire les contacts!\nVous passez directement à l'étape suivante.";
 "ALERT_CONTACT_DENIES_ACCESS_PREVIOUS" = "Vous n'avez pas autorisé à lire les contacts précédemment!\nVous passez directement à l'étape suivante.";
+"ALERT_CONTACT_MESSAGE_FAILED" = "L'envoi de votre message a échoué, essayez de recommencer.";
 
 "Validate_Button" = "Inviter";
 "CONTACT_PICKER_NON_FLOOZ" = "Mes amis à inviter";

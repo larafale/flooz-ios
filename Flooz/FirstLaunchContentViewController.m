@@ -1146,94 +1146,52 @@
 
 - (void) createContactList {
     [[Flooz sharedInstance] showLoadView];
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL,NULL);
-    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople( addressBook );
-    CFIndex nPeople = ABAddressBookGetPersonCount( addressBook );
-    
-    NSMutableArray *arrayPhonesAskServer = [NSMutableArray new];
-    for ( int i = 0; i < nPeople; i++ )
-    {
-        ABRecordRef person = CFArrayGetValueAtIndex( allPeople, i );
-        
-        CFTypeRef firstnameRefObject = ABRecordCopyValue(person, kABPersonFirstNameProperty);
-        NSString *firstNameObject;
-        if (firstnameRefObject) {
-            firstNameObject = (__bridge NSString *)firstnameRefObject;
-            CFRelease(firstnameRefObject);
-        }
-        
-        CFTypeRef lastnameRefObject = ABRecordCopyValue(person, kABPersonLastNameProperty);
-        NSString *lastNameObject;
-        if (lastnameRefObject) {
-            lastNameObject = (__bridge NSString *)lastnameRefObject;
-            CFRelease(lastnameRefObject);
-        }
-        
-        
-        NSMutableArray *contactsEmail = [NSMutableArray new];
-        ABMultiValueRef emailList = ABRecordCopyValue(person, kABPersonEmailProperty);
-        for (CFIndex i = 0; i < ABMultiValueGetCount(emailList); ++i) {
-            NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
-            [contactsEmail addObject:email];
-        }
-        
-        NSMutableArray *contactsPhone = [NSMutableArray new];
-        ABMultiValueRef phonesRef = ABRecordCopyValue(person, kABPersonPhoneProperty);
-        for (int i=0; i<ABMultiValueGetCount(phonesRef); i++) {
-            CFStringRef currentPhoneValue = ABMultiValueCopyValueAtIndex(phonesRef, i);
-            NSString *_phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phonesRef, i);
-            NSString *_formatedPhone = [FLHelper formatedPhone:_phone];
-            if (_formatedPhone) {
-                [contactsPhone addObject:_formatedPhone];
-                [arrayPhonesAskServer addObject:_formatedPhone];
-            }
-            CFRelease(currentPhoneValue);
-        }
-        
-        NSData *imageData;
-        if (ABPersonHasImageData(person)) {
-            imageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatThumbnail);
-        }
-        
-        if (contactsPhone.count && (firstNameObject || lastNameObject)) {
-            
-            NSMutableDictionary *personDic = [NSMutableDictionary new];
-            [personDic setObject:contactsPhone forKey:@"phones"];
-            
-            if (firstnameRefObject) {
-                [personDic setObject:[firstNameObject uppercaseString] forKey:@"firstName"];
-            }
-            if (lastnameRefObject) {
-                [personDic setObject:[lastNameObject uppercaseString] forKey:@"lastName"];
-            }
-            [personDic setObject:contactsEmail forKey:@"emails"];
-            
-            if (imageData) {
-                [personDic setObject:imageData forKey:@"imageData"];
-            }
-            [personDic setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
-            [_contactInfoArray addObject:personDic];
-        }
-    }
-    
-    _contactInfoArray = [[self sortedArray:_contactInfoArray withKey:@"lastName" ascending:YES] mutableCopy];
-    
-    NSDictionary *params = @{
-                             @"phones": arrayPhonesAskServer// @[@"+33611111111"]
-                             };
-    
-    [[Flooz sharedInstance] sendContactsWithParams:params success:^(id result) {
-        _contactFromFlooz = [[Flooz sharedInstance] createFriendsArrayFromResult:result];
+    [[Flooz sharedInstance] createContactList:^(NSMutableArray *arrayContacts, NSMutableArray *arrayServer) {
+        _contactInfoArray = [[self sortedArray:arrayContacts withKey:@"lastName" ascending:YES] mutableCopy];
         [[Flooz sharedInstance] hideLoadView];
-        if (_contactFromFlooz.count) {
-            NSIndexSet *index = [[NSIndexSet alloc] initWithIndex:0];
-            [_contactsTableView reloadSections:index withRowAnimation:UITableViewRowAnimationTop];
-        }
-    } failure:^(NSError *error) {
-        [[Flooz sharedInstance] hideLoadView];
+        
+        NSDictionary *params = @{@"phones": arrayServer};
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] sendContactsWithParams:params success:^(id result) {
+            _contactFromFlooz = [[Flooz sharedInstance] createFriendsArrayFromResult:result];
+            [self removeFloozerToMyContact];
+            [[Flooz sharedInstance] hideLoadView];
+        } failure:^(NSError *error) {
+            [self removeFloozerToMyContact];
+            [[Flooz sharedInstance] hideLoadView];
+        }];
     }];
 }
 
+- (void) removeFloozerToMyContact {
+    if (_contactFromFlooz.count) {
+        [_contactsTableView beginUpdates];
+        for (FLUser *contact in _contactFromFlooz) {
+            int index = [self findUserInAllMyContacts:contact];
+            if (index != -1) {
+                [_contactInfoArray removeObjectAtIndex:index];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:1];
+                [_contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+        }
+        NSIndexSet *index = [[NSIndexSet alloc] initWithIndex:0];
+        [_contactsTableView reloadSections:index withRowAnimation:UITableViewRowAnimationTop];
+        [_contactsTableView endUpdates];
+    }
+}
+
+- (int) findUserInAllMyContacts:(FLUser *)contact {
+    int i = 0;
+    for (NSDictionary *infoContact in _contactInfoArray) {
+        for (NSString *phone in infoContact[@"phones"]) {
+            if ([phone isEqualToString:contact.phone]) {
+                return i;
+            }
+        }
+        i ++;
+    }
+    return -1;
+}
 
 - (NSArray *) sortedArray:(NSArray *)array withKey:(NSString *)key ascending:(BOOL)ascending {
     NSSortDescriptor *sortDescriptor;
@@ -1296,6 +1254,8 @@
         else {
             cell.accessoryView = [UIImageView imageNamed:@"Signup_Box_Uncheck"];
         }
+        
+        [cell.addFriendButton setHidden:YES];
     }
     
     return cell;
@@ -1392,7 +1352,7 @@
         [_footerView addSubview:item];
         
         UIButton *b = [UIButton newWithFrame:CGRectMake(0, 0, CGRectGetWidth(_contactsTableView.frame), 50.0f)];
-        [b setTitle:NSLocalizedString(@"SEND", @"") forState:UIControlStateNormal];
+        [b setTitle:NSLocalizedString(@"Invite_Friends_Button", @"") forState:UIControlStateNormal];
         [b addTarget:self action:@selector(inviteFriends) forControlEvents:UIControlEventTouchUpInside];
         [_footerView addSubview:b];
         
