@@ -218,7 +218,7 @@
 "EVENT_STATUS_ACCEPTED" = "J'y participe";
 "EVENT_STATUS_WAITING" = "Invité";
 
-"SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser vos paiements en cas de perte ou de vol de votre mobile.";
+"SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser vos paiements en cas de perte/vol de votre mobile.";
 "SECORE_CODE_TEXT_CURRENT" = "Entrez votre code secret :";
 "SECORE_CODE_TEXT_OLD" = "Entrez votre ancien code :";
 "SECORE_CODE_TEXT_NEW" = "Entrez votre nouveau code :";
@@ -236,24 +236,25 @@
 
 
 "SIGNUP_HEAD_TITLE" = "Bienvenue sur Flooz";
-"SIGNUP_VIEW_1_TITLE_1" = "PAYEZ VOS AMIS EN 4 CLICS";
-"SIGNUP_VIEW_1_SUBTITLE_1" = "Choisissez un ami par son 06 ou son @pseudo, entrez un montant et un bref message. En 10 secondes, c'est payé !";
-"SIGNUP_VIEW_1_TITLE_2" = "LA SÉCURITÉ EST UNE ÉVIDENCE";
-"SIGNUP_VIEW_1_SUBTITLE_2" = "Toutes vos transactions sont 100% sécurisées. Sur Flooz, conservez votre CB dans votre smartphone";
-"SIGNUP_VIEW_1_TITLE_3" = "COLLECTEZ DE L'ARGENT À PLUSIEURS";
-"SIGNUP_VIEW_1_SUBTITLE_3" = "Créez des cagnottes et invitez vos amis pour vos cadeaux commun ! Réunir de l'argent n'a jamais été aussi simple.";
+"SIGNUP_VIEW_1_TITLE_1" = "PAYER VOS AMIS";
+"SIGNUP_VIEW_1_SUBTITLE_1" = "Choisissez un contact,entrez un montant et validez.";
+"SIGNUP_VIEW_1_TITLE_2" = "EN TOUTE SECURITE";
+"SIGNUP_VIEW_1_SUBTITLE_2" = "Un code secret à 4 chiffres sécurise chaque paiement.";
+"SIGNUP_VIEW_1_TITLE_3" = "100% GRATUIT";
+"SIGNUP_VIEW_1_SUBTITLE_3" = "Aucun frais à aucun moment, simplement gratuit... que du bonheur!";
 "SIGNUP_VIEW_1_BUTTON" = "Commencez";
 
 "SIGNUP_HEAD_TITLE_2" = "Créer votre compte";
-"SIGNUP_VIEW_2_TITLE_1" = "EN 2 TEMPS 3 MOUVEMENTS";
-"SIGNUP_VIEW_2_SUBTITLE_1" = "Choisissez votre @pseudo et un mot de passe. Il suffira de donner votre @pseudo à vos amis pour qu'ils vous envoient des paiements.";
-"SIGNUP_VIEW_2_TITLE_2" = "PRÉPAREZ VOTRE CARTE BANCAIRE";
-"SIGNUP_VIEW_2_SUBTITLE_2" = "Pour envoyer de l'argent, c'est votre porte-monnaie Flooz qui sera utilisé si vous disposez des fonds nécessaires. Sinon, c'est depuis votre CB que le paiement sera envoyé.";
-"SIGNUP_VIEW_2_TITLE_3" = "PARTAGEZ L'APPLICATION ET GAGNEZ 2€ CASH !";
-"SIGNUP_VIEW_2_SUBTITLE_3" = "Parrainez vos amis et gagnez 2€ immédiatement si 'lun de vos amis utilisez l'app. Partagez le code d'invitation qui vous a été fourni !";
+"SIGNUP_VIEW_2_TITLE_1" = "INSCRIPTION RAPIDE";
+"SIGNUP_VIEW_2_SUBTITLE_1" = "Vous êtes à quelques secondes de votre 1er Flooz !";
+"SIGNUP_VIEW_2_TITLE_2" = "PREPAREZ VOTRE CARTE";
+"SIGNUP_VIEW_2_SUBTITLE_2" = "Liez votre carte bancaire 1 seule fois seulement.";
+"SIGNUP_VIEW_2_TITLE_3" = "GAGNEZ 10€ CASH";
+"SIGNUP_VIEW_2_SUBTITLE_3" = "2€ à chaque amis qui envoie son 1er Flooz grâce à vous.";
 "SIGNUP_VIEW_2_BUTTON" = "Démarrez l'expérience Flooz";
 
 "SIGNUP_VIEW_IGNORE_BUTTON" = "Plus tard";
+"SIGNUP_VIEW_IGNORE_BUTTON_2" = "Terminer";
 
 "NumMobile" = "n° de mobile";
 "SIGNUP_PAGE_TITLE_Pseudo" = "Pseudo";
@@ -262,9 +263,10 @@
 "SIGNUP_PAGE_TITLE_Code" = "Code de sécurité";
 "SIGNUP_PAGE_TITLE_CodeVerif" = "Confirmation";
 "SIGNUP_PAGE_TITLE_CB" = "Carte bancaire";
-"SIGNUP_PAGE_TITLE_Friends" = "Invitez vos amis";
+"SIGNUP_PAGE_TITLE_Friends" = "Trouver des amis";
 
 "SIGNUP_PSEUDO_EXPLICATION" = "Votre pseudo est unique c'est comme ça que les gens vous voient sur Flooz. Donnez le à vos amis pour recevoir de l'argent.";
+"SIGNUP_PASSWORD_EXPLICATION" = "6 caractères minimum et sans espace";
 
 "SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
 "SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";
@@ -273,10 +275,13 @@
 
 "SIGNUP_FRIENDS_MESSAGE" = "Gagnez 2€ cash à chaque fois que l'un de vos amis envoie son premier Flooz grâce à vous.";
 
+"Send_Button_Mobile" = "Suivant";
 "SEND" = "Envoyer";
 "ALERT_CONTACT_DENIES_ACCESS" = "Vous n'avez pas autorisé à lire les contacts!\nVous passez directement à l'étape suivante.";
 "ALERT_CONTACT_DENIES_ACCESS_PREVIOUS" = "Vous n'avez pas autorisé à lire les contacts précédemment!\nVous passez directement à l'étape suivante.";
 
 "Validate_Button" = "Inviter";
 "CONTACT_PICKER_NON_FLOOZ" = "Mes amis à inviter";
-"CONTACT_PICKER_FLOOZ" = "Mes amis de flooz";
+"CONTACT_PICKER_FLOOZ" = "Déjà sur Flooz";
+
+"textmotdepasse" = "6 caractères minimum";
