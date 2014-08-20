@@ -255,6 +255,7 @@
 
 "SIGNUP_VIEW_IGNORE_BUTTON" = "Plus tard";
 
+"NumMobile" = "n° de mobile";
 "SIGNUP_PAGE_TITLE_Pseudo" = "Pseudo";
 "SIGNUP_PAGE_TITLE_Info" = "Inscription";
 "SIGNUP_PAGE_TITLE_Password" = "Mot de passe";

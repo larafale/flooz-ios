@@ -69,7 +69,7 @@
 
 - (FLKeyboardView *)setKeyboardValidateWithTarget:(id)target action:(SEL)action
 {
-    [closeButton setTitle:NSLocalizedString(@"Validate_Button", @"") forState:UIControlStateNormal];
+    [closeButton setTitle:NSLocalizedString(@"Send_Button_Mobile", @"") forState:UIControlStateNormal];
     [closeButton.titleLabel setFont: [UIFont customTitleThin:26]];
     [closeButton setImage:nil forState:UIControlStateNormal];
     [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
@@ -87,7 +87,7 @@
 }
 
 - (FLKeyboardView *)setKeyboardPhoneLoginWithTarget:(id)target action:(SEL)action {
-    [bottomRightButton setTitle:NSLocalizedString(@"Validate_Button", @"") forState:UIControlStateNormal];
+    [bottomRightButton setTitle:NSLocalizedString(@"Send_Button_Mobile", @"") forState:UIControlStateNormal];
     [bottomRightButton.titleLabel setFont: [UIFont customTitleThin:26]];
     [bottomRightButton setImage:nil forState:UIControlStateNormal];
     [bottomRightButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];

@@ -254,6 +254,7 @@
 
 "SIGNUP_VIEW_IGNORE_BUTTON" = "Plus tard";
 
+"NumMobile" = "n° de mobile";
 "SIGNUP_PAGE_TITLE_Pseudo" = "Pseudo";
 "SIGNUP_PAGE_TITLE_Info" = "Inscription";
 "SIGNUP_PAGE_TITLE_Password" = "Mot de passe";
@@ -275,6 +276,7 @@
 "ALERT_CONTACT_DENIES_ACCESS" = "Vous n'avez pas autorisé à lire les contacts!\nVous passez directement à l'étape suivante.";
 "ALERT_CONTACT_DENIES_ACCESS_PREVIOUS" = "Vous n'avez pas autorisé à lire les contacts précédemment!\nVous passez directement à l'étape suivante.";
 
+"Send_Button_Mobile" = "Envoyer";
 "Validate_Button" = "Inviter";
 "CONTACT_PICKER_NON_FLOOZ" = "Mes amis à inviter";
 "CONTACT_PICKER_FLOOZ" = "Mes amis de flooz";
