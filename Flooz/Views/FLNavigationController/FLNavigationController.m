@@ -30,15 +30,16 @@
 - (void)customAppearence
 {
     {
-        [[UINavigationBar appearance] setBarTintColor:[UIColor customBackgroundHeader]];
+        //[[UINavigationBar appearance] setBarTintColor:[UIColor customBackgroundHeader]];
+        [self.navigationBar setBarTintColor:[UIColor customBackgroundHeader]];
         self.navigationBar.translucent = NO;
         
         NSDictionary *attributes = @{
                                      NSForegroundColorAttributeName: [UIColor customBlue],
                                      NSFontAttributeName: [UIFont customTitleExtraLight:28]
                                      };
-        
-        [[UINavigationBar appearance] setTitleTextAttributes:attributes];
+        [self.navigationBar setTitleTextAttributes:attributes];
+        //[[UINavigationBar appearance] setTitleTextAttributes:attributes];
     }
     
     backItem = [UIBarButtonItem createBackButtonWithTarget:self action:@selector(popViewController)];
