@@ -56,6 +56,8 @@
     UIView *_footerView;
     
     BOOL _haveAnimated;
+    
+    UIView *_mainContent;
 }
 
 @end
@@ -90,6 +92,8 @@
 
 - (void)setUserInfoDico:(NSMutableDictionary *)userInfoDico {
     [self resetUserInfoDico];
+    [_validCBButton setEnabled:NO];
+    _haveAnimated = NO;
     [_userDic addEntriesFromDictionary:userInfoDico];
 }
 
@@ -131,10 +135,12 @@
             }
             [_name reloadTextField];
             [_email reloadTextField];
+            [self canValidate:_email];
         }
             break;
         case SignupPagePseudo: {
             [_userName reloadTextField];
+            [self canValidate:_userName];
         }
             break;
         case SignupPageCode: {
@@ -627,15 +633,11 @@
     [_name addForTextChangeTarget:self action:@selector(canValidate:)];
     [_mainBody addSubview:_name];
     
-    //[_name setBackgroundColor:[UIColor redColor]];
-    
     _email = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_EMAIL" for:_userDic key:@"email" position:CGPointMake(0.0f, CGRectGetMaxY(_name.frame) + 5.0f / ratioiPhones)];
     [_email addForNextClickTarget:self action:@selector(checkEmail)];
     [_email addForTextChangeTarget:self action:@selector(canValidate:)];
     _secondTextFieldToFocus = _email;
     [_mainBody addSubview:_email];
-    
-    //[_email setBackgroundColor:[UIColor yellowColor]];
     
     _validCBButton.center = CGPointMake(CGRectGetMidX(_validCBButton.frame), CGRectGetMidY(_email.frame));
 }
@@ -791,6 +793,18 @@
     currentSecureMode = SecureCodeModeNew;
     
     CGRectSetY(_secureCodeField.frame, CGRectGetMinY(firstTimeText.frame) - CGRectGetHeight(_secureCodeField.frame) - 5);
+    
+    
+    _mainContent = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
+    CGRectSetY(_secureCodeField.frame, 0);
+    CGRectSetY(firstTimeText.frame, CGRectGetHeight(_secureCodeField.frame));
+    [_mainContent addSubview:_secureCodeField];
+    [_mainContent addSubview:firstTimeText];
+    CGSize s = [self sizeExpectedForView:firstTimeText];
+    CGRectSetHeight(firstTimeText.frame, s.height*2);
+    CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(firstTimeText.frame));
+    [_mainContent setCenter:CGPointMake(PPScreenWidth()/2, CGRectGetMidY(backView.frame))];
+    [backView addSubview:_mainContent];
 }
 
 - (void) signupCodeVerifView {
@@ -814,6 +828,16 @@
     _secureCodeField.delegate = self;
     
     currentSecureMode = SecureCodeModeConfirm;
+    
+    
+    _mainContent = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
+    CGRectSetY(_secureCodeField.frame, 0);
+    [_mainContent addSubview:_secureCodeField];
+    CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(_secureCodeField.frame));
+    [_mainContent setCenter:CGPointMake(PPScreenWidth()/2, CGRectGetMidY(backView.frame))];
+    [backView addSubview:_mainContent];
+    
+    [_headerView setBackgroundColor:[UIColor redColor]];
 }
 
 - (void)didSecureCodeEnter:(NSString *)secureCode {
@@ -1073,8 +1097,9 @@
         ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
             if (granted) {
                 // If the app is authorized to access the first time then add the contact
-                [self createContactList];
+                
                 [self createTableContactUnderView: butt];
+                [self createContactList];
             } else {
                 // Show an alert here if user denies access telling that the contact cannot be added because you didn't allow it to access the contacts
                 [self displayAlertWithText:NSLocalizedString(@"ALERT_CONTACT_DENIES_ACCESS_PREVIOUS", @"")];
@@ -1083,8 +1108,8 @@
     }
     else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
         // If the user user has earlier provided the access, then add the contact
-        [self createContactList];
         [self createTableContactUnderView: butt];
+        [self createContactList];
     }
     else {
         // If the user user has NOT earlier provided the access, create an alert to tell the user to go to Settings app and allow access
@@ -1120,6 +1145,7 @@
 }
 
 - (void) createContactList {
+    [[Flooz sharedInstance] showLoadView];
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL,NULL);
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople( addressBook );
     CFIndex nPeople = ABAddressBookGetPersonCount( addressBook );
@@ -1190,17 +1216,31 @@
         }
     }
     
+    _contactInfoArray = [[self sortedArray:_contactInfoArray withKey:@"lastName" ascending:YES] mutableCopy];
+    
     NSDictionary *params = @{
                              @"phones": arrayPhonesAskServer// @[@"+33611111111"]
                              };
     
     [[Flooz sharedInstance] sendContactsWithParams:params success:^(id result) {
         _contactFromFlooz = [[Flooz sharedInstance] createFriendsArrayFromResult:result];
+        [[Flooz sharedInstance] hideLoadView];
         if (_contactFromFlooz.count) {
             NSIndexSet *index = [[NSIndexSet alloc] initWithIndex:0];
             [_contactsTableView reloadSections:index withRowAnimation:UITableViewRowAnimationTop];
         }
-    } failure:NULL];
+    } failure:^(NSError *error) {
+        [[Flooz sharedInstance] hideLoadView];
+    }];
+}
+
+
+- (NSArray *) sortedArray:(NSArray *)array withKey:(NSString *)key ascending:(BOOL)ascending {
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key
+                                                 ascending:ascending];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    return [array sortedArrayUsingDescriptors:sortDescriptors];
 }
 
 #pragma mark - UIAlertView Delegate
@@ -1346,14 +1386,15 @@
 - (void)displaySendButtonOrNot {
     if (!_footerView) {
         _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame), CGRectGetWidth(_contactsTableView.frame), 50.0f)];
-        UIButton *b = [UIButton newWithFrame:CGRectMake(0, 0, CGRectGetWidth(_contactsTableView.frame), 50.0f)];
-        [b setTitle:NSLocalizedString(@"SEND", @"") forState:UIControlStateNormal];
-        [b addTarget:self action:@selector(inviteFriends) forControlEvents:UIControlEventTouchUpInside];
-        [_footerView addSubview:b];
         
         FLStartItem *item = [FLStartItem newWithTitle:@"" imageImageName:@"Signup_Check_Enable" contentText:@"" andSize:50.0f];
         CGRectSetX(item.frame, CGRectGetWidth(_footerView.frame)-50.0f);
         [_footerView addSubview:item];
+        
+        UIButton *b = [UIButton newWithFrame:CGRectMake(0, 0, CGRectGetWidth(_contactsTableView.frame), 50.0f)];
+        [b setTitle:NSLocalizedString(@"SEND", @"") forState:UIControlStateNormal];
+        [b addTarget:self action:@selector(inviteFriends) forControlEvents:UIControlEventTouchUpInside];
+        [_footerView addSubview:b];
         
         CALayer *TopBorder = [CALayer layer];
         TopBorder.frame = CGRectMake(0.0f, 0.0f, _footerView.frame.size.width, 2.0f);
@@ -1385,15 +1426,14 @@
     if ([MFMessageComposeViewController canSendText]) {
         message.messageComposeDelegate = self;
         
-        NSMutableArray *a = [NSMutableArray new];
-        for (NSDictionary *d in _contactToInvite) {
-            for (NSString *p in d[@"phones"]) {
-                [a addObject:p];
+        NSMutableArray *listOfPhone = [NSMutableArray new];
+        for (NSDictionary *contact in _contactToInvite) {
+            for (NSString *phone in contact[@"phones"]) {
+                [listOfPhone addObject:phone];
             }
         }
-        NSArray *toRecipients = a;
-        [message setRecipients: toRecipients];
-        //[message setBody:[self createSMSBody]];
+        [message setRecipients: listOfPhone];
+        [message setBody:@"Rejoins moi sur Flooz"];
         
         message.modalPresentationStyle = UIModalPresentationPageSheet;
         [self presentViewController:message animated:YES completion:nil];
@@ -1424,8 +1464,14 @@
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    //portraitView.alpha = 1-(self.portraitView.frame.origin.x/self.portraitView.frame.size.width);
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (result == MessageComposeResultSent) {
+            [self goToNextPage];
+        }
+        else if (result == MessageComposeResultFailed) {
+            [self displayAlertWithText:NSLocalizedString(@"ALERT_CONTACT_DENIES_ACCESS_PREVIOUS", @"")];
+        }
+    }];
 }
 
 @end
