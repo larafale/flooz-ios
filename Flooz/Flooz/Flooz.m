@@ -213,13 +213,7 @@
 - (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
-        NSMutableArray *transactions = [NSMutableArray new];
-        NSArray *transactionsJSON = [result objectForKey:@"items"];
-        
-        for(NSDictionary *json in transactionsJSON){
-            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
-            [transactions addObject:transaction];
-        }
+        NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
         [_currentUser updateStatsPending:result];
         
@@ -242,13 +236,7 @@
 - (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success
 {
     id successBlock = ^(id result) {
-        NSMutableArray *transactions = [NSMutableArray new];
-        NSArray *transactionsJSON = [result objectForKey:@"items"];
-        
-        for(NSDictionary *json in transactionsJSON){
-            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
-            [transactions addObject:transaction];
-        }
+        NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
         if(success){
             success(transactions, [result objectForKey:@"next"]);
@@ -267,14 +255,7 @@
 - (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
-        NSMutableArray *activities = [NSMutableArray new];
-        NSArray *activitiesJSON = [result objectForKey:@"items"];
-                
-        for(NSDictionary *json in activitiesJSON){
-            FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
-            [activities addObject:activity];
-        }
-
+        NSMutableArray *activities = [self createActivityArrayFromResult:result];
         if(success){
             _activitiesCached = activities;
             success(activities, [result objectForKey:@"next"]);
@@ -287,14 +268,7 @@
 - (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success
 {
     id successBlock = ^(id result) {
-        NSMutableArray *activities = [NSMutableArray new];
-        NSArray *activitiesJSON = [result objectForKey:@"items"];
-        
-        for(NSDictionary *json in activitiesJSON){
-            FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
-            [activities addObject:activity];
-        }
-        
+        NSMutableArray *activities = [self createActivityArrayFromResult:result];
         if(success){
             success(activities, [result objectForKey:@"next"]);
         }
@@ -311,14 +285,7 @@
 - (void)events:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
-        NSMutableArray *events = [NSMutableArray new];
-        NSArray *eventsJSON = [result objectForKey:@"items"];
-        
-        for(NSDictionary *json in eventsJSON){
-            FLEvent *event = [[FLEvent alloc] initWithJSON:json];
-            [events addObject:event];
-        }
-        
+        NSMutableArray *events = [self createEventArrayFromResult:result];
         if(success){
             success(events, [result objectForKey:@"next"]);
         }
@@ -330,14 +297,7 @@
 - (void)eventsNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success
 {
     id successBlock = ^(id result) {
-        NSMutableArray *events = [NSMutableArray new];
-        NSArray *eventsJSON = [result objectForKey:@"items"];
-        
-        for(NSDictionary *json in eventsJSON){
-            FLEvent *event = [[FLEvent alloc] initWithJSON:json];
-            [events addObject:event];
-        }
-        
+        NSMutableArray *events = [self createEventArrayFromResult:result];
         if(success){
             success(events, [result objectForKey:@"next"]);
         }
@@ -540,15 +500,7 @@
 - (void)friendsSuggestion:(void (^)(id result))success
 {
     id successBlock = ^(id result) {
-        NSMutableArray *friends = [NSMutableArray new];
-        
-        if([result objectForKey:@"items"]){
-            for(NSDictionary *friendJSON in [result objectForKey:@"items"]){
-                FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
-                [friends addObject:friend];
-            }
-        }
-        
+        NSMutableArray *friends = [self createFriendsArrayFromResult:result];
         if(success){
             success(friends);
         }
@@ -572,15 +524,7 @@
 - (void)friendSearch:(NSString *)text success:(void (^)(id result))success
 {
     id successBlock = ^(id result) {
-        NSMutableArray *friends = [NSMutableArray new];
-        
-        if([result objectForKey:@"items"]){
-            for(NSDictionary *friendJSON in [result objectForKey:@"items"]){
-                FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
-                [friends addObject:friend];
-            }
-        }
-        
+        NSMutableArray *friends = [self createFriendsArrayFromResult:result];
         if(success){
             success(friends);
         }
@@ -1194,6 +1138,52 @@
 
 - (void)sendContactsWithParams:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     [self requestPath:@"/contacts/flooz" method:@"POST" params:params success:success failure:failure];
+}
+
+#pragma mark - array from result dictionnary
+- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result {
+    NSMutableArray *arrayFriends = [NSMutableArray new];
+    NSArray *friends = result[@"items"];
+    if (friends) {
+        for(NSDictionary *json in friends){
+            FLUser *friend = [[FLUser alloc] initWithJSON:json];
+            [arrayFriends addObject:friend];
+        }
+    }
+    return arrayFriends;
+}
+- (NSMutableArray *)createEventArrayFromResult:(NSDictionary *)result {
+    NSMutableArray *arrayEvent = [NSMutableArray new];
+    NSArray *events = result[@"items"];
+    if (events) {
+        for(NSDictionary *json in events){
+            FLEvent *event = [[FLEvent alloc] initWithJSON:json];
+            [arrayEvent addObject:event];
+        }
+    }
+    return arrayEvent;
+}
+- (NSMutableArray *)createActivityArrayFromResult:(NSDictionary *)result {
+    NSMutableArray *arrayActivities = [NSMutableArray new];
+    NSArray *activities = result[@"items"];
+    if (activities) {
+        for(NSDictionary *json in activities){
+            FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
+            [arrayActivities addObject:activity];
+        }
+    }
+    return arrayActivities;
+}
+- (NSMutableArray *)createTransactionArrayFromResult:(NSDictionary *)result {
+    NSMutableArray *arrayTransactions = [NSMutableArray new];
+    NSArray *transactions = result[@"items"];
+    if (transactions) {
+        for(NSDictionary *json in transactions){
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
+            [arrayTransactions addObject:transaction];
+        }
+    }
+    return arrayTransactions;
 }
 
 @end
