@@ -16,7 +16,7 @@
 
 @interface FirstLaunchViewController ()
 {
-    NSMutableArray   *_tutorialsView;
+    NSMutableArray *_tutorialsView;
     UIView *_headMenu;
     UIProgressView *_headProgress;
     
@@ -129,7 +129,7 @@
     
     
     [self setScrollEnabled:NO forPageViewController:_pageViewController];
-    _indexPage = SignupPagePseudo;
+    _indexPage = SignupPageTuto;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
 }
 
@@ -164,7 +164,14 @@
 
 - (void) closeSignup {
     [self.userInfoDico removeAllObjects];
-    [[Flooz sharedInstance] disconnectFacebook];
+    for (NSString *key in self.userInfoDico) {
+        [self.userInfoDico setValue:@"" forKey:key];
+    }
+    for (FirstLaunchContentViewController *tutoContentVC in _tutorialsView) {
+        if (![tutoContentVC isEqual:[NSNull null]]) {
+            [tutoContentVC resetUserInfoDico];
+        }
+    }
     _indexPage = SignupPagePhone;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionReverse];
 }
@@ -201,7 +208,7 @@
 
 - (void)goToPreviousPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico {
     self.userInfoDico = userDico;
-    if (currentIndex-1 == 0) {
+    if (currentIndex == 0) {
         return;
     }
     _indexPage = currentIndex-1;

@@ -52,6 +52,7 @@ typedef enum {
 
 - (void)setUserInfoDico:(NSMutableDictionary *)userInfoDico;
 - (void)displayChanges;
+- (void)resetUserInfoDico;
 
 @end
 

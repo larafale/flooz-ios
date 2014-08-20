@@ -54,6 +54,8 @@
     
     UITableView *_contactsTableView;
     UIView *_footerView;
+    
+    BOOL _haveAnimated;
 }
 
 @end
@@ -87,10 +89,14 @@
 }
 
 - (void)setUserInfoDico:(NSMutableDictionary *)userInfoDico {
-    if (!_userDic) {
-        _userDic = [NSMutableDictionary new];
-    }
+    [self resetUserInfoDico];
     [_userDic addEntriesFromDictionary:userInfoDico];
+}
+
+- (void)resetUserInfoDico {
+    for (NSString *key in _userDic.allKeys) {
+        [_userDic setValue:@"" forKey:key];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -141,6 +147,7 @@
             [_password reloadTextField];
             [_passwordConfirm reloadTextField];
             [_validCBButton setEnabled:NO];
+            _haveAnimated = NO;
         }
             break;
         case SignupPageCB: {
@@ -229,7 +236,7 @@
         CGRectSetY(_backButton.frame, CGRectGetMinY(_title.frame) + 7.0f);
     }
     [_headerView addSubview:_title];
-    [_headerView addSubview:_bar];
+    //[_headerView addSubview:_bar];
     [_headerView addSubview:_backButton];
     
     _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_headerView.frame), PPScreenWidth(), PPScreenHeight()-CGRectGetMaxY(_headerView.frame))];
@@ -368,24 +375,32 @@
         [self animateValidButton];
     } else {
         [_validCBButton setEnabled:NO];
+        _haveAnimated = NO;
     }
 }
 
 - (void) createValidButton {
-    UIImage *image = [UIImage imageNamed:@"navbar-check"];
-    _validCBButton = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(image.size)];
-    CGRectSetX(_validCBButton.frame, CGRectGetWidth(_mainBody.frame) - 10 - CGRectGetWidth(_validCBButton.frame));
-    [_validCBButton setImage:image  forState:UIControlStateNormal];
+    UIImage *imageDisable = [UIImage imageNamed:@"Signup_Check_Disable"];
+    UIImage *imageEnable = [UIImage imageNamed:@"Signup_Check_Enable"];
+    _validCBButton = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(imageDisable.size)];
+    CGRectSetX(_validCBButton.frame, CGRectGetWidth(_mainBody.frame) - 40 - CGRectGetWidth(_validCBButton.frame));
+    [_validCBButton setImage:imageDisable forState:UIControlStateDisabled];
+    [_validCBButton setImage:imageEnable forState:UIControlStateNormal];
     [_validCBButton setEnabled:NO];
+    _haveAnimated = NO;
     [_mainBody addSubview:_validCBButton];
 }
 
 - (void)animateValidButton
 {
+    if (_haveAnimated)
+        return;
+    _haveAnimated = YES;
     UIView *v = _validCBButton.superview;
     [_validCBButton removeFromSuperview];
     [v addSubview:_validCBButton];
     [_validCBButton setEnabled:YES];
+    
     CGFloat duration = .2;
     
     [UIView animateWithDuration:duration
@@ -454,8 +469,8 @@
     FLStartItem *item = [FLStartItem newWithTitle:@"" imageImageName:pictoName contentText:@"coucou" andSize:sizePicto];
     [item setSize:CGSizeMake(sizePicto, sizePicto)];
     if (!view)
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, -15, 0, 0)];
-    [item setOrigin:CGPointMake(10, CGRectGetMaxY(view.frame) + 15 / ratioiPhones)];
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, -25, 0, 0)];
+    [item setOrigin:CGPointMake(10, CGRectGetMaxY(view.frame) + 10 / ratioiPhones)];
     [_mainBody addSubview:item];
     
     [self placeTextBesidePicto:item
@@ -475,7 +490,7 @@
     UIView *textView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(picto.frame), CGRectGetMinY(picto.frame), PPScreenWidth() - CGRectGetMaxX(picto.frame) - 15, CGRectGetHeight(picto.frame))];
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(textView.frame), 40)];
-    [titleLabel setFont:[UIFont fontWithName:titleLabel.font.fontName size:12]];
+    [titleLabel setFont:[UIFont fontWithName:titleLabel.font.fontName size:15]];
     [titleLabel setTextColor:[UIColor whiteColor]];
     [titleLabel setText:titleText];
     [titleLabel setNumberOfLines:0];
@@ -483,7 +498,7 @@
     [textView addSubview:titleLabel];
     
     UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(titleLabel.frame), CGRectGetHeight(titleLabel.frame) + 5.0f / ratioiPhones, CGRectGetWidth(textView.frame), CGRectGetHeight(textView.frame) - titleLabel.frame.size.height)];
-    [subtitleLabel setFont:[UIFont fontWithName:titleLabel.font.fontName size:11]];
+    [subtitleLabel setFont:[UIFont fontWithName:titleLabel.font.fontName size:13]];
     [subtitleLabel setTextColor:[UIColor lightGrayColor]];
     [subtitleLabel setText:subText];
     [subtitleLabel setNumberOfLines:0];
@@ -511,7 +526,7 @@
     CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
     [self.view addSubview:logo];
     
-    _phoneField = [[FLHomeTextField alloc] initWithPlaceholder:@"n de mobile" for:_userDic key:@"phone" position:CGPointMake(20, 200)];
+    _phoneField = [[FLHomeTextField alloc] initWithPlaceholder:NSLocalizedString(@"NumMobile", @"") for:_userDic key:@"phone" position:CGPointMake(20, 200)];
     CGRectSetXY(_phoneField.frame, (SCREEN_WIDTH - _phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 35);
     if(SCREEN_HEIGHT < 500){
         CGRectSetXY(_phoneField.frame, (SCREEN_WIDTH - _phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 5);
@@ -557,13 +572,14 @@
     [_validCBButton addTarget:self action:@selector(checkPseudo) forControlEvents:UIControlEventTouchUpInside];
     
     _userName = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_USERNAME" for:_userDic key:@"nick" position:CGPointMake(0.0f, firstItemY)];
+    
     [_userName addForNextClickTarget:self action:@selector(checkPseudo)];
     [_userName addForTextChangeTarget:self action:@selector(canValidate:)];
     _firstTextFieldToFocus = _userName;
     [_mainBody addSubview:_userName];
     
     UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_userName.frame)+5, PPScreenWidth()-30, 50)];
-    firstTimeText.textColor = [UIColor customBlueLight];
+    firstTimeText.textColor = [UIColor customPlaceholder];
     firstTimeText.font = [UIFont customContentRegular:14];
     firstTimeText.numberOfLines = 0;
     firstTimeText.textAlignment = NSTextAlignmentCenter;
@@ -605,11 +621,13 @@
     [_mainBody addSubview:_avatarView];
     [_avatarView setHidden:YES];
     
-    _name = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_FIRSTNAME" for:_userDic key:@"firstName" position:CGPointMake(0.0f, firstItemY+15.0f) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
+    _name = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_FIRSTNAME" for:_userDic key:@"firstName" position:CGPointMake(0.0f, CGRectGetMaxY(_registerFacebook.frame)+12.0f) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
     _firstTextFieldToFocus = _name;
     [_name addForNextClickTarget:self action:@selector(focusOnNext)];
     [_name addForTextChangeTarget:self action:@selector(canValidate:)];
     [_mainBody addSubview:_name];
+    
+    //[_name setBackgroundColor:[UIColor redColor]];
     
     _email = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_EMAIL" for:_userDic key:@"email" position:CGPointMake(0.0f, CGRectGetMaxY(_name.frame) + 5.0f / ratioiPhones)];
     [_email addForNextClickTarget:self action:@selector(checkEmail)];
@@ -617,11 +635,13 @@
     _secondTextFieldToFocus = _email;
     [_mainBody addSubview:_email];
     
+    //[_email setBackgroundColor:[UIColor yellowColor]];
+    
     _validCBButton.center = CGPointMake(CGRectGetMidX(_validCBButton.frame), CGRectGetMidY(_email.frame));
 }
 
 - (void)createFacebookButton {
-    _registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(20, -5, PPScreenWidth()-40.0f, 40)];
+    _registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(15, 5, PPScreenWidth()-30.0f, 45)];
     [_registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
     [_registerFacebook setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
     _registerFacebook.titleLabel.font = [UIFont customContentRegular:15];
@@ -697,6 +717,14 @@
     _secondTextFieldToFocus = _passwordConfirm;
     [_mainBody addSubview:_passwordConfirm];
     
+    UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_passwordConfirm.frame)+2, PPScreenWidth()-30, 50)];
+    firstTimeText.textColor = [UIColor customPlaceholder];
+    firstTimeText.font = [UIFont customContentRegular:14];
+    firstTimeText.numberOfLines = 0;
+    firstTimeText.textAlignment = NSTextAlignmentCenter;
+    firstTimeText.text = NSLocalizedString(@"SIGNUP_PASSWORD_EXPLICATION", nil);
+    [_mainBody addSubview:firstTimeText];
+    
     _validCBButton.center = CGPointMake(CGRectGetMidX(_validCBButton.frame), CGRectGetMidY(_passwordConfirm.frame));
 }
 
@@ -752,8 +780,8 @@
     keyboardView.delegate = _secureCodeField;
     _secureCodeField.delegate = self;
     
-    UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetHeight(backView.frame)-50, PPScreenWidth()-30, 50)];
-    firstTimeText.textColor = [UIColor customBlueLight];
+    UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(14, CGRectGetHeight(backView.frame)-50, PPScreenWidth()-28, 50)];
+    firstTimeText.textColor = [UIColor customPlaceholder];
     firstTimeText.font = [UIFont customContentRegular:14];
     firstTimeText.numberOfLines = 0;
     firstTimeText.textAlignment = NSTextAlignmentCenter;
@@ -835,8 +863,12 @@
     [_backButton setHidden:YES];
     _title.text = NSLocalizedString(@"SIGNUP_PAGE_TITLE_CB", @"");
     [self displayHeader];
+    
     [_validCBButton addTarget:self action:@selector(didValidTouch2) forControlEvents:UIControlEventTouchUpInside];
     [_validCBButton removeFromSuperview];
+    CGRectSetY(_validCBButton.frame, CGRectGetMidY(_title.frame) - CGRectGetHeight(_validCBButton.frame) / 2.0f + 2.0f);
+    CGRectSetX(_validCBButton.frame, CGRectGetWidth(_headerView.frame) - 20 - CGRectGetWidth(_validCBButton.frame));
+    [_headerView addSubview:_validCBButton];
     
     _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0 - 10.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     [_mainBody addSubview:_contentView];
@@ -928,6 +960,7 @@
         [_userDic[@"number"] isBlank] || [_userDic[@"cvv"] isBlank] || [_userDic[@"expires"] isBlank] || [_userDic[@"holder"] isBlank]) {
         verifOk = NO;
         [_validCBButton setEnabled:NO];
+        _haveAnimated = NO;
     }
     else {
         [self animateValidButton];
@@ -1012,7 +1045,7 @@
     [self displayHeader];
     
     UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(10, -5, PPScreenWidth()-20, 50)];
-    firstTimeText.textColor = [UIColor customBlueLight];
+    firstTimeText.textColor = [UIColor customPlaceholder];
     firstTimeText.font = [UIFont customContentRegular:14];
     firstTimeText.numberOfLines = 0;
     firstTimeText.textAlignment = NSTextAlignmentCenter;
@@ -1023,7 +1056,7 @@
     //TODO: supprimer si on veut le texte d'explication
     CGRectSetHeight(firstTimeText.frame, 0);
     
-    UIButton *butt = [self ignoreButtonWithText:NSLocalizedString(@"SIGNUP_VIEW_IGNORE_BUTTON", @"") superV:_mainBody];
+    UIButton *butt = [self ignoreButtonWithText:NSLocalizedString(@"SIGNUP_VIEW_IGNORE_BUTTON_2", @"") superV:_mainBody];
     CGRectSetWidth(butt.frame, [self sizeExpectedForView:butt].width + 30.0f);
     CGRectSetX(butt.frame, CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(butt.frame));
     CGRectSetY(butt.frame, CGRectGetMaxY(firstTimeText.frame));
@@ -1162,9 +1195,8 @@
                              };
     
     [[Flooz sharedInstance] sendContactsWithParams:params success:^(id result) {
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            NSArray *arrayFloozer = result[@"items"];
-            _contactFromFlooz = [arrayFloozer mutableCopy];
+        _contactFromFlooz = [[Flooz sharedInstance] createFriendsArrayFromResult:result];
+        if (_contactFromFlooz.count) {
             NSIndexSet *index = [[NSIndexSet alloc] initWithIndex:0];
             [_contactsTableView reloadSections:index withRowAnimation:UITableViewRowAnimationTop];
         }
@@ -1199,8 +1231,8 @@
     }
     
     if (indexPath.section == 0) {
-        NSDictionary *contact = _contactFromFlooz[indexPath.row];
-        [cell setCellWithCompleteName:contact[@"name"] subText:contact[@"nick"] andImageUrl:contact[@"pic"]];
+        FLUser *contact = _contactFromFlooz[indexPath.row];
+        [cell setCellWithCompleteName:contact.fullname subText:contact.username andImageUrl:contact.avatarURL];
         [cell.addFriendButton addTarget:self action:@selector(addFriend:) forControlEvents:UIControlEventTouchUpInside];
         
         cell.accessoryView = nil;
@@ -1219,10 +1251,10 @@
         
         cell.accessoryView = nil;
         if ([contact[@"selected"] boolValue]) {
-            cell.accessoryView = [UIImageView imageNamed:@"Contact_check"];
+            cell.accessoryView = [UIImageView imageNamed:@"Signup_Box_Check"];
         }
         else {
-            cell.accessoryView = [UIImageView imageNamed:@"Contact_uncheck"];
+            cell.accessoryView = [UIImageView imageNamed:@"Signup_Box_Uncheck"];
         }
     }
     
@@ -1290,20 +1322,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
-        ContactCell *c = (ContactCell *)[tableView cellForRowAtIndexPath:indexPath];
-        [c setSelected:![c isSelected]];
+        ContactCell *cell = (ContactCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [cell setSelected:![cell isSelected]];
         
         NSMutableDictionary *contact = [_contactInfoArray[indexPath.row] mutableCopy];
         
+        cell.accessoryView = nil;
         if (![contact[@"selected"] boolValue]) {
             [contact setValue:[NSNumber numberWithBool:YES] forKey:@"selected"];
-            c.accessoryView = [UIImageView imageNamed:@"Contact_check"];
+            cell.accessoryView = [UIImageView imageNamed:@"Signup_Box_Check"];
             [_contactToInvite addObject:contact];
         }
         else {
             [_contactToInvite removeObject:contact];
             [contact setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
-            c.accessoryView = [UIImageView imageNamed:@"Contact_uncheck"];
+            cell.accessoryView = [UIImageView imageNamed:@"Signup_Box_Uncheck"];
         }
         [_contactInfoArray replaceObjectAtIndex:indexPath.row withObject:contact];
         [self displaySendButtonOrNot];
@@ -1318,7 +1351,7 @@
         [b addTarget:self action:@selector(inviteFriends) forControlEvents:UIControlEventTouchUpInside];
         [_footerView addSubview:b];
         
-        FLStartItem *item = [FLStartItem newWithTitle:@"" imageImageName:@"arrow-right" contentText:@"" andSize:50.0f];
+        FLStartItem *item = [FLStartItem newWithTitle:@"" imageImageName:@"Signup_Check_Enable" contentText:@"" andSize:50.0f];
         CGRectSetX(item.frame, CGRectGetWidth(_footerView.frame)-50.0f);
         [_footerView addSubview:item];
         
