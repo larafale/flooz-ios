@@ -106,13 +106,13 @@
     [_infoItem setCenter:CGPointMake(poXMid, midYPos)];
     [_headMenu addSubview:_infoItem];
     
-
+    
     _secureItem = [[FLStartItem alloc] initWithImageName:@"Signup_Menu_Lock" andSize:height_nav_bar];
     CGRectSetSize(_secureItem.frame, CGSizeMake(height_nav_bar, height_nav_bar));
     poXMid += offset;
     [_secureItem setCenter:CGPointMake(poXMid, midYPos)];
     [_headMenu addSubview:_secureItem];
-
+    
     
     _CBItem = [[FLStartItem alloc] initWithImageName:@"Signup_Menu_CB" andSize:height_nav_bar];
     CGRectSetSize(_CBItem.frame, CGSizeMake(height_nav_bar, height_nav_bar));
@@ -290,11 +290,6 @@
     [_headProgress setProgress:pro animated:YES];
     [self modifyItem:pro];
     
-    [_closeButton setEnabled:YES];
-    if (_indexPage > SignupPagePassword) {
-        [_closeButton setEnabled:NO];
-    }
-    
     if (_indexPage < SignupPagePseudo) {
         if (CGRectGetMaxY(_headMenu.frame) > 0) {
             [UIView animateWithDuration:.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -317,18 +312,34 @@
     [_secureItem setImageWithImageName:@"Signup_Menu_Lock"];
     [_CBItem setImageWithImageName:@"Signup_Menu_CB"];
     [_friendsItem setImageWithImageName:@"Signup_Menu_Friends"];
+    [_closeButton setEnabled:YES];
+    [_closeButton setImage:[UIImage imageNamed:@"Signup_Close"] forState:UIControlStateNormal];
     if (av >= 2.0f / NUMBER_STEP) {
         [_infoItem setImageWithImageName:@"Signup_Menu_Info_Disable"];
-        if (av >= 3.0f / NUMBER_STEP) {
-            [_secureItem setImageWithImageName:@"Signup_Menu_Lock_Disable"];
-            if (av >= 4.0f / NUMBER_STEP) {
-                [_CBItem setImageWithImageName:@"Signup_Menu_CB_Disable"];
-                if (av >= 5.0f / NUMBER_STEP) {
-                    [_friendsItem setImageWithImageName:@"Signup_Menu_Friends_Disable"];
+        if (av >= 2.5f / NUMBER_STEP) {
+            [_closeButton setEnabled:NO];
+            if (av >= 3.0f / NUMBER_STEP) {
+                [_closeButton setEnabled:YES];
+                [_secureItem setImageWithImageName:@"Signup_Menu_Lock_Disable"];
+                [_closeButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+                [_closeButton addTarget:self action:@selector(ignorePage) forControlEvents:UIControlEventTouchUpInside];
+                [_closeButton setImage:[UIImage imageNamed:@"Signup_Next"] forState:UIControlStateNormal];
+                if (av >= 4.0f / NUMBER_STEP) {
+                    [_CBItem setImageWithImageName:@"Signup_Menu_CB_Disable"];
+                    [_closeButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+                    [_closeButton addTarget:self action:@selector(ignorePage) forControlEvents:UIControlEventTouchUpInside];
+                    [_closeButton setImage:[UIImage imageNamed:@"Signup_Next"] forState:UIControlStateNormal];
+                    if (av >= 5.0f / NUMBER_STEP) {
+                        [_friendsItem setImageWithImageName:@"Signup_Menu_Friends_Disable"];
+                    }
                 }
             }
         }
     }
+}
+
+- (void) ignorePage {
+    [self goToNextPage:_indexPage withUser:self.userInfoDico];
 }
 
 @end
