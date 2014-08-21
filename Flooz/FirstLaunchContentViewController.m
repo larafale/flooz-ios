@@ -392,7 +392,7 @@
 - (void) createValidButton {
     UIImage *imageDisable = [UIImage imageNamed:@"Signup_Check_Disable"];
     UIImage *imageEnable = [UIImage imageNamed:@"Signup_Next"];
-    _validCBButton = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(imageDisable.size)];
+    _validCBButton = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(imageEnable.size)];
     CGRectSetX(_validCBButton.frame, CGRectGetWidth(_mainBody.frame) - 40 - CGRectGetWidth(_validCBButton.frame));
     [_validCBButton setImage:imageDisable forState:UIControlStateDisabled];
     [_validCBButton setImage:imageEnable forState:UIControlStateNormal];
