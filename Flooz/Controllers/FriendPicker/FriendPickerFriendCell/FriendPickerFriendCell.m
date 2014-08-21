@@ -100,7 +100,11 @@
 - (void)preparePhoneView
 {
     UILabel *view = [[self.contentView subviews] objectAtIndex:2];
-    view.text = [NSString stringWithFormat:@"@%@", [_user username]];
+    NSString *s = [NSString stringWithFormat:@"@%@", [_user username]];
+    view.text = s;
+    CGSize expectedLabelS = [s sizeWithAttributes:
+                             @{NSFontAttributeName: view.font}];
+    CGRectSetHeight(view.frame, expectedLabelS.height);
 }
 
 - (void)setSelectedCheckView:(BOOL)selected
