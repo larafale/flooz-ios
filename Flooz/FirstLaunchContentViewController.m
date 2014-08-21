@@ -584,9 +584,9 @@
     _firstTextFieldToFocus = _userName;
     [_mainBody addSubview:_userName];
     
-    UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_userName.frame)+5, PPScreenWidth()-30, 50)];
+    UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_userName.frame)+5, PPScreenWidth()-30, 60)];
     firstTimeText.textColor = [UIColor customPlaceholder];
-    firstTimeText.font = [UIFont customContentRegular:14];
+    firstTimeText.font = [UIFont customTitleExtraLight:14];
     firstTimeText.numberOfLines = 0;
     firstTimeText.textAlignment = NSTextAlignmentCenter;
     firstTimeText.text = NSLocalizedString(@"SIGNUP_PSEUDO_EXPLICATION", nil);
@@ -721,7 +721,7 @@
     
     UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_passwordConfirm.frame)+2, PPScreenWidth()-30, 50)];
     firstTimeText.textColor = [UIColor customPlaceholder];
-    firstTimeText.font = [UIFont customContentRegular:14];
+    firstTimeText.font = [UIFont customTitleExtraLight:14];
     firstTimeText.numberOfLines = 0;
     firstTimeText.textAlignment = NSTextAlignmentCenter;
     firstTimeText.text = NSLocalizedString(@"SIGNUP_PASSWORD_EXPLICATION", nil);
@@ -784,7 +784,7 @@
     
     UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(14, CGRectGetHeight(backView.frame)-50, PPScreenWidth()-28, 50)];
     firstTimeText.textColor = [UIColor customPlaceholder];
-    firstTimeText.font = [UIFont customContentRegular:14];
+    firstTimeText.font = [UIFont customTitleExtraLight:14];
     firstTimeText.numberOfLines = 0;
     firstTimeText.textAlignment = NSTextAlignmentCenter;
     firstTimeText.text = NSLocalizedString(@"SECORE_CODE_TEXT_FIRST_TIME", nil);
@@ -1069,7 +1069,7 @@
     
     UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(10, -5, PPScreenWidth()-20, 50)];
     firstTimeText.textColor = [UIColor customPlaceholder];
-    firstTimeText.font = [UIFont customContentRegular:14];
+    firstTimeText.font = [UIFont customTitleExtraLight:14];
     firstTimeText.numberOfLines = 0;
     firstTimeText.textAlignment = NSTextAlignmentCenter;
     firstTimeText.text = NSLocalizedString(@"SIGNUP_FRIENDS_MESSAGE", nil);
