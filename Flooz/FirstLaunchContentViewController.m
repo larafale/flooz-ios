@@ -1146,7 +1146,7 @@
 - (void) createContactList {
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createContactList:^(NSMutableArray *arrayContacts, NSMutableArray *arrayServer) {
-        _contactInfoArray = [[self sortedArray:arrayContacts withKey:@"lastName" ascending:YES] mutableCopy];
+        _contactInfoArray = [[self sortedArray:arrayContacts withKey:@"firstName" ascending:YES] mutableCopy];
         [[Flooz sharedInstance] hideLoadView];
         
         NSDictionary *params = @{@"phones": arrayServer};
