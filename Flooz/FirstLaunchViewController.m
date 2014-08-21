@@ -129,7 +129,7 @@
     
     
     [self setScrollEnabled:NO forPageViewController:_pageViewController];
-    _indexPage = SignupPageTuto;
+    _indexPage = SignupPageCB;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
 }
 
@@ -260,7 +260,10 @@
 
 - (void) manageProgressBar {
     CGFloat pro;
-    if (_indexPage == SignupPagePhone) {
+    if (_indexPage < SignupPagePhone) {
+        pro = 0.0f;
+    }
+    else if (_indexPage == SignupPagePhone) {
         pro = 1.0f / NUMBER_STEP;
     }
     else if (_indexPage == SignupPagePseudo) {
@@ -333,6 +336,11 @@
                         [_friendsItem setImageWithImageName:@"Signup_Menu_Friends_Disable"];
                     }
                 }
+            }
+            else {
+                [_closeButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+                [_closeButton addTarget:self action:@selector(closeSignup) forControlEvents:UIControlEventTouchUpInside];
+                [_closeButton setImage:[UIImage imageNamed:@"Signup_Close"] forState:UIControlStateNormal];
             }
         }
     }
