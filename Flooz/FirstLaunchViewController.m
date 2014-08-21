@@ -129,7 +129,7 @@
     
     
     [self setScrollEnabled:NO forPageViewController:_pageViewController];
-    _indexPage = SignupPageCB;
+    _indexPage = SignupPageTuto;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
 }
 
