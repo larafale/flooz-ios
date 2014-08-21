@@ -1022,6 +1022,7 @@
             [view reloadData];
             CGRectSetY(view.frame, CGRectGetMinY(view.frame)-CGRectGetHeight(_viewButtonScan.frame));
         }
+        [self verifAllFieldForCB];
     } cancel:^{
         [fieldsView[1] becomeFirstResponder];
     }];
