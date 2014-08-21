@@ -739,20 +739,14 @@
         [_firstTextFieldToFocus becomeFirstResponder];
         return;
     }
-    
-    if (!_userDic[@"confirmation"] || [_userDic[@"confirmation"] length] < 6) {
+    else if (!_userDic[@"confirmation"] || [_userDic[@"confirmation"] length] < 6) {
         [_secondTextFieldToFocus becomeFirstResponder];
         return;
     }
     
     if (_userDic[@"password"] && _userDic[@"confirmation"] && [_userDic[@"password"] length] >= 6 && [_userDic[@"confirmation"] length] >= 6 && [_userDic[@"password"] isEqualToString:_userDic[@"confirmation"]]) {
         [self animateValidButton];
-        
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] signup:_userDic success:^(id result) {
-            [[Flooz sharedInstance] hideLoadView];
-            [self goToNextPage];
-        } failure:NULL];
+        [self goToNextPage];
     }
     else {
         [_firstTextFieldToFocus becomeFirstResponder];
@@ -844,24 +838,24 @@
 
 - (void)didSecureCodeEnter:(NSString *)secureCode {
     if(currentSecureMode == SecureCodeModeNew){
-        [_userDic setValue:secureCode forKey:@"passcode"];
+        [_userDic setValue:secureCode forKey:@"secureCode"];
         [self goToNextPage];
     }
     else if(currentSecureMode == SecureCodeModeConfirm){
-        if ([_userDic[@"passcode"] isEqualToString:secureCode]) {
-            [UICKeyChainStore setString:secureCode forKey:[self keyForSecureCode]];
-            [self goToNextPage];
+        if ([_userDic[@"secureCode"] isEqualToString:secureCode]) {
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] signup:_userDic success:^(id result) {
+                [[Flooz sharedInstance] hideLoadView];
+                [self goToNextPage];
+            } failure:^(NSError *error) {
+                [self goToPreviousPage];
+            }];
         }
         else {
             [self startAnmiationBadCode];
             [_secureCodeField clean];
         }
     }
-}
-
-- (NSString *)keyForSecureCode
-{
-    return [NSString stringWithFormat:@"secureCode-%@", [[[Flooz sharedInstance] currentUser] userId]];
 }
 
 - (void)startAnmiationBadCode
@@ -1403,7 +1397,8 @@
             }
         }
         [message setRecipients: listOfPhone];
-        [message setBody:@"Rejoins moi sur Flooz"];
+        NSString *textMessage = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Invite_Friends_Message_SMS", @""),[[[Flooz sharedInstance] currentUser] invitCode]];
+        [message setBody:textMessage];
         
         message.modalPresentationStyle = UIModalPresentationPageSheet;
         [self presentViewController:message animated:YES completion:nil];

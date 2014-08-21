@@ -33,6 +33,7 @@
 #import "FriendsViewController.h"
 
 #import "NewTransactionViewController.h"
+#import "InvitationCodeViewController.h"
 
 @implementation AppDelegate
 
@@ -189,15 +190,16 @@
     [[self currentController] presentViewController:navController animated:YES completion:nil];
 }
 
-- (void)showSignupWithUser:(NSDictionary *)user
-{
-    [firstVC phoneNotRegistered:user];
-    /*
-    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[[SignupViewController alloc] initWithUser:user]];
+- (void)showRequestInvitationCodeWithUser:(NSDictionary *)user {
+    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[[InvitationCodeViewController  alloc] initWithUser:user]];
     
     [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     [[self currentController] presentViewController:navController animated:YES completion:nil];
-     */
+}
+
+- (void)showSignupWithUser:(NSDictionary *)user
+{
+    [firstVC phoneNotRegistered:user];
 }
 
 //TODO: delete after testing friends

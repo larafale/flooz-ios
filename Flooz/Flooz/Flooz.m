@@ -704,7 +704,16 @@
                 
                 [appDelegate showLoginWithUser:user];
             }
-            else{ // Signup
+            else if([operation.responseObject[@"item"] isEqualToString:@"signup"]){ // Signup
+                NSMutableDictionary *user = [NSMutableDictionary new];
+                
+                if(operation.responseObject[@"phone"]){
+                    user[@"phone"] = operation.responseObject[@"phone"];
+                }
+                
+                [appDelegate showSignupWithUser:user];
+            }
+            else{ // Invitation
                 NSMutableDictionary *user = [NSMutableDictionary new];
                 
                 if(operation.responseObject[@"invitationCode"]){
@@ -714,7 +723,7 @@
                     user[@"phone"] = operation.responseObject[@"phone"];
                 }
                 
-                [appDelegate showSignupWithUser:user];
+                [appDelegate showRequestInvitationCodeWithUser:user];
             }
         }
         else if(([statusCode intValue] == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && access_token && ![path isEqualToString:@"/login/basic"]){
@@ -760,6 +769,10 @@
         NSLog(@"Flooz request no valid method");
         [loadView hide];
     }
+}
+
+- (void)verifyInvitationCode:(NSString *)invitationCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/login/invitation" method:@"POST" params:@{@"invitationCode":invitationCode} success:success failure:failure];
 }
 
 #pragma mark -

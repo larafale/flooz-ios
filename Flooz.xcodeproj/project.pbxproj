@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
+		2FC83CAA19A678580001E3AF /* InvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC83CA819A678580001E3AF /* InvitationCodeViewController.m */; };
+		2FC83CAB19A678580001E3AF /* InvitationCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FC83CA919A678580001E3AF /* InvitationCodeViewController.xib */; };
+		2FC83CAC19A678940001E3AF /* InvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC83CA819A678580001E3AF /* InvitationCodeViewController.m */; };
+		2FC83CAD19A678BF0001E3AF /* InvitationCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FC83CA919A678580001E3AF /* InvitationCodeViewController.xib */; };
 		2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FD2460219A29495008DCFB5 /* ContactCell.m */; };
 		2FD2460419A2983C008DCFB5 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FD2460219A29495008DCFB5 /* ContactCell.m */; };
 		2FD2460619A3F6CC008DCFB5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD2460519A3F6CC008DCFB5 /* MessageUI.framework */; };
@@ -374,6 +378,9 @@
 
 /* Begin PBXFileReference section */
 		1686D3DC8F1E47F8A8972682 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FC83CA719A678580001E3AF /* InvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvitationCodeViewController.h; path = Controllers/InvitationCode/InvitationCodeViewController.h; sourceTree = "<group>"; };
+		2FC83CA819A678580001E3AF /* InvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InvitationCodeViewController.m; path = Controllers/InvitationCode/InvitationCodeViewController.m; sourceTree = "<group>"; };
+		2FC83CA919A678580001E3AF /* InvitationCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InvitationCodeViewController.xib; path = Controllers/InvitationCode/InvitationCodeViewController.xib; sourceTree = "<group>"; };
 		2FD2460119A29495008DCFB5 /* ContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactCell.h; path = ContactCell/ContactCell.h; sourceTree = "<group>"; };
 		2FD2460219A29495008DCFB5 /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactCell.m; path = ContactCell/ContactCell.m; sourceTree = "<group>"; };
 		2FD2460519A3F6CC008DCFB5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -775,6 +782,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2FC83CA219A675170001E3AF /* InvitationCode */ = {
+			isa = PBXGroup;
+			children = (
+				2FC83CA719A678580001E3AF /* InvitationCodeViewController.h */,
+				2FC83CA819A678580001E3AF /* InvitationCodeViewController.m */,
+				2FC83CA919A678580001E3AF /* InvitationCodeViewController.xib */,
+			);
+			name = InvitationCode;
+			sourceTree = "<group>";
+		};
 		2FD2460019A24DC4008DCFB5 /* ContactCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1066,6 +1083,7 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2FC83CA219A675170001E3AF /* InvitationCode */,
 				8B55B43E19996243003F5A6C /* FirstLaunch */,
 				ABE9145E18929150003AC722 /* Account */,
 				AB2FB54D18B2328D0079AA1D /* Activities */,
@@ -2152,6 +2170,7 @@
 				ABF7091E18A03D4600517389 /* Error.strings in Resources */,
 				ABB12D4918BCE805002FCAAE /* EventViewController.xib in Resources */,
 				ABE9142118894385003AC722 /* NewTransactionViewController.xib in Resources */,
+				2FC83CAB19A678580001E3AF /* InvitationCodeViewController.xib in Resources */,
 				AB6DA52118C8CEF70073B947 /* FriendAddViewController.xib in Resources */,
 				AB0D88F4197978F400A37630 /* InvitCodeViewController.xib in Resources */,
 				AB3D089C186CA11A00CF8380 /* InfoPlist.strings in Resources */,
@@ -2200,6 +2219,7 @@
 				ABAA4012197E96BF009F29EF /* LoginViewController.xib in Resources */,
 				ABAA4013197E96BF009F29EF /* EventParticipantsViewController.xib in Resources */,
 				ABAA4014197E96BF009F29EF /* Rene Bieder - Gentona Light.otf in Resources */,
+				2FC83CAD19A678BF0001E3AF /* InvitationCodeViewController.xib in Resources */,
 				ABAA4015197E96BF009F29EF /* Rene Bieder - Gentona Thin.otf in Resources */,
 				ABAA4016197E96BF009F29EF /* FriendsViewController.xib in Resources */,
 				ABAA4017197E96BF009F29EF /* PasswordForgetViewController.xib in Resources */,
@@ -2344,6 +2364,7 @@
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
 				ABF7093718A3C52200517389 /* FriendPickerViewController.m in Sources */,
 				AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */,
+				2FC83CAA19A678580001E3AF /* InvitationCodeViewController.m in Sources */,
 				ABB12D5118BE618D002FCAAE /* EventActionView.m in Sources */,
 				AB2FB54C18B231B90079AA1D /* ActivityCell.m in Sources */,
 				ABE9148B1892C734003AC722 /* FLKeyboardView.m in Sources */,
@@ -2472,6 +2493,7 @@
 				ABAA3F97197E96BF009F29EF /* SignupViewController.m in Sources */,
 				ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */,
 				ABAA3F99197E96BF009F29EF /* FriendPickerViewController.m in Sources */,
+				2FC83CAC19A678940001E3AF /* InvitationCodeViewController.m in Sources */,
 				ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */,
 				ABAA3F9B197E96BF009F29EF /* EventActionView.m in Sources */,
 				ABAA3F9C197E96BF009F29EF /* ActivityCell.m in Sources */,

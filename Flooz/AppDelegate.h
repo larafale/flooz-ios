@@ -51,6 +51,8 @@
 
 - (void)clearSavedViewController;
 
+- (void)showRequestInvitationCodeWithUser:(NSDictionary *)user;
+
 
 //TODO: delete after testing friends
 - (void)showsignupFriendUser:(NSDictionary *)user;
