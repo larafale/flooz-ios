@@ -164,6 +164,10 @@
             }
         }
             break;
+        case SignupPageFriends: {
+            [_validCBButton setEnabled:YES];
+        }
+            break;
         default:
             break;
     }
@@ -387,7 +391,7 @@
 
 - (void) createValidButton {
     UIImage *imageDisable = [UIImage imageNamed:@"Signup_Check_Disable"];
-    UIImage *imageEnable = [UIImage imageNamed:@"Signup_Check_Enable"];
+    UIImage *imageEnable = [UIImage imageNamed:@"Signup_Next"];
     _validCBButton = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(imageDisable.size)];
     CGRectSetX(_validCBButton.frame, CGRectGetWidth(_mainBody.frame) - 40 - CGRectGetWidth(_validCBButton.frame));
     [_validCBButton setImage:imageDisable forState:UIControlStateDisabled];
@@ -1063,9 +1067,15 @@
 
 - (void) signupFriendView {
     [_backButton setHidden:YES];
-    [_validCBButton setHidden:YES];
     _title.text = NSLocalizedString(@"SIGNUP_PAGE_TITLE_Friends", @"");
     [self displayHeader];
+    
+    [_validCBButton addTarget:self action:@selector(goToNextPage) forControlEvents:UIControlEventTouchUpInside];
+    [_validCBButton removeFromSuperview];
+    CGRectSetY(_validCBButton.frame, CGRectGetMidY(_title.frame) - CGRectGetHeight(_validCBButton.frame) / 2.0f + 2.0f);
+    CGRectSetX(_validCBButton.frame, CGRectGetWidth(_headerView.frame) - 20 - CGRectGetWidth(_validCBButton.frame));
+    [_headerView addSubview:_validCBButton];
+    [_validCBButton setEnabled:YES];
     
     UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(10, -5, PPScreenWidth()-20, 50)];
     firstTimeText.textColor = [UIColor customPlaceholder];
@@ -1078,13 +1088,13 @@
     CGRectSetHeight(firstTimeText.frame, [self sizeExpectedForView:firstTimeText].height*3);
     //TODO: supprimer si on veut le texte d'explication
     CGRectSetHeight(firstTimeText.frame, 0);
-    
+    /*
     UIButton *butt = [self ignoreButtonWithText:NSLocalizedString(@"SIGNUP_VIEW_IGNORE_BUTTON_2", @"") superV:_mainBody];
     CGRectSetWidth(butt.frame, [self sizeExpectedForView:butt].width + 30.0f);
     CGRectSetX(butt.frame, CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(butt.frame));
     CGRectSetY(butt.frame, CGRectGetMaxY(firstTimeText.frame));
     CGRectSetHeight(butt.frame, [self sizeExpectedForView:butt].height + 10.0f);
-    
+    */
     if (_contactInfoArray == nil) {
         _contactInfoArray = [NSMutableArray new];
     }
@@ -1097,7 +1107,7 @@
             if (granted) {
                 // If the app is authorized to access the first time then add the contact
                 
-                [self createTableContactUnderView: butt];
+                [self createTableContactUnderView: firstTimeText];
                 [self createContactList];
             } else {
                 // Show an alert here if user denies access telling that the contact cannot be added because you didn't allow it to access the contacts
@@ -1107,7 +1117,7 @@
     }
     else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
         // If the user user has earlier provided the access, then add the contact
-        [self createTableContactUnderView: butt];
+        [self createTableContactUnderView: firstTimeText];
         [self createContactList];
     }
     else {
@@ -1135,6 +1145,7 @@
     [_contactsTableView setBackgroundColor:[UIColor customBackground]];
     [_contactsTableView setSeparatorColor:[UIColor customBackgroundHeader]];
     [_contactsTableView setSeparatorInset:UIEdgeInsetsZero];
+    [_contactsTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [_contactsTableView setAllowsMultipleSelection: YES];
     
     [_mainBody addSubview:_contactsTableView];
@@ -1301,7 +1312,7 @@
         
         label.textColor = [UIColor customBlueLight];
         
-        label.font = [UIFont customContentRegular:10];
+        label.font = [UIFont customContentRegular:14];
         label.text = [self tableView:tableView titleForHeaderInSection:section];
         [label setWidthToFit];
         
@@ -1403,8 +1414,8 @@
     UITableViewCell *cell = (UITableViewCell *)[self findFirstViewInHierarchyOfClass:[UITableViewCell class] object:button];
     NSIndexPath *indexPath = [_contactsTableView indexPathForCell:cell];
     
-    NSDictionary *contact = _contactFromFlooz[indexPath.row];
-    [[Flooz sharedInstance] friendAcceptSuggestion:contact[@"_id"] success:^{
+    FLUser *contact = _contactFromFlooz[indexPath.row];
+    [[Flooz sharedInstance] friendAcceptSuggestion:contact.userId success:^{
         [_contactFromFlooz removeObjectAtIndex:indexPath.row];
         [_contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];

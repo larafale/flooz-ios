@@ -77,6 +77,18 @@
                              @{NSFontAttributeName: _lastNameLabel.font}];
     CGRectSetWidth(_lastNameLabel.frame, expectedLabelS.width);
     
+    CGFloat maxWidth = CGRectGetWidth(self.frame) - CGRectGetWidth(_addFriendButton.frame) - CGRectGetMinX(_firstNameLabel.frame);
+    if (CGRectGetWidth(_firstNameLabel.frame) > maxWidth) {
+        CGRectSetWidth(_firstNameLabel.frame, maxWidth);
+        CGRectSetWidth(_lastNameLabel.frame, 0);
+    }
+    else {
+        CGFloat maxWidth2 = CGRectGetWidth(self.frame) - CGRectGetMaxX(_firstNameLabel.frame) - CGRectGetWidth(_addFriendButton.frame);
+        if (CGRectGetWidth(_lastNameLabel.frame) > maxWidth2) {
+            CGRectSetWidth(_lastNameLabel.frame, maxWidth2);
+        }
+    }
+    
     [_avatarContact setImageFromData:dataImage];
     
     if (subText.length) {
@@ -98,6 +110,10 @@
                                 @{NSFontAttributeName: _firstNameLabel.font}];
     CGRectSetWidth(_firstNameLabel.frame, expectedLabelSize.width);
     CGRectSetX(_lastNameLabel.frame, CGRectGetMaxX(_firstNameLabel.frame));
+    
+    CGFloat maxWidth = CGRectGetWidth(self.frame) - CGRectGetWidth(_addFriendButton.frame) - CGRectGetMinX(_firstNameLabel.frame);
+    if (CGRectGetWidth(_firstNameLabel.frame) > maxWidth)
+        CGRectSetWidth(_firstNameLabel.frame, maxWidth);
     
     [_lastNameLabel setText:@""];
     
