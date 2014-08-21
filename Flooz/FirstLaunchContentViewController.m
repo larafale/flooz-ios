@@ -803,7 +803,7 @@
     CGSize s = [self sizeExpectedForView:firstTimeText];
     CGRectSetHeight(firstTimeText.frame, s.height*2);
     CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(firstTimeText.frame));
-    [_mainContent setCenter:CGPointMake(PPScreenWidth()/2, CGRectGetMidY(backView.frame))];
+    [_mainContent setCenter:CGPointMake(PPScreenWidth()/2, CGRectGetMidY(backView.frame) - 4)];
     [backView addSubview:_mainContent];
 }
 
@@ -834,10 +834,8 @@
     CGRectSetY(_secureCodeField.frame, 0);
     [_mainContent addSubview:_secureCodeField];
     CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(_secureCodeField.frame));
-    [_mainContent setCenter:CGPointMake(PPScreenWidth()/2, CGRectGetMidY(backView.frame))];
+    [_mainContent setCenter:CGPointMake(PPScreenWidth()/2, CGRectGetMidY(backView.frame) - 4)];
     [backView addSubview:_mainContent];
-    
-    [_headerView setBackgroundColor:[UIColor redColor]];
 }
 
 - (void)didSecureCodeEnter:(NSString *)secureCode {
