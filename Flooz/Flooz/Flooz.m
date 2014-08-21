@@ -653,6 +653,10 @@
         path = [path stringByAppendingString:@"&via=ios"];
     }
     
+    if ([path rangeOfString:@"cards"].location != NSNotFound || [path rangeOfString:@"/contacts/flooz"].location != NSNotFound || [path rangeOfString:@"/friends/request"].location != NSNotFound) {
+        path = [path stringByAppendingString:@"&context=signup"];
+    }
+    
     // Pour le nextUrl
     if([path rangeOfString:@"&version="].location == NSNotFound){
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&version=%@", APP_VERSION]];
