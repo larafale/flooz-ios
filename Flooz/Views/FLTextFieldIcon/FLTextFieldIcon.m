@@ -71,7 +71,7 @@
 - (void)createTextField:(NSString *)placeholder
 {
     BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
-    CGFloat width = CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18;
+    CGFloat width = CGRectGetWidth(self.frame) - CGRectGetMaxX(icon.frame) - 18 - 60;
     if(!haveOneTextField){
         width = (width / 2.) - MARGE_MIDDLE_BAR;
     }
