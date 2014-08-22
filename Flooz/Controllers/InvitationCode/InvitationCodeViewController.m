@@ -72,12 +72,14 @@
 }
 
 - (void) checkInvitationCode {
-    [[Flooz sharedInstance] verifyInvitationCode:dicCode[@"invitationCode"] success:^(id result) {
-        [self dismissViewControllerAnimated:YES completion:^{}];
-        [appDelegate showSignupWithUser:dicCode];
-    } failure:^(NSError *error) {
-        [_codeField becomeFirstResponder];
-    }];
+    if (dicCode[@"invitationCode"] && ![dicCode[@"invitationCode"] isBlank]) {
+        [[Flooz sharedInstance] verifyInvitationCode:dicCode[@"invitationCode"] success:^(id result) {
+            [self dismissViewControllerAnimated:YES completion:^{}];
+            [appDelegate showSignupWithUser:dicCode];
+        } failure:^(NSError *error) {
+            [_codeField becomeFirstResponder];
+        }];
+    }
 }
 
 @end
