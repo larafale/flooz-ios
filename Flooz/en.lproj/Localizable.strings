@@ -238,7 +238,7 @@
 "SIGNUP_HEAD_TITLE" = "Bienvenue sur Flooz";
 "SIGNUP_VIEW_1_TITLE_1" = "PAYER VOS AMIS";
 "SIGNUP_VIEW_1_SUBTITLE_1" = "Choisissez un contact, entrez un montant et validez.";
-"SIGNUP_VIEW_1_TITLE_2" = "EN TOUTE SÉCURITE";
+"SIGNUP_VIEW_1_TITLE_2" = "EN TOUTE SÉCURITÉ";
 "SIGNUP_VIEW_1_SUBTITLE_2" = "Un code secret à 4 chiffres sécurise chaque paiement.";
 "SIGNUP_VIEW_1_TITLE_3" = "100% GRATUIT";
 "SIGNUP_VIEW_1_SUBTITLE_3" = "Aucun frais à aucun moment, simplement gratuit... que du bonheur!";
