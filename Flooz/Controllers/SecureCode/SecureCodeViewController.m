@@ -174,8 +174,12 @@
     }
     else if(currentSecureMode == SecureCodeModeChangeConfirm){
         if([tempNewSecureCode isEqual:secureCode]){
-            [[self class] setSecureCodeForCurrentUser:secureCode];
-            [self dismissWithSuccess];
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] updateUser:@{@"secureCode": secureCode} success:^(id result) {
+                [[Flooz sharedInstance] hideLoadView];
+                [[self class] setSecureCodeForCurrentUser:secureCode];
+                [self dismissWithSuccess];
+            } failure:NULL];
         }
         else{
             [self startAnmiationBadCode];
@@ -314,22 +318,6 @@
         
         [textCode.layer addAnimation:animation forKey:@"opacity"];
     }
-}
-
-- (void)login
-{
-    [[self view] endEditing:YES];
-    
-    [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] loginForSecureCode:user success:^(id result) {
-        
-        [secureCodeField clean];
-        [[self class] clearSecureCode];
- 
-        currentSecureMode = SecureCodeModeChangeNew;
-        [self refreshController];
-
-    } failure:NULL];
 }
 
 #pragma mark - SecureCode

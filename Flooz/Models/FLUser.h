@@ -49,6 +49,7 @@
 @property NSString *device;
 @property NSDictionary *settings;
 @property NSString *invitCode;
+@property NSString *hasSecureCode;
 
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)updateStatsPending:(NSDictionary *)json;

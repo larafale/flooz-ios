@@ -35,11 +35,6 @@ typedef enum {
     SignupPageFriends
 } SignupOrderPage;
 
-typedef enum {
-    SecureCodeModeNew, // Nouveau code
-    SecureCodeModeConfirm // Nouveau code confirmation
-} SecureCodeMode2;
-
 @interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic) NSInteger pageIndex;

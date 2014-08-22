@@ -51,6 +51,7 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
 - (void)login:(NSDictionary *)user;
+- (void)loginWithCodeForUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)loginWithPhone:(NSString *)phone;
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)passwordLost:(NSString *)email success:(void (^)(id result))success;

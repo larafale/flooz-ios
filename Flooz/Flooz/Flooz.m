@@ -111,10 +111,19 @@
 - (void)login:(NSDictionary *)user
 {
     id successBlock = ^(id result) {
-        [self updateCurrentUserAfterConnect:result];
+        [self updateCurrentUserAfterConnectAndAskCode:result];
     };
     
     [self requestPath:@"/login/basic" method:@"POST" params:user success:successBlock failure:NULL];
+}
+
+- (void)loginWithCodeForUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
+{
+    id successBlock = ^(id result) {
+        [self updateCurrentUserAfterConnect:result];
+    };
+    
+    [self requestPath:@"/login/basic" method:@"POST" params:user success:successBlock failure:failure];
 }
 
 - (void)loginWithPhone:(NSString *)phone
@@ -130,7 +139,7 @@
     }
     
     [self requestPath:@"/login/quick" method:@"GET" params:@{ @"q": formatedPhone } success:^(id result) {
-        [self updateCurrentUserAfterConnect:result];
+        [self updateCurrentUserAfterConnectAndAskCode:result];
     } failure:NULL];
 }
 
@@ -702,7 +711,19 @@
                     user[@"login"] = operation.responseObject[@"nick"];
                 }
                 
-                [appDelegate showLoginWithUser:user];
+                if(operation.responseObject[@"secureCode"]) {
+                    user[@"hasSecureCode"] = operation.responseObject[@"secureCode"];
+                }
+                else {
+                    user[@"hasSecureCode"] = @"0";
+                }
+                
+                if ([user[@"hasSecureCode"] boolValue]) {
+                    [appDelegate askForSecureCodeWithUser:user withNavigationBar:YES];
+                }
+                else {
+                    [appDelegate showLoginWithUser:user];
+                }
             }
             else if([operation.responseObject[@"item"] isEqualToString:@"signup"]){ // Signup
                 NSMutableDictionary *user = [NSMutableDictionary new];
@@ -806,6 +827,21 @@
     [self checkDeviceToken];
 }
 
+- (void)updateCurrentUserAfterConnectAndAskCode:(id)result
+{
+    access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
+    [UICKeyChainStore setString:access_token forKey:@"login-token"];
+    
+    _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
+    _facebook_token = result[@"items"][1][@"fb"][@"token"];
+    
+    [appDelegate didConnected];
+    
+    [self startSocket];
+    [self checkDeviceToken];
+    [appDelegate askForSecureCodeWithUser:@{@"login":_currentUser.username,@"hasSecureCode":@NO} withNavigationBar:NO];
+}
+
 - (BOOL)autologin
 {
     NSString *token = [UICKeyChainStore stringForKey:@"login-token"];
@@ -881,7 +917,7 @@
     }
     else{
         [self requestPath:@"/login/facebook" method:@"POST" params:@{@"token": _facebook_token} success:^(id result) {
-            [self updateCurrentUserAfterConnect:result];
+            [self updateCurrentUserAfterConnectAndAskCode:result];
         } failure:^(NSError *error) {
             
             [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {

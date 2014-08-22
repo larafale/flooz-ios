@@ -34,6 +34,7 @@
 - (void)goToAccountViewController;
 - (void)didDisconnected;
 - (void)showLoginWithUser:(NSDictionary *)user;
+- (void)askForSecureCodeWithUser:(NSDictionary *)user withNavigationBar:(BOOL)navBar;
 - (void)showSignupWithUser:(NSDictionary *)user;
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user;
 

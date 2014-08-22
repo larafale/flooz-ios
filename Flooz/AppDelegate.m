@@ -34,6 +34,7 @@
 
 #import "NewTransactionViewController.h"
 #import "InvitationCodeViewController.h"
+#import "secureCodeLoginViewController.h"
 
 @implementation AppDelegate
 
@@ -188,6 +189,16 @@
     
     [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     [[self currentController] presentViewController:navController animated:YES completion:nil];
+}
+
+- (void)askForSecureCodeWithUser:(NSDictionary *)user withNavigationBar:(BOOL)navBar
+{
+    FLNavigationController *controller;
+    controller = [[FLNavigationController alloc] initWithRootViewController:[[secureCodeLoginViewController alloc] initWithUser:user]];
+    if (!navBar) {
+        [controller noButton];
+    }
+    [[self currentController] presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)showRequestInvitationCodeWithUser:(NSDictionary *)user {

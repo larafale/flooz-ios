@@ -483,7 +483,8 @@
     
     SecureCodeViewController *controller = [SecureCodeViewController new];
     controller.completeBlock = completeBlock;
-    [self presentViewController:controller animated:YES completion:NULL];
+    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    //[self presentViewController:controller animated:YES completion:NULL];
 }
 
 @end

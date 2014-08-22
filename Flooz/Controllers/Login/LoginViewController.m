@@ -52,6 +52,7 @@
     
     {
         username = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(MARGE, 0)];
+        [user setObject:@"" forKey:@"password"];
         password = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(MARGE, CGRectGetMaxY(username.frame))];
         [password seTsecureTextEntry:YES];
         

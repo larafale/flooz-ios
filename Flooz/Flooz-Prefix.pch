@@ -47,4 +47,12 @@
 #import "UIViewController+RegisterNotification.h"
 #import <PPHelpMe/PPHelpMe.h>
 
+typedef enum {
+    SecureCodeModeNormal, // Demande code pour avoir acces
+    SecureCodeModeForget, // Code perdu
+    SecureCodeModeChangeOld, // Ancien code pour le changer
+    SecureCodeModeChangeNew, // Nouveau code
+    SecureCodeModeChangeConfirm // Nouveau code confirmation
+} SecureCodeMode;
+
 //#define SIMUL_FIRST_LAUNCH

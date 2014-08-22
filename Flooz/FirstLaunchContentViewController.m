@@ -42,7 +42,7 @@
     FLTextFieldIcon *_passwordConfirm;
     SecureCodeField *_secureCodeField;
     
-    SecureCodeMode2 currentSecureMode;
+    SecureCodeMode currentSecureMode;
     
     NSMutableArray *fieldsView;
     FLKeyboardView *inputView;
@@ -788,7 +788,7 @@
     firstTimeText.text = NSLocalizedString(@"SECORE_CODE_TEXT_FIRST_TIME", nil);
     [backView addSubview:firstTimeText];
     
-    currentSecureMode = SecureCodeModeNew;
+    currentSecureMode = SecureCodeModeChangeNew;
     
     CGRectSetY(_secureCodeField.frame, CGRectGetMinY(firstTimeText.frame) - CGRectGetHeight(_secureCodeField.frame) - 5);
     
@@ -825,7 +825,7 @@
     keyboardView.delegate = _secureCodeField;
     _secureCodeField.delegate = self;
     
-    currentSecureMode = SecureCodeModeConfirm;
+    currentSecureMode = SecureCodeModeChangeConfirm;
     
     
     _mainContent = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
@@ -837,15 +837,16 @@
 }
 
 - (void)didSecureCodeEnter:(NSString *)secureCode {
-    if(currentSecureMode == SecureCodeModeNew){
+    if(currentSecureMode == SecureCodeModeChangeNew){
         [_userDic setValue:secureCode forKey:@"secureCode"];
         [self goToNextPage];
     }
-    else if(currentSecureMode == SecureCodeModeConfirm){
+    else if(currentSecureMode == SecureCodeModeChangeConfirm){
         if ([_userDic[@"secureCode"] isEqualToString:secureCode]) {
             [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] signup:_userDic success:^(id result) {
                 [[Flooz sharedInstance] hideLoadView];
+                [UICKeyChainStore setString:secureCode forKey:[self keyForSecureCode]];
                 [self goToNextPage];
             } failure:^(NSError *error) {
                 [self goToPreviousPage];
@@ -856,6 +857,11 @@
             [_secureCodeField clean];
         }
     }
+}
+
+- (NSString *)keyForSecureCode
+{
+    return [NSString stringWithFormat:@"secureCode-%@", [[[Flooz sharedInstance] currentUser] userId]];
 }
 
 - (void)startAnmiationBadCode

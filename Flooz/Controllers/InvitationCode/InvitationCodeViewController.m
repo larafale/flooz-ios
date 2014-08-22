@@ -19,15 +19,6 @@
 
 @implementation InvitationCodeViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        dicCode = [NSMutableDictionary new];
-    }
-    return self;
-}
-
 - (id)initWithUser:(NSDictionary *)_user
 {
     self = [super initWithNibName:nil bundle:nil];
@@ -52,11 +43,11 @@
     
     UIImageView *logo = [UIImageView imageNamed:@"home-logo"];
     CGRectSetWidthHeight(logo.frame, 105, 105);
-    CGRectSetXY(logo.frame, CGRectGetWidth(self.view.frame) / 2.0f - CGRectGetWidth(logo.frame) / 2.0f, 60.0f);
+    CGRectSetXY(logo.frame, CGRectGetWidth(self.view.frame) / 2.0f - CGRectGetWidth(logo.frame) / 2.0f, 0.0f);
     if (PPScreenHeight() < 500) {
         CGRectSetY(logo.frame, 30.0f);
     }
-    [self.view addSubview:logo];
+    //[self.view addSubview:logo];
     
     
     _codeField = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"Invitation Code" for:dicCode key:@"invitationCode" position:CGPointMake(0.0f, CGRectGetMaxY(logo.frame) + 18.0f)];

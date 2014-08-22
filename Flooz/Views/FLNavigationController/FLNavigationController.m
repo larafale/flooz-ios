@@ -11,6 +11,8 @@
 @interface FLNavigationController (){
     UIBarButtonItem *backItem;
     UIBarButtonItem *closeItem;
+    
+    BOOL hasButton;
 }
 
 @end
@@ -23,6 +25,7 @@
     if (self) {
         self.delegate = self;
         [self customAppearence];
+        hasButton = YES;
     }
     return self;
 }
@@ -56,6 +59,9 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+    if (!hasButton) {
+        return;
+    }
     if(navigationController.viewControllers.count == 1 && !navigationController.parentViewController){
         viewController.navigationItem.leftBarButtonItem = closeItem;
     }
@@ -72,6 +78,10 @@
 - (void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)noButton {
+    hasButton = NO;
 }
 
 @end

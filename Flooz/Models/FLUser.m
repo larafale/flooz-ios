@@ -46,6 +46,7 @@
     _phone = [json objectForKey:@"phone"];
     _avatarURL = [json objectForKey:@"pic"];
     _profileCompletion = [json objectForKey:@"profileCompletion"];
+    _hasSecureCode = [json objectForKey:@"secureCode"];
     
     if([_avatarURL isEqualToString:@"/img/nopic.png"]){
         _avatarURL = nil;
