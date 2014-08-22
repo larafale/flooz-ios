@@ -266,7 +266,7 @@
 "SIGNUP_PAGE_TITLE_Friends" = "Trouver des amis";
 
 "SIGNUP_PSEUDO_EXPLICATION" = "Votre pseudo est unique c'est comme ça que les gens vous voient sur Flooz. Donnez le à vos amis pour recevoir de l'argent.";
-"SIGNUP_PASSWORD_EXPLICATION" = "6 caractères minimum et sans espace";
+"SIGNUP_PASSWORD_EXPLICATION" = "6 caractères min";
 
 "SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
 "SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";
