@@ -176,7 +176,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    [textField setBackgroundColor:[UIColor customBlue]];
+    //[textField setBackgroundColor:[UIColor customBlue]];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
