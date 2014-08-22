@@ -79,9 +79,9 @@
     }
     
     {
-        inviteCode = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 246) title:NSLocalizedString(@"ACCOUNT_BUTTON_CODE", nil) imageNamed:@"account-button-code"];
+        inviteCode = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 246) title:NSLocalizedString(@"ACCOUNT_BUTTON_CODE", nil) imageNamed:@"account-button-cash"];
         
-        cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(inviteCode.frame) - 1, inviteCode.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-cashout"];
+        cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(inviteCode.frame) - 1, inviteCode.frame.origin.y) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-bank"];
         
         settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(inviteCode.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
         

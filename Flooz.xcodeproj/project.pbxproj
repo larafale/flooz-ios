@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
+		2FC6F6B419A773CF0051CB61 /* FLNewTransactionAmountInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6F6B319A773CF0051CB61 /* FLNewTransactionAmountInput.m */; };
+		2FC6F6B519A776210051CB61 /* FLNewTransactionAmountInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6F6B319A773CF0051CB61 /* FLNewTransactionAmountInput.m */; };
 		2FC83CAA19A678580001E3AF /* InvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC83CA819A678580001E3AF /* InvitationCodeViewController.m */; };
 		2FC83CAB19A678580001E3AF /* InvitationCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FC83CA919A678580001E3AF /* InvitationCodeViewController.xib */; };
 		2FC83CAC19A678940001E3AF /* InvitationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC83CA819A678580001E3AF /* InvitationCodeViewController.m */; };
@@ -378,6 +380,8 @@
 
 /* Begin PBXFileReference section */
 		1686D3DC8F1E47F8A8972682 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FC6F6B219A773CF0051CB61 /* FLNewTransactionAmountInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNewTransactionAmountInput.h; path = Views/FLNewTransactionAmount/FLNewTransactionAmountInput.h; sourceTree = "<group>"; };
+		2FC6F6B319A773CF0051CB61 /* FLNewTransactionAmountInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionAmountInput.m; path = Views/FLNewTransactionAmount/FLNewTransactionAmountInput.m; sourceTree = "<group>"; };
 		2FC83CA719A678580001E3AF /* InvitationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvitationCodeViewController.h; path = Controllers/InvitationCode/InvitationCodeViewController.h; sourceTree = "<group>"; };
 		2FC83CA819A678580001E3AF /* InvitationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InvitationCodeViewController.m; path = Controllers/InvitationCode/InvitationCodeViewController.m; sourceTree = "<group>"; };
 		2FC83CA919A678580001E3AF /* InvitationCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InvitationCodeViewController.xib; path = Controllers/InvitationCode/InvitationCodeViewController.xib; sourceTree = "<group>"; };
@@ -1800,6 +1804,8 @@
 				ABE914851892AE59003AC722 /* FLNewTransactionAmount.h */,
 				ABE914861892AE59003AC722 /* FLNewTransactionAmount.m */,
 				ABB12D6618BF8C83002FCAAE /* FLNewTransactionAmountDelegate.h */,
+				2FC6F6B219A773CF0051CB61 /* FLNewTransactionAmountInput.h */,
+				2FC6F6B319A773CF0051CB61 /* FLNewTransactionAmountInput.m */,
 			);
 			name = FLNewTransactionAmount;
 			sourceTree = "<group>";
@@ -2383,6 +2389,7 @@
 				AB7C9B2218D73AE9002775BA /* SecureCodeViewController.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
 				AB0D88F3197978F400A37630 /* InvitCodeViewController.m in Sources */,
+				2FC6F6B419A773CF0051CB61 /* FLNewTransactionAmountInput.m in Sources */,
 				AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */,
 				ABB12D6518BE66D7002FCAAE /* EventCommentsView.m in Sources */,
 				AB4CB6E11886AE2D00D1C573 /* LoginViewController.m in Sources */,
@@ -2512,6 +2519,7 @@
 				ABAA3FA8197E96BF009F29EF /* EventHeaderView.m in Sources */,
 				ABAA3FA9197E96BF009F29EF /* SecureCodeViewController.m in Sources */,
 				ABAA3FAA197E96BF009F29EF /* JTImageLabel.m in Sources */,
+				2FC6F6B519A776210051CB61 /* FLNewTransactionAmountInput.m in Sources */,
 				ABAA3FAB197E96BF009F29EF /* InvitCodeViewController.m in Sources */,
 				ABAA3FAC197E96BF009F29EF /* FriendsViewController.m in Sources */,
 				ABAA3FAD197E96BF009F29EF /* EventCommentsView.m in Sources */,
