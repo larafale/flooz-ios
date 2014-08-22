@@ -38,7 +38,7 @@
     FLPaymentField *payementField;
     
     BOOL isEvent;
-    FLNewTransactionAmount *amountInput;
+    FLNewTransactionAmountInput *amountInput;
     FLTextView *content;
     
     FLSelectFriendButton *friend;
@@ -137,11 +137,12 @@
         
         
         if(isEvent){
-            amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"goal"];
+            amountInput = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"Montant" for:transaction key:@"goal" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) delegate:nil];
             [amountInput hideSeparatorTop];
         }
         else{
-            amountInput = [[FLNewTransactionAmount alloc] initFor:transaction key:@"amount"];
+            amountInput = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"Montant" for:transaction key:@"amount" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) delegate:nil];
+            //amountInput = [[FLNewTransactionAmountInput alloc] initFor:transaction key:@"amount"];
         }
         {
             [amountInput setInputAccessoryView:transactionBarKeyboard];
@@ -149,6 +150,7 @@
             CGRectSetY(amountInput.frame, offset);
             offset = CGRectGetMaxY(amountInput.frame);
         }
+        
         
         if(!isEvent){
             friend = [[FLSelectFriendButton alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(amountInput.frame)) dictionary:transaction];

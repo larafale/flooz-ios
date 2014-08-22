@@ -86,6 +86,25 @@
     closeButtonState = CloseButtonTypeClose;
 }
 
+- (void)setKeyboardDecimal {
+    [closeButton setTitle:@"." forState:UIControlStateNormal];
+    closeButton.titleLabel.font = [UIFont customTitleThin:40];
+    [closeButton setImage:nil forState:UIControlStateNormal];
+    [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    [closeButton addTarget:self action:@selector(didButtonTouch:) forControlEvents:UIControlEventTouchUpInside];
+    
+    closeButton.backgroundColor = [UIColor customBackgroundHeader];
+    [closeButton setBackgroundImage:[UIImage imageWithColor:[UIColor customBackgroundHeader]] forState:UIControlStateNormal];
+    [closeButton setBackgroundImage:[UIImage imageWithColor:[UIColor customBackground]] forState:UIControlStateHighlighted];
+    [closeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    closeButtonState = CloseButtonTypeDecimal;
+}
+
+- (void) addDecimal {
+    
+}
+
 - (FLKeyboardView *)setKeyboardPhoneLoginWithTarget:(id)target action:(SEL)action {
     [bottomRightButton setTitle:NSLocalizedString(@"Send_Button_Mobile", @"") forState:UIControlStateNormal];
     [bottomRightButton.titleLabel setFont: [UIFont customTitleThin:26]];
