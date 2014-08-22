@@ -1160,33 +1160,35 @@
             _contactFromFlooz = [[Flooz sharedInstance] createFriendsArrayFromResult:result];
             [self removeFloozerToMyContact];
             [[Flooz sharedInstance] hideLoadView];
-        } failure:^(NSError *error) {
-            [self removeFloozerToMyContact];
-            [[Flooz sharedInstance] hideLoadView];
-        }];
+        } failure:nil];
     }];
 }
 
 - (void) removeFloozerToMyContact {
     if (_contactFromFlooz.count) {
+        NSMutableIndexSet *indexList = [[NSMutableIndexSet alloc] init];
+        NSMutableArray *arrayIndex = [NSMutableArray new];
         [_contactsTableView beginUpdates];
         for (FLUser *contact in _contactFromFlooz) {
-            int index = [self findUserInAllMyContacts:contact];
+            int index = [self findUser:contact inArray:_contactInfoArray];
             if (index != -1) {
-                [_contactInfoArray removeObjectAtIndex:index];
+                [indexList addIndex:index];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:1];
-                [_contactsTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [arrayIndex addObject:indexPath];
             }
         }
+        [_contactInfoArray removeObjectsAtIndexes:indexList];
+        [_contactsTableView deleteRowsAtIndexPaths:arrayIndex withRowAnimation:UITableViewRowAnimationAutomatic];
+        
         NSIndexSet *index = [[NSIndexSet alloc] initWithIndex:0];
         [_contactsTableView reloadSections:index withRowAnimation:UITableViewRowAnimationTop];
         [_contactsTableView endUpdates];
     }
 }
 
-- (int) findUserInAllMyContacts:(FLUser *)contact {
+- (int) findUser:(FLUser *)contact inArray:(NSArray *)array {
     int i = 0;
-    for (NSDictionary *infoContact in _contactInfoArray) {
+    for (NSDictionary *infoContact in array) {
         for (NSString *phone in infoContact[@"phones"]) {
             if ([phone isEqualToString:contact.phone]) {
                 return i;
