@@ -123,8 +123,24 @@
         view.font = [UIFont customContentLight:11];
         
         view.text = [FLHelper formatedDate:[_transaction date]];
-        [view setImage:[UIImage imageNamed:@"transaction-content-clock"]];
-        [view setImageOffset:CGPointMake(- 4, 0)];
+        
+        float yOffset = 0;
+        NSString *imageNamed = @"transaction-content-clock";
+        if(_transaction.social.scope == SocialScopeFriend){
+            imageNamed = @"scope-friend";
+        }
+        else if(_transaction.social.scope == SocialScopePrivate){
+            imageNamed = @"scope-private";
+        }
+        else if(_transaction.social.scope == SocialScopePublic){
+            imageNamed = @"scope-public";
+            yOffset = -1;
+        }
+        else {
+            imageNamed = @"transaction-content-clock";
+        }
+        [view setImage:[UIImage imageNamed:imageNamed]];
+        [view setImageOffset:CGPointMake(- 4, yOffset)];
         
         [view setWidthToFit];
         CGRectSetX(view.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(view.frame) - 13);
@@ -377,8 +393,9 @@
         } failure:NULL];
     };
     
-    SecureCodeViewController *controller = [SecureCodeViewController new];
-    controller.completeBlock = completeBlock;
+    SecureCodeViewController *secureVC = [SecureCodeViewController new];
+    secureVC.completeBlock = completeBlock;
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:secureVC];
     [self presentViewController:controller animated:YES completion:NULL];
 }
 
