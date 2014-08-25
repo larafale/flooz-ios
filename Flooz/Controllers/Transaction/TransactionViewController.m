@@ -124,7 +124,7 @@
         
         view.text = [FLHelper formatedDate:[_transaction date]];
         
-        float yOffset = 0;
+        float yOffset = -1;
         NSString *imageNamed = @"transaction-content-clock";
         if(_transaction.social.scope == SocialScopeFriend){
             imageNamed = @"scope-friend";
@@ -134,10 +134,10 @@
         }
         else if(_transaction.social.scope == SocialScopePublic){
             imageNamed = @"scope-public";
-            yOffset = -1;
         }
         else {
             imageNamed = @"transaction-content-clock";
+            yOffset = 0;
         }
         [view setImage:[UIImage imageNamed:imageNamed]];
         [view setImageOffset:CGPointMake(- 4, yOffset)];
