@@ -10,9 +10,9 @@
 
 #import "FLKeyboardView.h"
 
-#define HEIGHT 84.
-#define MARGE_TOP 12.
-#define MARGE_BOTTOM 17.
+#define HEIGHT 50.//84.
+#define MARGE_TOP 0.//12.
+#define MARGE_BOTTOM 0.//17.
 #define INPUTS_WIDTH 226.
 #define FONT_SIZE_MAX 50.
 
