@@ -21,6 +21,7 @@
     
     UIButton *passwordForget;
     UILabel *textExplication;
+    UILabel *secondTextExplication;
 }
 
 @end
@@ -31,7 +32,7 @@
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        self.title = NSLocalizedString(@"Login code", nil);
+        self.title = NSLocalizedString(@"SECURE_LOGIN_TITLE", nil);
         if(_user){
             _userDic = [_user mutableCopy];
         }
@@ -77,19 +78,33 @@
         textExplication.text = NSLocalizedString(@"SECORE_CODE_TEXT_CURRENT", nil);
     }
     else if(currentSecureMode == SecureCodeModeChangeNew){
-        textExplication.text = NSLocalizedString(@"SECORE_CODE_TEXT_FIRST_TIME", nil);
+        textExplication.text = NSLocalizedString(@"SECORE_CODE_CHOOSE", nil);
     }
     else if(currentSecureMode == SecureCodeModeChangeConfirm){
-        textExplication.text = NSLocalizedString(@"SECORE_CODE_TEXT_CONFIRM", nil);
+        textExplication.text = NSLocalizedString(@"SECORE_CODE_CHOOSE_CONFIRM", nil);
     }
+    
+    secondTextExplication = [[UILabel alloc] initWithFrame:CGRectMake(14, CGRectGetMaxY(_secureCodeField.frame), PPScreenWidth()-28, 50)];
+    secondTextExplication.textColor = [UIColor customPlaceholder];
+    secondTextExplication.font = [UIFont customTitleExtraLight:14];
+    secondTextExplication.numberOfLines = 0;
+    secondTextExplication.textAlignment = NSTextAlignmentCenter;
+    secondTextExplication.text = NSLocalizedString(@"SECORE_CODE_TEXT_FIRST_TIME", nil);
     
     UIView *_mainContent = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
     [_mainContent addSubview:_secureCodeField];
     [_mainContent addSubview:textExplication];
+    [_mainContent addSubview:secondTextExplication];
+    
     CGSize s = [self sizeExpectedForView:textExplication];
-    CGRectSetHeight(textExplication.frame, s.height*2);
-    CGRectSetY(_secureCodeField.frame, CGRectGetMaxY(textExplication.frame) + 10.0f);
-    CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(_secureCodeField.frame));
+    CGRectSetHeight(textExplication.frame, s.height);
+    
+    CGSize s2 = [self sizeExpectedForView:secondTextExplication];
+    CGRectSetHeight(textExplication.frame, s2.height*2);
+    
+    CGRectSetY(_secureCodeField.frame, CGRectGetMaxY(textExplication.frame) + 5.0f);
+    CGRectSetY(secondTextExplication.frame, CGRectGetMaxY(_secureCodeField.frame));
+    CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(secondTextExplication.frame));
     [_mainContent setCenter:CGPointMake(PPScreenWidth()/2, CGRectGetMidY(backView.frame) - 4)];
     [backView addSubview:_mainContent];
     
@@ -103,6 +118,9 @@
         [passwordForget addTarget:self action:@selector(didPasswordForgetTouch) forControlEvents:UIControlEventTouchUpInside];
         [backView addSubview:passwordForget];
     }
+    
+    
+    
     [self refreshText];
 }
 
@@ -163,14 +181,17 @@
     if(currentSecureMode == SecureCodeModeNormal){
         textExplication.text = NSLocalizedString(@"SECORE_CODE_TEXT_CURRENT", nil);
         [passwordForget setHidden:NO];
+        [secondTextExplication setHidden:YES];
     }
     else if(currentSecureMode == SecureCodeModeChangeNew){
-        textExplication.text = NSLocalizedString(@"SECORE_CODE_TEXT_FIRST_TIME", nil);
+        textExplication.text = NSLocalizedString(@"SECORE_CODE_CHOOSE", nil);
         [passwordForget setHidden:YES];
+        [secondTextExplication setHidden:NO];
     }
     else if(currentSecureMode == SecureCodeModeChangeConfirm){
-        textExplication.text = NSLocalizedString(@"SECORE_CODE_TEXT_CONFIRM", nil);
+        textExplication.text = NSLocalizedString(@"SECORE_CODE_CHOOSE_CONFIRM", nil);
         [passwordForget setHidden:YES];
+        [secondTextExplication setHidden:YES];
     }
 }
 
