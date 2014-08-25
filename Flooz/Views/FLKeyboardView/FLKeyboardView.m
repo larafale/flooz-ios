@@ -88,7 +88,9 @@
 
 - (void)setKeyboardDecimal {
     [closeButton setTitle:@"." forState:UIControlStateNormal];
-    closeButton.titleLabel.font = [UIFont customTitleThin:40];
+    closeButton.titleLabel.font = [UIFont customTitleThin:100];
+    closeButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 70, 0);
+    closeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [closeButton setImage:nil forState:UIControlStateNormal];
     [closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     [closeButton addTarget:self action:@selector(didButtonTouch:) forControlEvents:UIControlEventTouchUpInside];
