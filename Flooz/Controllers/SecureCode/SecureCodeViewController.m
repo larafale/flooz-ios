@@ -282,7 +282,7 @@
     
     if(!currentSecureCode){        
         self.navigationItem.hidesBackButton = YES;
-        self.navigationItem.leftBarButtonItem = nil;
+        //self.navigationItem.leftBarButtonItem = nil;
     }
 
     BOOL isFirstView = textCode.text == nil || [textCode.text isBlank];
