@@ -180,14 +180,14 @@
 {
     [_textField resignFirstResponder];
     
+    if([[_textField text] isBlank] || [[_textField text] length] > 140){
+        return;
+    }
+    
     NSDictionary *comment = @{
                               @"lineId": [_transaction transactionId],
                               @"comment": [_textField text]
                               };
-    
-    if([[_textField text] isBlank] || [[_textField text] length] > 140){
-        return;
-    }
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createComment:comment success:^(id result) {

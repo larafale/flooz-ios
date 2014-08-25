@@ -78,8 +78,11 @@
     NSLog(@"API PROD");
     [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
 #endif
-
-    [[HHRouter shared] map:@"/user/:userId/" toControllerClass:NSClassFromString(@"NewTransactionViewController")];
+    
+    //[[HHRouter shared] map:@"/user/:userId/" toControllerClass:NSClassFromString(@"NewTransactionViewController")];
+    
+    [self handlePushMessage:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] withApplication:application];
+    
     return YES;
 }
 
@@ -109,53 +112,6 @@
                                       traits:params];
 #endif
     
-    //
-    //    CompleteBlock completeBlock = ^{
-    //        if(!savedViewController){
-    //            savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
-    //        }
-    //
-    //        [UIView transitionWithView:self.window
-    //                          duration:0.7
-    //                           options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
-    //                        animations:^{
-    //                            self.window.rootViewController = savedViewController;
-    //                        }
-    //                        completion:^(BOOL finished) {
-    //                            savedViewController = nil;
-    //                        }
-    //         ];
-    //    };
-    //
-    //
-    //    FLNavigationController *navController = nil;
-    //    SecureCodeViewController *controller = [SecureCodeViewController new];
-    //    controller.completeBlock = completeBlock;
-    //
-    //    // Sortie de mise en vieille cas où on est deja connecté
-    //    if([self.window.rootViewController isKindOfClass:[FLContainerViewController class]]){
-    //        savedViewController = self.window.rootViewController;
-    //
-    //        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-    //        self.window.rootViewController = navController;
-    //    }
-    //    else{
-    //        navController = (FLNavigationController *)self.window.rootViewController;
-    //    }
-    //
-    //
-    //    // Cas ou fait retour sur le splashscreen
-    //    if([[[navController viewControllers] firstObject] isKindOfClass:[SplashViewController class]]){
-    //        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-    //        self.window.rootViewController = navController;
-    //    }
-    //
-    //    if([[[navController viewControllers] lastObject] presentedViewController]){
-    //        [[[[navController viewControllers] lastObject] presentedViewController] dismissViewControllerAnimated:NO completion:nil];
-    //    }
-    //
-    //    [navController pushViewController:controller animated:NO];
-    
     //TODO: delete after testing friends
     //[appDelegate showsignupFriendUser:nil];
 }
@@ -169,9 +125,6 @@
                        options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
                     animations:^{
                         self.window.rootViewController = savedViewController;
-#ifdef SIMUL_FIRST_LAUNCH
-                        [self.window.rootViewController presentViewController:[HomeViewController new] animated:YES completion:NULL];
-#endif
                     }
                     completion:^(BOOL finished) {
                         savedViewController = nil;
@@ -382,18 +335,15 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"Notification push: %@", userInfo);
-    
+    [self handlePushMessage:userInfo withApplication:application];
+}
+
+- (void) handlePushMessage:(NSDictionary *)userInfo withApplication:(UIApplication *)application
+{
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateActive) {
         return;
     }
-    
-    if([[Flooz sharedInstance] currentUser]){
-        [self didConnected];
-        [self goToAccountViewController];
-    }
-    return;
     
     NSDictionary *resource = userInfo[@"resource"];
     if([[Flooz sharedInstance] currentUser] && resource){
