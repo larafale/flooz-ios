@@ -238,8 +238,8 @@
 
 
 "SIGNUP_HEAD_TITLE" = "Bienvenue sur Flooz";
-"SIGNUP_VIEW_1_TITLE_1" = "PAYER VOS AMIS";
-"SIGNUP_VIEW_1_SUBTITLE_1" = "Choisissez un contact, entrez un montant et validez.";
+"SIGNUP_VIEW_1_TITLE_1" = "PAYEZ VOS AMIS";
+"SIGNUP_VIEW_1_SUBTITLE_1" = "Choisissez un contact, entrez un montant et un bref message, c’est envoyé !";
 "SIGNUP_VIEW_1_TITLE_2" = "EN TOUTE SÉCURITÉ";
 "SIGNUP_VIEW_1_SUBTITLE_2" = "Un code secret à 4 chiffres sécurise chaque paiement.";
 "SIGNUP_VIEW_1_TITLE_3" = "100% GRATUIT";
@@ -250,7 +250,7 @@
 "SIGNUP_VIEW_2_TITLE_1" = "INSCRIPTION RAPIDE";
 "SIGNUP_VIEW_2_SUBTITLE_1" = "Vous êtes à quelques secondes de votre 1er Flooz !";
 "SIGNUP_VIEW_2_TITLE_2" = "PRÉPAREZ VOTRE CARTE";
-"SIGNUP_VIEW_2_SUBTITLE_2" = "Liez votre carte bancaire 1 seule fois seulement.";
+"SIGNUP_VIEW_2_SUBTITLE_2" = "Liez votre carte bancaire une fois seuelement.";
 "SIGNUP_VIEW_2_TITLE_3" = "GAGNEZ 10€ CASH";
 "SIGNUP_VIEW_2_SUBTITLE_3" = "2€ à chaque amis qui envoie son 1er Flooz grâce à vous.";
 "SIGNUP_VIEW_2_BUTTON" = "Démarrez l'expérience Flooz";
@@ -267,7 +267,7 @@
 "SIGNUP_PAGE_TITLE_CB" = "Carte bancaire";
 "SIGNUP_PAGE_TITLE_Friends" = "Trouver des amis";
 
-"SIGNUP_PSEUDO_EXPLICATION" = "Votre pseudo est unique c'est comme ça que les gens vous voient sur Flooz. Donnez le à vos amis pour recevoir de l'argent.";
+"SIGNUP_PSEUDO_EXPLICATION" = "Ce pseudo, c’est votre identité sur Flooz. Il est unique et ne pourra plus être modifié.";
 "SIGNUP_PASSWORD_EXPLICATION" = "6 caractères min";
 
 "SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
@@ -283,7 +283,7 @@
 "ALERT_CONTACT_DENIES_ACCESS_PREVIOUS" = "Vous n'avez pas autorisé à lire les contacts précédemment!\nVous passez directement à l'étape suivante.";
 "ALERT_CONTACT_MESSAGE_FAILED" = "L'envoi de votre message a échoué, essayez de recommencer.";
 
-"CONTACT_PICKER_NON_FLOOZ" = "Mes amis à inviter";
+"CONTACT_PICKER_NON_FLOOZ" = "Invitez les sur Flooz";
 "CONTACT_PICKER_FLOOZ" = "Déjà sur Flooz";
 
 "textmotdepasse" = "6 caractères minimum";
