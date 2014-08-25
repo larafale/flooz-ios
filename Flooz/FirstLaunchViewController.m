@@ -322,7 +322,6 @@
     if (av >= 2.0f / NUMBER_STEP) {
         [_infoItem setImageWithImageName:@"Signup_Menu_Info_Disable"];
         if (av >= 2.5f / NUMBER_STEP) {
-            [_closeButton setEnabled:NO];
             if (av >= 3.0f / NUMBER_STEP) {
                 [_closeButton setEnabled:YES];
                 [_secureItem setImageWithImageName:@"Signup_Menu_Lock_Disable"];

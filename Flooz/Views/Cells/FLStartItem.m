@@ -30,7 +30,6 @@
     transition.duration = 1.0f;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type = kCATransitionFade;
-    
     [_imageViewIcon.layer addAnimation:transition forKey:nil];
 }
 
