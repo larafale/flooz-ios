@@ -376,17 +376,6 @@
     _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@"<" withString:@""];
     _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@">" withString:@""];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Token Push"
-                                                    message:_currentDeviceToken
-                                                   delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
-                                          otherButtonTitles:nil
-                          ];
-    alert.delegate = self;
-    [alert show];
-    
-    NSLog(@"Notification token: %@", _currentDeviceToken);
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
