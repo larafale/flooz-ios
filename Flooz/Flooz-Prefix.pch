@@ -46,6 +46,7 @@
 
 #import "UIViewController+RegisterNotification.h"
 #import <PPHelpMe/PPHelpMe.h>
+#import <HHRouter/HHRouter.h>
 
 typedef enum {
     SecureCodeModeNormal, // Demande code pour avoir acces
