@@ -172,6 +172,7 @@
             [tutoContentVC resetUserInfoDico];
         }
     }
+    [[FBSession activeSession] closeAndClearTokenInformation];
     _indexPage = SignupPagePhone;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionReverse];
 }
@@ -216,6 +217,7 @@
 }
 
 - (void)phoneNotRegistered:(NSDictionary *)user {
+    //[self.userInfoDico ]
     [self.userInfoDico addEntriesFromDictionary:user];
     [_headProgress setProgress:((SignupPagePhone-1) / 7.0f) animated:YES];
     _indexPage = SignupPagePseudo;

@@ -91,7 +91,6 @@
 }
 
 - (void)setUserInfoDico:(NSMutableDictionary *)userInfoDico {
-    [self resetUserInfoDico];
     [_validCBButton setEnabled:NO];
     _haveAnimated = NO;
     [_userDic addEntriesFromDictionary:userInfoDico];
@@ -123,7 +122,7 @@
 - (void)displayChanges {
     switch (_pageIndex) {
         case SignupPageInfo: {
-            if(_userDic[@"avatarURL"]){
+            if(_userDic[@"avatarURL"] && ![_userDic[@"avatarURL"] isBlank]){
                 [_avatarView setImageFromURL:_userDic[@"avatarURL"]];
                 [_avatarView setHidden:NO];
                 [_registerFacebook setHidden:YES];
@@ -660,7 +659,7 @@
 - (void)didFacebookTouch
 {
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] connectFacebook];
+    [[Flooz sharedInstance] getInfoFromFacebook];
 }
 
 - (void) checkEmail {

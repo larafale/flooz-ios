@@ -78,7 +78,8 @@
     NSLog(@"API PROD");
     [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
 #endif
-    
+
+    [[HHRouter shared] map:@"/user/:userId/" toControllerClass:NSClassFromString(@"NewTransactionViewController")];
     return YES;
 }
 
@@ -223,10 +224,6 @@
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user
 {
     [firstVC signupWithFacebookUser:user];
-}
-
-- (void) phoneNotRegistered:(NSDictionary *)user {
-    
 }
 
 - (UIViewController *)currentController

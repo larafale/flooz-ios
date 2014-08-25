@@ -117,6 +117,7 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 - (void)sendEmailValidation;
 
 - (void)connectFacebook;
+- (void)getInfoFromFacebook;
 - (void)disconnectFacebook;
 - (void)didConnectFacebook;
 - (void)facebokSearchFriends:(void (^)(id result))success;

@@ -867,6 +867,32 @@
 
 #pragma mark - Facebook
 
+- (void)getInfoFromFacebook
+{
+    [[FBSession activeSession] closeAndClearTokenInformation];
+    
+    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile,email,user_friends,publish_actions"]
+                                       allowLoginUI:YES
+                                  completionHandler:
+     ^(FBSession *session, FBSessionState state, NSError *error) {
+         _facebook_token = [[[FBSession activeSession] accessTokenData] accessToken];
+         [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+             [self hideLoadView];
+             if (!error) {
+                 NSDictionary *user = @{
+                                        @"email": [result objectForKey:@"email"],
+                                        @"lastName": [result objectForKey:@"last_name"],
+                                        @"firstName": [result objectForKey:@"first_name"],
+                                        @"idFacebook": [result objectForKey:@"id"],
+                                        @"fullName": [result objectForKey:@"name"],
+                                        @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", [result objectForKey:@"id"]]};
+                 
+                 [appDelegate showSignupAfterFacebookWithUser:user];
+             }
+         }];
+     }];
+}
+
 - (void)connectFacebook
 {
     [[FBSession activeSession] closeAndClearTokenInformation];
