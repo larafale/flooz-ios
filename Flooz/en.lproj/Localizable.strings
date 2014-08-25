@@ -225,6 +225,8 @@
 "SECORE_CODE_TEXT_CONFIRM" = "Confirmez votre nouveau code:";
 "SECORE_CODE_TEXT_LOGIN" = "Identifiez vous pour réinitialiser votre code";
 "SECURE_CODE_FORGOT" = "Code oublié ?";
+"SECORE_CODE_CHOOSE" = "Choisissez votre code secret :";
+"SECORE_CODE_CHOOSE_CONFIRM" = "Confirmation :";
 
 "DOCUMENTS_CARD_ID_RECTO" = "Carte d’identité (Recto)";
 "DOCUMENTS_CARD_ID_VERSO" = "Carte d’identité (Verso)";
@@ -286,3 +288,7 @@
 
 "textmotdepasse" = "6 caractères minimum";
 "Invite_Friends_Message_SMS" = "Prends cette appli elle est vraiment top pour s'échanger de l'argent http://flooz.me/download utilises ce code pour l'inscription: ";
+
+"SECURE_LOGIN_TITLE" = "Sécurité";
+"CODE_INVITATION_TITLE" = "Code d'invitation";
+"CODE_INVITATION_EXPLICATION" = "Vous devez disposer d'un code d'invitation pour vivre l'expérience flooz.";

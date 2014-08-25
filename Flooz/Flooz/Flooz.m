@@ -793,7 +793,7 @@
 }
 
 - (void)verifyInvitationCode:(NSString *)invitationCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/login/invitation" method:@"POST" params:@{@"invitationCode":invitationCode} success:success failure:failure];
+    [self requestPath:@"/signup/check" method:@"POST" params:@{@"invitationCode":invitationCode} success:success failure:failure];
 }
 
 #pragma mark -

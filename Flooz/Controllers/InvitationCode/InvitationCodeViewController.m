@@ -9,10 +9,12 @@
 #import "InvitationCodeViewController.h"
 
 @interface InvitationCodeViewController () {
+    UIView *_mainBody;
     
     FLTextFieldIcon *_codeField;
     
     NSMutableDictionary *dicCode;
+    UILabel *textExplication;
 }
 
 @end
@@ -23,7 +25,7 @@
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        self.title = NSLocalizedString(@"Invitation Code", nil);
+        self.title = NSLocalizedString(@"CODE_INVITATION_TITLE", nil);
         if(_user){
             dicCode = [_user mutableCopy];
         }
@@ -41,25 +43,44 @@
     self.view.backgroundColor = [UIColor customBackground];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(checkInvitationCode)];
     
-    UIImageView *logo = [UIImageView imageNamed:@"home-logo"];
-    CGRectSetWidthHeight(logo.frame, 105, 105);
-    CGRectSetXY(logo.frame, CGRectGetWidth(self.view.frame) / 2.0f - CGRectGetWidth(logo.frame) / 2.0f, 0.0f);
-    if (PPScreenHeight() < 500) {
-        CGRectSetY(logo.frame, 30.0f);
-    }
-    //[self.view addSubview:logo];
+    float heightForMain = CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT - NAVBAR_HEIGHT - 250;
+    NSLog(@"Main begin %f", heightForMain);
+    _mainBody = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - STATUSBAR_HEIGHT - NAVBAR_HEIGHT - 216)];
+    [self.view addSubview:_mainBody];
     
-    
-    _codeField = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"Invitation Code" for:dicCode key:@"invitationCode" position:CGPointMake(0.0f, CGRectGetMaxY(logo.frame) + 18.0f)];
+    _codeField = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"CODE_INVITATION_TITLE" for:dicCode key:@"invitationCode" position:CGPointMake(0.0f, CGRectGetHeight(_mainBody.frame) / 2 - 45)];
     
     [_codeField addForNextClickTarget:self action:@selector(checkInvitationCode)];
     
-    [self.view addSubview:_codeField];
+    [_mainBody addSubview:_codeField];
+    
+    textExplication = [[UILabel alloc] initWithFrame:CGRectMake(14, CGRectGetMaxY(_codeField.frame) + 10, PPScreenWidth()-28, 50)];
+    textExplication.textColor = [UIColor customPlaceholder];
+    textExplication.font = [UIFont customTitleExtraLight:14];
+    textExplication.numberOfLines = 0;
+    textExplication.textAlignment = NSTextAlignmentCenter;
+    textExplication.text = NSLocalizedString(@"CODE_INVITATION_EXPLICATION", nil);
+    
+    [_mainBody addSubview:textExplication];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [_codeField becomeFirstResponder];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myNotificationMethod:) name:UIKeyboardDidShowNotification object:nil];
+}
+
+- (void)myNotificationMethod:(NSNotification*)notification
+{
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    float height = CGRectGetHeight(keyboardFrameBeginRect);
+    float heightForMain = PPScreenHeight() - STATUSBAR_HEIGHT - NAVBAR_HEIGHT - height;
+    CGRectSetHeight(_mainBody.frame, heightForMain);
+    CGRectSetY(_codeField.frame, CGRectGetHeight(_mainBody.frame) / 2 - 45);
+    CGRectSetY(textExplication.frame, CGRectGetMaxY(_codeField.frame) + 10);
 }
 
 - (void) checkInvitationCode {
