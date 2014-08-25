@@ -75,7 +75,7 @@
         text.textColor = [UIColor whiteColor];
         text.textAlignment = NSTextAlignmentCenter;
         text.font = [UIFont customContentLight:14];
-        [self.view addSubview:text];
+        //[self.view addSubview:text];
     }
     
     {
@@ -90,7 +90,7 @@
         
         [registerFacebook addTarget:self action:@selector(didFacebookTouch) forControlEvents:UIControlEventTouchUpInside];
         
-        [self.view addSubview:registerFacebook];
+        //[self.view addSubview:registerFacebook];
     }
 }
 
