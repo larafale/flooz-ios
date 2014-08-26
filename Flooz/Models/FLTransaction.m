@@ -21,9 +21,9 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-    _transactionId = json[@"_id"];
+    _transactionId = [json objectForKey:@"_id"];
     
-    NSString *method = json[@"method"];
+    NSString *method = [json objectForKey:@"method"];
     if([method isEqualToString:@"pay"]){
         _type = TransactionTypePayment;
     }
@@ -34,7 +34,7 @@
         _type = TransactionTypeCharge;
     }
     
-    NSNumber *state = json[@"state"];
+    NSNumber *state = [json objectForKey:@"state"];
     
     if(!state){
         _status = TransactionStatusNone;
@@ -56,26 +56,26 @@
     }
     
         
-    _amount = json[@"amount"];
-    if(_amount && [json[@"payer"] isEqualToNumber:@1]){
+    _amount = [json objectForKey:@"amount"];
+    if(_amount && [[json objectForKey:@"payer"] isEqualToNumber:@1]){
         _amount = [NSNumber numberWithFloat:([_amount floatValue] * -1.)];
     }
     
     
-    if(json[@"avatar"]){
+    if([json objectForKey:@"avatar"]){
         _avatarURL = json[@"avatar"];
     }
     
-    _title = json[@"text"];
-    _content = json[@"why"];
+    _title = [json objectForKey:@"text"];
+    _content = [json objectForKey:@"why"];
     
-    _attachmentURL = json[@"pic"];
-    _attachmentThumbURL = json[@"picMini"];
+    _attachmentURL = [json objectForKey:@"pic"];
+    _attachmentThumbURL = [json objectForKey:@"picMini"];
     
     _social = [[FLSocial alloc] initWithJSON:json];
     
     _isPrivate = NO;
-    if([json[@"currentScope"] isEqualToString:@"private"]){
+    if([[json objectForKey:@"currentScope"] isEqualToString:@"private"]){
         _isPrivate = YES;
     }
     
@@ -84,17 +84,17 @@
         _isAcceptable = NO;
     
         if(_status == TransactionStatusPending){
-            if([json[@"actions"] count] == 1){
+            if([[json objectForKey:@"actions"] count] == 1){
                 _isCancelable = YES;
             }
-            else if([json[@"actions"] count] == 2){
+            else if([[json objectForKey:@"actions"] count] == 2){
                 _isAcceptable = YES;
             }
         }
     }
     
-    _from = [[FLUser alloc] initWithJSON:json[@"from"]];
-    _to = [[FLUser alloc] initWithJSON:json[@"to"]];
+    _from = [[FLUser alloc] initWithJSON:[json objectForKey:@"from"]];
+    _to = [[FLUser alloc] initWithJSON:[json objectForKey:@"to"]];
     
     
     {
@@ -105,12 +105,12 @@
             [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
         }
                 
-        _date = [dateFormatter dateFromString:json[@"cAt"]];
+        _date = [dateFormatter dateFromString:[json objectForKey:@"cAt"]];
     }
     
     {
         NSMutableArray *comments = [NSMutableArray new];
-        for(NSDictionary *commentJSON in json[@"comments"]){
+        for(NSDictionary *commentJSON in [json objectForKey:@"comments"]){
             [comments addObject:[[FLComment alloc] initWithJSON:commentJSON]];
         }
         _comments = comments;
@@ -118,18 +118,18 @@
         
     _when = [FLHelper formatedDateFromNow:_date];
     
-    if(json[@"text3d"]){
-        _text3d = json[@"text3d"];
+    if([json objectForKey:@"text3d"]){
+        _text3d = [json objectForKey:@"text3d"];
     }
     
-    _isCollect = [json[@"isCollect"] boolValue];
+    _isCollect = [[json objectForKey:@"isCollect"] boolValue];
     
     _collectCanParticipate = NO; //Collect removed
     if([[[[Flooz sharedInstance] currentUser] userId] isEqual:[_to userId]]){
         _collectCanParticipate = NO;
     }
     
-    if(json[@"collect"]){
+    if([json objectForKey:@"collect"]){
         NSMutableArray *colllectUsers = [NSMutableArray new];
         
         for(NSDictionary *userJSON in json[@"collect"][@"froms"]){

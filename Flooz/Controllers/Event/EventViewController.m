@@ -117,7 +117,7 @@
         firstView = NO;
     }
     
-    if(_eventOfferUser && _eventOfferUser[@"to"] && ![_eventOfferUser[@"to"] isBlank]){
+    if(_eventOfferUser && [_eventOfferUser objectForKey:@"to"] && ![[_eventOfferUser objectForKey:@"to"] isBlank]){
         [self didOfferEvent];
     }
     
@@ -416,7 +416,7 @@
             [[Flooz sharedInstance] showLoadView];
             
             [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
-                _event = [[FLEvent alloc] initWithJSON:result[@"item"]];
+                _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
                 paymentFieldIsShown = NO;
                 [self reloadEvent];
             }];
@@ -438,10 +438,10 @@
 {
     NSMutableDictionary *params = [@{
                                      @"id": [_event eventId],
-                                     //                             @"source": amount[@"source"] // payementField disable
+                                     //                             @"source": [amount objectForKey:@"source"] // payementField disable
                                      } mutableCopy];
-    if(amount[@"amount"]){
-        params[@"amount"] = amount[@"amount"];
+    if([amount objectForKey:@"amount"]){
+        params[@"amount"] = [amount objectForKey:@"amount"];
         params[@"hide"] = [NSNumber numberWithBool:participationHidden];
     }
     
@@ -456,7 +456,7 @@
                 [[Flooz sharedInstance] showLoadView];
                 
                 [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
-                    _event = [[FLEvent alloc] initWithJSON:result[@"item"]];
+                    _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
                     paymentFieldIsShown = NO;
                     [self reloadEvent];
                 }];
@@ -506,7 +506,7 @@
         
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] eventWithId:[_event eventId] success:^(id result) {
-            _event = [[FLEvent alloc] initWithJSON:result[@"item"]];
+            _event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
             paymentFieldIsShown = NO;
             [self reloadEvent];
         }];
@@ -541,7 +541,7 @@
 - (void)keyboardDidAppear:(NSNotification *)notification
 {
     NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
     UIView *firstResponder = [self.view findFirstResponder];
     if([[[firstResponder superview] superview] isKindOfClass:[EventCommentsView class]]){

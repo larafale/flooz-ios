@@ -322,8 +322,8 @@
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateTransactionValidate:params success:^(id result) {
         
-        if(result[@"confirmationText"]){
-            FLPopup *popup = [[FLPopup alloc] initWithMessage:result[@"confirmationText"] accept:^{
+        if([result objectForKey:@"confirmationText"]){
+            FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept:^{
                 [self didTransactionValidated];
             } refuse:NULL];
             [popup show];
@@ -347,7 +347,7 @@
                              };
     
     [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-        _transaction = [[FLTransaction alloc] initWithJSON:result[@"item"]];
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
         [self reloadTransaction];
     } failure:NULL];
 }
@@ -366,7 +366,7 @@
             paymentFieldIsVisible = NO;
             [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] transactionWithId:[_transaction transactionId] success:^(id result) {
-                _transaction = [[FLTransaction alloc] initWithJSON:result[@"item"]];
+                _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
                 [self reloadTransaction];
             }];
         } failure:NULL];
@@ -388,7 +388,7 @@
         [[Flooz sharedInstance] showLoadView];
         
         [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-            _transaction = [[FLTransaction alloc] initWithJSON:result[@"item"]];
+            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
             [self reloadTransaction];
         } failure:NULL];
     };
@@ -416,7 +416,7 @@
 - (void)keyboardDidAppear:(NSNotification *)notification
 {
     NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
     UIView *firstResponder = [self.view findFirstResponder];
     if([[[firstResponder superview] superview] isKindOfClass:[TransactionCommentsView class]]){

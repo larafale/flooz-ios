@@ -175,7 +175,7 @@
 - (void)updateCurrentUserWithSuccess:(void (^)())success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
-        _currentUser = [[FLUser alloc] initWithJSON:result[@"item"]];
+        _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
         _facebook_token = result[@"item"][@"fb"][@"token"];
         
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];

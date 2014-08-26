@@ -22,7 +22,7 @@
 - (void)setJSON:(NSDictionary *)json
 {
     _user = [[FLUser alloc] initWithJSON:json];
-    _requestId = json[@"id"];
+    _requestId = [json objectForKey:@"id"];
 }
 
 @end

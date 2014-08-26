@@ -47,8 +47,8 @@
 
         _readOnly = NO;
 
-        _textfield.text = _dictionary[_dictionaryKey];
-        _textfield2.text = _dictionary[_dictionaryKey2];
+        _textfield.text = [_dictionary objectForKey:_dictionaryKey];
+        _textfield2.text = [_dictionary objectForKey:_dictionaryKey2];
 
         [_textfield addTarget:self
                        action:@selector(textFieldDidChange:)
@@ -262,11 +262,11 @@
 - (void)reloadTextField
 {
     NSString *text = @"";
-    text = _dictionary[_dictionaryKey];
+    text = [_dictionary objectForKey:_dictionaryKey];
     _textfield.text = text;
 
     NSString *text2 = @"";
-    text2 = _dictionary[_dictionaryKey2];
+    text2 = [_dictionary objectForKey:_dictionaryKey2];
     _textfield2.text = text2;
 }
 

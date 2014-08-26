@@ -22,32 +22,32 @@
 
 - (void)setJSON:(NSDictionary *)json
 {    
-    _commentsCount = [json[@"comments"] count];
-    _likesCount = [json[@"likes"] count];
-    _likeText = json[@"likesString"];
+    _commentsCount = [[json objectForKey:@"comments"] count];
+    _likesCount = [[json objectForKey:@"likes"] count];
+    _likeText = [json objectForKey:@"likesString"];
     
     _isCommented = NO;
     _isLiked = NO;
     
-    for(NSDictionary *comment in json[@"comments"]){
-        if([comment[@"userId"] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]){
+    for(NSDictionary *comment in [json objectForKey:@"comments"]){
+        if([[comment objectForKey:@"userId"] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]){
             _isCommented = YES;
             break;
         }
     }
     
-    for(NSDictionary *like in json[@"likes"]){
-        if([like[@"userId"] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]){
+    for(NSDictionary *like in [json objectForKey:@"likes"]){
+        if([[like objectForKey:@"userId"] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]){
             _isLiked = YES;
             break;
         }
     }
     
-    if([json[@"scope"] intValue] == 0){
+    if([[json objectForKey:@"scope"] intValue] == 0){
         _scope = SocialScopePublic;
-    } else if([json[@"scope"] intValue] == 1){
+    } else if([[json objectForKey:@"scope"] intValue] == 1){
         _scope = SocialScopeFriend;
-    } else if([json[@"scope"] intValue] == 2){
+    } else if([[json objectForKey:@"scope"] intValue] == 2){
         _scope = SocialScopePrivate;
     } else{
         _scope = SocialScopeNone;

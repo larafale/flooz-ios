@@ -89,11 +89,11 @@
 {
     FLUserView *view = [[self.contentView subviews] objectAtIndex:0];
     
-    if(_contact[@"image"]){
-        [view setImageFromData:_contact[@"image"]];
+    if([_contact objectForKey:@"image"]){
+        [view setImageFromData:[_contact objectForKey:@"image"]];
     }
-    else if(_contact[@"image_url"]){
-        [view setImageFromURL:_contact[@"image_url"]];
+    else if([_contact objectForKey:@"image_url"]){
+        [view setImageFromURL:[_contact objectForKey:@"image_url"]];
     }
     else{
         [view setImageFromData:nil];
@@ -104,18 +104,18 @@
 {
     UILabel *view = [[self.contentView subviews] objectAtIndex:1];
     
-    view.text = [_contact[@"name"] uppercaseString];
+    view.text = [[_contact objectForKey:@"name"] uppercaseString];
 }
 
 - (void)preparePhoneView
 {
     UILabel *view = [[self.contentView subviews] objectAtIndex:2];
     
-    if(_contact[@"phone"]){
-        view.text = _contact[@"phone"];
+    if([_contact objectForKey:@"phone"]){
+        view.text = [_contact objectForKey:@"phone"];
     }
-    else if(_contact[@"email"]){
-        view.text = _contact[@"email"];
+    else if([_contact objectForKey:@"email"]){
+        view.text = [_contact objectForKey:@"email"];
     }
     else{
         view.text = @"";

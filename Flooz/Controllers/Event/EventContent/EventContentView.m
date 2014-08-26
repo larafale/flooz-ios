@@ -117,7 +117,7 @@
 {
     [[_event social] setIsLiked:![[_event social] isLiked]];
     [[Flooz sharedInstance] createLikeOnEvent:_event success:^(id result) {
-        [[_event social] setLikeText:result[@"item"]];
+        [[_event social] setLikeText:[result objectForKey:@"item"]];
         
         FLSocialView *view = [[self subviews] objectAtIndex:2];
         [view prepareView:_event.social];

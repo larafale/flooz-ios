@@ -21,7 +21,7 @@
 
 - (void)setJSON:(NSDictionary *)json
 {    
-    _content = json[@"text"];
+    _content = [json objectForKey:@"text"];
     _user = [[FLUser alloc] initWithJSON:json[@"emitter"]];
     
     // Si 0 alors pas lu
@@ -53,7 +53,7 @@
             [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
         }
         
-        _date = [dateFormatter dateFromString:json[@"cAt"]];
+        _date = [dateFormatter dateFromString:[json objectForKey:@"cAt"]];
     }
     
     {

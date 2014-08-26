@@ -76,11 +76,11 @@
 {
     [[self view] endEditing:YES];
     
-    if([dictionary[@"amount"] floatValue] <= 0){
+    if([[dictionary objectForKey:@"amount"] floatValue] <= 0){
         return;
     }
     
-    NSNumber *amount = dictionary[@"amount"];
+    NSNumber *amount = [dictionary objectForKey:@"amount"];
     
 //    [[Flooz sharedInstance] showLoadView];
 //    [[Flooz sharedInstance] cashoutValidate:amount success:^(id result) {

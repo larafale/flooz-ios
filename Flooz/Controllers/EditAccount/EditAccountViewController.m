@@ -47,7 +47,7 @@
         
         _user = [NSMutableDictionary new];
         [_user setObject:[NSMutableDictionary new] forKey:@"settings"];
-        [_user[@"settings"] setObject:[[currentUser address] mutableCopy] forKey:@"address"];
+        [[_user objectForKey:@"settings"] setObject:[[currentUser address] mutableCopy] forKey:@"address"];
         
         if([currentUser lastname]){
             [_user setObject:[currentUser lastname] forKey:@"lastName"];
@@ -146,14 +146,14 @@
         [sendValidationEmail addTarget:self action:@selector(didSendEmailValidationTouch:) forControlEvents:UIControlEventTouchUpInside];
     }
     
-    if([[[[Flooz sharedInstance] currentUser] checkDocuments][@"phone"] intValue] != 2){
+    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:@"phone"] intValue] != 2){
         sendValidationSMS.hidden = YES;
     }
     else{
         [fieldPhone setReadOnly:YES];
     }
     
-    if([[[[Flooz sharedInstance] currentUser] checkDocuments][@"email"] intValue] != 2){
+    if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:@"email"] intValue] != 2){
         sendValidationEmail.hidden = YES;
     }
     else{
@@ -189,19 +189,19 @@
     
     
     {
-        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-address" placeholder:@"FIELD_ADDRESS" for:_user[@"settings"][@"address"] key:@"address" position:CGPointMake(MARGE, height)];
+        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-address" placeholder:@"FIELD_ADDRESS" for:[[_user objectForKey:@"settings"] objectForKey:@"address"] key:@"address" position:CGPointMake(MARGE, height)];
         [_contentView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
     
     {
-        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-zip-code" placeholder:@"FIELD_ZIP_CODE" for:_user[@"settings"][@"address"] key:@"zipCode" position:CGPointMake(MARGE, height)];
+        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-zip-code" placeholder:@"FIELD_ZIP_CODE" for:[[_user objectForKey:@"settings"] objectForKey:@"address"] key:@"zipCode" position:CGPointMake(MARGE, height)];
         [_contentView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
 
     {
-        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-city" placeholder:@"FIELD_CITY" for:_user[@"settings"][@"address"] key:@"city" position:CGPointMake(MARGE, height)];
+        FLTextFieldIcon *view = [[FLTextFieldIcon alloc] initWithIcon:@"field-city" placeholder:@"FIELD_CITY" for:[[_user objectForKey:@"settings"] objectForKey:@"address"] key:@"city" position:CGPointMake(MARGE, height)];
         [_contentView addSubview:view];
         height = CGRectGetMaxY(view.frame);
     }
@@ -233,7 +233,7 @@
         UIImageView *imageView;
         
         
-        if([[[[Flooz sharedInstance] currentUser] checkDocuments][value] intValue] == 2 || ([[[[Flooz sharedInstance] currentUser] checkDocuments][value] intValue] == 0 && [[[Flooz sharedInstance] currentUser] settings][value])
+        if([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] intValue] == 2 || ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] intValue] == 0 && [[[[Flooz sharedInstance] currentUser] settings] objectForKey:value])
            ){
             imageView = [UIImageView imageNamed:@"document-check"];
         }
@@ -371,7 +371,7 @@
 - (void)showImagePicker
 {
     if(
-        ([[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 0 && [[[Flooz sharedInstance] currentUser] settings][currentDocumentKey])
+        ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:currentDocumentKey] intValue] == 0 && [[[[Flooz sharedInstance] currentUser] settings] objectForKey:currentDocumentKey])
         ){
         return;
     }
@@ -393,7 +393,7 @@
 - (void)keyboardDidAppear:(NSNotification *)notification
 {
     NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
     _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
 }
@@ -435,7 +435,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     if(!currentDocumentKey){
-        UIImage *originalImage = (UIImage *)info[UIImagePickerControllerOriginalImage];
+        UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
         UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
         NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
         
@@ -447,7 +447,7 @@
         }];
     }
     else{
-        UIImage *originalImage = (UIImage *)info[UIImagePickerControllerOriginalImage];
+        UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
         UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
         NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
         

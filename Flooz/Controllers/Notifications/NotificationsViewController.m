@@ -70,7 +70,7 @@
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSString *sectionName = [_sections objectAtIndex:section];
-    return [[_notifications[sectionName] allKeys] count];
+    return [[[_notifications objectForKey:sectionName] allKeys] count];
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -140,8 +140,8 @@
     UISwitch *switchView = (UISwitch *)cell.accessoryView;
     
     NSDictionary *notification = [self notificationAtIndexPath:indexPath];
-    NSString *sectionKey = notification[@"sectionKey"];
-    NSString *rowKey = notification[@"rowKey"];
+    NSString *sectionKey = [notification objectForKey:@"sectionKey"];
+    NSString *rowKey = [notification objectForKey:@"rowKey"];
     
     NSDictionary *notificationAPI = @{
                                    @"canal": sectionKey,
@@ -172,33 +172,33 @@
 - (NSString *)notificationTitleAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *notification = [self notificationAtIndexPath:indexPath];
-    NSString *rowKey = notification[@"rowKey"];
+    NSString *rowKey = [notification objectForKey:@"rowKey"];
     
-    return [[[Flooz sharedInstance] currentUser] notificationsText][rowKey];
+    return [[[[Flooz sharedInstance] currentUser] notificationsText] objectForKey:rowKey];
 }
 
 - (BOOL)notificationValueAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *notification = [self notificationAtIndexPath:indexPath];
-    NSString *sectionKey = notification[@"sectionKey"];
-    NSString *rowKey = notification[@"rowKey"];
+    NSString *sectionKey = [notification objectForKey:@"sectionKey"];
+    NSString *rowKey = [notification objectForKey:@"rowKey"];
     
-    return [_notifications[sectionKey][rowKey] isEqualToNumber:@1];
+    return [[[_notifications objectForKey:sectionKey] objectForKey:rowKey] isEqualToNumber:@1];
 }
 
 - (void)notificationValue:(BOOL)value indexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *notification = [self notificationAtIndexPath:indexPath];
-    NSString *sectionKey = notification[@"sectionKey"];
-    NSString *rowKey = notification[@"rowKey"];
+    NSString *sectionKey = [notification objectForKey:@"sectionKey"];
+    NSString *rowKey = [notification objectForKey:@"rowKey"];
     
-    [_notifications[sectionKey] setObject:[NSNumber numberWithBool:value] forKey:rowKey];
+    [[_notifications objectForKey:sectionKey] setObject:[NSNumber numberWithBool:value] forKey:rowKey];
 }
 
 - (NSDictionary *)notificationAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *sectionKey = [_sections objectAtIndex:indexPath.section];
-    NSString *rowKey = [[_notifications[sectionKey] allKeys] objectAtIndex:indexPath.row];
+    NSString *rowKey = [[[_notifications objectForKey:sectionKey] allKeys] objectAtIndex:indexPath.row];
 
     return @{
              @"sectionKey": sectionKey,

@@ -178,7 +178,7 @@
 {
     [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
     [[Flooz sharedInstance] createLikeOnTransaction:_transaction success:^(id result) {
-        [[_transaction social] setLikeText:result[@"item"]];
+        [[_transaction social] setLikeText:[result objectForKey:@"item"]];
         
         FLSocialView *view = [[self subviews] objectAtIndex:3];
         [view prepareView:_transaction.social];
