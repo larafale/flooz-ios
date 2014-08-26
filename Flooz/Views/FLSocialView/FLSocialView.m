@@ -89,6 +89,12 @@
         [like addGestureRecognizer:_gesture];
     }
     
+    {
+        comment.userInteractionEnabled = YES;
+        _gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCommentTouch)];
+        [comment addGestureRecognizer:_gesture];
+    }
+    
     // Mise a jour de la largeur apres avoir mit la police
     
     CGRectSetWidth(like.frame, [like widthToFit] + 5);
@@ -144,6 +150,12 @@
     _action = action;
 }
 
+- (void)addTargetForComment:(id)target action:(SEL)action
+{
+    _target2 = target;
+    _action2 = action;
+}
+
 - (void)didLikeTouch
 {
     UIColor *newColor = nil;
@@ -165,6 +177,11 @@
     }];
     
     [_target performSelector:_action];
+}
+
+- (void)didCommentTouch
+{
+    [_target2 performSelector:_action2];
 }
 
 @end

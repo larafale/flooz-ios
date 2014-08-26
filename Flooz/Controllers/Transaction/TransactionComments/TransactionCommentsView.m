@@ -174,6 +174,10 @@
     return YES;
 }
 
+- (void)focusOnTextField {
+    [_textField becomeFirstResponder];
+}
+
 #pragma mark -
 
 - (void)didButtonClick

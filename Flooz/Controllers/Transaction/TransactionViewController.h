@@ -15,6 +15,7 @@
 @interface TransactionViewController : UIViewController<TransactionActionsViewDelegate, FLNewTransactionAmountDelegate>
 
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;
+- (void)focusOnComment;
 
 @property (strong, nonatomic) UIViewController<TransactionCellDelegate> *delegateController;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentView;

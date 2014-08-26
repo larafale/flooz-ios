@@ -18,4 +18,6 @@
 @property (weak, nonatomic) FLTransaction *transaction;
 @property (weak, nonatomic) id<TransactionActionsViewDelegate> delegate;
 
+- (void)focusOnTextField;
+
 @end

@@ -26,6 +26,8 @@
     FLTransaction *_transaction;
     NSIndexPath *_indexPath;
     
+    BOOL focusOnCommentTextField;
+    
     UIView *_mainView;
     
     BOOL animationFirstView;
@@ -50,6 +52,7 @@
         _indexPath = indexPath;
         animationFirstView = YES;
         paymentFieldIsVisible = NO;
+        focusOnCommentTextField = NO;
         paymentFieldAmountData = [NSMutableDictionary new];
     }
     return self;
@@ -76,6 +79,14 @@
     [super viewDidAppear:animated];
     
     [self startAnimationFirstView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (focusOnCommentTextField) {
+        [commentsView focusOnTextField];
+    }
 }
 
 #pragma mark - Animation
@@ -253,6 +264,13 @@
     }
 }
 
+- (void)didWantToCommentTransactionData
+{
+    if(_indexPath){
+        [_delegateController commentTransactionAtIndex:_indexPath transaction:_transaction];
+    }
+}
+
 #pragma mark - Payment Field Actions
 
 - (void)showPaymentField
@@ -424,6 +442,10 @@
         CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
         [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
     }
+}
+
+- (void)focusOnComment {
+    focusOnCommentTextField = YES;
 }
 
 - (void)keyboardWillDisappear

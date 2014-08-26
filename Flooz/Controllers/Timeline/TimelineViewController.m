@@ -185,6 +185,9 @@
 
 - (void)didFilterPublicTouch
 {
+    if ([currentFilter isEqualToString:@"public"]) {
+        return;
+    }
     currentFilter = @"public";
     
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
@@ -213,6 +216,9 @@
 
 - (void)didFilterFriendTouch
 {
+    if ([currentFilter isEqualToString:@"friend"]) {
+        return;
+    }
     currentFilter = @"friend";
     
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
@@ -241,6 +247,9 @@
 
 - (void)didFilterPersoTouch
 {
+    if ([currentFilter isEqualToString:@"private"]) {
+        return;
+    }
     currentFilter = @"private";
     
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
@@ -298,6 +307,18 @@
     [_tableView beginUpdates];
     [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [_tableView endUpdates];
+}
+
+- (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+    TransactionViewController *controller = controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
+    [controller focusOnComment];
+    controller.delegateController = self;
+    
+    self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    
+    [self presentViewController:controller animated:NO completion:^{
+        self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }];
 }
 
 - (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath
