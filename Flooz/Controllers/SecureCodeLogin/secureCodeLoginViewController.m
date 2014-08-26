@@ -51,7 +51,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor customBackground];
     
-    _mainBody = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT - NAVBAR_HEIGHT)];
+    _mainBody = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - STATUSBAR_HEIGHT - NAVBAR_HEIGHT)];
     [self.view addSubview:_mainBody];
     
     // Do any additional setup after loading the view from its nib.

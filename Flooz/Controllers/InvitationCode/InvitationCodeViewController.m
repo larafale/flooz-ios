@@ -43,7 +43,7 @@
     self.view.backgroundColor = [UIColor customBackground];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(checkInvitationCode)];
     
-    float heightForMain = CGRectGetHeight(self.view.frame) - STATUSBAR_HEIGHT - NAVBAR_HEIGHT - 250;
+    float heightForMain =  PPScreenHeight() - STATUSBAR_HEIGHT - NAVBAR_HEIGHT - 250;
     NSLog(@"Main begin %f", heightForMain);
     _mainBody = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - STATUSBAR_HEIGHT - NAVBAR_HEIGHT - 216)];
     [self.view addSubview:_mainBody];
