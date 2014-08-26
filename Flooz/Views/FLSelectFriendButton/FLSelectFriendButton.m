@@ -74,19 +74,19 @@
     FLUserView *userView = [[self subviews] objectAtIndex:0];
     UIButton *button = [[self subviews] objectAtIndex:1];
     
-    if([_dictionary objectForKey:@"toTitle"] && ![[_dictionary objectForKey:@"toTitle"] isBlank]){
-        [button setTitle:[[_dictionary objectForKey:@"toTitle"] uppercaseString] forState:UIControlStateSelected];
+    if(_dictionary[@"toTitle"] && ![_dictionary[@"toTitle"] isBlank]){
+        [button setTitle:[_dictionary[@"toTitle"] uppercaseString] forState:UIControlStateSelected];
         button.selected = YES;
     }
     else{
         button.selected = NO;
     }
     
-    if([_dictionary objectForKey:@"toImage"]){
-        [userView setImageFromData:[_dictionary objectForKey:@"toImage"]];
+    if(_dictionary[@"toImage"]){
+        [userView setImageFromData:_dictionary[@"toImage"]];
     }
-    else if([_dictionary objectForKey:@"toImageUrl"]){
-         [userView setImageFromURL:[_dictionary objectForKey:@"toImageUrl"]];
+    else if(_dictionary[@"toImageUrl"]){
+         [userView setImageFromURL:_dictionary[@"toImageUrl"]];
     }
     else{
         [userView setImageFromData:nil];

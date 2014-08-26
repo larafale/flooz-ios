@@ -32,7 +32,7 @@
         
         isEmpty = NO;
         
-        if(![_dictionary objectForKey:_dictionaryKey]){
+        if(!_dictionary[_dictionaryKey]){
             isEmpty = YES;
             [_dictionary setValue:[NSNumber numberWithFloat:100.] forKey:_dictionaryKey];
         }
@@ -73,7 +73,7 @@
     point.text = @".";
     point.textAlignment = NSTextAlignmentCenter;
 
-    amount.text = [NSString stringWithFormat:@"%ld", (long)[[_dictionary objectForKey:_dictionaryKey] integerValue]];
+    amount.text = [NSString stringWithFormat:@"%ld", (long)[_dictionary[_dictionaryKey] integerValue]];
     amount.textAlignment = NSTextAlignmentCenter;
     amount.delegate = self;
     FLKeyboardView *inputView = [FLKeyboardView new];

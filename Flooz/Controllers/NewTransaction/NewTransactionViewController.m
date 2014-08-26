@@ -181,7 +181,7 @@
     if(isEvent){
         //        [self didAmountFixSelected]; // Seulement si sur montant libre, utilise pour gerer les vues
     }
-    else if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+    else if([transaction[@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
         [payementField didWalletTouch];
     }
     
@@ -215,7 +215,7 @@
     if([appDelegate showPreviewImage:@"preview-4"]){
         
     }
-    else if([transaction objectForKey:@"toTitle"]){
+    else if(transaction[@"toTitle"]){
         
         [UIView animateWithDuration:.15
                               delay:0
@@ -375,15 +375,15 @@
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] createTransactionValidate:transaction success:^(id result) {
             
-            if([result objectForKey:@"confirmationText"]){
-                FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept:^{
+            if(result[@"confirmationText"]){
+                FLPopup *popup = [[FLPopup alloc] initWithMessage:result[@"confirmationText"] accept:^{
                     [self didTransactionValidated];
                 } refuse:NULL];
                 [popup show];
                 
 //                UIAlertView *alertView = [[UIAlertView alloc]
 //                                          initWithTitle:nil
-//                                          message:[result objectForKey:@"confirmationText"]
+//                                          message:result[@"confirmationText"]
 //                                          delegate:self
 //                                          cancelButtonTitle:NSLocalizedString(@"GLOBAL_NO", nil)
 //                                          otherButtonTitles:NSLocalizedString(@"GLOBAL_YES", nil), nil];
@@ -434,7 +434,7 @@
 - (void)keyboardDidAppear:(NSNotification *)notification
 {
     NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    CGFloat keyboardHeight = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
     _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
     
@@ -472,7 +472,7 @@
             FLContainerViewController *presentingViewController = (FLContainerViewController *)[self presentingViewController];
             TimelineViewController *timelineController = [[presentingViewController viewControllers] objectAtIndex:1];
             [self dismissViewControllerAnimated:YES completion:^{
-                if([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+                if([transaction[@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
                     [[timelineController filterView] selectFilter:2];
                     FLContainerViewController *rootController = (FLContainerViewController *)appDelegate.window.rootViewController;
                     [rootController.navbarView loadControllerWithIndex:1];

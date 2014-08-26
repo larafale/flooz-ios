@@ -21,25 +21,25 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-    if([json objectForKey:@"_id"]){
-        _userId = [json objectForKey:@"_id"];
+    if(json[@"_id"]){
+        _userId = json[@"_id"];
     }
     
-    _amount = [json objectForKey:@"balance"];
+    _amount = json[@"balance"];
     if(!_amount){
         // Argent mis dans une cagnotte
-        _amount = [json objectForKey:@"amount"];
+        _amount = json[@"amount"];
     }
     
-    _firstname = [json objectForKey:@"firstName"];
-    _lastname = [json objectForKey:@"lastName"];
-    _fullname = [json objectForKey:@"name"];
-    _username = [json objectForKey:@"nick"];
-    _email = [json objectForKey:@"email"];
-    _phone = [json objectForKey:@"phone"];
-    _avatarURL = [json objectForKey:@"pic"];
-    _profileCompletion = [json objectForKey:@"profileCompletion"];
-    _hasSecureCode = [json objectForKey:@"secureCode"];
+    _firstname = json[@"firstName"];
+    _lastname = json[@"lastName"];
+    _fullname = json[@"name"];
+    _username = json[@"nick"];
+    _email = json[@"email"];
+    _phone = json[@"phone"];
+    _avatarURL = json[@"pic"];
+    _profileCompletion = json[@"profileCompletion"];
+    _hasSecureCode = json[@"secureCode"];
     
     if([_avatarURL isEqualToString:@"/img/nopic.png"]){
         _avatarURL = nil;
@@ -49,13 +49,13 @@
         _deviceToken = json[@"settings"][@"device"];
     }
     
-    _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
-    _eventsCount = [[[json objectForKey:@"stats"] objectForKey:@"event"] objectForKey:@"created"];
-    _transactionsCount = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"total"];
+    _friendsCount = [NSNumber numberWithInteger:[json[@"friends"] count]];
+    _eventsCount = json[@"stats"][@"event"][@"created"];
+    _transactionsCount = json[@"stats"][@"flooz"][@"total"];
     
     _haveStatsPending = NO;
     
-    NSNumber *statsPending = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"pending"];
+    NSNumber *statsPending = json[@"stats"][@"flooz"][@"pending"];
     if([statsPending intValue] > 0){
         _haveStatsPending = YES;
     }
@@ -65,27 +65,27 @@
     {
         _address = [NSMutableDictionary new];
         
-        if([json objectForKey:@"settings"] && [[json objectForKey:@"settings"] objectForKey:@"address"]){
-            _address = [[[json objectForKey:@"settings"] objectForKey:@"address"] mutableCopy];
+        if(json[@"settings"] && json[@"settings"][@"address"]){
+            _address = [json[@"settings"][@"address"] mutableCopy];
         }
     }
     
     {
         _sepa = [NSMutableDictionary new];
         
-        if([json objectForKey:@"settings"] && [[json objectForKey:@"settings"] objectForKey:@"sepa"]){
-            _sepa = [[[json objectForKey:@"settings"] objectForKey:@"sepa"] mutableCopy];
+        if(json[@"settings"] && json[@"settings"][@"sepa"]){
+            _sepa = [json[@"settings"][@"sepa"] mutableCopy];
         }
     }
     
     {
         _notifications = [NSMutableDictionary new];
                 
-        if([json objectForKey:@"notifications"]){
-            NSDictionary *notificationsJSON = [json objectForKey:@"notifications"];
+        if(json[@"notifications"]){
+            NSDictionary *notificationsJSON = json[@"notifications"];
             
             for(NSString *key in notificationsJSON){
-                NSDictionary *dictionary = [notificationsJSON objectForKey:key];
+                NSDictionary *dictionary = notificationsJSON[key];
                 [_notifications setObject:[dictionary mutableCopy] forKey:key];
             }
         }
@@ -94,25 +94,25 @@
     {
         _notificationsText = [NSMutableDictionary new];
         
-        if([json objectForKey:@"notifications"]){
-            NSDictionary *notificationsJSON = [json objectForKey:@"notificationsText"];
+        if(json[@"notifications"]){
+            NSDictionary *notificationsJSON = json[@"notificationsText"];
             
             for(NSString *key in notificationsJSON){
-                NSString *text = [notificationsJSON objectForKey:key];
+                NSString *text = notificationsJSON[key];
                 [_notificationsText setObject:text forKey:key];
             }
         }
     }
     
-    if([json objectForKey:@"cards"] && [[json objectForKey:@"cards"] count] > 0){
-        _creditCard = [[FLCreditCard alloc] initWithJSON:[[json objectForKey:@"cards"] objectAtIndex:0]];
+    if(json[@"cards"] && [json[@"cards"] count] > 0){
+        _creditCard = [[FLCreditCard alloc] initWithJSON:json[@"cards"][0]];
     }
     
     {
         NSMutableArray *friends = [NSMutableArray new];
         
-        if([json objectForKey:@"friends"]){
-            for(NSDictionary *friendJSON in [json objectForKey:@"friends"]){                
+        if(json[@"friends"]){
+            for(NSDictionary *friendJSON in json[@"friends"]){                
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
                 [friends addObject:friend];
             }
@@ -124,8 +124,8 @@
     {
         NSMutableArray *friendsRecent = [NSMutableArray new];
         
-        if([json objectForKey:@"recentFriends"]){
-            for(NSDictionary *friendJSON in [json objectForKey:@"recentFriends"]){
+        if(json[@"recentFriends"]){
+            for(NSDictionary *friendJSON in json[@"recentFriends"]){
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
                 [friendsRecent addObject:friend];
             }
@@ -137,8 +137,8 @@
     {
         NSMutableArray *friendsRequest = [NSMutableArray new];
         
-        if([json objectForKey:@"friendsRequest"]){
-            for(NSDictionary *friendRequestJSON in [json objectForKey:@"friendsRequest"]){
+        if(json[@"friendsRequest"]){
+            for(NSDictionary *friendRequestJSON in json[@"friendsRequest"]){
                 FLFriendRequest *friendRequest = [[FLFriendRequest alloc] initWithJSON:friendRequestJSON];
                 [friendsRequest addObject:friendRequest];
             }
@@ -148,8 +148,8 @@
     }
     
     _checkDocuments = @{};
-    if([json objectForKey:@"check"]){
-        _checkDocuments = [json objectForKey:@"check"];
+    if(json[@"check"]){
+        _checkDocuments = json[@"check"];
     }
     
     _isFriendWaiting = NO;
@@ -167,14 +167,14 @@
         _username = nil;
     }
     
-    if([[json objectForKey:@"invitation"] objectForKey:@"code"]){
-        _invitCode = [[json objectForKey:@"invitation"] objectForKey:@"code"];
+    if(json[@"invitation"][@"code"]){
+        _invitCode = json[@"invitation"][@"code"];
     }
 }
 
 - (void)updateStatsPending:(NSDictionary *)json
 {
-    NSNumber *statsPending = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"pending"];
+    NSNumber *statsPending = json[@"stats"][@"flooz"][@"pending"];
     if([statsPending intValue] > 0){
         _haveStatsPending = YES;
     }

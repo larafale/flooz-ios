@@ -274,18 +274,18 @@
     }
     else{
         contact = [_contacts objectAtIndex:indexPath.row];
-        title = [contact objectForKey:@"title"];
-        value = [contact objectForKey:@"value"];
+        title = contact[@"title"];
+        value = contact[@"value"];
     }
 
     [_dictionary setValue:title forKey:@"toTitle"];
     [_dictionary setValue:value forKey:@"to"];
     
-    if([contact objectForKey:@"facebook_id"]){
+    if(contact[@"facebook_id"]){
         id paramsFacebook = @{
-                                  @"id": [contact objectForKey:@"facebook_id"],
-                                  @"firstName": [contact objectForKey:@"firstname"],
-                                  @"lastName": [contact objectForKey:@"lastname"]
+                                  @"id": contact[@"facebook_id"],
+                                  @"firstName": contact[@"firstname"],
+                                  @"lastName": contact[@"lastname"]
                               };
         [_dictionary setValue:paramsFacebook forKey:@"fb"];
     }
@@ -296,28 +296,28 @@
     [_dictionary setValue:nil forKey:@"toImage"];
     [_dictionary setValue:nil forKey:@"toImageUrl"];
     
-    if([contact objectForKey:@"image"]){
-        [_dictionary setValue:[contact objectForKey:@"image"] forKey:@"toImage"];
+    if(contact[@"image"]){
+        [_dictionary setValue:contact[@"image"] forKey:@"toImage"];
     }
-    else if([contact objectForKey:@"image_url"]){
-        [_dictionary setValue:[contact objectForKey:@"image_url"] forKey:@"toImageUrl"];
+    else if(contact[@"image_url"]){
+        [_dictionary setValue:contact[@"image_url"] forKey:@"toImageUrl"];
     }
     
     [_dictionary setValue:nil forKey:@"contact"];
-    if([contact objectForKey:@"firstname"] || [contact objectForKey:@"lastname"]){
+    if(contact[@"firstname"] || contact[@"lastname"]){
         [_dictionary setValue:[NSMutableDictionary new] forKey:@"contact"];
         
-        if(![[contact objectForKey:@"firstname"] isBlank]){
-            [[_dictionary objectForKey:@"contact"] setValue:[contact objectForKey:@"firstname"] forKey:@"firstName"];
+        if(![contact[@"firstname"] isBlank]){
+            [_dictionary[@"contact"] setValue:contact[@"firstname"] forKey:@"firstName"];
         }
         
-        if(![[contact objectForKey:@"lastname"] isBlank]){
-            [[_dictionary objectForKey:@"contact"] setValue:[contact objectForKey:@"lastname"] forKey:@"lastName"];
+        if(![contact[@"lastname"] isBlank]){
+            [_dictionary[@"contact"] setValue:contact[@"lastname"] forKey:@"lastName"];
         }
     }
     
-    if(![[contact objectForKey:@"username"] isBlank]){
-        [_dictionary setValue:[contact objectForKey:@"username"] forKey:@"toUsername"];
+    if(![contact[@"username"] isBlank]){
+        [_dictionary setValue:contact[@"username"] forKey:@"toUsername"];
     }
     
     if(_event){
@@ -360,17 +360,17 @@
     NSMutableArray *friendsRecentFiltred = [NSMutableArray new];
     
     for(NSDictionary *contact in _currentContacts){
-        if([contact objectForKey:@"name"] && [[[contact objectForKey:@"name"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+        if(contact[@"name"] && [[contact[@"name"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
             [contactsFiltred addObject:contact];
         }
-        else if([contact objectForKey:@"email"] && [[[contact objectForKey:@"email"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+        else if(contact[@"email"] && [[contact[@"email"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
             [contactsFiltred addObject:contact];
         }
-        else if([contact objectForKey:@"phone"] && [[[contact objectForKey:@"phone"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+        else if(contact[@"phone"] && [[contact[@"phone"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
             [contactsFiltred addObject:contact];
         }
         // Pour rechercher sur telephone sans les points
-        else if([contact objectForKey:@"value"] && [[[contact objectForKey:@"value"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+        else if(contact[@"value"] && [[contact[@"value"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
             [contactsFiltred addObject:contact];
         }
     }
@@ -429,12 +429,12 @@
         for(NSDictionary *friend in result){
             NSMutableDictionary *contact = [NSMutableDictionary new];
             
-            [contact setValue:[friend objectForKey:@"first_name"] forKey:@"firstname"];
-            [contact setValue:[friend objectForKey:@"last_name"] forKey:@"lastname"];
+            [contact setValue:friend[@"first_name"] forKey:@"firstname"];
+            [contact setValue:friend[@"last_name"] forKey:@"lastname"];
             
-            [contact setValue:[friend objectForKey:@"name"] forKey:@"name"];
-            [contact setValue:[friend objectForKey:@"id"] forKey:@"facebook_id"];
-            [contact setValue:[[[friend objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"] forKey:@"image_url"];
+            [contact setValue:friend[@"name"] forKey:@"name"];
+            [contact setValue:friend[@"id"] forKey:@"facebook_id"];
+            [contact setValue:friend[@"picture"][@"data"][@"url"] forKey:@"image_url"];
             
             [_contactsFromFacebook addObject:contact];
         }
@@ -536,37 +536,37 @@
     
     for(NSDictionary *contact in contacts){
         // Format contact
-        if([contact objectForKey:@"name"]){
-            [contact setValue:[[contact objectForKey:@"name"] uppercaseString] forKey:@"title"];
+        if(contact[@"name"]){
+            [contact setValue:[contact[@"name"] uppercaseString] forKey:@"title"];
         }
         
-        if([contact objectForKey:@"phone"]){
-            [contact setValue:[FLHelper formatedPhone:[contact objectForKey:@"phone"]] forKey:@"phone"];
+        if(contact[@"phone"]){
+            [contact setValue:[FLHelper formatedPhone:contact[@"phone"]] forKey:@"phone"];
         }
         
-        if([contact objectForKey:@"phone"] && ![[contact objectForKey:@"phone"] isBlank]){
-            [contact setValue:[contact objectForKey:@"phone"] forKey:@"value"];
+        if(contact[@"phone"] && ![contact[@"phone"] isBlank]){
+            [contact setValue:contact[@"phone"] forKey:@"value"];
         }
-        else if([contact objectForKey:@"email"] && ![[contact objectForKey:@"email"] isBlank]){
-            [contact setValue:[contact objectForKey:@"email"] forKey:@"value"];
+        else if(contact[@"email"] && ![contact[@"email"] isBlank]){
+            [contact setValue:contact[@"email"] forKey:@"value"];
         }
-        else if([contact objectForKey:@"facebook_id"] && ![[contact objectForKey:@"facebook_id"] isBlank]){
-            [contact setValue:[contact objectForKey:@"facebook_id"] forKey:@"value"];
+        else if(contact[@"facebook_id"] && ![contact[@"facebook_id"] isBlank]){
+            [contact setValue:contact[@"facebook_id"] forKey:@"value"];
         }
         
         //Format téléphone
-        if([contact objectForKey:@"phone"]){
-            [contact setValue:[FLHelper formatedPhoneForDisplay:[contact objectForKey:@"phone"]] forKey:@"phone"];
+        if(contact[@"phone"]){
+            [contact setValue:[FLHelper formatedPhoneForDisplay:contact[@"phone"]] forKey:@"phone"];
         }
                 
         // Filtre les contacts invalide
-        if([contact objectForKey:@"title"] && [contact objectForKey:@"value"]){
+        if(contact[@"title"] && contact[@"value"]){
             [newContacts addObject:contact];
         }
     }
     
     newContacts = [[newContacts sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        return [[a objectForKey:@"title"] compare:[b objectForKey:@"title"]];
+        return [a[@"title"] compare:b[@"title"]];
     }] mutableCopy];
     
     return newContacts;
@@ -605,7 +605,7 @@
 {
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] eventInvite:_event friend:friend success:^(id result) {
-        [_event setJSON:[result objectForKey:@"item"]];
+        [_event setJSON:result[@"item"]];
     }];
 }
 
@@ -620,7 +620,7 @@
 - (void)keyboardDidAppear:(NSNotification *)notification
 {
     NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    CGFloat keyboardHeight = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
     _tableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
 }

@@ -119,8 +119,8 @@
 
 - (void)reloadData
 {
-    if(_dictionaryForFriendController && [_dictionaryForFriendController objectForKey:@"to"]){
-        NSString *text = [_dictionaryForFriendController objectForKey:@"to"];
+    if(_dictionaryForFriendController && _dictionaryForFriendController[@"to"]){
+        NSString *text = _dictionaryForFriendController[@"to"];
         
         if([_textfield.text isBlank]){
             _textfield.text = text;

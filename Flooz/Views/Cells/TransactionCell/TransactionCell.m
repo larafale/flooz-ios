@@ -533,7 +533,7 @@
     [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
 
     [[Flooz sharedInstance] createLikeOnTransaction:_transaction success:^(id result) {
-        [[_transaction social] setLikeText:[result objectForKey:@"item"]];
+        [[_transaction social] setLikeText:result[@"item"]];
 
         FLSocialView *view = [[rightView subviews] objectAtIndex:2];
         [view prepareView:_transaction.social];
@@ -558,7 +558,7 @@
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         
         if(indexPath){
-            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:result[@"item"]];
             [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
         }
     } failure:NULL];
@@ -577,7 +577,7 @@
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         
         if(indexPath){
-            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:result[@"item"]];
             [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
         }
     } failure:NULL];
@@ -597,7 +597,7 @@
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         
         if(indexPath){
-            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:result[@"item"]];
             [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
         }
     } failure:NULL];
@@ -616,7 +616,7 @@
         NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
         
         if(indexPath){
-            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:result[@"item"]];
             [_delegate updateTransactionAtIndex:indexPath transaction:transaction];
         }
     } failure:NULL];

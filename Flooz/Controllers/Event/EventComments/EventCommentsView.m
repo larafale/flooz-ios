@@ -192,7 +192,7 @@
     [[Flooz sharedInstance] createComment:comment success:^(id result) {
         [_textField setText:@""];
         
-        FLComment *comment = [[FLComment alloc] initWithJSON:[result objectForKey:@"item"]];
+        FLComment *comment = [[FLComment alloc] initWithJSON:result[@"item"]];
         NSMutableArray *comments = [[_event comments] mutableCopy];
         [comments addObject:comment];
         _event.comments = comments;

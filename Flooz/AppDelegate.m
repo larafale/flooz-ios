@@ -358,7 +358,7 @@
                 
                 [[Flooz sharedInstance] showLoadView];
                 [[Flooz sharedInstance] transactionWithId:resourceId success:^(id result) {
-                    FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                    FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:result[@"item"]];
                     TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:nil];
                     
                     currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
@@ -371,7 +371,7 @@
             else if([resource[@"type"] isEqualToString:@"event"]){
                 
                 [[Flooz sharedInstance] eventWithId:resourceId success:^(id result) {
-                    FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+                    FLEvent *event = [[FLEvent alloc] initWithJSON:result[@"item"]];
                     EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
                     
                     currentController.modalPresentationStyle = UIModalPresentationCurrentContext;

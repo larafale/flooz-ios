@@ -21,9 +21,9 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-    _cardId = [json objectForKey:@"_id"];
-    _owner = [json objectForKey:@"holder"];
-    _number = [json objectForKey:@"number"];
+    _cardId = json[@"_id"];
+    _owner = json[@"holder"];
+    _number = json[@"number"];
 }
 
 @end

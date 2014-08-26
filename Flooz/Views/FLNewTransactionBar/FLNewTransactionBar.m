@@ -25,7 +25,7 @@
         locationManager.delegate = self;
         
         isEvent = NO;
-//        if([[_dictionary objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeEvent]]){
+//        if([_dictionary[@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeEvent]]){
 //            isEvent = YES;
 //        }
         
@@ -73,11 +73,11 @@
     if(isEvent){
         imageButton.selected = NO;
         
-        if([_dictionary objectForKey:@"image"]){
+        if(_dictionary[@"image"]){
             imageButton.selected = YES;
             
             [[imageButton imageView] setContentMode:UIViewContentModeScaleAspectFit]; // Permet de garder proportion
-            [imageButton setImage:[UIImage imageWithData:[_dictionary objectForKey:@"image"]] forState:UIControlStateSelected];
+            [imageButton setImage:[UIImage imageWithData:_dictionary[@"image"]] forState:UIControlStateSelected];
         }
         
         return;
@@ -87,16 +87,16 @@
     imageButton.selected = NO;
     facebookButton.selected = NO;
     
-    if([_dictionary objectForKey:@"lat"]){
+    if(_dictionary[@"lat"]){
         localizeButton.selected = YES;
     }
-    if([_dictionary objectForKey:@"image"]){
+    if(_dictionary[@"image"]){
         imageButton.selected = YES;
         
         [[imageButton imageView] setContentMode:UIViewContentModeScaleAspectFit]; // Permet de garder proportion
-        [imageButton setImage:[UIImage imageWithData:[_dictionary objectForKey:@"image"]] forState:UIControlStateSelected];
+        [imageButton setImage:[UIImage imageWithData:_dictionary[@"image"]] forState:UIControlStateSelected];
     }
-    if([_dictionary objectForKey:@"share"]){
+    if(_dictionary[@"share"]){
         facebookButton.selected = YES;
     }
     
@@ -106,7 +106,7 @@
             currentIndex++;
         }
         for(NSInteger scope = currentIndex; scope <= TransactionScopePrivate; ++scope){
-            if([[_dictionary objectForKey:@"scope"] isEqualToString:[FLTransaction transactionScopeToParams:scope]]){
+            if([_dictionary[@"scope"] isEqualToString:[FLTransaction transactionScopeToParams:scope]]){
                 currentIndex = scope;
                 break;
             }
@@ -260,7 +260,7 @@
     }
     
     for(NSInteger scope = currentIndex; scope <= TransactionScopePrivate; ++scope){
-        if([[_dictionary objectForKey:@"scope"] isEqualToString:[FLTransaction transactionScopeToParams:scope]]){
+        if([_dictionary[@"scope"] isEqualToString:[FLTransaction transactionScopeToParams:scope]]){
             currentIndex = scope;
             break;
         }
@@ -330,7 +330,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *originalImage = (UIImage *)info[UIImagePickerControllerOriginalImage];
     
     UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
     

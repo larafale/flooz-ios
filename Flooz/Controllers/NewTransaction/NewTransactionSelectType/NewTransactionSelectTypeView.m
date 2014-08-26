@@ -21,7 +21,7 @@
         [self createButtons];
         [self createSeparator];
         
-        if([[_dictionary objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
+        if([_dictionary[@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]]){
             [self didButtonLeftTouch];
         }
         else{

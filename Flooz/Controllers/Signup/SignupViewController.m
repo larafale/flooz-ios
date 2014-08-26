@@ -59,10 +59,10 @@
     
     CGFloat offset = 0;
     
-    if([_user objectForKey:@"avatarURL"]){
+    if(_user[@"avatarURL"]){
         FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) / 2.) - (50 / 2.), 10, 50, 50)];
                 
-        [view setImageFromURL:[_user objectForKey:@"avatarURL"]];
+        [view setImageFromURL:_user[@"avatarURL"]];
         [_contentView addSubview:view];
         
         offset = CGRectGetMaxY(view.frame);
@@ -85,7 +85,7 @@
     }
     
     {
-        if([_user objectForKey:@"fb"]){
+        if(_user[@"fb"]){
             registerFacebook.hidden = YES;
         }
         
@@ -138,7 +138,7 @@
 {
     [super viewDidAppear:animated];
     
-    if([_user objectForKey:@"avatarURL"]){
+    if(_user[@"avatarURL"]){
         [username becomeFirstResponder];
         [[Flooz sharedInstance] socketSendSignupFocusUsername];
     }
@@ -172,7 +172,7 @@
 - (void)keyboardDidAppear:(NSNotification *)notification
 {
     NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    CGFloat keyboardHeight = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
 
     keyboardHeight += 50;
     

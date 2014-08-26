@@ -21,49 +21,49 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-    _eventId = [json objectForKey:@"_id"];
+    _eventId = json[@"_id"];
     
-    if([[json objectForKey:@"isInvited"] boolValue]){
+    if([json[@"isInvited"] boolValue]){
         _status = EventStatusPending;
     }
-    else if([[json objectForKey:@"isAttending"] boolValue]){
+    else if([json[@"isAttending"] boolValue]){
         _status = EventStatusAccepted;
     }
     else{
         _status = EventStatusRefused;
     }
     
-    _isNew = [[json objectForKey:@"isAttending"] boolValue];
+    _isNew = [json[@"isAttending"] boolValue];
     
-    _amount = [json objectForKey:@"amount"];
-    _amountCollected = [json objectForKey:@"total"];
-    _amountExpected = [json objectForKey:@"goal"];
+    _amount = json[@"amount"];
+    _amountCollected = json[@"total"];
+    _amountExpected = json[@"goal"];
     
     if([_amountExpected isEqualToNumber:@0]){
         _amountExpected = nil;
     }
         
-    _dayLeft = [json objectForKey:@"endWhen"];
-    _pourcentage = [json objectForKey:@"fulfilled"];
-    _isClosed = [[json objectForKey:@"closed"] boolValue];
+    _dayLeft = json[@"endWhen"];
+    _pourcentage = json[@"fulfilled"];
+    _isClosed = [json[@"closed"] boolValue];
     
     _isInvited = NO;
-    if([json objectForKey:@"isInvited"] && [[json objectForKey:@"isInvited"] boolValue]){
+    if(json[@"isInvited"] && [json[@"isInvited"] boolValue]){
         _isInvited = YES;
     }
         
-    _title = [json objectForKey:@"name"];
-    _content = [json objectForKey:@"why"];
+    _title = json[@"name"];
+    _content = json[@"why"];
     
-    _attachmentURL = [json objectForKey:@"pic"];
-    _attachmentThumbURL = [json objectForKey:@"picMini"];
+    _attachmentURL = json[@"pic"];
+    _attachmentThumbURL = json[@"picMini"];
     
     _social = [[FLSocial alloc] initWithJSON:json];
 //    _social.scope = SocialScopeNone;
     
     _isCreator = [json[@"isCreator"] boolValue];
     
-    if([[json objectForKey:@"scope"] intValue] == 1){
+    if([json[@"scope"] intValue] == 1){
         _scope = TransactionScopeFriend;
         _social.scope = SocialScopeFriend;
     }
@@ -74,7 +74,7 @@
     
     {
         _isPrivate = NO;
-        if([[json objectForKey:@"canParticipate"] boolValue]){
+        if([json[@"canParticipate"] boolValue]){
             _isPrivate = YES;
         }
     }
@@ -82,7 +82,7 @@
     {
         _canParticipate = NO;
         
-        if([[json objectForKey:@"actions"] objectForKey:@"1"]){
+        if(json[@"actions"][@"1"]){
             _canParticipate = YES;
         }
     }
@@ -90,7 +90,7 @@
     {
         _canInvite = NO;
         
-        if([[json objectForKey:@"actions"] objectForKey:@"2"]){
+        if(json[@"actions"][@"2"]){
             _canInvite = YES;
         }
     }
@@ -98,7 +98,7 @@
     {
         _canGiveOrTakeOffer = NO;
         
-        if([[json objectForKey:@"actions"] objectForKey:@"3"]){
+        if(json[@"actions"][@"3"]){
             _canGiveOrTakeOffer = YES;
         }
     }
@@ -106,7 +106,7 @@
     {
         _canCancelOffer = NO;
         
-        if([[json objectForKey:@"actions"] objectForKey:@"5"]){
+        if(json[@"actions"][@"5"]){
             _canCancelOffer = YES;
         }
     }
@@ -114,7 +114,7 @@
     {
         _canAcceptOrDeclineOffer = NO;
         
-        if([[json objectForKey:@"actions"] objectForKey:@"6"]){ // 6 decliner offre et 7 accepter
+        if(json[@"actions"][@"6"]){ // 6 decliner offre et 7 accepter
             _canAcceptOrDeclineOffer = YES;
         }
     }
@@ -122,7 +122,7 @@
     {
         _canDeclineInvite = NO;
         
-        if([[json objectForKey:@"actions"] objectForKey:@"8"]){
+        if(json[@"actions"][@"8"]){
             _canDeclineInvite = YES;
         }
     }
@@ -131,16 +131,16 @@
 //    {
 //        _canInvite = NO;
 //        
-//        if([[json objectForKey:@"isCreator"] boolValue] && ![[json objectForKey:@"closed"] boolValue]){
+//        if([json[@"isCreator"] boolValue] && ![json[@"closed"] boolValue]){
 //            _canInvite = YES;
 //        }
 //    }
     
-    _creator = [[FLUser alloc] initWithJSON:[json objectForKey:@"creator"]];
+    _creator = [[FLUser alloc] initWithJSON:json[@"creator"]];
     
     {
         NSMutableArray *participants = [NSMutableArray new];
-        for(NSDictionary *participantJSON in [json objectForKey:@"participants"]){
+        for(NSDictionary *participantJSON in json[@"participants"]){
             [participants addObject:[[FLUser alloc] initWithJSON:participantJSON]];
         }
         _participants = participants;
@@ -154,12 +154,12 @@
             [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
         }
         
-        _date = [dateFormatter dateFromString:[json objectForKey:@"cAt"]];
+        _date = [dateFormatter dateFromString:json[@"cAt"]];
     }
     
     {
         NSMutableArray *comments = [NSMutableArray new];
-        for(NSDictionary *commentJSON in [json objectForKey:@"comments"]){
+        for(NSDictionary *commentJSON in json[@"comments"]){
             [comments addObject:[[FLComment alloc] initWithJSON:commentJSON]];
         }
         _comments = comments;

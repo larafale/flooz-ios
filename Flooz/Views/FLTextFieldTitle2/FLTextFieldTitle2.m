@@ -22,7 +22,7 @@
         [self createTextField:placeholder];
         [self createBottomBar];
         
-        _textfield.text = [_dictionary objectForKey:_dictionaryKey];
+        _textfield.text = _dictionary[_dictionaryKey];
     }
     return self;
 }
@@ -167,15 +167,15 @@
     [self setTextFieldValueForStyle];
     
     if([_textfield isFirstResponder]){
-        if(_style == FLTextFieldTitle2StyleCardNumber && [[_dictionary objectForKey:_dictionaryKey] length] == 16){
+        if(_style == FLTextFieldTitle2StyleCardNumber && [_dictionary[_dictionaryKey] length] == 16){
             [_textfield resignFirstResponder];
             [_target performSelector:_action];
         }
-        else if(_style == FLTextFieldTitle2StyleCardExpire && [[_dictionary objectForKey:_dictionaryKey] length] == 5){
+        else if(_style == FLTextFieldTitle2StyleCardExpire && [_dictionary[_dictionaryKey] length] == 5){
             [_textfield resignFirstResponder];
             [_target performSelector:_action];
         }
-        else if(_style == FLTextFieldTitle2StyleCVV && [[_dictionary objectForKey:_dictionaryKey] length] == 3){
+        else if(_style == FLTextFieldTitle2StyleCVV && [_dictionary[_dictionaryKey] length] == 3){
             [_textfield resignFirstResponder];
             [_target performSelector:_action];
         }
@@ -187,27 +187,27 @@
     NSString *text = @"";
     
     if(_style == FLTextFieldTitle2StyleCardNumber){
-        for(int i = 0; i < [[_dictionary objectForKey:_dictionaryKey] length]; ++i){
-            text = [text stringByAppendingString:[[_dictionary objectForKey:_dictionaryKey] substringWithRange:NSMakeRange(i, 1)]];
+        for(int i = 0; i < [_dictionary[_dictionaryKey] length]; ++i){
+            text = [text stringByAppendingString:[_dictionary[_dictionaryKey] substringWithRange:NSMakeRange(i, 1)]];
             
-            if(i % 4 == 3 && i != [[_dictionary objectForKey:_dictionaryKey] length] - 1){
+            if(i % 4 == 3 && i != [_dictionary[_dictionaryKey] length] - 1){
                 text = [text stringByAppendingString:@" "];
             }
         }
     }
     else if(_style == FLTextFieldTitle2StyleCardExpire){
-        for(int i = 0; i < [[_dictionary objectForKey:_dictionaryKey] length]; ++i){
-            text = [text stringByAppendingString:[[_dictionary objectForKey:_dictionaryKey] substringWithRange:NSMakeRange(i, 1)]];
+        for(int i = 0; i < [_dictionary[_dictionaryKey] length]; ++i){
+            text = [text stringByAppendingString:[_dictionary[_dictionaryKey] substringWithRange:NSMakeRange(i, 1)]];
             
             if(i == 1
                &&
-               i != [[_dictionary objectForKey:_dictionaryKey] length] - 1
+               i != [_dictionary[_dictionaryKey] length] - 1
                &&
                (
-               ([[_dictionary objectForKey:_dictionaryKey] length] == 2)
+               ([_dictionary[_dictionaryKey] length] == 2)
                ||
                
-               ([[_dictionary objectForKey:_dictionaryKey] length] > 2 && ![[[_dictionary objectForKey:_dictionaryKey] substringWithRange:NSMakeRange(2, 1)] isEqualToString:@"-"])
+               ([_dictionary[_dictionaryKey] length] > 2 && ![[_dictionary[_dictionaryKey] substringWithRange:NSMakeRange(2, 1)] isEqualToString:@"-"])
                )
                )
             {
@@ -216,7 +216,7 @@
         }
     }
     else{
-        text = [_dictionary objectForKey:_dictionaryKey];
+        text = _dictionary[_dictionaryKey];
     }
 
     _textfield.text = text;
