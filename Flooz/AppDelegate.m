@@ -589,4 +589,16 @@
      ];
 }
 
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	[super touchesBegan:touches withEvent:event];
+    CGPoint location = [[[event allTouches] anyObject] locationInView:[self window]];
+	if(location.y > 0 && location.y < 20) {
+		[self touchStatusBar];
+	}
+}
+
+- (void) touchStatusBar {
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationTouchStatusBarClick object:nil];
+}
+
 @end

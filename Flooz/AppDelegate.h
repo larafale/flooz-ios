@@ -11,6 +11,8 @@
 #import "FirstLaunchViewController.h"
 #import "FLAlertView.h"
 
+static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBarClick";
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UIActionSheetDelegate>{
     NSDate *lastErrorDate;
     NSInteger lastErrorCode;
