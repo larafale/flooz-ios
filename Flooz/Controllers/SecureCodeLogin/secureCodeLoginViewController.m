@@ -100,7 +100,7 @@
     CGRectSetHeight(textExplication.frame, s.height);
     
     CGSize s2 = [self sizeExpectedForView:secondTextExplication];
-    CGRectSetHeight(textExplication.frame, s2.height*2);
+    CGRectSetHeight(secondTextExplication.frame, s2.height*2);
     
     CGRectSetY(_secureCodeField.frame, CGRectGetMaxY(textExplication.frame) + 5.0f);
     CGRectSetY(secondTextExplication.frame, CGRectGetMaxY(_secureCodeField.frame));
@@ -109,7 +109,7 @@
     [backView addSubview:_mainContent];
     
     {
-        passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(backView.frame) - 50, CGRectGetWidth(self.view.frame), 50)];
+        passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(backView.frame) - 50, PPScreenWidth(), 50)];
         passwordForget.titleLabel.textAlignment = NSTextAlignmentCenter;
         passwordForget.titleLabel.font = [UIFont customContentRegular:12];
         [passwordForget setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
