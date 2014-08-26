@@ -38,7 +38,7 @@
 
 - (void) createCurrencySymbol:(NSString *)symbol {
     currency = [[UILabel alloc] initWithFrame:CGRectMake(5, MARGE_TOP - 2.5, 49, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
-    currency.font = [UIFont customTitleThin:55];
+    currency.font = [UIFont customTitleThin:45];
     currency.textColor = [UIColor whiteColor];
     currency.text = symbol;
     currency.textAlignment = NSTextAlignmentCenter;
@@ -56,7 +56,7 @@
     
     _textfield.delegate = self;
     
-    _textfield.font = [UIFont customTitleThin:40];
+    _textfield.font = [UIFont customTitleThin:35];
     _textfield.textAlignment = NSTextAlignmentLeft;
     _textfield.textColor = [UIColor whiteColor];
     
