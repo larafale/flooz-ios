@@ -146,6 +146,10 @@
             [_secureCodeField clean];
         }
             break;
+        case SignupPageCodeVerif: {
+            [_secureCodeField clean];
+        }
+            break;
         case SignupPagePassword: {
             [_userDic setValue:@"" forKey:@"password"];
             [_userDic setValue:@"" forKey:@"confirmation"];
@@ -826,7 +830,6 @@
     
     currentSecureMode = SecureCodeModeChangeConfirm;
     
-    
     _mainContent = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
     CGRectSetY(_secureCodeField.frame, 0);
     [_mainContent addSubview:_secureCodeField];
@@ -843,6 +846,11 @@
     else if(currentSecureMode == SecureCodeModeChangeConfirm){
         if ([_userDic[@"secureCode"] isEqualToString:secureCode]) {
             [[Flooz sharedInstance] showLoadView];
+            
+            NSString *deviceToken = [appDelegate currentDeviceToken];
+            if (deviceToken) {
+                [_userDic setValue:deviceToken forKeyPath:@"device"];
+            }
             [[Flooz sharedInstance] signup:_userDic success:^(id result) {
                 [[Flooz sharedInstance] hideLoadView];
                 [UICKeyChainStore setString:secureCode forKey:[self keyForSecureCode]];
@@ -1187,6 +1195,8 @@
         
         NSIndexSet *index = [[NSIndexSet alloc] initWithIndex:0];
         [_contactsTableView reloadSections:index withRowAnimation:UITableViewRowAnimationTop];
+        NSIndexSet *index1 = [[NSIndexSet alloc] initWithIndex:1];
+        [_contactsTableView reloadSections:index1 withRowAnimation:UITableViewRowAnimationTop];
         [_contactsTableView endUpdates];
     }
 }
@@ -1291,13 +1301,13 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if(section == 0 && !_contactFromFlooz.count){
-        return 0;
+    if(section == 0 && _contactFromFlooz.count){
+        return 28;
     }
-    else if(section == 1 && !_contactInfoArray.count){
-        return 0;
+    else if(section == 1 && _contactInfoArray.count){
+        return 28;
     }
-    return 28;
+    return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
