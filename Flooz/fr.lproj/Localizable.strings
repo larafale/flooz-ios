@@ -152,6 +152,9 @@
 
 "FRIEND_PCIKER_SELECTION_CELL" = "Sélectionner ce contact :";
 
+"FRIEND_REQUEST_ACCEPT" = "Accepter";
+"FRIEND_REQUEST_REFUSE" = "Refuser";
+
 "TRANSACTION_FIELD_GOAL" = "Montant / pers. (facultatif)";
 
 "TRANSACTION_ACTION_ACCEPT" = "ACCEPTER";

@@ -102,6 +102,7 @@
 
 - (void)createButtons
 {
+    return;
     {
         UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 100, 11, 37, 28)];
         [view setImage:[UIImage imageNamed:@"friend-decline"] forState:UIControlStateNormal];

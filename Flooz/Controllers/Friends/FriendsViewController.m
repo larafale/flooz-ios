@@ -20,6 +20,7 @@
     NSArray *friends;
     
     BOOL isSearching;
+    FLFriendRequest *currentFriendR;
 }
 
 @end
@@ -141,7 +142,7 @@
         
         label.textColor = [UIColor customBlueLight];
         
-        label.font = [UIFont customContentRegular:10];
+        label.font = [UIFont customContentRegular:14];
         label.text = [self tableView:tableView titleForHeaderInSection:section];
         label.textAlignment = NSTextAlignmentCenter;
 //        [label setWidthToFit];
@@ -257,7 +258,9 @@
         user = [friendsSearch objectAtIndex:indexPath.row];
     }
     else if(indexPath.section == 1){
-//        user = [friendsRequest objectAtIndex:indexPath.row];
+        FLFriendRequest *friendRequest = [friendsRequest objectAtIndex:indexPath.row];
+        [self showMenuForFriendRequest:friendRequest];
+        return;
     }
     else if(indexPath.section == 2){
         user = [friendsSuggestion objectAtIndex:indexPath.row];
@@ -268,6 +271,51 @@
     
     if(user){
         [appDelegate showMenuForUser:user imageView:nil canRemoveFriend:YES];
+    }
+}
+
+- (void)showMenuForFriendRequest:(FLFriendRequest *)friendR
+{
+    if(!friendR || ![friendR requestId]) {
+        return;
+    }
+    
+    currentFriendR = friendR;
+    
+    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_ACCEPT", nil)];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_REFUSE", nil)];
+    
+    if([friendR.user avatarURL]){
+        [actionSheet addButtonWithTitle:NSLocalizedString(@"MENU_AVATAR", nil)];
+    }
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet showInView:self.view.window];
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0){
+        //Accepter
+        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": [currentFriendR requestId], @"action": @"accept" } success:^{
+            [self didReloadData];
+        }];
+    }
+    else if(buttonIndex == 1){
+        //Refuser
+        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": [currentFriendR requestId], @"action": @"decline" } success:^{
+            [self didReloadData];
+        }];
+    }
+    else if(buttonIndex == 2 && [currentFriendR.user avatarURL]){
+        //showAvatar();
+    }
+    else if(buttonIndex == 2){
+        
     }
 }
 
