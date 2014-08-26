@@ -21,14 +21,7 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-    if([json objectForKey:@"userId"]){
-        _userId = [json objectForKey:@"userId"];
-        
-        if([json objectForKey:@"_id"]){
-            _friendRelationId = [json objectForKey:@"_id"];
-        }
-    }
-    else{
+    if([json objectForKey:@"_id"]){
         _userId = [json objectForKey:@"_id"];
     }
     

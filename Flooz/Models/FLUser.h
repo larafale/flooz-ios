@@ -36,7 +36,6 @@
 @property NSDictionary *checkDocuments;
 @property FLCreditCard *creditCard;
 
-@property NSString *friendRelationId;
 @property NSArray *friends;
 @property NSArray *friendsRecent;
 @property NSArray *friendsRequest;

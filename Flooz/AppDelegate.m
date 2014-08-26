@@ -514,7 +514,7 @@
         }
         
         if(isFriend){
-            [[Flooz sharedInstance] friendRemove:[currentUserForMenu friendRelationId] success:nil];
+            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success:nil];
         }
         else{
             [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:nil];

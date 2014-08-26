@@ -103,7 +103,7 @@
 }
 
 - (void)didButtonTouch{
-    [_delegate removeFriend:[_friend friendRelationId]];
+    [_delegate removeFriend:[_friend userId]];
 }
 
 @end
