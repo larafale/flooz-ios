@@ -885,6 +885,9 @@
          [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
              [self hideLoadView];
              if (!error) {
+                 NSDictionary *dicDevices = [NSDictionary new];
+                 if (result[@"devices"])
+                     dicDevices = result[@"devices"];
                  NSDictionary *user = @{
                                         @"email": result[@"email"],
                                         @"lastName": result[@"last_name"],
@@ -893,6 +896,7 @@
                                         @"fullName": result[@"name"],
                                         @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", result[@"id"]],
                                         @"fb": @{
+                                                @"devices": dicDevices,
                                                 @"email": result[@"email"],
                                                 @"id": result[@"id"],
                                                 @"name": result[@"name"],
@@ -938,9 +942,12 @@
             [self hideLoadView];
             
             if (!error) {
+                NSDictionary *dicDevices = [NSDictionary new];
+                if (result[@"devices"])
+                    dicDevices = result[@"devices"];
                 NSDictionary *user = @{
                                        @"fb": @{
-                                               @"devices": result[@"devices"],
+                                               @"devices": dicDevices,
                                                @"email": result[@"email"],
                                                @"id": result[@"id"],
                                                @"name": result[@"name"],
@@ -965,18 +972,21 @@
                 [self hideLoadView];
                 
                 if (!error) {
+                    NSDictionary *dicDevices = [NSDictionary new];
+                    if (result[@"devices"])
+                        dicDevices = result[@"devices"];
                     NSDictionary *user = @{
                                            @"email": result[@"email"],
                                            @"lastName": result[@"last_name"],
                                            @"firstName": result[@"first_name"],
                                            @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", result[@"id"]],
                                            @"fb": @{
-                                                     @"devices": result[@"devices"],
-                                                     @"email": result[@"email"],
-                                                     @"id": result[@"id"],
-                                                     @"name": result[@"name"],
-                                                     @"token": _facebook_token
-                                                     }
+                                                   @"devices": dicDevices,
+                                                   @"email": result[@"email"],
+                                                   @"id": result[@"id"],
+                                                   @"name": result[@"name"],
+                                                   @"token": _facebook_token
+                                                   }
                                            };
                     
                     [appDelegate showSignupAfterFacebookWithUser:user];
@@ -1066,7 +1076,7 @@
         return;
     }
     
-    [self updateUser:@{ @"settings": @{@"device": appDelegate.currentDeviceToken }} success:^(id result) {
+    [self updateUser:@{@"device": appDelegate.currentDeviceToken } success:^(id result) {
         _currentUser.deviceToken = appDelegate.currentDeviceToken;
     } failure:nil];
 }
