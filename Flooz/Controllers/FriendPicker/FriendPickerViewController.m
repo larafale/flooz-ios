@@ -133,7 +133,7 @@
         
         label.textColor = [UIColor customBlueLight];
         
-        label.font = [UIFont customContentRegular:10];
+        label.font = [UIFont customContentRegular:14];
         label.text = [self tableView:tableView titleForHeaderInSection:section];
         [label setWidthToFit];
         
