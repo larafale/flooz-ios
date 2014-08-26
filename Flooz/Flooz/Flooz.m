@@ -169,7 +169,7 @@
 - (void)updateCurrentUserWithSuccess:(void (^)())success failure:(void (^)(NSError *error))failure
 {
     id successBlock = ^(id result) {
-        _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
+        _currentUser = [[FLUser alloc] initWithJSON:result[@"item"]];
         _facebook_token = result[@"item"][@"fb"][@"token"];
         
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
@@ -185,7 +185,7 @@
 - (void)updateUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
     [self requestPath:@"profile" method:@"PUT" params:user success:^(id result) {
-        _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
+        _currentUser = [[FLUser alloc] initWithJSON:result[@"item"]];
         
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
         
@@ -227,7 +227,7 @@
         [_currentUser updateStatsPending:result];
         
         if(success){
-            success(transactions, [result objectForKey:@"next"]);
+            success(transactions, result[@"next"]);
         }
     };
     
@@ -248,7 +248,7 @@
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
         if(success){
-            success(transactions, [result objectForKey:@"next"]);
+            success(transactions, result[@"next"]);
         }
     };
     
@@ -267,7 +267,7 @@
         NSMutableArray *activities = [self createActivityArrayFromResult:result];
         if(success){
             _activitiesCached = activities;
-            success(activities, [result objectForKey:@"next"]);
+            success(activities, result[@"next"]);
         }
     };
     
@@ -279,7 +279,7 @@
     id successBlock = ^(id result) {
         NSMutableArray *activities = [self createActivityArrayFromResult:result];
         if(success){
-            success(activities, [result objectForKey:@"next"]);
+            success(activities, result[@"next"]);
         }
     };
     
@@ -296,7 +296,7 @@
     id successBlock = ^(id result) {
         NSMutableArray *events = [self createEventArrayFromResult:result];
         if(success){
-            success(events, [result objectForKey:@"next"]);
+            success(events, result[@"next"]);
         }
     };
     
@@ -308,7 +308,7 @@
     id successBlock = ^(id result) {
         NSMutableArray *events = [self createEventArrayFromResult:result];
         if(success){
-            success(events, [result objectForKey:@"next"]);
+            success(events, result[@"next"]);
         }
     };
     
@@ -486,7 +486,7 @@
 {
     id successBlock = ^(id result) {
         if(success){
-            [_currentUser setCreditCard:[[FLCreditCard alloc] initWithJSON:[result objectForKey:@"item"]]];
+            [_currentUser setCreditCard:[[FLCreditCard alloc] initWithJSON:result[@"item"]]];
             success(result);
         }
     };
@@ -800,10 +800,10 @@
 
 - (void)updateCurrentUserAfterSignup:(id)result
 {
-    access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
+    access_token = [[result[@"items"] objectAtIndex:0] objectForKey:@"token"];
     [UICKeyChainStore setString:access_token forKey:@"login-token"];
     
-    _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
+    _currentUser = [[FLUser alloc] initWithJSON:[result[@"items"] objectAtIndex:1]];
     _facebook_token = result[@"items"][1][@"fb"][@"token"];
     
     [appDelegate didConnected];
@@ -814,10 +814,10 @@
 
 - (void)updateCurrentUserAfterConnect:(id)result
 {
-    access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
+    access_token = [[result[@"items"] objectAtIndex:0] objectForKey:@"token"];
     [UICKeyChainStore setString:access_token forKey:@"login-token"];
     
-    _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
+    _currentUser = [[FLUser alloc] initWithJSON:[result[@"items"] objectAtIndex:1]];
     _facebook_token = result[@"items"][1][@"fb"][@"token"];
     
     [appDelegate didConnected];
@@ -829,10 +829,10 @@
 
 - (void)updateCurrentUserAfterConnectAndAskCode:(id)result
 {
-    access_token = [[[result objectForKey:@"items"] objectAtIndex:0] objectForKey:@"token"];
+    access_token = [[result[@"items"] objectAtIndex:0] objectForKey:@"token"];
     [UICKeyChainStore setString:access_token forKey:@"login-token"];
     
-    _currentUser = [[FLUser alloc] initWithJSON:[[result objectForKey:@"items"] objectAtIndex:1]];
+    _currentUser = [[FLUser alloc] initWithJSON:[result[@"items"] objectAtIndex:1]];
     _facebook_token = result[@"items"][1][@"fb"][@"token"];
     
     [appDelegate didConnected];
@@ -880,12 +880,21 @@
              [self hideLoadView];
              if (!error) {
                  NSDictionary *user = @{
-                                        @"email": [result objectForKey:@"email"],
-                                        @"lastName": [result objectForKey:@"last_name"],
-                                        @"firstName": [result objectForKey:@"first_name"],
-                                        @"idFacebook": [result objectForKey:@"id"],
-                                        @"fullName": [result objectForKey:@"name"],
-                                        @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", [result objectForKey:@"id"]]};
+                                        @"email": result[@"email"],
+                                        @"lastName": result[@"last_name"],
+                                        @"firstName": result[@"first_name"],
+                                        @"idFacebook": result[@"id"],
+                                        @"fullName": result[@"name"],
+                                        @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", result[@"id"]],
+                                        @"fb": @{
+                                                @"email": result[@"email"],
+                                                @"id": result[@"id"],
+                                                @"name": result[@"name"],
+                                                @"lastName": result[@"last_name"],
+                                                @"firstName": result[@"first_name"],
+                                                @"token": _facebook_token
+                                                }
+                                        };
                  
                  [appDelegate showSignupAfterFacebookWithUser:user];
              }
@@ -925,10 +934,10 @@
             if (!error) {
                 NSDictionary *user = @{
                                        @"fb": @{
-                                               @"devices": [result objectForKey:@"devices"],
-                                               @"email": [result objectForKey:@"email"],
-                                               @"id": [result objectForKey:@"id"],
-                                               @"name": [result objectForKey:@"name"],
+                                               @"devices": result[@"devices"],
+                                               @"email": result[@"email"],
+                                               @"id": result[@"id"],
+                                               @"name": result[@"name"],
                                                @"token": _facebook_token
                                                }
                                        };
@@ -951,17 +960,17 @@
                 
                 if (!error) {
                     NSDictionary *user = @{
-                                           @"email": [result objectForKey:@"email"],
-                                           @"lastName": [result objectForKey:@"last_name"],
-                                           @"firstName": [result objectForKey:@"first_name"],
-                                           @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", [result objectForKey:@"id"]]/*,
-                                                                                                                                                                                @"fb": [@{
-                                                                                                                                                                                @"devices": [result objectForKey:@"devices"],
-                                                                                                                                                                                @"email": [result objectForKey:@"email"],
-                                                                                                                                                                                @"id": [result objectForKey:@"id"],
-                                                                                                                                                                                @"name": [result objectForKey:@"name"],
-                                                                                                                                                                                @"token": _facebook_token
-                                                                                                                                                                                } mutableCopy]*/
+                                           @"email": result[@"email"],
+                                           @"lastName": result[@"last_name"],
+                                           @"firstName": result[@"first_name"],
+                                           @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", result[@"id"]],
+                                           @"fb": @{
+                                                     @"devices": result[@"devices"],
+                                                     @"email": result[@"email"],
+                                                     @"id": result[@"id"],
+                                                     @"name": result[@"name"],
+                                                     @"token": _facebook_token
+                                                     }
                                            };
                     
                     [appDelegate showSignupAfterFacebookWithUser:user];
@@ -981,7 +990,7 @@
         [self hideLoadView];
         
         if (!error) {
-            success([result objectForKey:@"data"]);
+            success(result[@"data"]);
         } else {
             NSLog(@"facebokSearchFriends: %@", [error description]);
         }

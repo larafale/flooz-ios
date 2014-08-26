@@ -122,19 +122,19 @@
 - (void)displayChanges {
     switch (_pageIndex) {
         case SignupPageInfo: {
+            [_name reloadTextField];
+            [_email reloadTextField];
+            [self canValidate:_email];
             if(_userDic[@"avatarURL"] && ![_userDic[@"avatarURL"] isBlank]){
                 [_avatarView setImageFromURL:_userDic[@"avatarURL"]];
                 [_avatarView setHidden:NO];
                 [_registerFacebook setHidden:YES];
-                [self animateValidButton];
+                [self.view endEditing:YES];
             }
             else {
                 [_avatarView setHidden:YES];
                 [_registerFacebook setHidden:NO];
             }
-            [_name reloadTextField];
-            [_email reloadTextField];
-            [self canValidate:_email];
         }
             break;
         case SignupPagePseudo: {
@@ -626,7 +626,7 @@
     [self createFacebookButton];
     [_mainBody addSubview:_registerFacebook];
     
-    _avatarView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(_mainBody.frame) / 2.0f) - (50 / 2.0f), -10, 50, 50)];
+    _avatarView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(_mainBody.frame) / 2.0f) - (50 / 2.0f), 0, 50, 50)];
     [_mainBody addSubview:_avatarView];
     [_avatarView setHidden:YES];
     
@@ -663,7 +663,7 @@
 }
 
 - (void) checkEmail {
-    if (!_userDic[@"lastName"] || !_userDic[@"firstName"] || [_userDic[@"lastName"] isBlank] || [_userDic[@"lastName"] isBlank]) {
+    if (!_userDic[@"lastName"] || !_userDic[@"firstName"] || [_userDic[@"lastName"] isBlank] || [_userDic[@"firstName"] isBlank]) {
         [_firstTextFieldToFocus becomeFirstResponder];
         return;
     }
