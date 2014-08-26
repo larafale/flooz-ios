@@ -524,9 +524,9 @@
     [self requestPath:@"/friends/suggestion" method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
-- (void)friendRemove:(NSString *)friendRelationId success:(void (^)())success
+- (void)friendRemove:(NSString *)friendId success:(void (^)())success
 {
-    NSString *path = [@"/friends/" stringByAppendingFormat:@"%@/delete", friendRelationId];
+    NSString *path = [@"/friends/" stringByAppendingFormat:@"%@/delete", friendId];
     [self requestPath:path method:@"GET" params:nil success:success failure:nil];
 }
 

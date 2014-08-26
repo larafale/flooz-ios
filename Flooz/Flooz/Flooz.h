@@ -99,7 +99,7 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success;
 - (void)friendsSuggestion:(void (^)(id result))success;
-- (void)friendRemove:(NSString *)friendRelationId success:(void (^)())success;
+- (void)friendRemove:(NSString *)friendId success:(void (^)())success;
 - (void)friendAcceptSuggestion:(NSString *)friendId success:(void (^)())success;
 - (void)friendSearch:(NSString *)text success:(void (^)(id result))success;
 
