@@ -105,6 +105,12 @@
         }
     };
     
+    NSMutableDictionary *userM = [user mutableCopy];
+    NSString *deviceToken = [appDelegate currentDeviceToken];
+    if (deviceToken) {
+        [userM setValue:deviceToken forKeyPath:@"device"];
+        user = [userM copy];
+    }
     [self requestPath:@"signup" method:@"POST" params:user success:successBlock failure:failure];
 }
 
