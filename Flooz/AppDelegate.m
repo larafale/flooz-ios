@@ -79,8 +79,6 @@
     [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
 #endif
     
-    //[[HHRouter shared] map:@"/user/:userId/" toControllerClass:NSClassFromString(@"NewTransactionViewController")];
-    
     [self handlePushMessage:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] withApplication:application];
     
     return YES;
@@ -335,58 +333,62 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [self handlePushMessage:userInfo withApplication:application];
-}
-
-- (void) handlePushMessage:(NSDictionary *)userInfo withApplication:(UIApplication *)application
-{
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateActive) {
         return;
     }
     
-    NSDictionary *resource = userInfo[@"resource"];
-    if([[Flooz sharedInstance] currentUser] && resource){
-        NSString *resourceId = resource[@"resourceId"];
-        
-        FLContainerViewController *currentController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
-        
-        self.window.rootViewController = currentController;
-        
-        if([resource[@"type"] isEqualToString:@"line"]){
+    [self handlePushMessage:userInfo withApplication:application];
+}
+
+- (void) handlePushMessage:(NSDictionary *)userInfo withApplication:(UIApplication *)application
+{
+    double delayInSeconds = 0.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSDictionary *resource = userInfo[@"resource"];
+        if([[Flooz sharedInstance] currentUser] && resource){
+            NSString *resourceId = resource[@"resourceId"];
             
-            [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] transactionWithId:resourceId success:^(id result) {
-                FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-                TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:nil];
+            FLContainerViewController *currentController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
+            
+            self.window.rootViewController = currentController;
+            
+            if([resource[@"type"] isEqualToString:@"line"]){
                 
-                currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
-                [currentController presentViewController:controller animated:NO completion:^{
-                    currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+                [[Flooz sharedInstance] showLoadView];
+                [[Flooz sharedInstance] transactionWithId:resourceId success:^(id result) {
+                    FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                    TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:nil];
+                    
+                    currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                    [currentController presentViewController:controller animated:NO completion:^{
+                        currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+                    }];
                 }];
-            }];
-            
-        }
-        else if([resource[@"type"] isEqualToString:@"event"]){
-            
-            [[Flooz sharedInstance] eventWithId:resourceId success:^(id result) {
-                FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
-                EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
                 
-                currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
-                [currentController presentViewController:controller animated:NO completion:^{
-                    currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
+            else if([resource[@"type"] isEqualToString:@"event"]){
+                
+                [[Flooz sharedInstance] eventWithId:resourceId success:^(id result) {
+                    FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+                    EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
+                    
+                    currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                    [currentController presentViewController:controller animated:NO completion:^{
+                        currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+                    }];
                 }];
-            }];
-            
+                
+            }
+            else if([resource[@"type"] isEqualToString:@"friend"]){
+                
+                FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
+                [currentController presentViewController:controller animated:YES completion:NULL];
+                
+            }
         }
-        else if([resource[@"type"] isEqualToString:@"friend"]){
-            
-            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
-            [currentController presentViewController:controller animated:YES completion:NULL];
-            
-        }
-    }
+    });
 }
 
 #pragma mark - Image fullscreen
