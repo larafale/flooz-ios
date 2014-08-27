@@ -15,6 +15,7 @@
     UIButton *imageButton;
     UIButton *facebookButton;
     UIButton *privacyButton;
+    UILabel *circle;
     
     __weak NSMutableDictionary *_dictionary;
     CLLocationManager *locationManager;

@@ -25,37 +25,37 @@
         locationManager.delegate = self;
         
         isEvent = NO;
-//        if([[_dictionary objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeEvent]]){
-//            isEvent = YES;
-//        }
+        //        if([[_dictionary objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeEvent]]){
+        //            isEvent = YES;
+        //        }
         
-//        [self createLocalizeButton];
-//        [self createImageButton];
-//        [self createFacebookButton];
-//        [self createSeparator];
-//        [self createPrivacyButton];
-//        
-//        if(isEvent){
-//            [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopeFriend] forKey:@"scope"];
-//             [privacyButton setTitle:[FLEvent eventScopeToText:TransactionScopeFriend] forState:UIControlStateNormal];
-//            [privacyButton setImage:[FLEvent eventScopeToImage:TransactionScopeFriend] forState:UIControlStateNormal];
-//        }
-//        else{
-//            [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
-//            [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
-//            [privacyButton setImage:[FLTransaction transactionScopeToImage:TransactionScopePublic] forState:UIControlStateNormal];
-//        }
+        //        [self createLocalizeButton];
+        //        [self createImageButton];
+        //        [self createFacebookButton];
+        //        [self createSeparator];
+        //        [self createPrivacyButton];
+        //
+        //        if(isEvent){
+        //            [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopeFriend] forKey:@"scope"];
+        //             [privacyButton setTitle:[FLEvent eventScopeToText:TransactionScopeFriend] forState:UIControlStateNormal];
+        //            [privacyButton setImage:[FLEvent eventScopeToImage:TransactionScopeFriend] forState:UIControlStateNormal];
+        //        }
+        //        else{
+        //            [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
+        //            [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
+        //            [privacyButton setImage:[FLTransaction transactionScopeToImage:TransactionScopePublic] forState:UIControlStateNormal];
+        //        }
         
         
         if(!isEvent){
             [self createLocalizeButton];
             [self createImageButton];
             [self createFacebookButton];
-//            [self createSeparator];
+            //            [self createSeparator];
             [self createPrivacyButton];
             
             if(isEvent){
-         
+                
                 [_dictionary setValue:[FLTransaction transactionScopeToParams:TransactionScopePublic] forKey:@"scope"];
                 [privacyButton setTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] forState:UIControlStateNormal];
                 [privacyButton setImage:[FLTransaction transactionScopeToImage:TransactionScopePublic] forState:UIControlStateNormal];
@@ -141,8 +141,8 @@
 
 - (void)createImageButton
 {
-//    imageButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(localizeButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
-
+    //    imageButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(localizeButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
+    
     imageButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
     
     [imageButton setImage:[UIImage imageNamed:@"new-transaction-bar-image"] forState:UIControlStateNormal];
@@ -156,7 +156,7 @@
 
 - (void)createFacebookButton
 {
-//    facebookButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
+    //    facebookButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
     
     facebookButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(localizeButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
     
@@ -195,6 +195,30 @@
     privacyButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
     privacyButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     
+    {
+        circle = [[UILabel alloc] initWithFrame:CGRectMakeSize(16, 16)];
+        CGRectSetY(circle.frame, CGRectGetHeight(privacyButton.frame) / 2. - CGRectGetHeight(circle.frame) / 2. - 1);
+        CGRectSetX(circle.frame, CGRectGetWidth(privacyButton.frame) - 10 - CGRectGetWidth(circle.frame));
+        
+        circle.backgroundColor = [UIColor customBackgroundHeader];
+        circle.textColor = [UIColor customBlue];
+        circle.textAlignment = NSTextAlignmentCenter;
+        circle.font = [UIFont customTitleExtraLight:9];
+        
+        circle.clipsToBounds = YES;
+        circle.layer.borderColor = [UIColor customBlue].CGColor;
+        circle.layer.borderWidth = 1;
+        circle.layer.cornerRadius = CGRectGetHeight(circle.frame) / 2.;
+        
+        [privacyButton addSubview:circle];
+    }
+    
+    {
+        UIImageView *arr = [UIImageView imageNamed:@"arrow-blue-down"];
+        [circle addSubview:arr];
+        arr.center = CGRectGetFrameCenter(circle.frame);
+    }
+    
     [self addSubview:privacyButton];
 }
 
@@ -220,21 +244,21 @@
 
 - (void)didImageButtonTouch
 {
-//    if(!imageButton.selected){
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"GLOBAL_CAMERA", nil), NSLocalizedString(@"GLOBAL_ALBUMS", nil), nil];
-        
-        // WARNING
-        [actionSheet showInView:self];
-//    }
-//    else{
-//        [_dictionary setValue:nil forKey:@"image"];
-//        imageButton.selected = NO;
+    //    if(!imageButton.selected){
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"GLOBAL_CAMERA", nil), NSLocalizedString(@"GLOBAL_ALBUMS", nil), nil];
     
-//        UIImagePickerController *cameraUI = [UIImagePickerController new];
-//        cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//        cameraUI.delegate = self;
-//        [currentController presentViewController:cameraUI animated:YES completion:nil];
-//    }
+    // WARNING
+    [actionSheet showInView:self];
+    //    }
+    //    else{
+    //        [_dictionary setValue:nil forKey:@"image"];
+    //        imageButton.selected = NO;
+    
+    //        UIImagePickerController *cameraUI = [UIImagePickerController new];
+    //        cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    //        cameraUI.delegate = self;
+    //        [currentController presentViewController:cameraUI animated:YES completion:nil];
+    //    }
 }
 
 - (void)didFacebookButtonTouch
