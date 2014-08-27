@@ -28,8 +28,8 @@
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(14, 0, CGRectGetWidth(self.frame) - 28, CGRectGetHeight(self.frame))];
     
     _textView.backgroundColor = [UIColor clearColor];
-    _textView.autocorrectionType = UITextAutocorrectionTypeNo;
-    _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    _textView.autocorrectionType = UITextAutocorrectionTypeYes;
+    _textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     
     _textView.delegate = self;
     
