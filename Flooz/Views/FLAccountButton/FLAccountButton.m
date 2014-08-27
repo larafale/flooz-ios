@@ -13,7 +13,7 @@
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title imageNamed:(NSString *)imageNamed
 {
     if(SCREEN_HEIGHT < 568){
-        CGRectSetWidthHeight(frame, (SCREEN_WIDTH / 2.) + 2, 85);
+        CGRectSetWidthHeight(frame, (SCREEN_WIDTH / 2.) + 2, 86);
     }
     else{
         CGRectSetWidthHeight(frame, (SCREEN_WIDTH / 2.) + 2, 130);
