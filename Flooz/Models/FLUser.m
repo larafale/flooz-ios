@@ -110,11 +110,15 @@
     
     {
         NSMutableArray *friends = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
         
         if([json objectForKey:@"friends"]){
             for(NSDictionary *friendJSON in [json objectForKey:@"friends"]){
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
-                [friends addObject:friend];
+                if (![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
+                    [unique addObject:[friend userId]];
+                    [friends addObject:friend];
+                }
             }
         }
         
@@ -123,11 +127,15 @@
     
     {
         NSMutableArray *friendsRecent = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
         
         if([json objectForKey:@"recentFriends"]){
             for(NSDictionary *friendJSON in [json objectForKey:@"recentFriends"]){
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
-                [friendsRecent addObject:friend];
+                if (![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
+                    [unique addObject:[friend userId]];
+                    [friendsRecent addObject:friend];
+                }
             }
         }
         
@@ -136,11 +144,15 @@
     
     {
         NSMutableArray *friendsRequest = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
         
         if([json objectForKey:@"friendsRequest"]){
             for(NSDictionary *friendRequestJSON in [json objectForKey:@"friendsRequest"]){
                 FLFriendRequest *friendRequest = [[FLFriendRequest alloc] initWithJSON:friendRequestJSON];
-                [friendsRequest addObject:friendRequest];
+                if (![unique containsObject:[friendRequest requestId]]) {
+                    [unique addObject:[friendRequest requestId]];
+                    [friendsRequest addObject:friendRequest];
+                }
             }
         }
         
@@ -170,6 +182,30 @@
     if([[json objectForKey:@"invitation"] objectForKey:@"code"]){
         _invitCode = [[json objectForKey:@"invitation"] objectForKey:@"code"];
     }
+}
+
+- (NSArray *)removeDuplicatesUserInArray:(NSArray *)array {
+    NSMutableArray *unique = [NSMutableArray array];
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet new];
+    for (FLUser *obj in array) {
+        if (![obj.userId isEqualToString:_userId] && ![unique containsObject:[obj userId]]) {
+            [unique addObject:[obj userId]];
+            [indexSet addIndex:[array indexOfObject:obj]];
+        }
+    }
+    return [array objectsAtIndexes:indexSet];
+}
+
+- (NSArray *)removeDuplicatesRequestInArray:(NSArray *)array {
+    NSMutableArray *unique = [NSMutableArray array];
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet new];
+    for (FLFriendRequest *obj in array) {
+        if (![unique containsObject:[obj requestId]]) {
+            [unique addObject:[obj requestId]];
+            [indexSet addIndex:[array indexOfObject:obj]];
+        }
+    }
+    return [array objectsAtIndexes:indexSet];
 }
 
 - (void)updateStatsPending:(NSDictionary *)json
