@@ -444,7 +444,7 @@
 
 - (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend
 {
-    if(!user || [user userId] == [[[Flooz sharedInstance] currentUser] userId] ||
+    if(!user || [[user userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]] ||
        ![user username] || ![user fullname]) {
         return;
     }
