@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		20BD9A090F4F4C4DA7759DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
+		2F6A177419AE84A800C49CF3 /* HistoricalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6A177219AE84A800C49CF3 /* HistoricalViewController.m */; };
+		2F6A177519AE84A800C49CF3 /* HistoricalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6A177219AE84A800C49CF3 /* HistoricalViewController.m */; };
+		2F6A177619AE84A800C49CF3 /* HistoricalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F6A177319AE84A800C49CF3 /* HistoricalViewController.xib */; };
+		2F6A177719AE84A800C49CF3 /* HistoricalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F6A177319AE84A800C49CF3 /* HistoricalViewController.xib */; };
 		2FC6F6B419A773CF0051CB61 /* FLNewTransactionAmountInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6F6B319A773CF0051CB61 /* FLNewTransactionAmountInput.m */; };
 		2FC6F6B519A776210051CB61 /* FLNewTransactionAmountInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6F6B319A773CF0051CB61 /* FLNewTransactionAmountInput.m */; };
 		2FC6F6BA19A7C1E30051CB61 /* secureCodeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6F6B819A7C1E30051CB61 /* secureCodeLoginViewController.m */; };
@@ -383,6 +387,9 @@
 
 /* Begin PBXFileReference section */
 		1686D3DC8F1E47F8A8972682 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F6A177119AE84A800C49CF3 /* HistoricalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoricalViewController.h; path = Controllers/Historical/HistoricalViewController.h; sourceTree = "<group>"; };
+		2F6A177219AE84A800C49CF3 /* HistoricalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoricalViewController.m; path = Controllers/Historical/HistoricalViewController.m; sourceTree = "<group>"; };
+		2F6A177319AE84A800C49CF3 /* HistoricalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HistoricalViewController.xib; path = Controllers/Historical/HistoricalViewController.xib; sourceTree = "<group>"; };
 		2FC6F6B219A773CF0051CB61 /* FLNewTransactionAmountInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNewTransactionAmountInput.h; path = Views/FLNewTransactionAmount/FLNewTransactionAmountInput.h; sourceTree = "<group>"; };
 		2FC6F6B319A773CF0051CB61 /* FLNewTransactionAmountInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionAmountInput.m; path = Views/FLNewTransactionAmount/FLNewTransactionAmountInput.m; sourceTree = "<group>"; };
 		2FC6F6B719A7C1E30051CB61 /* secureCodeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = secureCodeLoginViewController.h; path = Controllers/SecureCodeLogin/secureCodeLoginViewController.h; sourceTree = "<group>"; };
@@ -792,6 +799,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F6A177019AE846900C49CF3 /* Historical */ = {
+			isa = PBXGroup;
+			children = (
+				2F6A177119AE84A800C49CF3 /* HistoricalViewController.h */,
+				2F6A177219AE84A800C49CF3 /* HistoricalViewController.m */,
+				2F6A177319AE84A800C49CF3 /* HistoricalViewController.xib */,
+			);
+			name = Historical;
+			sourceTree = "<group>";
+		};
 		2FC6F6B619A7C1B00051CB61 /* SecureCodeLogin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1103,6 +1120,7 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2F6A177019AE846900C49CF3 /* Historical */,
 				2FC6F6B619A7C1B00051CB61 /* SecureCodeLogin */,
 				2FC83CA219A675170001E3AF /* InvitationCode */,
 				8B55B43E19996243003F5A6C /* FirstLaunch */,
@@ -2165,6 +2183,7 @@
 			files = (
 				AB5EB6F0188214F000D81AF6 /* SettingsViewController.xib in Resources */,
 				AB5EB6F81882151000D81AF6 /* TimelineViewController.xib in Resources */,
+				2F6A177619AE84A800C49CF3 /* HistoricalViewController.xib in Resources */,
 				2FC6F6BB19A7C1E30051CB61 /* secureCodeLoginViewController.xib in Resources */,
 				ABF46A301875C1B400E92A77 /* ProximaNova-Light.otf in Resources */,
 				AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */,
@@ -2224,6 +2243,7 @@
 				ABAA3FFF197E96BF009F29EF /* ProximaNova-Light.otf in Resources */,
 				ABAA4000197E96BF009F29EF /* SplashViewController.xib in Resources */,
 				ABAA4001197E96BF009F29EF /* WebViewController.xib in Resources */,
+				2F6A177719AE84A800C49CF3 /* HistoricalViewController.xib in Resources */,
 				ABAA4002197E96BF009F29EF /* ProximaNova-Regular.otf in Resources */,
 				AB119B45198A743B00F05ECE /* NewEventViewController.xib in Resources */,
 				ABAA4004197E96BF009F29EF /* SecureCodeViewController.xib in Resources */,
@@ -2473,6 +2493,7 @@
 				2FC6F6BA19A7C1E30051CB61 /* secureCodeLoginViewController.m in Sources */,
 				8BCB8D2B19996E6E00CE628F /* FLStartButton.m in Sources */,
 				ABE9149C18968C30003AC722 /* FLTextFieldTitle.m in Sources */,
+				2F6A177419AE84A800C49CF3 /* HistoricalViewController.m in Sources */,
 				AB2FB54318AD9C7A0079AA1D /* PasswordViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2604,6 +2625,7 @@
 				2FC6F6BC19A7C3060051CB61 /* secureCodeLoginViewController.m in Sources */,
 				8B102E06199A61C20040278F /* FLStartButton.m in Sources */,
 				ABAA3FE5197E96BF009F29EF /* FLTextFieldTitle.m in Sources */,
+				2F6A177519AE84A800C49CF3 /* HistoricalViewController.m in Sources */,
 				ABAA3FE6197E96BF009F29EF /* PasswordViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

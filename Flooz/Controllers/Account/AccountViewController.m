@@ -17,6 +17,7 @@
 #import "CashOutViewController.h"
 
 #import "SecureCodeViewController.h"
+#import "HistoricalViewController.h"
 
 #import "FLWaveAnimation.h"
 
@@ -108,6 +109,10 @@
         [_bottomView addSubview:plusL];
         [_bottomView addSubview:arrowDown];
         [_bottomView addSubview:minusL];
+        
+        UIButton *b = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 100)];
+        [b addTarget:self action:@selector(displayTransationHistorical) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView addSubview:b];
     }
     
     {
@@ -119,10 +124,10 @@
         
         cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(inviteCode.frame) - 1, CGRectGetMinY(inviteCode.frame)) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-bank"];
         /*
-        inviteCode = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 65) title:NSLocalizedString(@"ACCOUNT_BUTTON_CODE", nil) imageNamed:@"account-button-cash"];
-        cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(inviteCode.frame) - 1, CGRectGetMinY(inviteCode.frame)) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-bank"];
-        settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(inviteCode.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
-        informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame) - 1, CGRectGetMaxY(inviteCode.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
+         inviteCode = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, 65) title:NSLocalizedString(@"ACCOUNT_BUTTON_CODE", nil) imageNamed:@"account-button-cash"];
+         cashout = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(inviteCode.frame) - 1, CGRectGetMinY(inviteCode.frame)) title:NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) imageNamed:@"account-button-bank"];
+         settings = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(- 1, CGRectGetMaxY(inviteCode.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_SETTINGS", nil) imageNamed:@"account-button-settings"];
+         informations = [[FLAccountButton alloc] initWithFrame:CGRectMakePosition(CGRectGetMaxX(settings.frame) - 1, CGRectGetMaxY(inviteCode.frame) - 1) title:NSLocalizedString(@"ACCOUNT_BUTTON_INFORMATIONS", nil) imageNamed:@"account-button-informations"];
          */
         CGRectSetY(settings.frame, CGRectGetHeight(_bottomView.frame) - CGRectGetHeight(settings.frame));
         CGRectSetY(informations.frame, CGRectGetMinY(settings.frame));
@@ -182,7 +187,7 @@
     [[Flooz sharedInstance] cashoutValidate:^(id result) {
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[CashOutViewController new]];
         [self presentViewController:controller animated:YES completion:NULL];
-    } failure:^(NSError *error) {        
+    } failure:^(NSError *error) {
         [self presentEditAccountController];
     }];
 }
@@ -232,6 +237,11 @@
     minusL.text = [FLHelper formatedAmount:minusAmount];
 }
 
+- (void) displayTransationHistorical {
+    
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[HistoricalViewController alloc] initWithArrayTransaction:transactions]];
+    [self presentViewController:controller animated:YES completion:NULL];
+}
 
 - (void)presentMenuTransactionController
 {
