@@ -217,10 +217,10 @@
     float minus = 0.0;
     for (FLTransaction *tr in transactions) {
         if (tr && [tr status] == TransactionStatusAccepted) {
-            if ([tr type] == TransactionTypePayment) {
+            if ([[tr from].userId isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
                 minus += [[tr amount] floatValue];
             }
-            else {
+            else if ([[tr to].userId isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
                 plus += [[tr amount] floatValue];
             }
         }
