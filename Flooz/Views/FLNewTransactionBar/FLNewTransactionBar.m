@@ -210,13 +210,17 @@
         circle.layer.borderWidth = 1;
         circle.layer.cornerRadius = CGRectGetHeight(circle.frame) / 2.;
         
-        [privacyButton addSubview:circle];
+        //[privacyButton addSubview:circle];
     }
     
     {
         UIImageView *arr = [UIImageView imageNamed:@"arrow-blue-down"];
-        [circle addSubview:arr];
-        arr.center = CGRectGetFrameCenter(circle.frame);
+        [privacyButton addSubview:arr];
+        //arr.center = CGRectGetFrameCenter(circle.frame);
+        //[circle addSubview:arr];
+        
+        CGRectSetY(arr.frame, CGRectGetHeight(privacyButton.frame) / 2. - CGRectGetHeight(arr.frame) / 2. - 1);
+        CGRectSetX(arr.frame, CGRectGetWidth(privacyButton.frame) - 10 - CGRectGetWidth(arr.frame));
     }
     
     [self addSubview:privacyButton];
