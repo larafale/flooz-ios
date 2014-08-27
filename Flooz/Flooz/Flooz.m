@@ -691,9 +691,6 @@
         if([statusCode intValue] == 426){
             [appDelegate lockForUpdate:operation.responseObject[@"item"][@"upgradeUri"]];
         }
-        else if([path isEqualToString:@"/login/facebook"] || [path isEqualToString:@"/login/basic"]){
-            
-        }
         else if(error.code == kCFURLErrorTimedOut ||
                 error.code == kCFURLErrorCannotConnectToHost ||
                 error.code == kCFURLErrorNotConnectedToInternet ||
@@ -753,7 +750,8 @@
             
             // Token expire
             //            DISPLAY_ERROR(FLBadLoginError);
-            [self logout];
+            [self displayPopupMessage:operation.responseObject];
+            //[self logout];
         }
         else if(operation.responseObject){
             [self displayPopupMessage:operation.responseObject];

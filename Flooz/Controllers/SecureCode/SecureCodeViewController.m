@@ -129,6 +129,7 @@
     }
     
     {
+        [user setValue:[[[Flooz sharedInstance] currentUser] username] forKey:@"login"];
         usernameField = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(20, CGRectGetMaxY(textCode.frame) + 10.0f)];
         passwordField = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(20, CGRectGetMaxY(usernameField.frame))];
         [passwordField seTsecureTextEntry:YES];
@@ -162,14 +163,14 @@
     
     // Sinon le bouton retour ne disparait pas
     [self refreshController];
-
+    
     CGRectSetY(keyboardView.frame, CGRectGetHeight(_mainBody.frame)-CGRectGetHeight(keyboardView.frame));
 }
 
 - (void)didSecureCodeEnter:(NSString *)secureCode
 {
     NSString *currentSecureCode = [[self class] secureCodeForCurrentUser];
- 
+    
     NSLog(@"currentCode: %@ %@", currentSecureCode, secureCode);
     
     if(currentSecureMode == SecureCodeModeNormal){
@@ -280,6 +281,7 @@
         passwordField.hidden = NO;
         
         self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(login)];
+        [passwordField becomeFirstResponder];
     }
     else{
         passwordForget.hidden = NO;
@@ -304,11 +306,11 @@
         passwordForget.hidden = YES;
     }
     
-    if(!currentSecureCode){        
+    if(!currentSecureCode){
         self.navigationItem.hidesBackButton = YES;
         //self.navigationItem.leftBarButtonItem = nil;
     }
-
+    
     BOOL isFirstView = textCode.text == nil || [textCode.text isBlank];
     
     // Textes
@@ -332,16 +334,33 @@
     if(!isFirstView){
         CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
         animation.values = @[
-                                  @1,
-                                  @0,
-                                  @1
-                                  ];
+                             @1,
+                             @0,
+                             @1
+                             ];
         
         animation.repeatCount = 1;
         animation.duration  = .8;
         
         [textCode.layer addAnimation:animation forKey:@"opacity"];
     }
+}
+
+- (void)login {
+    if(user[@"login"] && ![user[@"login"] isBlank]){
+        [usernameField becomeFirstResponder];
+    }
+    if(user[@"password"] && ![user[@"password"] isBlank]){
+        [passwordField becomeFirstResponder];
+    }
+    
+    [[Flooz sharedInstance] loginForSecureCode:user success:^(id result) {
+        [self.view endEditing:YES];
+        currentSecureMode = SecureCodeModeChangeNew;
+        [self refreshController];
+    } failure:^(NSError *error) {
+        NSLog(@"mot de passe incorrect");
+    }];
 }
 
 #pragma mark - SecureCode
