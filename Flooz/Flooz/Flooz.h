@@ -24,6 +24,7 @@ static NSString *kNotificationConnectionError = @"kNotificationConnectionError";
 static NSString *kNotificationRemoveWindowSubviews = @"kNotificationRemoveWindowSubviews";
 static NSString *kNotificationCloseKeyboard = @"kNotificationCloseKeyboard";
 static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUser";
+static NSString *kNotificationRemoveFriend = @"kNotificationRemoveFriend";
 
 @interface Flooz : NSObject<SocketIODelegate>{
     AFHTTPRequestOperationManager *manager;

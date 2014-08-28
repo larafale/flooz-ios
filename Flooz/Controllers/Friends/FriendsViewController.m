@@ -12,6 +12,7 @@
 #import "FriendCell.h"
 #import "FriendSuggestionCell.h"
 #import "AppDelegate.h"
+#import "FLContainerViewController.h"
 
 @interface FriendsViewController (){
     NSArray *friendsSearch;
@@ -58,8 +59,9 @@
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self registerForKeyboardNotifications];
-        
+    
     [self registerNotification:@selector(scrollViewDidScroll:) name:kNotificationCloseKeyboard object:nil];
+    [self registerNotification:@selector(didReloadData) name:kNotificationRemoveFriend object:nil];
 }
 
 - (void)viewDidUnload
@@ -312,7 +314,8 @@
         }];
     }
     else if(buttonIndex == 2 && [currentFriendR.user avatarURL]){
-        //showAvatar();
+        FLContainerViewController *controller = (FLContainerViewController *)appDelegate.window.rootViewController;
+        [controller didImageTouch:nil photoURL:[NSURL URLWithString:[currentFriendR.user avatarURL]]];
     }
     else if(buttonIndex == 2){
         
@@ -326,7 +329,7 @@
 
 - (void)didReloadData
 {
-    [refreshControl beginRefreshing];
+    //[refreshControl beginRefreshing];
     
     // bug au rechargement
 //    friendsRequest = @[];

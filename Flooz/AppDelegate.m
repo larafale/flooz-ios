@@ -514,10 +514,14 @@
         }
         
         if(isFriend){
-            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success:nil];
+            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+            }];
         }
         else{
-            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:nil];
+            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+            }];
         }
     };
     
