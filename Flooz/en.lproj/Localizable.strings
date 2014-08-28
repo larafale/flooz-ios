@@ -268,7 +268,7 @@
 "SIGNUP_PAGE_TITLE_Code" = "Code de sécurité";
 "SIGNUP_PAGE_TITLE_CodeVerif" = "Confirmation";
 "SIGNUP_PAGE_TITLE_CB" = "Carte bancaire";
-"SIGNUP_PAGE_TITLE_Friends" = "Trouver des amis";
+"SIGNUP_PAGE_TITLE_Friends" = "Inviter des amis";
 
 "SIGNUP_PSEUDO_EXPLICATION" = "Ce pseudo, c’est votre identité sur Flooz. Il est unique et ne pourra plus être modifié.";
 "SIGNUP_PASSWORD_EXPLICATION" = "6 caractères min";

@@ -54,6 +54,7 @@
     
     UITableView *_contactsTableView;
     UIView *_footerView;
+    UIButton *inviteButton;
     
     BOOL _haveAnimated;
     
@@ -413,6 +414,7 @@
     [_validCBButton removeFromSuperview];
     [v addSubview:_validCBButton];
     [_validCBButton setEnabled:YES];
+    [_validCBButton setHidden:NO];
     
     CGFloat duration = .2;
     
@@ -902,6 +904,7 @@
     CGRectSetY(_validCBButton.frame, CGRectGetMidY(_title.frame) - CGRectGetHeight(_validCBButton.frame) / 2.0f + 2.0f);
     CGRectSetX(_validCBButton.frame, CGRectGetWidth(_headerView.frame) - 20 - CGRectGetWidth(_validCBButton.frame));
     [_headerView addSubview:_validCBButton];
+    [_validCBButton setHidden:YES];
     
     _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0 - 10.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     [_mainBody addSubview:_contentView];
@@ -1083,28 +1086,9 @@
     CGRectSetX(_validCBButton.frame, CGRectGetWidth(_headerView.frame) - 20 - CGRectGetWidth(_validCBButton.frame));
     [_headerView addSubview:_validCBButton];
     [_validCBButton setEnabled:YES];
-    
-    UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(10, -5, PPScreenWidth()-20, 50)];
-    firstTimeText.textColor = [UIColor customPlaceholder];
-    firstTimeText.font = [UIFont customTitleExtraLight:14];
-    firstTimeText.numberOfLines = 0;
-    firstTimeText.textAlignment = NSTextAlignmentCenter;
-    firstTimeText.text = NSLocalizedString(@"SIGNUP_FRIENDS_MESSAGE", nil);
-    [_mainBody addSubview:firstTimeText];
-    
-    CGRectSetHeight(firstTimeText.frame, [self sizeExpectedForView:firstTimeText].height*3);
-    //TODO: supprimer si on veut le texte d'explication
-    CGRectSetHeight(firstTimeText.frame, 0);
-    /*
-    UIButton *butt = [self ignoreButtonWithText:NSLocalizedString(@"SIGNUP_VIEW_IGNORE_BUTTON_2", @"") superV:_mainBody];
-    CGRectSetWidth(butt.frame, [self sizeExpectedForView:butt].width + 30.0f);
-    CGRectSetX(butt.frame, CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(butt.frame));
-    CGRectSetY(butt.frame, CGRectGetMaxY(firstTimeText.frame));
-    CGRectSetHeight(butt.frame, [self sizeExpectedForView:butt].height + 10.0f);
-    */
-    if (_contactInfoArray == nil) {
-        _contactInfoArray = [NSMutableArray new];
-    }
+    [_validCBButton setHidden:YES];
+
+    _contactInfoArray = [NSMutableArray new];
     _contactToInvite = [NSMutableArray new];
     _contactFromFlooz = [NSMutableArray new];
     
@@ -1113,8 +1097,7 @@
         ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
             if (granted) {
                 // If the app is authorized to access the first time then add the contact
-                
-                [self createTableContactUnderView: firstTimeText];
+                [self createTableContactUnderView: nil];
                 [self createContactList];
             } else {
                 // Show an alert here if user denies access telling that the contact cannot be added because you didn't allow it to access the contacts
@@ -1124,13 +1107,14 @@
     }
     else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
         // If the user user has earlier provided the access, then add the contact
-        [self createTableContactUnderView: firstTimeText];
+        [self createTableContactUnderView: nil];
         [self createContactList];
     }
     else {
         // If the user user has NOT earlier provided the access, create an alert to tell the user to go to Settings app and allow access
         [self displayAlertWithText:NSLocalizedString(@"ALERT_CONTACT_DENIES_ACCESS", @"")];
     }
+    [self displaySendButtonOrNot];
 }
 
 - (void) displayAlertWithText:(NSString *)alertMessage {
@@ -1148,6 +1132,8 @@
 }
 
 - (void) createTableContactUnderView:(UIView *)topView {
+    if (!topView)
+        topView = [[UIView alloc] initWithFrame:CGRectMake(0, -5, 0, 0)];
     _contactsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topView.frame), CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(topView.frame)) style:UITableViewStylePlain];
     [_contactsTableView setBackgroundColor:[UIColor customBackground]];
     [_contactsTableView setSeparatorColor:[UIColor customBackgroundHeader]];
@@ -1368,14 +1354,14 @@
     if (!_footerView) {
         _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame), CGRectGetWidth(_contactsTableView.frame), 50.0f)];
         
-        FLStartItem *item = [FLStartItem newWithTitle:@"" imageImageName:@"Signup_Check_Enable" contentText:@"" andSize:50.0f];
-        CGRectSetX(item.frame, CGRectGetWidth(_footerView.frame)-50.0f);
-        [_footerView addSubview:item];
+        FLStartItem *inviteTitle = [FLStartItem newWithTitle:@"" imageImageName:@"Signup_Check_Enable" contentText:@"" andSize:50.0f];
+        CGRectSetX(inviteTitle.frame, CGRectGetWidth(_footerView.frame)-50.0f);
+        [_footerView addSubview:inviteTitle];
         
-        UIButton *b = [UIButton newWithFrame:CGRectMake(0, 0, CGRectGetWidth(_contactsTableView.frame), 50.0f)];
-        [b setTitle:NSLocalizedString(@"Invite_Friends_Button", @"") forState:UIControlStateNormal];
-        [b addTarget:self action:@selector(inviteFriends) forControlEvents:UIControlEventTouchUpInside];
-        [_footerView addSubview:b];
+        inviteButton = [UIButton newWithFrame:CGRectMake(0, 0, CGRectGetWidth(_contactsTableView.frame), 50.0f)];
+        [inviteButton setTitle:NSLocalizedString(@"Invite_Friends_Button", @"") forState:UIControlStateNormal];
+        [inviteButton addTarget:self action:@selector(inviteFriends) forControlEvents:UIControlEventTouchUpInside];
+        [_footerView addSubview:inviteButton];
         
         CALayer *TopBorder = [CALayer layer];
         TopBorder.frame = CGRectMake(0.0f, 0.0f, _footerView.frame.size.width, 2.0f);
@@ -1383,8 +1369,14 @@
         [_footerView.layer addSublayer:TopBorder];
         
         [_mainBody addSubview:_footerView];
+        CGRectSetHeight(_contactsTableView.frame, CGRectGetHeight(_contactsTableView.frame) - 50.0f);
+        CGRectSetY(_footerView.frame, CGRectGetMinY(_footerView.frame)-50.0f);
     }
     if (_contactToInvite.count > 0) {
+        [inviteButton setTitle:NSLocalizedString(@"Invite_Friends_Button", @"") forState:UIControlStateNormal];
+        [inviteButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+        [inviteButton addTarget:self action:@selector(inviteFriends) forControlEvents:UIControlEventTouchUpInside];
+        return;
         if (CGRectGetMinY(_footerView.frame) >= CGRectGetHeight(_mainBody.frame)) {
             [UIView animateWithDuration:.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 CGRectSetHeight(_contactsTableView.frame, CGRectGetHeight(_contactsTableView.frame) - 50.0f);
@@ -1393,6 +1385,10 @@
         }
     }
     else {
+        [inviteButton setTitle:NSLocalizedString(@"SIGNUP_VIEW_IGNORE_BUTTON_2", @"") forState:UIControlStateNormal];
+        [inviteButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+        [inviteButton addTarget:self action:@selector(goToNextPage) forControlEvents:UIControlEventTouchUpInside];
+        return;
         if (CGRectGetHeight(_mainBody.frame) > CGRectGetMinY(_footerView.frame)) {
             [UIView animateWithDuration:.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 CGRectSetHeight(_contactsTableView.frame, CGRectGetHeight(_contactsTableView.frame) + 50.0f);
