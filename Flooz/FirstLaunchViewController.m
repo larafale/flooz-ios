@@ -129,7 +129,7 @@
     
     
     [self setScrollEnabled:NO forPageViewController:_pageViewController];
-    _indexPage = SignupPageTuto;
+    _indexPage = SignupPageAccessToFriends;
     [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
 }
 
@@ -200,11 +200,12 @@
 - (void)goToNextPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico {
     self.userInfoDico = userDico;
     if (currentIndex+1 >= NUMBER_OF_PAGES) {
-        [appDelegate goToAccountViewController];
-        return;
+        [self leaveSignup];
     }
-    _indexPage = currentIndex+1;
-    [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
+    else {
+        _indexPage = currentIndex+1;
+        [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
+    }
 }
 
 - (void)goToPreviousPage:(NSInteger)currentIndex withUser:(NSMutableDictionary *)userDico {
@@ -238,6 +239,10 @@
     FirstLaunchContentViewController *newView = [self viewControllerAtIndex:_indexPage];
     [newView setUserInfoDico:self.userInfoDico];
     [newView displayChanges];
+}
+
+- (void)leaveSignup {
+    [appDelegate goToAccountViewController];
 }
 
 - (void) presentNewViewSignup:(UIPageViewControllerNavigationDirection)direction {
@@ -286,8 +291,11 @@
     else if (_indexPage == SignupPageCB) {
         pro = 3.0f / NUMBER_STEP;
     }
-    else if (_indexPage == SignupPageFriends) {
+    else if (_indexPage == SignupPageAccessToFriends) {
         pro = 4.0f / NUMBER_STEP;
+    }
+    else if (_indexPage == SignupPageFriends) {
+        pro = 4.1f / NUMBER_STEP;
     }
     else {
         pro = NUMBER_STEP / NUMBER_STEP;
@@ -333,8 +341,12 @@
                     [_closeButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
                     [_closeButton addTarget:self action:@selector(ignorePage) forControlEvents:UIControlEventTouchUpInside];
                     [_closeButton setImage:[UIImage imageNamed:@"Signup_Next"] forState:UIControlStateNormal];
-                    if (av >= 5.0f / NUMBER_STEP) {
-                        [_friendsItem setImageWithImageName:@"Signup_Menu_Friends_Disable"];
+                    [_closeButton setEnabled:NO];
+                    if (av >= 4.1f / NUMBER_STEP) {
+                        [_closeButton setEnabled:YES];
+                        if (av >= 5.0f / NUMBER_STEP) {
+                            [_friendsItem setImageWithImageName:@"Signup_Menu_Friends_Disable"];
+                        }
                     }
                 }
             }

@@ -32,6 +32,7 @@ typedef enum {
     SignupPageCode,
     SignupPageCodeVerif,
     SignupPageCB,
+    SignupPageAccessToFriends,
     SignupPageFriends
 } SignupOrderPage;
 
