@@ -16,6 +16,7 @@
 
 #import <UICKeyChainStore.h>
 #import "ScanPayViewController.h"
+#import "WebViewController.h"
 
 @interface FirstLaunchContentViewController ()
 {
@@ -351,6 +352,14 @@
     return expectedSize;
 }
 
+- (void) displayCGU {
+    WebViewController *controller = [WebViewController new];
+    [controller setUrl:@"https://www.flooz.me/n/cgu"];
+    controller.title = NSLocalizedString(@"INFORMATIONS_TERMS", nil);
+    FLNavigationController *controller2 = [[FLNavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:controller2 animated:YES completion:NULL];
+}
+
 #pragma mark - CALLS to Delegate Methods
 - (void) goToNextPage {
     if ([self.delegate respondsToSelector:@selector(goToNextPage:withUser:)]) {
@@ -362,7 +371,6 @@
         [self.delegate goToPreviousPage:_pageIndex withUser:_userDic];
     }
 }
-
 
 #pragma mark - VALIDATION SECTION
 
@@ -651,6 +659,17 @@
     [_email addForTextChangeTarget:self action:@selector(canValidate:)];
     _secondTextFieldToFocus = _email;
     [_mainBody addSubview:_email];
+    
+    UILabel *cguLabel = [UILabel newWithFrame:CGRectMake(10, CGRectGetMaxY(_email.frame), PPScreenWidth() - 20, 80)];
+    [cguLabel setText:NSLocalizedString(@"SIGNUP_READ_CGU", @"")];
+    cguLabel.textColor = [UIColor customPlaceholder];
+    cguLabel.font = [UIFont customTitleExtraLight:13];
+    cguLabel.textAlignment = NSTextAlignmentCenter;
+    [cguLabel setNumberOfLines:0];
+    [_mainBody addSubview:cguLabel];
+    UIButton *cguButton = [UIButton newWithFrame:CGRectMake(0, CGRectGetMaxY(_email.frame), PPScreenWidth(), 80)];
+    [cguButton addTarget:self action:@selector(displayCGU) forControlEvents:UIControlEventTouchUpInside];
+    [_mainBody addSubview:cguButton];
     
     _validCBButton.center = CGPointMake(CGRectGetMidX(_validCBButton.frame), CGRectGetMidY(_email.frame));
 }
@@ -1081,7 +1100,7 @@
 
 - (void) signupAskAccessToFriends {
     [_backButton setHidden:YES];
-    _title.text = NSLocalizedString(@"Accès à vos contacts", @"");
+    _title.text = NSLocalizedString(@"SIGNUP_PAGE_TITLE_Ask_Contact", @"");
     [self displayHeader];
     [_validCBButton setHidden:YES];
     

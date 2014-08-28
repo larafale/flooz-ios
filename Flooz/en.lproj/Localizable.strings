@@ -268,10 +268,13 @@
 "SIGNUP_PAGE_TITLE_Code" = "Code de sécurité";
 "SIGNUP_PAGE_TITLE_CodeVerif" = "Confirmation";
 "SIGNUP_PAGE_TITLE_CB" = "Carte bancaire";
+"SIGNUP_PAGE_TITLE_Ask_Contact" = "Accès à vos contacts";
 "SIGNUP_PAGE_TITLE_Friends" = "Inviter des amis";
 
 "SIGNUP_PSEUDO_EXPLICATION" = "Ce pseudo, c’est votre identité sur Flooz. Il est unique et ne pourra plus être modifié.";
 "SIGNUP_PASSWORD_EXPLICATION" = "6 caractères min";
+
+"SIGNUP_READ_CGU" = "En passant à l'étape suivante, vous déclarez accepter les conditions générales d'utilisation de Flooz.\nCliquez ici pour les consulter.";
 
 "SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
 "SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";
