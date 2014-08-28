@@ -111,7 +111,7 @@
         [_bottomView addSubview:minusL];
         
         UIButton *b = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 100)];
-        [b addTarget:self action:@selector(displayTransationHistorical) forControlEvents:UIControlEventTouchUpInside];
+        //[b addTarget:self action:@selector(displayTransationHistorical) forControlEvents:UIControlEventTouchUpInside];
         [_bottomView addSubview:b];
     }
     
