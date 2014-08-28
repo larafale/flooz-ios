@@ -387,6 +387,10 @@
     }
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self hideScrollViewIndicator];
+}
+
 - (void)refreshScrollViewIndicator
 {
     if([transactions count] == 0){
