@@ -188,7 +188,7 @@
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[CashOutViewController new]];
         [self presentViewController:controller animated:YES completion:NULL];
     } failure:^(NSError *error) {
-        [self presentEditAccountController];
+        //[self presentEditAccountController];
     }];
 }
 
