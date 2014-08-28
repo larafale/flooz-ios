@@ -38,7 +38,7 @@
             NSDate *d1 = c1.date;
             NSDate *d2 = c2.date;
             
-            return [d1 compare:d2];
+            return ![d1 compare:d2];
         }];
     }
     return self;
@@ -78,12 +78,12 @@
     NSString *transString;
     
     if ([[transaction from].userId isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
-        cell.textLabel.textColor = [UIColor customRed];
+        //cell.textLabel.textColor = [UIColor customRed];
         transString = [NSString stringWithFormat:@"(%@) %@ à %@",[FLHelper formatedDate:[transaction date]], [FLHelper formatedAmount:transaction.amount], transaction.to.username];
         cell.imageView.image = [UIImage imageNamed:@"balance-minus"];
     }
     else if ([[transaction to].userId isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
-        cell.textLabel.textColor = [UIColor customGreen];
+        //cell.textLabel.textColor = [UIColor customGreen];
         transString = [NSString stringWithFormat:@"(%@) %@ de %@",[FLHelper formatedDate:[transaction date]], [FLHelper formatedAmount:transaction.amount], transaction.from.username];
         cell.imageView.image = [UIImage imageNamed:@"balance-plus"];
     }
