@@ -1319,11 +1319,27 @@
     if (friends) {
         for(NSDictionary *json in friends){
             FLUser *friend = [[FLUser alloc] initWithJSON:json];
-            [arrayFriends addObject:friend];
+            NSUInteger newIndex = [self findIndexForUser:friend inArray:arrayFriends];
+            [arrayFriends insertObject:friend atIndex:newIndex];
         }
     }
     return arrayFriends;
 }
+
+- (NSUInteger) findIndexForUser:(FLUser *)newUser inArray:(NSArray *)array {
+    NSComparator comparator = ^NSComparisonResult(FLUser *obj1, FLUser *obj2) {
+        NSString *username1 = [obj1 fullname];
+        NSString *username2 = [obj2 fullname];
+        
+        return [username1 compare:username2];
+    };
+    NSUInteger newIndex = [array indexOfObject:newUser
+                                 inSortedRange:(NSRange){0, [array count]}
+                                       options:NSBinarySearchingInsertionIndex
+                               usingComparator:comparator];
+    return newIndex;
+}
+
 - (NSMutableArray *)createEventArrayFromResult:(NSDictionary *)result {
     NSMutableArray *arrayEvent = [NSMutableArray new];
     NSArray *events = result[@"items"];
