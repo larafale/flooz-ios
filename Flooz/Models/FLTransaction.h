@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, TransactionPaymentMethod) {
 
 @property NSString *transactionId;
 @property NSNumber *amount;
+@property NSString *amountText;
 
 @property NSString *avatarURL;
 

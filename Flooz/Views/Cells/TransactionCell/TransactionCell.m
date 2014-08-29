@@ -349,7 +349,7 @@
 //    }
 //    view.hidden = NO;
     
-    view.text = [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
+    view.text = [_transaction amountText];// [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
     [view setWidthToFit];
     
     CGRectSetXY(view.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(view.frame), height - 20);

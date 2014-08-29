@@ -61,6 +61,9 @@
         _amount = [NSNumber numberWithFloat:([_amount floatValue] * -1.)];
     }
     
+    if (json[@"amountText"]) {
+        _amountText = json[@"amountText"];
+    }
     
     if([json objectForKey:@"avatar"]){
         _avatarURL = json[@"avatar"];
