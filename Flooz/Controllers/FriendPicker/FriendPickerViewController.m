@@ -15,6 +15,8 @@
 #import "AppDelegate.h"
 #import <AddressBook/AddressBook.h>
 
+#import "FriendAddCell.h"
+
 @implementation FriendPickerViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -31,6 +33,8 @@
         _friendsFiltred = _friends;
         _friendsRecentFiltred = _friendsRecent;
         
+        _friendsSearch = [NSMutableArray new];
+        
         _selectedIndexPath = [NSMutableArray new];
     }
     return self;
@@ -44,7 +48,7 @@
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
     self.view.backgroundColor = [UIColor customBackgroundHeader];
-
+    
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self registerForKeyboardNotifications];
     [self requestAddressBookPermission];
@@ -59,18 +63,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     [[[self navigationController] navigationBar] setHidden:YES];
 }
 
 - (void)dismiss
-{    
+{
     if([self navigationController]){
         [[self navigationController] popViewControllerAnimated:YES];
     }
     else{
         // WARNING enorme bug si arrive sur la vue attend 5s, click sur un contact, il y a une latence de 10s, mais uniquement la 1ere fois et seulement si choisit un contact (pas si bouton back)
-//        [self dismissViewControllerAnimated:YES completion:nil];
+        //        [self dismissViewControllerAnimated:YES completion:nil];
         [UIView animateWithDuration:.3
                          animations:^{
                              CGRectSetY(self.view.frame, SCREEN_HEIGHT);
@@ -104,7 +108,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if(section == 0 && (!_selectionText || [_selectionText isBlank])){
+    if(section == 0 && (!_selectionText || [_selectionText isBlank] || ![_friendsSearch count])){
         return 0;
     }
     else if(section == 1 && [_friendsRecentFiltred count] == 0){
@@ -153,8 +157,8 @@
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if(section == 0){
-        if(_selectionText && ![_selectionText isBlank]){
-            return 1;
+        if (_selectionText || ![_selectionText isBlank]) {
+            return [_friendsSearch count];
         }
         return 0;
     }
@@ -174,27 +178,15 @@
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 0){
-//        static NSString *cellIdentifierSelection = @"FriendPickerSelectionCell";
-//        FriendPickerSelectionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSelection];
-//        
-//        if(!cell){
-//            cell = [[FriendPickerSelectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
-//        }
-//        
-//        [cell setSelectionText:_selectionText];
-//        
-//        return cell;
-        
-        static NSString *cellIdentifierSelection = @"FriendPickerSelectionCell";
-        FriendPickerContactCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSelection];
+        static NSString *cellIdentifier = @"FriendAddCell";
+        FriendAddCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
         if(!cell){
-            cell = [[FriendPickerContactCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
+            cell = [[FriendAddCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
         
-        NSDictionary *contact = @{ @"name" : _selectionText };
-        [cell setContact:contact];
-        [cell setSelectedCheckView:NO];
+        FLUser *user = [_friendsSearch objectAtIndex:indexPath.row];
+        [cell setUser:user];
         
         return cell;
     }
@@ -277,15 +269,15 @@
         title = [contact objectForKey:@"title"];
         value = [contact objectForKey:@"value"];
     }
-
+    
     [_dictionary setValue:title forKey:@"toTitle"];
     [_dictionary setValue:value forKey:@"to"];
     
     if([contact objectForKey:@"facebook_id"]){
         id paramsFacebook = @{
-                                  @"id": [contact objectForKey:@"facebook_id"],
-                                  @"firstName": [contact objectForKey:@"firstname"],
-                                  @"lastName": [contact objectForKey:@"lastname"]
+                              @"id": [contact objectForKey:@"facebook_id"],
+                              @"firstName": [contact objectForKey:@"firstname"],
+                              @"lastName": [contact objectForKey:@"lastname"]
                               };
         [_dictionary setValue:paramsFacebook forKey:@"fb"];
     }
@@ -348,6 +340,7 @@
     }
     
     if(!text || [text isBlank]){
+        _friendsSearch = @[];
         _contacts = _currentContacts;
         _friendsFiltred = _friends;
         _friendsRecentFiltred = _friendsRecent;
@@ -390,20 +383,11 @@
         }
     }
     
-//    for(FLUser *user in _friendsRecent){
-//        if([user firstname] && [[[user firstname] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
-//            [friendsRecentFiltred addObject:user];
-//        }
-//        else if([user lastname] && [[[user lastname] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
-//            [friendsRecentFiltred addObject:user];
-//        }
-//        else if([user fullname] && [[[user fullname] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
-//            [friendsRecentFiltred addObject:user];
-//        }
-//        else if([user username] && [[[user username] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
-//            [friendsRecentFiltred addObject:user];
-//        }
-//    }
+    [[Flooz sharedInstance] friendSearch:text success:^(id result) {
+        _friendsSearch = result;
+        [_tableView setContentOffset:CGPointZero animated:YES];
+        [_tableView reloadData];
+    }];
     
     _contacts = contactsFiltred;
     _friendsFiltred = friendsFiltred;
@@ -476,7 +460,7 @@
     // Doit avoir nom et (telephone ou email)
     for(int i = 0; i < nPeople; ++i){
         ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
-
+        
         NSString *firstName = (__bridge NSString *)(ABRecordCopyValue(ref, kABPersonFirstNameProperty));
         NSString *lastName = (__bridge NSString *)(ABRecordCopyValue(ref, kABPersonLastNameProperty));
         NSData *image = (__bridge_transfer NSData *)ABPersonCopyImageDataWithFormat(ref, kABPersonImageFormatThumbnail);
@@ -491,27 +475,11 @@
         else{
             name = [firstName stringByAppendingFormat:@" %@", lastName];
         }
-
-        // Desactivé pour le moment
-//        ABMultiValueRef emailList = ABRecordCopyValue(ref, kABPersonEmailProperty);
-//        for (CFIndex i = 0; i < ABMultiValueGetCount(emailList); ++i) {
-//            NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
-//
-//            NSMutableDictionary *contact = [NSMutableDictionary new];
-//            
-//            [contact setValue:firstName forKey:@"firstname"];
-//            [contact setValue:lastName forKey:@"lastname"];
-//            [contact setValue:name forKey:@"name"];
-//            [contact setValue:email forKey:@"email"];
-//            [contact setValue:image forKey:@"image"];
-//            
-//            [_contactsFromAdressBook addObject:contact];
-//        }
         
         ABMultiValueRef phoneNumbers = ABRecordCopyValue(ref, kABPersonPhoneProperty);
         for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); ++i) {
             NSString *phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phoneNumbers, i);
-
+            
             NSMutableDictionary *contact = [NSMutableDictionary new];
             
             [contact setValue:firstName forKey:@"firstname"];
@@ -558,7 +526,7 @@
         if([contact objectForKey:@"phone"]){
             [contact setValue:[FLHelper formatedPhoneForDisplay:[contact objectForKey:@"phone"]] forKey:@"phone"];
         }
-                
+        
         // Filtre les contacts invalide
         if([contact objectForKey:@"title"] && [contact objectForKey:@"value"]){
             [newContacts addObject:contact];
@@ -578,7 +546,7 @@
         [self requestFacebookFriends];
         return;
     }
-
+    
     if(isFacebook){
         [self loadFacebookContacts];
     }
