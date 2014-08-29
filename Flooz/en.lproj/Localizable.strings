@@ -281,7 +281,7 @@
 "SIGNUP_FIELD_CARD_EXPIRES_PLACEHOLDER" = "Date d'expiration (MMYY)";
 "SIGNUP_FIELD_CARD_CVV_PLACEHOLDER" = "CVV (3 chiffres au dos)";
 
-"SIGNUP_FRIENDS_MESSAGE" = "Pour envoyer de l'argent à vos amis vous devez autoriser l'accès à vos contacts.";
+"SIGNUP_FRIENDS_MESSAGE" = "Pour envoyer de l'argent à vos amis, Flooz a besoin d'accéder à votre carnet de contact.";
 
 "Send_Button_Mobile" = "Suivant";
 "Invite_Friends_Button" = "Inviter";
