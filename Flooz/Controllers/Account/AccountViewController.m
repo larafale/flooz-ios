@@ -105,10 +105,10 @@
         minusL.font = [UIFont customTitleLight:18];
         minusL.textColor = [UIColor customRed];
         
-        [_bottomView addSubview:arrowUp];
-        [_bottomView addSubview:plusL];
-        [_bottomView addSubview:arrowDown];
-        [_bottomView addSubview:minusL];
+//        [_bottomView addSubview:arrowUp];
+//        [_bottomView addSubview:plusL];
+//        [_bottomView addSubview:arrowDown];
+//        [_bottomView addSubview:minusL];
         
         UIButton *b = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 100)];
         //[b addTarget:self action:@selector(displayTransationHistorical) forControlEvents:UIControlEventTouchUpInside];
