@@ -130,7 +130,8 @@
 {
     __strong UIViewController *presentingController = self.presentingViewController;
     [self dismissViewControllerAnimated:NO completion:^{
-        [presentingController presentViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeCharge] animated:YES completion:NULL];
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeCharge]];
+        [presentingController presentViewController:controller animated:YES completion:NULL];
     }];
 }
 
@@ -138,7 +139,8 @@
 {
     __strong UIViewController *presentingController = self.presentingViewController;
     [self dismissViewControllerAnimated:NO completion:^{
-        [presentingController presentViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypePayment] animated:YES completion:NULL];
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypePayment]];
+        [presentingController presentViewController:controller animated:YES completion:NULL];
     }];
 }
 

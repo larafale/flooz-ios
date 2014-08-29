@@ -229,13 +229,13 @@
     NSString *title;
     NSString *value;
     
-    if(indexPath.section == 0){
-        title = _selectionText;
-        value = _selectionText;
-    }
-    else if(indexPath.section == 1 || indexPath.section == 2){
+    if(indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 2){
         FLUser *friend;
-        if(indexPath.section == 1){
+        
+        if (indexPath.section == 0) {
+            friend = _friendsSearch[indexPath.row];
+        }
+        else if(indexPath.section == 1){
             friend = [_friendsRecentFiltred objectAtIndex:indexPath.row];
         }
         else{

@@ -68,7 +68,7 @@
 
 - (void)createButtonView{
     UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 11, 37, 28)];
-    [view setImage:[UIImage imageNamed:@"friends-add"] forState:UIControlStateNormal];
+    [view setImage:[UIImage imageNamed:@"Signup_Friends_Plus"] forState:UIControlStateNormal];
     view.backgroundColor = [UIColor customBackgroundStatus];
     view.layer.cornerRadius = 14;
     

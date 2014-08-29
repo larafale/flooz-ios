@@ -20,14 +20,14 @@
 
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey currencySymbol:(NSString *)symbol delegate:(id<FLNewTransactionAmountDelegate>)delegate; {
-    CGRect frame = CGRectMakeSize(SCREEN_WIDTH, HEIGHT);
+    CGRect frame = CGRectMakeSize(110, HEIGHT);
     self = [super initWithFrame:frame];
     if (self) {
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;
         
-        [self createCurrencySymbol:symbol];
         [self createTextField:placeholder];
+        [self createCurrencySymbol:symbol];
         
         isEmpty = YES;
         
@@ -37,8 +37,8 @@
 }
 
 - (void) createCurrencySymbol:(NSString *)symbol {
-    currency = [[UILabel alloc] initWithFrame:CGRectMake(5, MARGE_TOP - 2.5, 49, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
-    currency.font = [UIFont customTitleThin:45];
+    currency = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_textfield.frame), MARGE_TOP - 2.5, 20, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
+    currency.font = [UIFont customTitleThin:30];
     currency.textColor = [UIColor whiteColor];
     currency.text = symbol;
     currency.textAlignment = NSTextAlignmentCenter;
@@ -48,7 +48,7 @@
 
 - (void)createTextField:(NSString *)placeholder
 {
-    _textfield = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(currency.frame), MARGE_TOP, 180.0f, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
+    _textfield = [[UITextField alloc] initWithFrame:CGRectMake(0, MARGE_TOP, 90.0f, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
     
     _textfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _textfield.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -56,11 +56,11 @@
     
     _textfield.delegate = self;
     
-    _textfield.font = [UIFont customTitleThin:35];
+    _textfield.font = [UIFont customTitleThin:24];
     _textfield.textAlignment = NSTextAlignmentLeft;
     _textfield.textColor = [UIColor whiteColor];
     
-    _textfield.layer.sublayerTransform = CATransform3DMakeTranslation(15, 0, 0);
+    _textfield.layer.sublayerTransform = CATransform3DMakeTranslation(0, 0, 0);
     
     NSAttributedString *attributedText = [[NSAttributedString alloc]
                                           initWithString:NSLocalizedString(placeholder, nil)
@@ -69,6 +69,7 @@
                                                        }];
     
     _textfield.attributedPlaceholder = attributedText;
+    _textfield.textAlignment = NSTextAlignmentRight;
     
     [self addSubview:_textfield];
 }

@@ -12,14 +12,16 @@
 
 @implementation FLNewTransactionBar
 
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCollect:(SEL)actionCollect
 {
-    self = [super initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 37)];
+    self = [super initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 37 + 40)];
     if (self) {
         self.backgroundColor = [UIColor customBackgroundHeader];
         
         _dictionary = dictionary;
         currentController = controller;
+        actionValidSend = actionSend;
+        actionValidCollect = actionCollect;
         
         locationManager = [CLLocationManager new];
         locationManager.delegate = self;
@@ -53,6 +55,7 @@
             [self createFacebookButton];
             //            [self createSeparator];
             [self createPrivacyButton];
+            [self createButtonSend];
             
             if(isEvent){
                 
@@ -123,9 +126,30 @@
     }
 }
 
+- (void)createButtonSend {
+    askButton = [[UIButton alloc] initWithFrame:CGRectMake(1, CGRectGetHeight(self.frame) / 2. + 1, CGRectGetWidth(self.frame) / 2. - 1, CGRectGetHeight(self.frame) / 2. - 2)];
+    [askButton setTitle:NSLocalizedString(@"MENU_COLLECT", nil) forState:UIControlStateNormal];
+    [askButton setImage:[UIImage imageNamed:@"menu-new-transaction-collect"] forState:UIControlStateNormal];
+    askButton.titleLabel.font = [UIFont customTitleLight:16];
+    [askButton setImageEdgeInsets:UIEdgeInsetsMake(0, -15, 0, 0)];
+    [askButton setBackgroundColor:[UIColor customBlue]];
+    [askButton addTarget:currentController action:actionValidCollect forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:askButton];
+    
+    
+    sendButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2. + 1, CGRectGetHeight(self.frame) / 2. + 1, CGRectGetWidth(self.frame) / 2. - 2, CGRectGetHeight(self.frame) / 2. - 2)];
+    [sendButton setTitle:NSLocalizedString(@"MENU_PAYMENT", nil) forState:UIControlStateNormal];
+    [sendButton setImage:[UIImage imageNamed:@"menu-new-transaction-payment"] forState:UIControlStateNormal];
+    sendButton.titleLabel.font = [UIFont customTitleLight:16];
+    [sendButton setImageEdgeInsets:UIEdgeInsetsMake(0, -15, 0, 0)];
+    [sendButton setBackgroundColor:[UIColor customBlue]];
+    [sendButton addTarget:currentController action:actionValidSend forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:sendButton];
+}
+
 - (void)createLocalizeButton
 {
-    localizeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
+    localizeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame) / 2.)];
     
     [localizeButton setImage:[UIImage imageNamed:@"new-transaction-bar-localize"] forState:UIControlStateNormal];
     [localizeButton setImage:[UIImage imageNamed:@"new-transaction-bar-localize-selected"] forState:UIControlStateSelected];
@@ -143,7 +167,7 @@
 {
     //    imageButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(localizeButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
     
-    imageButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
+    imageButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame) / 2.)];
     
     [imageButton setImage:[UIImage imageNamed:@"new-transaction-bar-image"] forState:UIControlStateNormal];
     [imageButton setImage:[UIImage imageNamed:@"new-transaction-bar-image-selected"] forState:UIControlStateSelected];
@@ -158,7 +182,7 @@
 {
     //    facebookButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
     
-    facebookButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(localizeButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame))];
+    facebookButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(localizeButton.frame), 0, CGRectGetWidth(self.frame) / 4., CGRectGetHeight(self.frame) / 2.)];
     
     [facebookButton setImage:[UIImage imageNamed:@"new-transaction-bar-facebook"] forState:UIControlStateNormal];
     [facebookButton setImage:[UIImage imageNamed:@"new-transaction-bar-facebook-selected"] forState:UIControlStateSelected];
@@ -180,7 +204,7 @@
 
 - (void)createPrivacyButton
 {
-    privacyButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(facebookButton.frame), 0, CGRectGetWidth(self.frame) - CGRectGetMaxX(facebookButton.frame), CGRectGetHeight(self.frame))];
+    privacyButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(facebookButton.frame), 0, CGRectGetWidth(self.frame) - CGRectGetMaxX(facebookButton.frame), CGRectGetHeight(self.frame) / 2.)];
     
     [privacyButton setImage:[UIImage imageNamed:@"arrow-blue-down"] forState:UIControlStateNormal];
     

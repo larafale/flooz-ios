@@ -13,7 +13,7 @@
 
 - (id)initWithFrame:(CGRect)frame dictionary:(NSMutableDictionary *)dictionary
 {
-    CGRectSetWidthHeight(frame, SCREEN_WIDTH, 50);
+    CGRectSetWidthHeight(frame, SCREEN_WIDTH - 110, 50);
     self = [super initWithFrame:frame];
     if (self) {
         _dictionary = dictionary;
@@ -36,24 +36,21 @@
 
 - (void)createButton
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(65, 0, CGRectGetWidth(self.frame) - 65, CGRectGetHeight(self.frame))];
-    
-    [button setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    button.titleLabel.font = [UIFont customContentLight:14];
-
-    [button setTitle:NSLocalizedString(@"FIELD_TRANSACTION_SELECT_FRIEND", nil) forState:UIControlStateNormal];
-    
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     [button addTarget:self action:@selector(didButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     
     {
-        usernameView = [[UILabel alloc] initWithFrame:CGRectMakeWithSize(button.frame.size)];
-        [button addSubview:usernameView];
+        fullnameView = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, CGRectGetWidth(button.frame) - 60, CGRectGetHeight(self.frame))];
+        fullnameView.font = [UIFont customContentLight:14];
+        fullnameView.textColor = [UIColor customPlaceholder];
+        fullnameView.lineBreakMode = NSLineBreakByTruncatingTail;
+        [fullnameView setText:NSLocalizedString(@"FIELD_TRANSACTION_SELECT_FRIEND", nil)];
+        [button addSubview:fullnameView];
         
-        usernameView.font = [UIFont customContentRegular:10];
+        usernameView = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(fullnameView.frame), 30, CGRectGetWidth(button.frame) - CGRectGetMinX(fullnameView.frame), 9)];
+        usernameView.font = [UIFont customContentRegular:11];
         usernameView.textColor = [UIColor customBlue];
+        [button addSubview:usernameView];
     }
     
     [self addSubview:button];
@@ -75,7 +72,11 @@
     UIButton *button = [[self subviews] objectAtIndex:1];
     
     if([_dictionary objectForKey:@"toTitle"] && ![[_dictionary objectForKey:@"toTitle"] isBlank]){
-        [button setTitle:[[_dictionary objectForKey:@"toTitle"] uppercaseString] forState:UIControlStateSelected];
+        fullnameView.text = [[_dictionary objectForKey:@"toTitle"] uppercaseString];
+        fullnameView.font = [UIFont customTitleLight:14];
+        fullnameView.textColor = [UIColor whiteColor];
+        CGRectSetHeight(fullnameView.frame, 45);
+        CGRectSetY(fullnameView.frame, -7);
         button.selected = YES;
     }
     else{
@@ -86,7 +87,7 @@
         [userView setImageFromData:[_dictionary objectForKey:@"toImage"]];
     }
     else if([_dictionary objectForKey:@"toImageUrl"]){
-         [userView setImageFromURL:[_dictionary objectForKey:@"toImageUrl"]];
+        [userView setImageFromURL:[_dictionary objectForKey:@"toImageUrl"]];
     }
     else{
         [userView setImageFromData:nil];
@@ -95,11 +96,6 @@
     if(_dictionary[@"toUsername"] && ![_dictionary[@"toUsername"] isBlank]){
         usernameView.hidden = NO;
         usernameView.text = [NSString stringWithFormat:@"@%@", _dictionary[@"toUsername"]];
-        
-        CGFloat width = CGRectGetWidth(button.titleLabel.frame);
-        [button.titleLabel setWidthToFit];
-        CGRectSetX(usernameView.frame, CGRectGetWidth(button.titleLabel.frame) + 5);
-        CGRectSetWidth(button.titleLabel.frame, width);
     }
     else{
         usernameView.hidden = YES;

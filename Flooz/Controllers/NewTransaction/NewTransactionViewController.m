@@ -60,6 +60,7 @@
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
+        self.title = NSLocalizedString(@"NEW_TRANSACTION", nil);
         transaction = [NSMutableDictionary new];
         
         transaction[@"random"] = [FLHelper generateRandomString];
@@ -92,7 +93,7 @@
     
     self.view.backgroundColor = [UIColor customBackground];
     
-    transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self];
+    transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
     
     {
         [_navBar cancelAddTarget:self action:@selector(dismiss)];
@@ -136,6 +137,17 @@
         }
         
         
+        
+        
+        if(!isEvent){
+            friend = [[FLSelectFriendButton alloc] initWithFrame:CGRectMakePosition(0, offset) dictionary:transaction];
+            friend.delegate = self;
+            
+            [_contentView addSubview:friend];
+            
+            offset = CGRectGetMaxY(friend.frame);
+        }
+        
         if(isEvent){
             amountInput = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"Montant" for:transaction key:@"goal" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) delegate:nil];
             [amountInput hideSeparatorTop];
@@ -147,21 +159,11 @@
         {
             [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
-            CGRectSetY(amountInput.frame, offset);
+            CGRectSetX(amountInput.frame, PPScreenWidth() - 110);
+            CGRectSetWidth(amountInput.frame, PPScreenWidth() - CGRectGetMinX(amountInput.frame));
+            CGRectSetY(amountInput.frame, CGRectGetMinY(friend.frame));
             offset = CGRectGetMaxY(amountInput.frame);
         }
-        
-        
-        if(!isEvent){
-            friend = [[FLSelectFriendButton alloc] initWithFrame:CGRectMakePosition(0, CGRectGetMaxY(amountInput.frame)) dictionary:transaction];
-            friend.delegate = self;
-            
-            [_contentView addSubview:friend];
-            
-            offset = CGRectGetMaxY(friend.frame);
-        }
-        
-
         
         NSString *contentPlaceholder = @"FIELD_TRANSACTION_CONTENT_PLACEHOLDER";
         if(isEvent){
@@ -172,7 +174,7 @@
         [content setInputAccessoryView:transactionBarKeyboard];
         [_contentView addSubview:content];
         
-        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self];
+        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
         [_contentView addSubview:transactionBar];
         
         offset = CGRectGetMaxY(content.frame);
@@ -344,6 +346,16 @@
 - (void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)validSendMoney {
+    [transaction setValue:[FLTransaction transactionTypeToParams:TransactionTypePayment] forKey:@"method"];
+    [self valid];
+}
+
+- (void)validCollectMoney {
+    [transaction setValue:[FLTransaction transactionTypeToParams:TransactionTypeCharge] forKey:@"method"];
+    [self valid];
 }
 
 - (void)valid

@@ -71,11 +71,11 @@
 - (void)createButtons
 {
     UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 11, 37, 28)];
-    view.backgroundColor = [UIColor customBackgroundStatus];
+    //view.backgroundColor = [UIColor customBackgroundStatus];
     view.layer.cornerRadius = 14;
     
-    [view setImage:[UIImage imageNamed:@"friends-add"] forState:UIControlStateNormal];
-    [view setImage:[UIImage imageNamed:@"friend-accept"] forState:UIControlStateSelected];
+    [view setImage:[UIImage imageNamed:@"Signup_Friends_Plus"] forState:UIControlStateNormal];
+    [view setImage:[UIImage imageNamed:@"Signup_Friends_Selected"] forState:UIControlStateSelected];
     
     [view addTarget:self action:@selector(accept) forControlEvents:UIControlEventTouchUpInside];
     
@@ -129,6 +129,7 @@
         }
     }
     
+    view.userInteractionEnabled = !isFriend;
     view.selected = isFriend;
 }
 

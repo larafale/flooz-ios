@@ -48,6 +48,8 @@
 "CREDIT_CARD_SCAN" = "Scanner ma carte, c'est plus rapide !";
 "CREDIT_CARD_REMOVE" = "Supprimer cette carte";
 
+"NEW_TRANSACTION" = "Nouveau Flooz";
+
 "INFORMATIONS_WHY" = "Sécurité";
 "INFORMATIONS_TERMS" = "CGU / CGV";
 "INFORMATIONS_FAQ" = "FAQ";

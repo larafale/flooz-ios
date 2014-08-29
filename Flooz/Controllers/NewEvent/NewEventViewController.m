@@ -82,6 +82,16 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)validSendMoney {
+    [transaction setValue:[FLTransaction transactionTypeToParams:TransactionTypePayment] forKey:@"method"];
+    [self valid];
+}
+
+- (void)validCollectMoney {
+    [transaction setValue:[FLTransaction transactionTypeToParams:TransactionTypeCollect] forKey:@"method"];
+    [self valid];
+}
+
 - (void)valid
 {
     [[self view] endEditing:YES];
@@ -118,9 +128,9 @@
 
 - (void)createKeyboardBar
 {
-    keyboardBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self];
+    keyboardBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
     
-    keyboardBarFooter = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self];
+    keyboardBarFooter = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
     [_contentView addSubview:keyboardBarFooter];
     
     [self registerNotification:@selector(reloadKeyboardBarData) name:UIKeyboardWillShowNotification object:nil];
