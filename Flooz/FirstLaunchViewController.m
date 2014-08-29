@@ -279,14 +279,11 @@
     else if (_indexPage == SignupPageInfo) {
         pro = 1.5f / NUMBER_STEP;
     }
-    else if (_indexPage == SignupPagePassword) {
+    else if (_indexPage == SignupPageCode) {
         pro = 2.0f / NUMBER_STEP;
     }
-    else if (_indexPage == SignupPageCode) {
-        pro = 2.5f / NUMBER_STEP;
-    }
     else if (_indexPage == SignupPageCodeVerif) {
-        pro = 2.75f / NUMBER_STEP;
+        pro = 2.5f / NUMBER_STEP;
     }
     else if (_indexPage == SignupPageCB) {
         pro = 3.0f / NUMBER_STEP;
@@ -327,40 +324,44 @@
     [_friendsItem setImageWithImageName:@"Signup_Menu_Friends"];
     [_closeButton setEnabled:YES];
     [_closeButton setImage:[UIImage imageNamed:@"Signup_Close"] forState:UIControlStateNormal];
+    if (av == 1.5f / NUMBER_STEP) {
+        [self closeButtonAction:@selector(backPage) withImageName:@"Signup_Close"];
+    }
     if (av >= 2.0f / NUMBER_STEP) {
         [_infoItem setImageWithImageName:@"Signup_Menu_Info_Disable"];
-        if (av >= 2.5f / NUMBER_STEP) {
-            if (av >= 3.0f / NUMBER_STEP) {
-                [_closeButton setEnabled:YES];
-                [_secureItem setImageWithImageName:@"Signup_Menu_Lock_Disable"];
-                [_closeButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-                [_closeButton addTarget:self action:@selector(ignorePage) forControlEvents:UIControlEventTouchUpInside];
-                [_closeButton setImage:[UIImage imageNamed:@"Signup_Next"] forState:UIControlStateNormal];
-                if (av >= 4.0f / NUMBER_STEP) {
-                    [_CBItem setImageWithImageName:@"Signup_Menu_CB_Disable"];
-                    [_closeButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-                    [_closeButton addTarget:self action:@selector(ignorePage) forControlEvents:UIControlEventTouchUpInside];
-                    [_closeButton setImage:[UIImage imageNamed:@"Signup_Next"] forState:UIControlStateNormal];
-                    [_closeButton setEnabled:NO];
-                    if (av >= 4.1f / NUMBER_STEP) {
-                        [_closeButton setEnabled:YES];
-                        if (av >= 5.0f / NUMBER_STEP) {
-                            [_friendsItem setImageWithImageName:@"Signup_Menu_Friends_Disable"];
-                        }
+        if (av >= 3.0f / NUMBER_STEP) {
+            [_closeButton setEnabled:YES];
+            [_secureItem setImageWithImageName:@"Signup_Menu_Lock_Disable"];
+            [self closeButtonAction:@selector(ignorePage) withImageName:@"Signup_Next"];
+            if (av >= 4.0f / NUMBER_STEP) {
+                [_CBItem setImageWithImageName:@"Signup_Menu_CB_Disable"];
+                [_closeButton setEnabled:NO];
+                if (av >= 4.1f / NUMBER_STEP) {
+                    [_closeButton setEnabled:YES];
+                    if (av >= 5.0f / NUMBER_STEP) {
+                        [_friendsItem setImageWithImageName:@"Signup_Menu_Friends_Disable"];
                     }
                 }
             }
-            else {
-                [_closeButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-                [_closeButton addTarget:self action:@selector(closeSignup) forControlEvents:UIControlEventTouchUpInside];
-                [_closeButton setImage:[UIImage imageNamed:@"Signup_Close"] forState:UIControlStateNormal];
-            }
+        }
+        else {
+            [self closeButtonAction:@selector(closeSignup) withImageName:@"Signup_Close"];
         }
     }
 }
 
+- (void) closeButtonAction:(SEL)action withImageName:(NSString *)imageName {
+    [_closeButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [_closeButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    [_closeButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+}
+
 - (void) ignorePage {
     [self goToNextPage:_indexPage withUser:self.userInfoDico];
+}
+
+- (void) backPage {
+    [self goToPreviousPage:_indexPage withUser:self.userInfoDico];
 }
 
 @end

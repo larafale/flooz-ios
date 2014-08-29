@@ -27,7 +27,7 @@
     
     _imageViewIcon.image = image;
     CATransition *transition = [CATransition animation];
-    transition.duration = 1.0f;
+    transition.duration = 0.5f;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type = kCATransitionFade;
     [_imageViewIcon.layer addAnimation:transition forKey:nil];

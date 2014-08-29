@@ -881,6 +881,7 @@
                  if (result[@"devices"])
                      dicDevices = result[@"devices"];
                  NSDictionary *user = @{
+                                        @"picId" : [NSData new],
                                         @"email": result[@"email"],
                                         @"lastName": result[@"last_name"],
                                         @"firstName": result[@"first_name"],

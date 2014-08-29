@@ -108,7 +108,7 @@
 
 "SIGNUP_FACEBOOK" = "Avec Facebook";
 
-"LOGIN_FACEBOOK" = "Avec Facebook";
+"LOGIN_FACEBOOK" = "Utiliser mes infos Facebook";
 "LOGIN_OR" = "ou";
 "LOGIN_PASSWORD_FORGOT" = "Oublié ?";
 
@@ -274,7 +274,7 @@
 "SIGNUP_PSEUDO_EXPLICATION" = "Ce pseudo, c’est votre identité sur Flooz. Il est unique et ne pourra plus être modifié.";
 "SIGNUP_PASSWORD_EXPLICATION" = "6 caractères min";
 
-"SIGNUP_READ_CGU" = "En passant à l'étape suivante, vous déclarez accepter les conditions générales d'utilisation de Flooz.\nCliquez ici pour les consulter.";
+"SIGNUP_READ_CGU" = "En passant à l'étape suivante, vous déclarez accepter les conditions générales d'utilisation de Flooz.";
 
 "SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
 "SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";

@@ -28,7 +28,6 @@ typedef enum {
     SignupPagePhone,
     SignupPagePseudo,
     SignupPageInfo,
-    SignupPagePassword,
     SignupPageCode,
     SignupPageCodeVerif,
     SignupPageCB,
@@ -36,7 +35,7 @@ typedef enum {
     SignupPageFriends
 } SignupOrderPage;
 
-@interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate>
+@interface FirstLaunchContentViewController : UIViewController <SecureCodeFieldDelegate, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate, TTTAttributedLabelDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic) NSInteger pageIndex;
 @property (nonatomic, weak) id<FirstLaunchContentViewControllerDelegate> delegate;

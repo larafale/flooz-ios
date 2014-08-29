@@ -34,6 +34,7 @@
     UIButton *_validCBButton;
     UIImageView *logo;
     FLUserView *_avatarView;
+    UIView *_contentViewInfo;
     
     UIButton *_registerFacebook;
     FLTextFieldIcon *_userName;
@@ -128,14 +129,12 @@
             [_email reloadTextField];
             [self canValidate:_email];
             if(_userDic[@"avatarURL"] && ![_userDic[@"avatarURL"] isBlank]){
-                [_avatarView setImageFromURL:_userDic[@"avatarURL"]];
-                [_avatarView setHidden:NO];
+                if (!_userDic[@"picId"] || [_userDic[@"picId"] isEqual:[NSData new]]) {
+                    [_avatarView setImageFromURL:_userDic[@"avatarURL"]];
+                }
                 [_registerFacebook setHidden:YES];
                 [self.view endEditing:YES];
-            }
-            else {
-                [_avatarView setHidden:YES];
-                [_registerFacebook setHidden:NO];
+                CGRectSetY(_contentViewInfo.frame, 0);
             }
         }
             break;
@@ -150,15 +149,6 @@
             break;
         case SignupPageCodeVerif: {
             [_secureCodeField clean];
-        }
-            break;
-        case SignupPagePassword: {
-            [_userDic setValue:@"" forKey:@"password"];
-            [_userDic setValue:@"" forKey:@"confirmation"];
-            [_password reloadTextField];
-            [_passwordConfirm reloadTextField];
-            [_validCBButton setEnabled:NO];
-            _haveAnimated = NO;
         }
             break;
         case SignupPageCB: {
@@ -199,10 +189,6 @@
             break;
         case SignupPageInfo: {
             [self signupInfoView];
-        }
-            break;
-        case SignupPagePassword: {
-            [self signupPasswordView];
         }
             break;
         case SignupPageCode: {
@@ -304,12 +290,14 @@
         }
             break;
         case SignupPageInfo: {
-            if(_userDic[@"avatarURL"]){
-                [self focusOnSecond];
-            }
-            else {
-                [self focusOnFirst];
-            }
+            /*
+             if(_userDic[@"avatarURL"]){
+             [self focusOnSecond];
+             }
+             else {
+             [self focusOnFirst];
+             }
+             */
         }
             break;
         default: {
@@ -381,17 +369,11 @@
         {
             canValidate = YES;
         }
-    } else if ([textIcon isEqual:_name] || [textIcon isEqual:_email]) {
+    } else if ([textIcon isEqual:_name] || [textIcon isEqual:_email] || [textIcon isEqual:_password]) {
         if ((_userDic[@"firstName"] && ![_userDic[@"firstName"] isBlank])
             && (_userDic[@"lastName"] && ![_userDic[@"lastName"] isBlank])
+            && (_userDic[@"password"] && [_userDic[@"password"] length] >= 6)
             && (_userDic[@"email"] && ![_userDic[@"email"] isBlank] && [self validateEmail:_userDic[@"email"]]))
-        {
-            canValidate = YES;
-        }
-    } else if ([textIcon isEqual:_password] || [textIcon isEqual:_passwordConfirm]) {
-        if ((_userDic[@"password"] && [_userDic[@"password"] length] >= 6)
-            && (_userDic[@"confirmation"] && [_userDic[@"confirmation"] length] >= 6)
-            && ([_userDic[@"password"] isEqualToString:_userDic[@"confirmation"]]))
         {
             canValidate = YES;
         }
@@ -637,45 +619,121 @@
 #pragma mark - ********** SIGNUP_INFO **********
 
 - (void) signupInfoView {
-    _title.text = NSLocalizedString(@"SIGNUP_PAGE_TITLE_Info", @"");
-    [self displayHeader];
+    [self.view setBackgroundColor: [UIColor customBackground]];
+    [_backButton setHidden:YES];
+    CGRectSetY(_mainBody.frame, STATUSBAR_HEIGHT + 40);
+    CGRectSetHeight(_mainBody.frame, PPScreenHeight()-CGRectGetMinY(_mainBody.frame));
     [_validCBButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
     
+    _contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
+    [_mainBody addSubview:_contentView];
+    
     [self createFacebookButton];
-    [_mainBody addSubview:_registerFacebook];
+    [_contentView addSubview:_registerFacebook];
     
-    _avatarView = [[FLUserView alloc] initWithFrame:CGRectMake((CGRectGetWidth(_mainBody.frame) / 2.0f) - (50 / 2.0f), 0, 50, 50)];
-    [_mainBody addSubview:_avatarView];
-    [_avatarView setHidden:YES];
+    _contentViewInfo = [UIView newWithFrame:CGRectMake(0, CGRectGetMaxY(_registerFacebook.frame), PPScreenWidth(), CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(_registerFacebook.frame))];
+    [_contentView addSubview:_contentViewInfo];
     
-    _name = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_FIRSTNAME" for:_userDic key:@"firstName" position:CGPointMake(0.0f, CGRectGetMaxY(_registerFacebook.frame)+12.0f) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
-    _firstTextFieldToFocus = _name;
-    [_name addForNextClickTarget:self action:@selector(focusOnNext)];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    tapGesture.cancelsTouchesInView = NO;
+    [_mainBody addGestureRecognizer:tapGesture];
+    [_contentView addGestureRecognizer:tapGesture];
+    [_contentViewInfo addGestureRecognizer:tapGesture];
+    [self registerForKeyboardNotifications];
+    
+    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 70)];
+    [view setBackgroundColor:[UIColor customBackgroundHeader]];
+    [view addTarget:self action:@selector(showImagePicker) forControlEvents:UIControlEventTouchUpInside];
+    {
+        CGFloat size = 50.0f;
+        _avatarView = [[FLUserView alloc] initWithFrame:CGRectMake(((CGRectGetWidth(view.frame) - size) / 2.0), ((CGRectGetHeight(view.frame) - size) / 2.0), size, size)];
+        [view addSubview:_avatarView];
+        [_avatarView setHidden:NO];
+    }
+    [_contentViewInfo addSubview:view];
+    
+    _name = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_FIRSTNAME" for:_userDic key:@"firstName" position:CGPointMake(0.0f, CGRectGetMaxY(view.frame)) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
+    [_name addForNextClickTarget:self action:@selector(focusOnNextInfo)];
     [_name addForTextChangeTarget:self action:@selector(canValidate:)];
-    [_mainBody addSubview:_name];
+    [_contentViewInfo addSubview:_name];
     
     _email = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_EMAIL" for:_userDic key:@"email" position:CGPointMake(0.0f, CGRectGetMaxY(_name.frame) + 5.0f / ratioiPhones)];
-    [_email addForNextClickTarget:self action:@selector(checkEmail)];
+    [_email addForNextClickTarget:self action:@selector(focusOnNextInfo)];
     [_email addForTextChangeTarget:self action:@selector(canValidate:)];
-    _secondTextFieldToFocus = _email;
-    [_mainBody addSubview:_email];
+    [_contentViewInfo addSubview:_email];
     
-    UILabel *cguLabel = [UILabel newWithFrame:CGRectMake(10, CGRectGetMaxY(_email.frame), PPScreenWidth() - 20, 80)];
-    [cguLabel setText:NSLocalizedString(@"SIGNUP_READ_CGU", @"")];
-    cguLabel.textColor = [UIColor customPlaceholder];
-    cguLabel.font = [UIFont customTitleExtraLight:13];
-    cguLabel.textAlignment = NSTextAlignmentCenter;
-    [cguLabel setNumberOfLines:0];
-    [_mainBody addSubview:cguLabel];
-    UIButton *cguButton = [UIButton newWithFrame:CGRectMake(0, CGRectGetMaxY(_email.frame), PPScreenWidth(), 80)];
-    [cguButton addTarget:self action:@selector(displayCGU) forControlEvents:UIControlEventTouchUpInside];
-    [_mainBody addSubview:cguButton];
+    _password = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_PASSWORD" for:_userDic key:@"password" position:CGPointMake(0.0f, CGRectGetMaxY(_email.frame) + 5.0f / ratioiPhones)];
+    [_password seTsecureTextEntry:YES];
+    [_password addForNextClickTarget:self action:@selector(focusOnNextInfo)];
+    [_password addForTextChangeTarget:self action:@selector(canValidate:)];
+    [_contentViewInfo addSubview:_password];
     
-    _validCBButton.center = CGPointMake(CGRectGetMidX(_validCBButton.frame), CGRectGetMidY(_email.frame));
+    
+    UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_password.frame), PPScreenWidth()-30, 30)];
+    firstTimeText.textColor = [UIColor customPlaceholder];
+    firstTimeText.font = [UIFont customTitleExtraLight:14];
+    firstTimeText.numberOfLines = 0;
+    firstTimeText.textAlignment = NSTextAlignmentCenter;
+    firstTimeText.text = NSLocalizedString(@"SIGNUP_PASSWORD_EXPLICATION", nil);
+    [_contentViewInfo addSubview:firstTimeText];
+    
+    
+    TTTAttributedLabel *tttLabel = [TTTAttributedLabel newWithFrame:CGRectMake(10, CGRectGetHeight(_contentView.frame) - 45.0f, PPScreenWidth() - 20, 45)];
+    NSString *labelText = NSLocalizedString(@"SIGNUP_READ_CGU", @"");
+    [tttLabel setNumberOfLines:0];
+    [tttLabel setLineBreakMode: NSLineBreakByWordWrapping];
+    [tttLabel setTextAlignment: NSTextAlignmentCenter];
+    [tttLabel setTextColor: [UIColor customPlaceholder]];
+    [tttLabel setFont: [UIFont customTitleExtraLight:13]];
+    NSRange CGURange = [labelText rangeOfString:@"conditions générales d'utilisation"];
+    [tttLabel setText:labelText afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        if (CGURange.location != NSNotFound) {
+            [mutableAttributedString addAttribute:(NSString *)kCTUnderlineStyleAttributeName value:(id)@1 range:CGURange];
+        }
+        return mutableAttributedString;
+    }];
+    [tttLabel sizeToFit];
+    [tttLabel setLinkAttributes:@{NSForegroundColorAttributeName : [UIColor customPlaceholder]}];
+    [tttLabel addLinkToURL:[NSURL URLWithString:@"action://show-CGU"] withRange:CGURange];
+    [tttLabel setDelegate:self];
+    [_contentView addSubview:tttLabel];
+    
+    
+    _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), CGRectGetMaxY(tttLabel.frame));
+    [_validCBButton removeFromSuperview];
+    _validCBButton.center = CGPointMake(CGRectGetMidX(_validCBButton.frame), CGRectGetMidY(_password.frame));
+    [_contentViewInfo addSubview:_validCBButton];
+}
+
+
+- (void)showImagePicker
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"GLOBAL_CAMERA", nil), NSLocalizedString(@"GLOBAL_ALBUMS", nil), nil];
+    [actionSheet showInView:_mainBody];
+}
+
+- (void) focusOnNextInfo {
+    if ([_name isFirstResponder]) {
+        [_email becomeFirstResponder];
+    }
+    else if ([_email isFirstResponder]) {
+        [_password becomeFirstResponder];
+    }
+    else {
+        [self checkEmail];
+    }
+}
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
+    if ([[url scheme] hasPrefix:@"action"]) {
+        if ([[url host] hasPrefix:@"show-CGU"]) {
+            [self displayCGU];
+        }
+    }
 }
 
 - (void)createFacebookButton {
-    _registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(15, 5, PPScreenWidth()-30.0f, 45)];
+    _registerFacebook = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 45)];
     [_registerFacebook setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.5]] forState:UIControlStateNormal];
     [_registerFacebook setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
     _registerFacebook.titleLabel.font = [UIFont customContentRegular:15];
@@ -693,21 +751,28 @@
 
 - (void) checkEmail {
     if (!_userDic[@"lastName"] || !_userDic[@"firstName"] || [_userDic[@"lastName"] isBlank] || [_userDic[@"firstName"] isBlank]) {
-        [_firstTextFieldToFocus becomeFirstResponder];
+        [_name becomeFirstResponder];
         return;
     }
-    
+    if (!_userDic[@"email"] || [_userDic[@"email"] isBlank] || ![self validateEmail:_userDic[@"email"]]) {
+        [_email becomeFirstResponder];
+        return;
+    }
+    if (!_userDic[@"password"] || [_userDic[@"password"] length] < 6) {
+        [_password becomeFirstResponder];
+        return;
+    }
     if (_userDic[@"email"] && ![_userDic[@"email"] isBlank] && [self validateEmail:_userDic[@"email"]]) {
         [self animateValidButton];
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] verifyEmail:_userDic[@"email"] success:^(id result) {
             [self goToNextPage];
         } failure:^(NSError *error) {
-            [_secondTextFieldToFocus becomeFirstResponder];
+            [_email becomeFirstResponder];
         }];
     }
     else {
-        [_secondTextFieldToFocus becomeFirstResponder];
+        [_email becomeFirstResponder];
     }
 }
 
@@ -725,60 +790,48 @@
     return [emailTest evaluateWithObject:candidate];
 }
 
-/**
- *  SIGNUP_Password_VIEW
- *
- *
- */
-#pragma mark - ********** SIGNUP_PASSWORD **********
 
-- (void) signupPasswordView {
-    _title.text = NSLocalizedString(@"SIGNUP_PAGE_TITLE_Password", @"");
-    [self displayHeader];
-    [_validCBButton addTarget:self action:@selector(checkPassword) forControlEvents:UIControlEventTouchUpInside];
+#pragma mark - ImagePicker
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *cameraUI = [UIImagePickerController new];
     
-    _password = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_PASSWORD" for:_userDic key:@"password" position:CGPointMake(0.0f, firstItemY)];
-    [_password seTsecureTextEntry:YES];
-    [_password addForNextClickTarget:self action:@selector(focusOnNext)];
-    [_password addForTextChangeTarget:self action:@selector(canValidate:)];
-    _firstTextFieldToFocus = _password;
-    [_mainBody addSubview:_password];
+    if(buttonIndex == 0){
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == NO){
+            DISPLAY_ERROR(FLCameraAccessDenyError);
+            return;
+        }
+        
+        cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }else if(buttonIndex == 1){
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == NO){
+            DISPLAY_ERROR(FLAlbumsAccessDenyError);
+            return;
+        }
+        
+        cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }else{
+        return;
+    }
     
-    _passwordConfirm = [[FLTextFieldIcon alloc] initWithIcon:@"" placeholder:@"FIELD_PASSWORD_CONFIRMATION" for:_userDic key:@"confirmation" position:CGPointMake(0.0f, CGRectGetMaxY(_password.frame) + 10.0f / ratioiPhones)];
-    [_passwordConfirm seTsecureTextEntry:YES];
-    [_passwordConfirm addForNextClickTarget:self action:@selector(checkPassword)];
-    [_passwordConfirm addForTextChangeTarget:self action:@selector(canValidate:)];
-    _secondTextFieldToFocus = _passwordConfirm;
-    [_mainBody addSubview:_passwordConfirm];
+    cameraUI.delegate = self;
     
-    UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_passwordConfirm.frame)+2, PPScreenWidth()-30, 50)];
-    firstTimeText.textColor = [UIColor customPlaceholder];
-    firstTimeText.font = [UIFont customTitleExtraLight:14];
-    firstTimeText.numberOfLines = 0;
-    firstTimeText.textAlignment = NSTextAlignmentCenter;
-    firstTimeText.text = NSLocalizedString(@"SIGNUP_PASSWORD_EXPLICATION", nil);
-    [_mainBody addSubview:firstTimeText];
-    
-    _validCBButton.center = CGPointMake(CGRectGetMidX(_validCBButton.frame), CGRectGetMidY(_passwordConfirm.frame));
+    [self presentViewController:cameraUI animated:YES completion:nil];
 }
 
-- (void) checkPassword {
-    if (!_userDic[@"password"] || [_userDic[@"password"] length] < 6) {
-        [_firstTextFieldToFocus becomeFirstResponder];
-        return;
-    }
-    else if (!_userDic[@"confirmation"] || [_userDic[@"confirmation"] length] < 6) {
-        [_secondTextFieldToFocus becomeFirstResponder];
-        return;
-    }
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *resizedImage = [originalImage resize:CGSizeMake(640, 0)];
+    NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
     
-    if (_userDic[@"password"] && _userDic[@"confirmation"] && [_userDic[@"password"] length] >= 6 && [_userDic[@"confirmation"] length] >= 6 && [_userDic[@"password"] isEqualToString:_userDic[@"confirmation"]]) {
-        [self animateValidButton];
-        [self goToNextPage];
-    }
-    else {
-        [_firstTextFieldToFocus becomeFirstResponder];
-    }
+    [_avatarView setImageFromData:imageData];
+    
+    [_userDic setValue:imageData forKey:@"picId"];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }];
 }
 
 /**
@@ -879,6 +932,11 @@
             [[Flooz sharedInstance] signup:_userDic success:^(id result) {
                 [[Flooz sharedInstance] hideLoadView];
                 [UICKeyChainStore setString:secureCode forKey:[self keyForSecureCode]];
+                
+                if (_userDic[@"picId"] && ![_userDic[@"picId"] isEqual:[NSData new]]) {
+                    [[Flooz sharedInstance] showLoadView];
+                    [[Flooz sharedInstance] uploadDocument:_userDic[@"picId"] field:@"picId" success:NULL failure:NULL];
+                }
                 [self goToNextPage];
             } failure:^(NSError *error) {
                 [self goToPreviousPage];
@@ -1069,7 +1127,7 @@
 
 - (void)registerForKeyboardNotifications
 {
-    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardWillShowNotification object:nil];
     [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
 }
 
@@ -1078,7 +1136,7 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight + 30, 0);
 }
 
 - (void)keyboardWillDisappear
@@ -1111,7 +1169,7 @@
     firstTimeText.textAlignment = NSTextAlignmentCenter;
     firstTimeText.text = NSLocalizedString(@"SIGNUP_FRIENDS_MESSAGE", nil);
     [_mainBody addSubview:firstTimeText];
-
+    
     UIImageView *inviteTitle = [UIImageView newWithImageName:@"Signup-Ask-Friend"];
     CGRectSetX(inviteTitle.frame, CGRectGetWidth(_mainBody.frame) / 2 - CGRectGetWidth(inviteTitle.frame) / 2);
     CGRectSetY(inviteTitle.frame, CGRectGetMinY(firstTimeText.frame) - 10 - CGRectGetHeight(inviteTitle.frame));
@@ -1121,7 +1179,7 @@
     [okB setTitle:@"OK" forState:UIControlStateNormal];
     [okB addTarget:self action:@selector(askContacts) forControlEvents:UIControlEventTouchUpInside];
     CGRectSetY(okB.frame, CGRectGetMaxY(firstTimeText.frame) + 10);
-
+    
     [_mainBody addSubview:okB];
 }
 
@@ -1170,7 +1228,7 @@
     [_headerView addSubview:_validCBButton];
     [_validCBButton setEnabled:YES];
     [_validCBButton setHidden:YES];
-
+    
     _contactInfoArray = [NSMutableArray new];
     _contactToInvite = [NSMutableArray new];
     _contactFromFlooz = [NSMutableArray new];
