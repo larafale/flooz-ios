@@ -9,7 +9,7 @@
 #import "FLKeyboardView.h"
 
 #define BUTTON_WIDTH (SCREEN_WIDTH / 3.)
-#define BUTTON_HEIGHT 62.5
+#define BUTTON_HEIGHT 54
 
 @implementation FLKeyboardView
 
