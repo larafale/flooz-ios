@@ -46,8 +46,8 @@
         _avatarURL = nil;
     }
     
-    if(json[@"settings"]){
-        _deviceToken = json[@"settings"][@"iosDevices"];
+    if(json[@"device"]){
+        _deviceToken = [json objectForKey:@"device"];
     }
     
     _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
@@ -114,14 +114,11 @@
         NSMutableArray *unique = [NSMutableArray array];
         
         if([_json objectForKey:@"friends"]){
-            NSLog(@"%@", _json[@"friends"]);
             for(NSDictionary *friendJSON in [_json objectForKey:@"friends"]){
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
-                if (friend != nil) {
-                    if ([friend userId] && ![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
-                        [unique addObject:[friend userId]];
-                        [friends addObject:friend];
-                    }
+                if (friend && [friend userId] && ![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
+                    [unique addObject:[friend userId]];
+                    [friends addObject:friend];
                 }
             }
         }
@@ -136,7 +133,7 @@
         if([json objectForKey:@"recentFriends"]){
             for(NSDictionary *friendJSON in [json objectForKey:@"recentFriends"]){
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
-                if (![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
+                if (friend && [friend userId] && ![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
                     [unique addObject:[friend userId]];
                     [friendsRecent addObject:friend];
                 }
@@ -153,7 +150,7 @@
         if([json objectForKey:@"friendsRequest"]){
             for(NSDictionary *friendRequestJSON in [json objectForKey:@"friendsRequest"]){
                 FLFriendRequest *friendRequest = [[FLFriendRequest alloc] initWithJSON:friendRequestJSON];
-                if (![unique containsObject:[friendRequest requestId]]) {
+                if (friendRequest && [friendRequest requestId] && ![unique containsObject:[friendRequest requestId]]) {
                     [unique addObject:[friendRequest requestId]];
                     [friendsRequest addObject:friendRequest];
                 }

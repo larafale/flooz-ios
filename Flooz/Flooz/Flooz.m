@@ -172,6 +172,8 @@
         _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
         _facebook_token = result[@"item"][@"fb"][@"token"];
         
+        [self checkDeviceToken];
+        
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
         
         if(success){
@@ -187,6 +189,7 @@
     [self requestPath:@"profile" method:@"PUT" params:user success:^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:result[@"item"]];
         
+        [self checkDeviceToken];
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"reloadCurrentUser" object:nil]];
         
         if(success){
@@ -197,7 +200,12 @@
 
 - (void)updatePassword:(NSDictionary *)password success:(void (^)(id result))success failure:(void (^)(NSError *error))failure
 {
-    [self requestPath:@"password/change" method:@"POST" params:password success:success failure:failure];
+    [self requestPath:@"password/change" method:@"POST" params:password success:^(id result) {
+        [self checkDeviceToken];
+        if (success) {
+            success(result);
+        }
+    } failure:failure];
 }
 
 - (void)uploadDocument:(NSData *)data field:(NSString *)field success:(void (^)())success failure:(void (^)(NSError *error))failure
@@ -1069,8 +1077,13 @@
 
 - (void)checkDeviceToken
 {
-    if(!_currentUser || !appDelegate.currentDeviceToken || [[_currentUser deviceToken] isEqualToString:appDelegate.currentDeviceToken]){
+    if(!_currentUser || !appDelegate.currentDeviceToken){
         return;
+    }
+    if ([_currentUser deviceToken]) {
+        if ([_currentUser.deviceToken isEqualToString:appDelegate.currentDeviceToken]) {
+            return;
+        }
     }
     
     [self updateUser:@{@"device": appDelegate.currentDeviceToken } success:^(id result) {
