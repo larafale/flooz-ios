@@ -152,10 +152,21 @@
         return nil;
     }
     
-    NSString *formattedPhone = [phone substringWithRange:NSMakeRange(0, 2)];
     
-    for(int i = 2; i < phone.length; i += 2){
+    NSString *formattedPhone;
+    int i = 0;
+    if ([phone hasPrefix:@"+33"]) {
+        formattedPhone = [phone substringWithRange:NSMakeRange(i, 4)];
+        i = 4;
+    }
+    else if ([phone hasPrefix:@"06"] || [phone hasPrefix:@"07"]) {
+        formattedPhone = [phone substringWithRange:NSMakeRange(i, 2)];
+        i = 2;
+    }
+    
+    while (i < phone.length) {
         formattedPhone = [NSString stringWithFormat:@"%@ %@", formattedPhone, [phone substringWithRange:NSMakeRange(i, 2)]];
+        i+= 2;
     }
     
     return formattedPhone;

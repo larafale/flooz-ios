@@ -363,8 +363,16 @@
             [contactsFiltred addObject:contact];
         }
         // Pour rechercher sur telephone sans les points
-        else if([contact objectForKey:@"value"] && [[[contact objectForKey:@"value"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
-            [contactsFiltred addObject:contact];
+        else if([contact objectForKey:@"value"]) {
+            NSString *clearPhone = [contact objectForKey:@"value"];
+            if([clearPhone hasPrefix:@"+33"]){
+                clearPhone = [clearPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
+            }
+            if ([[clearPhone lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+                [contactsFiltred addObject:contact];
+            } else if ([[[contact objectForKey:@"value"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound){
+                [contactsFiltred addObject:contact];
+            }
         }
     }
     
@@ -524,7 +532,7 @@
         
         //Format téléphone
         if([contact objectForKey:@"phone"]){
-            [contact setValue:[FLHelper formatedPhoneForDisplay:[contact objectForKey:@"phone"]] forKey:@"phone"];
+            //[contact setValue:[FLHelper formatedPhoneForDisplay:[contact objectForKey:@"phone"]] forKey:@"phone"];
         }
         
         // Filtre les contacts invalide
