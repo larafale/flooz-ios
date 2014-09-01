@@ -28,8 +28,8 @@
 
 - (void)createImage
 {
-    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMakeSize(30, 30)];
-    view.center = CGPointMake(30, CGRectGetHeight(self.frame) / 2);
+    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 8, 36, 36)];
+    //view.center = CGPointMake(30, CGRectGetHeight(self.frame) / 2);
     [self addSubview:view];
 }
 
@@ -39,15 +39,15 @@
     [button addTarget:self action:@selector(didButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     
     {
-        fullnameView = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, CGRectGetWidth(button.frame) - 60, CGRectGetHeight(self.frame))];
+        fullnameView = [[UILabel alloc] initWithFrame:CGRectMake(60, 20, CGRectGetWidth(button.frame) - 60, 11)];
         fullnameView.font = [UIFont customContentLight:14];
         fullnameView.textColor = [UIColor customPlaceholder];
         fullnameView.lineBreakMode = NSLineBreakByTruncatingTail;
         [fullnameView setText:NSLocalizedString(@"FIELD_TRANSACTION_SELECT_FRIEND", nil)];
         [button addSubview:fullnameView];
         
-        usernameView = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(fullnameView.frame), 30, CGRectGetWidth(button.frame) - CGRectGetMinX(fullnameView.frame), 9)];
-        usernameView.font = [UIFont customContentRegular:11];
+        usernameView = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(fullnameView.frame), 29, CGRectGetWidth(button.frame) - CGRectGetMinX(fullnameView.frame), 9)];
+        usernameView.font = [UIFont customContentBold:11];
         usernameView.textColor = [UIColor customBlue];
         [button addSubview:usernameView];
     }
@@ -72,10 +72,10 @@
     
     if([_dictionary objectForKey:@"toTitle"] && ![[_dictionary objectForKey:@"toTitle"] isBlank]){
         fullnameView.text = [[_dictionary objectForKey:@"toTitle"] uppercaseString];
-        fullnameView.font = [UIFont customTitleLight:14];
+        fullnameView.font = [UIFont customContentBold:13];
         fullnameView.textColor = [UIColor whiteColor];
-        CGRectSetHeight(fullnameView.frame, 45);
-        CGRectSetY(fullnameView.frame, -7);
+        
+        CGRectSetY(fullnameView.frame, 15.0);
         button.selected = YES;
     }
     else{

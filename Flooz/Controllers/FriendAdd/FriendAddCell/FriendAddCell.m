@@ -20,7 +20,7 @@
 
 + (CGFloat)getHeight
 {
-    return 50;
+    return 54;
 }
 
 - (void)setUser:(FLUser *)user
@@ -44,13 +44,13 @@
 
 - (void)createAvatarView
 {
-    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 5, 40, 40)];
+    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 8, 38, 38)];
     [self.contentView addSubview:view];
 }
 
 - (void)createNameView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, - 5, CGRectGetWidth(self.frame) - 75, [[self class] getHeight])];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 17, CGRectGetWidth(self.frame) - 75, 11)];
     
     view.font = [UIFont customContentBold:13];
     view.textColor = [UIColor whiteColor];
@@ -60,7 +60,7 @@
 
 - (void)createPhoneView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 28, CGRectGetWidth(self.frame) - 75, 9)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 31, CGRectGetWidth(self.frame) - 75, 9)];
     
     view.font = [UIFont customContentBold:11];
     view.textColor = [UIColor customPlaceholder];
@@ -70,7 +70,7 @@
 
 - (void)createButtons
 {
-    _addButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 11, 37, 28)];
+    _addButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 13, 37, 28)];
     //view.backgroundColor = [UIColor customBackgroundStatus];
     _addButton.layer.cornerRadius = 14;
     
@@ -109,7 +109,11 @@
 - (void)preparePhoneView
 {
     UILabel *view = [[self.contentView subviews] objectAtIndex:2];
-    view.text = [NSString stringWithFormat:@"@%@", [_user username]];
+    NSString *s = [NSString stringWithFormat:@"@%@", [_user username]];
+    view.text = s;
+    CGSize expectedLabelS = [s sizeWithAttributes:
+                             @{NSFontAttributeName: view.font}];
+    CGRectSetHeight(view.frame, expectedLabelS.height);
 }
 
 - (void)prepareCheckView
