@@ -1067,7 +1067,6 @@
                 }
             }
         }
-        
     }
     
     if(content && ![content isBlank]){
