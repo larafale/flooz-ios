@@ -52,7 +52,7 @@
 {
     UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, - 5, CGRectGetWidth(self.frame) - 75, [[self class] getHeight])];
     
-    view.font = [UIFont customTitleLight:13];
+    view.font = [UIFont customContentBold:13];
     view.textColor = [UIColor whiteColor];
     
     [self.contentView addSubview:view];
@@ -70,16 +70,16 @@
 
 - (void)createButtons
 {
-    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 11, 37, 28)];
+    _addButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 11, 37, 28)];
     //view.backgroundColor = [UIColor customBackgroundStatus];
-    view.layer.cornerRadius = 14;
+    _addButton.layer.cornerRadius = 14;
     
-    [view setImage:[UIImage imageNamed:@"Signup_Friends_Plus"] forState:UIControlStateNormal];
-    [view setImage:[UIImage imageNamed:@"Signup_Friends_Selected"] forState:UIControlStateSelected];
+    [_addButton setImage:[UIImage imageNamed:@"Signup_Friends_Plus"] forState:UIControlStateNormal];
+    [_addButton setImage:[UIImage imageNamed:@"Signup_Friends_Selected"] forState:UIControlStateSelected];
     
-    [view addTarget:self action:@selector(accept) forControlEvents:UIControlEventTouchUpInside];
+    [_addButton addTarget:self action:@selector(accept) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.contentView addSubview:view];
+    [self.contentView addSubview:_addButton];
 }
 
 #pragma mark - Prepare Views
@@ -145,6 +145,12 @@
     
     [[Flooz sharedInstance] friendAcceptSuggestion:[_user userId] success:nil];
     view.selected = YES;
+}
+
+#pragma mark -
+
+- (void) hideAddButton {
+    [_addButton setHidden:YES];
 }
 
 

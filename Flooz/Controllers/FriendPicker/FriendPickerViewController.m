@@ -187,7 +187,7 @@
         
         FLUser *user = [_friendsSearch objectAtIndex:indexPath.row];
         [cell setUser:user];
-        
+        [cell hideAddButton];
         return cell;
     }
     else if(indexPath.section == 1 || indexPath.section == 2){
