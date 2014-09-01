@@ -140,7 +140,8 @@
         
         
         if(!isEvent){
-            friend = [[FLSelectFriendButton alloc] initWithFrame:CGRectMakePosition(0, offset) dictionary:transaction];
+            CGRect frameFriend = CGRectMake(0, 0, PPScreenWidth() - 130, 50);
+            friend = [[FLSelectFriendButton alloc] initWithFrame:frameFriend dictionary:transaction];
             friend.delegate = self;
             
             [_contentView addSubview:friend];
@@ -148,19 +149,21 @@
             offset = CGRectGetMaxY(friend.frame);
         }
         
+        CGRect frameAmount = CGRectMake(CGRectGetMaxX(friend.frame), CGRectGetMinY(friend.frame), PPScreenWidth() - CGRectGetMaxX(friend.frame), CGRectGetHeight(friend.frame));
         if(isEvent){
-            amountInput = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"Montant" for:transaction key:@"goal" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) delegate:nil];
+            amountInput = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"0" for:transaction key:@"goal" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) andFrame:frameAmount delegate:nil];
             [amountInput hideSeparatorTop];
         }
         else{
-            amountInput = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"Montant" for:transaction key:@"amount" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) delegate:nil];
+            amountInput = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"0" for:transaction key:@"amount" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) andFrame:frameAmount delegate:nil];
             //amountInput = [[FLNewTransactionAmountInput alloc] initFor:transaction key:@"amount"];
+            [amountInput hideSeparatorTop];
         }
         {
             [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
-            CGRectSetX(amountInput.frame, PPScreenWidth() - 110);
-            CGRectSetWidth(amountInput.frame, PPScreenWidth() - CGRectGetMinX(amountInput.frame));
+            //CGRectSetX(amountInput.frame, PPScreenWidth() - 110);
+            //CGRectSetWidth(amountInput.frame, PPScreenWidth() - CGRectGetMinX(amountInput.frame));
             CGRectSetY(amountInput.frame, CGRectGetMinY(friend.frame));
             offset = CGRectGetMaxY(amountInput.frame);
         }

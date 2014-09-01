@@ -19,8 +19,7 @@
 @implementation FLNewTransactionAmountInput
 
 
-- (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey currencySymbol:(NSString *)symbol delegate:(id<FLNewTransactionAmountDelegate>)delegate; {
-    CGRect frame = CGRectMakeSize(110, HEIGHT);
+- (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey currencySymbol:(NSString *)symbol andFrame:(CGRect)frame delegate:(id<FLNewTransactionAmountDelegate>)delegate; {
     self = [super initWithFrame:frame];
     if (self) {
         _dictionary = dictionary;
@@ -37,18 +36,18 @@
 }
 
 - (void) createCurrencySymbol:(NSString *)symbol {
-    currency = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_textfield.frame), MARGE_TOP - 2.5, 20, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
-    currency.font = [UIFont customTitleThin:30];
+    currency = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 30, MARGE_TOP - 2.5, 30, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
+    currency.font = [UIFont customTitleThin:32];
     currency.textColor = [UIColor whiteColor];
     currency.text = symbol;
-    currency.textAlignment = NSTextAlignmentCenter;
+    currency.textAlignment = NSTextAlignmentLeft;
     
     [self addSubview:currency];
 }
 
 - (void)createTextField:(NSString *)placeholder
 {
-    _textfield = [[UITextField alloc] initWithFrame:CGRectMake(0, MARGE_TOP, 90.0f, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
+    _textfield = [[UITextField alloc] initWithFrame:CGRectMake(0, MARGE_TOP, CGRectGetWidth(self.frame) - 30, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
     
     _textfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _textfield.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -56,7 +55,7 @@
     
     _textfield.delegate = self;
     
-    _textfield.font = [UIFont customTitleThin:24];
+    _textfield.font = [UIFont customTitleThin:26];
     _textfield.textAlignment = NSTextAlignmentLeft;
     _textfield.textColor = [UIColor whiteColor];
     

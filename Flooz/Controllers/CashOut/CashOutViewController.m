@@ -72,7 +72,8 @@
         CGRectSetY(amountInput.frame, offset);
         //[self.view addSubview:amountInput];
         
-        amountInput2 = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"Montant" for:dictionary key:@"amount" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) delegate:nil];
+        CGRect frame = CGRectMake(0, 0, PPScreenWidth(), 50.0f);
+        amountInput2 = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"Montant" for:dictionary key:@"amount" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) andFrame:frame delegate:nil];
         CGRectSetY(amountInput2.frame, offset);
         [self.view addSubview:amountInput2];
     }

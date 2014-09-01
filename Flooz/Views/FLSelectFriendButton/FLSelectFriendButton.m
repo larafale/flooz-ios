@@ -13,7 +13,6 @@
 
 - (id)initWithFrame:(CGRect)frame dictionary:(NSMutableDictionary *)dictionary
 {
-    CGRectSetWidthHeight(frame, SCREEN_WIDTH - 110, 50);
     self = [super initWithFrame:frame];
     if (self) {
         _dictionary = dictionary;
@@ -93,12 +92,16 @@
         [userView setImageFromData:nil];
     }
     
+    //usernameView.hidden = YES;
     if(_dictionary[@"toUsername"] && ![_dictionary[@"toUsername"] isBlank]){
         usernameView.hidden = NO;
         usernameView.text = [NSString stringWithFormat:@"@%@", _dictionary[@"toUsername"]];
     }
-    else{
-        usernameView.hidden = YES;
+    else {
+        if (_dictionary[@"to"]) {
+            usernameView.hidden = NO;
+            usernameView.text = _dictionary[@"to"];
+        }
     }
 }
 
