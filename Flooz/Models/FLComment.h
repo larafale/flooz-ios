@@ -10,11 +10,11 @@
 
 @interface FLComment : NSObject
 
-@property FLUser *user;
-@property NSString *content;
-@property NSDate *date;
-@property NSString *when;
-@property NSString *dateText;
+@property (strong, nonatomic) FLUser *user;
+@property (strong, nonatomic) NSString *content;
+@property (strong, nonatomic) NSDate *date;
+@property (strong, nonatomic) NSString *when;
+@property (strong, nonatomic) NSString *dateText;
 
 - (id)initWithJSON:(NSDictionary *)json;
 
