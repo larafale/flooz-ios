@@ -21,6 +21,7 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
+    _json = json;
     if([json objectForKey:@"_id"]){
         _userId = [json objectForKey:@"_id"];
     }
@@ -46,7 +47,7 @@
     }
     
     if(json[@"settings"]){
-        _deviceToken = json[@"settings"][@"device"];
+        _deviceToken = json[@"settings"][@"iosDevices"];
     }
     
     _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
@@ -112,12 +113,15 @@
         NSMutableArray *friends = [NSMutableArray new];
         NSMutableArray *unique = [NSMutableArray array];
         
-        if([json objectForKey:@"friends"]){
-            for(NSDictionary *friendJSON in [json objectForKey:@"friends"]){
+        if([_json objectForKey:@"friends"]){
+            NSLog(@"%@", _json[@"friends"]);
+            for(NSDictionary *friendJSON in [_json objectForKey:@"friends"]){
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
-                if (![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
-                    [unique addObject:[friend userId]];
-                    [friends addObject:friend];
+                if (friend != nil) {
+                    if ([friend userId] && ![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
+                        [unique addObject:[friend userId]];
+                        [friends addObject:friend];
+                    }
                 }
             }
         }
