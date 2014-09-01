@@ -114,7 +114,10 @@
     {
         NSMutableArray *comments = [NSMutableArray new];
         for(NSDictionary *commentJSON in [json objectForKey:@"comments"]){
-            [comments addObject:[[FLComment alloc] initWithJSON:commentJSON]];
+            FLComment *comment = [[FLComment alloc] initWithJSON:commentJSON];
+            if (comment) {
+                [comments addObject:comment];
+            }
         }
         _comments = comments;
     }
@@ -136,7 +139,10 @@
         NSMutableArray *colllectUsers = [NSMutableArray new];
         
         for(NSDictionary *userJSON in json[@"collect"][@"froms"]){
-            [colllectUsers addObject:[[FLUser alloc] initWithJSON:userJSON]];
+            FLUser *user = [[FLUser alloc] initWithJSON:userJSON];
+            if (user) {
+                [colllectUsers addObject:user];
+            }
         }
         
         _collectUsers = colllectUsers;

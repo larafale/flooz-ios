@@ -189,7 +189,7 @@
     NSMutableArray *unique = [NSMutableArray array];
     NSMutableIndexSet *indexSet = [NSMutableIndexSet new];
     for (FLUser *obj in array) {
-        if (![obj.userId isEqualToString:_userId] && ![unique containsObject:[obj userId]]) {
+        if ([obj userId] && ![obj.userId isEqualToString:_userId] && ![unique containsObject:[obj userId]]) {
             [unique addObject:[obj userId]];
             [indexSet addIndex:[array indexOfObject:obj]];
         }
@@ -201,7 +201,7 @@
     NSMutableArray *unique = [NSMutableArray array];
     NSMutableIndexSet *indexSet = [NSMutableIndexSet new];
     for (FLFriendRequest *obj in array) {
-        if (![unique containsObject:[obj requestId]]) {
+        if ([obj requestId] && ![unique containsObject:[obj requestId]]) {
             [unique addObject:[obj requestId]];
             [indexSet addIndex:[array indexOfObject:obj]];
         }
