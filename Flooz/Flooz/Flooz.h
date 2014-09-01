@@ -102,7 +102,7 @@ static NSString *kNotificationRemoveFriend = @"kNotificationRemoveFriend";
 - (void)friendsSuggestion:(void (^)(id result))success;
 - (void)friendRemove:(NSString *)friendId success:(void (^)())success;
 - (void)friendAcceptSuggestion:(NSString *)friendId success:(void (^)())success;
-- (void)friendSearch:(NSString *)text success:(void (^)(id result))success;
+- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz success:(void (^)(id result))success;
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)createLikeOnEvent:(FLEvent *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;

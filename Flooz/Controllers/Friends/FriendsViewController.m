@@ -366,7 +366,7 @@
     isSearching = YES;
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] friendSearch:text success:^(id result) {
+    [[Flooz sharedInstance] friendSearch:text forNewFlooz:NO success:^(id result) {
         friendsSearch = result;
         [_tableView reloadData];
         [_tableView setContentOffset:CGPointZero animated:YES];

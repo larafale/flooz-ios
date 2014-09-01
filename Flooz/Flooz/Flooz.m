@@ -530,7 +530,7 @@
     [self requestPath:path method:@"GET" params:nil success:success failure:nil];
 }
 
-- (void)friendSearch:(NSString *)text success:(void (^)(id result))success
+- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz success:(void (^)(id result))success
 {
     id successBlock = ^(id result) {
         NSMutableArray *friends = [self createFriendsArrayFromResult:result];
@@ -539,7 +539,11 @@
         }
     };
     
-    [self requestPath:@"/friends/search" method:@"GET" params:@{@"q" : text} success:successBlock failure:nil];
+    NSString *path = @"/friends/search";
+    if (newFlooz) {
+        path = [path stringByAppendingString:@"?context=newFlooz"];
+    }
+    [self requestPath:path method:@"GET" params:@{@"q" : text} success:successBlock failure:nil];
 }
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure

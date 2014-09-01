@@ -383,7 +383,7 @@
         }
     }
     
-    [[Flooz sharedInstance] friendSearch:text success:^(id result) {
+    [[Flooz sharedInstance] friendSearch:text forNewFlooz:YES success:^(id result) {
         _friendsSearch = result;
         [_tableView setContentOffset:CGPointZero animated:YES];
         [_tableView reloadData];
