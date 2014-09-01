@@ -929,13 +929,17 @@
             if (deviceToken) {
                 [_userDic setValue:deviceToken forKeyPath:@"device"];
             }
+            NSData *dataPic = _userDic[@"picId"];
+            [_userDic removeObjectForKey:@"picId"];
+            
+            __block NSData *weakPic = dataPic;
             [[Flooz sharedInstance] signup:_userDic success:^(id result) {
                 [[Flooz sharedInstance] hideLoadView];
                 [UICKeyChainStore setString:secureCode forKey:[self keyForSecureCode]];
                 
-                if (_userDic[@"picId"] && ![_userDic[@"picId"] isEqual:[NSData new]]) {
+                if (weakPic && ![weakPic isEqual:[NSData new]]) {
                     [[Flooz sharedInstance] showLoadView];
-                    [[Flooz sharedInstance] uploadDocument:_userDic[@"picId"] field:@"picId" success:NULL failure:NULL];
+                    [[Flooz sharedInstance] uploadDocument:weakPic field:@"picId" success:NULL failure:NULL];
                 }
                 [self goToNextPage];
             } failure:^(NSError *error) {

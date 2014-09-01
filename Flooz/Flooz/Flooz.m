@@ -168,7 +168,7 @@
 
 - (void)updateCurrentUserWithSuccess:(void (^)())success failure:(void (^)(NSError *error))failure
 {
-    id successBlock = ^(id result) {
+    __block id successBlock = ^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
         _facebook_token = result[@"item"][@"fb"][@"token"];
         
@@ -881,7 +881,7 @@
                  if (result[@"devices"])
                      dicDevices = result[@"devices"];
                  NSDictionary *user = @{
-                                        @"picId" : [NSData new],
+                                        @"picId": [NSData new],
                                         @"email": result[@"email"],
                                         @"lastName": result[@"last_name"],
                                         @"firstName": result[@"first_name"],
