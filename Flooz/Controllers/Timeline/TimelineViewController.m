@@ -11,6 +11,7 @@
 #import "TransactionCell.h"
 
 #import "MenuNewTransactionViewController.h"
+#import "NewTransactionViewController.h"
 #import "TransactionViewController.h"
 
 #import "AppDelegate.h"
@@ -158,15 +159,16 @@
 
 - (void)presentMenuTransactionController
 {
-    //    FLPopup *popup = [[FLPopup alloc] initWithMessage:@"Envoyez de l'argent à vos amis en quelques secondes, autorisez Flooz à accéder à vos contacts." accept:NULL refuse:NULL];
-    //    [popup show];
-    
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypePayment]];
+    [self.parentViewController presentViewController:controller animated:YES completion:NULL];
+    /*
     UIViewController *controller = [MenuNewTransactionViewController new];
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     
     [self presentViewController:controller animated:YES completion:^{
         self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     }];
+     */
 }
 
 #pragma mark - Filters

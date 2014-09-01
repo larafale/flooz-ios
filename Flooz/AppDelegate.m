@@ -453,7 +453,7 @@
     currentImageView = imageView;
     haveMenuFriend = NO;
     
-    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_PAYMENT", nil), NSLocalizedString(@"MENU_COLLECT", nil), nil];
+    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), nil];
     NSMutableArray *menus = [NSMutableArray new];
     
     
@@ -533,19 +533,16 @@
     if(buttonIndex == 0){
         [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
     }
-    else if(buttonIndex == 1){
-        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypeCharge];
-    }
-    else if(buttonIndex == 2 && haveMenuFriend){
+    else if(buttonIndex == 1 && haveMenuFriend){
         friendMenu();
     }
-    else if(buttonIndex == 2 && [currentUserForMenu avatarURL]){
+    else if(buttonIndex == 1 && [currentUserForMenu avatarURL]){
         showAvatar();
     }
-    else if(buttonIndex == 2){
+    else if(buttonIndex == 1){
         
     }
-    else if(buttonIndex == 3 && haveMenuFriend && [currentUserForMenu avatarURL]){
+    else if(buttonIndex == 2 && haveMenuFriend && [currentUserForMenu avatarURL]){
         showAvatar();
     }
 }
@@ -555,13 +552,13 @@
 {
     if([self.window.rootViewController presentedViewController]){
         [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
-            NewTransactionViewController *controller = [[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu];
-            [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
+            [self.window.rootViewController  presentViewController:controller animated:YES completion:NULL];
         }];
     }
     else{
-        NewTransactionViewController *controller = [[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu];
-        [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
+        [self.window.rootViewController  presentViewController:controller animated:YES completion:NULL];
     }
 }
 

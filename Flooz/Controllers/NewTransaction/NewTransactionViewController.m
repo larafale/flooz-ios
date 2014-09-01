@@ -162,8 +162,6 @@
         {
             [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
-            //CGRectSetX(amountInput.frame, PPScreenWidth() - 110);
-            //CGRectSetWidth(amountInput.frame, PPScreenWidth() - CGRectGetMinX(amountInput.frame));
             CGRectSetY(amountInput.frame, CGRectGetMinY(friend.frame));
             offset = CGRectGetMaxY(amountInput.frame);
         }

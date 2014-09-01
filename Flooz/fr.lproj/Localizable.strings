@@ -120,6 +120,7 @@
 
 "MENU_PAYMENT" = "Payer";
 "MENU_COLLECT" = "Réclamer";
+"MENU_NEW_FLOOZ" = "Nouveau Flooz";
 "MENU_ADD_FRIENDS" = "Ajouter aux amis";
 "MENU_REMOVE_FRIENDS" = "Supprimer des amis";
 "MENU_AVATAR" = "Voir la photo";
