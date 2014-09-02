@@ -96,7 +96,7 @@
 - (void)didFilterChange:(NSString *)text
 {
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] friendSearch:text success:^(id result) {
+    [[Flooz sharedInstance] friendSearch:text forNewFlooz:NO success:^(id result) {
         friends = result;
         [_tableView reloadData];
         [_tableView setContentOffset:CGPointZero animated:YES];

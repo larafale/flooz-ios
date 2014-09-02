@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -8,7 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewTransactionViewController">
             <connections>
                 <outlet property="contentView" destination="hf6-Dm-Xb9" id="qeo-SO-tJI"/>
-                <outlet property="navBar" destination="AnT-fy-WNu" id="M4m-Fd-Xq6"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -17,33 +16,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hf6-Dm-Xb9">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hf6-Dm-Xb9">
                     <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="Cks-cU-OeU"/>
-                    </constraints>
                 </scrollView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AnT-fy-WNu" customClass="FLValidNavBar">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="HrI-zt-f1h"/>
-                        <constraint firstAttribute="height" constant="64" id="lZk-hz-Krm"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="AnT-fy-WNu" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="43I-yg-0Ow"/>
-                <constraint firstItem="hf6-Dm-Xb9" firstAttribute="top" secondItem="AnT-fy-WNu" secondAttribute="bottom" id="4Hh-Aa-Qm6"/>
-                <constraint firstItem="hf6-Dm-Xb9" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="55Q-WT-uSh"/>
-                <constraint firstAttribute="trailing" secondItem="AnT-fy-WNu" secondAttribute="trailing" id="HvQ-gp-zRp"/>
-                <constraint firstAttribute="bottom" secondItem="hf6-Dm-Xb9" secondAttribute="bottom" id="aHq-Zo-E6z"/>
-                <constraint firstItem="AnT-fy-WNu" firstAttribute="top" secondItem="1" secondAttribute="top" id="nV3-3t-rdz"/>
-                <constraint firstItem="hf6-Dm-Xb9" firstAttribute="top" secondItem="AnT-fy-WNu" secondAttribute="bottom" id="t29-mF-Xvc"/>
-                <constraint firstAttribute="trailing" secondItem="hf6-Dm-Xb9" secondAttribute="trailing" id="ufq-Bu-7vr"/>
+                <constraint firstAttribute="bottom" secondItem="hf6-Dm-Xb9" secondAttribute="bottom" id="UI9-Cy-oW6"/>
+                <constraint firstAttribute="centerY" secondItem="hf6-Dm-Xb9" secondAttribute="centerY" id="Yzl-pS-kdm"/>
+                <constraint firstItem="hf6-Dm-Xb9" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="h7U-KC-4mK"/>
+                <constraint firstAttribute="centerX" secondItem="hf6-Dm-Xb9" secondAttribute="centerX" id="mPU-lR-T2u"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

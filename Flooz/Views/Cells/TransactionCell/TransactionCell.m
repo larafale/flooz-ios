@@ -188,6 +188,7 @@
 - (void)createSocialView{
     FLSocialView *view = [[FLSocialView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(rightView.frame), 0)];
     [view addTargetForLike:self action:@selector(didLikeButtonTouch)];
+    [view addTargetForComment:self action:@selector(didCommentButtonTouch)];
     [rightView addSubview:view];
 }
 
@@ -348,7 +349,7 @@
 //    }
 //    view.hidden = NO;
     
-    view.text = [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
+    view.text = [_transaction amountText];// [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
     [view setWidthToFit];
     
     CGRectSetXY(view.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(view.frame), height - 20);
@@ -529,12 +530,12 @@
     if(![[Flooz sharedInstance] currentUser]){
         return;
     }
-
+    
     [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
-
+    
     [[Flooz sharedInstance] createLikeOnTransaction:_transaction success:^(id result) {
         [[_transaction social] setLikeText:[result objectForKey:@"item"]];
-
+        
         FLSocialView *view = [[rightView subviews] objectAtIndex:2];
         [view prepareView:_transaction.social];
         
@@ -543,6 +544,18 @@
             [_delegate updateTransactionAtIndex:indexPath transaction:_transaction];
         }
     } failure:NULL];
+}
+
+- (void)didCommentButtonTouch
+{
+    if(![[Flooz sharedInstance] currentUser]){
+        return;
+    }
+    
+    NSIndexPath *indexPath = [[_delegate tableView] indexPathForCell:self];
+    if(indexPath){
+        [_delegate commentTransactionAtIndex:indexPath transaction:_transaction];
+    }
 }
 
 - (void)cancelTransaction

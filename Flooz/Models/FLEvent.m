@@ -42,7 +42,7 @@
     if([_amountExpected isEqualToNumber:@0]){
         _amountExpected = nil;
     }
-        
+    
     _dayLeft = [json objectForKey:@"endWhen"];
     _pourcentage = [json objectForKey:@"fulfilled"];
     _isClosed = [[json objectForKey:@"closed"] boolValue];
@@ -51,7 +51,7 @@
     if([json objectForKey:@"isInvited"] && [[json objectForKey:@"isInvited"] boolValue]){
         _isInvited = YES;
     }
-        
+    
     _title = [json objectForKey:@"name"];
     _content = [json objectForKey:@"why"];
     
@@ -59,7 +59,7 @@
     _attachmentThumbURL = [json objectForKey:@"picMini"];
     
     _social = [[FLSocial alloc] initWithJSON:json];
-//    _social.scope = SocialScopeNone;
+    //    _social.scope = SocialScopeNone;
     
     _isCreator = [json[@"isCreator"] boolValue];
     
@@ -128,20 +128,23 @@
     }
     
     
-//    {
-//        _canInvite = NO;
-//        
-//        if([[json objectForKey:@"isCreator"] boolValue] && ![[json objectForKey:@"closed"] boolValue]){
-//            _canInvite = YES;
-//        }
-//    }
+    //    {
+    //        _canInvite = NO;
+    //
+    //        if([[json objectForKey:@"isCreator"] boolValue] && ![[json objectForKey:@"closed"] boolValue]){
+    //            _canInvite = YES;
+    //        }
+    //    }
     
     _creator = [[FLUser alloc] initWithJSON:[json objectForKey:@"creator"]];
     
     {
         NSMutableArray *participants = [NSMutableArray new];
         for(NSDictionary *participantJSON in [json objectForKey:@"participants"]){
-            [participants addObject:[[FLUser alloc] initWithJSON:participantJSON]];
+            FLUser *user = [[FLUser alloc] initWithJSON:participantJSON];
+            if (user) {
+                [participants addObject:user];
+            }
         }
         _participants = participants;
     }
@@ -160,7 +163,10 @@
     {
         NSMutableArray *comments = [NSMutableArray new];
         for(NSDictionary *commentJSON in [json objectForKey:@"comments"]){
-            [comments addObject:[[FLComment alloc] initWithJSON:commentJSON]];
+            FLComment *comment = [[FLComment alloc] initWithJSON:commentJSON];
+            if (comment) {
+                [comments addObject:comment];
+            }
         }
         _comments = comments;
     }

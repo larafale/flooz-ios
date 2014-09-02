@@ -12,6 +12,7 @@
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;
+- (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;
 - (FLTableView *)tableView;
 - (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath;
 

@@ -10,9 +10,11 @@
 #import "FLNewTransactionAmount.h"
 
 #import "SecureCodeViewController.h"
+#import "FLNewTransactionAmountInput.h"
 
 @interface CashOutViewController (){
     FLNewTransactionAmount *amountInput;
+    FLNewTransactionAmountInput *amountInput2;
     NSMutableDictionary *dictionary;
 }
 
@@ -68,7 +70,12 @@
     {
         amountInput = [[FLNewTransactionAmount alloc] initFor:dictionary key:@"amount"];
         CGRectSetY(amountInput.frame, offset);
-        [self.view addSubview:amountInput];
+        //[self.view addSubview:amountInput];
+        
+        CGRect frame = CGRectMake(0, 0, PPScreenWidth(), 50.0f);
+        amountInput2 = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"Montant" for:dictionary key:@"amount" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) andFrame:frame delegate:nil];
+        CGRectSetY(amountInput2.frame, offset);
+        [self.view addSubview:amountInput2];
     }
 }
 

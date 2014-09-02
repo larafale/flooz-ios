@@ -35,43 +35,43 @@ typedef NS_ENUM(NSInteger, EventAction) {
 
 @property (nonatomic) EventStatus status;
 
-@property NSString *eventId;
-@property NSNumber *amount;
-@property NSNumber *amountCollected;
-@property NSNumber *amountExpected;
-@property NSNumber *dayLeft;
-@property NSNumber *pourcentage;
-@property BOOL isClosed;
-@property BOOL isCreator;
+@property (strong, nonatomic) NSString *eventId;
+@property (strong, nonatomic) NSNumber *amount;
+@property (strong, nonatomic) NSNumber *amountCollected;
+@property (strong, nonatomic) NSNumber *amountExpected;
+@property (strong, nonatomic) NSNumber *dayLeft;
+@property (strong, nonatomic) NSNumber *pourcentage;
+@property (nonatomic) BOOL isClosed;
+@property (nonatomic) BOOL isCreator;
 
-@property NSString *avatarURL;
+@property (strong, nonatomic) NSString *avatarURL;
 
-@property NSString *title;
-@property NSString *content;
-@property NSString *attachmentURL;
-@property NSString *attachmentThumbURL;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *content;
+@property (strong, nonatomic) NSString *attachmentURL;
+@property (strong, nonatomic) NSString *attachmentThumbURL;
 
-@property BOOL isPrivate;
-@property BOOL isNew;
-@property TransactionScope scope;
+@property (nonatomic) BOOL isPrivate;
+@property (nonatomic) BOOL isNew;
+@property (nonatomic) TransactionScope scope;
 
-@property BOOL isInvited;
+@property (nonatomic) BOOL isInvited;
 
-@property BOOL canParticipate; // 1, participer
-@property BOOL canInvite; // 2, inviter
-@property BOOL canGiveOrTakeOffer; // 3, 4, offrir ou prendre une cagnotte
-@property BOOL canCancelOffer; // 5, annuler l offre
-@property BOOL canAcceptOrDeclineOffer; // 6, 7, accepter ou refuser l offre
-@property BOOL canDeclineInvite; // 8, refuser une invitation
+@property (nonatomic) BOOL canParticipate; // 1, participer
+@property (nonatomic) BOOL canInvite; // 2, inviter
+@property (nonatomic) BOOL canGiveOrTakeOffer; // 3, 4, offrir ou prendre une cagnotte
+@property (nonatomic) BOOL canCancelOffer; // 5, annuler l offre
+@property (nonatomic) BOOL canAcceptOrDeclineOffer; // 6, 7, accepter ou refuser l offre
+@property (nonatomic) BOOL canDeclineInvite; // 8, refuser une invitation
 
-@property NSDate *date;
+@property (strong, nonatomic) NSDate *date;
 
-@property FLUser *creator;
-@property NSArray *participants;
+@property (strong, nonatomic) FLUser *creator;
+@property (strong, nonatomic) NSArray *participants;
 
-@property FLSocial *social;
+@property (strong, nonatomic) FLSocial *social;
 
-@property NSArray *comments;
+@property (strong, nonatomic) NSArray *comments;
 
 - (NSString *)statusText;
 

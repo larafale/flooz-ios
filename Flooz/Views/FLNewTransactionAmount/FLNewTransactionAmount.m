@@ -215,6 +215,24 @@
     // Taille limite
     if(textField == amount && amount.text.length == 4){
         return NO;
+        NSString *cleanCentString = [[textField.text componentsSeparatedByCharactersInSet: [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""];
+        NSInteger centValue= cleanCentString.integerValue;
+        
+        if (string.length > 0)
+        {
+            centValue = centValue * 10 + string.integerValue;
+        }
+        else
+        {
+            centValue = centValue / 10;
+        }
+        
+        NSNumber *formatedValue;
+        formatedValue = [[NSNumber alloc] initWithFloat:(float)centValue / 100.0f];
+        NSNumberFormatter *_currencyFormatter = [[NSNumberFormatter alloc] init];
+        [_currencyFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        textField.text = [_currencyFormatter stringFromNumber:formatedValue];
+        return NO;
     }
     
     // Taille limite sur les centimes alors remplace le premier chiffre

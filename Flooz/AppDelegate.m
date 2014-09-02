@@ -24,20 +24,24 @@
 #import "SecureCodeViewController.h"
 #import <Analytics/Analytics.h>
 #import <Crashlytics/Crashlytics.h>
+#ifdef TARGET_IPHONE_SIMULATOR
 #import <PonyDebugger/PonyDebugger.h>
+#endif
 
 #import "TransactionViewController.h"
 #import "EventViewController.h"
 #import "FriendsViewController.h"
 
 #import "NewTransactionViewController.h"
+#import "InvitationCodeViewController.h"
+#import "secureCodeLoginViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        
+    
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
     
@@ -53,16 +57,19 @@
     self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[SplashViewController new]];
     
     if(![[Flooz sharedInstance] autologin]){
-        self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+        firstVC = [FirstLaunchViewController new];
+        self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:firstVC];
     }
     // initialisation de MagicalRecord
     // Pony Debugger
 #ifdef PONY_D
+#ifdef TARGET_IPHONE_SIMULATOR
     PDDebugger *debugger = [PDDebugger defaultInstance];
     [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
     [debugger enableNetworkTrafficDebugging];
     [debugger forwardAllNetworkTraffic];
     [debugger enableViewHierarchyDebugging];
+#endif
 #endif
     
 #ifdef FLOOZ_DEV_API
@@ -72,17 +79,19 @@
     [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
 #endif
     
+    [self handlePushMessage:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] withApplication:application];
+    
     return YES;
 }
 
 - (void)didConnected
-{    
+{
     NSMutableDictionary *params = [@{
-                             @"record":[[[Flooz sharedInstance] currentUser] record],
-                             @"id": [[[Flooz sharedInstance] currentUser] userId],
-                             @"username": [[[Flooz sharedInstance] currentUser] username],
-                             @"phone": [[[Flooz sharedInstance] currentUser] phone]
-                             } mutableCopy];
+                                     @"record":[[[Flooz sharedInstance] currentUser] record],
+                                     @"id": [[[Flooz sharedInstance] currentUser] userId],
+                                     @"username": [[[Flooz sharedInstance] currentUser] username],
+                                     @"phone": [[[Flooz sharedInstance] currentUser] phone]
+                                     } mutableCopy];
     
     if([[[Flooz sharedInstance] currentUser] email]){
         params[@"email"] = [[[Flooz sharedInstance] currentUser] email];
@@ -97,10 +106,15 @@
     }
     
 #ifndef FLOOZ_DEV_API
-        [[SEGAnalytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
-                                   traits:params];
+    [[SEGAnalytics sharedAnalytics] identify:[[[Flooz sharedInstance] currentUser] userId]
+                                      traits:params];
 #endif
     
+    //TODO: delete after testing friends
+    //[appDelegate showsignupFriendUser:nil];
+}
+
+- (void) goToAccountViewController {
     if(!savedViewController){
         savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
     }
@@ -109,60 +123,11 @@
                        options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
                     animations:^{
                         self.window.rootViewController = savedViewController;
-#ifdef SIMUL_FIRST_LAUNCH
-                        [self.window.rootViewController presentViewController:[FirstLaunchViewController new] animated:YES completion:NULL];
-#endif
                     }
                     completion:^(BOOL finished) {
                         savedViewController = nil;
                     }
      ];
-//
-//    CompleteBlock completeBlock = ^{
-//        if(!savedViewController){
-//            savedViewController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
-//        }
-//        
-//        [UIView transitionWithView:self.window
-//                          duration:0.7
-//                           options:(UIViewAnimationOptionTransitionFlipFromLeft | UIViewAnimationOptionAllowAnimatedContent)
-//                        animations:^{
-//                            self.window.rootViewController = savedViewController;
-//                        }
-//                        completion:^(BOOL finished) {
-//                            savedViewController = nil;
-//                        }
-//         ];
-//    };
-//
-//    
-//    FLNavigationController *navController = nil;
-//    SecureCodeViewController *controller = [SecureCodeViewController new];
-//    controller.completeBlock = completeBlock;
-//    
-//    // Sortie de mise en vieille cas où on est deja connecté
-//    if([self.window.rootViewController isKindOfClass:[FLContainerViewController class]]){
-//        savedViewController = self.window.rootViewController;
-//        
-//        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-//        self.window.rootViewController = navController;
-//    }
-//    else{
-//        navController = (FLNavigationController *)self.window.rootViewController;
-//    }
-//    
-//    
-//    // Cas ou fait retour sur le splashscreen
-//    if([[[navController viewControllers] firstObject] isKindOfClass:[SplashViewController class]]){
-//        navController = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
-//        self.window.rootViewController = navController;
-//    }
-//    
-//    if([[[navController viewControllers] lastObject] presentedViewController]){
-//        [[[[navController viewControllers] lastObject] presentedViewController] dismissViewControllerAnimated:NO completion:nil];
-//    }
-//    
-//    [navController pushViewController:controller animated:NO];
 }
 
 - (void)clearSavedViewController
@@ -173,17 +138,43 @@
 - (void)showLoginWithUser:(NSDictionary *)user
 {
     FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[[LoginViewController  alloc] initWithUser:user]];
+    
+    [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
+    [[self currentController] presentViewController:navController animated:YES completion:nil];
+}
 
+- (void)askForSecureCodeWithUser:(NSDictionary *)user withNavigationBar:(BOOL)navBar
+{
+    FLNavigationController *controller;
+    controller = [[FLNavigationController alloc] initWithRootViewController:[[secureCodeLoginViewController alloc] initWithUser:user]];
+    if (!navBar) {
+        [controller noButton];
+    }
+    [[self currentController] presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)showRequestInvitationCodeWithUser:(NSDictionary *)user {
+    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[[InvitationCodeViewController  alloc] initWithUser:user]];
+    
     [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     [[self currentController] presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user
-{    
-    FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:[[SignupViewController alloc] initWithUser:user]];
+{
+    [firstVC phoneNotRegistered:user];
+}
 
-    [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
-    [[self currentController] presentViewController:navController animated:YES completion:nil];
+//TODO: delete after testing friends
+- (void)showsignupFriendUser:(NSDictionary *)user
+{
+    firstVC = [FirstLaunchViewController new];
+    self.window.rootViewController = [[FLNavigationController alloc] initWithRootViewController:firstVC];
+}
+
+- (void)showSignupAfterFacebookWithUser:(NSDictionary *)user
+{
+    [firstVC signupWithFacebookUser:user];
 }
 
 - (UIViewController *)currentController
@@ -201,7 +192,8 @@
 
 - (void)didDisconnected
 {
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[HomeViewController new]];
+    firstVC = [FirstLaunchViewController new];
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:firstVC];
     
     [UIView transitionWithView:self.window
                       duration:0.7
@@ -216,14 +208,14 @@
 - (void)displayError:(NSError *)error
 {
     NSTimeInterval seconds = [[NSDate date] timeIntervalSinceDate:lastErrorDate];
-        
+    
     if((lastErrorCode == FLNetworkError) && (error.code == FLNetworkError) && seconds < 30){
         return;
     }
     
     lastErrorDate = [NSDate date];
     lastErrorCode = error.code;
-
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
                                                     message:ERROR_LOCALIZED_DESCRIPTION((int)error.code)
                                                    delegate:nil
@@ -241,7 +233,7 @@
     if(!title || [title isBlank]){
         title = NSLocalizedString(@"GLOBAL_ERROR", nil);
     }
-
+    
     [alertView show:title content:content style:style time:time delay:delay];
 }
 
@@ -255,7 +247,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     [[Flooz sharedInstance] socketSendSessionEnd];
@@ -302,7 +294,7 @@
         // Clear this token
         [FBSession.activeSession closeAndClearTokenInformation];
         // Show the user the logged-out UI
-//        [self userLoggedOut];
+        //        [self userLoggedOut];
     }
 }
 
@@ -319,7 +311,7 @@
     
     // Handle the user leaving the app while the Facebook login dialog is being shown
     // For example: when the user presses the iOS "home" button while the login dialog is active
-        
+    
     [FBAppCall handleDidBecomeActive];
     [[Flooz sharedInstance] startSocket];
 }
@@ -332,8 +324,6 @@
     _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@"<" withString:@""];
     _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@">" withString:@""];
-    
-    NSLog(@"Notification token: %@", _currentDeviceToken);
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -343,60 +333,62 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"Notification push: %@", userInfo);
-    
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateActive) {
         return;
     }
     
-    if([[Flooz sharedInstance] currentUser]){
-        [self didConnected];
-    }
-    return;
-    
-    NSDictionary *resource = userInfo[@"resource"];
-    if([[Flooz sharedInstance] currentUser] && resource){
-        NSString *resourceId = resource[@"resourceId"];
-        
-        FLContainerViewController *currentController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
-        
-        self.window.rootViewController = currentController;
-        
-        if([resource[@"type"] isEqualToString:@"line"]){
+    [self handlePushMessage:userInfo withApplication:application];
+}
+
+- (void) handlePushMessage:(NSDictionary *)userInfo withApplication:(UIApplication *)application
+{
+    double delayInSeconds = 0.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSDictionary *resource = userInfo[@"resource"];
+        if([[Flooz sharedInstance] currentUser] && resource){
+            NSString *resourceId = resource[@"resourceId"];
             
-            [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] transactionWithId:resourceId success:^(id result) {
-                FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-                TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:nil];
+            FLContainerViewController *currentController = [[FLContainerViewController alloc] initWithControllers:@[[AccountViewController new], [TimelineViewController new], [FriendsViewController new]]];
+            
+            self.window.rootViewController = currentController;
+            
+            if([resource[@"type"] isEqualToString:@"line"]){
                 
-                currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
-                [currentController presentViewController:controller animated:NO completion:^{
-                    currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+                [[Flooz sharedInstance] showLoadView];
+                [[Flooz sharedInstance] transactionWithId:resourceId success:^(id result) {
+                    FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                    TransactionViewController *controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:nil];
+                    
+                    currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                    [currentController presentViewController:controller animated:NO completion:^{
+                        currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+                    }];
                 }];
-            }];
-            
-        }
-        else if([resource[@"type"] isEqualToString:@"event"]){
-            
-            [[Flooz sharedInstance] eventWithId:resourceId success:^(id result) {
-                FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
-                EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
                 
-                currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
-                [currentController presentViewController:controller animated:NO completion:^{
-                    currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
+            else if([resource[@"type"] isEqualToString:@"event"]){
+                
+                [[Flooz sharedInstance] eventWithId:resourceId success:^(id result) {
+                    FLEvent *event = [[FLEvent alloc] initWithJSON:[result objectForKey:@"item"]];
+                    EventViewController *controller = [[EventViewController alloc] initWithEvent:event indexPath:nil];
+                    
+                    currentController.modalPresentationStyle = UIModalPresentationCurrentContext;
+                    [currentController presentViewController:controller animated:NO completion:^{
+                        currentController.modalPresentationStyle = UIModalPresentationFullScreen;
+                    }];
                 }];
-            }];
-            
+                
+            }
+            else if([resource[@"type"] isEqualToString:@"friend"]){
+                
+                FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
+                [currentController presentViewController:controller animated:YES completion:NULL];
+                
+            }
         }
-        else if([resource[@"type"] isEqualToString:@"friend"]){
-            
-            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
-            [currentController presentViewController:controller animated:YES completion:NULL];
-            
-        }
-    }
+    });
 }
 
 #pragma mark - Image fullscreen
@@ -452,7 +444,7 @@
 
 - (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend
 {
-    if(!user || [user userId] == [[[Flooz sharedInstance] currentUser] userId] ||
+    if(!user || [[user userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]] ||
        ![user username] || ![user fullname]) {
         return;
     }
@@ -461,10 +453,10 @@
     currentImageView = imageView;
     haveMenuFriend = NO;
     
-     UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_PAYMENT", nil), NSLocalizedString(@"MENU_COLLECT", nil), nil];
+    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), nil];
     NSMutableArray *menus = [NSMutableArray new];
     
-
+    
     BOOL isFriend = NO;
     if([[[[Flooz sharedInstance] currentUser] userId] isEqualToString:[user userId]]){
         isFriend = YES;
@@ -492,7 +484,7 @@
     if([currentUserForMenu avatarURL]){
         [menus addObject:NSLocalizedString(@"MENU_AVATAR", nil)];
     }
-
+    
     for(NSString *menu in menus){
         [actionSheet addButtonWithTitle:menu];
     }
@@ -522,10 +514,14 @@
         }
         
         if(isFriend){
-            [[Flooz sharedInstance] friendRemove:[currentUserForMenu friendRelationId] success:nil];
+            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+            }];
         }
         else{
-            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:nil];
+            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+            }];
         }
     };
     
@@ -537,19 +533,16 @@
     if(buttonIndex == 0){
         [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
     }
-    else if(buttonIndex == 1){
-        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypeCharge];
-    }
-    else if(buttonIndex == 2 && haveMenuFriend){
+    else if(buttonIndex == 1 && haveMenuFriend){
         friendMenu();
     }
-    else if(buttonIndex == 2 && [currentUserForMenu avatarURL]){
+    else if(buttonIndex == 1 && [currentUserForMenu avatarURL]){
         showAvatar();
     }
-    else if(buttonIndex == 2){
+    else if(buttonIndex == 1){
         
     }
-    else if(buttonIndex == 3 && haveMenuFriend && [currentUserForMenu avatarURL]){
+    else if(buttonIndex == 2 && haveMenuFriend && [currentUserForMenu avatarURL]){
         showAvatar();
     }
 }
@@ -559,13 +552,13 @@
 {
     if([self.window.rootViewController presentedViewController]){
         [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
-            NewTransactionViewController *controller = [[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu];
-            [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
+            [self.window.rootViewController  presentViewController:controller animated:YES completion:NULL];
         }];
     }
     else{
-        NewTransactionViewController *controller = [[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu];
-        [self.window.rootViewController presentViewController:controller animated:YES completion:nil];
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
+        [self.window.rootViewController  presentViewController:controller animated:YES completion:NULL];
     }
 }
 
@@ -595,6 +588,18 @@
                         });
                     }
      ];
+}
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	[super touchesBegan:touches withEvent:event];
+    CGPoint location = [[[event allTouches] anyObject] locationInView:[self window]];
+	if(location.y > 0 && location.y < 20) {
+		[self touchStatusBar];
+	}
+}
+
+- (void) touchStatusBar {
+	[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationTouchStatusBarClick object:nil];
 }
 
 @end

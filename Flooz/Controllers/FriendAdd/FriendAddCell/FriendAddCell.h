@@ -12,6 +12,9 @@
 
 + (CGFloat)getHeight;
 
+- (void) hideAddButton;
+
 @property (weak, nonatomic) FLUser *user;
+@property (strong, nonatomic) UIButton *addButton;
 
 @end

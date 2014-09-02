@@ -10,9 +10,9 @@
 
 @interface FLCreditCard : NSObject
 
-@property NSString *cardId;
-@property NSString *owner;
-@property NSString *number;
+@property (strong, nonatomic) NSString *cardId;
+@property (strong, nonatomic) NSString *owner;
+@property (strong, nonatomic) NSString *number;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

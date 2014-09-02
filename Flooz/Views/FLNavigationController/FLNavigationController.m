@@ -11,6 +11,8 @@
 @interface FLNavigationController (){
     UIBarButtonItem *backItem;
     UIBarButtonItem *closeItem;
+    
+    BOOL hasButton;
 }
 
 @end
@@ -23,6 +25,7 @@
     if (self) {
         self.delegate = self;
         [self customAppearence];
+        hasButton = YES;
     }
     return self;
 }
@@ -30,15 +33,16 @@
 - (void)customAppearence
 {
     {
-        [[UINavigationBar appearance] setBarTintColor:[UIColor customBackgroundHeader]];
+        //[[UINavigationBar appearance] setBarTintColor:[UIColor customBackgroundHeader]];
+        [self.navigationBar setBarTintColor:[UIColor customBackgroundHeader]];
         self.navigationBar.translucent = NO;
         
         NSDictionary *attributes = @{
                                      NSForegroundColorAttributeName: [UIColor customBlue],
                                      NSFontAttributeName: [UIFont customTitleExtraLight:28]
                                      };
-        
-        [[UINavigationBar appearance] setTitleTextAttributes:attributes];
+        [self.navigationBar setTitleTextAttributes:attributes];
+        //[[UINavigationBar appearance] setTitleTextAttributes:attributes];
     }
     
     backItem = [UIBarButtonItem createBackButtonWithTarget:self action:@selector(popViewController)];
@@ -55,6 +59,9 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+    if (!hasButton) {
+        return;
+    }
     if(navigationController.viewControllers.count == 1 && !navigationController.parentViewController){
         viewController.navigationItem.leftBarButtonItem = closeItem;
     }
@@ -71,6 +78,10 @@
 - (void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)noButton {
+    hasButton = NO;
 }
 
 @end

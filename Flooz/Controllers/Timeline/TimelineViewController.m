@@ -11,6 +11,7 @@
 #import "TransactionCell.h"
 
 #import "MenuNewTransactionViewController.h"
+#import "NewTransactionViewController.h"
 #import "TransactionViewController.h"
 
 #import "AppDelegate.h"
@@ -36,7 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
     UIImageView *shadow = [UIImageView imageNamed:@"tableview-shadow"];
     CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
     [self.view addSubview:shadow];
@@ -47,7 +48,7 @@
         [_filterView addFilter:@"filter-scope-private-large" title:@"FILTER_SCOPE_PRIVATE" target:self action:@selector(didFilterPersoTouch)];
     }
     
-//    [self didFilterPersoTouch];
+    //    [self didFilterPersoTouch];
     [_filterView selectFilter:2];
     
     refreshControl = [UIRefreshControl new];
@@ -62,9 +63,15 @@
     
     // Padding pour que le dernier element au dessus du +
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMakeSize(SCREEN_WIDTH, 70)];
+    [_tableView setScrollsToTop:YES];
     
     [self registerNotification:@selector(handleRefresh) name:@"reloadTimeline" object:nil];
     [self registerNotification:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
+    [self registerNotification:@selector(statusBarHit) name:kNotificationTouchStatusBarClick object:nil];
+}
+
+- (void)statusBarHit {
+    [_tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (void)viewDidUnload
@@ -148,19 +155,20 @@
     return cell;
 }
 
-#pragma mark - 
+#pragma mark -
 
 - (void)presentMenuTransactionController
 {
-//    FLPopup *popup = [[FLPopup alloc] initWithMessage:@"Envoyez de l'argent à vos amis en quelques secondes, autorisez Flooz à accéder à vos contacts." accept:NULL refuse:NULL];
-//    [popup show];
-    
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:TransactionTypePayment]];
+    [self.parentViewController presentViewController:controller animated:YES completion:NULL];
+    /*
     UIViewController *controller = [MenuNewTransactionViewController new];
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     
     [self presentViewController:controller animated:YES completion:^{
         self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     }];
+     */
 }
 
 #pragma mark - Filters
@@ -168,7 +176,7 @@
 - (void)handleRefresh
 {
     [refreshControl beginRefreshing];
-
+    
     [[Flooz sharedInstance] timeline:currentFilter success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
@@ -179,11 +187,14 @@
 
 - (void)didFilterPublicTouch
 {
+    if ([currentFilter isEqualToString:@"public"]) {
+        return;
+    }
     currentFilter = @"public";
     
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     [_tableView setContentOffset:CGPointZero animated:NO];
-
+    
     [self resetTransactionsLoaded];
     if(transactionsCache[currentFilter]){
         transactions = [transactionsCache[currentFilter] mutableCopy];
@@ -207,8 +218,11 @@
 
 - (void)didFilterFriendTouch
 {
+    if ([currentFilter isEqualToString:@"friend"]) {
+        return;
+    }
     currentFilter = @"friend";
-
+    
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     [_tableView setContentOffset:CGPointZero animated:NO];
     
@@ -235,6 +249,9 @@
 
 - (void)didFilterPersoTouch
 {
+    if ([currentFilter isEqualToString:@"private"]) {
+        return;
+    }
     currentFilter = @"private";
     
     [_tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
@@ -276,7 +293,7 @@
     TransactionViewController *controller = controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
     
     controller.delegateController = self;
-
+    
     self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     
     [self presentViewController:controller animated:NO completion:^{
@@ -292,6 +309,18 @@
     [_tableView beginUpdates];
     [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [_tableView endUpdates];
+}
+
+- (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+    TransactionViewController *controller = controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
+    [controller focusOnComment];
+    controller.delegateController = self;
+    
+    self.parentViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    
+    [self presentViewController:controller animated:NO completion:^{
+        self.parentViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }];
 }
 
 - (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath
@@ -328,7 +357,7 @@
     if(!_nextPageUrl || [_nextPageUrl isBlank]){
         return;
     }
-
+    
     nextPageIsLoading = YES;
     
     [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success:^(id result, NSString *nextPageUrl) {
@@ -358,6 +387,10 @@
     if(_tableView.contentOffset.y > 0){
         [self refreshScrollViewIndicator];
     }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self hideScrollViewIndicator];
 }
 
 - (void)refreshScrollViewIndicator

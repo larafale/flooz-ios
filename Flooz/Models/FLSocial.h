@@ -17,12 +17,12 @@ typedef NS_ENUM(NSInteger, SocialScope) {
     SocialScopePrivate
 };
 
-@property NSUInteger commentsCount;
-@property NSUInteger likesCount;
+@property (nonatomic) NSUInteger commentsCount;
+@property (nonatomic) NSUInteger likesCount;
 @property BOOL isCommented;
 @property BOOL isLiked;
-@property NSString *likeText;
-@property SocialScope scope;
+@property (strong, nonatomic) NSString *likeText;
+@property (nonatomic) SocialScope scope;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

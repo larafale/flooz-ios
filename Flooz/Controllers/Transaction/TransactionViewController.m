@@ -26,6 +26,8 @@
     FLTransaction *_transaction;
     NSIndexPath *_indexPath;
     
+    BOOL focusOnCommentTextField;
+    
     UIView *_mainView;
     
     BOOL animationFirstView;
@@ -50,6 +52,7 @@
         _indexPath = indexPath;
         animationFirstView = YES;
         paymentFieldIsVisible = NO;
+        focusOnCommentTextField = NO;
         paymentFieldAmountData = [NSMutableDictionary new];
     }
     return self;
@@ -76,6 +79,14 @@
     [super viewDidAppear:animated];
     
     [self startAnimationFirstView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (focusOnCommentTextField) {
+        [commentsView focusOnTextField];
+    }
 }
 
 #pragma mark - Animation
@@ -123,8 +134,24 @@
         view.font = [UIFont customContentLight:11];
         
         view.text = [FLHelper formatedDate:[_transaction date]];
-        [view setImage:[UIImage imageNamed:@"transaction-content-clock"]];
-        [view setImageOffset:CGPointMake(- 4, 0)];
+        
+        float yOffset = -1;
+        NSString *imageNamed = @"transaction-content-clock";
+        if(_transaction.social.scope == SocialScopeFriend){
+            imageNamed = @"scope-friend";
+        }
+        else if(_transaction.social.scope == SocialScopePrivate){
+            imageNamed = @"scope-private";
+        }
+        else if(_transaction.social.scope == SocialScopePublic){
+            imageNamed = @"scope-public";
+        }
+        else {
+            imageNamed = @"transaction-content-clock";
+            yOffset = 0;
+        }
+        [view setImage:[UIImage imageNamed:imageNamed]];
+        [view setImageOffset:CGPointMake(- 4, yOffset)];
         
         [view setWidthToFit];
         CGRectSetX(view.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(view.frame) - 13);
@@ -234,6 +261,13 @@
 {
     if(_indexPath){
         [_delegateController updateTransactionAtIndex:_indexPath transaction:_transaction];
+    }
+}
+
+- (void)didWantToCommentTransactionData
+{
+    if(_indexPath){
+        [_delegateController commentTransactionAtIndex:_indexPath transaction:_transaction];
     }
 }
 
@@ -377,8 +411,9 @@
         } failure:NULL];
     };
     
-    SecureCodeViewController *controller = [SecureCodeViewController new];
-    controller.completeBlock = completeBlock;
+    SecureCodeViewController *secureVC = [SecureCodeViewController new];
+    secureVC.completeBlock = completeBlock;
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:secureVC];
     [self presentViewController:controller animated:YES completion:NULL];
 }
 
@@ -407,6 +442,10 @@
         CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
         [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
     }
+}
+
+- (void)focusOnComment {
+    focusOnCommentTextField = YES;
 }
 
 - (void)keyboardWillDisappear

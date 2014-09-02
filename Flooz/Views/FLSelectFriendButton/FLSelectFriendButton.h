@@ -10,6 +10,7 @@
 
 @interface FLSelectFriendButton : UIView{
     __weak NSMutableDictionary *_dictionary;
+    UILabel *fullnameView;
     UILabel *usernameView;
 }
 

@@ -49,22 +49,22 @@
         CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
         [_contentView addSubview:logo];
     }
-    
+    /*
     if(SCREEN_HEIGHT < 500){
-        CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 90);
+        CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 70);
     }
     else{
         CGRectSetXY(logo.frame, (SCREEN_WIDTH - logo.frame.size.width) / 2., 60);
     }
-    
+    */
     {
-        loginButton = [UIButton new];
-        
-        loginButton.backgroundColor = [UIColor clearColor];
-        loginButton.titleLabel.font = [UIFont customTitleLight:20];
-        [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [loginButton setTitle:NSLocalizedString(@"HOME_LOGIN", nil) forState:UIControlStateNormal];
-        [loginButton addTarget:self action:@selector(didConnectTouch) forControlEvents:UIControlEventTouchUpInside];
+//        loginButton = [UIButton new];
+//        
+//        loginButton.backgroundColor = [UIColor clearColor];
+//        loginButton.titleLabel.font = [UIFont customTitleLight:20];
+//        [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [loginButton setTitle:NSLocalizedString(@"HOME_LOGIN", nil) forState:UIControlStateNormal];
+//        [loginButton addTarget:self action:@selector(didConnectTouch) forControlEvents:UIControlEventTouchUpInside];
         
 //        [_contentView addSubview:loginButton];
     }
@@ -72,18 +72,22 @@
     {
         phoneField = [[FLHomeTextField alloc] initWithPlaceholder:@"06 ou code" for:phone key:@"phone" position:CGPointMake(20, 200)];
         
-        [phoneField addForNextClickTarget:self action:@selector(didConnectTouch)];
+        if(SCREEN_HEIGHT < 500){
+            CGRectSetXY(phoneField.frame, (SCREEN_WIDTH - phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 5);
+        }
+        else{
+            CGRectSetXY(phoneField.frame, (SCREEN_WIDTH - phoneField.frame.size.width) / 2., CGRectGetMaxY(logo.frame) + 35);
+        }
+        //[phoneField addForNextClickTarget:self action:@selector(didConnectTouch)];
         
         [_contentView addSubview:phoneField];
         
         inputView = [FLKeyboardView new];
-        [inputView setKeyboardChangeable];
         inputView.textField = phoneField.textfield;
         phoneField.textfield.inputView = inputView;
-
     }
     
-    loginButton.frame = CGRectMake(20, CGRectGetMaxY(phoneField.frame) + 5, SCREEN_WIDTH - 40, 39);
+//    loginButton.frame = CGRectMake(20, CGRectGetMaxY(phoneField.frame) + 5, SCREEN_WIDTH - 40, 39);
     _contentView.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(loginButton.frame) + 5);
     
     [self registerForKeyboardNotifications];
@@ -106,16 +110,20 @@
     [phoneField becomeFirstResponder];
 }
 
+/*
 - (void)didConnectTouch
 {
     [[self view] endEditing:YES];
     
     if(phone[@"phone"] && ![phone[@"phone"] isBlank]){
+        [inputView setKeyboardValidateWithTarget:self action:@selector(didConnectTouch)];
+        
         [[Flooz sharedInstance] showLoadView];
         [appDelegate clearSavedViewController];
         [[Flooz sharedInstance] loginWithPhone:phone[@"phone"]];
     }
 }
+ */
 
 #pragma mark - Keyboard Management
 
@@ -130,7 +138,7 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight + 55, 0);
+    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight + 15, 0);
 }
 
 - (void)keyboardWillDisappear

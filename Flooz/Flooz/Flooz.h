@@ -24,6 +24,7 @@ static NSString *kNotificationConnectionError = @"kNotificationConnectionError";
 static NSString *kNotificationRemoveWindowSubviews = @"kNotificationRemoveWindowSubviews";
 static NSString *kNotificationCloseKeyboard = @"kNotificationCloseKeyboard";
 static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUser";
+static NSString *kNotificationRemoveFriend = @"kNotificationRemoveFriend";
 
 @interface Flooz : NSObject<SocketIODelegate>{
     AFHTTPRequestOperationManager *manager;
@@ -51,6 +52,7 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
 - (void)login:(NSDictionary *)user;
+- (void)loginWithCodeForUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)loginWithPhone:(NSString *)phone;
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)passwordLost:(NSString *)email success:(void (^)(id result))success;
@@ -98,9 +100,9 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success;
 - (void)friendsSuggestion:(void (^)(id result))success;
-- (void)friendRemove:(NSString *)friendRelationId success:(void (^)())success;
+- (void)friendRemove:(NSString *)friendId success:(void (^)())success;
 - (void)friendAcceptSuggestion:(NSString *)friendId success:(void (^)())success;
-- (void)friendSearch:(NSString *)text success:(void (^)(id result))success;
+- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz success:(void (^)(id result))success;
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)createLikeOnEvent:(FLEvent *)event success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
@@ -116,6 +118,7 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 - (void)sendEmailValidation;
 
 - (void)connectFacebook;
+- (void)getInfoFromFacebook;
 - (void)disconnectFacebook;
 - (void)didConnectFacebook;
 - (void)facebokSearchFriends:(void (^)(id result))success;
@@ -125,6 +128,17 @@ static NSString *kNotificationReloadCurrentUser = @"kNotificationReloadCurrentUs
 - (void)socketSendCloseActivities;
 - (void)socketSendSessionEnd;
 
+- (void)verifyInvitationCode:(NSString *)invitationCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)verifyPseudo:(NSString *)pseudo success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)verifyEmail:(NSString *)email success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
 - (void)sendContacts;
+- (void)sendContactsWithParams:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)createContactList:(void (^)(NSMutableArray *arrayContacts, NSMutableArray *arrayServer))lists;
+
+- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result;
+- (NSMutableArray *)createEventArrayFromResult:(NSDictionary *)result;
+- (NSMutableArray *)createActivityArrayFromResult:(NSDictionary *)result;
+- (NSMutableArray *)createTransactionArrayFromResult:(NSDictionary *)result;
 
 @end

@@ -10,4 +10,6 @@
 
 @interface FLNavigationController : UINavigationController<UINavigationControllerDelegate>
 
+- (void)noButton;
+
 @end

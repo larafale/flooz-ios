@@ -73,7 +73,8 @@
 
 - (void)didShareButtonTouch
 {
-    NSArray *objectToShare = @[_contentCodeLabel.text];
+    NSString *textMessage = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Invite_Friends_Message_SMS", @""),_contentCodeLabel.text];
+    NSArray *objectToShare = @[textMessage];
     
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectToShare applicationActivities:nil];
     

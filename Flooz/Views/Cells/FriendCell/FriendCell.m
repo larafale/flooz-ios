@@ -20,7 +20,7 @@
 }
 
 + (CGFloat)getHeight{
-    return 50;
+    return 54;
 }
 
 - (void)setFriend:(FLUser *)friend{
@@ -41,15 +41,15 @@
 }
 
 - (void)createAvatarView{
-    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 5, 40, 40)];
+    FLUserView *view = [[FLUserView alloc] initWithFrame:CGRectMake(15, 8, 38, 38)];
     [self.contentView addSubview:view];
 }
 
 - (void)createNameView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, - 5, CGRectGetWidth(self.frame) - 75, [[self class] getHeight])];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 17, CGRectGetWidth(self.frame) - 75, 11)];
     
-    view.font = [UIFont customTitleLight:13];
+    view.font = [UIFont customContentBold:13];
     view.textColor = [UIColor whiteColor];
     
     [self.contentView addSubview:view];
@@ -57,7 +57,7 @@
 
 - (void)createPhoneView
 {
-    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 28, CGRectGetWidth(self.frame) - 75, 9)];
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(75, 31, CGRectGetWidth(self.frame) - 75, 9)];
     
     view.font = [UIFont customContentBold:11];
     view.textColor = [UIColor customPlaceholder];
@@ -66,7 +66,7 @@
 }
 
 - (void)createButtonView{
-    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 11, 37, 28)];
+    UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 50, 13, 37, 28)];
     [view setImage:[UIImage imageNamed:@"friend-decline"] forState:UIControlStateNormal];
     view.backgroundColor = [UIColor customBackgroundStatus];
     view.layer.cornerRadius = 14;
@@ -94,7 +94,11 @@
     view.text = [[_friend fullname] uppercaseString];
     
     UILabel *view2 = [[self.contentView subviews] objectAtIndex:2];
-    view2.text = [NSString stringWithFormat:@"@%@", [_friend username]];
+    NSString *s = [NSString stringWithFormat:@"@%@", [_friend username]];
+    view2.text = s;
+    CGSize expectedLabelS = [s sizeWithAttributes:
+                             @{NSFontAttributeName: view2.font}];
+    CGRectSetHeight(view2.frame, expectedLabelS.height);
 }
 
 - (void)prepareButton{
@@ -103,7 +107,7 @@
 }
 
 - (void)didButtonTouch{
-    [_delegate removeFriend:[_friend friendRelationId]];
+    [_delegate removeFriend:[_friend userId]];
 }
 
 @end

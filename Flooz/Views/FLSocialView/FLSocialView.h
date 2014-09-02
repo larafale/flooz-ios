@@ -16,6 +16,9 @@
     
     __weak id _target;
     SEL _action;
+    
+    __weak id _target2;
+    SEL _action2;
 }
 
 @property (strong, nonatomic) UITapGestureRecognizer *gesture;
@@ -24,5 +27,6 @@
 
 - (void)prepareView:(FLSocial *)social;
 - (void)addTargetForLike:(id)target action:(SEL)action;
+- (void)addTargetForComment:(id)target action:(SEL)action;
 
 @end

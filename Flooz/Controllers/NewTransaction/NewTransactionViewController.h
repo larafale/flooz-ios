@@ -10,6 +10,7 @@
 
 #import "FLSelectAmountDelegate.h"
 #import "FLNewTransactionAmount.h"
+#import "FLNewTransactionAmountInput.h"
 #import "FLPaymentFieldDelegate.h"
 #import "NewTransactionSelectTypeDelegate.h"
 

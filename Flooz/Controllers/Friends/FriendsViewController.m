@@ -12,6 +12,7 @@
 #import "FriendCell.h"
 #import "FriendSuggestionCell.h"
 #import "AppDelegate.h"
+#import "FLContainerViewController.h"
 
 @interface FriendsViewController (){
     NSArray *friendsSearch;
@@ -20,6 +21,7 @@
     NSArray *friends;
     
     BOOL isSearching;
+    FLFriendRequest *currentFriendR;
 }
 
 @end
@@ -57,8 +59,9 @@
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self registerForKeyboardNotifications];
-        
+    
     [self registerNotification:@selector(scrollViewDidScroll:) name:kNotificationCloseKeyboard object:nil];
+    [self registerNotification:@selector(didReloadData) name:kNotificationRemoveFriend object:nil];
 }
 
 - (void)viewDidUnload
@@ -141,7 +144,7 @@
         
         label.textColor = [UIColor customBlueLight];
         
-        label.font = [UIFont customContentRegular:10];
+        label.font = [UIFont customContentRegular:14];
         label.text = [self tableView:tableView titleForHeaderInSection:section];
         label.textAlignment = NSTextAlignmentCenter;
 //        [label setWidthToFit];
@@ -257,7 +260,9 @@
         user = [friendsSearch objectAtIndex:indexPath.row];
     }
     else if(indexPath.section == 1){
-//        user = [friendsRequest objectAtIndex:indexPath.row];
+        FLFriendRequest *friendRequest = [friendsRequest objectAtIndex:indexPath.row];
+        [self showMenuForFriendRequest:friendRequest];
+        return;
     }
     else if(indexPath.section == 2){
         user = [friendsSuggestion objectAtIndex:indexPath.row];
@@ -271,6 +276,52 @@
     }
 }
 
+- (void)showMenuForFriendRequest:(FLFriendRequest *)friendR
+{
+    if(!friendR || ![friendR requestId]) {
+        return;
+    }
+    
+    currentFriendR = friendR;
+    
+    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_ACCEPT", nil)];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_REFUSE", nil)];
+    
+    if([friendR.user avatarURL]){
+        [actionSheet addButtonWithTitle:NSLocalizedString(@"MENU_AVATAR", nil)];
+    }
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet showInView:self.view.window];
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0){
+        //Accepter
+        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": [currentFriendR requestId], @"action": @"accept" } success:^{
+            [self didReloadData];
+        }];
+    }
+    else if(buttonIndex == 1){
+        //Refuser
+        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": [currentFriendR requestId], @"action": @"decline" } success:^{
+            [self didReloadData];
+        }];
+    }
+    else if(buttonIndex == 2 && [currentFriendR.user avatarURL]){
+        FLContainerViewController *controller = (FLContainerViewController *)appDelegate.window.rootViewController;
+        [controller didImageTouch:nil photoURL:[NSURL URLWithString:[currentFriendR.user avatarURL]]];
+    }
+    else if(buttonIndex == 2){
+        
+    }
+}
+
 - (void)scrollViewDidScroll:(id)scrollView
 {
     [_searchBar close];
@@ -278,7 +329,7 @@
 
 - (void)didReloadData
 {
-    [refreshControl beginRefreshing];
+    //[refreshControl beginRefreshing];
     
     // bug au rechargement
 //    friendsRequest = @[];
@@ -315,7 +366,7 @@
     isSearching = YES;
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] friendSearch:text success:^(id result) {
+    [[Flooz sharedInstance] friendSearch:text forNewFlooz:NO success:^(id result) {
         friendsSearch = result;
         [_tableView reloadData];
         [_tableView setContentOffset:CGPointZero animated:YES];
