@@ -15,6 +15,13 @@
     UIButton *imageButton;
     UIButton *facebookButton;
     UIButton *privacyButton;
+    UILabel *circle;
+    
+    UIButton *askButton;
+    UIButton *sendButton;
+    
+    SEL actionValidSend;
+    SEL actionValidCollect;
     
     __weak NSMutableDictionary *_dictionary;
     CLLocationManager *locationManager;
@@ -24,7 +31,7 @@
     __weak UIViewController* currentController;
 }
 
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller;
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCollect:(SEL)actionCollect;
 - (void)reloadData;
 
 @end

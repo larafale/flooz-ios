@@ -14,6 +14,8 @@
 #import <UICKeyChainStore.h>
 
 @interface SecureCodeViewController (){
+    UIView *_mainBody;
+    
     UILabel *textCode;
     UILabel *firstTimeText;
     SecureCodeField *secureCodeField;
@@ -52,67 +54,96 @@
     
     self.view.backgroundColor = [UIColor customBackground];
     
-    {
-        textCode = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 320, 20)];
-        
-        textCode.textAlignment = NSTextAlignmentCenter;
-        textCode.textColor = [UIColor customBlueLight];
-        textCode.font = [UIFont customContentRegular:14];
-        
-        [self.view addSubview:textCode];
+    _mainBody = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - STATUSBAR_HEIGHT - NAVBAR_HEIGHT)];
+    [self.view addSubview:_mainBody];
+    
+    keyboardView = [FLKeyboardView new];
+    CGRectSetY(keyboardView.frame, CGRectGetHeight(_mainBody.frame)-CGRectGetHeight(keyboardView.frame));
+    
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(),  CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(keyboardView.frame))];
+    [backView setBackgroundColor:[UIColor customBackground]];
+    [_mainBody addSubview:backView];
+    
+    
+    secureCodeField = [SecureCodeField new];
+    
+    [_mainBody addSubview:keyboardView];
+    keyboardView.delegate = secureCodeField;
+    secureCodeField.delegate = self;
+    
+    textCode = [[UILabel alloc] initWithFrame:CGRectMake(14, 0, PPScreenWidth()-28, 50)];
+    textCode.textColor = [UIColor customPlaceholder];
+    textCode.font = [UIFont customTitleExtraLight:14];
+    textCode.numberOfLines = 0;
+    textCode.textAlignment = NSTextAlignmentCenter;
+    
+    if(currentSecureMode == SecureCodeModeNormal){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_CURRENT", nil);
+    }
+    else if(currentSecureMode == SecureCodeModeForget){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_LOGIN", nil);
+    }
+    else if(currentSecureMode == SecureCodeModeChangeOld){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_OLD", nil);
+    }
+    else if(currentSecureMode == SecureCodeModeChangeNew){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_NEW", nil);
+    }
+    else if(currentSecureMode == SecureCodeModeChangeConfirm){
+        textCode.text = NSLocalizedString(@"SECORE_CODE_TEXT_CONFIRM", nil);
     }
     
-    {
-        usernameField = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(20, 50)];
-        passwordField = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(20, CGRectGetMaxY(usernameField.frame))];
-        [passwordField seTsecureTextEntry:YES];
-        
-        [self.view addSubview:usernameField];
-        [self.view addSubview:passwordField];
-    }
+    firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(14, CGRectGetMaxY(secureCodeField.frame), PPScreenWidth()-28, 50)];
+    firstTimeText.textColor = [UIColor customPlaceholder];
+    firstTimeText.font = [UIFont customTitleExtraLight:14];
+    firstTimeText.numberOfLines = 0;
+    firstTimeText.textAlignment = NSTextAlignmentCenter;
+    firstTimeText.text = NSLocalizedString(@"SECORE_CODE_TEXT_FIRST_TIME", nil);
+    
+    UIView *_mainContent = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
+    [_mainContent addSubview:secureCodeField];
+    [_mainContent addSubview:textCode];
+    [_mainContent addSubview:firstTimeText];
+    
+    CGSize s = [self sizeExpectedForView:textCode];
+    CGRectSetHeight(textCode.frame, s.height);
+    
+    CGSize s2 = [self sizeExpectedForView:firstTimeText];
+    CGRectSetHeight(firstTimeText.frame, s2.height*2);
+    
+    CGRectSetY(secureCodeField.frame, CGRectGetMaxY(textCode.frame) + 10.0f);
+    CGRectSetY(firstTimeText.frame, CGRectGetMaxY(secureCodeField.frame));
+    CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(firstTimeText.frame));
+    [_mainContent setCenter:CGPointMake(PPScreenWidth()/2, CGRectGetMidY(backView.frame) - 4)];
+    [backView addSubview:_mainContent];
     
     {
-        passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, 110, CGRectGetWidth(self.view.frame), 50)];
+        passwordForget = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(backView.frame) - 50, PPScreenWidth(), 50)];
         passwordForget.titleLabel.textAlignment = NSTextAlignmentCenter;
         passwordForget.titleLabel.font = [UIFont customContentRegular:12];
         [passwordForget setTitleColor:[UIColor customBlueLight] forState:UIControlStateNormal];
         [passwordForget setTitle:NSLocalizedString(@"SECURE_CODE_FORGOT", nil) forState:UIControlStateNormal];
         
         [passwordForget addTarget:self action:@selector(didPasswordForgetTouch) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.view addSubview:passwordForget];
+        [backView addSubview:passwordForget];
     }
     
     {
-        firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(20, 120, 280, 50)];
+        [user setValue:[[[Flooz sharedInstance] currentUser] username] forKey:@"login"];
+        usernameField = [[FLTextFieldIcon alloc] initWithIcon:@"field-username" placeholder:@"FIELD_USERNAME" for:user key:@"login" position:CGPointMake(20, CGRectGetMaxY(textCode.frame) + 10.0f)];
+        passwordField = [[FLTextFieldIcon alloc] initWithIcon:@"field-password" placeholder:@"FIELD_PASSWORD" for:user key:@"password" position:CGPointMake(20, CGRectGetMaxY(usernameField.frame))];
+        [passwordField seTsecureTextEntry:YES];
         
-        firstTimeText.textColor = [UIColor customBlueLight];
-        firstTimeText.font = [UIFont customContentRegular:14];
-        firstTimeText.numberOfLines = 0;
-        firstTimeText.textAlignment = NSTextAlignmentCenter;
-        firstTimeText.text = NSLocalizedString(@"SECORE_CODE_TEXT_FIRST_TIME", nil);
-        [self.view addSubview:firstTimeText];
+        [_mainContent addSubview:usernameField];
+        [_mainContent addSubview:passwordField];
+        CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(passwordField.frame));
+        [_mainContent setCenter:CGPointMake(PPScreenWidth()/2, CGRectGetMidY(backView.frame) - 4)];
     }
-    
-    {
-        secureCodeField = [SecureCodeField new];
-        [self.view addSubview:secureCodeField];
-        CGRectSetY(secureCodeField.frame, 55);
-    }
-    
-    {
-        keyboardView = [FLKeyboardView new];
-        [self.view addSubview:keyboardView];
-    }
-        
-    keyboardView.delegate = secureCodeField;
-    secureCodeField.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    CGRectSetY(keyboardView.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(keyboardView.frame));
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
@@ -133,14 +164,13 @@
     // Sinon le bouton retour ne disparait pas
     [self refreshController];
     
-    // Car bug uniquement apres autologin
-    CGRectSetY(keyboardView.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(keyboardView.frame));
+    CGRectSetY(keyboardView.frame, CGRectGetHeight(_mainBody.frame)-CGRectGetHeight(keyboardView.frame));
 }
 
 - (void)didSecureCodeEnter:(NSString *)secureCode
 {
     NSString *currentSecureCode = [[self class] secureCodeForCurrentUser];
- 
+    
     NSLog(@"currentCode: %@ %@", currentSecureCode, secureCode);
     
     if(currentSecureMode == SecureCodeModeNormal){
@@ -169,8 +199,12 @@
     }
     else if(currentSecureMode == SecureCodeModeChangeConfirm){
         if([tempNewSecureCode isEqual:secureCode]){
-            [[self class] setSecureCodeForCurrentUser:secureCode];
-            [self dismissWithSuccess];
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] updateUser:@{@"secureCode": secureCode} success:^(id result) {
+                [[Flooz sharedInstance] hideLoadView];
+                [[self class] setSecureCodeForCurrentUser:secureCode];
+                [self dismissWithSuccess];
+            } failure:NULL];
         }
         else{
             [self startAnmiationBadCode];
@@ -247,6 +281,7 @@
         passwordField.hidden = NO;
         
         self.navigationItem.rightBarButtonItem = [UIBarButtonItem createCheckButtonWithTarget:self action:@selector(login)];
+        [passwordField becomeFirstResponder];
     }
     else{
         passwordForget.hidden = NO;
@@ -271,11 +306,11 @@
         passwordForget.hidden = YES;
     }
     
-    if(!currentSecureCode){        
+    if(!currentSecureCode){
         self.navigationItem.hidesBackButton = YES;
-        self.navigationItem.leftBarButtonItem = nil;
+        //self.navigationItem.leftBarButtonItem = nil;
     }
-
+    
     BOOL isFirstView = textCode.text == nil || [textCode.text isBlank];
     
     // Textes
@@ -299,10 +334,10 @@
     if(!isFirstView){
         CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
         animation.values = @[
-                                  @1,
-                                  @0,
-                                  @1
-                                  ];
+                             @1,
+                             @0,
+                             @1
+                             ];
         
         animation.repeatCount = 1;
         animation.duration  = .8;
@@ -311,20 +346,21 @@
     }
 }
 
-- (void)login
-{
-    [[self view] endEditing:YES];
+- (void)login {
+    if(user[@"login"] && ![user[@"login"] isBlank]){
+        [usernameField becomeFirstResponder];
+    }
+    if(user[@"password"] && ![user[@"password"] isBlank]){
+        [passwordField becomeFirstResponder];
+    }
     
-    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] loginForSecureCode:user success:^(id result) {
-        
-        [secureCodeField clean];
-        [[self class] clearSecureCode];
- 
+        [self.view endEditing:YES];
         currentSecureMode = SecureCodeModeChangeNew;
         [self refreshController];
-
-    } failure:NULL];
+    } failure:^(NSError *error) {
+        NSLog(@"mot de passe incorrect");
+    }];
 }
 
 #pragma mark - SecureCode
@@ -352,6 +388,20 @@
 + (void)clearSecureCode
 {
     [UICKeyChainStore removeItemForKey:[self keyForSecureCode]];
+}
+
+#pragma mark -helpers
+- (CGSize)sizeExpectedForView:(UIView *)view {
+    CGSize expectedSize;
+    if ([view isKindOfClass:[UILabel class]]) {
+        UILabel *label = (UILabel *)view;
+        expectedSize = [label.text sizeWithAttributes:@{NSFontAttributeName: label.font}];
+    }
+    else if ([view isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)view;
+        expectedSize = [button.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: button.titleLabel.font}];
+    }
+    return expectedSize;
 }
 
 @end

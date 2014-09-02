@@ -162,7 +162,7 @@
 
 - (void)didUserLeftViewTouch
 {
-    if([[_transaction from] userId] == [[[Flooz sharedInstance] currentUser] userId]) {
+    if([[[_transaction from] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
         return;
     }
     
@@ -171,7 +171,7 @@
 
 - (void)didUserRightViewTouch
 {
-    if([[_transaction to] userId] == [[[Flooz sharedInstance] currentUser] userId]) {
+    if([[[_transaction to] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
         return;
     }
     

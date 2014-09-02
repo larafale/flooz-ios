@@ -21,14 +21,8 @@
 
 - (void)setJSON:(NSDictionary *)json
 {
-    if([json objectForKey:@"userId"]){
-        _userId = [json objectForKey:@"userId"];
-        
-        if([json objectForKey:@"_id"]){
-            _friendRelationId = [json objectForKey:@"_id"];
-        }
-    }
-    else{
+    _json = json;
+    if([json objectForKey:@"_id"]){
         _userId = [json objectForKey:@"_id"];
     }
     
@@ -46,13 +40,14 @@
     _phone = [json objectForKey:@"phone"];
     _avatarURL = [json objectForKey:@"pic"];
     _profileCompletion = [json objectForKey:@"profileCompletion"];
+    _hasSecureCode = [json objectForKey:@"secureCode"];
     
     if([_avatarURL isEqualToString:@"/img/nopic.png"]){
         _avatarURL = nil;
     }
     
-    if(json[@"settings"]){
-        _deviceToken = json[@"settings"][@"device"];
+    if(json[@"device"]){
+        _deviceToken = [json objectForKey:@"device"];
     }
     
     _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
@@ -86,7 +81,7 @@
     
     {
         _notifications = [NSMutableDictionary new];
-                
+        
         if([json objectForKey:@"notifications"]){
             NSDictionary *notificationsJSON = [json objectForKey:@"notifications"];
             
@@ -116,11 +111,15 @@
     
     {
         NSMutableArray *friends = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
         
-        if([json objectForKey:@"friends"]){
-            for(NSDictionary *friendJSON in [json objectForKey:@"friends"]){                
+        if([_json objectForKey:@"friends"]){
+            for(NSDictionary *friendJSON in [_json objectForKey:@"friends"]){
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
-                [friends addObject:friend];
+                if (friend && [friend userId] && ![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
+                    [unique addObject:[friend userId]];
+                    [friends addObject:friend];
+                }
             }
         }
         
@@ -129,11 +128,15 @@
     
     {
         NSMutableArray *friendsRecent = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
         
         if([json objectForKey:@"recentFriends"]){
             for(NSDictionary *friendJSON in [json objectForKey:@"recentFriends"]){
                 FLUser *friend = [[FLUser alloc] initWithJSON:friendJSON];
-                [friendsRecent addObject:friend];
+                if (friend && [friend userId] && ![friend.userId isEqualToString:_userId] && ![unique containsObject:[friend userId]]) {
+                    [unique addObject:[friend userId]];
+                    [friendsRecent addObject:friend];
+                }
             }
         }
         
@@ -142,11 +145,15 @@
     
     {
         NSMutableArray *friendsRequest = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
         
         if([json objectForKey:@"friendsRequest"]){
             for(NSDictionary *friendRequestJSON in [json objectForKey:@"friendsRequest"]){
                 FLFriendRequest *friendRequest = [[FLFriendRequest alloc] initWithJSON:friendRequestJSON];
-                [friendsRequest addObject:friendRequest];
+                if (friendRequest && [friendRequest requestId] && ![unique containsObject:[friendRequest requestId]]) {
+                    [unique addObject:[friendRequest requestId]];
+                    [friendsRequest addObject:friendRequest];
+                }
             }
         }
         
@@ -178,6 +185,30 @@
     }
 }
 
+- (NSArray *)removeDuplicatesUserInArray:(NSArray *)array {
+    NSMutableArray *unique = [NSMutableArray array];
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet new];
+    for (FLUser *obj in array) {
+        if ([obj userId] && ![obj.userId isEqualToString:_userId] && ![unique containsObject:[obj userId]]) {
+            [unique addObject:[obj userId]];
+            [indexSet addIndex:[array indexOfObject:obj]];
+        }
+    }
+    return [array objectsAtIndexes:indexSet];
+}
+
+- (NSArray *)removeDuplicatesRequestInArray:(NSArray *)array {
+    NSMutableArray *unique = [NSMutableArray array];
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet new];
+    for (FLFriendRequest *obj in array) {
+        if ([obj requestId] && ![unique containsObject:[obj requestId]]) {
+            [unique addObject:[obj requestId]];
+            [indexSet addIndex:[array indexOfObject:obj]];
+        }
+    }
+    return [array objectsAtIndexes:indexSet];
+}
+
 - (void)updateStatsPending:(NSDictionary *)json
 {
     NSNumber *statsPending = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"pending"];
@@ -190,7 +221,7 @@
 {
     if(_avatarURL){
         return _avatarURL;
-//        return [_avatarURL stringByAppendingFormat:@"?width=%d&height=%d", 2 * (int)floorf(size.width), 2 * (int)floorf(size.height)];
+        //        return [_avatarURL stringByAppendingFormat:@"?width=%d&height=%d", 2 * (int)floorf(size.width), 2 * (int)floorf(size.height)];
     }
     else{
         return nil;

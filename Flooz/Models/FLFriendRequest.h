@@ -12,8 +12,8 @@
 
 @interface FLFriendRequest : NSObject
 
-@property FLUser *user;
-@property NSString *requestId;
+@property (strong, nonatomic) FLUser *user;
+@property (strong, nonatomic) NSString *requestId;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

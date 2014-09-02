@@ -14,6 +14,8 @@
     NSMutableArray *_contactsFromAdressBook;
     NSMutableArray *_contactsFromFacebook;
 
+    NSArray *_friendsSearch;
+    
     NSArray *_friends;
     NSArray *_friendsRecent;
     

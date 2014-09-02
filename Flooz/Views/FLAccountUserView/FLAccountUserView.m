@@ -62,8 +62,9 @@
     user = [[Flooz sharedInstance] currentUser];
     
     fullname.text = [user.fullname uppercaseString];
-    username.text = [@"@" stringByAppendingString:user.username];
-    
+    if (user.username) {
+        username.text = [@"@" stringByAppendingString:user.username];
+    }
     [userView setImageFromUser:user];
 }
 

@@ -179,7 +179,9 @@
     currentFilterIndex = button.tag;
     
     NSDictionary *action = [actions objectAtIndex:button.tag];
-    [[action objectForKey:@"target"] performSelector:NSSelectorFromString([action objectForKey:@"action"]) withObject:[NSNumber numberWithInteger:currentFilterColorIndex]];
+    id target = action[@"target"];
+    SEL selector = NSSelectorFromString(action[@"action"]);
+    [target performSelector:selector withObject:[NSNumber numberWithInteger:currentFilterColorIndex]];
 }
 
 - (void)updateFilterViews

@@ -41,9 +41,19 @@
             dateFormatter = [NSDateFormatter new];
             [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
             [dateFormatter setDateFormat:@"dd' 'MMMM', 'HH':'mm"];
+            [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+            [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+            [dateFormatter setDoesRelativeDateFormatting:YES];
+
         }
+        NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
+        NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+        NSInteger currentGMTOffset = [currentTimeZone secondsFromGMTForDate:_date];
+        NSInteger gmtOffset = [utcTimeZone secondsFromGMTForDate:_date];
+        NSTimeInterval gmtInterval = currentGMTOffset - gmtOffset;
+        NSDate *destinationDate = [[NSDate alloc] initWithTimeInterval:gmtInterval sinceDate:_date];
         
-        _dateText = [dateFormatter stringFromDate:_date];
+        _dateText = [dateFormatter stringFromDate: destinationDate];
     }
     
     _when = [FLHelper formatedDateFromNow:_date];

@@ -39,40 +39,41 @@ typedef NS_ENUM(NSInteger, TransactionPaymentMethod) {
     TransactionPaymentMethodCreditCard
 };
 
-@property TransactionType type;
-@property TransactionStatus status;
+@property (nonatomic) TransactionType type;
+@property (nonatomic) TransactionStatus status;
 
-@property NSString *transactionId;
-@property NSNumber *amount;
+@property (strong, nonatomic) NSString *transactionId;
+@property (strong, nonatomic) NSNumber *amount;
+@property (strong, nonatomic) NSString *amountText;
 
-@property NSString *avatarURL;
+@property (strong, nonatomic) NSString *avatarURL;
 
-@property NSString *title;
-@property NSString *content;
-@property NSString *attachmentURL;
-@property NSString *attachmentThumbURL;
-@property NSString *when;
-@property NSArray *text3d;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *content;
+@property (strong, nonatomic) NSString *attachmentURL;
+@property (strong, nonatomic) NSString *attachmentThumbURL;
+@property (strong, nonatomic) NSString *when;
+@property (strong, nonatomic) NSArray *text3d;
 
-@property BOOL isPrivate;
-@property BOOL isCancelable; // Si peut annuler la demande
-@property BOOL isAcceptable; // Si peut accepter ou refuser de payer
+@property (nonatomic) BOOL isPrivate;
+@property (nonatomic) BOOL isCancelable; // Si peut annuler la demande
+@property (nonatomic) BOOL isAcceptable; // Si peut accepter ou refuser de payer
 
-@property NSDate *date;
+@property (strong, nonatomic) NSDate *date;
 
-@property FLUser *from;
-@property FLUser *to;
+@property (strong, nonatomic) FLUser *from;
+@property (strong, nonatomic) FLUser *to;
 
-@property FLSocial *social;
+@property (strong, nonatomic) FLSocial *social;
 
-@property NSArray *comments;
+@property (strong, nonatomic) NSArray *comments;
 
-@property BOOL isCollect;
-@property BOOL collectCanParticipate;
-@property NSArray *collectUsers;
-@property NSString *collectTitle;
+@property (nonatomic) BOOL isCollect;
+@property (nonatomic) BOOL collectCanParticipate;
+@property (strong, nonatomic) NSArray *collectUsers;
+@property (strong, nonatomic) NSString *collectTitle;
 
-@property BOOL haveAction;
+@property (nonatomic) BOOL haveAction;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

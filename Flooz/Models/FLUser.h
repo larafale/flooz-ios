@@ -12,43 +12,44 @@
 
 @interface FLUser : NSObject
 
-@property NSString *userId;
-@property NSNumber *amount;
-@property NSString *firstname;
-@property NSString *lastname;
-@property NSString *fullname;
-@property NSString *username;
-@property NSString *email;
-@property NSString *phone;
-@property NSString *avatarURL;
-@property NSString *profileCompletion;
-@property NSNumber *friendsCount;
-@property NSNumber *eventsCount;
-@property NSNumber *transactionsCount;
-@property BOOL haveStatsPending;
+@property (strong, nonatomic) NSString *userId;
+@property (strong, nonatomic) NSNumber *amount;
+@property (strong, nonatomic) NSString *firstname;
+@property (strong, nonatomic) NSString *lastname;
+@property (strong, nonatomic) NSString *fullname;
+@property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString *email;
+@property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *avatarURL;
+@property (strong, nonatomic) NSString *profileCompletion;
+@property (strong, nonatomic) NSNumber *friendsCount;
+@property (strong, nonatomic) NSNumber *eventsCount;
+@property (strong, nonatomic) NSNumber *transactionsCount;
+@property (nonatomic)  BOOL haveStatsPending;
 
-@property NSString *deviceToken;
+@property (strong, nonatomic) NSString *deviceToken;
 
-@property NSMutableDictionary *address;
-@property NSMutableDictionary *sepa;
-@property NSMutableDictionary *notifications;
-@property NSMutableDictionary *notificationsText;
-@property NSDictionary *checkDocuments;
-@property FLCreditCard *creditCard;
+@property (strong, nonatomic) NSMutableDictionary *address;
+@property (strong, nonatomic) NSMutableDictionary *sepa;
+@property (strong, nonatomic) NSMutableDictionary *notifications;
+@property (strong, nonatomic) NSMutableDictionary *notificationsText;
+@property (strong, nonatomic) NSDictionary *checkDocuments;
+@property (strong, nonatomic) FLCreditCard *creditCard;
 
-@property NSString *friendRelationId;
-@property NSArray *friends;
-@property NSArray *friendsRecent;
-@property NSArray *friendsRequest;
+@property (strong, nonatomic) NSArray *friends;
+@property (strong, nonatomic) NSArray *friendsRecent;
+@property (strong, nonatomic) NSArray *friendsRequest;
 
-@property BOOL needDocuments;
+@property (nonatomic)  BOOL needDocuments;
 
-@property BOOL isFriendWaiting;
+@property (nonatomic)  BOOL isFriendWaiting;
 
-@property NSString *record;
-@property NSString *device;
-@property NSDictionary *settings;
-@property NSString *invitCode;
+@property (strong, nonatomic) NSString *record;
+@property (strong, nonatomic) NSString *device;
+@property (strong, nonatomic) NSDictionary *settings;
+@property (strong, nonatomic) NSString *invitCode;
+@property (strong, nonatomic) NSString *hasSecureCode;
+@property (strong, nonatomic) NSDictionary *json;
 
 - (id)initWithJSON:(NSDictionary *)json;
 - (void)updateStatsPending:(NSDictionary *)json;

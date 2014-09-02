@@ -120,6 +120,9 @@
     else{
         view.text = @"";
     }
+    CGSize expectedLabelS = [view.text sizeWithAttributes:
+                             @{NSFontAttributeName: view.font}];
+    CGRectSetHeight(view.frame, expectedLabelS.height);
 }
 
 - (void)setSelectedCheckView:(BOOL)selected

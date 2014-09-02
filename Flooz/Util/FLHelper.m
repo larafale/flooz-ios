@@ -114,12 +114,19 @@
 }
 
 + (NSString *)formatedPhone:(NSString *)phone{
-    NSString *formatedPhone = [[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""]
-        stringByReplacingOccurrencesOfString:@"." withString:@""]
-        stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    NSString *formatedPhone = [[[[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                  stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                stringByReplacingOccurrencesOfString:@"." withString:@""]
+                               stringByReplacingOccurrencesOfString:@"-" withString:@""]
+                               stringByReplacingOccurrencesOfString:@")" withString:@""]
+                               stringByReplacingOccurrencesOfString:@"(" withString:@""];
 
     if([formatedPhone hasPrefix:@"+33"]){
         formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
+    }
+    
+    if([formatedPhone hasPrefix:@"0033"]){
+        formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 4) withString:@"0"];
     }
     
     if([formatedPhone length] != 10){
@@ -128,6 +135,12 @@
 
     if(![formatedPhone hasPrefix:@"06"] && ![formatedPhone hasPrefix:@"07"]){
         formatedPhone = nil;
+    }
+    
+    if (formatedPhone) {
+        if([formatedPhone hasPrefix:@"06"] || [formatedPhone hasPrefix:@"07"]){
+            formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@"+33"];
+        }
     }
     
     return formatedPhone;
@@ -139,10 +152,21 @@
         return nil;
     }
     
-    NSString *formattedPhone = [phone substringWithRange:NSMakeRange(0, 2)];
     
-    for(int i = 2; i < phone.length; i += 2){
+    NSString *formattedPhone;
+    int i = 0;
+    if ([phone hasPrefix:@"+33"]) {
+        formattedPhone = [phone substringWithRange:NSMakeRange(i, 4)];
+        i = 4;
+    }
+    else if ([phone hasPrefix:@"06"] || [phone hasPrefix:@"07"]) {
+        formattedPhone = [phone substringWithRange:NSMakeRange(i, 2)];
+        i = 2;
+    }
+    
+    while (i < phone.length) {
         formattedPhone = [NSString stringWithFormat:@"%@ %@", formattedPhone, [phone substringWithRange:NSMakeRange(i, 2)]];
+        i+= 2;
     }
     
     return formattedPhone;

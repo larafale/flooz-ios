@@ -7,6 +7,7 @@
 //
 
 #import "TransactionViewController.h"
+#import "SecureCodeViewController.h"
 
 #import "TransactionHeaderView.h"
 #import "TransactionActionsView.h"
@@ -24,6 +25,8 @@
 @interface TransactionViewController (){
     FLTransaction *_transaction;
     NSIndexPath *_indexPath;
+    
+    BOOL focusOnCommentTextField;
     
     UIView *_mainView;
     
@@ -49,6 +52,7 @@
         _indexPath = indexPath;
         animationFirstView = YES;
         paymentFieldIsVisible = NO;
+        focusOnCommentTextField = NO;
         paymentFieldAmountData = [NSMutableDictionary new];
     }
     return self;
@@ -75,6 +79,14 @@
     [super viewDidAppear:animated];
     
     [self startAnimationFirstView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (focusOnCommentTextField) {
+        [commentsView focusOnTextField];
+    }
 }
 
 #pragma mark - Animation
@@ -122,8 +134,24 @@
         view.font = [UIFont customContentLight:11];
         
         view.text = [FLHelper formatedDate:[_transaction date]];
-        [view setImage:[UIImage imageNamed:@"transaction-content-clock"]];
-        [view setImageOffset:CGPointMake(- 4, 0)];
+        
+        float yOffset = -1;
+        NSString *imageNamed = @"transaction-content-clock";
+        if(_transaction.social.scope == SocialScopeFriend){
+            imageNamed = @"scope-friend";
+        }
+        else if(_transaction.social.scope == SocialScopePrivate){
+            imageNamed = @"scope-private";
+        }
+        else if(_transaction.social.scope == SocialScopePublic){
+            imageNamed = @"scope-public";
+        }
+        else {
+            imageNamed = @"transaction-content-clock";
+            yOffset = 0;
+        }
+        [view setImage:[UIImage imageNamed:imageNamed]];
+        [view setImageOffset:CGPointMake(- 4, yOffset)];
         
         [view setWidthToFit];
         CGRectSetX(view.frame, CGRectGetWidth(_contentView.frame) - CGRectGetWidth(view.frame) - 13);
@@ -236,6 +264,13 @@
     }
 }
 
+- (void)didWantToCommentTransactionData
+{
+    if(_indexPath){
+        [_delegateController commentTransactionAtIndex:_indexPath transaction:_transaction];
+    }
+}
+
 #pragma mark - Payment Field Actions
 
 - (void)showPaymentField
@@ -341,32 +376,45 @@
         return;
     }
     
-    [[Flooz sharedInstance] showLoadView];
-    
-    [[Flooz sharedInstance] participateCollect:_transaction.transactionId amount:paymentFieldAmountData[@"amount"] success:^(id result) {
-        
-        paymentFieldIsVisible = NO;
+    CompleteBlock completeBlock = ^{
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] transactionWithId:[_transaction transactionId] success:^(id result) {
-            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-            [self reloadTransaction];
-        }];
-    } failure:NULL];
+        
+        [[Flooz sharedInstance] participateCollect:_transaction.transactionId amount:paymentFieldAmountData[@"amount"] success:^(id result) {
+            
+            paymentFieldIsVisible = NO;
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] transactionWithId:[_transaction transactionId] success:^(id result) {
+                _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                [self reloadTransaction];
+            }];
+        } failure:NULL];
+    };
+    
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    controller.completeBlock = completeBlock;
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)didTransactionValidated
 {
-    NSDictionary *params = @{
-                             @"id": [_transaction transactionId],
-                             @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
-                             };
+    CompleteBlock completeBlock = ^{
+        NSDictionary *params = @{
+                                 @"id": [_transaction transactionId],
+                                 @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
+                                 };
+        
+        [[Flooz sharedInstance] showLoadView];
+        
+        [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
+            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            [self reloadTransaction];
+        } failure:NULL];
+    };
     
-    [[Flooz sharedInstance] showLoadView];
-    
-    [[Flooz sharedInstance] updateTransaction:params success:^(id result) {
-        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-        [self reloadTransaction];
-    } failure:NULL];
+    SecureCodeViewController *secureVC = [SecureCodeViewController new];
+    secureVC.completeBlock = completeBlock;
+    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:secureVC];
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)presentCollectParticipantsController
@@ -394,6 +442,10 @@
         CGFloat y = _contentView.contentSize.height - (CGRectGetHeight(_contentView.frame) - keyboardHeight);
         [_contentView setContentOffset:CGPointMake(0, MAX(y, 0)) animated:YES];
     }
+}
+
+- (void)focusOnComment {
+    focusOnCommentTextField = YES;
 }
 
 - (void)keyboardWillDisappear

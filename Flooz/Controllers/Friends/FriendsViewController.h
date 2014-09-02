@@ -12,7 +12,7 @@
 #import "FriendAddSearchBar.h"
 #import "FriendAddCell.h"
 
-@interface FriendsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FriendRequestCellDelegate, FriendAddSearchBarDelegate>{
+@interface FriendsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, FriendRequestCellDelegate, FriendAddSearchBarDelegate, UIActionSheetDelegate>{
     UIRefreshControl *refreshControl;
 }
 

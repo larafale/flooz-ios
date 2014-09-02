@@ -10,18 +10,18 @@
 
 @interface FLActivity : NSObject
 
-@property FLUser *user;
-@property NSString *content;
-@property BOOL isRead;
+@property (strong, nonatomic) FLUser *user;
+@property (strong, nonatomic) NSString *content;
+@property (nonatomic) BOOL isRead;
 
-@property NSString *eventId;
-@property NSString *transactionId;
-@property BOOL isFriend;
-@property BOOL isForCompleteProfil;
+@property (strong, nonatomic) NSString *eventId;
+@property (strong, nonatomic) NSString *transactionId;
+@property (nonatomic) BOOL isFriend;
+@property (nonatomic) BOOL isForCompleteProfil;
 
-@property NSDate *date;
-@property NSString *when;
-@property NSString *dateText;
+@property (strong, nonatomic) NSDate *date;
+@property (strong, nonatomic) NSString *when;
+@property (strong, nonatomic) NSString *dateText;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

@@ -89,6 +89,12 @@
         [like addGestureRecognizer:_gesture];
     }
     
+    {
+        comment.userInteractionEnabled = YES;
+        _gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCommentTouch)];
+        [comment addGestureRecognizer:_gesture];
+    }
+    
     // Mise a jour de la largeur apres avoir mit la police
     
     CGRectSetWidth(like.frame, [like widthToFit] + 5);
@@ -122,7 +128,7 @@
     }
     else{
         commentText.hidden = NO;
-        commentText.text = [NSString stringWithFormat:@"%ld", social.commentsCount];
+        commentText.text = [NSString stringWithFormat:@"%ld", (unsigned long)social.commentsCount];
         
         CGRectSetWidth(commentText.frame, [commentText widthToFit] + 20);
     }
@@ -144,6 +150,12 @@
     _action = action;
 }
 
+- (void)addTargetForComment:(id)target action:(SEL)action
+{
+    _target2 = target;
+    _action2 = action;
+}
+
 - (void)didLikeTouch
 {
     UIColor *newColor = nil;
@@ -163,8 +175,13 @@
             like.transform = CGAffineTransformIdentity;
         }];
     }];
+    
+    [_target performSelector:_action];
+}
 
-    [_target performSelector:_action withObject:nil];
+- (void)didCommentTouch
+{
+    [_target2 performSelector:_action2];
 }
 
 @end

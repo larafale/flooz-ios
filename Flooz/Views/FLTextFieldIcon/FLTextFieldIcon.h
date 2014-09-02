@@ -19,6 +19,9 @@
     
     id _target;
     SEL _action;
+    
+    id _targetTextChange;
+    SEL _actionTextChange;
 }
 
 @property BOOL readOnly;
@@ -34,5 +37,9 @@
 - (void)seTsecureTextEntry:(BOOL)secureTextEntry;
 
 - (void)addForNextClickTarget:(id)target action:(SEL)action;
+
+- (void)addForTextChangeTarget:(id)target action:(SEL)action;
+
+- (void)reloadTextField;
 
 @end
