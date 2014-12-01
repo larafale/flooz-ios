@@ -1,0 +1,75 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+	#import <UIKit/UIKit.h>
+	#import <Foundation/Foundation.h>
+#endif
+
+#import <QuartzCore/QuartzCore.h>
+
+#import <PPRevealSideViewController/PPRevealSideViewController.h>
+
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import <JTHelper.h>
+
+#import "JTImageLabel.h"
+#import "FLLoadView.h"
+#import "FLUserView.h"
+
+#import "Flooz.h"
+
+#import "FLPopup.h"
+#import "FLReport.h"
+#import "FLHelper.h"
+#import "FLError.h"
+#import "UIColor+custom.h"
+#import "UIFont+custom.h"
+#import "UIBarButtonItem+custom.h"
+
+#import "LoadingCell.h"
+#import "FLImageView.h"
+#import "FLNavigationController.h"
+#import "FLTableView.h"
+#import "FLTextView.h"
+#import "FLTextField.h"
+#import "FLTextFieldTitle.h"
+#import "FLTextFieldIcon.h"
+#import "FLValidNavBar.h"
+
+#import "UIViewController+RegisterNotification.h"
+#import <PPHelpMe/PPHelpMe.h>
+#import <HHRouter/HHRouter.h>
+#import "TTTAttributedLabel.h"
+
+#import <AVFoundation/AVFoundation.h>
+#import <NSDate+Calendar/NSDate+Calendar.h>
+#import "GlobalViewController.h"
+#import "BaseViewController.h"
+#import "MZFormSheetController.h"
+
+#define PADDING_NAV 60.0f
+#define IS_IPHONE4  ([[UIScreen mainScreen] bounds].size.height == 480)?TRUE:FALSE
+
+#define ROOT_CONTROLLER [[[[UIApplication sharedApplication] delegate] window] rootViewController]
+
+typedef enum {
+	SecureCodeModeNormal, // Demande code pour avoir acces
+	SecureCodeModeForget, // Code perdu
+	SecureCodeModeChangeOld, // Ancien code pour le changer
+	SecureCodeModeChangeNew, // Nouveau code
+	SecureCodeModeChangeConfirm, // Nouveau code confirmation
+    SecureCodeModeChangePass // Changement du mot de passe
+} SecureCodeMode;
+
+//#define SIMUL_FIRST_LAUNCH

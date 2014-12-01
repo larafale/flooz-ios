@@ -1,0 +1,15 @@
+/* 
+  Error.strings
+  Flooz
+
+  Created by jonathan on 2/3/2014.
+  Copyright (c) 2014 Flooz. All rights reserved.
+*/
+
+"1000" = "Network error";
+"1001" = "Bad login";
+"1002" = "Albums access deny";
+"1003" = "No camera";
+"1004" = "GPS access deny";
+"1005" = "Contact access deny";
+"1006" = "Update your application";
