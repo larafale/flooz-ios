@@ -178,6 +178,8 @@
     if (activity.isFriend) {
         [[Flooz sharedInstance] readFriendActivity:nil];
     }
+    if (activity.type == LinePreset)
+        [[Flooz sharedInstance] readTransactionWithId:activity.activityId success:nil];
   
     [tableView reloadData];
 }

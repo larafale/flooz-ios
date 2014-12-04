@@ -1,7 +1,1 @@
-#import <Foundation/Foundation.h>
-
-@interface NSString (JTHelper)
-
-- (BOOL)isBlank;
-
-@end
+../../../JTHelper/JTHelper/NSString+JTHelper.h

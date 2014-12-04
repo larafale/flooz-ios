@@ -1,7 +1,1 @@
-#import <UIKit/UIKit.h>
-
-@interface UIImageView (JTHelper)
-
-+ (UIImageView *)imageNamed:(NSString *)imageNamed;
-
-@end
+../../../JTHelper/JTHelper/UIImageView+JTHelper.h

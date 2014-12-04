@@ -47,6 +47,8 @@
 	[super viewDidLoad];
 
 	[self initWithInfo];
+    
+    documentsButton = [NSMutableArray new];
 	fieldsView = [NSMutableArray new];
 
     _contentView = [UIScrollView newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
@@ -100,6 +102,10 @@
     [self addTapGestureForDismissKeyboard];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+
+}
+
 - (void)initWithInfo {
 	FLUser *currentUser = [[Flooz sharedInstance] currentUser];
 
@@ -127,8 +133,6 @@
 	        @{ @"CARD_ID_VERSO": @"cniVerso" }
 	    ];
     
-	documentsButton = [NSMutableArray new];
-
 	registerButtonCount = 0;
 }
 

@@ -65,6 +65,11 @@
         [_phone addForTextChangeTarget:self action:@selector(canValidate:)];
 		[_contentView addSubview:_phone];
 		[fieldsView addObject:_phone];
+        
+        inputView = [FLKeyboardView new];
+        [inputView noneCloseButton];
+        inputView.textField = _phone.textfield;
+        _phone.textfield.inputView = inputView;
 	}
 
 	{
@@ -157,7 +162,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self initWithInfo];
+
 }
 
 - (void)initWithInfo {
@@ -173,7 +178,7 @@
 		[_userDic setObject:[currentUser email] forKey:@"email"];
 	}
 
-	_addressDic = [currentUser address];
+	_addressDic = [[currentUser address] copy];
 
 	documents = @[
 	        @{ @"HOME": @"justificatory" }

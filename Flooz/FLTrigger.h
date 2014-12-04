@@ -34,7 +34,8 @@ typedef enum e_FLTriggerType {
     TriggerFail3DSecure,
     TriggerSecureCodeClear,
     TriggerSecureCodeCheck,
-    TriggerPresetLine
+    TriggerPresetLine,
+    TriggerFeedRead
 } FLTriggerType;
 
 @property (nonatomic) FLTriggerType type;

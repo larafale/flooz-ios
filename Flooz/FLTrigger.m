@@ -79,6 +79,8 @@
         return TriggerSecureCodeCheck;
     else if ([param isEqualToString:@"line:preset"])
         return TriggerPresetLine;
+    else if ([param isEqualToString:@"fead:read"])
+        return TriggerFeedRead;
     else
         return TriggerNone;
 }

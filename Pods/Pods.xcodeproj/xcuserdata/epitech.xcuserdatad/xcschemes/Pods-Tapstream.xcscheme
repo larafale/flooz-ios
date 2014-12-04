@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BA6C7E34144DDDFA6A851DF9"
+               BlueprintIdentifier = "1F73DD8DD67CB06108B820D7"
                BuildableName = "libPods-Tapstream.a"
                BlueprintName = "Pods-Tapstream"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -10,6 +10,29 @@
 
 @interface FLActivity : NSObject
 
+typedef enum e_FLActivityType {
+    AccountLocked,
+    AccountUnlocked,
+    AddAvatar,
+    CardExpired,
+    Cashout,
+    CheckDeclined,
+    CommentsLine,
+    CompleteProfile,
+    FriendJoined,
+    FriendRequest,
+    FriendRequestCancelled,
+    LineExpired,
+    LineExpiredReceiver,
+    LikesLine,
+    LineCharge,
+    LineChargeDeclined,
+    LinePay,
+    LinePreset
+} FLActivityType;
+
+@property (nonatomic, retain) NSString *activityId;
+@property (nonatomic) FLActivityType type;
 @property (strong, nonatomic) FLUser *user;
 @property (strong, nonatomic) NSString *content;
 @property (nonatomic) BOOL isRead;
@@ -26,5 +49,6 @@
 @property (strong, nonatomic) NSMutableArray *triggers;
 
 - (id)initWithJSON:(NSDictionary *)json;
++ (FLActivityType)activityTypeParamToEnum:(NSString *)param;
 
 @end

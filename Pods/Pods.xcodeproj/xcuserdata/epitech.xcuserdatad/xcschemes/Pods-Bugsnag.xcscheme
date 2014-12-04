@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E419BC1F0FE653A95E3CD658"
+               BlueprintIdentifier = "7210FB9DFE3510935760376E"
                BuildableName = "libPods-Bugsnag.a"
                BlueprintName = "Pods-Bugsnag"
                ReferencedContainer = "container:Pods.xcodeproj">

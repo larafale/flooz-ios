@@ -225,6 +225,7 @@ static BOOL canTouchID = YES;
             [_userDic setValue:[[[Flooz sharedInstance] currentUser] username] forKey:@"login"];
         }
         _usernameField = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_USERNAME" for:_userDic key:@"login" position:CGPointMake(20.0f, 0.0f)];
+        [_usernameField addForNextClickTarget:self action:@selector(focusPassword)];
         [_mainBody addSubview:_usernameField];
     }
     
@@ -267,6 +268,10 @@ static BOOL canTouchID = YES;
     CGRectSetY(_keyboardView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(_keyboardView.frame));
     [_mainBody addSubview:_keyboardView];
     _keyboardView.delegate = _codePinView;
+}
+
+- (void)focusPassword {
+    [_passwordField becomeFirstResponder];
 }
 
 - (void)useTouchID {
@@ -508,7 +513,14 @@ static BOOL canTouchID = YES;
 
 - (void)didPasswordForgetTouch {
     
-    [appDelegate displayMailWithMessage:[NSString stringWithFormat:NSLocalizedString(@"FORGOT_MESSAGE", @""), _userDic[@"login"]] object:NSLocalizedString(@"FORGOT_OBJECT", nil) recipients:@[NSLocalizedString(@"FORGOT_RECIPIENTS", nil)] andMessageError:NSLocalizedString(@"ALERT_NO_MAIL_MESSAGE", nil) inViewController:self];
+    NSString *number;
+    
+    if ([Flooz sharedInstance].currentUser != nil)
+        number = [Flooz sharedInstance].currentUser.phone;
+    else
+        number = _userDic[@"login"];
+    
+    [appDelegate displayMailWithMessage:[NSString stringWithFormat:NSLocalizedString(@"FORGOT_MESSAGE", @""), number] object:NSLocalizedString(@"FORGOT_OBJECT", nil) recipients:@[NSLocalizedString(@"FORGOT_RECIPIENTS", nil)] andMessageError:NSLocalizedString(@"ALERT_NO_MAIL_MESSAGE", nil) inViewController:self];
 }
 
 - (BOOL)checkNextOk {

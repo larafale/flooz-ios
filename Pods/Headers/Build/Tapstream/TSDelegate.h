@@ -1,8 +1,1 @@
-#pragma once
-#import <Foundation/Foundation.h>
-
-@protocol TSDelegate<NSObject>
-- (int)getDelay;
-- (void)setDelay:(int)delay;
-- (BOOL)isRetryAllowed;
-@end
+../../../Tapstream/objc/Core/TSDelegate.h

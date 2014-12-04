@@ -11,7 +11,13 @@
 	#import "UITextField+JTHelper.h"
 	#import "UIView+MotionEffect.h"
 
-	#define NSSTRING_IS_NOT_BLANK(x) (x != nil && x.length > 0)
+	#define NSSTRING_IS_NOT_BLANK(x) (x != nil && [x length] > 0)
+	#define NSSTRING_IS_BLANK(x) (x == nil || [x length] == 0)
+
+	#define TR(x) NSLocalizedString(x, nil)
+
+	#define RADIANS_TO_DEGREES(radians) ((radians) * (180.0 / M_PI))
+	#define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
 	#define CGRectMakePosition(x, y) CGRectMake(x, y, 0, 0)
 	#define CGRectMakeWithPosition(position) CGRectMake(position.x, position.y, 0, 0)
@@ -43,7 +49,7 @@
 
 	#define appDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
 
-	#define STATUSBAR_HEIGHT 12.
+	#define STATUSBAR_HEIGHT 20.
 	#define NAVBAR_HEIGHT 44.
 	#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 	#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height

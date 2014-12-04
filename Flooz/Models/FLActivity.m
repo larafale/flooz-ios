@@ -19,6 +19,8 @@
 }
 
 - (void)setJSON:(NSDictionary *)json {
+    _activityId = [json objectForKey:@"_id"];
+    _type = [self.class activityTypeParamToEnum:[json objectForKey:@"type"]];
 	_content = [json objectForKey:@"text"];
 	_user = [[FLUser alloc] initWithJSON:json[@"emitter"]];
 
@@ -82,6 +84,68 @@
     for (NSDictionary *trigger in t) {
         [self.triggers addObject:[[FLTrigger alloc] initWithJson:trigger]];
     }
+}
+
++(FLActivityType)activityTypeParamToEnum:(NSString *)param {
+    
+    FLActivityType type = CompleteProfile;
+    
+    if ([param isEqualToString:@"accountLocked"]) {
+        type = AccountLocked;
+    }
+    else if ([param isEqualToString:@"accountUnlocked"]) {
+        type = AccountUnlocked;
+    }
+    else if ([param isEqualToString:@"addAvatar"]) {
+        type = AddAvatar;
+    }
+    else if ([param isEqualToString:@"cardExpired"]) {
+        type = CardExpired;
+    }
+    else if ([param isEqualToString:@"cashout"]) {
+        type = Cashout;
+    }
+    else if ([param isEqualToString:@"checkDeclined"]) {
+        type = CheckDeclined;
+    }
+    else if ([param isEqualToString:@"commentsLine"]) {
+        type = CommentsLine;
+    }
+    else if ([param isEqualToString:@"completeProfile"]) {
+        type = CompleteProfile;
+    }
+    else if ([param isEqualToString:@"friendJoined"]) {
+        type = FriendJoined;
+    }
+    else if ([param isEqualToString:@"friendRequest"]) {
+        type = FriendRequest;
+    }
+    else if ([param isEqualToString:@"friendRequestCancelled"]) {
+        type = FriendRequestCancelled;
+    }
+    else if ([param isEqualToString:@"lineExpired"]) {
+        type = LineExpired;
+    }
+    else if ([param isEqualToString:@"lineExpiredReceiver"]) {
+        type = LineExpiredReceiver;
+    }
+    else if ([param isEqualToString:@"likesLine"]) {
+        type = LikesLine;
+    }
+    else if ([param isEqualToString:@"lineCharge"]) {
+        type = LineCharge;
+    }
+    else if ([param isEqualToString:@"lineChargeDeclined"]) {
+        type = LineChargeDeclined;
+    }
+    else if ([param isEqualToString:@"linePay"]) {
+        type = LinePay;
+    }
+    else if ([param isEqualToString:@"linePreset"]) {
+        type = LinePreset;
+    }
+    
+    return type;
 }
 
 @end

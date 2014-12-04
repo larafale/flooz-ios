@@ -399,11 +399,12 @@
 	NSMutableDictionary *tempTransaction = [transaction mutableCopy];
 	[tempTransaction removeObjectForKey:@"image"];
 	[tempTransaction removeObjectForKey:@"toImage"];
+    [tempTransaction removeObjectForKey:@"preset"];
 	tempTransaction[@"validate"] = @"true";
     if ([SecureCodeViewController hasSecureCodeForCurrentUser])
         [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
 
-	[self requestPath:@"flooz" method:@"POST" params:tempTransaction success:success fullFailure:nil];
+    [self requestPath:@"flooz" method:@"POST" params:tempTransaction success:success fullFailure:nil];
 }
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -1046,6 +1047,10 @@
     [appDelegate showPresetNewTransactionController:[[FLPreset alloc] initWithJson:data]];
 }
 
+- (void)handleTriggerReadFeed:(NSDictionary *)data {
+    [self readTransactionWithId:data[@"_id"] success:nil];
+}
+
 - (void)handleTrigger:(FLTrigger*)trigger {
     NSDictionary *triggerFuncs =
         @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
@@ -1070,7 +1075,8 @@
           [NSNumber numberWithInt:TriggerSecureCodeClear]: NSStringFromSelector(@selector(handleTriggerClearSecureCode:)),
           [NSNumber numberWithInt:TriggerSecureCodeCheck]: NSStringFromSelector(@selector(handleTriggerCheckSecureCode:)),
           [NSNumber numberWithInt:TriggerPresetLine]: NSStringFromSelector(@selector(handleTriggerPresetLine:)),
-          [NSNumber numberWithInt:TriggerReloadFriend]: NSStringFromSelector(@selector(handleTriggerFriendReload:))};
+          [NSNumber numberWithInt:TriggerReloadFriend]: NSStringFromSelector(@selector(handleTriggerFriendReload:)),
+          [NSNumber numberWithInt:TriggerFeedRead]: NSStringFromSelector(@selector(handleTriggerReadFeed:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
         if ([trigger.delay isEqualToNumber:@0])

@@ -53,11 +53,12 @@
         [socket.javascriptContext evaluateScript: blob_factory_js];
         
         NSString *socketConstructor = socket_io_js_constructor(hostURL,
-                                                                reconnectAutomatically,
-                                                                attempts,
-                                                                reconnectionDelay,
-                                                                maximumDelay,
-                                                                timeout);
+            reconnectAutomatically,
+            attempts,
+            reconnectionDelay,
+            maximumDelay,
+            timeout
+        );
 
         socket.javascriptContext[@"objc_socket"] = [socket.javascriptContext evaluateScript: socketConstructor];
         if (![socket.javascriptContext[@"objc_socket"] toObject]) {

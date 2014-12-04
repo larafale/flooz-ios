@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F5200A0515908E84F90F99A4"
+               BlueprintIdentifier = "B69843AA92F45F5EEBDEF5FF"
                BuildableName = "libPods-TRVSDictionaryWithCaseInsensitivity.a"
                BlueprintName = "Pods-TRVSDictionaryWithCaseInsensitivity"
                ReferencedContainer = "container:Pods.xcodeproj">

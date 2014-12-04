@@ -18,7 +18,7 @@
 @interface FLPopupAskInviteCode () {
     FLTextFieldSignup *_name;
     FLTextFieldSignup *_email;
-
+    
     UIButton    *_sendButton;
     
     NSMutableDictionary *_userDic;
@@ -38,9 +38,9 @@
         [self createViews];
         
         returnBlock = completionBlock;
-
+        
         _userDic = user;
-
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveRemoveWindowSubviews) name:kNotificationRemoveWindowSubviews object:nil];
     }
     return self;
@@ -85,7 +85,7 @@
         _name.textfield.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"FIELD_FULLNAME", nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
         _name.textfield.tintColor = [UIColor whiteColor];
         [_name addForNextClickTarget:self action:@selector(nextName)];
-
+        
         [self addSubview:_name];
         height += CGRectGetHeight(_name.frame);
     }
@@ -98,11 +98,11 @@
         _email.textfield.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"FIELD_EMAIL", nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
         _email.textfield.tintColor = [UIColor whiteColor];
         [_email addForNextClickTarget:self action:@selector(nextEmail)];
-
+        
         [self addSubview:_email];
         height += CGRectGetHeight(_email.frame);
     }
-   
+    
     height += PADDING_TOP_BOTTOM;
     
     {
@@ -137,55 +137,61 @@
 }
 
 - (void)show {
-    background = [[UIView alloc] initWithFrame:CGRectMakeWithSize(appDelegate.window.frame.size)];
-    background.backgroundColor = [UIColor customBackground:.6];
-    
-    UITapGestureRecognizer *tap = [UITapGestureRecognizer new];
-    [tap addTarget:self action:@selector(dismiss)];
-    [background addGestureRecognizer:tap];
-    
-    CGAffineTransform tr = CGAffineTransformScale(self.transform, 1.1, 1.1);
-    self.transform = CGAffineTransformScale(self.transform, 0, 0);
-    
-    background.layer.opacity = 0;
-    
-    [appDelegate.topWindow addSubview:background];
-    [appDelegate.topWindow addSubview:self];
-    
-    [UIView animateWithDuration:ANIMATION_DELAY
-                     animations: ^{
-                         background.layer.opacity = 1;
-                     }];
-    
-    [UIView animateWithDuration:ANIMATION_DELAY
-                     animations: ^{
-                         self.transform = tr;
-                     } completion: ^(BOOL finished) {
-                         [UIView animateWithDuration:.1
-                                          animations: ^{
-                                              self.transform = CGAffineTransformIdentity;
-                                          }];
-                         [_name becomeFirstResponder];
-                     }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        background = [[UIView alloc] initWithFrame:CGRectMakeWithSize(appDelegate.window.frame.size)];
+        background.backgroundColor = [UIColor customBackground:.6];
+        
+        UITapGestureRecognizer *tap = [UITapGestureRecognizer new];
+        [tap addTarget:self action:@selector(dismiss)];
+        [background addGestureRecognizer:tap];
+        
+        CGAffineTransform tr = CGAffineTransformScale(self.transform, 1.1, 1.1);
+        self.transform = CGAffineTransformScale(self.transform, 0, 0);
+        
+        background.layer.opacity = 0;
+        
+        [appDelegate.topWindow addSubview:background];
+        [appDelegate.topWindow addSubview:self];
+        
+        [UIView animateWithDuration:ANIMATION_DELAY
+                         animations: ^{
+                             background.layer.opacity = 1;
+                         }];
+        
+        [UIView animateWithDuration:ANIMATION_DELAY
+                         animations: ^{
+                             self.transform = tr;
+                         } completion: ^(BOOL finished) {
+                             [UIView animateWithDuration:.1
+                                              animations: ^{
+                                                  self.transform = CGAffineTransformIdentity;
+                                              }];
+                             [_name becomeFirstResponder];
+                         }];
+    });
 }
 
 - (void)dismiss {
-    [UIView animateWithDuration:ANIMATION_DELAY
-                     animations: ^{
-                         background.layer.opacity = 0;
-                     }
-     
-                     completion: ^(BOOL finished) {
-                         [background removeFromSuperview];
-                     }];
-    
-    [UIView animateWithDuration:ANIMATION_DELAY
-                     animations: ^{
-                         self.transform = CGAffineTransformScale(self.transform, 0, 0);
-                     }
-                     completion: ^(BOOL finished) {
-                         [self removeFromSuperview];
-                     }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [UIView animateWithDuration:ANIMATION_DELAY
+                         animations: ^{
+                             background.layer.opacity = 0;
+                         }
+         
+                         completion: ^(BOOL finished) {
+                             [background removeFromSuperview];
+                         }];
+        
+        [UIView animateWithDuration:ANIMATION_DELAY
+                         animations: ^{
+                             self.transform = CGAffineTransformScale(self.transform, 0, 0);
+                         }
+                         completion: ^(BOOL finished) {
+                             [self removeFromSuperview];
+                         }];
+    });
 }
 
 - (void)didAskCode {

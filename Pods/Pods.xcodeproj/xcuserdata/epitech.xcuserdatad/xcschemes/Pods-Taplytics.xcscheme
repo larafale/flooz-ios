@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3030EF7F885E7085E395002D"
+               BlueprintIdentifier = "D2A544E22149B4DDEA76AD0C"
                BuildableName = "libPods-Taplytics.a"
                BlueprintName = "Pods-Taplytics"
                ReferencedContainer = "container:Pods.xcodeproj">

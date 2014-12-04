@@ -1,11 +1,1 @@
-#import <UIKit/UIKit.h>
-
-@interface UITextField (JTHelper)
-
-- (CGFloat)heightToFit;
-- (void)setHeightToFit;
-
-- (CGFloat)widthToFit;
-- (void)setWidthToFit;
-
-@end
+../../../JTHelper/JTHelper/UITextField+JTHelper.h

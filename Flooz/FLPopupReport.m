@@ -88,16 +88,6 @@
         view.delegate = self;
         view.backgroundColor = [UIColor whiteColor];
         
-//        CALayer *bottomBorder = [CALayer layer];
-//        bottomBorder.frame = CGRectMake(0.0f, CGRectGetHeight(view.frame) - 1, CGRectGetWidth(view.frame), 1.0f);
-//        bottomBorder.backgroundColor = [UIColor whiteColor].CGColor;
-//        [view.layer addSublayer:bottomBorder];
-//
-//        CALayer *leftBorder = [CALayer layer];
-//        leftBorder.frame = CGRectMake(0.0f, 0.0f, 1.0f, CGRectGetHeight(view.frame));
-//        leftBorder.backgroundColor = [UIColor whiteColor].CGColor;
-//        [view.layer addSublayer:leftBorder];
-
         [self addSubview:view];
         
         height += CGRectGetHeight(view.frame);
@@ -136,7 +126,7 @@
         view.backgroundColor = [UIColor customBlue];
         [self addSubview:view];
     }
-
+    
     height += BUTTON_HEIGHT;
     
     CGRectSetHeight(self.frame, height);
@@ -148,51 +138,54 @@
 }
 
 - (void)show {
-    
-    background = [[UIView alloc] initWithFrame:CGRectMakeWithSize(appDelegate.window.frame.size)];
-    background.backgroundColor = [UIColor customBackground:.6];
-    
-    CGAffineTransform tr = CGAffineTransformScale(self.transform, 1.1, 1.1);
-    self.transform = CGAffineTransformScale(self.transform, 0, 0);
-    
-    background.layer.opacity = 0;
-    
-    [appDelegate.window addSubview:background];
-    [appDelegate.window addSubview:self];
-    
-    [UIView animateWithDuration:0.1
-                     animations: ^{
-                         background.layer.opacity = 1;
-                     }];
-    
-    
-    [UIView animateWithDuration:ANIMATION_DELAY
-                     animations: ^{
-                         self.transform = tr;
-                     } completion: ^(BOOL finished) {
-                         [UIView animateWithDuration:.1
-                                          animations: ^{
-                                              self.transform = CGAffineTransformIdentity;
-                                          }];
-                     }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        background = [[UIView alloc] initWithFrame:CGRectMakeWithSize(appDelegate.window.frame.size)];
+        background.backgroundColor = [UIColor customBackground:.6];
+        
+        CGAffineTransform tr = CGAffineTransformScale(self.transform, 1.1, 1.1);
+        self.transform = CGAffineTransformScale(self.transform, 0, 0);
+        
+        background.layer.opacity = 0;
+        
+        [appDelegate.window addSubview:background];
+        [appDelegate.window addSubview:self];
+        
+        [UIView animateWithDuration:0.1
+                         animations: ^{
+                             background.layer.opacity = 1;
+                         }];
+        
+        
+        [UIView animateWithDuration:ANIMATION_DELAY
+                         animations: ^{
+                             self.transform = tr;
+                         } completion: ^(BOOL finished) {
+                             [UIView animateWithDuration:.1
+                                              animations: ^{
+                                                  self.transform = CGAffineTransformIdentity;
+                                              }];
+                         }];
+    });
 }
 
 - (void)dismiss {
-    [UIView animateWithDuration:ANIMATION_DELAY
-                     animations: ^{
-                         background.layer.opacity = 0;
-                     }
-                     completion: ^(BOOL finished) {
-                         [background removeFromSuperview];
-                     }];
-    
-    [UIView animateWithDuration:ANIMATION_DELAY
-                     animations: ^{
-                         self.transform = CGAffineTransformScale(self.transform, 0, 0);
-                     }
-                     completion: ^(BOOL finished) {
-                         [self removeFromSuperview];
-                     }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:ANIMATION_DELAY
+                         animations: ^{
+                             background.layer.opacity = 0;
+                         }
+                         completion: ^(BOOL finished) {
+                             [background removeFromSuperview];
+                         }];
+        
+        [UIView animateWithDuration:ANIMATION_DELAY
+                         animations: ^{
+                             self.transform = CGAffineTransformScale(self.transform, 0, 0);
+                         }
+                         completion: ^(BOOL finished) {
+                             [self removeFromSuperview];
+                         }];
+    });
 }
 
 - (void)didReportTouch {

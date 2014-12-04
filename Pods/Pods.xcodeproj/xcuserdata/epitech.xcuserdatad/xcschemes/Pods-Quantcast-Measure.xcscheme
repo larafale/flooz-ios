@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2BDD28711512EFA1491C8110"
+               BlueprintIdentifier = "27A33838D350D0D3D56ECAB7"
                BuildableName = "libPods-Quantcast-Measure.a"
                BlueprintName = "Pods-Quantcast-Measure"
                ReferencedContainer = "container:Pods.xcodeproj">

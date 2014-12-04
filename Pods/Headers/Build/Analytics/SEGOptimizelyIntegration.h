@@ -1,13 +1,1 @@
-//
-//  SEGOptmizelyIntegration.h
-//  Analytics
-//
-//  Created by Travis Jeffery on 7/16/14.
-//  Copyright (c) 2014 Segment.io. All rights reserved.
-//
-
-#import "SEGAnalyticsIntegration.h"
-
-@interface SEGOptimizelyIntegration : SEGAnalyticsIntegration
-
-@end
+../../../Analytics/Analytics/Integrations/Optimizely/SEGOptimizelyIntegration.h

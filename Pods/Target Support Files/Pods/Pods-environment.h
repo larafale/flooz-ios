@@ -15,44 +15,44 @@
 // AFNetworking
 #define COCOAPODS_POD_AVAILABLE_AFNetworking
 #define COCOAPODS_VERSION_MAJOR_AFNetworking 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking 4
-#define COCOAPODS_VERSION_PATCH_AFNetworking 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking 0
 
 // AFNetworking/NSURLConnection
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLConnection
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLConnection 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLConnection 4
-#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLConnection 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection 0
 
 // AFNetworking/NSURLSession
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLSession
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLSession 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLSession 4
-#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLSession 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession 0
 
 // AFNetworking/Reachability
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_Reachability
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_Reachability 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_Reachability 4
-#define COCOAPODS_VERSION_PATCH_AFNetworking_Reachability 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Reachability 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Reachability 0
 
 // AFNetworking/Security
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_Security
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_Security 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_Security 4
-#define COCOAPODS_VERSION_PATCH_AFNetworking_Security 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Security 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Security 0
 
 // AFNetworking/Serialization
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_Serialization
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_Serialization 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_Serialization 4
-#define COCOAPODS_VERSION_PATCH_AFNetworking_Serialization 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Serialization 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Serialization 0
 
 // AFNetworking/UIKit
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_UIKit
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_UIKit 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 4
-#define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 0
 
 // Amplitude-iOS
 #define COCOAPODS_POD_AVAILABLE_Amplitude_iOS
@@ -64,103 +64,103 @@
 #define COCOAPODS_POD_AVAILABLE_Analytics
 #define COCOAPODS_VERSION_MAJOR_Analytics 1
 #define COCOAPODS_VERSION_MINOR_Analytics 8
-#define COCOAPODS_VERSION_PATCH_Analytics 4
+#define COCOAPODS_VERSION_PATCH_Analytics 6
 
 // Analytics/Amplitude
 #define COCOAPODS_POD_AVAILABLE_Analytics_Amplitude
 #define COCOAPODS_VERSION_MAJOR_Analytics_Amplitude 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Amplitude 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Amplitude 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Amplitude 6
 
 // Analytics/AppsFlyer
 #define COCOAPODS_POD_AVAILABLE_Analytics_AppsFlyer
 #define COCOAPODS_VERSION_MAJOR_Analytics_AppsFlyer 1
 #define COCOAPODS_VERSION_MINOR_Analytics_AppsFlyer 8
-#define COCOAPODS_VERSION_PATCH_Analytics_AppsFlyer 4
+#define COCOAPODS_VERSION_PATCH_Analytics_AppsFlyer 6
 
 // Analytics/Bugsnag
 #define COCOAPODS_POD_AVAILABLE_Analytics_Bugsnag
 #define COCOAPODS_VERSION_MAJOR_Analytics_Bugsnag 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Bugsnag 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Bugsnag 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Bugsnag 6
 
 // Analytics/Core-iOS
 #define COCOAPODS_POD_AVAILABLE_Analytics_Core_iOS
 #define COCOAPODS_VERSION_MAJOR_Analytics_Core_iOS 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Core_iOS 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Core_iOS 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Core_iOS 6
 
 // Analytics/Countly
 #define COCOAPODS_POD_AVAILABLE_Analytics_Countly
 #define COCOAPODS_VERSION_MAJOR_Analytics_Countly 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Countly 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Countly 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Countly 6
 
 // Analytics/Crittercism
 #define COCOAPODS_POD_AVAILABLE_Analytics_Crittercism
 #define COCOAPODS_VERSION_MAJOR_Analytics_Crittercism 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Crittercism 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Crittercism 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Crittercism 6
 
 // Analytics/Flurry
 #define COCOAPODS_POD_AVAILABLE_Analytics_Flurry
 #define COCOAPODS_VERSION_MAJOR_Analytics_Flurry 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Flurry 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Flurry 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Flurry 6
 
 // Analytics/GoogleAnalytics
 #define COCOAPODS_POD_AVAILABLE_Analytics_GoogleAnalytics
 #define COCOAPODS_VERSION_MAJOR_Analytics_GoogleAnalytics 1
 #define COCOAPODS_VERSION_MINOR_Analytics_GoogleAnalytics 8
-#define COCOAPODS_VERSION_PATCH_Analytics_GoogleAnalytics 4
+#define COCOAPODS_VERSION_PATCH_Analytics_GoogleAnalytics 6
 
 // Analytics/Localytics
 #define COCOAPODS_POD_AVAILABLE_Analytics_Localytics
 #define COCOAPODS_VERSION_MAJOR_Analytics_Localytics 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Localytics 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Localytics 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Localytics 6
 
 // Analytics/Mixpanel
 #define COCOAPODS_POD_AVAILABLE_Analytics_Mixpanel
 #define COCOAPODS_VERSION_MAJOR_Analytics_Mixpanel 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Mixpanel 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Mixpanel 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Mixpanel 6
 
 // Analytics/Optimizely
 #define COCOAPODS_POD_AVAILABLE_Analytics_Optimizely
 #define COCOAPODS_VERSION_MAJOR_Analytics_Optimizely 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Optimizely 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Optimizely 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Optimizely 6
 
 // Analytics/Quantcast
 #define COCOAPODS_POD_AVAILABLE_Analytics_Quantcast
 #define COCOAPODS_VERSION_MAJOR_Analytics_Quantcast 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Quantcast 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Quantcast 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Quantcast 6
 
 // Analytics/Segmentio
 #define COCOAPODS_POD_AVAILABLE_Analytics_Segmentio
 #define COCOAPODS_VERSION_MAJOR_Analytics_Segmentio 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Segmentio 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Segmentio 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Segmentio 6
 
 // Analytics/Taplytics
 #define COCOAPODS_POD_AVAILABLE_Analytics_Taplytics
 #define COCOAPODS_VERSION_MAJOR_Analytics_Taplytics 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Taplytics 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Taplytics 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Taplytics 6
 
 // Analytics/Tapstream
 #define COCOAPODS_POD_AVAILABLE_Analytics_Tapstream
 #define COCOAPODS_VERSION_MAJOR_Analytics_Tapstream 1
 #define COCOAPODS_VERSION_MINOR_Analytics_Tapstream 8
-#define COCOAPODS_VERSION_PATCH_Analytics_Tapstream 4
+#define COCOAPODS_VERSION_PATCH_Analytics_Tapstream 6
 
 // Analytics/TestFlight
 #define COCOAPODS_POD_AVAILABLE_Analytics_TestFlight
 #define COCOAPODS_VERSION_MAJOR_Analytics_TestFlight 1
 #define COCOAPODS_VERSION_MINOR_Analytics_TestFlight 8
-#define COCOAPODS_VERSION_PATCH_Analytics_TestFlight 4
+#define COCOAPODS_VERSION_PATCH_Analytics_TestFlight 6
 
 // AppsFlyer-SDK
 #define COCOAPODS_POD_AVAILABLE_AppsFlyer_SDK
@@ -189,9 +189,9 @@
 
 // CrittercismSDK
 #define COCOAPODS_POD_AVAILABLE_CrittercismSDK
-#define COCOAPODS_VERSION_MAJOR_CrittercismSDK 4
-#define COCOAPODS_VERSION_MINOR_CrittercismSDK 3
-#define COCOAPODS_VERSION_PATCH_CrittercismSDK 4
+#define COCOAPODS_VERSION_MAJOR_CrittercismSDK 5
+#define COCOAPODS_VERSION_MINOR_CrittercismSDK 0
+#define COCOAPODS_VERSION_PATCH_CrittercismSDK 5
 
 // DACircularProgress
 #define COCOAPODS_POD_AVAILABLE_DACircularProgress
@@ -239,7 +239,7 @@
 #define COCOAPODS_POD_AVAILABLE_JTHelper
 #define COCOAPODS_VERSION_MAJOR_JTHelper 0
 #define COCOAPODS_VERSION_MINOR_JTHelper 1
-#define COCOAPODS_VERSION_PATCH_JTHelper 4
+#define COCOAPODS_VERSION_PATCH_JTHelper 8
 
 // Localytics-AMP
 #define COCOAPODS_POD_AVAILABLE_Localytics_AMP
@@ -340,8 +340,8 @@
 // SocketRocket
 #define COCOAPODS_POD_AVAILABLE_SocketRocket
 #define COCOAPODS_VERSION_MAJOR_SocketRocket 0
-#define COCOAPODS_VERSION_MINOR_SocketRocket 3
-#define COCOAPODS_VERSION_PATCH_SocketRocket 1
+#define COCOAPODS_VERSION_MINOR_SocketRocket 2
+#define COCOAPODS_VERSION_PATCH_SocketRocket 0
 
 // TRVSDictionaryWithCaseInsensitivity
 #define COCOAPODS_POD_AVAILABLE_TRVSDictionaryWithCaseInsensitivity
@@ -352,8 +352,8 @@
 // TTTAttributedLabel
 #define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
 #define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
-#define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 10
-#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 1
+#define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 11
+#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 0
 
 // Taplytics
 #define COCOAPODS_POD_AVAILABLE_Taplytics
@@ -376,8 +376,8 @@
 // UICKeyChainStore
 #define COCOAPODS_POD_AVAILABLE_UICKeyChainStore
 #define COCOAPODS_VERSION_MAJOR_UICKeyChainStore 1
-#define COCOAPODS_VERSION_MINOR_UICKeyChainStore 0
-#define COCOAPODS_VERSION_PATCH_UICKeyChainStore 5
+#define COCOAPODS_VERSION_MINOR_UICKeyChainStore 1
+#define COCOAPODS_VERSION_PATCH_UICKeyChainStore 0
 
 // YLMoment
 #define COCOAPODS_POD_AVAILABLE_YLMoment

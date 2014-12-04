@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "79B6DB261D8D1AE56E3B2452"
+               BlueprintIdentifier = "D9D1B80B368A8B184FBF9A07"
                BuildableName = "libPods-AppsFlyer-SDK.a"
                BlueprintName = "Pods-AppsFlyer-SDK"
                ReferencedContainer = "container:Pods.xcodeproj">

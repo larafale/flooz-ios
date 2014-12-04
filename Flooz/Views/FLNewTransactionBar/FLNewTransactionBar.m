@@ -15,6 +15,7 @@
 	CGFloat heightBar;
 	CGFloat heightTopBar;
 	CGFloat heightButtonBar;
+    UIView *separatorButtonBar;
 }
 
 - (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCollect:(SEL)actionCollect {
@@ -86,11 +87,11 @@
 	[self addSubview:sendButton];
 
 
-	UIView *separatorButtonBar = [UIView newWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., heightTopBar + heightButtonBar / 4., 1, heightButtonBar / 2.0)];
+	separatorButtonBar = [UIView newWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., heightTopBar + heightButtonBar / 4., 1, heightButtonBar / 2.0)];
 	[separatorButtonBar setBackgroundColor:[UIColor whiteColor]];
 	[self addSubview:separatorButtonBar];
     
-    if (_dictionary[@"preset"]) {
+    if ([_dictionary[@"preset"] boolValue]) {
         if ([_dictionary[@"method"] isEqualToString:@"pay"]) {
             [separatorButtonBar removeFromSuperview];
             [askButton removeFromSuperview];
