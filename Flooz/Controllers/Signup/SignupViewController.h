@@ -23,15 +23,12 @@
 @protocol SignupViewControllerDelegate;
 
 typedef enum {
-	SignupPageTuto = 0,
-	SignupPageExplication,
-	SignupPagePhone,
+	SignupPagePhone = 0,
 	SignupPagePseudo,
 	SignupPagePhoto,
 	SignupPageInfo,
 	SignupPageCode,
 	SignupPageCodeVerif,
-	SignupPageCB,
 	SignupPageAskAccess,
 	SignupPageFriends
 } SignupOrderPage;

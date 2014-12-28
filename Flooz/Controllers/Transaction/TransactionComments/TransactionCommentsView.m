@@ -167,7 +167,7 @@
 	sendPressed = YES;
 
 	NSDictionary *comment = @{
-		@"lineId": [_transaction transactionId],
+		@"floozId": [_transaction transactionId],
 		@"comment": commentDic[@"comment"]
 	};
     [commentDic setObject:@"" forKey:@"comment"];

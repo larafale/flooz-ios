@@ -13,27 +13,38 @@
 #import "FriendCell.h"
 #import "FriendPickerSearchBar.h"
 #import "FLUser.h"
+#import "ClipboardPopoverViewController.h"
+#import "FLClearActionTextView.h"
 
 @interface ShareAppViewController () {
-	NSMutableArray *_contactInfoArray;
-	NSMutableArray *_contactFiltered;
-    NSMutableArray *_contactSearch;
-
-    FriendPickerSearchBar *_searchBar;
-    UIView *_messageView;
-	UILabel *_messageDescription;
-	UIButton *_shareButton;
-	UITableView *_tableView;
-
-	NSMutableArray *_arrayPhonesAskServer;
-	NSArray *arrayIndex;
-
-	NSMutableArray *_contactToInvite;
+    UIView *_footerView;
+    UIView *_mainBody;
     
-    NSIndexPath *tmpIndex;
-    NSString *_selectionText;
+    UIButton *_shareFB;
+    UIButton *_shareTwitter;
+    UIButton *_shareSMS;
+    UIButton *_shareMail;
     
-    Boolean alertAsked;
+    UIImageView *_backImage;
+    
+    UILabel *_codeLabel;
+    
+    FLClearActionTextView *_text;
+    
+    NSString *_code;
+    NSString *_appText;
+    NSString *_mailText;
+    NSString *_fbDecription;
+    NSString *_fbName;
+    NSString *_fbLink;
+    NSString *_fbCaption;
+    NSString *_fbMessage;
+    NSString *_twitterText;
+    NSString *_smsText;
+    NSString *_mailObject;
+    
+    WYPopoverController *popoverController;
+    ClipboardPopoverViewController *popoverViewController;
 }
 
 @end
@@ -41,323 +52,346 @@
 @implementation ShareAppViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self) {
-		self.title = NSLocalizedString(@"ACCOUNT_BUTTON_INVITE", @"");
-	}
-	return self;
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_INVITE", @"");
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
-	[super viewDidLoad];
+    [super viewDidLoad];
+    
+    _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(_headerView.frame) + STATUSBAR_HEIGHT, PPScreenWidth(), PPScreenHeight() - CGRectGetHeight(_headerView.frame) - STATUSBAR_HEIGHT)];
+    _mainBody.backgroundColor = [UIColor customBackgroundHeader];
+    [self.view addSubview:_mainBody];
+    
+    _backImage = [[UIImageView alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(_mainBody.frame) - 40, 200)];
+    [_backImage setImage:[[UIImage imageNamed:@"people"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [_backImage setTintColor:[UIColor customBlue]];
+    [_backImage setContentMode:UIViewContentModeScaleAspectFit];
+    
+    [_mainBody addSubview:_backImage];
+    
+    _codeLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentBold:30] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    [_codeLabel setUserInteractionEnabled:YES];
+    [_codeLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
 
-    alertAsked = NO;
-	_contactInfoArray = [NSMutableArray new];
-    _contactToInvite = [NSMutableArray new];
+    [_mainBody addSubview:_codeLabel];
     
-    _messageView = [UIView newWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), 60.0f)];
-    [_messageView setBackgroundColor:[UIColor customBackground]];
-    [_mainBody addSubview:_messageView];
+    _text = [[FLClearActionTextView alloc] initWithFrame:CGRectMake(20, 220, CGRectGetWidth(_mainBody.frame) - 40, 100)];
     
-    {
-        UIView *imageView = [UIImageView newWithImage:[UIImage imageNamed:@"invite-image"]];
-        CGRectSetX(imageView.frame, 10.0f);
-        CGRectSetY(imageView.frame, (CGRectGetHeight(_messageView.frame) - CGRectGetHeight(imageView.frame)) / 2.0f);
-        [_messageView addSubview:imageView];
-        
-        _messageDescription = [UILabel newWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5.0f, 0.0f, CGRectGetWidth(_messageView.frame) - (CGRectGetMaxX(imageView.frame) + 5.0f + 10.0f), CGRectGetHeight(_messageView.frame))];
-        _messageDescription.text = NSLocalizedString(@"INVITE_MESSAGE", nil);
-        _messageDescription.font = [UIFont customTitleLight:16];
-        _messageDescription.numberOfLines = 0;
-        _messageDescription.textColor = [UIColor whiteColor];
-        _messageDescription.textAlignment = NSTextAlignmentCenter;
-        [_messageView addSubview:_messageDescription];
+    if (IS_IPHONE4) {
+        CGRectSetY(_text.frame, 200);
     }
-
-    _searchBar = [FriendPickerSearchBar newWithFrame:CGRectMake(0, CGRectGetMinY(_mainBody.frame) + CGRectGetHeight(_messageView.frame) + 5, PPScreenWidth(), 20)];
-    _searchBar.delegate = self;
-    _searchBar._searchBar.placeholder = NSLocalizedString(@"FRIEND_PCIKER_PLACEHOLDER2", nil);
     
-    [self.view addSubview:_searchBar];
+    [_text setEditable:NO];
+    [_text setBounces:NO];
+    [_text setScrollEnabled:NO];
+    [_text setBackgroundColor:[UIColor clearColor]];
     
-	[self createTableContact];
+    [_mainBody addSubview:_text];
+    
+    [self createFooterView];
+}
 
-	[[Flooz sharedInstance] grantedAccessToContacts: ^(BOOL granted) {
-	    if (granted) {
-	        [self createContactList];
-		}
-	    else {
-//	        [self displayAlertWithText:NSLocalizedString(@"ALERT_CONTACT_DENIES_ACCESS", @"")];
-		}
-	}];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[Flooz sharedInstance] invitationStrings:^(NSDictionary *result) {
+        _code = result[@"item"][@"code"];
+        _appText = result[@"item"][@"app"];
+        _mailText = result[@"item"][@"mail"][@"content"];
+        _fbMessage = result[@"item"][@"facebook"][@"message"];
+        _fbName = result[@"item"][@"facebook"][@"name"];
+        _fbDecription = result[@"item"][@"facebook"][@"description"];
+        _fbCaption = result[@"item"][@"facebook"][@"caption"];
+        _fbLink = result[@"item"][@"facebook"][@"link"];
+        _twitterText = result[@"item"][@"twitter"];
+        _smsText = result[@"item"][@"sms"];
+        _mailObject = result[@"item"][@"mail"][@"title"];
+        
+        if (!_code)
+            _code = @"";
+        
+        [_codeLabel setText:_code];
+        [_codeLabel sizeToFit];
+        CGRectSetWidth(_codeLabel.frame, CGRectGetWidth(_codeLabel.frame) + 10);
+        CGRectSetHeight(_codeLabel.frame, CGRectGetHeight(_codeLabel.frame) + 5);
+        [_codeLabel setCenter:_backImage.center];
+        [_codeLabel setBackgroundColor:[UIColor customBackgroundHeader]];
+        _codeLabel.layer.masksToBounds = YES;
+        _codeLabel.layer.cornerRadius = 2;
+        
+        [_text setText:_appText];
+        [_text setTextColor:[UIColor whiteColor]];
+        [_text setTextAlignment:NSTextAlignmentCenter];
+        [_text setFont:[UIFont customContentRegular:18]];
+        [_text sizeToFit];
+        CGRectSetX(_text.frame, (CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(_text.frame)) / 2);
+        
+    } failure:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [_tableView setHidden:NO];
-}
-
-- (void)createShareButton {
-	_shareButton = [[UIButton alloc] initWithFrame:CGRectMake(20.0f, 0, PPScreenWidth() - 20.0f * 2, 34)];
-
-	[_shareButton setTitle:NSLocalizedString(@"INVITE_CODE_SHARE", nil) forState:UIControlStateNormal];
-	[_shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[_shareButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
-	[_shareButton setBackgroundColor:[UIColor customBackground]];
-}
-
-- (void)createTableContact {
-	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_messageView.frame) + 40.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_messageView.frame) - 40.0f) style:UITableViewStylePlain];
-	[_tableView setBackgroundColor:[UIColor customBackgroundHeader]];
-	[_tableView setSeparatorInset:UIEdgeInsetsZero];
-	[_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [_tableView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     
-	[_mainBody addSubview:_tableView];
-
-	[_tableView setDataSource:self];
-	[_tableView setDelegate:self];
-	[_tableView setHidden:YES];
-    [_tableView setAllowsMultipleSelection:YES];
-
-	[self setIndexColorForTableView:_tableView];
+    popoverViewController = [ClipboardPopoverViewController new];
+    [popoverViewController setPreferredContentSize:CGSizeMake(120, 35)];
+    popoverViewController.modalInPopover = NO;
 }
 
-- (void)displayAlertWithText:(NSString *)alertMessage {
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"GLOBAL_ERROR", nil)
-	                                                message:alertMessage
-	                                               delegate:nil
-	                                      cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
-	                                      otherButtonTitles:nil
-	    ];
-	alert.delegate = self;
-	alert.tag = 25;
-	dispatch_async(dispatch_get_main_queue(), ^{
-	    [alert show];
-	});
-}
-
-- (void)createContactList {
-	[[Flooz sharedInstance] createContactList: ^(NSMutableArray *arrayContactAdressBook, NSMutableArray *arrayContactFlooz) {
-	    _contactInfoArray = arrayContactAdressBook;
-	    for (FLUser * us in arrayContactFlooz) {
-	        NSUInteger index = [[Flooz sharedInstance] findIndexForUser:us inArray:_contactInfoArray];
-	        [_contactInfoArray insertObject:us atIndex:index];
-		}
-
-	    _contactFiltered = [[self partitionObjects:_contactInfoArray collationStringSelector:@selector(description)] mutableCopy];
-	    [_tableView reloadData];
-	} atSignup:NO];
-}
-
-#pragma mark - TableView Delegate & Datasource
-
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-	return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
-}
-
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-	return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [_contactFiltered[section] count];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return [[[UILocalizedIndexedCollation currentCollation] sectionTitles] count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	[self setIndexColorForTableView:tableView];
-
-	static NSString *cellIdentifier = @"ContactCell";
-	ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-
-	if (!cell) {
-		cell = [[ContactCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = [UIColor customBackgroundHeader];
-	}
+- (void)createFooterView {
+    _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame) - 90, CGRectGetWidth(_mainBody.frame), 80)];
     
-	NSDictionary *contact = _contactFiltered[indexPath.section][indexPath.row];
-	if ([contact isKindOfClass:[NSDictionary class]]) {
-		[cell setContact:contact];
-	}
-	else {
-		[cell setContactUser:(FLUser *)contact];
-    }
-    [cell.addFriendButton setHidden:YES];
-    NSInteger anIndex=[_contactToInvite indexOfObject:contact];
-    if(NSNotFound == anIndex) {
-        UIImage *image = [UIImage imageNamed:@"event-scope-invite-selected"];
-        UIButton *b = [UIButton newWithFrame:CGRectMakeWithSize(image.size)];
-        b.tag = indexPath.row;
-        [b addTarget:self action:@selector(invite:) forControlEvents:UIControlEventTouchUpInside];
-        [b setImage:image forState:UIControlStateNormal];
-        cell.accessoryView = b;
-    }
-    else {
-        cell.accessoryView = [UIImageView imageNamed:@"friends-field-in"];
-    }
-    return cell;
+    float buttonSize = 35;
+    float padding = (CGRectGetWidth(_footerView.frame) - (4 * buttonSize)) / 5;
+    float posX = padding;
+    
+    _shareSMS = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_shareSMS setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
+    [_footerView addSubview:_shareSMS];
+    posX += buttonSize + padding;
+    
+    _shareFB = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_shareFB setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
+    [_footerView addSubview:_shareFB];
+    posX += buttonSize + padding;
+    
+    _shareTwitter = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_shareTwitter setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
+    [_footerView addSubview:_shareTwitter];
+    posX += buttonSize + padding;
+    
+    _shareMail = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_shareMail setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
+    [_footerView addSubview:_shareMail];
+    
+    UIImage *image;
+    
+    image = [[UIImage imageNamed:@"share_sms"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_shareSMS setImage:image forState:UIControlStateNormal];
+    
+    image = [[UIImage imageNamed:@"share_facebook"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_shareFB setImage:image forState:UIControlStateNormal];
+    
+    image = [[UIImage imageNamed:@"share_twitter"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_shareTwitter setImage:image forState:UIControlStateNormal];
+    
+    image = [[UIImage imageNamed:@"share_mail"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [_shareMail setImage:image forState:UIControlStateNormal];
+    
+    [_shareSMS setTintColor:[UIColor customBlue]];
+    [_shareFB setTintColor:[UIColor customBlue]];
+    [_shareTwitter setTintColor:[UIColor customBlue]];
+    [_shareMail setTintColor:[UIColor customBlue]];
+    
+    [_shareSMS addTarget:self action:@selector(sendWithSMS) forControlEvents:UIControlEventTouchUpInside];
+    [_shareFB addTarget:self action:@selector(sendWithFacebook) forControlEvents:UIControlEventTouchUpInside];
+    [_shareTwitter addTarget:self action:@selector(sendWithTwitter) forControlEvents:UIControlEventTouchUpInside];
+    [_shareMail addTarget:self action:@selector(sendWithMail) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *label;
+    
+    label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_SMS", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    [label setFrame:CGRectMake(CGRectGetMidX(_shareSMS.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
+    [_footerView addSubview:label];
+    
+    label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_FACEBOOK", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    [label setFrame:CGRectMake(CGRectGetMidX(_shareFB.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
+    [_footerView addSubview:label];
+    
+    label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_TWITTER", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    [label setFrame:CGRectMake(CGRectGetMidX(_shareTwitter.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
+    [_footerView addSubview:label];
+    
+    label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_MAIL", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    [label setFrame:CGRectMake(CGRectGetMidX(_shareMail.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
+    [_footerView addSubview:label];
+    
+    [_mainBody addSubview:_footerView];
 }
 
-- (void)setIndexColorForTableView:(UITableView *)tableView {
-	for (UIView *view in[tableView subviews]) {
-		if ([view respondsToSelector:@selector(setIndexColor:)]) {
-			[view performSelector:@selector(setIndexColor:) withObject:[UIColor customBackground]];
-			[view performSelector:@selector(setIndexBackgroundColor:) withObject:[UIColor customBackgroundHeader]];
-		}
-	}
+
+- (void)showPopover {
+    popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
+    popoverController.delegate = self;
+    
+    [popoverController presentPopoverFromRect:_codeLabel.bounds inView:_codeLabel permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+        [popoverViewController.button addTarget:self action:@selector(copyCode) forControlEvents:UIControlEventTouchUpInside];
+    }];
 }
 
-- (void)invite:(id)sender {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:_tableView];
-    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:buttonPosition];
-    if (indexPath != nil)
+- (void)copyCode {
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    [pasteboard setString:_code];
+    [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale];
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
+{
+    return YES;
+}
+
+- (void)sendWithFacebook {
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
     {
-        ContactCell *cell = (ContactCell *)[_tableView cellForRowAtIndexPath:indexPath];
-        NSDictionary *friend = _contactFiltered[indexPath.section][indexPath.row];
-        NSInteger anIndex = [_contactToInvite indexOfObject:friend];
-        if (NSNotFound == anIndex) {
-            if (!alertAsked)
-                [self showAlertAskInvite:indexPath];
-            else {
-                [_contactToInvite addObject:friend];
-                cell.accessoryView = [UIImageView imageNamed:@"friends-field-in"];
-                [[Flooz sharedInstance] inviteWithPhone:friend[@"phone"]];
+        SLComposeViewController *mySLComposerSheet;
+        
+        mySLComposerSheet = [[SLComposeViewController alloc] init];
+        mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        [mySLComposerSheet setInitialText:_fbMessage];
+        
+        [self presentViewController:mySLComposerSheet animated:YES completion:nil];
+        
+        [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
+            NSString *output;
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    output = @"Action Cancelled";
+                    break;
+                case SLComposeViewControllerResultDone:
+                    output = @"Post Successfull";
+                    break;
+                default:
+                    break;
             }
-        }
-    }
-}
-
-- (void)showAlertAskInvite:(NSIndexPath*)indexPath {
-    tmpIndex = indexPath;
-    alertAsked = YES;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SHARE_APP_ALERT_TITLE", nil) message:NSLocalizedString(@"SHARE_APP_ALERT_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_INVITE", nil), nil];
-    [alert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        ContactCell *cell = (ContactCell *)[_tableView cellForRowAtIndexPath:tmpIndex];
-        NSDictionary *friend = _contactFiltered[tmpIndex.section][tmpIndex.row];
-        [_contactToInvite addObject:friend];
-        cell.accessoryView = [UIImageView imageNamed:@"friends-field-in"];
-        [[Flooz sharedInstance] inviteWithPhone:friend[@"phone"]];
-    }
-}
-
-- (void)didFilterChange:(NSString *)text {
-    _selectionText = text;
-    
-    // Supprime le @ si text commence par @
-    if ([text rangeOfString:@"@"].location == 0) {
-        text = [text substringFromIndex:1];
-    }
-    
-    if (!text || [text isBlank]) {
-        _contactFiltered = [[self partitionObjects:_contactInfoArray collationStringSelector:@selector(description)] mutableCopy];
-        [_tableView reloadData];
-        return;
-    }
-
-    _contactSearch = [NSMutableArray new];
-    
-    for (NSDictionary *contact in _contactInfoArray) {
-        if ([contact objectForKey:@"name"] && [[[contact objectForKey:@"name"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound) {
-            [_contactSearch addObject:contact];
-        }
-        else if ([contact objectForKey:@"email"] && [[[contact objectForKey:@"email"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound) {
-            [_contactSearch addObject:contact];
-        }
-        else if ([contact objectForKey:@"phone"] && [[[contact objectForKey:@"phone"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound) {
-            [_contactSearch addObject:contact];
-        }
-        else if ([contact objectForKey:@"phone"]) {
-            NSString *clearPhone = [contact objectForKey:@"phone"];
-            if ([clearPhone hasPrefix:@"+33"]) {
-                clearPhone = [clearPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
+        }];
+    } else if ([FBDialogs canPresentShareDialog]) {
+        FBLinkShareParams *params = [[FBLinkShareParams alloc] initWithLink:[NSURL URLWithString:_fbLink] name:_fbName caption:@"www.flooz.me" description:_fbDecription picture:nil];
+        
+        [FBDialogs presentShareDialogWithParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+            if(error) {
+                // An error occurred, we need to handle the error
+            } else {
+                // Success
             }
-            if ([[clearPhone lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound) {
-                [_contactSearch addObject:contact];
-            }
-            else if ([[[contact objectForKey:@"phone"] lowercaseString] rangeOfString:[text lowercaseString]].location != NSNotFound) {
-                [_contactSearch addObject:contact];
-            }
-        }
+        }];
+    } else {
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       _fbName , @"name",
+                                       _fbCaption, @"caption",
+                                       _fbDecription, @"description",
+                                       _fbLink, @"link",
+                                       nil];
+        
+        [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                               parameters:params
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                      if (error) {
+                                                          NSLog(@"Error publishing story: %@", error.description);
+                                                      } else {
+                                                          if (result == FBWebDialogResultDialogNotCompleted) {
+                                                              NSLog(@"User cancelled.");
+                                                          } else {
+                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                                                              
+                                                              if (![urlParams valueForKey:@"post_id"]) {
+                                                                  NSLog(@"User cancelled.");
+                                                                  
+                                                              } else {
+                                                                  NSString *result = [NSString stringWithFormat: @"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
+                                                                  NSLog(@"result %@", result);
+                                                              }
+                                                          }
+                                                      }
+                                                  }];
     }
+}
+
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[kv[0]] = val;
+    }
+    return params;
+}
+
+- (void)sendWithTwitter {
+    SLComposeViewController *mySLComposerSheet;
     
-    if (!_contactSearch.count) {
-        NSString *formattedPhone = [FLHelper formatedPhone2:text];
-        if (formattedPhone) {
-            [_contactSearch addObject:@{@"name":@"Futur utilisateur", @"phone":formattedPhone}];
-        }
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        mySLComposerSheet = [[SLComposeViewController alloc] init];
+        mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [mySLComposerSheet setInitialText:_twitterText];
+        
+        [self presentViewController:mySLComposerSheet animated:YES completion:nil];
     }
-
-    _contactFiltered = [[self partitionObjects:_contactSearch collationStringSelector:@selector(description)] mutableCopy];
-    [_tableView reloadData];
+    [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
+        NSString *output;
+        switch (result) {
+            case SLComposeViewControllerResultCancelled:
+                output = @"Action Cancelled";
+                break;
+            case SLComposeViewControllerResultDone:
+                output = @"Post Successfull";
+                break;
+            default:
+                break;
+        }
+    }];
 }
 
-#pragma mark - index section
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	BOOL showSection;
-	showSection = [_contactFiltered[section] count] != 0;
-	return (showSection) ? [NSString stringWithFormat:@"%@", [[UILocalizedIndexedCollation currentCollation] sectionTitles][section]] : nil;
+- (void)sendWithMail {
+    MFMailComposeViewController *message = [[MFMailComposeViewController alloc] init];
+    message.mailComposeDelegate = self;
+    
+    [message setSubject:_mailObject];
+    [message setMessageBody:_mailText isHTML:@YES];
+    
+    [[Flooz sharedInstance] showLoadView];
+    message.modalPresentationStyle = UIModalPresentationPageSheet;
+    [self presentViewController:message animated:YES completion:^{
+        [[Flooz sharedInstance] hideLoadView];
+    }];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	if (section == 0) {
-		return 5.0f;
-	}
-	return 0;
+- (void)sendWithSMS {
+    MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
+    if ([MFMessageComposeViewController canSendText]) {
+        message.messageComposeDelegate = self;
+        
+        [message setBody:_smsText];
+        
+        [[Flooz sharedInstance] showLoadView];
+        message.modalPresentationStyle = UIModalPresentationPageSheet;
+        [self presentViewController:message animated:YES completion:^{
+            [[Flooz sharedInstance] hideLoadView];
+        }];
+    }
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	return [UIView new];
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [self dismissViewControllerAnimated:YES completion: ^{
+        if (result == MessageComposeResultSent) {
+            
+        }
+        else if (result == MessageComposeResultCancelled) {
+            
+        }
+        else if (result == MessageComposeResultFailed) {
+            
+        }
+    }];
 }
 
-- (NSArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector {
-	UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
-
-	NSInteger sectionCount = [[collation sectionTitles] count]; //section count is take from sectionTitles and not sectionIndexTitles
-	NSMutableArray *unsortedSections = [NSMutableArray arrayWithCapacity:sectionCount];
-
-	//create an array to hold the data for each section
-	for (int i = 0; i < sectionCount; i++) {
-		[unsortedSections addObject:[NSMutableArray array]];
-	}
-	//put each object into a section
-	for (NSDictionary *object in array) {
-		NSInteger index;
-
-		if ([object isKindOfClass:[NSDictionary class]]) {
-			index = [collation sectionForObject:object[@"name"] collationStringSelector:selector];
-		}
-		else {
-			index = [collation sectionForObject:[(FLUser *)object fullname] collationStringSelector:selector];
-		}
-
-		[unsortedSections[index] addObject:object];
-	}
-	return unsortedSections;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 54.0f;
-}
-
-- (UIView *)findFirstViewInHierarchyOfClass:(Class)classToLookFor object:(UIView *)v {
-	UIView *sView = v.superview;
-	while (sView) {
-		if ([sView isKindOfClass:classToLookFor]) {
-			return sView;
-		}
-		sView = [sView superview];
-	}
-	return sView;
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [self dismissViewControllerAnimated:YES completion: ^{
+        if (result == MessageComposeResultSent) {
+            
+        }
+        else if (result == MessageComposeResultCancelled) {
+            
+        }
+        else if (result == MessageComposeResultFailed) {
+            
+        }
+    }];
 }
 
 @end

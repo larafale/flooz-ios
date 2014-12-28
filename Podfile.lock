@@ -23,104 +23,19 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Amplitude-iOS (2.1.1)
-  - Analytics (1.8.6):
-    - Analytics/Amplitude (= 1.8.6)
-    - Analytics/AppsFlyer (= 1.8.6)
-    - Analytics/Bugsnag (= 1.8.6)
-    - Analytics/Core-iOS (= 1.8.6)
-    - Analytics/Countly (= 1.8.6)
-    - Analytics/Crittercism (= 1.8.6)
-    - Analytics/Flurry (= 1.8.6)
-    - Analytics/GoogleAnalytics (= 1.8.6)
-    - Analytics/Localytics (= 1.8.6)
-    - Analytics/Mixpanel (= 1.8.6)
-    - Analytics/Optimizely (= 1.8.6)
-    - Analytics/Quantcast (= 1.8.6)
-    - Analytics/Segmentio (= 1.8.6)
-    - Analytics/Taplytics (= 1.8.6)
-    - Analytics/Tapstream (= 1.8.6)
-    - Analytics/TestFlight (= 1.8.6)
-  - Analytics/Amplitude (1.8.6):
-    - Amplitude-iOS (= 2.1.1)
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-  - Analytics/AppsFlyer (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - AppsFlyer-SDK (= 2.5.3.10)
-  - Analytics/Bugsnag (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - Bugsnag (= 3.1.2)
-  - Analytics/Core-iOS (1.8.6):
-    - TRVSDictionaryWithCaseInsensitivity (= 0.0.2)
-  - Analytics/Countly (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - Countly (= 1.0.0)
-  - Analytics/Crittercism (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - CrittercismSDK (= 5.0.5)
-  - Analytics/Flurry (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - FlurrySDK (= 4.4.0)
-  - Analytics/GoogleAnalytics (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - GoogleAnalytics-iOS-SDK (= 3.0.9)
-  - Analytics/Localytics (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - Localytics-AMP (= 2.71.0)
-  - Analytics/Mixpanel (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - Mixpanel (= 2.5.4)
-  - Analytics/Optimizely (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - Optimizely-iOS-SDK (= 0.7.55)
-  - Analytics/Quantcast (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - Quantcast-Measure (= 1.4.6)
-  - Analytics/Segmentio (1.8.6):
-    - Analytics/Core-iOS
-  - Analytics/Taplytics (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - Taplytics (= 2.0.10)
-  - Analytics/Tapstream (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - Tapstream (= 2.8.3)
-  - Analytics/TestFlight (1.8.6):
-    - Analytics/Core-iOS
-    - Analytics/Segmentio
-    - TestFlightSDK (= 3.0.2)
-  - AppsFlyer-SDK (2.5.3.10)
   - Bolts (1.1.3)
-  - Bugsnag (3.1.2)
-  - Countly (1.0.0)
-  - CrittercismSDK (5.0.5)
   - DACircularProgress (2.2.0)
   - Facebook-iOS-SDK (3.20.0):
     - Bolts (~> 1.0)
-  - FlurrySDK (4.4.0):
-    - FlurrySDK/FlurrySDK (= 4.4.0)
-  - FlurrySDK/FlurrySDK (4.4.0)
-  - GoogleAnalytics-iOS-SDK (3.0.9)
   - HHRouter (0.1)
   - IDMPhotoBrowser (1.4):
     - AFNetworking
     - DACircularProgress
     - pop
   - JTHelper (0.1.8)
-  - Localytics-AMP (2.71.0)
-  - Mixpanel (2.5.4)
+  - Mixpanel (2.6.2):
+    - Mixpanel/MPCategoryHelpers (= 2.6.2)
+  - Mixpanel/MPCategoryHelpers (2.6.2)
   - MZAppearance (1.1.3)
   - MZFormSheetController (2.4.1):
     - MZAppearance (~> 1.1.3)
@@ -128,38 +43,31 @@ PODS:
   - MZFormSheetController/Core (2.4.1):
     - MZAppearance (~> 1.1.3)
   - NSDate+Calendar (0.0.5)
-  - Optimizely-iOS-SDK (0.7.55)
   - PonyDebugger (0.4.0):
     - SocketRocket
   - pop (1.0.7)
   - PPHelpMe (1.0.2)
   - PPRevealSideViewController (1.2.0):
     - PPHelpMe
-  - Quantcast-Measure (1.4.6):
-    - Quantcast-Measure/Core (= 1.4.6)
-  - Quantcast-Measure/Core (1.4.6)
   - SDWebImage (3.7.1):
     - SDWebImage/Core (= 3.7.1)
   - SDWebImage/Core (3.7.1)
   - SIOSocket (0.2.0)
   - SMPageControl (1.2)
   - SocketRocket (0.2.0)
-  - Taplytics (2.0.10)
-  - Tapstream (2.8.3)
-  - TestFlightSDK (3.0.2)
-  - TRVSDictionaryWithCaseInsensitivity (0.0.2)
   - TTTAttributedLabel (1.11.0)
+  - UAAppReviewManager (0.2.6)
   - UICKeyChainStore (1.1.0)
   - YLMoment (0.5.1)
 
 DEPENDENCIES:
   - AFNetworkActivityLogger
   - AFNetworking (~> 2.0)
-  - Analytics
   - Facebook-iOS-SDK (~> 3.15)
   - HHRouter (~> 0.1)
   - IDMPhotoBrowser (~> 1.3)
   - JTHelper (~> 0.1.1)
+  - Mixpanel
   - MZFormSheetController
   - NSDate+Calendar
   - PonyDebugger
@@ -169,47 +77,34 @@ DEPENDENCIES:
   - SIOSocket
   - SMPageControl
   - TTTAttributedLabel
+  - UAAppReviewManager
   - UICKeyChainStore
   - YLMoment
 
 SPEC CHECKSUMS:
   AFNetworkActivityLogger: d6a2d2755fada3a1fbf1f490ec0dd92224e092a4
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
-  Amplitude-iOS: e72b65479dc035ef671a57e34e1a981767224318
-  Analytics: 0c7054c0774b0ab6af6dd28fc436164a224cb18d
-  AppsFlyer-SDK: f83ad2e0821c57852512ea0bb8d3b207c64ef698
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
-  Bugsnag: 74d109dfa41b55d16890c987c7551ca071afd3d2
-  Countly: f26a3483a660b5790b2c76e1f91dea4f276b3c33
-  CrittercismSDK: 0f3bfca5d5e7b11ba8042a119c7aeb32c034c3aa
   DACircularProgress: 3b41941891a56dc6aa17971f5322a9a38a6f446e
   Facebook-iOS-SDK: 5854404b4b651f612a8ef79ca06d766858f4cb8e
-  FlurrySDK: abaedafc350afa41b004236b67ae14f7d3748b68
-  GoogleAnalytics-iOS-SDK: d9e198b1f955259a72886769be7377cdfcdb2250
   HHRouter: 5d41d5346167b087aebc1ddf07b034f9402545ed
   IDMPhotoBrowser: da2110d99ea8735ad9a0ba52f2d184e756104a71
   JTHelper: 37f65604e25187c35c37d6d6447476c4aeda4157
-  Localytics-AMP: 4d158e216541912109b1ae7ca20b153d053d68c5
-  Mixpanel: 87167a0b0a74f11f0ee3787f291357494730617c
+  Mixpanel: c075cedebda3328ce1ee29a18429e265ce967cd8
   MZAppearance: c88502c0c2345120630c34e09d5ff09e2969ba30
   MZFormSheetController: 4b58486f5f1562b3905310b02e8dbbb5a0a94128
   NSDate+Calendar: 033ae5ec36c72703516293ad38df47addd8661e3
-  Optimizely-iOS-SDK: 73fb9acc68e32df7a0a1f30909b7af4556aa7013
   PonyDebugger: 4f43d7c2f67aa5e26ca00ce6983421608a6eca6d
   pop: 2f14a1ea61339767af9e66741b418c831b3844df
   PPHelpMe: 42295095f70926b9406cf0911f262c00bf49a6cb
   PPRevealSideViewController: ae3c739dd0fcd8ce1413de9b680a37e783c14afb
-  Quantcast-Measure: 82b2e0b81df7f59ee3f643551d4d79fa433f22ba
   SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
   SIOSocket: 40ebc9f014b9fec4ec595212faaf6f19cf29d1f2
   SMPageControl: 506b0c561d3ddbe2d5df28cb33acc8e4b1f93f19
   SocketRocket: 6c9cfd1592bea82262b4283dcda3a7de166af3b6
-  Taplytics: 6e029d9f99592bb81712e06e126b796eaf2db900
-  Tapstream: b2d949e963c393938697db68256ba70aadddb820
-  TestFlightSDK: 0c24c533748d0d84bfe7a3cb6036fa79124d84ee
-  TRVSDictionaryWithCaseInsensitivity: a61daa8469fa079e05b694f6aad5441785c837d1
   TTTAttributedLabel: e63baa4d3b8798ea259f5d9f55720002b4bbbd66
+  UAAppReviewManager: f23428de9c9cd242c2ffd899e218ba3620bd0683
   UICKeyChainStore: 257d869d42527b9853ebb11d6dc3ac377b270e72
   YLMoment: a5e6733c66490fd736db325f5d339cb511bdfb54
 
-COCOAPODS: 0.35.0.rc2
+COCOAPODS: 0.35.0

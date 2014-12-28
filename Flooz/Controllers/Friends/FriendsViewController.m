@@ -371,6 +371,7 @@
 	        [refreshControl endRefreshing];
 	        friendsSuggestion = result;
             [self reloadFriendsList];
+            [[Flooz sharedInstance] readFriendActivity:nil];
 		}];
 	}];
 }

@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
+#import <UAAppReviewManager.h>
+
 #import "SettingsViewController.h"
 #import "WebViewController.h"
 
@@ -26,6 +28,9 @@
 		self.title = NSLocalizedString(@"ACCOUNT_BUTTON_DIVERS", nil);
         
         _menuArray = @[
+                       @{ @"title":NSLocalizedString(@"INFORMATIONS_RATE", @""),
+                          @"action":@"rate",
+                          @"page":@"rate"},
                        @{ @"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""),
                           @"action":@"faq",
                           @"page":@"faq"},
@@ -93,16 +98,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *dic = _menuArray[indexPath.row];
-	if (indexPath.row == 0 || indexPath.row == 1) {
+    
+    if (indexPath.row == 0) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?pageNumber=0&sortOrdering=1&type=Purple+Software&mt=8&id=940393916"]];
+    }
+	else if (indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 3) {
         [self goToWebView:dic];
 	}
-	else if (indexPath.row == 2) {
-        [self goToWebView:dic];
-	}
-	else if (indexPath.row == 3) {
+	else if (indexPath.row == 4) {
         [self presentIdeaCritics];
 	}
-    else if (indexPath.row == 4) {
+    else if (indexPath.row == 5) {
         [[Flooz sharedInstance] logout];
     }
 }

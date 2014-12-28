@@ -55,6 +55,7 @@ static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 - (BOOL)autologin;
 - (void)logout;
 
+- (void)signupPassStep:(NSString *)step user:(NSMutableDictionary*)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
 - (void)askInvitationCode:(NSDictionary*)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)loginWithPseudoAndPassword:(NSDictionary *)user success:(void (^)(id result))success;
@@ -106,6 +107,7 @@ static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 - (void)abort3DSecure;
 
 - (void)inviteWithPhone:(NSString *)phone;
+- (void)invitationStrings:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success;
 - (void)friendsSuggestion:(void (^)(id result))success;

@@ -80,7 +80,7 @@
     height += 10;
     
     {
-        _code = [[FLTextFieldSignup alloc] initWithPlaceholder:@"" for:_userDic key:@"code" frame:CGRectMake(10, height, CGRectGetWidth(self.frame) - 20, 20)];
+        _code = [[FLTextFieldSignup alloc] initWithPlaceholder:@"" for:_userDic key:@"coupon" frame:CGRectMake(10, height, CGRectGetWidth(self.frame) - 20, 20)];
         _code.bottomBar.backgroundColor = [UIColor whiteColor];
         _code.textfield.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"CODE_INVITATION_PLACEHOLDER", nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
         _code.textfield.tintColor = [UIColor whiteColor];

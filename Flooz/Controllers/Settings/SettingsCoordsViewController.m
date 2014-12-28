@@ -67,7 +67,6 @@
 		[fieldsView addObject:_phone];
         
         inputView = [FLKeyboardView new];
-        [inputView noneCloseButton];
         inputView.textField = _phone.textfield;
         _phone.textfield.inputView = inputView;
 	}
@@ -178,7 +177,7 @@
 		[_userDic setObject:[currentUser email] forKey:@"email"];
 	}
 
-	_addressDic = [[currentUser address] copy];
+	_addressDic = [[currentUser address] mutableCopy];
 
 	documents = @[
 	        @{ @"HOME": @"justificatory" }
@@ -425,6 +424,7 @@
     UIImagePickerController *cameraUI = [UIImagePickerController new];
     cameraUI.sourceType = type;
     cameraUI.delegate = self;
+    cameraUI.allowsEditing = YES;
     
     [self presentViewController:cameraUI animated:YES completion: ^{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
@@ -453,19 +453,17 @@
 		NSString *key = currentDocumentKey;
 
 		[picker dismissViewControllerAnimated:YES completion: ^{
-		    [[Flooz sharedInstance] showLoadView];
-		    [[Flooz sharedInstance] uploadDocument:imageData field:key success: ^{
-		        NSUInteger index = 0;
-		        for (NSDictionary * dic in documents) {
-		            if ([[[dic allValues] firstObject] isEqualToString:currentDocumentKey]) {
-		                break;
-					}
-		            index++;
-				}
-                
-                UIImageView *imageView = [documentsButton objectAtIndex:index];
-                [imageView setImage:[UIImage imageNamed:@"friends-field-in"]];
-			} failure:NULL];
+		    [[Flooz sharedInstance] uploadDocument:imageData field:key success:nil failure:NULL];
+            NSUInteger index = 0;
+            for (NSDictionary * dic in documents) {
+                if ([[[dic allValues] firstObject] isEqualToString:currentDocumentKey]) {
+                    break;
+                }
+                index++;
+            }
+            
+            UIImageView *imageView = [documentsButton objectAtIndex:index];
+            [imageView setImage:[UIImage imageNamed:@"friends-field-in"]];
 		}];
 	}
 }

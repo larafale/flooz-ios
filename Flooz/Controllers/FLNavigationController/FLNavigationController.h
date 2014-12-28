@@ -10,6 +10,8 @@
 
 @interface FLNavigationController : UINavigationController <UINavigationControllerDelegate>
 
+@property (nonatomic) BOOL blockBack;
+
 - (void)setAmount:(NSNumber *)amount;
 
 @end

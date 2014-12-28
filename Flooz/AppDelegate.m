@@ -6,8 +6,9 @@
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
-#import <Analytics/Analytics.h>
+#import "Mixpanel.h"
 #import <Crashlytics/Crashlytics.h>
+#import <UAAppReviewManager.h>
 
 #import "AppDelegate.h"
 
@@ -70,10 +71,13 @@
 #endif
     
 #ifdef FLOOZ_DEV_API
+    [Mixpanel sharedInstanceWithToken:@"82c134b277474d6143decdc6ae73d5c9"];
 #else
-    [SEGAnalytics setupWithConfiguration:[SEGAnalyticsConfiguration configurationWithWriteKey:@"2jcb70koii"]];
+    [Mixpanel sharedInstanceWithToken:@"86108691338079db55b5fac30140d895"];
 #endif
     
+    [[Mixpanel sharedInstance] identify:[FLHelper generateRandomString]];
+        
     [self handlePushMessage:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] withApplication:application];
     
     return YES;
@@ -92,29 +96,7 @@
     
     FLUser *currentUser = [[Flooz sharedInstance] currentUser];
     
-    NSMutableDictionary *params = [@{
-                                     @"record":[currentUser record],
-                                     @"id": [currentUser userId],
-                                     @"username": [currentUser username],
-                                     @"phone": [currentUser phone]
-                                     } mutableCopy];
-    
-    if ([currentUser email]) {
-        params[@"email"] = [currentUser email];
-    }
-    
-    if ([currentUser firstname]) {
-        params[@"firstName"] = [currentUser firstname];
-    }
-    
-    if ([currentUser lastname]) {
-        params[@"lastName"] = [currentUser lastname];
-    }
-    
-#ifndef FLOOZ_DEV_API
-    [[SEGAnalytics sharedAnalytics] identify:[currentUser userId]
-                                      traits:params];
-#endif
+    [[Mixpanel sharedInstance] identify:currentUser.userId];
     
     [[Flooz sharedInstance] startSocket];
 }
@@ -206,11 +188,17 @@
 - (void)showRequestInvitationCodeWithUser:(NSDictionary *)user {
     InviteViewController *invitVC = [[InviteViewController  alloc] initWithUser:user];
     [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
-    [[self currentController] presentViewController:invitVC animated:YES completion:nil];
+    [[self currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:invitVC] animated:YES completion:nil];
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user {
-    [firstVC phoneNotRegistered:user];
+    if (user[@"coupon"] && ![user[@"coupon"] isBlank]) {
+        firstVC = [[FirstLaunchViewController alloc] initWithSpecificPage:SignupPagePseudo];
+        [firstVC phoneNotRegistered:user];
+        [self flipToViewController:firstVC];
+    }
+    else
+        [firstVC phoneNotRegistered:user];
 }
 
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user {
@@ -224,12 +212,20 @@
 #pragma mark -
 
 - (void)didDisconnected {
+    
+    [[Mixpanel sharedInstance] identify:[FLHelper generateRandomString]];
+    
     [self displayHome];
 }
 
 - (void)displayHome {
     HomeViewController *home = [HomeViewController new];
     [self flipToViewController:home];
+}
+
+- (void)displaySignin {
+    firstVC = [[FirstLaunchViewController alloc] initWithSpecificPage:SignupPagePhone];
+    [self flipToViewController:firstVC];
 }
 
 - (void)displaySignupAtPage:(SignupOrderPage)index {
@@ -486,7 +482,7 @@
 
 - (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend inWindow:(UIWindow *)window {
     if (!user || [[user userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]] ||
-        ![user username] || ![user fullname])
+        ![user username] || ![user fullname] || [user.username isEqualToString:@"flooz"])
         return;
     
     currentUserForMenu = user;
@@ -768,11 +764,13 @@
 }
 
 - (void)showPresetNewTransactionController:(FLPreset *)preset {
-    [self dismissControllersAnimated:YES completion: ^{
-        [self popToMainView];
-        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithPreset:preset]];
-        [self.revealSideViewController presentViewController:controller animated:YES completion:NULL];
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissControllersAnimated:YES completion: ^{
+            [self popToMainView];
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithPreset:preset]];
+            [self.revealSideViewController presentViewController:controller animated:YES completion:NULL];
+        }];
+    });
 }
 
 - (void)showFriendsController {

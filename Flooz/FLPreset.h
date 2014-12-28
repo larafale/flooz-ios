@@ -17,6 +17,9 @@
 @property (nonatomic, retain) NSDictionary *payload;
 @property (nonatomic) BOOL blockAmount;
 @property (nonatomic) BOOL blockTo;
+@property (nonatomic) BOOL blockBack;
+@property (nonatomic) BOOL blockWhy;
+@property (nonatomic, retain) NSString *title;
 
 - (id)initWithJson:(NSDictionary *)json;
 

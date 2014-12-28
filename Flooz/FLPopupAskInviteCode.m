@@ -80,9 +80,9 @@
     height += 10;
     
     {
-        _name = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_FULLNAME", nil) for:_userDic key:@"name" frame:CGRectMake(10, height, CGRectGetWidth(self.frame) - 20, 20)];
+        _name = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"INVITATION_CODE_ASK_NAME_PLACEHOLDER", nil) for:_userDic key:@"name" frame:CGRectMake(10, height, CGRectGetWidth(self.frame) - 20, 20)];
         _name.bottomBar.backgroundColor = [UIColor whiteColor];
-        _name.textfield.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"FIELD_FULLNAME", nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        _name.textfield.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"INVITATION_CODE_ASK_NAME_PLACEHOLDER", nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
         _name.textfield.tintColor = [UIColor whiteColor];
         [_name addForNextClickTarget:self action:@selector(nextName)];
         
@@ -93,9 +93,9 @@
     height += 5;
     
     {
-        _email = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_EMAIL", nil) for:_userDic key:@"email" frame:CGRectMake(10, height, CGRectGetWidth(self.frame) - 20, 20)];
+        _email = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"INVITATION_CODE_ASK_EMAIL_PLACEHOLDER", nil) for:_userDic key:@"email" frame:CGRectMake(10, height, CGRectGetWidth(self.frame) - 20, 20)];
         _email.bottomBar.backgroundColor = [UIColor whiteColor];
-        _email.textfield.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"FIELD_EMAIL", nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        _email.textfield.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"INVITATION_CODE_ASK_EMAIL_PLACEHOLDER", nil) attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
         _email.textfield.tintColor = [UIColor whiteColor];
         [_email addForNextClickTarget:self action:@selector(nextEmail)];
         

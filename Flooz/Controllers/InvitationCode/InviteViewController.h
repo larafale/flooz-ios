@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import <Social/Social.h>
 
-@interface InviteViewController : GlobalViewController
+@interface InviteViewController : BaseViewController
 
 - (id)initWithUser:(NSDictionary *)_user;
 

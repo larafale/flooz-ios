@@ -22,28 +22,38 @@
     
     self.blockAmount = NO;
     self.blockTo = NO;
+    self.blockBack = NO;
+    self.blockWhy = NO;
+
+    if (json[@"to"])
+        self.to = [[FLUser alloc] initWithJSON:json[@"to"]];
     
-    self.to = [[FLUser alloc] initWithJSON:json[@"to"]];
-    
-    NSString *method = [json objectForKey:@"method"];
-    
-    if ([method isEqualToString:@"pay"])
-        self.type = TransactionTypePayment;
-    else if ([method isEqualToString:@"charge"])
-        self.type = TransactionTypeCharge;
-    else
-        self.type = TransactionTypeBase;
+    self.type = TransactionTypeBase;
     
     self.amount = [json objectForKey:@"amount"];
     self.why = [json objectForKey:@"why"];
     self.payload = [json objectForKey:@"payload"];
     
+    self.title = [json objectForKey:@"title"];
+    
     if ([json objectForKey:@"block"]) {
         if ([[json objectForKey:@"block"] objectForKey:@"amount"])
             self.blockAmount = [[json objectForKey:@"block"] objectForKey:@"amount"];
-
+        
         if ([[json objectForKey:@"block"] objectForKey:@"to"])
             self.blockTo = [[json objectForKey:@"block"] objectForKey:@"to"];
+        
+        if ([[json objectForKey:@"block"] objectForKey:@"close"])
+            self.blockBack = [[json objectForKey:@"block"] objectForKey:@"close"];
+        
+        if ([[json objectForKey:@"block"] objectForKey:@"pay"])
+            self.type = TransactionTypeCharge;
+
+        if ([[json objectForKey:@"block"] objectForKey:@"charge"])
+            self.type = TransactionTypePayment;
+        
+        if ([[json objectForKey:@"block"] objectForKey:@"why"])
+            self.blockWhy = [[json objectForKey:@"block"] objectForKey:@"why"];
     }
 }
 

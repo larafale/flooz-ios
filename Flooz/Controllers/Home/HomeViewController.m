@@ -144,11 +144,11 @@
 #pragma mark - button action
 
 - (void)connect {
-	[appDelegate displaySignupAtPage:SignupPagePhone];
+	[appDelegate displaySignin];
 }
 
 - (void)signup {
-	[appDelegate displaySignupAtPage:SignupPageTuto];
+	[appDelegate displaySignupAtPage:SignupPagePhone];
 }
 
 #pragma mark - TableView

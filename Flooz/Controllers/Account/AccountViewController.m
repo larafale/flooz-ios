@@ -55,7 +55,7 @@
 		           @"title":NSLocalizedString(@"ACCOUNT_BUTTON_PROFIL", @"") },
 		        @{ @"image":@"account-button-notification",
 		           @"title":NSLocalizedString(@"ACCOUNT_BUTTON_NOTIFICATION", @"") },
-		        @{ @"image":@"account-button-share",
+		        @{ @"image":@"menu-share",
 		           @"title":NSLocalizedString(@"ACCOUNT_BUTTON_INVITE", @"") },
 		        @{ @"image":@"account-button-bank",
 		           @"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) },
@@ -189,35 +189,8 @@
 }
 
 - (void)inviteFriends {
-    
-    BOOL alreadyReask = [[NSUserDefaults standardUserDefaults] boolForKey:kKeyAccessContacts];
-
-	[[Flooz sharedInstance] grantedAccessToContacts: ^(BOOL granted) {
-	    if (granted) {
-	        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
-	        [self presentViewController:controller animated:YES completion:NULL];
-		}
-	    else {
-            if (alreadyReask == YES)
-            {
-                if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-                {
-                    UIAlertView* curr1=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CONTACT_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CONTACT_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
-                            [curr1 setTag:125];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [curr1 show];
-                    });
-                }
-                else
-                {
-                    UIAlertView* curr2=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CONTACT_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CONTACT_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [curr2 show];
-                    });
-                }
-            }
-		}
-	}];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

@@ -23,8 +23,15 @@
 	CGFloat offsetY = 0.0f;
 	CGFloat sizeButton = 74.5f;
 
+    if (IS_IPHONE4)
+        sizeButton = 63.0f;
+    
 	for (int l = 1; l <= 3; l++) {
 		offsetX = 27.5;
+        
+        if (IS_IPHONE4)
+            offsetX = 44.0f;
+        
 		for (int c = 1; c <= 3; c++) {
 			[self addSubview:[self numButton:c + (l - 1) * 3 withX:offsetX Y:offsetY andSize:sizeButton]];
 
@@ -36,6 +43,9 @@
 		}
 	}
 	offsetX = 27.5f + sizeButton + 20.0f;
+    if (IS_IPHONE4)
+        offsetX = 44.0f + sizeButton + 20.0f;
+
 	[self addSubview:[self numButton:0 withX:offsetX Y:offsetY andSize:sizeButton]];
 }
 

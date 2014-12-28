@@ -66,6 +66,8 @@
 		}
         [privacyButton setTitle:[FLTransaction transactionScopeToText:currentIndex] forState:UIControlStateNormal];
         [privacyButton setImage:[FLTransaction transactionScopeToImage:currentIndex] forState:UIControlStateNormal];
+        
+        [_dictionary setValue:[FLTransaction transactionScopeToParams:currentIndex] forKey:@"scope"];
 	}
 }
 

@@ -31,6 +31,10 @@ install_resource()
       echo "xcrun momc \"${PODS_ROOT}/$1\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/`basename "$1" .xcdatamodeld`.momd\""
       xcrun momc "${PODS_ROOT}/$1" "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/`basename "$1" .xcdatamodeld`.momd"
       ;;
+    *.xcmappingmodel)
+      echo "xcrun mapc \"${PODS_ROOT}/$1\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/`basename "$1" .xcmappingmodel`.cdm\""
+      xcrun mapc "${PODS_ROOT}/$1" "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/`basename "$1" .xcmappingmodel`.cdm"
+      ;;
     *.xcassets)
       ;;
     /*)
@@ -43,8 +47,7 @@ install_resource()
       ;;
   esac
 }
-          install_resource "CrittercismSDK/CrittercismSDK/dsym_upload.sh"
-                    install_resource "IDMPhotoBrowser/Classes/IDMPhotoBrowser.bundle"
+          install_resource "IDMPhotoBrowser/Classes/IDMPhotoBrowser.bundle"
                     install_resource "IDMPhotoBrowser/Classes/IDMPBLocalizations.bundle"
                     install_resource "Mixpanel/Mixpanel/Media.xcassets/MPArrowLeft.imageset/MPArrowLeft.png"
                     install_resource "Mixpanel/Mixpanel/Media.xcassets/MPArrowLeft.imageset/MPArrowLeft@2x.png"
@@ -62,6 +65,7 @@ install_resource()
                     install_resource "Mixpanel/Mixpanel/MPCloseBtn@2x.png"
                     install_resource "Mixpanel/Mixpanel/MPNotification.storyboard"
                     install_resource "Mixpanel/Mixpanel/MPSurvey.storyboard"
+                    install_resource "${BUILT_PRODUCTS_DIR}/UAAppReviewManager-iOS.bundle"
                     install_resource "${BUILT_PRODUCTS_DIR}/YLMoment-iOS.bundle"
           
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

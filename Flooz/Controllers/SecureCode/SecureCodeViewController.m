@@ -182,7 +182,7 @@ static BOOL canTouchID = YES;
     }
     
     {
-        _padNumber = [[NumPadAppleStyle alloc] initWithHeight:CGRectGetHeight(_mainBody.frame) - 50.0f - CGRectGetMaxY(_codePinView.frame) - 5.0f];
+        _padNumber = [[NumPadAppleStyle alloc] initWithHeight:CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_codePinView.frame) - 20.0f];
         CGRectSetY(_padNumber.frame, CGRectGetMaxY(_codePinView.frame) + 10.0f);
         CGRectSetX(_padNumber.frame, (PPScreenWidth() - CGRectGetWidth(_padNumber.frame)) / 2.0f);
         [_padNumber setDelegate:self];

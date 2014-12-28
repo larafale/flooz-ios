@@ -37,17 +37,17 @@
 - (void)customAppearence {
     [self.navigationBar setBarTintColor:[UIColor customBackgroundHeader]];
     self.navigationBar.translucent = NO;
-        
+    
     NSDictionary *attributes = @{
                                  NSForegroundColorAttributeName: [UIColor customBlue],
                                  NSFontAttributeName: [UIFont customTitleNav]
-                                };
-
-    NSDictionary *attributes2 = @{
-                                 NSForegroundColorAttributeName: [UIColor customBlue],
-                                 NSFontAttributeName: [UIFont customTitleExtraLight:15]
                                  };
-
+    
+    NSDictionary *attributes2 = @{
+                                  NSForegroundColorAttributeName: [UIColor customBlue],
+                                  NSFontAttributeName: [UIFont customTitleExtraLight:15]
+                                  };
+    
     [self.navigationBar setTitleTextAttributes:attributes];
     
     backItem = [UIBarButtonItem createBackButtonWithTarget:self action:@selector(popViewController)];
@@ -66,7 +66,7 @@
     
     cbItem = [[UIBarButtonItem alloc] initWithImage:cbImage style:UIBarButtonItemStylePlain target:self action:nil];
     [cbItem setTintColor:[UIColor customBlue]];
-
+    
     
     {
         self.navigationBar.backgroundColor = [UIColor colorWithRed:0. green:0. blue:0. alpha:.2];
@@ -88,7 +88,7 @@
     [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
     cbImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
+    
     NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
     attachment.image = cbImage;
     
@@ -114,7 +114,7 @@
         if ([[[UIDevice currentDevice] systemVersion] intValue] < 8)
             [vc dismissViewControllerAnimated:YES completion:nil];
     }];
-
+    
     if ([[[UIDevice currentDevice] systemVersion] intValue] >= 8 && [vc isKindOfClass:[FLNavigationController class]] && [vc.title isEqualToString:NSLocalizedString(@"NAV_NEW_FLOOZ_FRIENDS", nil)]) {
         [vc.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         [vc.view setBackgroundColor:[UIColor clearColor]];
@@ -126,12 +126,16 @@
     
     controller = viewController;
     
-    if (navigationController.viewControllers.count == 1 && !navigationController.parentViewController) {
-        viewController.navigationItem.leftBarButtonItem = closeItem;
+    if (!self.blockBack) {
+        if (navigationController.viewControllers.count == 1 && !navigationController.parentViewController) {
+            viewController.navigationItem.leftBarButtonItem = closeItem;
+        }
+        else {
+            viewController.navigationItem.leftBarButtonItem = backItem;
+        }
     }
-    else {
-        viewController.navigationItem.leftBarButtonItem = backItem;
-    }
+    else
+        viewController.navigationItem.leftBarButtonItem = nil;
     
     if ([viewController isKindOfClass:[NewTransactionViewController class]]) {
         if ([[Flooz sharedInstance].currentUser.amount isEqualToNumber:@0])
@@ -151,7 +155,7 @@
     }
     else {
         [amountItem setTitle:[NSString stringWithFormat:@"%.2f €", tmp]];
-
+        
         if (controller.navigationItem.rightBarButtonItem != amountItem)
             controller.navigationItem.rightBarButtonItem = amountItem;
     }

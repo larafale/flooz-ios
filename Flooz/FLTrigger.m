@@ -79,7 +79,7 @@
         return TriggerSecureCodeCheck;
     else if ([param isEqualToString:@"line:preset"])
         return TriggerPresetLine;
-    else if ([param isEqualToString:@"fead:read"])
+    else if ([param isEqualToString:@"feed:read"])
         return TriggerFeedRead;
     else
         return TriggerNone;

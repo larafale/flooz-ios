@@ -369,6 +369,7 @@
     UIImagePickerController *cameraUI = [UIImagePickerController new];
     cameraUI.sourceType = type;
     cameraUI.delegate = self;
+    cameraUI.allowsEditing = YES;
     
     [self presentViewController:cameraUI animated:YES completion: ^{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];

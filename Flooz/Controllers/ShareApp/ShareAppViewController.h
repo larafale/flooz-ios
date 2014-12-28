@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import <Social/Social.h>
+#import <Accounts/Accounts.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <MessageUI/MFMessageComposeViewController.h>
+#import "WYPopoverController.h"
 
 #import "FriendPickerSearchBarDelegate.h"
 
-@interface ShareAppViewController : BaseViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, FriendPickerSearchBarDelegate>
+@interface ShareAppViewController : BaseViewController <UIAlertViewDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, WYPopoverControllerDelegate>
 
 @end

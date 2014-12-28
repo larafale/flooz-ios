@@ -16,6 +16,7 @@
 		[self setBackgroundColor:[UIColor clearColor]];
 		[self createImage];
 		[self createTitle];
+        [self createIndicator];
 	}
 	return self;
 }
@@ -38,6 +39,13 @@
     _titleMenu.textColor = [UIColor whiteColor];
     _titleMenu.font = [UIFont customTitleExtraLight:20];
 	[self.contentView addSubview:_titleMenu];
+}
+
+- (void)createIndicator {
+    _indicatorMenu = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 60, ([MenuCell getHeight] - 8) / 2, 8, 8)];
+    [_indicatorMenu setImage:[UIImage imageNamed:@"incomplete"]];
+    [_indicatorMenu setHidden:YES];
+    [self.contentView addSubview:_indicatorMenu];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -66,6 +74,7 @@
 - (void)prepareViews {
 	[self prepareImageView];
 	[self prepareTitleView];
+    [self prepareIndicatorView];
 }
 
 - (void)prepareImageView {
@@ -81,6 +90,13 @@
 - (void)prepareTitleView {
 	NSString *title = _menuDico[@"title"];
 	[_titleMenu setText:title];
+}
+
+- (void)prepareIndicatorView {
+    if (_menuDico[@"incomplete"])
+        [_indicatorMenu setHidden:NO];
+    else
+        [_indicatorMenu setHidden:YES];
 }
 
 @end

@@ -239,11 +239,11 @@
 
 + (NSString *)transactionScopeToParams:(TransactionScope)scope {
 	if (scope == TransactionScopePublic)
-		return @"0";
+		return @"public";
 	else if (scope == TransactionScopeFriend)
-		return @"1";
+		return @"friend";
 	else // if(status == TransactionScopePrivate){
-		return @"2";
+		return @"private";
 }
 
 + (NSString *)transactionScopeToTextParams:(TransactionScope)scope {

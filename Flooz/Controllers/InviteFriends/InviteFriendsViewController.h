@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import <Social/Social.h>
+#import <Accounts/Accounts.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <MessageUI/MFMessageComposeViewController.h>
 
-@interface InviteFriendsViewController : GlobalViewController <UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface InviteFriendsViewController : GlobalViewController <MFMessageComposeViewControllerDelegate, UIAlertViewDelegate, UINavigationControllerDelegate>
 
 @end

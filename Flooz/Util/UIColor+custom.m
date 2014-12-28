@@ -107,7 +107,7 @@
 }
 
 + (UIColor *)customGrey {
-	return [UIColor colorWithIntegerRed:204 green:204 blue:204 alpha:1.0];
+	return [UIColor colorWithIntegerRed:140 green:159 blue:178 alpha:1.0];
 }
 
 + (UIColor *)customPlaceholder {

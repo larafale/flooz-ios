@@ -174,13 +174,13 @@
 		}
 		break;
 
-		case SignupPageCB: {
-			if (_userDic[@"firstName"] && _userDic[@"lastName"]) {
-				NSString *holder = [NSString stringWithFormat:@"%@ %@", _userDic[@"firstName"], _userDic[@"lastName"]];
-				[_userDic setObject:holder forKey:@"holder"];
-				[fieldsView[0] reloadData];
-			}
-		}
+//		case SignupPageCB: {
+//			if (_userDic[@"firstName"] && _userDic[@"lastName"]) {
+//				NSString *holder = [NSString stringWithFormat:@"%@ %@", _userDic[@"firstName"], _userDic[@"lastName"]];
+//				[_userDic setObject:holder forKey:@"holder"];
+//				[fieldsView[0] reloadData];
+//			}
+//		}
 		break;
 
 		case SignupPageAskAccess: {
@@ -203,16 +203,6 @@
 
 - (void)setContent {
 	switch (_pageIndex) {
-		case SignupPageTuto: {
-			[self signupPageTuto];
-		}
-		break;
-
-		case SignupPageExplication: {
-			[self signupPageExplication];
-		}
-		break;
-
 		case SignupPagePhone: {
 			[self signupPhoneView];
 		}
@@ -243,9 +233,9 @@
 		}
 		break;
 
-		case SignupPageCB: {
-			[self signupCBView];
-		}
+//		case SignupPageCB: {
+//			[self signupCBView];
+//		}
 		break;
 
 		case SignupPageAskAccess: {
@@ -653,11 +643,11 @@
 		[_nextButton setEnabled:YES];
 		[_nextButton setBackgroundColor:[UIColor customBlue]];
 		[[Flooz sharedInstance] showLoadView];
-		[[Flooz sharedInstance] verifyPseudo:_userDic[@"nick"] success: ^(id result) {
-		    [self goToNextPage];
-		} failure: ^(NSError *error) {
-		    [_firstTextFieldToFocus becomeFirstResponder];
-		}];
+        [[Flooz sharedInstance] signupPassStep:@"nick" user:_userDic success:^(id result) {
+            [self goToNextPage];
+        } failure:^(NSError *error) {
+            [_firstTextFieldToFocus becomeFirstResponder];
+        }];
 	}
 }
 
@@ -749,10 +739,28 @@
 
 	{
 		CGRectSetY(_nextButton.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(_nextButton.frame) - 20.0f);
-		[_nextButton addTarget:self action:@selector(goToNextPage) forControlEvents:UIControlEventTouchUpInside];
+		[_nextButton addTarget:self action:@selector(checkImage) forControlEvents:UIControlEventTouchUpInside];
 		[_nextButton setBackgroundColor:[UIColor customBackground]];
 		[_mainBody addSubview:_nextButton];
 	}
+}
+
+- (void)checkImage {
+    NSMutableDictionary *dic = [_userDic mutableCopy];
+    if (_userDic[@"picId"]) {
+        [dic setValue:@YES forKey:@"hasImage"];
+    }
+    else {
+        [dic setValue:@NO forKey:@"hasImage"];
+    }
+    [dic removeObjectForKey:@"picId"];
+
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] signupPassStep:@"image" user:dic success:^(id result) {
+        [self goToNextPage];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)createFacebookButton {
@@ -1073,8 +1081,8 @@
 /**
  *  SIGNUP_Code_VIEW
  *
- *
  */
+
 #pragma mark - ********** SIGNUP_CODE **********
 
 - (void)signupCodeView {

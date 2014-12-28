@@ -26,7 +26,7 @@
 #import "JTImageLabel.h"
 #import "FLLoadView.h"
 #import "FLUserView.h"
-
+#import "Mixpanel.h"
 #import "Flooz.h"
 
 #import "FLPopup.h"

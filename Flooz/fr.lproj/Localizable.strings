@@ -38,7 +38,7 @@
 "NAV_NOTIFICATIONS" = "Notifications";
 "NAV_CASHOUT" = "Virement";
 "NAV_RIB" = "RIB";
-"NAV_PASSWORD" = "Mot de passe";
+"NAV_PASSWORD" = "Chnager de mot de passe";
 "NAV_PASSWORD_FORGET" = "MDP oublié";
 "NAV_CREDIT_CARD" = "Carte bancaire";
 "NAV_CREDIT_CARD_ADD" = "Ajouter une CB";
@@ -58,12 +58,21 @@
 
 "NEW_TRANSACTION" = "Nouveau Flooz";
 
+"SHARE_FACEBOOK" = "FB";
+"SHARE_SMS" = "SMS";
+"SHARE_TWITTER" = "TWEETER";
+"SHARE_MAIL" = "E-MAIL";
+"SHARE_CLIPBOARD" = "Copier le code";
+
+"FINALIZE_SIGNUP" = "Finaliser votre inscription";
+
 "INFORMATIONS_WHY" = "Sécurité";
 "INFORMATIONS_TERMS" = "Conditions d'utilisation";
 "INFORMATIONS_FAQ" = "Questions / Réponses";
 "INFORMATIONS_PREVIEW" = "Visite Guidée";
 "INFORMATIONS_ABOUT" = "A Propos";
 "INFORMATIONS_CONTACT" = "Contactez-nous";
+"INFORMATIONS_RATE" = "Noter l'application";
 
 "NOTIFICATIONS_SECTION_FEED" = "Feed";
 "NOTIFICATIONS_SECTION_PUSH" = "Push";
@@ -90,6 +99,8 @@
 "FIELD_ADDRESS" = "Adresse";
 "FIELD_ZIP_CODE" = "Code postal";
 "FIELD_CITY" = "Ville";
+
+"CASHOUT_FIELD" = "Saisir le montant à retirer";
 
 "FIELD_IBAN" = "Code IBAN";
 "FIELD_IBAN_PLACEHOLDER" = "FRXXXXXXXXXXXXXXXXXXXXXXXXX";
@@ -144,11 +155,13 @@
 "ACTIVITIES_NOTIFICATIONS" = "Notifications";
 "ACTIVITIES_NEW_NOTIFICATIONS" = "nouvelles notifications";
 
+"INCOMPLETE_TIP" = "  Complétez votre profil pour finaliser votre inscription.";
+
 "ACCOUNT_BUTTON_PROFIL" = "Mon profil";
 "ACCOUNT_BUTTON_NOTIFICATION" = "Notifications";
-"ACCOUNT_BUTTON_INVITE" = "Inviter mes amis";
+"ACCOUNT_BUTTON_INVITE" = "J'aime mes amis";
 "ACCOUNT_BUTTON_CASH_OUT" = "Virer à ma banque";
-"ACCOUNT_BUTTON_DIVERS" = "Divers";
+"ACCOUNT_BUTTON_DIVERS" = "À propos";
 
 "IDEA_RECIPIENTS" = "hello@flooz.me";
 "IDEA_OBJECT" = "Idées / Critiques";
@@ -295,12 +308,15 @@
 "INVITE_MESSAGE" = "Offrez à vos amis la possibilité d'accéder à l'application !";
 "INVITE_CODE_CODE" = "Votre code";
 "INVITE_CODE_SHARE" = "Partagez mon code";
-"INVITATION_CODE_EXPLICATION" = "Flooz est accessible sur invitation.\nLe moyen le plus rapide d'en obtenir une est de vous adresser à un ami qui utilise déjà Flooz. Vous pouvez aussi envoyer une demande.";
-"INVITATION_CODE_WAITING_EXPLICATION" = "Nous avons bien reçu votre demande d'invitation. Chaque semaine, nous augmentons le nombre d'utilisateurs pouvant accéder à Flooz. L'équipe Flooz vous enverra un e-mail d'invitation.";
+"INVITATION_CODE_EXPLICATION" = "Seul les personnes ayant un code d'invitation peuvent s'inscrire sur Flooz.";
+"INVITATION_CODE_WAITING_EXPLICATION" = "Votre demande d'invitation a bien était prise en compte.\nVous recevrez très bientôt un email d'invitation !";
 "ALREADY_FLOOZ" = "Déjà sur\nFlooz";
-"INVITATION_CODE_ACCESS" = " J'ai déjà une\ninvitation ";
-"INVITATION_CODE_ACCESS_LONG" = " J'ai déjà une invitation ";
-"INVITATION_CODE_ASK" = "Demander une invitation";
+"INVITATION_CODE_ACCESS" = "J'ai déjà une\ninvitation";
+"INVITATION_CODE_ACCESS_LONG" = "J'ai déjà une invitation";
+"INVITATION_CODE_ASK" = "Réclamer un code d'invitation";
+"INVITATION_CODE_PLACEHOLDER" = "Saisir votre code";
+"INVITATION_CODE_ASK_NAME_PLACEHOLDER" = "Votre nom et prénom";
+"INVITATION_CODE_ASK_EMAIL_PLACEHOLDER" = "Votre adresse email";
 
 "SIGNUP_HEAD_TITLE" = "Bienvenue sur Flooz";
 "SIGNUP_VIEW_1_TITLE_1" = "PAYEZ VOS AMIS";

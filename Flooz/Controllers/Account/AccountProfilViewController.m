@@ -26,8 +26,10 @@
 #import "MenuCell.h"
 
 @interface AccountProfilViewController () {
-	UITableView *_tableView;
-	NSArray *_menuArray;
+    UITableView *_tableView;
+    NSMutableArray *_menuArray;
+    
+    UILabel *_tips;
 }
 
 @end
@@ -38,22 +40,46 @@
     self = [super init];
     if (self) {
         self.title = NSLocalizedString(@"ACCOUNT_BUTTON_PROFIL", nil);
-        
-        _menuArray = @[
-                       @{ @"title":NSLocalizedString(@"SETTINGS_CARD", @"")},
-                       @{ @"title":NSLocalizedString(@"SETTINGS_BANK", @"")},
-                       @{ @"title":NSLocalizedString(@"SETTINGS_IDENTITY", @"")},
-                       @{ @"title":NSLocalizedString(@"SETTINGS_COORDS", nil)},
-                       @{ @"title":NSLocalizedString(@"SETTINGS_SECURITY", nil)},
-                       @{ @"title":NSLocalizedString(@"SETTINGS_PREFERENCES", nil)},
-                       @{ @"title":NSLocalizedString(@"SETTINGS_PRIVACY", nil)}
-                       ];
     }
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _menuArray = [NSMutableArray new];
+    
+    [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_CARD", @"")}];
+    
+    NSArray *missingFields = [Flooz sharedInstance].currentUser.json[@"missingFields"];
+    
+    if ([missingFields containsObject:@"iban"])
+        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"incomplete": @YES}];
+    else
+        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_BANK", @"")}];
+    
+    if ([missingFields containsObject:@"cniRecto"] || [missingFields containsObject:@"cniVerso"])
+        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_IDENTITY", @""), @"incomplete": @YES}];
+    else
+        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_IDENTITY", @"")}];
+    
+    if ([missingFields containsObject:@"justificatory"] || [missingFields containsObject:@"address"])
+        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"incomplete": @YES}];
+    else
+        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_COORDS", @"")}];
+    
+    [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_SECURITY", @"")}];
+    [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @"")}];
+    [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_PRIVACY", @"")}];
+    
+    if (missingFields.count)
+        [_tips setHidden:NO];
+    else
+        [_tips setHidden:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_mainBody.frame)) style:UITableViewStyleGrouped];
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
@@ -61,6 +87,30 @@
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     [_mainBody addSubview:_tableView];
+    
+    UIImage *image = [UIImage imageNamed:@"incomplete"];
+    CGSize newImgSize = CGSizeMake(8, 8);
+    
+    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
+    image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+    attachment.image = image;
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"INCOMPLETE_TIP", nil)]];
+
+    _tips = [UILabel newWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame) - 40, CGRectGetWidth(_mainBody.frame), 20)];
+    [_tips setAttributedText:string];
+    [_tips setTextAlignment:NSTextAlignmentCenter];
+    [_tips setTextColor:[UIColor whiteColor]];
+    [_tips setFont:[UIFont customTitleExtraLight:12]];
+    
+    [_mainBody addSubview:_tips];
 }
 #pragma mark - TableView
 

@@ -9,17 +9,17 @@
 #import "InviteViewController.h"
 #import "FLPopupAskInviteCode.h"
 #import "FLPopupEnterInviteCode.h"
+#import "PendingInvitationViewController.h"
 
 @interface InviteViewController () {
-	NSMutableDictionary *_userDic;
-	UIView *_mainBody;
-
-    UIImageView *_headerImage;
+    NSMutableDictionary *_userDic;
     
-	UILabel *_textExplication;
-
+    FLTextFieldSignup *_codeTextfield;
+    
+    UILabel *_textExplication;
+    
+    UIButton *_validCode;
     UIButton *_askCode;
-    UIButton *_enterCode;
 }
 
 @end
@@ -27,25 +27,24 @@
 @implementation InviteViewController
 
 - (id)initWithUser:(NSDictionary *)user {
-	self = [super initWithNibName:nil bundle:nil];
-	if (self) {
-		if (user) {
-			_userDic = [user mutableCopy];
-		}
-		else {
-			_userDic = [NSMutableDictionary new];
-		}
-	}
-	return self;
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        if (user) {
+            _userDic = [user mutableCopy];
+            self.showBack = YES;
+            self.title = NSLocalizedString(@"CODE_INVITATION_TITLE", nil);
+        }
+        else {
+            _userDic = [NSMutableDictionary new];
+        }
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
-	[super viewDidLoad];
-	self.view.backgroundColor = [UIColor customBackgroundHeader];
-
-
-	[self prepareViews];
+    [super viewDidLoad];
     
+    [self prepareViews];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -56,130 +55,89 @@
 
 - (void)prepareViews {
     CGFloat padding = 15.0f;
-    CGFloat height = 0.0f;
+    CGFloat height = padding * 2;
     
-    _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0.0f, STATUSBAR_HEIGHT, PPScreenWidth(), PPScreenHeight() - 60.0f)];
-    [self.view addSubview:_mainBody];
+    _codeTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"INVITATION_CODE_PLACEHOLDER", @"") for:_userDic key:@"coupon" position:CGPointMake(padding * 2, height)];
+    CGRectSetWidth(_codeTextfield.frame, CGRectGetWidth(_mainBody.frame) - (4 * padding));
+    [_codeTextfield addForNextClickTarget:self action:@selector(validCode)];
+    [_codeTextfield addForTextChangeTarget:self action:@selector(canValidate)];
+    [_mainBody addSubview:_codeTextfield];
     
-    {
-        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 2, 30, 60)];
-        [backButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
-        [backButton addTarget:self action:@selector(dismissViewController) forControlEvents:UIControlEventTouchUpInside];
-        [_mainBody addSubview:backButton];
+    height += CGRectGetHeight(_codeTextfield.frame) + padding;
+    
+    _validCode = [[UIButton alloc] initWithFrame:CGRectMake(padding * 2, height, CGRectGetWidth(_mainBody.frame) - (4 * padding), 35)];
+    
+    [_validCode setTitle:NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil) forState:UIControlStateNormal];
+    [_validCode setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_validCode setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
+    [_validCode setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
+    
+    [_validCode setEnabled:NO];
+    [_validCode setBackgroundColor:[UIColor customBackground]];
+    [_validCode addTarget:self action:@selector(validCode) forControlEvents:UIControlEventTouchUpInside];
+    [_mainBody addSubview:_validCode];
+    
+    height += CGRectGetHeight(_validCode.frame) + padding;
+    
+    _textExplication = [[UILabel alloc] initWithFrame:CGRectMake(padding, height, PPScreenWidth() - padding * 2.0f, CGRectGetHeight(_mainBody.frame) - height - padding * 3 - CGRectGetHeight(_validCode.frame))];
+    _textExplication.textColor = [UIColor customGrey];
+    _textExplication.font = [UIFont customTitleExtraLight:18];
+    if (IS_IPHONE4) {
+        _textExplication.font = [UIFont customTitleExtraLight:17];
     }
-
-    {
-        _headerImage = [UIImageView imageNamed:@"code-envelope"];
-        
-        CGFloat scaleRatio = CGRectGetWidth(_headerImage.frame) / CGRectGetHeight(_headerImage.frame);
-        
-        CGRectSetWidthHeight(_headerImage.frame, CGRectGetWidth(_mainBody.frame) / 2, CGRectGetWidth(_mainBody.frame) / 2 * scaleRatio);
-        CGRectSetXY(_headerImage.frame, CGRectGetWidth(_mainBody.frame) / 2 - CGRectGetWidth(_headerImage.frame) / 2, 70);
-        
-        [_mainBody addSubview:_headerImage];
-        height += CGRectGetMaxY(_headerImage.frame);
-    }
+    _textExplication.textAlignment = NSTextAlignmentCenter;
+    _textExplication.numberOfLines = 0;
+    _textExplication.text = NSLocalizedString(@"INVITATION_CODE_EXPLICATION", nil);
     
-    height += 30.0f;
+    [_mainBody addSubview:_textExplication];
     
-    {
-        _textExplication = [[UILabel alloc] initWithFrame:CGRectMake(padding, height, PPScreenWidth() - padding * 2.0f, CGRectGetHeight(_mainBody.frame) - height)];
-        _textExplication.textColor = [UIColor customGrey];
-        _textExplication.font = [UIFont customTitleExtraLight:18];
-        if (IS_IPHONE4) {
-            _textExplication.font = [UIFont customTitleExtraLight:17];
-        }
-        _textExplication.textAlignment = NSTextAlignmentCenter;
-        _textExplication.numberOfLines = 0;
-        
-        if (_userDic[@"pendingInvitation"] && [_userDic[@"pendingInvitation"] boolValue])
-            _textExplication.text = NSLocalizedString(@"INVITATION_CODE_WAITING_EXPLICATION", nil);
-        else
-            _textExplication.text = NSLocalizedString(@"INVITATION_CODE_EXPLICATION", nil);
-        
-        [_textExplication sizeToFit];
-        
-        [_mainBody addSubview:_textExplication];
-    }
+    height += CGRectGetHeight(_textExplication.frame) + padding;
     
-    {
-        if (_userDic[@"pendingInvitation"] && [_userDic[@"pendingInvitation"] boolValue]) {
-            _enterCode = [[UIButton alloc] initWithFrame:CGRectMake(1, CGRectGetHeight(self.view.frame) - 59, CGRectGetWidth(self.view.frame) - 2, 58)];
-            [_enterCode setBackgroundColor:[UIColor customBlue]];
-            [_enterCode addTarget:self action:@selector(showAccessPopup) forControlEvents:UIControlEventTouchUpInside];
-            {
-                UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_enterCode.frame), CGRectGetHeight(_enterCode.frame))];
-                titleLabel.text = NSLocalizedString(@"INVITATION_CODE_ACCESS_LONG", nil);
-                titleLabel.font = [UIFont customTitleLight:16];
-                titleLabel.numberOfLines = 2;
-                titleLabel.textColor = [UIColor whiteColor];
-                titleLabel.textAlignment = NSTextAlignmentCenter;
-                [_enterCode addSubview:titleLabel];
-            }
-
-            [self.view addSubview:_enterCode];
-        }
-        else {
-            _enterCode = [[UIButton alloc] initWithFrame:CGRectMake(1, CGRectGetHeight(self.view.frame) - 59, CGRectGetWidth(self.view.frame) / 2. - 1, 58)];
-            [_enterCode setBackgroundColor:[UIColor customBlue]];
-            [_enterCode addTarget:self action:@selector(showAccessPopup) forControlEvents:UIControlEventTouchUpInside];
-            {
-                UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_enterCode.frame), CGRectGetHeight(_enterCode.frame))];
-                titleLabel.text = NSLocalizedString(@"INVITATION_CODE_ACCESS", nil);
-                titleLabel.font = [UIFont customTitleLight:16];
-                titleLabel.numberOfLines = 2;
-                titleLabel.textColor = [UIColor whiteColor];
-                titleLabel.textAlignment = NSTextAlignmentCenter;
-                [_enterCode addSubview:titleLabel];
-            }
-            
-            [self.view addSubview:_enterCode];
-            
-            _askCode = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) / 2., CGRectGetHeight(self.view.frame) - 59, CGRectGetWidth(self.view.frame) / 2. - 1, 58)];
-            [_askCode setBackgroundColor:[UIColor customBlue]];
-            [_askCode addTarget:self action:@selector(showAskPopup) forControlEvents:UIControlEventTouchUpInside];
-            {
-                UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_askCode.frame), CGRectGetHeight(_askCode.frame))];
-                titleLabel.text = NSLocalizedString(@"INVITATION_CODE_ASK", nil);
-                titleLabel.font = [UIFont customTitleLight:16];
-                titleLabel.numberOfLines = 2;
-                titleLabel.textColor = [UIColor whiteColor];
-                titleLabel.textAlignment = NSTextAlignmentCenter;
-                [_askCode addSubview:titleLabel];
-            }
-            [self.view addSubview:_askCode];
-            
-            UIView *separatorButtonBar = [UIView newWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) / 2., CGRectGetHeight(self.view.frame) - 45, 1, 30)];
-            [separatorButtonBar setBackgroundColor:[UIColor whiteColor]];
-            
-            [self.view addSubview:separatorButtonBar];
-        }
-    }
+    _askCode = [[UIButton alloc] initWithFrame:CGRectMake(padding * 2, height, CGRectGetWidth(_mainBody.frame) - (4 * padding), 35)];
     
+    [_askCode setTitle:NSLocalizedString(@"INVITATION_CODE_ASK", nil) forState:UIControlStateNormal];
+    [_askCode setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_askCode setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
+    [_askCode setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
+    [_askCode addTarget:self action:@selector(showAskPopup) forControlEvents:UIControlEventTouchUpInside];
+    [_askCode setEnabled:YES];
+    [_askCode setBackgroundColor:[UIColor customBlue]];
+    
+    [_mainBody addSubview:_askCode];
 }
 
-- (void)showAccessPopup {
-    [[[FLPopupEnterInviteCode alloc] initWithUser:_userDic andCompletionBlock:^{
+- (void)validCode {
+    [_codeTextfield resignFirstResponder];
+    
+    if (_userDic[@"coupon"] && ![_userDic[@"coupon"] isBlank]) {
         [[Flooz sharedInstance] showLoadView];
-        
-        NSMutableDictionary *tmp = [_userDic mutableCopy];
-        [tmp removeObjectForKey:@"pendingInvitation"];
-        
-        [[Flooz sharedInstance] verifyInvitationCode:tmp success:^(id result) {
-            [self dismissViewController];
-        } failure:nil];
-    }] show];
+        [[Flooz sharedInstance] verifyInvitationCode:_userDic success:nil failure:nil];
+    }
+}
+
+- (void)canValidate {
+    if (_userDic[@"coupon"] && ![_userDic[@"coupon"] isBlank]) {
+        [_validCode setEnabled:YES];
+        [_validCode setBackgroundColor:[UIColor customBlue]];
+    } else {
+        [_validCode setEnabled:NO];
+        [_validCode setBackgroundColor:[UIColor customBackground]];
+    }
 }
 
 - (void)showAskPopup {
-    [[[FLPopupAskInviteCode alloc] initWithUser:_userDic andCompletionBlock:^{
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] askInvitationCode:_userDic success:^(id result) {
-            _userDic[@"pendingInvitation"] = @YES;
-            [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-            [self prepareViews];
-        } failure:nil];
-    }] show];
+    if (_userDic[@"pendingInvitation"] && [_userDic[@"pendingInvitation"] boolValue]) {
+        [self.navigationController pushViewController:[PendingInvitationViewController new] animated:YES];
+    }
+    else {
+        [[[FLPopupAskInviteCode alloc] initWithUser:_userDic andCompletionBlock:^{
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] askInvitationCode:_userDic success:^(id result) {
+                _userDic[@"pendingInvitation"] = @YES;
+                [self showAskPopup];
+            } failure:nil];
+        }] show];
+    }
 }
 
 @end

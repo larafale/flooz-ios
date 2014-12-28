@@ -371,6 +371,14 @@
 		C93118491A1FBD72008C6EEC /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
 		C931184C1A1FBE81008C6EEC /* FLPopupReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C931184B1A1FBE81008C6EEC /* FLPopupReport.m */; };
 		C931184D1A1FD4FE008C6EEC /* FLPopupReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C931184B1A1FBE81008C6EEC /* FLPopupReport.m */; };
+		C95AED971A49AF4A00000FB3 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
+		C95AED981A49B10700000FB3 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
+		C95AED9E1A49B5E500000FB3 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */; };
+		C95AED9F1A49B5E500000FB3 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */; };
+		C95AEDA01A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */; };
+		C95AEDA11A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */; };
+		C95AEDA51A49BB9100000FB3 /* FLClearActionTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */; };
+		C95AEDA61A49BB9100000FB3 /* FLClearActionTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */; };
 		C966473C19FFEA0D000851AF /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C966473A19FFEA0D000851AF /* TransitionDelegate.m */; };
 		C966473E19FFEA28000851AF /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C966473A19FFEA0D000851AF /* TransitionDelegate.m */; };
 		C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = C966474019FFEB4E000851AF /* AnimatedTransitioning.m */; };
@@ -389,6 +397,8 @@
 		C9C7EE9419F685B9009FE292 /* FLAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7EE9319F685B9009FE292 /* FLAlert.m */; };
 		C9C7EE9519F695E8009FE292 /* FLTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7EE9019F685AC009FE292 /* FLTrigger.m */; };
 		C9C7EE9619F695E8009FE292 /* FLAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7EE9319F685B9009FE292 /* FLAlert.m */; };
+		C9F5F61F1A5066CD00EB2B2F /* PendingInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F5F61E1A5066CD00EB2B2F /* PendingInvitationViewController.m */; };
+		C9F5F6201A5066CD00EB2B2F /* PendingInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F5F61E1A5066CD00EB2B2F /* PendingInvitationViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -763,6 +773,14 @@
 		C93118471A1F7E0B008C6EEC /* FLReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReport.m; sourceTree = "<group>"; };
 		C931184A1A1FBE81008C6EEC /* FLPopupReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPopupReport.h; sourceTree = "<group>"; };
 		C931184B1A1FBE81008C6EEC /* FLPopupReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPopupReport.m; sourceTree = "<group>"; };
+		C95AED951A49AF4A00000FB3 /* ClipboardPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipboardPopoverViewController.h; sourceTree = "<group>"; };
+		C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClipboardPopoverViewController.m; sourceTree = "<group>"; };
+		C95AED9A1A49B5E500000FB3 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
+		C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
+		C95AED9C1A49B5E500000FB3 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
+		C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
+		C95AEDA31A49BB9100000FB3 /* FLClearActionTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLClearActionTextView.h; sourceTree = "<group>"; };
+		C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLClearActionTextView.m; sourceTree = "<group>"; };
 		C966473919FFEA0D000851AF /* TransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionDelegate.h; sourceTree = "<group>"; };
 		C966473A19FFEA0D000851AF /* TransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionDelegate.m; sourceTree = "<group>"; };
 		C966473F19FFEB4E000851AF /* AnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedTransitioning.h; sourceTree = "<group>"; };
@@ -781,6 +799,8 @@
 		C9C7EE9019F685AC009FE292 /* FLTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTrigger.m; sourceTree = "<group>"; };
 		C9C7EE9219F685B9009FE292 /* FLAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAlert.h; sourceTree = "<group>"; };
 		C9C7EE9319F685B9009FE292 /* FLAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAlert.m; sourceTree = "<group>"; };
+		C9F5F61D1A5066CD00EB2B2F /* PendingInvitationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingInvitationViewController.h; sourceTree = "<group>"; };
+		C9F5F61E1A5066CD00EB2B2F /* PendingInvitationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingInvitationViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -919,6 +939,8 @@
 				2FC2545D19B6742500EB1EED /* ShareAppViewController.h */,
 				2FC2545E19B6742500EB1EED /* ShareAppViewController.m */,
 				2FC2545F19B6742500EB1EED /* ShareAppViewController.xib */,
+				C95AED951A49AF4A00000FB3 /* ClipboardPopoverViewController.h */,
+				C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */,
 			);
 			name = ShareApp;
 			sourceTree = "<group>";
@@ -928,6 +950,8 @@
 			children = (
 				2FA828AE19F062C000F07A69 /* InviteViewController.h */,
 				2FA828AF19F062C000F07A69 /* InviteViewController.m */,
+				C9F5F61D1A5066CD00EB2B2F /* PendingInvitationViewController.h */,
+				C9F5F61E1A5066CD00EB2B2F /* PendingInvitationViewController.m */,
 			);
 			name = InvitationCode;
 			sourceTree = "<group>";
@@ -1288,6 +1312,7 @@
 		AB3D08D5186CA6F800CF8380 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C95AEDA21A49BB5E00000FB3 /* FLClearActionTextView */,
 				C9AF4BE319F7C2A9005C696B /* AvatarMenu */,
 				2FD1EA9919E332D800CA5EDA /* FLBadgeView */,
 				AB5EB6F91882157300D81AF6 /* Cells */,
@@ -1332,6 +1357,7 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				C95AED991A49B5E500000FB3 /* WYPopoverController */,
 				C966473619FFE9EC000851AF /* Modal Transitions */,
 				ABA96DA3196EED4D00B8B7C7 /* scanpay */,
 				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
@@ -2093,6 +2119,26 @@
 			name = 3DSecure;
 			sourceTree = "<group>";
 		};
+		C95AED991A49B5E500000FB3 /* WYPopoverController */ = {
+			isa = PBXGroup;
+			children = (
+				C95AED9A1A49B5E500000FB3 /* WYPopoverController.h */,
+				C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */,
+				C95AED9C1A49B5E500000FB3 /* WYStoryboardPopoverSegue.h */,
+				C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */,
+			);
+			path = WYPopoverController;
+			sourceTree = "<group>";
+		};
+		C95AEDA21A49BB5E00000FB3 /* FLClearActionTextView */ = {
+			isa = PBXGroup;
+			children = (
+				C95AEDA31A49BB9100000FB3 /* FLClearActionTextView.h */,
+				C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */,
+			);
+			name = FLClearActionTextView;
+			sourceTree = "<group>";
+		};
 		C966473619FFE9EC000851AF /* Modal Transitions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2460,6 +2506,7 @@
 				2FA828B019F062C000F07A69 /* InviteViewController.m in Sources */,
 				ABBB75CB18B63DB20070C2A8 /* CreditCardViewController.m in Sources */,
 				AB3D08A2186CA11A00CF8380 /* AppDelegate.m in Sources */,
+				C9F5F61F1A5066CD00EB2B2F /* PendingInvitationViewController.m in Sources */,
 				AB7C9B1718D71884002775BA /* FriendPickerFriendCell.m in Sources */,
 				ABE9148F189337E4003AC722 /* FLTextField.m in Sources */,
 				2FC8873719C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
@@ -2500,10 +2547,13 @@
 				2FA3E55F19DDE97700EC65C2 /* SettingsPreferencesViewController.m in Sources */,
 				ABE91424188944D5003AC722 /* FLValidNavBar.m in Sources */,
 				ABC1115218ACE4AA00C3C52D /* TransactionCommentsView.m in Sources */,
+				C95AEDA01A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */,
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
+				C95AED971A49AF4A00000FB3 /* ClipboardPopoverViewController.m in Sources */,
 				C9860E221A0910C0001D4A57 /* FLPopupAskInviteCode.m in Sources */,
 				AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */,
 				AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */,
+				C95AED9E1A49B5E500000FB3 /* WYPopoverController.m in Sources */,
 				ABE9149818967670003AC722 /* FLTextFieldIcon.m in Sources */,
 				AB7C9B2218D73AE9002775BA /* SecureCodeViewController.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
@@ -2518,6 +2568,7 @@
 				ABE914871892AE59003AC722 /* FLNewTransactionAmount.m in Sources */,
 				AB6DA52518C8D0AF0073B947 /* FriendAddSearchBar.m in Sources */,
 				8BD2410F199975BC00AAE69E /* FLStartItem.m in Sources */,
+				C95AEDA51A49BB9100000FB3 /* FLClearActionTextView.m in Sources */,
 				ABE914371890A029003AC722 /* FLLoadView.m in Sources */,
 				AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */,
 				2FDD682F19D09D1100719E89 /* MenuCell.m in Sources */,
@@ -2603,9 +2654,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C95AED981A49B10700000FB3 /* ClipboardPopoverViewController.m in Sources */,
 				C9A7BE611A2788D800195AFC /* FLPreset.m in Sources */,
 				C931184D1A1FD4FE008C6EEC /* FLPopupReport.m in Sources */,
 				C93118491A1FBD72008C6EEC /* FLReport.m in Sources */,
+				C9F5F6201A5066CD00EB2B2F /* PendingInvitationViewController.m in Sources */,
 				C9860E261A092AD3001D4A57 /* FLPopupAskInviteCode.m in Sources */,
 				C9860E271A092AD3001D4A57 /* FLPopupEnterInviteCode.m in Sources */,
 				C90B94811A00EA2400E2C53B /* 3DSecureViewController.m in Sources */,
@@ -2646,11 +2699,13 @@
 				ABAA3F97197E96BF009F29EF /* SignupViewController.m in Sources */,
 				ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */,
 				ABAA3F99197E96BF009F29EF /* FriendPickerViewController.m in Sources */,
+				C95AEDA11A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */,
 				ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */,
 				2FCBCD1119BF406200FB31E0 /* FLCameraKeyboard.m in Sources */,
 				2F1307EA19D9C1790062D194 /* FLSocialButton.m in Sources */,
 				2FA3E55819DDDB3B00EC65C2 /* AccountProfilViewController.m in Sources */,
 				ABAA3F9C197E96BF009F29EF /* ActivityCell.m in Sources */,
+				C95AED9F1A49B5E500000FB3 /* WYPopoverController.m in Sources */,
 				ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */,
 				2FA3E56019DDE97700EC65C2 /* SettingsPreferencesViewController.m in Sources */,
 				ABAA3F9E197E96BF009F29EF /* InformationsViewController.m in Sources */,
@@ -2665,6 +2720,7 @@
 				2FC6F6B519A776210051CB61 /* FLNewTransactionAmountInput.m in Sources */,
 				ABAA3FAB197E96BF009F29EF /* InvitCodeViewController.m in Sources */,
 				ABAA3FAC197E96BF009F29EF /* FriendsViewController.m in Sources */,
+				C95AEDA61A49BB9100000FB3 /* FLClearActionTextView.m in Sources */,
 				2FC8784519C08B0300F034E0 /* FLPopupInformation.m in Sources */,
 				ABAA3FAF197E96BF009F29EF /* FLFriendRequest.m in Sources */,
 				2F88A32219F173EF001FC26F /* FLTextViewComment.m in Sources */,

@@ -68,7 +68,7 @@
 
 	[self setScrollEnabled:NO forPageViewController:_pageViewController];
 	if (!_indexPage) {
-		_indexPage = SignupPageTuto;
+		_indexPage = SignupPagePhone;
 		_indexPageStart = 0;
 	}
 
@@ -169,6 +169,7 @@
 - (void)phoneNotRegistered:(NSDictionary *)user {
 	//[self.userInfoDico ]
 	[self.userInfoDico addEntriesFromDictionary:user];
+    self.userInfoDico[@"distinctId"] = [Mixpanel sharedInstance].distinctId;
 	_indexPage = SignupPagePseudo;
 	_indexPageStart++;
 	[self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];

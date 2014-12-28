@@ -15,13 +15,14 @@
 #import "NewTransactionSelectTypeDelegate.h"
 #import "FLPreset.h"
 #import <ImageIO/ImageIO.h>
+#import <MessageUI/MFMessageComposeViewController.h>
 
 #import "FLCameraKeyboard.h"
 
 #define kImageCapturedSuccessfully @"imageCapturedSuccessfully"
 #define degreesToRadians(degrees) ((degrees) / 180.0 * M_PI)
 
-@interface NewTransactionViewController : GlobalViewController <FLSelectAmountDelegate, FLPaymentFieldDelegate, NewTransactionSelectTypeDelegate, UIAlertViewDelegate, FLCameraKeyboardDelegate>
+@interface NewTransactionViewController : GlobalViewController <FLSelectAmountDelegate, FLPaymentFieldDelegate, NewTransactionSelectTypeDelegate, UIAlertViewDelegate, FLCameraKeyboardDelegate, MFMessageComposeViewControllerDelegate>
 
 - (id)initWithTransactionType:(TransactionType)transactionType;
 - (id)initWithTransactionType:(TransactionType)transactionType user:(FLUser *)user;

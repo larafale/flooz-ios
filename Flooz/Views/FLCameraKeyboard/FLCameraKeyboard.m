@@ -304,6 +304,7 @@
 	UIImagePickerController *cameraUI = [UIImagePickerController new];
 	cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 	cameraUI.delegate = self;
+    cameraUI.allowsEditing = YES;
 
 	[self.delegate presentCameraRoll:cameraUI];
 }

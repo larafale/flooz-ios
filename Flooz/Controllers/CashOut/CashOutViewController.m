@@ -73,7 +73,7 @@
     height += 30;
     
     {
-        _amountInput = [[FLTextFieldSignup alloc] initWithPlaceholder:@"Montant à retirer" for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
+        _amountInput = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
         inputView = [FLKeyboardView new];
         [inputView setKeyboardDecimal];
         inputView.textField = _amountInput.textfield;
