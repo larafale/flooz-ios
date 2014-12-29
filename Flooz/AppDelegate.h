@@ -15,6 +15,9 @@
 #import "MZFormSheetController.h"
 #import "FirstLaunchViewController.h"
 #import "FLRevealContainerViewController.h"
+#import "SignupNavigationController.h"
+#import "SignupPhoneViewController.h"
+#import "SignupSMSViewController.h"
 
 #define REFRESH_INTERVAL 0
 
@@ -41,7 +44,8 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 
 	UIViewController *savedViewController;
 	FirstLaunchViewController *firstVC;
-
+    SignupNavigationController *signupNavigationController;
+    
 	UIViewController *viewControllerForPopup;
 	UIViewController *currentMainView;
     NSString *_lastTransactionID;
@@ -62,7 +66,6 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)showResetPasswordWithUser:(NSDictionary*)user;
 - (void)showSignupWithUser:(NSDictionary *)user;
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user;
-- (void)showSignupAfter3DSecureWithUser:(NSDictionary *)user;
 
 - (void)displaySignin;
 - (void)displayError:(NSError *)error;

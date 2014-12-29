@@ -148,7 +148,7 @@
 }
 
 - (void)signup {
-	[appDelegate displaySignupAtPage:SignupPagePhone];
+    [appDelegate displaySignin];
 }
 
 #pragma mark - TableView

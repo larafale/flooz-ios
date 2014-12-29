@@ -46,7 +46,7 @@
 	self.userInfoDico = [NSMutableDictionary new];
 }
 
-#define NUMBER_OF_PAGES (SignupPageFriends + 1)
+#define NUMBER_OF_PAGES (SignupPageCodeVerif + 1)
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -178,21 +178,6 @@
 - (void)signupWithFacebookUser:(NSDictionary *)user {
 	[self.userInfoDico addEntriesFromDictionary:user];
 	_indexPage = SignupPagePhoto;
-	SignupViewController *newView = [self viewControllerAtIndex:_indexPage];
-	[newView setUserInfoDico:self.userInfoDico];
-	[newView displayChanges];
-}
-
-- (void)signupAfter3DSecure:(NSDictionary *)user {
-    [[Flooz sharedInstance] hideLoadView];
-    [self.userInfoDico addEntriesFromDictionary:user];
-    _indexPage = SignupPageAskAccess;
-    [self presentNewViewSignup:UIPageViewControllerNavigationDirectionForward];
-}
-
-- (void)signupFriendUser:(NSDictionary *)user {
-	[self.userInfoDico addEntriesFromDictionary:user];
-	_indexPage = SignupPageFriends;
 	SignupViewController *newView = [self viewControllerAtIndex:_indexPage];
 	[newView setUserInfoDico:self.userInfoDico];
 	[newView displayChanges];

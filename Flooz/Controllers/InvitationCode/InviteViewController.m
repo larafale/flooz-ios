@@ -19,7 +19,6 @@
     UILabel *_textExplication;
     
     UIButton *_validCode;
-    UIButton *_askCode;
 }
 
 @end
@@ -55,7 +54,22 @@
 
 - (void)prepareViews {
     CGFloat padding = 15.0f;
-    CGFloat height = padding * 2;
+    CGFloat height = padding;
+    
+    _textExplication = [[UILabel alloc] initWithFrame:CGRectMake(padding, height, PPScreenWidth() - padding * 2.0f, 200)];
+    _textExplication.textColor = [UIColor customGrey];
+    _textExplication.font = [UIFont customTitleExtraLight:18];
+    if (IS_IPHONE4) {
+        _textExplication.font = [UIFont customTitleExtraLight:17];
+    }
+    _textExplication.textAlignment = NSTextAlignmentCenter;
+    _textExplication.numberOfLines = 0;
+    _textExplication.text = NSLocalizedString(@"INVITATION_CODE_EXPLICATION", nil);
+    [_textExplication heightToFit];
+    CGRectSetY(_textExplication.frame, height);
+    [_mainBody addSubview:_textExplication];
+    
+    height = CGRectGetHeight(_mainBody.frame) - padding * 3 - 35 * 2;
     
     _codeTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"INVITATION_CODE_PLACEHOLDER", @"") for:_userDic key:@"coupon" position:CGPointMake(padding * 2, height)];
     CGRectSetWidth(_codeTextfield.frame, CGRectGetWidth(_mainBody.frame) - (4 * padding));
@@ -75,35 +89,7 @@
     [_validCode setEnabled:NO];
     [_validCode setBackgroundColor:[UIColor customBackground]];
     [_validCode addTarget:self action:@selector(validCode) forControlEvents:UIControlEventTouchUpInside];
-    [_mainBody addSubview:_validCode];
-    
-    height += CGRectGetHeight(_validCode.frame) + padding;
-    
-    _textExplication = [[UILabel alloc] initWithFrame:CGRectMake(padding, height, PPScreenWidth() - padding * 2.0f, CGRectGetHeight(_mainBody.frame) - height - padding * 3 - CGRectGetHeight(_validCode.frame))];
-    _textExplication.textColor = [UIColor customGrey];
-    _textExplication.font = [UIFont customTitleExtraLight:18];
-    if (IS_IPHONE4) {
-        _textExplication.font = [UIFont customTitleExtraLight:17];
-    }
-    _textExplication.textAlignment = NSTextAlignmentCenter;
-    _textExplication.numberOfLines = 0;
-    _textExplication.text = NSLocalizedString(@"INVITATION_CODE_EXPLICATION", nil);
-    
-    [_mainBody addSubview:_textExplication];
-    
-    height += CGRectGetHeight(_textExplication.frame) + padding;
-    
-    _askCode = [[UIButton alloc] initWithFrame:CGRectMake(padding * 2, height, CGRectGetWidth(_mainBody.frame) - (4 * padding), 35)];
-    
-    [_askCode setTitle:NSLocalizedString(@"INVITATION_CODE_ASK", nil) forState:UIControlStateNormal];
-    [_askCode setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_askCode setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
-    [_askCode setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
-    [_askCode addTarget:self action:@selector(showAskPopup) forControlEvents:UIControlEventTouchUpInside];
-    [_askCode setEnabled:YES];
-    [_askCode setBackgroundColor:[UIColor customBlue]];
-    
-    [_mainBody addSubview:_askCode];
+    [_mainBody addSubview:_validCode];    
 }
 
 - (void)validCode {

@@ -5,13 +5,13 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>E6FE1110-D7A5-4588-B819-C372EF66633A</string>
+	<string>7FDE275A-7224-4E20-BEE5-841BD0FEE784</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Flooz</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>7434FE90F6186019A271FD95372605DE58779CB1</key>
-		<string>https://bitbucket.org/Lolinpiko/flooz-ios-aix.git</string>
+		<string>https://github.com/larafale/flooz-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Flooz.xcworkspace</string>
@@ -21,7 +21,7 @@
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://bitbucket.org/Lolinpiko/flooz-ios-aix.git</string>
+	<string>https://github.com/larafale/flooz-ios.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>7434FE90F6186019A271FD95372605DE58779CB1</string>
 			<key>IDESourceControlWCCName</key>
-			<string>flooz-ios-aix</string>
+			<string>flooz-ios</string>
 		</dict>
 	</array>
 </dict>

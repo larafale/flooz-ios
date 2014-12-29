@@ -2,7 +2,7 @@
 //  FLTrigger.h
 //  Flooz
 //
-//  Created by Epitech on 10/21/14.
+//  Created by Olivier on 10/21/14.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

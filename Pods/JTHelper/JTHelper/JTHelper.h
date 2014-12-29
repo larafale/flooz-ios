@@ -54,4 +54,44 @@
 	#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 	#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 
+	#define UICOLOR_DEFINE(name, r, g, b) \
+	+ (instancetype)name\
+	{\
+	return [UIColor colorWithIntegerRed:r green:g blue:b];\
+	}
+
+	#define UIVIEW_COMMON_INIT \
+	- (instancetype)initWithFrame:(CGRect)frame\
+	{\
+	    self = [super initWithFrame:frame];\
+	    if(!self){\
+	        return nil;\
+	    }\
+	    \
+	    [self commonInit];\
+	    \
+	    return self;\
+	}\
+	\
+	- (id)initWithCoder:(NSCoder *)aDecoder\
+	{\
+	    self = [super initWithCoder:aDecoder];\
+	    if(!self){\
+	        return nil;\
+	    }\
+	    \
+	    [self commonInit];\
+	    \
+	    return self;\
+	}
+
+	#define DEFINE_SHARED_INSTANCE \
+	+ (instancetype)sharedInstance\
+	{\
+    	static dispatch_once_t once;\
+    	static id instance;\
+    	dispatch_once(&once, ^{instance = self.new;});\
+    	return instance;\
+	}
+
 #endif

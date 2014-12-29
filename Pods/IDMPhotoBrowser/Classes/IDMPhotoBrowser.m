@@ -69,6 +69,8 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     //UIImage *_backgroundScreenshot;
     
     UIWindow *_applicationWindow;
+	
+	// iOS 7
     UIViewController *_applicationTopViewController;
     int _previousModalPresentationStyle;
 }
@@ -134,6 +136,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 @synthesize arrowButtonsChangePhotosAnimated = _arrowButtonsChangePhotosAnimated;
 @synthesize forceHideStatusBar = _forceHideStatusBar;
 @synthesize usePopAnimation = _usePopAnimation;
+@synthesize disableVerticalSwipe = _disableVerticalSwipe;
 @synthesize actionsSheet = _actionsSheet, activityViewController = _activityViewController;
 @synthesize trackTintColor = _trackTintColor, progressTintColor = _progressTintColor;
 @synthesize delegate = _delegate;
@@ -165,7 +168,8 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         
         _forceHideStatusBar = NO;
         _usePopAnimation = NO;
-        
+		_disableVerticalSwipe = NO;
+		
         _useWhiteBackgroundColor = NO;
         _leftArrowImage = _rightArrowImage = _leftArrowSelectedImage = _rightArrowSelectedImage = nil;
         
@@ -182,15 +186,22 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
             self.automaticallyAdjustsScrollViewInsets = NO;
         
         _applicationWindow = [[[UIApplication sharedApplication] delegate] window];
-        
-        _applicationTopViewController = [self topviewController];
-        
-        _previousModalPresentationStyle = _applicationTopViewController.modalPresentationStyle;
-        
-        _applicationTopViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-        
-        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        
+		
+		if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+		{
+			self.modalPresentationStyle = UIModalPresentationCustom;
+			self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+		}
+		else
+		{
+			_applicationTopViewController = [self topviewController];
+			_previousModalPresentationStyle = _applicationTopViewController.modalPresentationStyle;
+			_applicationTopViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+			self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+		}
+		
+		self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+		
         // Listen for IDMPhoto notifications
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleIDMPhotoLoadingDidEndNotification:)
@@ -491,8 +502,11 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     [self dismissViewControllerAnimated:animated completion:^{
         if ([_delegate respondsToSelector:@selector(photoBrowser:didDismissAtPageIndex:)])
             [_delegate photoBrowser:self didDismissAtPageIndex:_currentPageIndex];
-        
-        _applicationTopViewController.modalPresentationStyle = _previousModalPresentationStyle;
+		
+		if (SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(@"7.0"))
+		{
+			_applicationTopViewController.modalPresentationStyle = _previousModalPresentationStyle;
+		}
     }];
 }
 
@@ -798,8 +812,9 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 	_pagingScrollView.contentOffset = [self contentOffsetForPageAtIndex:_currentPageIndex];
     [self tilePages];
     _performingLayout = NO;
-    
-    [self.view addGestureRecognizer:_panGesture];
+	
+	if(! _disableVerticalSwipe)
+		[self.view addGestureRecognizer:_panGesture];
 }
 
 #pragma mark - Data

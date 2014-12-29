@@ -71,7 +71,7 @@
 }
 
 + (UIColor *)customWhite:(CGFloat)alpha {
-	return [UIColor colorWithIntegerRed:84 green:99 blue:109 alpha:alpha];
+	return [UIColor colorWithIntegerRed:255 green:255 blue:255 alpha:alpha];
 }
 
 + (UIColor *)customSeparator {

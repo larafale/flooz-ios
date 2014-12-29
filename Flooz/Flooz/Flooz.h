@@ -67,6 +67,7 @@ static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 - (void)reportContent:(FLReport *)report;
 - (void)blockUser:(NSString *)userId;
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (NSString *)formatBirthDate:(NSString *)birthdate;
 
 - (void)updateCurrentUser;
 - (void)updateCurrentUserWithSuccess:(void (^)())success;

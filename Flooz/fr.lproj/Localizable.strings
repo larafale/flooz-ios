@@ -20,6 +20,7 @@
 "GLOBAL_NO" = "Non";
 "GLOBAL_EDIT" = "Changer";
 "GLOBAL_UPDATE" = "Mise à jour disponible !";
+"GLOBAL_VALIDATE" = "Valider";
 
 "MSG_UPDATE" = "Bonne nouvelle ! Une nouvelle version de Flooz est disponible.";
 "BTN_UPDATE" = "Mettre à jour";
@@ -99,7 +100,7 @@
 "FIELD_ADDRESS" = "Adresse";
 "FIELD_ZIP_CODE" = "Code postal";
 "FIELD_CITY" = "Ville";
-
+"FIELD_SMS_CODE" = "Saisir le numéro reçu par SMS";
 "CASHOUT_FIELD" = "Saisir le montant à retirer";
 
 "FIELD_IBAN" = "Code IBAN";
@@ -314,7 +315,7 @@
 "INVITATION_CODE_ACCESS" = "J'ai déjà une\ninvitation";
 "INVITATION_CODE_ACCESS_LONG" = "J'ai déjà une invitation";
 "INVITATION_CODE_ASK" = "Réclamer un code d'invitation";
-"INVITATION_CODE_PLACEHOLDER" = "Saisir votre code";
+"INVITATION_CODE_PLACEHOLDER" = "Entrer votre code d'invitation";
 "INVITATION_CODE_ASK_NAME_PLACEHOLDER" = "Votre nom et prénom";
 "INVITATION_CODE_ASK_EMAIL_PLACEHOLDER" = "Votre adresse email";
 
@@ -350,6 +351,7 @@
 "SIGNUP_PAGE_TITLE_Ask1" = "Accepter les notifications";
 "SIGNUP_PAGE_TITLE_Ask2" = "Accéder à vos contacts";
 "SIGNUP_PAGE_TITLE_Friends" = "Ajouter des amis";
+"SIGNUP_PAGE_TITLE_SMS" = "SMS de validation";
 
 "SIGNUP_NEXT_BUTTON" = "Suivant";
 "SIGNUP_NEXT_BUTTON_ADD" = "Ajouter";

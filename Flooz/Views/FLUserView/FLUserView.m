@@ -127,7 +127,7 @@
 //    CGRectSetWidthHeight(avatar.frame, CGRectGetWidth(self.frame) * RATIO, CGRectGetHeight(self.frame) * RATIO);
 //    avatar.center = CGRectGetFrameCenter(self.frame);
 
-	avatar.layer.cornerRadius = 0;
+    avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;
 //    avatar.layer.borderWidth = 0;
 }
 

@@ -28,9 +28,7 @@ typedef enum {
 	SignupPagePhoto,
 	SignupPageInfo,
 	SignupPageCode,
-	SignupPageCodeVerif,
-	SignupPageAskAccess,
-	SignupPageFriends
+	SignupPageCodeVerif
 } SignupOrderPage;
 
 @interface SignupViewController : GlobalViewController <CodePinDelegate, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate, TTTAttributedLabelDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>

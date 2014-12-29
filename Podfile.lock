@@ -25,14 +25,14 @@ PODS:
     - AFNetworking/NSURLSession
   - Bolts (1.1.3)
   - DACircularProgress (2.2.0)
-  - Facebook-iOS-SDK (3.20.0):
+  - Facebook-iOS-SDK (3.21.1):
     - Bolts (~> 1.0)
-  - HHRouter (0.1)
-  - IDMPhotoBrowser (1.4):
+  - HHRouter (0.1.2)
+  - IDMPhotoBrowser (1.5.2):
     - AFNetworking
     - DACircularProgress
     - pop
-  - JTHelper (0.1.8)
+  - JTHelper (0.1.11)
   - Mixpanel (2.6.2):
     - Mixpanel/MPCategoryHelpers (= 2.6.2)
   - Mixpanel/MPCategoryHelpers (2.6.2)
@@ -42,7 +42,7 @@ PODS:
     - MZFormSheetController/Core (= 2.4.1)
   - MZFormSheetController/Core (2.4.1):
     - MZAppearance (~> 1.1.3)
-  - NSDate+Calendar (0.0.5)
+  - NSDate+Calendar (0.0.6)
   - PonyDebugger (0.4.0):
     - SocketRocket
   - pop (1.0.7)
@@ -55,7 +55,7 @@ PODS:
   - SIOSocket (0.2.0)
   - SMPageControl (1.2)
   - SocketRocket (0.2.0)
-  - TTTAttributedLabel (1.11.0)
+  - TTTAttributedLabel (1.13.0)
   - UAAppReviewManager (0.2.6)
   - UICKeyChainStore (1.1.0)
   - YLMoment (0.5.1)
@@ -86,14 +86,14 @@ SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   DACircularProgress: 3b41941891a56dc6aa17971f5322a9a38a6f446e
-  Facebook-iOS-SDK: 5854404b4b651f612a8ef79ca06d766858f4cb8e
-  HHRouter: 5d41d5346167b087aebc1ddf07b034f9402545ed
-  IDMPhotoBrowser: da2110d99ea8735ad9a0ba52f2d184e756104a71
-  JTHelper: 37f65604e25187c35c37d6d6447476c4aeda4157
+  Facebook-iOS-SDK: 18c26e86ab25c17854a2ee2a8f60562099c6600f
+  HHRouter: 5ee831141a02565c42bd868d92fe7b8e105b4a5a
+  IDMPhotoBrowser: 9639f7c57bdf942dc4e214ff9d8108e08ebd3f27
+  JTHelper: 2ada36adc294d1f7bd80b42766933136fbc64cff
   Mixpanel: c075cedebda3328ce1ee29a18429e265ce967cd8
   MZAppearance: c88502c0c2345120630c34e09d5ff09e2969ba30
   MZFormSheetController: 4b58486f5f1562b3905310b02e8dbbb5a0a94128
-  NSDate+Calendar: 033ae5ec36c72703516293ad38df47addd8661e3
+  NSDate+Calendar: 73e0e7429de90201da3fb41f7165cccb85a59a48
   PonyDebugger: 4f43d7c2f67aa5e26ca00ce6983421608a6eca6d
   pop: 2f14a1ea61339767af9e66741b418c831b3844df
   PPHelpMe: 42295095f70926b9406cf0911f262c00bf49a6cb
@@ -102,9 +102,9 @@ SPEC CHECKSUMS:
   SIOSocket: 40ebc9f014b9fec4ec595212faaf6f19cf29d1f2
   SMPageControl: 506b0c561d3ddbe2d5df28cb33acc8e4b1f93f19
   SocketRocket: 6c9cfd1592bea82262b4283dcda3a7de166af3b6
-  TTTAttributedLabel: e63baa4d3b8798ea259f5d9f55720002b4bbbd66
+  TTTAttributedLabel: a847b59a75c92d59f4eabc9cc1745704cff2dc36
   UAAppReviewManager: f23428de9c9cd242c2ffd899e218ba3620bd0683
   UICKeyChainStore: 257d869d42527b9853ebb11d6dc3ac377b270e72
   YLMoment: a5e6733c66490fd736db325f5d339cb511bdfb54
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.36.0.beta.1

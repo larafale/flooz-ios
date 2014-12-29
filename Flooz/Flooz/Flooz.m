@@ -705,6 +705,10 @@
 	[self requestPath:[NSString stringWithFormat:@"/utils/exists/coupon/%@", user[@"coupon"]] method:@"GET" params:user success:success failure:failure];
 }
 
+- (void)sendSignupSMS:(NSString *)phone {
+    [self requestPath:@"/utils/smstoken" method:@"POST" params:@{@"phone": phone} success:nil failure:nil];
+}
+
 #pragma mark -
 
 - (void)updateCurrentUserAndAskResetCode:(id)result {
@@ -973,8 +977,8 @@
     [self clearLogin];
     NSMutableDictionary *user = [NSMutableDictionary new];
     
-    if (data[@"nick"])
-        user[@"login"] = data[@"nick"];
+    if (data[@"phone"])
+        user[@"login"] = data[@"phone"];
     
     if (data[@"secureCode"])
         user[@"hasSecureCode"] = data[@"secureCode"];
@@ -983,6 +987,7 @@
 }
 
 - (void)handleTriggerSignupShow:(NSDictionary *)data {
+    [self sendSignupSMS:data[@"phone"]];
     [appDelegate showSignupWithUser:data];
 }
 
@@ -1018,8 +1023,6 @@
 - (void)handleTrigger3DSecureComplete:(NSDictionary *)data {
     Secure3DViewController *controller = [Secure3DViewController getInstance];
     [controller dismissViewControllerAnimated:YES completion:^{
-        if (controller.isAtSignup)
-            [appDelegate showSignupAfter3DSecureWithUser:data];
         [Secure3DViewController clearInstance];
     }];
 }

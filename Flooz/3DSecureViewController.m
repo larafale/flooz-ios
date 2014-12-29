@@ -2,8 +2,8 @@
 //  3DSecureViewController.m
 //  Flooz
 //
-//  Created by Epitech on 10/29/14.
-//  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
+//  Created by Olivier on 10/29/14.
+//  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
 #import "3DSecureViewController.h"

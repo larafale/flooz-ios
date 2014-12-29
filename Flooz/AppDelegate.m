@@ -192,21 +192,16 @@
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user {
-    if (user[@"coupon"] && ![user[@"coupon"] isBlank]) {
-        firstVC = [[FirstLaunchViewController alloc] initWithSpecificPage:SignupPagePseudo];
-        [firstVC phoneNotRegistered:user];
-        [self flipToViewController:firstVC];
-    }
-    else
-        [firstVC phoneNotRegistered:user];
+    [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
+    SignupSMSViewController *controller = [SignupSMSViewController new];
+    signupNavigationController.controller.userDic = [user mutableCopy];
+    [signupNavigationController.controller.userDic setObject:@"distinctId" forKey:[Mixpanel sharedInstance].distinctId];
+    [signupNavigationController pushViewController:controller animated:YES];
 }
 
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user {
-    [firstVC signupWithFacebookUser:user];
-}
-
-- (void)showSignupAfter3DSecureWithUser:(NSDictionary *)user {
-    [firstVC signupAfter3DSecure:user];
+    [signupNavigationController.controller.userDic addEntriesFromDictionary:user];
+    [signupNavigationController.controller displayChanges];
 }
 
 #pragma mark -
@@ -224,8 +219,8 @@
 }
 
 - (void)displaySignin {
-    firstVC = [[FirstLaunchViewController alloc] initWithSpecificPage:SignupPagePhone];
-    [self flipToViewController:firstVC];
+    signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:[SignupPhoneViewController new]];
+    [self flipToViewController:signupNavigationController];
 }
 
 - (void)displaySignupAtPage:(SignupOrderPage)index {
