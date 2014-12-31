@@ -39,7 +39,7 @@
 "NAV_NOTIFICATIONS" = "Notifications";
 "NAV_CASHOUT" = "Virement";
 "NAV_RIB" = "RIB";
-"NAV_PASSWORD" = "Chnager de mot de passe";
+"NAV_PASSWORD" = "Changer de mot de passe";
 "NAV_PASSWORD_FORGET" = "MDP oublié";
 "NAV_CREDIT_CARD" = "Carte bancaire";
 "NAV_CREDIT_CARD_ADD" = "Ajouter une CB";
@@ -47,7 +47,7 @@
 "NAV_FRIENDS" = "Mes amis";
 "NAV_DOCUMENTS" = "Justificatifs";
 "NAV_SECURE_CODE" = "Sécurité";
-"NAV_INVIT_CODE" = "Code";
+"NAV_INVITE" = "Inviter des amis";
 "NAV_NEW_FLOOZ_FRIENDS" = "Choisir un contact";
 "NAV_3DSECURE" = "3D Secure";
 
@@ -73,7 +73,7 @@
 "INFORMATIONS_PREVIEW" = "Visite Guidée";
 "INFORMATIONS_ABOUT" = "A Propos";
 "INFORMATIONS_CONTACT" = "Contactez-nous";
-"INFORMATIONS_RATE" = "Noter l'application";
+"INFORMATIONS_RATE" = "Noter sur l'App Store";
 
 "NOTIFICATIONS_SECTION_FEED" = "Feed";
 "NOTIFICATIONS_SECTION_PUSH" = "Push";
@@ -100,7 +100,7 @@
 "FIELD_ADDRESS" = "Adresse";
 "FIELD_ZIP_CODE" = "Code postal";
 "FIELD_CITY" = "Ville";
-"FIELD_SMS_CODE" = "Saisir le numéro reçu par SMS";
+"FIELD_SMS_CODE" = "Saisir le code reçu par SMS";
 "CASHOUT_FIELD" = "Saisir le montant à retirer";
 
 "FIELD_IBAN" = "Code IBAN";
@@ -140,8 +140,8 @@
 
 "MENU_PAYMENT" = "Payer";
 "MENU_COLLECT" = "Réclamer";
-"MENU_NEW_FLOOZ" = "Nouveau Flooz";
-"MENU_ADD_FRIENDS" = "Ajouter aux amis";
+"MENU_NEW_FLOOZ" = "Floozer @%@";
+"MENU_ADD_FRIENDS" = "Demander @%@ en ami";
 "MENU_REMOVE_FRIENDS" = "Supprimer des amis";
 "MENU_AVATAR" = "Voir la photo";
 "MENU_REPORT" = "Signaler";
@@ -160,9 +160,11 @@
 
 "ACCOUNT_BUTTON_PROFIL" = "Mon profil";
 "ACCOUNT_BUTTON_NOTIFICATION" = "Notifications";
-"ACCOUNT_BUTTON_INVITE" = "J'aime mes amis";
+"ACCOUNT_BUTTON_INVITE" = "Le Club Flooz";
 "ACCOUNT_BUTTON_CASH_OUT" = "Virer à ma banque";
 "ACCOUNT_BUTTON_DIVERS" = "À propos";
+
+"INVITATION_BACKTEXT" = "Devenir ambassadeur";
 
 "IDEA_RECIPIENTS" = "hello@flooz.me";
 "IDEA_OBJECT" = "Idées / Critiques";
@@ -241,7 +243,7 @@
 "EVENT_SCOPE_PRIVATE" = "Sur invitation";
 
 "FRIENDS_FRIENDS_SEARCH" = "Recherche";
-"SEARCH_FRIENDS" = "Retrouver des amis";
+"SEARCH_FRIENDS" = "Chercher des amis sur Flooz";
 "FRIENDS_SEARCH_FRIENDS" = "Mes amis";
 "FRIENDS_FRIENDS_REQUEST" = "Demandes en attente";
 "FRIENDS_FRIENDS_SUGGESTION" = "Vous connaissez peut-être...";
@@ -309,13 +311,13 @@
 "INVITE_MESSAGE" = "Offrez à vos amis la possibilité d'accéder à l'application !";
 "INVITE_CODE_CODE" = "Votre code";
 "INVITE_CODE_SHARE" = "Partagez mon code";
-"INVITATION_CODE_EXPLICATION" = "Seul les personnes ayant un code d'invitation peuvent s'inscrire sur Flooz.";
+"INVITATION_CODE_EXPLICATION" = "Seules les personnes ayant été invitées peuvent rejoindre Flooz.";
 "INVITATION_CODE_WAITING_EXPLICATION" = "Votre demande d'invitation a bien était prise en compte.\nVous recevrez très bientôt un email d'invitation !";
 "ALREADY_FLOOZ" = "Déjà sur\nFlooz";
 "INVITATION_CODE_ACCESS" = "J'ai déjà une\ninvitation";
 "INVITATION_CODE_ACCESS_LONG" = "J'ai déjà une invitation";
 "INVITATION_CODE_ASK" = "Réclamer un code d'invitation";
-"INVITATION_CODE_PLACEHOLDER" = "Entrer votre code d'invitation";
+"INVITATION_CODE_PLACEHOLDER" = "Entrer votre code";
 "INVITATION_CODE_ASK_NAME_PLACEHOLDER" = "Votre nom et prénom";
 "INVITATION_CODE_ASK_EMAIL_PLACEHOLDER" = "Votre adresse email";
 
@@ -340,11 +342,11 @@
 "SIGNUP_VIEW_IGNORE_BUTTON" = "Plus tard";
 "SIGNUP_VIEW_IGNORE_BUTTON_2" = "Terminer";
 
-"NumMobile" = "Entrez votre numéro";
+"NumMobile" = "Entrez votre n° de mobile";
 "SIGNUP_PAGE_PHONE_MESSAGE" = "Un lien de confirmation vous sera\nenvoyé par SMS";
 
-"SIGNUP_PAGE_TITLE_Phone" = "Numéro de mobile";
-"SIGNUP_PAGE_TITLE_Pseudo" = "Choisissez un pseudo";
+"SIGNUP_PAGE_TITLE_Phone" = "Identification";
+"SIGNUP_PAGE_TITLE_Pseudo" = "Créez votre pseudo";
 "SIGNUP_PAGE_TITLE_Photo" = "Soyez reconnaissable";
 "SIGNUP_PAGE_TITLE_Info" = "Informations";
 "SIGNUP_PAGE_TITLE_CB" = "Ajouter une carte bancaire";
@@ -388,7 +390,7 @@
 "Invite_Friends_Message_SMS" = "Prends cette appli elle est vraiment top pour s'échanger de l'argent http://flooz.me/download utilise ce code pour l'inscription ";
 
 "SECURE_LOGIN_TITLE" = "Sécurité";
-"CODE_INVITATION_TITLE" = "Code d'invitation";
+"CODE_INVITATION_TITLE" = "Rejoignez le Club";
 "CODE_INVITATION_PLACEHOLDER" = "Entrez votre code";
 "CODE_INVITATION_PLACEHOLDER" = "Entre ton code d'invitation...";
 "CODE_INVITATION_EXPLICATION" = "Tu voudrais Floozer mais t'es pas invité ?\nRéclame ton code à un ami ou prend contact avec nous via twitter ou téléphone.";
@@ -424,6 +426,8 @@
 "Confirm" = "Confirmer";
 "OK" = "OK";
 
+"Join" = "Rejoindre";
+"Login" = "Démarrer";
 "Connect" = "Se connecter";
 "Signup" = "S'inscrire";
 "Save" = "Enregistrer";

@@ -114,16 +114,16 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if(section == 0){
-        return NSLocalizedString(@"FRIENDS_FRIENDS_SEARCH", nil);
+        return [NSString stringWithFormat:@"%@ (%lu)", NSLocalizedString(@"FRIENDS_FRIENDS_SEARCH", nil), (unsigned long)friendsSearch.count];
     }
     else if(section == 1){
         return NSLocalizedString(@"FRIENDS_FRIENDS_SUGGESTION", nil);
     }
     else if(section == 2){
-        return NSLocalizedString(@"FRIENDS_FRIENDS_REQUEST", nil);
+        return [NSString stringWithFormat:@"%@ (%lu)", NSLocalizedString(@"FRIENDS_FRIENDS_REQUEST", nil), (unsigned long)friendsRequest.count];
     }
     
-    return NSLocalizedString(@"FRIENDS_FRIENDS", nil);
+    return [NSString stringWithFormat:@"%@ (%lu)", NSLocalizedString(@"FRIENDS_FRIENDS", nil), (unsigned long)friends.count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

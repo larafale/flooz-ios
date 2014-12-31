@@ -17,6 +17,8 @@
 	SocialScopePrivate
 };
 
+@property (nonatomic) NSArray *likes;
+@property (nonatomic) NSArray *comments;
 @property (nonatomic) NSUInteger commentsCount;
 @property (nonatomic) NSUInteger likesCount;
 @property BOOL isCommented;

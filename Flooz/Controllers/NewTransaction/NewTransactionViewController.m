@@ -41,6 +41,7 @@
     BOOL infoDisplayed;
     BOOL firstView;
     BOOL firstViewAmount;
+    BOOL firstViewWhy;
     
     FLCameraKeyboard *camera;
     UIView *cameraView;
@@ -81,6 +82,7 @@
         infoDisplayed = NO;
         firstView = YES;
         firstViewAmount = YES;
+        firstViewWhy = NO;
         
         if (user) {
             transaction[@"to"] = [@"@" stringByAppendingString :[user username]];
@@ -138,6 +140,9 @@
         
         if (preset.blockAmount)
             firstViewAmount = !preset.blockAmount;
+        
+        firstViewAmount = preset.focusAmount;
+        firstViewWhy = preset.focusWhy;
     }
     return self;
 }
@@ -151,7 +156,7 @@
     _blackScreen = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [_blackScreen setBackgroundColor:[UIColor customBackground]];
     [_blackScreen setAlpha:0.0];
-
+    
     if (currentPreset && currentPreset.blockBack)
         ((FLNavigationController*)self.parentViewController).blockBack = currentPreset.blockBack;
     
@@ -256,17 +261,16 @@
         if (!infoDisplayed) {
             infoDisplayed = YES;
         }
-        
-        if (firstViewAmount) {
-            [amountInput becomeFirstResponder];
-            firstViewAmount = NO;
-        }
     }
-    else {
-        if (firstViewAmount) {
-            [amountInput becomeFirstResponder];
-            firstViewAmount = NO;
-        }
+    
+    if (firstViewAmount) {
+        [amountInput becomeFirstResponder];
+        firstViewAmount = NO;
+    }
+    
+    if (firstViewWhy) {
+        [content becomeFirstResponder];
+        firstViewWhy = NO;
     }
     
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTuto) userInfo:nil repeats:NO];
@@ -463,18 +467,21 @@
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] createTransaction:transaction success: ^(NSDictionary *result) {
-                if (result[@"sms"]) {
+                if (transaction[@"image"]) {
+                    [[Flooz sharedInstance] uploadTransactionPic:result[@"item"][@"_id"] image:transaction[@"image"] success:^(id result) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
+                    } failure:nil];
+                }
+                
+                if (result[@"sms"] && [MFMessageComposeViewController canSendText]) {
                     MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
-                    if ([MFMessageComposeViewController canSendText]) {
-                        message.messageComposeDelegate = self;
-                        
-                        [message setRecipients:[NSArray arrayWithObject:result[@"sms"][@"phone"]]];
-                        [message setBody:result[@"sms"][@"message"]];
-                        
-                        message.modalPresentationStyle = UIModalPresentationPageSheet;
-                        [self presentViewController:message animated:YES completion:nil];
-                    }
-
+                    message.messageComposeDelegate = self;
+                    
+                    [message setRecipients:[NSArray arrayWithObject:result[@"sms"][@"phone"]]];
+                    [message setBody:result[@"sms"][@"message"]];
+                    
+                    message.modalPresentationStyle = UIModalPresentationPageSheet;
+                    [self presentViewController:message animated:YES completion:nil];
                 } else {
                     [self dismissView];
                 }

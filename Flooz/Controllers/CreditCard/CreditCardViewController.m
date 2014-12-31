@@ -19,7 +19,7 @@
 	NSMutableDictionary *_card;
 	NSMutableArray *fieldsView;
 	UIScrollView *_contentView;
-	UIButton *_nextButton;
+	FLActionButton *_nextButton;
 }
 
 @end
@@ -92,15 +92,9 @@
 }
 
 - (void)createNextButton {
-	_nextButton = [[UIButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, 34)];
-
-	[_nextButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
-	[_nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[_nextButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
-	[_nextButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
+	_nextButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Save", nil)];
 
     [_nextButton setEnabled:NO];
-	[_nextButton setBackgroundColor:[UIColor customBackground]];
 }
 
 - (void)resetContentView {
@@ -227,15 +221,14 @@
 
 	{
         MARGE_LEFT_RIGHT += 6;
-		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, CGRectGetHeight(_contentView.frame) - 60.0f, CGRectGetWidth(_contentView.frame) - (2 * MARGE_LEFT_RIGHT), 40)];
+		FLActionButton *button = [[FLActionButton alloc] initWithFrame:CGRectMake(MARGE_LEFT_RIGHT, CGRectGetHeight(_contentView.frame) - 60.0f, CGRectGetWidth(_contentView.frame) - (2 * MARGE_LEFT_RIGHT), FLActionButtonDefaultHeight) title:NSLocalizedString(@"CREDIT_CARD_REMOVE", nil)];
 
-		button.backgroundColor = [UIColor customBackgroundStatus];
-		[button setTitle:NSLocalizedString(@"CREDIT_CARD_REMOVE", Nil) forState:UIControlStateNormal];
+        [button setBackgroundColor:[UIColor customBackgroundStatus] forState:UIControlStateNormal];
+        [button setBackgroundColor:[UIColor customBackgroundStatus:0.5f] forState:UIControlStateDisabled];
+        [button setBackgroundColor:[UIColor customBackgroundStatus:0.5f] forState:UIControlStateHighlighted];
+		[button setImage:[UIImage imageNamed:@"trash"] size:CGSizeMake(16, 16)];
 
-		[button setImage:[UIImage imageNamed:@"trash"] forState:UIControlStateNormal];
-		[button setImageEdgeInsets:UIEdgeInsetsMake(0, -15, 0, 0)];
-
-		button.titleLabel.font = [UIFont customTitleExtraLight:14];
+		button.titleLabel.font = [UIFont customTitleExtraLight:15];
 
 		[button addTarget:self action:@selector(didRemoveCardTouch) forControlEvents:UIControlEventTouchUpInside];
 
@@ -294,11 +287,9 @@
 	    [_card[@"number"] isBlank] || [_card[@"cvv"] isBlank] || [_card[@"expires"] isBlank] || [_card[@"holder"] isBlank]) {
 		verifOk = NO;
 		[_nextButton setEnabled:NO];
-		[_nextButton setBackgroundColor:[UIColor customBackground]];
 	}
 	else {
 		[_nextButton setEnabled:YES];
-		[_nextButton setBackgroundColor:[UIColor customBlue]];
 	}
 	return verifOk;
 }
@@ -307,7 +298,6 @@
 	[[self view] endEditing:YES];
 
     [_nextButton setEnabled:NO];
-    [_nextButton setBackgroundColor:[UIColor customBackground]];
     
 	[[Flooz sharedInstance] showLoadView];
 	[[Flooz sharedInstance] createCreditCard:_card atSignup:NO success: ^(id result) {

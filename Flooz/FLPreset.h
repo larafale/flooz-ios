@@ -19,6 +19,8 @@
 @property (nonatomic) BOOL blockTo;
 @property (nonatomic) BOOL blockBack;
 @property (nonatomic) BOOL blockWhy;
+@property (nonatomic) BOOL focusAmount;
+@property (nonatomic) BOOL focusWhy;
 @property (nonatomic, retain) NSString *title;
 
 - (id)initWithJson:(NSDictionary *)json;

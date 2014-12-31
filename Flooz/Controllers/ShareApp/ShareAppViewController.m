@@ -27,21 +27,18 @@
     
     UIImageView *_backImage;
     
-    UILabel *_codeLabel;
+    UILabel *_titleLabel;
     
     FLClearActionTextView *_text;
     
     NSString *_code;
-    NSString *_appText;
-    NSString *_mailText;
-    NSString *_fbDecription;
-    NSString *_fbName;
-    NSString *_fbLink;
-    NSString *_fbCaption;
-    NSString *_fbMessage;
+    NSArray *_appText;
+    NSDictionary *_fbData;
+    NSDictionary *_mailData;
     NSString *_twitterText;
     NSString *_smsText;
-    NSString *_mailObject;
+    NSString *_h1;
+    NSString *_viewTitle;
     
     WYPopoverController *popoverController;
     ClipboardPopoverViewController *popoverViewController;
@@ -54,7 +51,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_INVITE", @"");
     }
     return self;
 }
@@ -73,13 +69,13 @@
     
     [_mainBody addSubview:_backImage];
     
-    _codeLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentBold:30] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    [_codeLabel setUserInteractionEnabled:YES];
-    [_codeLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
-
-    [_mainBody addSubview:_codeLabel];
+    _titleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentBold:27] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    [_titleLabel setUserInteractionEnabled:YES];
+    
+    [_mainBody addSubview:_titleLabel];
     
     _text = [[FLClearActionTextView alloc] initWithFrame:CGRectMake(20, 220, CGRectGetWidth(_mainBody.frame) - 40, 100)];
+    [_text addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
     
     if (IS_IPHONE4) {
         CGRectSetY(_text.frame, 200);
@@ -91,8 +87,6 @@
     [_text setBackgroundColor:[UIColor clearColor]];
     
     [_mainBody addSubview:_text];
-    
-    [self createFooterView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -100,35 +94,48 @@
     
     [[Flooz sharedInstance] invitationStrings:^(NSDictionary *result) {
         _code = result[@"item"][@"code"];
-        _appText = result[@"item"][@"app"];
-        _mailText = result[@"item"][@"mail"][@"content"];
-        _fbMessage = result[@"item"][@"facebook"][@"message"];
-        _fbName = result[@"item"][@"facebook"][@"name"];
-        _fbDecription = result[@"item"][@"facebook"][@"description"];
-        _fbCaption = result[@"item"][@"facebook"][@"caption"];
-        _fbLink = result[@"item"][@"facebook"][@"link"];
+        _appText = result[@"item"][@"text"];
+        _fbData = result[@"item"][@"facebook"];
+        _mailData = result[@"item"][@"mail"];
         _twitterText = result[@"item"][@"twitter"];
         _smsText = result[@"item"][@"sms"];
-        _mailObject = result[@"item"][@"mail"][@"title"];
+        _viewTitle = result[@"item"][@"title"];
+        _h1 = result[@"item"][@"h1"];
         
         if (!_code)
             _code = @"";
         
-        [_codeLabel setText:_code];
-        [_codeLabel sizeToFit];
-        CGRectSetWidth(_codeLabel.frame, CGRectGetWidth(_codeLabel.frame) + 10);
-        CGRectSetHeight(_codeLabel.frame, CGRectGetHeight(_codeLabel.frame) + 5);
-        [_codeLabel setCenter:_backImage.center];
-        [_codeLabel setBackgroundColor:[UIColor customBackgroundHeader]];
-        _codeLabel.layer.masksToBounds = YES;
-        _codeLabel.layer.cornerRadius = 2;
+        [self setTitle:_viewTitle];
         
-        [_text setText:_appText];
-        [_text setTextColor:[UIColor whiteColor]];
+        [_titleLabel setText:_h1];
+        [_titleLabel sizeToFit];
+        CGRectSetWidth(_titleLabel.frame, CGRectGetWidth(_titleLabel.frame));
+        CGRectSetHeight(_titleLabel.frame, CGRectGetHeight(_titleLabel.frame));
+        [_titleLabel setCenter:_backImage.center];
+        
+        NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_appText[0]];
+        [text addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text.length)];
+        [text addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text.length)];
+        
+        NSMutableAttributedString *code = [[NSMutableAttributedString alloc] initWithString:_code];
+        [code addAttribute:NSForegroundColorAttributeName value:[UIColor customBlue] range:NSMakeRange(0, code.length)];
+        [code addAttribute:NSFontAttributeName value:[UIFont customContentBold:19] range:NSMakeRange(0, code.length)];
+        
+        NSMutableAttributedString *text2 = [[NSMutableAttributedString alloc] initWithString:_appText[1]];
+        [text2 addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text2.length)];
+        [text2 addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text2.length)];
+        
+        [text appendAttributedString:code];
+        [text appendAttributedString:text2];
+        
+        [_text setAttributedText:text];
         [_text setTextAlignment:NSTextAlignmentCenter];
-        [_text setFont:[UIFont customContentRegular:18]];
         [_text sizeToFit];
         CGRectSetX(_text.frame, (CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(_text.frame)) / 2);
+        
+        if (_footerView)
+            [_footerView removeFromSuperview];
+        [self createFooterView];
         
     } failure:nil];
 }
@@ -144,80 +151,88 @@
 - (void)createFooterView {
     _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame) - 90, CGRectGetWidth(_mainBody.frame), 80)];
     
+    float nbButtons = 0;
+    
+    if (_smsText && ![_smsText isBlank])
+        ++nbButtons;
+    
+    if (_fbData)
+        ++nbButtons;
+    
+    if (_twitterText && ![_twitterText isBlank])
+        ++nbButtons;
+    
+    if (_mailData)
+        ++nbButtons;
+    
     float buttonSize = 35;
-    float padding = (CGRectGetWidth(_footerView.frame) - (4 * buttonSize)) / 5;
+    float padding = (CGRectGetWidth(_footerView.frame) - (nbButtons * buttonSize)) / (nbButtons + 1);
     float posX = padding;
     
-    _shareSMS = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_shareSMS setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
-    [_footerView addSubview:_shareSMS];
-    posX += buttonSize + padding;
     
-    _shareFB = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_shareFB setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
-    [_footerView addSubview:_shareFB];
-    posX += buttonSize + padding;
+    if ([self smsAvailable]) {
+        _shareSMS = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_shareSMS setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
+        [_shareSMS setImage:[[UIImage imageNamed:@"share_sms"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [_shareSMS setTintColor:[UIColor customBlue]];
+        [_shareSMS addTarget:self action:@selector(sendWithSMS) forControlEvents:UIControlEventTouchUpInside];
+        [_footerView addSubview:_shareSMS];
+        posX += buttonSize + padding;
+        
+        UILabel *label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_SMS", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        [label setFrame:CGRectMake(CGRectGetMidX(_shareSMS.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
+        [_footerView addSubview:label];
+    }
     
-    _shareTwitter = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_shareTwitter setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
-    [_footerView addSubview:_shareTwitter];
-    posX += buttonSize + padding;
+    if ([self facebookAvailable]) {
+        _shareFB = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_shareFB setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
+        [_shareFB setImage:[[UIImage imageNamed:@"share_facebook"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [_shareFB setTintColor:[UIColor customBlue]];
+        [_shareFB addTarget:self action:@selector(sendWithFacebook) forControlEvents:UIControlEventTouchUpInside];
+        [_footerView addSubview:_shareFB];
+        posX += buttonSize + padding;
+        
+        UILabel *label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_FACEBOOK", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        [label setFrame:CGRectMake(CGRectGetMidX(_shareFB.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
+        [_footerView addSubview:label];
+    }
     
-    _shareMail = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_shareMail setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
-    [_footerView addSubview:_shareMail];
+    if ([self twitterAvailable]) {
+        _shareTwitter = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_shareTwitter setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
+        [_shareTwitter setImage:[[UIImage imageNamed:@"share_twitter"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [_shareTwitter setTintColor:[UIColor customBlue]];
+        [_shareTwitter addTarget:self action:@selector(sendWithTwitter) forControlEvents:UIControlEventTouchUpInside];
+        [_footerView addSubview:_shareTwitter];
+        posX += buttonSize + padding;
+        
+        UILabel *label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_TWITTER", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        [label setFrame:CGRectMake(CGRectGetMidX(_shareTwitter.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
+        [_footerView addSubview:label];
+    }
     
-    UIImage *image;
-    
-    image = [[UIImage imageNamed:@"share_sms"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [_shareSMS setImage:image forState:UIControlStateNormal];
-    
-    image = [[UIImage imageNamed:@"share_facebook"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [_shareFB setImage:image forState:UIControlStateNormal];
-    
-    image = [[UIImage imageNamed:@"share_twitter"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [_shareTwitter setImage:image forState:UIControlStateNormal];
-    
-    image = [[UIImage imageNamed:@"share_mail"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [_shareMail setImage:image forState:UIControlStateNormal];
-    
-    [_shareSMS setTintColor:[UIColor customBlue]];
-    [_shareFB setTintColor:[UIColor customBlue]];
-    [_shareTwitter setTintColor:[UIColor customBlue]];
-    [_shareMail setTintColor:[UIColor customBlue]];
-    
-    [_shareSMS addTarget:self action:@selector(sendWithSMS) forControlEvents:UIControlEventTouchUpInside];
-    [_shareFB addTarget:self action:@selector(sendWithFacebook) forControlEvents:UIControlEventTouchUpInside];
-    [_shareTwitter addTarget:self action:@selector(sendWithTwitter) forControlEvents:UIControlEventTouchUpInside];
-    [_shareMail addTarget:self action:@selector(sendWithMail) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *label;
-    
-    label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_SMS", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    [label setFrame:CGRectMake(CGRectGetMidX(_shareSMS.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
-    [_footerView addSubview:label];
-    
-    label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_FACEBOOK", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    [label setFrame:CGRectMake(CGRectGetMidX(_shareFB.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
-    [_footerView addSubview:label];
-    
-    label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_TWITTER", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    [label setFrame:CGRectMake(CGRectGetMidX(_shareTwitter.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
-    [_footerView addSubview:label];
-    
-    label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_MAIL", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    [label setFrame:CGRectMake(CGRectGetMidX(_shareMail.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
-    [_footerView addSubview:label];
+    if ([self mailAvailable]) {
+        _shareMail = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_shareMail setFrame:CGRectMake(posX, 0, buttonSize, buttonSize)];
+        [_shareMail setImage:[[UIImage imageNamed:@"share_mail"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [_shareMail setTintColor:[UIColor customBlue]];
+        [_shareMail addTarget:self action:@selector(sendWithMail) forControlEvents:UIControlEventTouchUpInside];
+        [_footerView addSubview:_shareMail];
+        
+        UILabel *label = [[UILabel alloc] initWithText:NSLocalizedString(@"SHARE_MAIL", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        [label setFrame:CGRectMake(CGRectGetMidX(_shareMail.frame) - (CGRectGetWidth(label.frame) / 2), buttonSize + 10, CGRectGetWidth(label.frame), CGRectGetHeight(label.frame))];
+        [_footerView addSubview:label];
+    }
     
     [_mainBody addSubview:_footerView];
 }
-
 
 - (void)showPopover {
     popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
     popoverController.delegate = self;
     
-    [popoverController presentPopoverFromRect:_codeLabel.bounds inView:_codeLabel permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+    [popoverController presentPopoverFromRect:_text.bounds inView:_text permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
         [popoverViewController.button addTarget:self action:@selector(copyCode) forControlEvents:UIControlEventTouchUpInside];
     }];
 }
@@ -233,6 +248,30 @@
     return YES;
 }
 
+- (BOOL)smsAvailable {
+    if (_smsText && ![_smsText isBlank] && [MFMessageComposeViewController canSendText])
+        return YES;
+    return NO;
+}
+
+- (BOOL)mailAvailable {
+    if (_mailData && [MFMailComposeViewController canSendMail])
+        return YES;
+    return NO;
+}
+
+- (BOOL)facebookAvailable {
+    if (_fbData)
+        return YES;
+    return NO;
+}
+
+- (BOOL)twitterAvailable {
+    if (_twitterText && ![_twitterText isBlank] && [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+        return YES;
+    return NO;
+}
+
 - (void)sendWithFacebook {
     if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
     {
@@ -240,7 +279,7 @@
         
         mySLComposerSheet = [[SLComposeViewController alloc] init];
         mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        [mySLComposerSheet setInitialText:_fbMessage];
+        [mySLComposerSheet setInitialText:_fbData[@"message"]];
         
         [self presentViewController:mySLComposerSheet animated:YES completion:nil];
         
@@ -252,27 +291,28 @@
                     break;
                 case SLComposeViewControllerResultDone:
                     output = @"Post Successfull";
+                    [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
                     break;
                 default:
                     break;
             }
         }];
     } else if ([FBDialogs canPresentShareDialog]) {
-        FBLinkShareParams *params = [[FBLinkShareParams alloc] initWithLink:[NSURL URLWithString:_fbLink] name:_fbName caption:@"www.flooz.me" description:_fbDecription picture:nil];
+        FBLinkShareParams *params = [[FBLinkShareParams alloc] initWithLink:[NSURL URLWithString:_fbData[@"link"]] name:_fbData[@"name"] caption:_fbData[@"caption"] description:_fbData[@"description"] picture:nil];
         
         [FBDialogs presentShareDialogWithParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
             if(error) {
                 // An error occurred, we need to handle the error
             } else {
-                // Success
+                [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
             }
         }];
     } else {
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       _fbName , @"name",
-                                       _fbCaption, @"caption",
-                                       _fbDecription, @"description",
-                                       _fbLink, @"link",
+                                       _fbData[@"name"] , @"name",
+                                       _fbData[@"caption"], @"caption",
+                                       _fbData[@"description"], @"description",
+                                       _fbData[@"link"], @"link",
                                        nil];
         
         [FBWebDialogs presentFeedDialogModallyWithSession:nil
@@ -290,8 +330,7 @@
                                                                   NSLog(@"User cancelled.");
                                                                   
                                                               } else {
-                                                                  NSString *result = [NSString stringWithFormat: @"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
-                                                                  NSLog(@"result %@", result);
+                                                                  [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
                                                               }
                                                           }
                                                       }
@@ -312,48 +351,50 @@
 }
 
 - (void)sendWithTwitter {
-    SLComposeViewController *mySLComposerSheet;
     
     if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
     {
+        SLComposeViewController *mySLComposerSheet;
         mySLComposerSheet = [[SLComposeViewController alloc] init];
         mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         [mySLComposerSheet setInitialText:_twitterText];
         
         [self presentViewController:mySLComposerSheet animated:YES completion:nil];
+        [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
+            NSString *output;
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    output = @"Action Cancelled";
+                    break;
+                case SLComposeViewControllerResultDone:
+                    [[Flooz sharedInstance] sendInvitationMetric:@"twitter"];
+                    break;
+                default:
+                    break;
+            }
+        }];
     }
-    [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-        NSString *output;
-        switch (result) {
-            case SLComposeViewControllerResultCancelled:
-                output = @"Action Cancelled";
-                break;
-            case SLComposeViewControllerResultDone:
-                output = @"Post Successfull";
-                break;
-            default:
-                break;
-        }
-    }];
 }
 
 - (void)sendWithMail {
-    MFMailComposeViewController *message = [[MFMailComposeViewController alloc] init];
-    message.mailComposeDelegate = self;
-    
-    [message setSubject:_mailObject];
-    [message setMessageBody:_mailText isHTML:@YES];
-    
-    [[Flooz sharedInstance] showLoadView];
-    message.modalPresentationStyle = UIModalPresentationPageSheet;
-    [self presentViewController:message animated:YES completion:^{
-        [[Flooz sharedInstance] hideLoadView];
-    }];
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *message = [[MFMailComposeViewController alloc] init];
+        message.mailComposeDelegate = self;
+        
+        [message setSubject:_mailData[@"title"]];
+        [message setMessageBody:_mailData[@"content"] isHTML:@YES];
+        
+        [[Flooz sharedInstance] showLoadView];
+        message.modalPresentationStyle = UIModalPresentationPageSheet;
+        [self presentViewController:message animated:YES completion:^{
+            [[Flooz sharedInstance] hideLoadView];
+        }];
+    }
 }
 
 - (void)sendWithSMS {
-    MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
     if ([MFMessageComposeViewController canSendText]) {
+        MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
         message.messageComposeDelegate = self;
         
         [message setBody:_smsText];
@@ -369,7 +410,7 @@
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     [self dismissViewControllerAnimated:YES completion: ^{
         if (result == MessageComposeResultSent) {
-            
+            [[Flooz sharedInstance] sendInvitationMetric:@"sms"];
         }
         else if (result == MessageComposeResultCancelled) {
             
@@ -383,7 +424,7 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion: ^{
         if (result == MessageComposeResultSent) {
-            
+            [[Flooz sharedInstance] sendInvitationMetric:@"email"];
         }
         else if (result == MessageComposeResultCancelled) {
             

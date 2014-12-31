@@ -81,6 +81,8 @@
         return TriggerPresetLine;
     else if ([param isEqualToString:@"feed:read"])
         return TriggerFeedRead;
+    else if ([param isEqualToString:@"invitation:show"])
+        return TriggerShowInvitation;
     else
         return TriggerNone;
 }

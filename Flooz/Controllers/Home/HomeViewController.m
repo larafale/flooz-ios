@@ -20,7 +20,6 @@
 
 	NSMutableArray *transactions;
 
-
 	NSString *_nextPageUrl;
 	BOOL nextPageIsLoading;
 
@@ -55,21 +54,21 @@
 
 	self.view.backgroundColor = [UIColor customBackground];
 
-	{
-		_headerView = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), 55.0f + PPStatusBarHeight())];
-		[_headerView setBackgroundColor:[UIColor customBackground]];
-		[self.view addSubview:_headerView];
-	}
+//	{
+//		_headerView = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), 55.0f + PPStatusBarHeight())];
+//		[_headerView setBackgroundColor:[UIColor customBackground]];
+//		[self.view addSubview:_headerView];
+//	}
+
+//	{
+//		logo = [UIImageView imageNamed:@"home-title"];
+//		CGRectSetXY(logo.frame, (CGRectGetWidth(_headerView.frame) - logo.frame.size.width) / 2. + 5, PPStatusBarHeight());
+//		[_headerView addSubview:logo];
+//	}
+
 
 	{
-		logo = [UIImageView imageNamed:@"home-title"];
-		CGRectSetXY(logo.frame, (CGRectGetWidth(_headerView.frame) - logo.frame.size.width) / 2. + 5, PPStatusBarHeight());
-		[_headerView addSubview:logo];
-	}
-
-
-	{
-		_mainView = [UIView newWithFrame:CGRectMake(0, CGRectGetMaxY(_headerView.frame), PPScreenWidth(), PPScreenHeight() - CGRectGetHeight(_headerView.frame) - 50.0f)];
+		_mainView = [UIView newWithFrame:CGRectMake(0, STATUSBAR_HEIGHT, PPScreenWidth(), PPScreenHeight() - 85.0f - STATUSBAR_HEIGHT)];
 		[self.view addSubview:_mainView];
 	}
 
@@ -120,35 +119,41 @@
 }
 
 - (void)createButtonSend {
-	UIButton *connectButton = [[UIButton alloc] initWithFrame:CGRectMake(1, 1, CGRectGetWidth(_footerView.frame) / 2. - 1, CGRectGetHeight(_footerView.frame) - 2)];
-	[connectButton setTitle:NSLocalizedString(@"Connect", nil) forState:UIControlStateNormal];
-	connectButton.titleLabel.font = [UIFont customTitleLight:16];
-	[connectButton setBackgroundColor:[UIColor customBlue]];
-	[connectButton addTarget:self action:@selector(connect) forControlEvents:UIControlEventTouchUpInside];
-	[_footerView addSubview:connectButton];
-
-
-	UIButton *signupButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_footerView.frame) / 2., 1, CGRectGetWidth(_footerView.frame) / 2. - 1, CGRectGetHeight(_footerView.frame) - 2)];
-	[signupButton setTitle:NSLocalizedString(@"Signup", nil) forState:UIControlStateNormal];
-	signupButton.titleLabel.font = [UIFont customTitleLight:16];
-	[signupButton setBackgroundColor:[UIColor customBlue]];
-	[signupButton addTarget:self action:@selector(signup) forControlEvents:UIControlEventTouchUpInside];
-	[_footerView addSubview:signupButton];
-
-
-	UIView *separatorButtonBar = [UIView newWithFrame:CGRectMake(CGRectGetWidth(_footerView.frame) / 2., CGRectGetHeight(_footerView.frame) / 4., 1, CGRectGetHeight(_footerView.frame) / 2.0)];
-	[separatorButtonBar setBackgroundColor:[UIColor whiteColor]];
-	[_footerView addSubview:separatorButtonBar];
+    
+    CGFloat height = 0;
+    
+    UIView *loginButton = [[UIView alloc] initWithFrame:CGRectMake(5, 5, CGRectGetWidth(_footerView.frame) - 10, CGRectGetHeight(_footerView.frame) - 10)];
+    loginButton.layer.masksToBounds = YES;
+    loginButton.layer.cornerRadius = 3;
+    loginButton.backgroundColor = [UIColor customBlue];
+    
+    UILabel *loginText = [[UILabel alloc] initWithText:[NSLocalizedString(@"Login", nil) uppercaseString] textColor:[UIColor customWhite] font:[UIFont customTitleLight:18] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    CGRectSetXY(loginText.frame, CGRectGetWidth(loginButton.frame) / 2 - CGRectGetWidth(loginText.frame) / 2, height);
+    [loginButton addSubview:loginText];
+    
+    height += CGRectGetHeight(loginText.frame) + 5.0f;
+    
+    UIImageView *loginImage = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"home-title"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [loginImage setContentMode:UIViewContentModeScaleAspectFit];
+    [loginImage setTintColor:[UIColor whiteColor]];
+    CGRectSetHeight(loginImage.frame, CGRectGetHeight(loginButton.frame) / 2 - 10);
+    CGRectSetXY(loginImage.frame, CGRectGetWidth(loginButton.frame) / 2 - CGRectGetWidth(loginImage.frame) / 2, height);
+    [loginButton addSubview:loginImage];
+    
+    height += CGRectGetHeight(loginImage.frame);
+    
+    CGRectSetY(loginText.frame, CGRectGetHeight(loginButton.frame) / 2 - height / 2);
+    CGRectSetY(loginImage.frame, CGRectGetHeight(loginButton.frame) / 2 - height / 2 + CGRectGetHeight(loginText.frame) + 5.0f);
+    
+    [loginButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(connect)]];
+    
+	[_footerView addSubview:loginButton];
 }
 
 #pragma mark - button action
 
 - (void)connect {
 	[appDelegate displaySignin];
-}
-
-- (void)signup {
-    [appDelegate displaySignin];
 }
 
 #pragma mark - TableView
@@ -198,13 +203,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[self signup];
+	[self connect];
 }
 
 #pragma mark - TransactionCellDelegate
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
-	[self signup];
+	[self connect];
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
@@ -217,7 +222,7 @@
 }
 
 - (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
-	[self signup];
+	[self connect];
 }
 
 - (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath {

@@ -8,6 +8,8 @@
 
 #import "SignupBaseViewController.h"
 
-@interface SignupSecureCodeViewController : SignupBaseViewController
+@interface SignupSecureCodeViewController : SignupBaseViewController<CodePinDelegate>
+
+- (id)initWithMode:(SecureCodeMode)mode;
 
 @end

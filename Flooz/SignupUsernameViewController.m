@@ -87,7 +87,8 @@
 - (void)checkPseudo {
     if (self.userDic[@"nick"] && ((NSString *)self.userDic[@"nick"]).length >= 3) {
         NSMutableDictionary *dic = [self.userDic mutableCopy];
-        [dic setObject:[[Flooz sharedInstance] formatBirthDate:self.userDic[@"birthdate"]] forKey:@"birthdate"];
+        if (dic[@"birthdate"])
+            [dic setObject:[[Flooz sharedInstance] formatBirthDate:self.userDic[@"birthdate"]] forKey:@"birthdate"];
         if (self.userDic[@"picId"]) {
             [dic setValue:@YES forKey:@"hasImage"];
         }

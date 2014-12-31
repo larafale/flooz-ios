@@ -8,6 +8,7 @@
 
 #import "WebViewController.h"
 #import "SignupInfosViewController.h"
+#import "SignupSecureCodeViewController.h"
 
 @interface SignupInfosViewController () {
     UIScrollView *_contentView;
@@ -31,7 +32,6 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.userDic = [NSMutableDictionary new];
         self.title = NSLocalizedString(@"SIGNUP_PAGE_TITLE_Info", @"");
     }
     return self;
@@ -167,6 +167,8 @@
     [_email reloadTextField];
     [_birthday reloadTextField];
     [_password reloadTextField];
+    
+    [self.userDic removeObjectForKey:@"secureCode"];
 }
 
 - (void)checkEmail {
@@ -193,9 +195,9 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] checkSignup:self.userDic success: ^(id result) {
-
+        [self.navigationController pushViewController:[[SignupSecureCodeViewController alloc] initWithMode:SecureCodeModeChangeNew] animated:YES];
     } failure: ^(NSError *error) {
-        [_email becomeFirstResponder];
+        [_lastname becomeFirstResponder];
     }];
 }
 

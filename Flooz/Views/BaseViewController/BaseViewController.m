@@ -82,4 +82,9 @@
     [self.navigationController setNavigationBarHidden:YES];
 }
 
+- (void)setTitle:(NSString *)title {
+    [super setTitle:title];
+    _headTitle.text = self.title;
+}
+
 @end

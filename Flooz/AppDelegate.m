@@ -195,7 +195,7 @@
     [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     SignupSMSViewController *controller = [SignupSMSViewController new];
     signupNavigationController.controller.userDic = [user mutableCopy];
-    [signupNavigationController.controller.userDic setObject:@"distinctId" forKey:[Mixpanel sharedInstance].distinctId];
+    [signupNavigationController.controller.userDic setObject:[Mixpanel sharedInstance].distinctId forKey:@"distinctId"];
     [signupNavigationController pushViewController:controller animated:YES];
 }
 
@@ -494,11 +494,11 @@
 - (void)createAlertController {
     UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_NEW_FLOOZ", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) { [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment]; }]];
+    [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) { [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment]; }]];
     
     if (![self isFriend]) {
         haveMenuFriend = YES;
-        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_ADD_FRIENDS", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+        [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_ADD_FRIENDS", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
             [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success: ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
@@ -611,11 +611,11 @@
 }
 
 - (void)createActionSheetInWindow:(UIWindow *)wind {
-    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), nil];
+    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUserForMenu.username], nil];
     NSMutableArray *menus = [NSMutableArray new];
     
     if (![self isFriend]) {
-        [menus addObject:NSLocalizedString(@"MENU_ADD_FRIENDS", nil)];
+        [menus addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_ADD_FRIENDS", nil), currentUserForMenu.username]];
         haveMenuFriend = YES;
     }
     

@@ -9,6 +9,7 @@
 #import "FLTransactionDescriptionView.h"
 #import "FLSocialView.h"
 #import "FLSocialButton.h"
+#import "FLLikePopoverViewController.h"
 
 #define MARGE_TOP_BOTTOM 10.0f
 #define MARGE_LEFT_RIGHT 10.0f
@@ -31,7 +32,7 @@
 	FLUserView *avatarView;
 
 	JTImageLabel *commentText;
-	JTImageLabel *likeText;
+	FLActionButton *likeText;
 
 	BOOL hasAvatar;
 
@@ -40,6 +41,7 @@
 	FLSocialButton *_commentButton;
 
 	CGFloat paddingSide;
+    WYPopoverController *popoverController;
 }
 
 - (id)initWithFrame:(CGRect)frame andAvatar:(BOOL)avatar {
@@ -224,14 +226,21 @@
 	commentText.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
 	commentText.textColor = [UIColor customPlaceholder];
 
-	likeText = [[JTImageLabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(commentText.frame), CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
-	[likeText setImage:[UIImage imageNamed:@"like-heart"]];
-	[likeText setImageOffset:CGPointMake(-2.5, -1)];
-
+	likeText = [[FLActionButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(commentText.frame), CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
+    [likeText addTarget:self action:@selector(didLikeTextTouch) forControlEvents:UIControlEventTouchUpInside];
 	[rightView addSubview:likeText];
+    [likeText.titleLabel setTextAlignment:NSTextAlignmentRight];
+	likeText.titleLabel.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
+    [likeText setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
+    [likeText setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
+    [likeText setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
+    
+    [likeText setBackgroundColor:[UIColor customBackground] forState:UIControlStateNormal];
+    [likeText setBackgroundColor:[UIColor customBackground] forState:UIControlStateHighlighted];
+    [likeText setBackgroundColor:[UIColor customBackground] forState:UIControlStateDisabled];
 
-	likeText.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
-	likeText.textColor = [UIColor customPlaceholder];
+    [likeText setImage:[UIImage imageNamed:@"like-heart"] size:CGSizeMake(13.0, 12.0)];
+    CGRectSetX(likeText.imageView.frame, 0);
 }
 
 - (void)createFooterView {
@@ -388,11 +397,16 @@
 	{
 		if (!social.likeText || [social.likeText isBlank]) {
 			likeText.hidden = YES;
-			likeText.text = @"";
+			[likeText setTitle:@"" forState:UIControlStateNormal];
 		}
 		else {
 			likeText.hidden = NO;
-			likeText.text = social.likeText;
+            [likeText setTitle:social.likeText forState:UIControlStateNormal];
+
+            NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont customContentRegular:FONT_SIZE_LIKE],
+                                             NSForegroundColorAttributeName: [UIColor customPlaceholder]};
+            CGSize labelSize = [social.likeText sizeWithAttributes:labelAttributes];
+            CGRectSetWidth(likeText.frame, labelSize.width + 12 * 3);
 		}
 
 		CGFloat heightLike = 12.0f;
@@ -434,6 +448,23 @@
 	[amountLabel setWidthToFit];
 
 	CGRectSetX(amountLabel.frame, CGRectGetWidth(footerDescView.frame) - CGRectGetWidth(amountLabel.frame));
+}
+
+- (void)didLikeTextTouch {
+    FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithTransaction:_transaction];
+    
+    popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
+    popoverController.delegate = self;
+    
+    [popoverController presentPopoverFromRect:likeText.bounds inView:likeText permittedArrowDirections:WYPopoverArrowDirectionDown|WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+
+    }];
+
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
+{
+    return YES;
 }
 
 - (void)didLikeButtonTouch {

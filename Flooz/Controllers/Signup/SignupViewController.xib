@@ -18,9 +18,6 @@
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nW1-wT-QsN">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_SignupViewController-scrollView-nW1-wT-QsN"/>
-                    </userDefinedRuntimeAttributes>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -30,9 +27,6 @@
                 <constraint firstItem="nW1-wT-QsN" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="DdV-Qv-R5E"/>
                 <constraint firstAttribute="trailing" secondItem="nW1-wT-QsN" secondAttribute="trailing" id="Y30-1Z-IGW"/>
             </constraints>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_SignupViewController-view-1"/>
-            </userDefinedRuntimeAttributes>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

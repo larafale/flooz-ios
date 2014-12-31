@@ -24,7 +24,9 @@
     self.blockTo = NO;
     self.blockBack = NO;
     self.blockWhy = NO;
-
+    self.focusAmount = NO;
+    self.focusWhy = NO;
+    
     if (json[@"to"])
         self.to = [[FLUser alloc] initWithJSON:json[@"to"]];
     
@@ -54,6 +56,14 @@
         
         if ([[json objectForKey:@"block"] objectForKey:@"why"])
             self.blockWhy = [[json objectForKey:@"block"] objectForKey:@"why"];
+    }
+    
+    if ([json objectForKey:@"focus"]) {
+        NSString *focus = [json objectForKey:@"focus"];
+        if ([focus isEqualToString:@"amount"])
+            self.focusAmount = YES;
+        else if ([focus isEqualToString:@"why"])
+            self.focusWhy = YES;
     }
 }
 

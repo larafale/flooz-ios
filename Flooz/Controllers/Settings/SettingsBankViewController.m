@@ -19,7 +19,7 @@
 
 	FLTextFieldSignup *_IBAN;
 
-    UIButton *_saveButton;
+    FLActionButton *_saveButton;
 }
 
 @end
@@ -61,15 +61,9 @@
 }
 
 - (void)createSaveButton {
-	_saveButton = [[UIButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, 34)];
-
-	[_saveButton setTitle:NSLocalizedString(@"SAVE_IBAN", nil) forState:UIControlStateNormal];
-	[_saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[_saveButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
-	[_saveButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
+	_saveButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"SAVE_IBAN", nil)];
 
 	[_saveButton setEnabled:NO];
-	[_saveButton setBackgroundColor:[UIColor customBackground]];
 }
 
 - (BOOL)canValidate:(FLTextFieldSignup *)textIcon {
@@ -81,11 +75,9 @@
 
 	if (canValidate) {
 		[_saveButton setEnabled:YES];
-		[_saveButton setBackgroundColor:[UIColor customBlue]];
 	}
 	else {
 		[_saveButton setEnabled:NO];
-		[_saveButton setBackgroundColor:[UIColor customBackground]];
 	}
 	return canValidate;
 }

@@ -92,6 +92,7 @@ static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
+- (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)updateTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
@@ -109,6 +110,7 @@ static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 
 - (void)inviteWithPhone:(NSString *)phone;
 - (void)invitationStrings:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)sendInvitationMetric:(NSString *)canal;
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success;
 - (void)friendsSuggestion:(void (^)(id result))success;

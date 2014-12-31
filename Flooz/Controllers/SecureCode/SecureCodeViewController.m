@@ -30,7 +30,7 @@
     FLTextFieldSignup *_usernameField;
     FLTextFieldSignup *_passwordField;
     UIButton *_passwordForgetButton;
-    UIButton *_nextButton;
+    FLActionButton *_nextButton;
     
     UIButton *_forgotButton;
     UIButton *_cleanButton;
@@ -249,15 +249,8 @@ static BOOL canTouchID = YES;
     }
     
     {
-        _nextButton = [[UIButton alloc] initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(_passwordField.frame) + 10.0f, PPScreenWidth() - 20.0f * 2, 34)];
-        
-        [_nextButton setTitle:NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil) forState:UIControlStateNormal];
-        [_nextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_nextButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
-        [_nextButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
-        
+        _nextButton = [[FLActionButton alloc] initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(_passwordField.frame) + 10.0f, PPScreenWidth() - 20.0f * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil)];        
         [_nextButton setEnabled:NO];
-        [_nextButton setBackgroundColor:[UIColor customBackground]];
         [_nextButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
         [_mainBody addSubview:_nextButton];
     }
@@ -527,24 +520,20 @@ static BOOL canTouchID = YES;
     if (!_userDic[@"login"] || [_userDic[@"login"] isBlank]) {
         [_usernameField becomeFirstResponder];
         [_nextButton setEnabled:NO];
-        [_nextButton setBackgroundColor:[UIColor customBackground]];
         return NO;
     }
     if (!_userDic[@"password"] || [_userDic[@"password"] length] < 1) {
         [_passwordField becomeFirstResponder];
         [_nextButton setEnabled:NO];
-        [_nextButton setBackgroundColor:[UIColor customBackground]];
         return NO;
     }
     
     if (currentSecureMode == SecureCodeModeChangePass && ![_userDic[@"login"] isEqualToString:_userDic[@"password"]]) {
         [_nextButton setEnabled:NO];
-        [_nextButton setBackgroundColor:[UIColor customBackground]];
         return NO;
     }
     
     [_nextButton setEnabled:YES];
-    [_nextButton setBackgroundColor:[UIColor customBlue]];
     return YES;
 }
 

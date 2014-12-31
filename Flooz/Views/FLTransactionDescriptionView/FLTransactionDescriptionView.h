@@ -11,8 +11,9 @@
 #import "FLTransaction.h"
 #import "TransactionCellDelegate.h"
 #import "TransactionViewController.h"
+#import "WYPopoverController.h"
 
-@interface FLTransactionDescriptionView : UIView
+@interface FLTransactionDescriptionView : UIView<WYPopoverControllerDelegate>
 
 - (id)initWithFrame:(CGRect)frame andAvatar:(BOOL)avatar;
 - (id)initWithFrame:(CGRect)frame transaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath andAvatar:(BOOL)avatar;

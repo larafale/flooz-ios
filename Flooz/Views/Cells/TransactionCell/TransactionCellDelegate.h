@@ -15,7 +15,6 @@
 - (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;
 - (FLTableView *)tableView;
 - (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath;
-
 - (BOOL)transactionAlreadyLoaded:(FLTransaction *)transaction;
 
 @end

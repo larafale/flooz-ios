@@ -27,14 +27,17 @@
 	_isCommented = NO;
 	_isLiked = NO;
 
-	for (NSDictionary *comment in[json objectForKey:@"comments"]) {
+    _likes = [json objectForKey:@"likes"];
+    _comments = [json objectForKey:@"comments"];
+    
+	for (NSDictionary *comment in [json objectForKey:@"comments"]) {
 		if ([[comment objectForKey:@"userId"] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
 			_isCommented = YES;
 			break;
 		}
 	}
 
-	for (NSDictionary *like in[json objectForKey:@"likes"]) {
+	for (NSDictionary *like in [json objectForKey:@"likes"]) {
 		if ([[like objectForKey:@"userId"] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
 			_isLiked = YES;
 			break;

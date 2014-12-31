@@ -368,6 +368,8 @@
 		C9088B6D1A51A22200026FE9 /* SignupBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */; };
 		C90B94801A00E96900E2C53B /* 3DSecureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90B947F1A00E96900E2C53B /* 3DSecureViewController.m */; };
 		C90B94811A00EA2400E2C53B /* 3DSecureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90B947F1A00E96900E2C53B /* 3DSecureViewController.m */; };
+		C910E0EE1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */; };
+		C910E0EF1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */; };
 		C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
 		C93118491A1FBD72008C6EEC /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
 		C931184C1A1FBE81008C6EEC /* FLPopupReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C931184B1A1FBE81008C6EEC /* FLPopupReport.m */; };
@@ -789,6 +791,8 @@
 		C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupBaseViewController.m; sourceTree = "<group>"; };
 		C90B947E1A00E96900E2C53B /* 3DSecureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 3DSecureViewController.h; sourceTree = "<group>"; };
 		C90B947F1A00E96900E2C53B /* 3DSecureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = 3DSecureViewController.m; sourceTree = "<group>"; };
+		C910E0EC1A5405A000EB77DE /* FLLikePopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLLikePopoverViewController.h; sourceTree = "<group>"; };
+		C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLLikePopoverViewController.m; sourceTree = "<group>"; };
 		C93118461A1F7E0B008C6EEC /* FLReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReport.h; sourceTree = "<group>"; };
 		C93118471A1F7E0B008C6EEC /* FLReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReport.m; sourceTree = "<group>"; };
 		C931184A1A1FBE81008C6EEC /* FLPopupReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPopupReport.h; sourceTree = "<group>"; };
@@ -937,6 +941,8 @@
 			children = (
 				2F21173019D4AA3100CCA109 /* FLTransactionDescriptionView.h */,
 				2F21173119D4AA3100CCA109 /* FLTransactionDescriptionView.m */,
+				C910E0EC1A5405A000EB77DE /* FLLikePopoverViewController.h */,
+				C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */,
 			);
 			name = FLTransactionDescriptionView;
 			sourceTree = "<group>";
@@ -2622,6 +2628,7 @@
 				ABE914451890A12C003AC722 /* FLTransaction.m in Sources */,
 				2F21173219D4AA3100CCA109 /* FLTransactionDescriptionView.m in Sources */,
 				AB2FB54818AE798D0079AA1D /* FLActivity.m in Sources */,
+				C910E0EE1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */,
 				2FE983E619CB73A200E05501 /* CodePinView.m in Sources */,
 				ABE9143D1890A08A003AC722 /* UIBarButtonItem+custom.m in Sources */,
 				2F10A19F19D208990083EABD /* FLRevealContainerViewController.m in Sources */,
@@ -2783,6 +2790,7 @@
 				ABAA3FBB197E96BF009F29EF /* FLNewTransactionBar.m in Sources */,
 				2F606FF119E70E2300F1905F /* TutoViewController.m in Sources */,
 				2F0F6AFC19DF0686004CA223 /* FLSwitch.m in Sources */,
+				C910E0EF1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */,
 				2FD2460419A2983C008DCFB5 /* ContactCell.m in Sources */,
 				ABAA3FBC197E96BF009F29EF /* FLTextView.m in Sources */,
 				2F21173319D4AA3100CCA109 /* FLTransactionDescriptionView.m in Sources */,
