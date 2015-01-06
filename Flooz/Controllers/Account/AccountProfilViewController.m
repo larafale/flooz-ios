@@ -40,6 +40,7 @@
     self = [super init];
     if (self) {
         self.title = NSLocalizedString(@"ACCOUNT_BUTTON_PROFIL", nil);
+        _menuArray = [NSMutableArray new];
     }
     return self;
 }
@@ -48,7 +49,10 @@
     [super viewWillAppear:animated];
     _menuArray = [NSMutableArray new];
     
-    [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_CARD", @"")}];
+    if (![Flooz sharedInstance].currentUser.creditCard)
+        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"incomplete": @YES}];
+    else
+        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_CARD", @"")}];
     
     NSArray *missingFields = [Flooz sharedInstance].currentUser.json[@"missingFields"];
     
@@ -71,10 +75,15 @@
     [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @"")}];
     [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_PRIVACY", @"")}];
     
-    if (missingFields.count)
+    if (missingFields.count || ![Flooz sharedInstance].currentUser.creditCard)
         [_tips setHidden:NO];
     else
         [_tips setHidden:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [_tableView reloadData];
 }
 
 - (void)viewDidLoad {

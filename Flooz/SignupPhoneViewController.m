@@ -67,8 +67,10 @@
 }
 
 - (void)testPhoneNumber {
+    int lenght = 0;
     
-    int lenght = ((NSString *)self.userDic[@"phone"]).UTF8String[0] == '0' ? 10 : 12;
+    if (self.userDic[@"phone"] && ![self.userDic[@"phone"] isBlank] && ((NSString *)self.userDic[@"phone"]).length > 0)
+        lenght = ((NSString *)self.userDic[@"phone"]).UTF8String[0] == '0' ? 10 : 12;
     
     if (self.userDic[@"phone"] && ![self.userDic[@"phone"] isBlank] && ((NSString *)self.userDic[@"phone"]).length >= lenght) {
         [_nextButton setEnabled:YES];
