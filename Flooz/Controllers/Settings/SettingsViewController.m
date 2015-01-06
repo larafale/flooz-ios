@@ -42,6 +42,8 @@
                           @"page":@"contact"},
                        @{ @"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", nil),
                           @"action":@"presentCashOutController" },
+                       @{ @"title":NSLocalizedString(@"SETTINGS_RELOAD_TUTO", nil),
+                          @"action":@"reloadTuto" },
                        @{ @"title":NSLocalizedString(@"SETTINGS_LOGOUT", nil),
                           @"action":@"presentCashOutController" }
                        ];
@@ -109,6 +111,17 @@
         [self presentIdeaCritics];
 	}
     else if (indexPath.row == 5) {
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoFlooz];
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelineFriends];
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePublic];
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePrivate];
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoWelcome];
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [appDelegate popToMainView];
+        }];
+    }
+    else if (indexPath.row == 6) {
         [[Flooz sharedInstance] logout];
     }
 }

@@ -47,6 +47,7 @@
 #import "FLTextField.h"
 #import "FLTextFieldTitle.h"
 #import "FLTextFieldIcon.h"
+#import "FLTextFieldSignup.h"
 #import "FLValidNavBar.h"
 
 #import "UIViewController+RegisterNotification.h"

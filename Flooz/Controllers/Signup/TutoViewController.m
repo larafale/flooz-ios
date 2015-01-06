@@ -25,9 +25,19 @@
                 _imageNamed = @"tuto-welcome";
                 break;
                 
-            case TutoPageTimeline:
-                _keyTuto = kKeyTutoTimeline;
-                _imageNamed = @"tuto-timeline";
+            case TutoPageTimelineFriends:
+                _keyTuto = kKeyTutoTimelineFriends;
+                _imageNamed = @"tuto-timeline-friends";
+                break;
+
+            case TutoPageTimelinePublic:
+                _keyTuto = kKeyTutoTimelinePublic;
+                _imageNamed = @"tuto-timeline-public";
+                break;
+
+            case TutoPageTimelinePrivate:
+                _keyTuto = kKeyTutoTimelinePrivate;
+                _imageNamed = @"tuto-timeline-private";
                 break;
 
             case TutoPageFlooz:
@@ -84,10 +94,10 @@
 - (void)remove {
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler: ^(MZFormSheetController *formSheetController) {
         appDelegate.formSheet = nil;
-        if (_keyTuto == kKeyTutoWelcome) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoWelcome] && (_keyTuto == kKeyTutoTimelineFriends || _keyTuto == kKeyTutoTimelinePublic || _keyTuto == kKeyTutoTimelinePrivate)) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 UIViewController *v = appDelegate.revealSideViewController;
-                [appDelegate showTutoPage:TutoPageTimeline inController:v];
+                [appDelegate showTutoPage:TutoPageWelcome inController:v];
             });
         }
     }];

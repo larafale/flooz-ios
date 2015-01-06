@@ -77,8 +77,6 @@
 		5186240E764ACC1CA7F471A7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1686D3DC8F1E47F8A8972682 /* libPods.a */; };
 		8B102E06199A61C20040278F /* FLStartButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCB8D2A19996E6E00CE628F /* FLStartButton.m */; };
 		8B102E07199A61CA0040278F /* FLStartItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2410E199975BC00AAE69E /* FLStartItem.m */; };
-		8B55B44119996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
-		8B55B44319996283003F5A6C /* FirstLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55B44019996283003F5A6C /* FirstLaunchViewController.m */; };
 		8B81C5AB1999442900765C63 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81C5AA1999442900765C63 /* Crashlytics.framework */; };
 		8B81C5AC1999442900765C63 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81C5AA1999442900765C63 /* Crashlytics.framework */; };
 		8BCB8D2B19996E6E00CE628F /* FLStartButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCB8D2A19996E6E00CE628F /* FLStartButton.m */; };
@@ -125,8 +123,6 @@
 		AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08DF1871AAB400CF8380 /* Flooz.m */; };
 		AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */; };
 		AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
-		AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6F61886C1C600D1C573 /* SignupViewController.m */; };
-		AB4CB6F91886C1C600D1C573 /* SignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */; };
 		AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6D9188214F000D81AF6 /* HomeViewController.m */; };
 		AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */; };
 		AB5EB6ED188214F000D81AF6 /* MenuNewTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6DD188214F000D81AF6 /* MenuNewTransactionViewController.m */; };
@@ -180,7 +176,6 @@
 		ABAA3F93197E96BF009F29EF /* TransactionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */; };
 		ABAA3F94197E96BF009F29EF /* FriendAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA51E18C8CEF70073B947 /* FriendAddViewController.m */; };
 		ABAA3F95197E96BF009F29EF /* FLPaymentField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149F18968E52003AC722 /* FLPaymentField.m */; };
-		ABAA3F97197E96BF009F29EF /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4CB6F61886C1C600D1C573 /* SignupViewController.m */; };
 		ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
 		ABAA3F99197E96BF009F29EF /* FriendPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093518A3C52200517389 /* FriendPickerViewController.m */; };
 		ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
@@ -276,7 +271,6 @@
 		ABAA4008197E96BF009F29EF /* Rene Bieder - Gentona Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2C1875C0B100E92A77 /* Rene Bieder - Gentona Book.otf */; };
 		ABAA4009197E96BF009F29EF /* EditAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE9147E18929B7D003AC722 /* EditAccountViewController.xib */; };
 		ABAA400A197E96BF009F29EF /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
-		ABAA400C197E96BF009F29EF /* SignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */; };
 		ABAA400D197E96BF009F29EF /* Rene Bieder - Gentona ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2D1875C0B100E92A77 /* Rene Bieder - Gentona ExtraLight.otf */; };
 		ABAA400E197E96BF009F29EF /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB54218AD9C7A0079AA1D /* PasswordViewController.xib */; };
 		ABAA400F197E96BF009F29EF /* MenuNewTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DE188214F000D81AF6 /* MenuNewTransactionViewController.xib */; };
@@ -364,6 +358,8 @@
 		ABF7093818A3C52200517389 /* FriendPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7093618A3C52200517389 /* FriendPickerViewController.xib */; };
 		ABF7094118A4D64300517389 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7094018A4D64300517389 /* TransactionCell.m */; };
 		ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
+		C905A8DB1A56D5BE00473963 /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C905A8DA1A56D5BE00473963 /* SIOSocket.m */; };
+		C905A8DC1A56D5BE00473963 /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C905A8DA1A56D5BE00473963 /* SIOSocket.m */; };
 		C9088B6C1A51A22200026FE9 /* SignupBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */; };
 		C9088B6D1A51A22200026FE9 /* SignupBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */; };
 		C90B94801A00E96900E2C53B /* 3DSecureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90B947F1A00E96900E2C53B /* 3DSecureViewController.m */; };
@@ -518,8 +514,6 @@
 		2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = Views/BaseViewController/BaseViewController.m; sourceTree = "<group>"; };
 		45B29532629A14DF0F80E2B6 /* Pods.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.recette.xcconfig; path = "Pods/Target Support Files/Pods/Pods.recette.xcconfig"; sourceTree = "<group>"; };
 		4A8F0D8688B2485F99D51733 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		8B55B43F19996283003F5A6C /* FirstLaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstLaunchViewController.h; sourceTree = "<group>"; };
-		8B55B44019996283003F5A6C /* FirstLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstLaunchViewController.m; sourceTree = "<group>"; };
 		8B81C5AA1999442900765C63 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8BCB8D2919996E6E00CE628F /* FLStartButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLStartButton.h; sourceTree = "<group>"; };
 		8BCB8D2A19996E6E00CE628F /* FLStartButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLStartButton.m; sourceTree = "<group>"; };
@@ -592,9 +586,6 @@
 		AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+custom.m"; path = "Util/UIColor+custom.m"; sourceTree = "<group>"; };
 		AB3D08E51871C0CC00CF8380 /* UIFont+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIFont+custom.h"; path = "Util/UIFont+custom.h"; sourceTree = "<group>"; };
 		AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIFont+custom.m"; path = "Util/UIFont+custom.m"; sourceTree = "<group>"; };
-		AB4CB6F51886C1C600D1C573 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SignupViewController.h; path = Controllers/Signup/SignupViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		AB4CB6F61886C1C600D1C573 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupViewController.m; path = Controllers/Signup/SignupViewController.m; sourceTree = "<group>"; };
-		AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignupViewController.xib; path = Controllers/Signup/SignupViewController.xib; sourceTree = "<group>"; };
 		AB5EB6D8188214F000D81AF6 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HomeViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AB5EB6D9188214F000D81AF6 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -787,6 +778,9 @@
 		ABF7094018A4D64300517389 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionCell.m; path = TransactionCell/TransactionCell.m; sourceTree = "<group>"; };
 		ABF7095B18A4FD6B00517389 /* FLComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLComment.h; path = Models/FLComment.h; sourceTree = "<group>"; };
 		ABF7095C18A4FD6B00517389 /* FLComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLComment.m; path = Models/FLComment.m; sourceTree = "<group>"; };
+		C905A8D81A56D5BE00473963 /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
+		C905A8D91A56D5BE00473963 /* SIOSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOSocket.h; sourceTree = "<group>"; };
+		C905A8DA1A56D5BE00473963 /* SIOSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOSocket.m; sourceTree = "<group>"; };
 		C9088B6A1A51A22200026FE9 /* SignupBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupBaseViewController.h; sourceTree = "<group>"; };
 		C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupBaseViewController.m; sourceTree = "<group>"; };
 		C90B947E1A00E96900E2C53B /* 3DSecureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 3DSecureViewController.h; sourceTree = "<group>"; };
@@ -1054,15 +1048,6 @@
 			name = BaseViewController;
 			sourceTree = "<group>";
 		};
-		8B55B43E19996243003F5A6C /* FirstLaunch */ = {
-			isa = PBXGroup;
-			children = (
-				8B55B43F19996283003F5A6C /* FirstLaunchViewController.h */,
-				8B55B44019996283003F5A6C /* FirstLaunchViewController.m */,
-			);
-			name = FirstLaunch;
-			sourceTree = "<group>";
-		};
 		8BCB8D2819996E4600CE628F /* FLStartButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1324,7 +1309,6 @@
 				AB2FB52F18AD40120079AA1D /* CashOut */,
 				ABBB75C718B63D930070C2A8 /* CreditCard */,
 				ABE9147B18929B6D003AC722 /* EditAccount */,
-				8B55B43E19996243003F5A6C /* FirstLaunch */,
 				2F3EB4C219D3449E00C65FBC /* FLTimelineTableViewController */,
 				AB6DA51C18C8CEDF0073B947 /* FriendAdd */,
 				ABF7093318A3C4FE00517389 /* FriendPicker */,
@@ -1400,6 +1384,7 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				C905A8D71A56D5AC00473963 /* SIOSocket */,
 				C95AED991A49B5E500000FB3 /* WYPopoverController */,
 				C966473619FFE9EC000851AF /* Modal Transitions */,
 				ABA96DA3196EED4D00B8B7C7 /* scanpay */,
@@ -1472,9 +1457,6 @@
 		AB4CB6F41886C1B000D1C573 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
-				AB4CB6F51886C1C600D1C573 /* SignupViewController.h */,
-				AB4CB6F61886C1C600D1C573 /* SignupViewController.m */,
-				AB4CB6F71886C1C600D1C573 /* SignupViewController.xib */,
 				2F606FEE19E70E2300F1905F /* TutoViewController.h */,
 				2F606FEF19E70E2300F1905F /* TutoViewController.m */,
 				C9CA676E1A518535003863D1 /* SignupNavigationController.h */,
@@ -2169,6 +2151,16 @@
 			name = FriendPickerSearchBar;
 			sourceTree = "<group>";
 		};
+		C905A8D71A56D5AC00473963 /* SIOSocket */ = {
+			isa = PBXGroup;
+			children = (
+				C905A8D81A56D5BE00473963 /* socket.io.js.h */,
+				C905A8D91A56D5BE00473963 /* SIOSocket.h */,
+				C905A8DA1A56D5BE00473963 /* SIOSocket.m */,
+			);
+			name = SIOSocket;
+			sourceTree = "<group>";
+		};
 		C90B947D1A00E94F00E2C53B /* 3DSecure */ = {
 			isa = PBXGroup;
 			children = (
@@ -2239,6 +2231,7 @@
 				AB3D088B186CA11A00CF8380 /* Frameworks */,
 				AB3D088C186CA11A00CF8380 /* Resources */,
 				4CC96E89B70430396A329033 /* Copy Pods Resources */,
+				C96373361A5BE2E40080C20F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2359,7 +2352,6 @@
 				ABE9148018929B7D003AC722 /* EditAccountViewController.xib in Resources */,
 				ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */,
 				2FC2546119B6742500EB1EED /* ShareAppViewController.xib in Resources */,
-				AB4CB6F91886C1C600D1C573 /* SignupViewController.xib in Resources */,
 				ABF46A341875C1B400E92A77 /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
 				AB2FB54418AD9C7A0079AA1D /* PasswordViewController.xib in Resources */,
 				AB5EB6EE188214F000D81AF6 /* MenuNewTransactionViewController.xib in Resources */,
@@ -2406,7 +2398,6 @@
 				ABAA4008197E96BF009F29EF /* Rene Bieder - Gentona Book.otf in Resources */,
 				ABAA4009197E96BF009F29EF /* EditAccountViewController.xib in Resources */,
 				ABAA400A197E96BF009F29EF /* TransactionViewController.xib in Resources */,
-				ABAA400C197E96BF009F29EF /* SignupViewController.xib in Resources */,
 				ABAA400D197E96BF009F29EF /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
 				ABAA400E197E96BF009F29EF /* PasswordViewController.xib in Resources */,
 				ABAA400F197E96BF009F29EF /* MenuNewTransactionViewController.xib in Resources */,
@@ -2519,6 +2510,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C96373361A5BE2E40080C20F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
+		};
 		DA016FF9FB8BFD4B213AD07F /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2569,12 +2573,11 @@
 				ABC1115B18ACE4C700C3C52D /* TransactionUsersView.m in Sources */,
 				AB6DA52018C8CEF70073B947 /* FriendAddViewController.m in Sources */,
 				ABE914A018968E52003AC722 /* FLPaymentField.m in Sources */,
-				AB4CB6F81886C1C600D1C573 /* SignupViewController.m in Sources */,
 				C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */,
-				8B55B44119996283003F5A6C /* FirstLaunchViewController.m in Sources */,
 				AB119B41198A6E7C00F05ECE /* FLFriendsField.m in Sources */,
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
 				ABF7093718A3C52200517389 /* FriendPickerViewController.m in Sources */,
+				C905A8DB1A56D5BE00473963 /* SIOSocket.m in Sources */,
 				AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */,
 				C9C7EE9419F685B9009FE292 /* FLAlert.m in Sources */,
 				2FCBCD1019BF3C6700FB31E0 /* FLCameraKeyboard.m in Sources */,
@@ -2737,6 +2740,7 @@
 				ABAA3F8A197E96BF009F29EF /* FLSocialView.m in Sources */,
 				2FEAA9D019DC63B500EE95C9 /* BaseViewController.m in Sources */,
 				ABAA3F8B197E96BF009F29EF /* FLMenuNewTransactionButton.m in Sources */,
+				C905A8DC1A56D5BE00473963 /* SIOSocket.m in Sources */,
 				ABAA3F8C197E96BF009F29EF /* TransactionActionsView.m in Sources */,
 				ABAA3F8D197E96BF009F29EF /* FLComment.m in Sources */,
 				ABAA3F90197E96BF009F29EF /* MenuNewTransactionViewController.m in Sources */,
@@ -2744,9 +2748,7 @@
 				ABAA3F92197E96BF009F29EF /* FLAccountButton.m in Sources */,
 				ABAA3F93197E96BF009F29EF /* TransactionUsersView.m in Sources */,
 				ABAA3F94197E96BF009F29EF /* FriendAddViewController.m in Sources */,
-				8B55B44319996283003F5A6C /* FirstLaunchViewController.m in Sources */,
 				ABAA3F95197E96BF009F29EF /* FLPaymentField.m in Sources */,
-				ABAA3F97197E96BF009F29EF /* SignupViewController.m in Sources */,
 				ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */,
 				ABAA3F99197E96BF009F29EF /* FriendPickerViewController.m in Sources */,
 				C95AEDA11A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */,

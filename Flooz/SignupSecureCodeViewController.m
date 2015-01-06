@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
+#import "CodePinView.h"
 #import <UICKeyChainStore.h>
 #import "SignupSecureCodeViewController.h"
 

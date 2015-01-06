@@ -11,7 +11,7 @@
 #import "SignupPhoneViewController.h"
 
 @interface SignupPhoneViewController () {
-    FLHomeTextField *_phoneField;
+    FLTextFieldSignup *_phoneField;
     FLKeyboardView *_inputView;
     
     FLActionButton *_nextButton;
@@ -32,10 +32,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _phoneField = [[FLHomeTextField alloc] initWithPlaceholder:NSLocalizedString(@"NumMobile", @"") for:self.userDic key:@"phone" position:CGPointMake(SIGNUP_PADDING_SIDE, CGRectGetMaxY(_headerView.frame) + 5)];
-    CGRectSetX(_phoneField.frame, (SCREEN_WIDTH - _phoneField.frame.size.width) / 2);
 
+    _phoneField = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"NumMobile", @"") for:self.userDic key:@"phone" position:CGPointMake(SIGNUP_PADDING_SIDE, self.firstItemY + 20.0f)];
+    CGRectSetX(_phoneField.frame, (SCREEN_WIDTH - _phoneField.frame.size.width) / 2);
+    [_phoneField addForTextChangeTarget:self action:@selector(testPhoneNumber)];
     [_phoneField addForNextClickTarget:self action:@selector(testPhoneNumber)];
     [_mainBody addSubview:_phoneField];
     
@@ -49,6 +49,8 @@
     [_nextButton addTarget:self action:@selector(tryPhoneNumber) forControlEvents:UIControlEventTouchUpInside];
     CGRectSetY(_nextButton.frame, CGRectGetMaxY(_phoneField.frame) + 10.0f);
     [_mainBody addSubview:_nextButton];
+    
+    self.userDic = [NSMutableDictionary new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -60,8 +62,15 @@
     
 }
 
+- (void)displayChanges {
+    [_phoneField setDictionary:self.userDic andKey:@"phone"];
+}
+
 - (void)testPhoneNumber {
-    if (self.userDic[@"phone"] && ![self.userDic[@"phone"] isBlank] && ((NSString *)self.userDic[@"phone"]).length >= 10) {
+    
+    int lenght = ((NSString *)self.userDic[@"phone"]).UTF8String[0] == '0' ? 10 : 12;
+    
+    if (self.userDic[@"phone"] && ![self.userDic[@"phone"] isBlank] && ((NSString *)self.userDic[@"phone"]).length >= lenght) {
         [_nextButton setEnabled:YES];
     }
     else {
@@ -72,7 +81,9 @@
 
 - (void)tryPhoneNumber {
     [self.view endEditing:YES];
-    if (self.userDic[@"phone"] && ![self.userDic[@"phone"] isBlank] && ((NSString *)self.userDic[@"phone"]).length >= 10) {
+    int lenght = ((NSString *)self.userDic[@"phone"]).UTF8String[0] == '0' ? 10 : 12;
+
+    if (self.userDic[@"phone"] && ![self.userDic[@"phone"] isBlank] && ((NSString *)self.userDic[@"phone"]).length >= lenght) {
         [_nextButton setEnabled:YES];
         
         [[Flooz sharedInstance] showLoadView];

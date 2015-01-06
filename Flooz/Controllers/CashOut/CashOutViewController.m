@@ -15,12 +15,12 @@
 #define PADDING_SIDE 20.0f
 
 @interface CashOutViewController () {
-	NSMutableDictionary *dictionary;
+    NSMutableDictionary *dictionary;
     
     FLTextFieldSignup *_amountInput;
     FLKeyboardView *inputView;
     
-    UIButton *_confirmButton;
+    FLActionButton *_confirmButton;
 }
 
 @end
@@ -28,12 +28,12 @@
 @implementation CashOutViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self) {
-		self.title = NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil);
-		dictionary = [NSMutableDictionary new];
-	}
-	return self;
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil);
+        dictionary = [NSMutableDictionary new];
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -56,8 +56,9 @@
         UILabel *text2 = [[UILabel alloc] initWithText:NSLocalizedString(@"GLOBAL_EURO", nil) textColor:[UIColor customBlue] font:[UIFont customContentLight:20] textAlignment:NSTextAlignmentCenter numberOfLines:1];
         
         [_mainBody addSubview:text2];
-
-        UILabel *text3 = [[UILabel alloc] initWithText:[NSString stringWithFormat:@"%@", [[[Flooz sharedInstance] currentUser].amount stringValue]] textColor:[UIColor customBlue] font:[UIFont customContentLight:35] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        
+        UILabel *text3 = [[UILabel alloc] initWithText:[FLHelper formatedAmount:[Flooz sharedInstance].currentUser.amount withCurrency:NO withSymbol:NO]
+                                             textColor:[UIColor customBlue] font:[UIFont customContentLight:35] textAlignment:NSTextAlignmentCenter numberOfLines:1];
         
         CGFloat globalWidth = CGRectGetWidth(text2.frame) + CGRectGetWidth(text3.frame) + 3;
         
@@ -65,7 +66,7 @@
         CGRectSetXY(text3.frame, CGRectGetWidth(_mainBody.frame) / 2 - globalWidth / 2, height);
         
         [_mainBody addSubview:text3];
-
+        
         
         height += CGRectGetHeight(text3.frame);
     }
@@ -74,6 +75,9 @@
     
     {
         _amountInput = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
+        [_amountInput addForNextClickTarget:self action:@selector(keyNext)];
+        [_amountInput addForTextChangeTarget:self action:@selector(amountChange)];
+
         inputView = [FLKeyboardView new];
         [inputView setKeyboardDecimal];
         inputView.textField = _amountInput.textfield;
@@ -99,42 +103,56 @@
     }
 }
 
+- (void)keyNext {
+    
+}
+
+- (void)amountChange {
+    if (dictionary[@"amount"] && ![dictionary[@"amount"] isBlank]) {
+        [_confirmButton setEnabled:YES];
+        NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+        [f setFormatterBehavior:NSNumberFormatterBehavior10_4];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        NSNumber *numberAmount = [f numberFromString:dictionary[@"amount"]];
+        
+        [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), [[FLHelper formatedAmount:numberAmount withCurrency:NO withSymbol:NO] stringByAppendingString:@"€"]] forState:UIControlStateNormal];
+    } else {
+        [_confirmButton setEnabled:NO];
+        [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), @""] forState:UIControlStateNormal];
+    }
+}
+
 - (void)createConfirmButton {
-    _confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, 34)];
-    
-    [_confirmButton setTitle:NSLocalizedString(@"Confirm", nil) forState:UIControlStateNormal];
-    [_confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_confirmButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
-    [_confirmButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
-    
-    [_confirmButton setEnabled:YES];
-    [_confirmButton setBackgroundColor:[UIColor customBackground]];
+    _confirmButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, 34)];
+
+    [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), @""] forState:UIControlStateNormal];
+    [_confirmButton setEnabled:NO];
 }
 
 - (void)didValidTouch {
-	[[self view] endEditing:YES];
-
-	if ([[dictionary objectForKey:@"amount"] floatValue] <= 0) {
-		return;
-	}
-
-	NSNumber *amount = [dictionary objectForKey:@"amount"];
-
-//    [[Flooz sharedInstance] showLoadView];
-//    [[Flooz sharedInstance] cashoutValidate:amount success:^(id result) {
-	CompleteBlock completeBlock = ^{
-		[[Flooz sharedInstance] showLoadView];
-		[[Flooz sharedInstance] cashout:amount success: ^(id result) {
+    [[self view] endEditing:YES];
+    
+    if ([[dictionary objectForKey:@"amount"] floatValue] <= 0) {
+        return;
+    }
+    
+    NSNumber *amount = [dictionary objectForKey:@"amount"];
+    
+    //    [[Flooz sharedInstance] showLoadView];
+    //    [[Flooz sharedInstance] cashoutValidate:amount success:^(id result) {
+    CompleteBlock completeBlock = ^{
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] cashout:amount success: ^(id result) {
             [self dismissViewController];
-		} failure:NULL];
-	};
-
-	SecureCodeViewController *controller = [SecureCodeViewController new];
-	controller.completeBlock = completeBlock;
-	[[self navigationController] pushViewController:controller animated:YES];
-//    } failure:^(NSError *error) {
-
-//    }];
+        } failure:NULL];
+    };
+    
+    SecureCodeViewController *controller = [SecureCodeViewController new];
+    controller.completeBlock = completeBlock;
+    [[self navigationController] pushViewController:controller animated:YES];
+    //    } failure:^(NSError *error) {
+    
+    //    }];
 }
 
 @end

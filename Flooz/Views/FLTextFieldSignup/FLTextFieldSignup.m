@@ -304,7 +304,12 @@
             }
         }
         
-        return (newLength > 12) ? NO : YES;
+        int size = 12;
+        
+        if (_textfield.text.UTF8String[0] == '0')
+            size = 10;
+        
+        return (newLength > size) ? NO : YES;
     }
 	else if ([_dictionaryKey isEqualToString:@"birthdate"]) {
 		if ([string isEqualToString:@"\r"] && textField.text.length > 0) {
@@ -536,6 +541,12 @@
 - (void)setEnable:(BOOL)enable {
     [_textfield setEnabled:enable];
     [_textfield2 setEnabled:enable];
+}
+
+- (void)setDictionary:(NSMutableDictionary *)dic andKey:(NSString *)k {
+    _dictionary = dic;
+    _dictionaryKey = k;
+    [self reloadTextField];
 }
 
 @end

@@ -10,6 +10,15 @@
 
 #import "FLCreditCard.h"
 
+typedef enum e_FLUserSelectedCanal {
+    RecentCanal,
+    SuggestionCanal,
+    FriendsCanal,
+    ContactCanal,
+    SearchCanal,
+    TimelineCanal
+} FLUserSelectedCanal;
+
 @interface FLUser : NSObject
 
 @property (strong, nonatomic) NSString *userId;
@@ -26,6 +35,7 @@
 @property (strong, nonatomic) NSNumber *friendsCount;
 @property (strong, nonatomic) NSNumber *transactionsCount;
 @property (nonatomic)  BOOL haveStatsPending;
+@property (strong, nonatomic) NSString *selectedFrom;
 
 @property (strong, nonatomic) NSString *deviceToken;
 
@@ -55,5 +65,6 @@
 - (void)updateStatsPending:(NSDictionary *)json;
 
 - (NSString *)avatarURL:(CGSize)size;
+- (void)setSelectedCanal:(FLUserSelectedCanal)canal;
 
 @end

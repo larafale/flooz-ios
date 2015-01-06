@@ -52,4 +52,6 @@
 - (BOOL)resignFirstResponder;
 - (void)setEnable:(BOOL)enable;
 
+- (void)setDictionary:(NSMutableDictionary *)dic andKey:(NSString *)k;
+
 @end

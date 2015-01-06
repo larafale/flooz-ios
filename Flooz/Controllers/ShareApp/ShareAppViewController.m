@@ -153,16 +153,16 @@
     
     float nbButtons = 0;
     
-    if (_smsText && ![_smsText isBlank])
+    if ([self smsAvailable])
         ++nbButtons;
     
-    if (_fbData)
+    if ([self facebookAvailable])
         ++nbButtons;
     
-    if (_twitterText && ![_twitterText isBlank])
+    if ([self twitterAvailable])
         ++nbButtons;
     
-    if (_mailData)
+    if ([self mailAvailable])
         ++nbButtons;
     
     float buttonSize = 35;

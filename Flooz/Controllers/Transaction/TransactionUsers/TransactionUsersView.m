@@ -140,7 +140,8 @@
 	if ([[[_transaction from] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
 		return;
 	}
-
+    
+    [[_transaction from] setSelectedCanal:TimelineCanal];
 	[appDelegate showMenuForUser:[_transaction from] imageView:[[leftUserView subviews] firstObject]];
 }
 
@@ -149,6 +150,7 @@
 		return;
 	}
 
+    [[_transaction to] setSelectedCanal:TimelineCanal];
 	[appDelegate showMenuForUser:[_transaction to] imageView:[[rightUserView subviews] firstObject]];
 }
 

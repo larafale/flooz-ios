@@ -208,8 +208,6 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     posXBase = 0.0f;
-    [self registerNotification:@selector(reloadBadge) name:@"newNotifications" object:nil];
-    [self registerNotification:@selector(cancelTimer) name:kNotificationCancelTimer object:nil];
 }
 
 - (void)viewDidUnload {
@@ -221,9 +219,27 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
     
-    if (!_timer) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(showTuto) userInfo:nil repeats:NO];
+    switch (selectedTitleIndex) {
+        case TimelineFilterPublic:
+            if (!_timer && ![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePublic]) {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTutoPublic) userInfo:nil repeats:NO];
+            }
+            break;
+        case TimelineFilterFriend:
+            if (!_timer && ![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelineFriends]) {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTuto) userInfo:nil repeats:NO];
+            }
+            break;
+        case TimelineFilterPrivate:
+            if (!_timer && ![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePrivate]) {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTutoPrivate) userInfo:nil repeats:NO];
+            }
+            break;
+        default:
+            break;
     }
+    [self registerNotification:@selector(reloadBadge) name:@"newNotifications" object:nil];
+//    [self registerNotification:@selector(cancelTimer) name:kNotificationCancelTimer object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -237,7 +253,21 @@
 }
 
 -(void)showTuto {
-    [appDelegate showTutoPage:TutoPageWelcome inController:self];
+    [appDelegate showTutoPage:TutoPageTimelineFriends inController:self];
+    [_timer invalidate];
+    _timer = nil;
+}
+
+- (void)showTutoPublic {
+    [appDelegate showTutoPage:TutoPageTimelinePublic inController:self];
+    [_timer invalidate];
+    _timer = nil;
+}
+
+- (void)showTutoPrivate {
+    [appDelegate showTutoPage:TutoPageTimelinePrivate inController:self];
+    [_timer invalidate];
+    _timer = nil;
 }
 
 - (void)reloadBadge {
@@ -269,6 +299,7 @@
 
 - (void)prepareTitleViews {
 	_titlesView = [[UIView alloc] initWithFrame:CGRectMake(52.0f, 0.0f, WIDTH_TITLE_VIEW, 40.0f)];
+    [_titlesView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextPage)]];
 	self.navigationItem.titleView = _titlesView;
 
 	for (UIViewController *controller in _viewControllers) {
@@ -367,21 +398,39 @@
     [self presentViewController:controller animated:YES completion:NULL];
 }
 
+- (void)showNextPage {
+    if (selectedTitleIndex == TimelineFilterFriend)
+        [self smoothFocusOnTimeline:TimelineFilterPublic];
+    else if (selectedTitleIndex == TimelineFilterPublic)
+        [self smoothFocusOnTimeline:TimelineFilterPrivate];
+    else if (selectedTitleIndex == TimelineFilterPrivate)
+        [self smoothFocusOnTimeline:TimelineFilterFriend];
+}
+
 - (void)reloadTable:(TimelineFilter)filter andFocus:(BOOL)focus {
     if (filter) {
         selectedTitleIndex = filter;
     }
 	switch (filter) {
 		case TimelineFilterPublic:
-			[timelinePublic reloadTableView];
+            if (!_timer && ![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePublic]) {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTutoPublic) userInfo:nil repeats:NO];
+            }
+            [timelinePublic reloadTableView];
 			break;
 
 		case TimelineFilterFriend:
+            if (!_timer && ![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelineFriends]) {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTuto) userInfo:nil repeats:NO];
+            }
 			[timelineFriend reloadTableView];
 			break;
 
 		case TimelineFilterPrivate:
-			[timelinePrivate reloadTableView];
+            if (!_timer && ![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePrivate]) {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTutoPrivate) userInfo:nil repeats:NO];
+            }
+            [timelinePrivate reloadTableView];
 			break;
 
 		default:
@@ -395,6 +444,10 @@
 
 - (void)focusOnTimeline:(TimelineFilter)filter {
 	[_scrollView setContentOffset:CGPointMake(PPScreenWidth() * filter, 0.0f)];
+}
+
+- (void)smoothFocusOnTimeline:(TimelineFilter)filter {
+    [_scrollView setContentOffset:CGPointMake(PPScreenWidth() * filter, 0.0f) animated:YES];
 }
 
 @end

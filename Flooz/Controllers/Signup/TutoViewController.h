@@ -10,7 +10,9 @@
 
 typedef enum {
     TutoPageWelcome = 0,
-    TutoPageTimeline,
+    TutoPageTimelineFriends,
+    TutoPageTimelinePrivate,
+    TutoPageTimelinePublic,
     TutoPageFlooz
 } TutoPage;
 

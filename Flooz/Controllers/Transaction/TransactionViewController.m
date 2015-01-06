@@ -435,8 +435,8 @@
 
 - (void)presentCreditCardController {
     CreditCardViewController *controller = [CreditCardViewController new];
-    
-    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    controller.showCross = YES;
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)didChangeHeight:(CGFloat)height {

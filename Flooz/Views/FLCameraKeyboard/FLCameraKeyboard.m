@@ -257,13 +257,20 @@
 	}];
 }
 
-- (void)processImage:(UIImage *)image {  //process captured image, crop, resize and rotate
-    UIGraphicsBeginImageContext(CGSizeMake(PPScreenWidth(), PPScreenHeight()));
-	[image drawInRect:CGRectMake(0, CGRectGetMinY(_captureVideoPreviewLayer.frame), PPScreenWidth(), PPScreenHeight())];
+- (void)processImage:(UIImage *)image {  // process captured image, crop, resize and rotate
+    CGSize imageSize = image.size;
+    CGFloat screenHeight = PPScreenHeight();
+    CGFloat startY = CGRectGetMinY(_captureVideoPreviewLayer.frame);
+    
+    if (startY < 0)
+        startY = (imageSize.height * startY) / screenHeight;
+    
+    UIGraphicsBeginImageContext(CGSizeMake(imageSize.width, imageSize.height));
+	[image drawInRect:CGRectMake(0, startY, imageSize.width, imageSize.height)];
 	UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
     
-    CGRect cropRect = CGRectMake(0, 0, CGRectGetWidth(_captureVideoPreviewLayer.frame), heightImageToCapture);
+    CGRect cropRect = CGRectMake(0, 0, imageSize.width, (imageSize.height * heightImageToCapture) / screenHeight);
 	CGImageRef imageRef = CGImageCreateWithImageInRect([smallImage CGImage], cropRect);
 	UIImage *imageCroped = [UIImage imageWithCGImage:imageRef];
 	CGImageRelease(imageRef);

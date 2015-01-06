@@ -243,18 +243,22 @@
 	NSDictionary *contact;
 	NSString *title;
 	NSString *value;
+    NSString *from;
 
 	if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 2) {
 		FLUser *friend;
 
 		if (indexPath.section == 0) {
 			friend = _friendsSearch[indexPath.row];
+            [friend setSelectedCanal:SearchCanal];
 		}
 		else if (indexPath.section == 1) {
 			friend = [_friendsRecentFiltred objectAtIndex:indexPath.row];
-		}
+            [friend setSelectedCanal:RecentCanal];
+        }
 		else {
 			friend = [_friendsFiltred objectAtIndex:indexPath.row];
+            [friend setSelectedCanal:FriendsCanal];
 		}
 
 
@@ -278,15 +282,20 @@
 
 		title = [friend fullname];
 		value = [friend username];
+        from = [friend selectedFrom];
 	}
 	else {
 		contact = [_contacts objectAtIndex:indexPath.row];
 		title = [contact objectForKey:@"title"];
 		value = [contact objectForKey:@"value"];
+        FLUser *tmp = [FLUser new];
+        [tmp setSelectedCanal:ContactCanal];
+        from = tmp.selectedFrom;
 	}
 
 	[_dictionary setValue:title forKey:@"toTitle"];
 	[_dictionary setValue:value forKey:@"to"];
+    [_dictionary setValue:@{@"selectedFrom":from} forKey:@"metrics"];
 
 	if ([contact objectForKey:@"facebook_id"]) {
 		id paramsFacebook = @{

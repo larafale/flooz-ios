@@ -105,7 +105,10 @@
         [self updateCurrentUserAndAskResetCode:result];
         
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoFlooz];
-        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimeline];
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelineFriends];
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePublic];
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePrivate];
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoWelcome];
         
         if (success) {
             success(result);
@@ -401,6 +404,7 @@
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     void (^failureBlock1)(NSError *error);
+    void (^successBlock1)(id result);
     
     NSMutableDictionary *dic = [transaction mutableCopy];;
     
@@ -410,23 +414,21 @@
         }
     };
     
-    if (dic[@"toImage"]) {
-        NSData *image = dic[@"toImage"];
-        [transaction setValue:nil forKey:@"toImage"];
+    if (dic[@"toImage"])
+        [dic removeObjectForKey:@"toImage"];
+   
+    if (dic[@"image"])
+        [dic removeObjectForKey:@"image"];
+    
+    successBlock1 = ^(id result) {
+        [self updateCurrentUser];
         
-        failureBlock1 = ^(NSError *error) {
-            [dic setValue:image forKey:@"toImage"];
-            if (failure) {
-                failure(error);
-            }
-        };
-    }
+        if (success) {
+            success(result);
+        }
+    };
     
-    if (dic[@"image"]) {
-        [dic setValue:nil forKey:@"image"];
-    }
-    
-    [self requestPath:@"/flooz" method:@"POST" params:dic success:success failure:failureBlock1];
+    [self requestPath:@"/flooz" method:@"POST" params:dic success:successBlock1 failure:failureBlock1];
 }
 
 - (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -457,12 +459,12 @@
         [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
     
     id failure = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (operation && operation.responseObject && [operation.responseObject[@"item"][@"code"] intValue] == 107) {
+        if (operation && operation.responseObject && [operation.responseObject[@"item"] intValue] == 107) {
             noCreditCard();
         }
     };
     
-    NSString *path = [NSString stringWithFormat:@"f/looz/%@", transaction[@"id"]];
+    NSString *path = [NSString stringWithFormat:@"/flooz/%@", transaction[@"id"]];
     [self requestPath:path method:@"POST" params:tempTransaction success:successBlock fullFailure:failure];
 }
 
@@ -556,9 +558,9 @@
     [self requestPath:path method:@"GET" params:nil success:success failure:nil];
 }
 
-- (void)friendAcceptSuggestion:(NSString *)friendId success:(void (^)())success {
+- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success {
     NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/request", friendId];
-    [self requestPath:path method:@"GET" params:nil success:success failure:nil];
+    [self requestPath:path method:@"GET" params:@{@"metrics":@{@"selectedFrom": canal}} success:success failure:nil];
 }
 
 - (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz success:(void (^)(id result))success {
@@ -589,7 +591,7 @@
 }
 
 - (void)invitationStrings:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/invitations/config" method:@"GET" params:nil success:success failure:failure];
+    [self requestPath:@"/invitations/texts" method:@"GET" params:nil success:success failure:failure];
 }
 
 - (void)sendInvitationMetric:(NSString *)canal {
@@ -1274,20 +1276,11 @@
             }
         }
     }
-    
-    //	NSDictionary *params = @{
-    //		@"emails": contactsEmail,
-    //		@"phones": contactsPhone
-    //	};
-    //
-    //	[self requestPath:@"/contacts/import" method:@"POST" params:params success:NULL failure:NULL];
 }
 
 - (void)sendContactsAtSignup:(BOOL)signup WithParams:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     NSString *path = @"/users/contacts";
-    if (signup) {
-        path = [path stringByAppendingString:@"?context=signup"];
-    }
+    
     [self requestPath:path method:@"POST" params:params success:success failure:failure];
 }
 

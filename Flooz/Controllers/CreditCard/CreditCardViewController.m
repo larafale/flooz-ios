@@ -177,6 +177,13 @@
 	[_nextButton setTitle:NSLocalizedString(@"SIGNUP_NEXT_BUTTON_ADD", @"") forState:UIControlStateNormal];
 	_contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), CGRectGetMaxY(_nextButton.frame) + 40);
 
+    
+    UILabel *cbInfos = [[UILabel alloc] initWithText:NSLocalizedString(@"CREDIT_CARD_INFOS", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:8];
+    CGRectSetWidth(cbInfos.frame, CGRectGetWidth(_contentView.frame) - PADDING_SIDE * 2);
+    CGRectSetHeight(cbInfos.frame, 130);
+    CGRectSetXY(cbInfos.frame, PADDING_SIDE, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(cbInfos.frame) - PADDING_SIDE);
+    [_contentView addSubview:cbInfos];
+    
     [self verifAllFieldForCB];
 }
 

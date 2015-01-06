@@ -74,7 +74,7 @@
         height += CGRectGetHeight(logo.frame) + padding;
     }
     
-    _textExplication = [[UILabel alloc] initWithFrame:CGRectMake(padding, height, PPScreenWidth() - padding * 2.0f, 45)];
+    _textExplication = [[UILabel alloc] initWithFrame:CGRectMake(padding, height, PPScreenWidth() - padding * 2.0f, 70)];
     _textExplication.textColor = [UIColor customWhite];
     _textExplication.font = [UIFont customTitleExtraLight:18];
     if (IS_IPHONE4) {
@@ -87,7 +87,7 @@
     CGRectSetY(_textExplication.frame, height);
     [_mainBody addSubview:_textExplication];
     
-    height += CGRectGetHeight(_textExplication.frame) + padding * 2;
+    height += CGRectGetHeight(_textExplication.frame) + padding;
     
     _codeTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"INVITATION_CODE_PLACEHOLDER", @"") for:_userDic key:@"coupon" position:CGPointMake(padding * 2, height)];
     _codeTextfield.textfield.textAlignment = NSTextAlignmentCenter;

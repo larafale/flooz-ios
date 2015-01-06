@@ -12,6 +12,7 @@
 #import "FriendCell.h"
 #import "AppDelegate.h"
 #import "InviteFriendsViewController.h"
+#import "ShareAppViewController.h"
 
 @interface FriendsViewController () {
 	UIView *_backgroundView;
@@ -52,37 +53,44 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	self.view.backgroundColor = [UIColor customBackgroundHeader];
-
-    _backgroundView = [UIView newWithFrame:CGRectMake(PADDING_NAV, 120.0f, PPScreenWidth() - PADDING_NAV, 200.0f / (PPScreenWidth() / (PPScreenWidth() - PADDING_NAV)))];
     
-    UIImageView *backgroudImage = [UIImageView newWithFrame:CGRectMake(0, 0, PPScreenWidth() - PADDING_NAV, 100.0f / (PPScreenWidth() / (PPScreenWidth() - PADDING_NAV)))];
-    backgroudImage.image = [UIImage imageNamed:@"background-friends"];
-    backgroudImage.contentMode = UIViewContentModeScaleAspectFit;
-    
-    UITextView *backgroundText = [UITextView newWithFrame:CGRectMake(20.0f, 120.0f / (PPScreenWidth() / (PPScreenWidth() - PADDING_NAV)), PPScreenWidth() - PADDING_NAV - 40.0f, 120.0f / (PPScreenWidth() / (PPScreenWidth() - PADDING_NAV)))];
-    [backgroundText setEditable:NO];
-    [backgroundText setBackgroundColor:[UIColor clearColor]];
-    [backgroundText setTextAlignment:NSTextAlignmentCenter];
-    [backgroundText setTextColor:[UIColor whiteColor]];
-    [backgroundText setFont:[UIFont customTitleLight:18]];
-    [backgroundText setText:NSLocalizedString(@"FRIENDS_EMPTY_MESSAGE", nil)];
-    
-    [_backgroundView addSubview:backgroudImage];
-    [_backgroundView addSubview:backgroundText];
-    
-	[self.view addSubview:_backgroundView];
-
 	_searchBar = [[FriendAddSearchBar alloc] initWithStartX:PADDING_NAV + 10.0f];
 	CGRectSetY(_searchBar.frame, PPStatusBarHeight());
 	[_searchBar setDelegate:self];
 	[self.view addSubview:_searchBar];
 
+    _backgroundView = [UIView newWithFrame:CGRectMake(PADDING_NAV, CGRectGetMaxY(_searchBar.frame), PPScreenWidth() - PADDING_NAV, PPScreenHeight() - CGRectGetMaxY(_searchBar.frame))];
+    
+    UIImageView *backgroudImage = [UIImageView newWithImage:[UIImage imageNamed:@"background-friends"]];
+    backgroudImage.contentMode = UIViewContentModeScaleAspectFit;
+    CGFloat newWidth = PPScreenWidth() - PADDING_NAV;
+    
+    if (IS_IPHONE4)
+        newWidth -= 25;
+    
+    CGFloat newHeight = newWidth * CGRectGetHeight(backgroudImage.frame) / CGRectGetWidth(backgroudImage.frame);
+
+    CGRectSetWidthHeight(backgroudImage.frame, newWidth, newHeight);
+    CGRectSetPosition(backgroudImage.frame, CGRectGetWidth(_backgroundView.frame) / 2 - newWidth / 2, 0);
+
+    CGFloat margin = 20;
+    if (IS_IPHONE4)
+        margin = 10;
+    
+    FLActionButton *shareButton = [[FLActionButton alloc] initWithFrame:CGRectMake(30.0f, CGRectGetHeight(backgroudImage.frame) + margin, PPScreenWidth() - PADDING_NAV - 60.0f, FLActionButtonDefaultHeight) title:NSLocalizedString(@"FRIENDS_BUTTON_INVITE", nil)];
+    [shareButton addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_backgroundView addSubview:backgroudImage];
+    [_backgroundView addSubview:shareButton];
+    
 	_tableView = [[FLTableView alloc] initWithFrame:CGRectMake(PADDING_NAV, CGRectGetMaxY(_searchBar.frame), PPScreenWidth() - PADDING_NAV, PPScreenHeight() - CGRectGetMaxY(_searchBar.frame)) style:UITableViewStylePlain];
 	[_tableView setDelegate:self];
 	[_tableView setDataSource:self];
 	[self.view addSubview:_tableView];
+    [self.view addSubview:_backgroundView];
 
 	refreshControl = [UIRefreshControl new];
+    [refreshControl setTintColor:[UIColor customBlueLight]];
 	[refreshControl addTarget:self action:@selector(didReloadData) forControlEvents:UIControlEventValueChanged];
 	[_tableView addSubview:refreshControl];
 
@@ -107,6 +115,11 @@
 	[self registerNotification:@selector(scrollViewDidScroll:) name:kNotificationCloseKeyboard object:nil];
 	[self registerNotification:@selector(didReloadData) name:kNotificationRemoveFriend object:nil];
     [self registerNotification:@selector(reloadFriendsList) name:kNotificationReloadCurrentUser object:nil];
+}
+
+- (void)showShareView {
+    ShareAppViewController *controller = [ShareAppViewController new];
+    [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
 }
 
 #pragma mark - TableView
@@ -268,13 +281,16 @@
 
 	if (indexPath.section == 0) {
 		friend = friendsSearch[indexPath.row];
+        [friend setSelectedCanal:SearchCanal];
 	}
 	else if (indexPath.section == 1) {
 		friend = [friendsSuggestion objectAtIndex:indexPath.row];
-	}
+        [friend setSelectedCanal:SuggestionCanal];
+    }
 	else if (indexPath.section == 3) {
 		friend = [friends objectAtIndex:indexPath.row];
-	}
+        [friend setSelectedCanal:FriendsCanal];
+    }
 
 	if (friend) {
         FriendCell *cell = (FriendCell *)[tableView cellForRowAtIndexPath:indexPath];
@@ -420,9 +436,23 @@
 	}];
 }
 
-- (void)acceptFriendSuggestion:(NSString *)friendSuggestionId {
+- (void)acceptFriendSuggestion:(NSString *)friendSuggestionId cell:(UITableViewCell *)cell {
+    
+    NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+    
+    FLUser *tmp = [FLUser new];
+    if (indexPath.section == 0) {
+        [tmp setSelectedCanal:SearchCanal];
+    }
+    else if (indexPath.section == 1) {
+        [tmp setSelectedCanal:SuggestionCanal];
+    }
+    else if (indexPath.section == 3) {
+        [tmp setSelectedCanal:FriendsCanal];
+    }
+
 	[[Flooz sharedInstance] showLoadView];
-	[[Flooz sharedInstance] friendAcceptSuggestion:friendSuggestionId success: ^{
+	[[Flooz sharedInstance] friendAcceptSuggestion:friendSuggestionId  canal:tmp.selectedFrom success: ^{
 	    [self didReloadData];
 	}];
 }

@@ -172,11 +172,11 @@
 }
 
 - (void)checkEmail {
-    if (!self.userDic[@"lastName"] ||  [self.userDic[@"lastName"] isBlank]) {
+    if (!self.userDic[@"lastName"] || [self.userDic[@"lastName"] isBlank]) {
         [_lastname becomeFirstResponder];
         return;
     }
-    if (!self.userDic[@"firstName"] ||  [self.userDic[@"firstName"] isBlank]) {
+    if (!self.userDic[@"firstName"] || [self.userDic[@"firstName"] isBlank]) {
         [_firstname becomeFirstResponder];
         return;
     }
@@ -188,7 +188,7 @@
         [_birthday becomeFirstResponder];
         return;
     }
-    if (!self.userDic[@"password"] || [self.userDic[@"password"] length] < 6) {
+    if (!self.userDic[@"password"] || [self.userDic[@"password"] isBlank]) {
         [_password becomeFirstResponder];
         return;
     }

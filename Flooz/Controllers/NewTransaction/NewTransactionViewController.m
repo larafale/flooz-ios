@@ -73,7 +73,7 @@
         transaction = [NSMutableDictionary new];
         
         currentPreset = nil;
-        
+       
         transaction[@"random"] = [FLHelper generateRandomString];
         transaction[@"preset"] = @NO;
         
@@ -90,6 +90,10 @@
             
             if ([user avatarURL]) {
                 transaction[@"toImageUrl"] = [user avatarURL];
+            }
+            
+            if ([user selectedFrom]) {
+                [transaction setValue:@{@"selectedFrom": user.selectedFrom} forKey:@"metrics"];
             }
         }
     }

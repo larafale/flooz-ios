@@ -67,7 +67,7 @@
 	FLUser *user = [friends objectAtIndex:indexPath.row];
 
 	[[Flooz sharedInstance] showLoadView];
-	[[Flooz sharedInstance] friendAcceptSuggestion:[user userId] success: ^{
+    [[Flooz sharedInstance] friendAcceptSuggestion:[user userId] canal:[user selectedFrom] success: ^{
 	    [self dismiss];
 	}];
 }

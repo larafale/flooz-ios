@@ -39,7 +39,7 @@
 "NAV_NOTIFICATIONS" = "Notifications";
 "NAV_CASHOUT" = "Virement";
 "NAV_RIB" = "RIB";
-"NAV_PASSWORD" = "Changer de mot de passe";
+"NAV_PASSWORD" = "Modifier";
 "NAV_PASSWORD_FORGET" = "MDP oublié";
 "NAV_CREDIT_CARD" = "Carte bancaire";
 "NAV_CREDIT_CARD_ADD" = "Ajouter une CB";
@@ -56,6 +56,7 @@
 
 "CREDIT_CARD_SCAN" = "Scanner ma carte, c'est plus rapide !";
 "CREDIT_CARD_REMOVE" = "Supprimer cette carte";
+"CREDIT_CARD_INFOS" = "Vos données bancaires ne sont pas stockées dans l'application. Elles sont cryptées et conservées chez Rentabiliweb, établissement de paiement certifié PCI-DSS niveau 1, soit le plus haut niveau d'exigence en matière de sécurité des données bancaires sur Internet. Vous pouvez supprimer votre carte bancaire à tout moment.";
 
 "NEW_TRANSACTION" = "Nouveau Flooz";
 
@@ -160,7 +161,7 @@
 
 "ACCOUNT_BUTTON_PROFIL" = "Mon profil";
 "ACCOUNT_BUTTON_NOTIFICATION" = "Notifications";
-"ACCOUNT_BUTTON_INVITE" = "Le Club Flooz";
+"ACCOUNT_BUTTON_INVITE" = "Flooz Family";
 "ACCOUNT_BUTTON_CASH_OUT" = "Virer à ma banque";
 "ACCOUNT_BUTTON_DIVERS" = "À propos";
 
@@ -180,6 +181,7 @@
 "SETTINGS_PRIVACY" = "Partage & confidentialité";
 "SETTINGS_DOCUMENTS" = "Justificatifs";
 
+"SMS_REFRESH_CODE" = "Renvoyer le code %@";
 
 "SETTINGS_CARD" = "Carte bancaire";
 "SETTINGS_BANK" = "Compte bancaire";
@@ -188,6 +190,7 @@
 "SETTINGS_SECURITY" = "Sécurité";
 "SETTINGS_PREFERENCES" = "Préférences";
 "SETTINGS_PRIVACY" = "Partage & vie privée";
+"SETTINGS_RELOAD_TUTO" = "Redémarrer le tutoriel";
 
 "SETTINGS_CODE" = "Code de sécurité";
 "SETTINGS_PASSWORD" = "Mot de passe";
@@ -199,7 +202,7 @@
 "SETTINGS_IDEAS_CRITICS" = "Idées / Critiques";
 "SETTINGS_LOGOUT" = "Déconnexion";
 
-"SETTINGS_DEFAULT_SCOPE" = "Visibilité par défaut";
+"SETTINGS_DEFAULT_SCOPE" = "Pratique ! Choisissez la visibilité par défaut de vos flooz. Vous avez toutefois la possibilité de la changer lors de chacun de vos paiements";
 
 "EDIT_ACCOUNT_SEND_SMS" = "Renvoyer SMS";
 "EDIT_ACCOUNT_SEND_MAIL" = "Renvoyer email";
@@ -243,12 +246,13 @@
 "EVENT_SCOPE_PRIVATE" = "Sur invitation";
 
 "FRIENDS_FRIENDS_SEARCH" = "Recherche";
-"SEARCH_FRIENDS" = "Chercher des amis sur Flooz";
+"SEARCH_FRIENDS" = "Rechercher des amis";
 "FRIENDS_SEARCH_FRIENDS" = "Mes amis";
 "FRIENDS_FRIENDS_REQUEST" = "Demandes en attente";
 "FRIENDS_FRIENDS_SUGGESTION" = "Vous connaissez peut-être...";
 "FRIENDS_FRIENDS" = "Mes amis";
 "FRIENDS_EMPTY_MESSAGE" = "Ajoutez des amis pour retrouver leurs flooz dans votre fil d'actualité !";
+"FRIENDS_BUTTON_INVITE" = "Inviter ses amis";
 
 "FRIEND_PCIKER_PLACEHOLDER2" = "Rechercher";
 "FRIEND_PCIKER_PLACEHOLDER" = "Rechercher pseudo ou 06";
@@ -311,7 +315,7 @@
 "INVITE_MESSAGE" = "Offrez à vos amis la possibilité d'accéder à l'application !";
 "INVITE_CODE_CODE" = "Votre code";
 "INVITE_CODE_SHARE" = "Partagez mon code";
-"INVITATION_CODE_EXPLICATION" = "Seules les personnes ayant été invitées peuvent rejoindre Flooz.";
+"INVITATION_CODE_EXPLICATION" = "Seules les personnes invitées peuvent rejoindre la Flooz Family.";
 "INVITATION_CODE_WAITING_EXPLICATION" = "Votre demande d'invitation a bien était prise en compte.\nVous recevrez très bientôt un email d'invitation !";
 "ALREADY_FLOOZ" = "Déjà sur\nFlooz";
 "INVITATION_CODE_ACCESS" = "J'ai déjà une\ninvitation";
@@ -390,7 +394,7 @@
 "Invite_Friends_Message_SMS" = "Prends cette appli elle est vraiment top pour s'échanger de l'argent http://flooz.me/download utilise ce code pour l'inscription ";
 
 "SECURE_LOGIN_TITLE" = "Sécurité";
-"CODE_INVITATION_TITLE" = "Rejoignez le Club";
+"CODE_INVITATION_TITLE" = "Code d'invitation";
 "CODE_INVITATION_PLACEHOLDER" = "Entrez votre code";
 "CODE_INVITATION_PLACEHOLDER" = "Entre ton code d'invitation...";
 "CODE_INVITATION_EXPLICATION" = "Tu voudrais Floozer mais t'es pas invité ?\nRéclame ton code à un ami ou prend contact avec nous via twitter ou téléphone.";
@@ -405,6 +409,7 @@
 
 
 "CASH_OUT_MESSAGE" = "Virez la totalité ou une partie de votre porte-monnaie sur votre compte bancaire.";
+"CASHOUT_BUTTON" = "Virer %@";
 
 "ERROR_ACCESS_CONTACT_TITLE" = "Accès aux contacts refusé";
 "ERROR_ACCESS_CONTACT_CONTENT" = "\nFlooz ne peut pas accéder à vos contacts. Vous pouvez modifier ces paramètres dans les réglages.";
@@ -425,6 +430,7 @@
 "Erase" = "Effacer";
 "Confirm" = "Confirmer";
 "OK" = "OK";
+
 
 "Join" = "Rejoindre";
 "Login" = "Démarrer";

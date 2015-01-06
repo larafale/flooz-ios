@@ -13,7 +13,6 @@
 #import "FLAlertView.h"
 #import "TutoViewController.h"
 #import "MZFormSheetController.h"
-#import "FirstLaunchViewController.h"
 #import "FLRevealContainerViewController.h"
 #import "SignupNavigationController.h"
 #import "SignupPhoneViewController.h"
@@ -25,6 +24,9 @@ static NSString *kKeyTutoFlooz = @"kKeyTutoFlooz";
 static NSString *kKeyLastUpdate = @"kKeyLastUpdate";
 static NSString *kKeyTutoWelcome = @"kKeyTutoWelcome";
 static NSString *kKeyTutoTimeline = @"kKeyTutoTimeline";
+static NSString *kKeyTutoTimelineFriends = @"kKeyTutoTimelineFriends";
+static NSString *kKeyTutoTimelinePublic = @"kKeyTutoTimelinePublic";
+static NSString *kKeyTutoTimelinePrivate = @"kKeyTutoTimelinePrivate";
 static NSString *kKeyAccessContacts = @"kKeyAccessContacts";
 static NSString *kNotificationCancelTimer = @"kNotificationCancelTimer";
 static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBarClick";
@@ -43,7 +45,6 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 	NSMutableArray *imagesForPreview;
 
 	UIViewController *savedViewController;
-	FirstLaunchViewController *firstVC;
     SignupNavigationController *signupNavigationController;
     
 	UIViewController *viewControllerForPopup;
@@ -61,7 +62,6 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)goToAccountViewController;
 - (void)didDisconnected;
 - (void)displayHome;
-- (void)displaySignupAtPage:(SignupOrderPage)index;
 - (void)askForSecureCodeWithUser:(NSDictionary *)user;
 - (void)showResetPasswordWithUser:(NSDictionary*)user;
 - (void)showSignupWithUser:(NSDictionary *)user;
@@ -85,6 +85,7 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend inWindow:(UIWindow *)window;
 - (void)showAvatarView:(UIView *)view withUrl:(NSURL *)urlImage;
 - (void)showPresetNewTransactionController:(FLPreset *)preset;
+- (void)popToMainView;
 
 - (void)lockForUpdate:(NSString *)updateUrl;
 

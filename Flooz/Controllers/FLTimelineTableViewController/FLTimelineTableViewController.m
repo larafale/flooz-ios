@@ -24,10 +24,14 @@
 
 	NSMutableArray *transactionsLoaded;
 
+    UIImageView *_backgroundImage;
+    
 	NSMutableArray *cells;
 	CGRect frameTable;
     
     BOOL isReloading;
+    
+    NSTimer *_timer;
 }
 
 @end
@@ -47,7 +51,6 @@
 		else {
 			titleController = @"Moi";
 		}
-//        titleController = [[[filter substringToIndex:1] uppercaseString] stringByAppendingString:[filter substringFromIndex:1]];
 
 		self.title = titleController;
 
@@ -67,10 +70,26 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
+    [self.view setBackgroundColor:[UIColor customBackground]];
+    
+    NSString *backImageName = @"timeline-back-";
+    
+    backImageName = [backImageName stringByAppendingString:currentFilter];
+    
+    if (IS_IPHONE4)
+        backImageName = [backImageName stringByAppendingString:@"-iphone4"];
+    
+    _backgroundImage = [[UIImageView alloc] initWithFrame:frameTable];
+    [_backgroundImage setImage:[UIImage imageNamed:backImageName]];
+    [_backgroundImage setContentMode:UIViewContentModeScaleAspectFit];
+    [_backgroundImage setHidden:YES];
+    [self.view addSubview:_backgroundImage];
+    
 	_tableView = [FLTableView newWithFrame:frameTable];
 	[_tableView setDelegate:self];
 	[_tableView setDataSource:self];
 	[_tableView setScrollsToTop:YES];
+    [_tableView setBackgroundColor:[UIColor clearColor]];
 	[self.view addSubview:_tableView];
 
 	// Padding pour que le dernier element au dessus du +
@@ -185,6 +204,10 @@
         
 	    _nextPageUrl = nextPageUrl;
 	    nextPageIsLoading = NO;
+        if (![transactions count])
+            _timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(showBack) userInfo:nil repeats:NO];
+        else
+            [_backgroundImage setHidden:YES];
 	    [self didFilterChange];
         isReloading = NO;
 	} failure:^(NSError *error) {
@@ -194,16 +217,24 @@
     }];
 }
 
+- (void)showBack {
+    if (![transactions count])
+        [_backgroundImage setHidden:NO];
+
+    [_timer invalidate];
+    _timer = nil;
+}
+
 - (void)handleRefresh {
 	[refreshControl beginRefreshing];
 	[self reloadTableView];
 }
 
 - (void)didFilterChange {
+    [_tableView setContentOffset:CGPointZero animated:YES];
+    [refreshControl endRefreshing];
 	rowsWithPaymentField = [NSMutableSet new];
 	[_tableView reloadData];
-	[_tableView setContentOffset:CGPointZero animated:YES];
-	[refreshControl endRefreshing];
 }
 
 #pragma mark - TransactionCellDelegate

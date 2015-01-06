@@ -17,14 +17,12 @@
 #import "IDMPhotoBrowser.h"
 #import "TutoViewController.h"
 #import "HomeViewController.h"
-#import "SignupViewController.h"
 #import "SplashViewController.h"
 #import "InviteViewController.h"
 #import "AccountViewController.h"
 #import "FriendsViewController.h"
 #import "TimelineViewController.h"
 #import "SecureCodeViewController.h"
-#import "FirstLaunchViewController.h"
 #import "TransactionViewController.h"
 #import "AccountProfilViewController.h"
 #import "NewTransactionViewController.h"
@@ -77,9 +75,19 @@
 #endif
     
     [[Mixpanel sharedInstance] identify:[FLHelper generateRandomString]];
-        
+    
     [self handlePushMessage:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] withApplication:application];
     
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kKeyTutoTimeline] != nil) {
+        BOOL tutoBool = [[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimeline];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:tutoBool forKey:kKeyTutoTimelineFriends];
+        [[NSUserDefaults standardUserDefaults] setBool:tutoBool forKey:kKeyTutoTimelinePrivate];
+        [[NSUserDefaults standardUserDefaults] setBool:tutoBool forKey:kKeyTutoTimelinePublic];
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kKeyTutoTimeline];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     return YES;
 }
 
@@ -223,11 +231,6 @@
     [self flipToViewController:signupNavigationController];
 }
 
-- (void)displaySignupAtPage:(SignupOrderPage)index {
-    firstVC = [[FirstLaunchViewController alloc] initWithSpecificPage:index];
-    [self flipToViewController:firstVC];
-}
-
 - (void)displayError:(NSError *)error {
     NSTimeInterval seconds = [[NSDate date] timeIntervalSinceDate:lastErrorDate];
     
@@ -360,6 +363,7 @@
     if ([[Flooz sharedInstance] currentUser]) {
         [[Flooz sharedInstance] startSocket];
         [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
     }
 }
 
@@ -500,7 +504,7 @@
         haveMenuFriend = YES;
         [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_ADD_FRIENDS", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
             [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success: ^{
+            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
             }];
         }]];
@@ -643,7 +647,7 @@
             }];
         }
         else {
-            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success: ^{
+            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
             }];
         }
@@ -670,7 +674,7 @@
             }];
         }
         else {
-            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] success: ^{
+            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
             }];
         }

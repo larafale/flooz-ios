@@ -27,12 +27,12 @@
     
     CGFloat height = 20.0f;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_SIDE, height, PPScreenWidth() - 2 * PADDING_SIDE, 20)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_SIDE, height, PPScreenWidth() - 2 * PADDING_SIDE, 70)];
     [label setText:NSLocalizedString(@"SETTINGS_DEFAULT_SCOPE", nil)];
     [label setTextColor:[UIColor whiteColor]];
     [label setFont:[UIFont customContentLight:16]];
     [label setTextAlignment:NSTextAlignmentCenter];
-    
+    [label setNumberOfLines:4];
     [_mainBody addSubview:label];
     
     height += CGRectGetHeight(label.frame) + 20.0f;

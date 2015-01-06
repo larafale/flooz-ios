@@ -18,8 +18,8 @@
 	UIButton *privacyButton;
 	UILabel *circle;
 
-	UIButton *askButton;
-	UIButton *sendButton;
+	FLActionButton *askButton;
+	FLActionButton *sendButton;
 
 	SEL actionValidSend;
 	SEL actionValidCollect;

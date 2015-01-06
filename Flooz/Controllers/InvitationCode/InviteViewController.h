@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FirstLaunchViewController.h"
 #import "AppDelegate.h"
 #import <Social/Social.h>
 

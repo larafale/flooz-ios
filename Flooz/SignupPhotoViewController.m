@@ -34,7 +34,9 @@
     [super viewDidLoad];
     
     _avatarButton = [[FLActionButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), 100.0f)];
-    [_avatarButton setBackgroundColor:[UIColor customBackgroundHeader]];
+    [_avatarButton setBackgroundColor:[UIColor customBackgroundHeader] forState:UIControlStateNormal];
+    [_avatarButton setBackgroundColor:[UIColor customBackgroundHeader] forState:UIControlStateDisabled];
+    [_avatarButton setBackgroundColor:[UIColor customBackgroundHeader] forState:UIControlStateHighlighted];
     [_avatarButton addTarget:self action:@selector(showImagePicker) forControlEvents:UIControlEventTouchUpInside];
     {
         CGFloat size = CGRectGetHeight(_avatarButton.frame) - 10.0f;

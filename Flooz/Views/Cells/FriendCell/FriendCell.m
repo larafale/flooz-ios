@@ -152,7 +152,7 @@
 		return;
 	}
 	_addButton.selected = YES;
-	[_delegate acceptFriendSuggestion:[_friend userId]];
+	[_delegate acceptFriendSuggestion:[_friend userId] cell:self];
 }
 
 #pragma mark -

@@ -20,7 +20,7 @@
 
 - (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCollect:(SEL)actionCollect {
 	heightTopBar = 37.0f;
-	heightButtonBar = 50.0f;
+	heightButtonBar = 40.0f;
 	heightBar = heightTopBar + heightButtonBar;
 	self = [super initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, heightBar)];
 	if (self) {
@@ -73,38 +73,29 @@
 
 - (void)createButtonSend {
 
-	askButton = [[UIButton alloc] initWithFrame:CGRectMake(1, heightTopBar + 1, CGRectGetWidth(self.frame) / 2. - 1, heightButtonBar - 2)];
+	askButton = [[FLActionButton alloc] initWithFrame:CGRectMake(4, heightTopBar, CGRectGetWidth(self.frame) / 2. - 6, heightButtonBar - 3)];
 	[askButton setTitle:NSLocalizedString(@"MENU_COLLECT", nil) forState:UIControlStateNormal];
 	askButton.titleLabel.font = [UIFont customTitleLight:16];
-	[askButton setBackgroundColor:[UIColor customBlue]];
 	[askButton addTarget:currentController action:actionValidCollect forControlEvents:UIControlEventTouchUpInside];
 	[self addSubview:askButton];
 
 
-	sendButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., heightTopBar + 1, CGRectGetWidth(self.frame) / 2. - 1, heightButtonBar - 2)];
+	sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2. + 2, heightTopBar, CGRectGetWidth(self.frame) / 2. - 6, heightButtonBar - 3)];
 	[sendButton setTitle:NSLocalizedString(@"MENU_PAYMENT", nil) forState:UIControlStateNormal];
 	sendButton.titleLabel.font = [UIFont customTitleLight:16];
-	[sendButton setBackgroundColor:[UIColor customBlue]];
 	[sendButton addTarget:currentController action:actionValidSend forControlEvents:UIControlEventTouchUpInside];
 	[self addSubview:sendButton];
-
-
-	separatorButtonBar = [UIView newWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2., heightTopBar + heightButtonBar / 4., 1, heightButtonBar / 2.0)];
-	[separatorButtonBar setBackgroundColor:[UIColor whiteColor]];
-	[self addSubview:separatorButtonBar];
     
     if ([_dictionary[@"preset"] boolValue]) {
         if ([_dictionary[@"method"] isEqualToString:@"pay"]) {
-            [separatorButtonBar removeFromSuperview];
             [askButton removeFromSuperview];
             
-            [sendButton setFrame:CGRectMake(1, heightTopBar + 1, CGRectGetWidth(self.frame) - 2, heightButtonBar - 2)];
+            [sendButton setFrame:CGRectMake(4, heightTopBar, CGRectGetWidth(self.frame) - 8, heightButtonBar - 3)];
         }
         else if ([_dictionary[@"method"] isEqualToString:@"charge"]) {
-            [separatorButtonBar removeFromSuperview];
             [sendButton removeFromSuperview];
             
-            [askButton setFrame:CGRectMake(1, heightTopBar + 1, CGRectGetWidth(self.frame) - 2, heightButtonBar - 2)];
+            [askButton setFrame:CGRectMake(4, heightTopBar, CGRectGetWidth(self.frame) - 8, heightButtonBar - 3)];
         }
     }
 }

@@ -54,6 +54,7 @@
     [_mainBody addSubview:_tableView];
     
     refreshControl = [UIRefreshControl new];
+    [refreshControl setTintColor:[UIColor customBlueLight]];
     [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
 }
