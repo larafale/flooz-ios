@@ -423,13 +423,13 @@
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion: ^{
-        if (result == MessageComposeResultSent) {
+        if (result == MFMailComposeResultSent) {
             [[Flooz sharedInstance] sendInvitationMetric:@"email"];
         }
-        else if (result == MessageComposeResultCancelled) {
+        else if (result == MFMailComposeResultCancelled) {
             
         }
-        else if (result == MessageComposeResultFailed) {
+        else if (result == MFMailComposeResultFailed) {
             
         }
     }];

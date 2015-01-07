@@ -167,6 +167,28 @@
 	[[_transaction social] setIsLiked:![[_transaction social] isLiked]];
 	[[Flooz sharedInstance] createLikeOnTransaction:_transaction success: ^(id result) {
 	    [[_transaction social] setLikeText:[result objectForKey:@"item"]];
+        NSInteger numberOfLike = [[_transaction social] likesCount];
+        NSMutableArray *tmpLikes = [[_transaction social].likes mutableCopy];
+        if ([[_transaction social] isLiked]) {
+            numberOfLike += 1;
+            if (numberOfLike == 1)
+                tmpLikes = [NSMutableArray new];
+            
+            FLUser *currentUser = [Flooz sharedInstance].currentUser;
+            [tmpLikes addObject:@{@"_id": currentUser.userId, @"nick": currentUser.username, @"userId": currentUser.userId}];
+        }
+        else {
+            numberOfLike -= 1;
+            
+            for (NSDictionary *likeUser in tmpLikes) {
+                if ([likeUser[@"nick"] isEqualToString:[Flooz sharedInstance].currentUser.username]) {
+                    [tmpLikes removeObject:likeUser];
+                    break;
+                }
+            }
+        }
+        [[_transaction social] setLikes:tmpLikes];
+        [[_transaction social] setLikesCount:numberOfLike];
 
 	    FLSocialView *view = [[self subviews] objectAtIndex:3];
 	    [view prepareView:_transaction.social];

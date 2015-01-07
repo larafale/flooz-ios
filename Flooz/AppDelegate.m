@@ -31,7 +31,9 @@
 #import <PonyDebugger/PonyDebugger.h>
 #endif
 
-@interface AppDelegate()
+@interface AppDelegate() {
+    NSDictionary *tmpUser;
+}
 
 @property (nonatomic, retain) NSString *appUpdateURI;
 
@@ -194,9 +196,14 @@
 }
 
 - (void)showRequestInvitationCodeWithUser:(NSDictionary *)user {
-    InviteViewController *invitVC = [[InviteViewController  alloc] initWithUser:user];
-    [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
-    [[self currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:invitVC] animated:YES completion:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SIGNUP_PHONE_ALERT_TITLE", nil) message:[NSString stringWithFormat:NSLocalizedString(@"SIGNUP_PHONE_ALERT_CONTENT", nil), user[@"phone"]] delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_EDIT", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_OK", nil), nil];
+    [alert setTag:125];
+    
+    tmpUser = user;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [alert show];
+    });
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user {
@@ -303,6 +310,14 @@
     else if (alertView.tag == 11) {
         if (buttonIndex == 1) {
             [[Flooz sharedInstance] blockUser:currentUserForMenu.userId];
+        }
+    }
+    else if (alertView.tag == 125) {
+        if (buttonIndex == 1) {
+            InviteViewController *invitVC = [[InviteViewController  alloc] initWithUser:tmpUser];
+            [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
+            [[self currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:invitVC] animated:YES completion:nil];
+            tmpUser = nil;
         }
     }
 }

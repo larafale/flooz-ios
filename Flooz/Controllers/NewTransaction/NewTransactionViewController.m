@@ -73,7 +73,7 @@
         transaction = [NSMutableDictionary new];
         
         currentPreset = nil;
-       
+        
         transaction[@"random"] = [FLHelper generateRandomString];
         transaction[@"preset"] = @NO;
         
@@ -471,13 +471,15 @@
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] createTransaction:transaction success: ^(NSDictionary *result) {
+                transaction[@"id"] = result[@"item"][@"_id"];
                 if (transaction[@"image"]) {
-                    [[Flooz sharedInstance] uploadTransactionPic:result[@"item"][@"_id"] image:transaction[@"image"] success:^(id result) {
+                    [[Flooz sharedInstance] uploadTransactionPic:transaction[@"id"] image:transaction[@"image"] success:^(id result) {
                         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
                     } failure:nil];
                 }
                 
                 if (result[@"sms"] && [MFMessageComposeViewController canSendText]) {
+                    [[Flooz sharedInstance] showLoadView];
                     MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
                     message.messageComposeDelegate = self;
                     
@@ -485,7 +487,9 @@
                     [message setBody:result[@"sms"][@"message"]];
                     
                     message.modalPresentationStyle = UIModalPresentationPageSheet;
-                    [self presentViewController:message animated:YES completion:nil];
+                    [self presentViewController:message animated:YES completion:^{
+                        [[Flooz sharedInstance] hideLoadView];
+                    }];
                 } else {
                     [self dismissView];
                 }
@@ -529,15 +533,29 @@
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     [self dismissViewControllerAnimated:YES completion: ^{
         if (result == MessageComposeResultSent) {
-            
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] confirmTransactionSMS:transaction[@"id"] validate:YES success:^(id result) {
+                [self dismissView];
+            } failure:^(NSError *error) {
+                [self dismissView];
+            }];
         }
         else if (result == MessageComposeResultCancelled) {
-            
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] confirmTransactionSMS:transaction[@"id"] validate:NO success:^(id result) {
+                [self dismissView];
+            } failure:^(NSError *error) {
+                [self dismissView];
+            }];
         }
         else if (result == MessageComposeResultFailed) {
-            
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] confirmTransactionSMS:transaction[@"id"] validate:NO success:^(id result) {
+                [self dismissView];
+            } failure:^(NSError *error) {
+                [self dismissView];
+            }];
         }
-        [self dismissView];
     }];
 }
 

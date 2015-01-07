@@ -189,7 +189,7 @@
         formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
     }
     
-    [self requestPath:@"/login" method:@"GET" params:@{ @"q": formatedPhone } success:nil failure:nil];
+    [self requestPath:@"/login" method:@"GET" params:@{ @"q": formatedPhone, @"distinctId": [Mixpanel sharedInstance].distinctId } success:nil failure:nil];
 }
 
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -429,6 +429,10 @@
     };
     
     [self requestPath:@"/flooz" method:@"POST" params:dic success:successBlock1 failure:failureBlock1];
+}
+
+- (void)confirmTransactionSMS:(NSString *)floozId validate:(Boolean)validate success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:[NSString stringWithFormat:@"/flooz/%@/status", floozId] method:@"POST" params:@{@"validate":[NSNumber numberWithBool:validate]} success:success failure:failure];
 }
 
 - (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {

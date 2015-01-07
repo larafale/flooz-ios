@@ -17,7 +17,8 @@
     FLTextFieldSignup *_codeTextfield;
     
     UILabel *_textExplication;
-    
+    UILabel *_learnMore;
+
     FLActionButton *_validCode;
 }
 
@@ -59,7 +60,7 @@
 
 - (void)prepareViews {
     CGFloat padding = 15.0f;
-    CGFloat height = padding;
+    CGFloat height = 10;
     
     if (!IS_IPHONE4) {
         UIImageView *logo = [UIImageView imageNamed:@"white-logo"];
@@ -71,10 +72,10 @@
         CGRectSetY(logo.frame, height);
         [_mainBody addSubview:logo];
         
-        height += CGRectGetHeight(logo.frame) + padding;
+        height += CGRectGetHeight(logo.frame) + 10;
     }
     
-    _textExplication = [[UILabel alloc] initWithFrame:CGRectMake(padding, height, PPScreenWidth() - padding * 2.0f, 70)];
+    _textExplication = [[UILabel alloc] initWithFrame:CGRectMake(padding, height, PPScreenWidth() - padding * 2.0f, 50)];
     _textExplication.textColor = [UIColor customWhite];
     _textExplication.font = [UIFont customTitleExtraLight:18];
     if (IS_IPHONE4) {
@@ -82,12 +83,29 @@
     }
     _textExplication.textAlignment = NSTextAlignmentCenter;
     _textExplication.numberOfLines = 0;
-    _textExplication.text = NSLocalizedString(@"INVITATION_CODE_EXPLICATION", nil);
+    [_textExplication setText:NSLocalizedString(@"INVITATION_CODE_EXPLICATION", nil)];
     [_textExplication heightToFit];
     CGRectSetY(_textExplication.frame, height);
     [_mainBody addSubview:_textExplication];
     
-    height += CGRectGetHeight(_textExplication.frame) + padding;
+    height += CGRectGetHeight(_textExplication.frame);
+    
+    _learnMore = [[UILabel alloc] initWithFrame:CGRectMake(padding, height, PPScreenWidth() - padding * 2.0f, 20)];
+    _learnMore.textColor = [UIColor customBlue];
+    _learnMore.font = [UIFont customTitleLight:17];
+    if (IS_IPHONE4) {
+        _learnMore.font = [UIFont customTitleExtraLight:16];
+    }
+    _learnMore.textAlignment = NSTextAlignmentCenter;
+    _learnMore.numberOfLines = 0;
+    [_learnMore setText:NSLocalizedString(@"LEARN_MORE", nil)];
+    [_learnMore heightToFit];
+    [_learnMore setUserInteractionEnabled:YES];
+    CGRectSetY(_learnMore.frame, height);
+    [_learnMore addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openLearnMore)]];
+    [_mainBody addSubview:_learnMore];
+
+    height += CGRectGetHeight(_learnMore.frame) + 10;
     
     _codeTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"INVITATION_CODE_PLACEHOLDER", @"") for:_userDic key:@"coupon" position:CGPointMake(padding * 2, height)];
     _codeTextfield.textfield.textAlignment = NSTextAlignmentCenter;
@@ -105,11 +123,16 @@
     [_mainBody addSubview:_validCode];
 }
 
+- (void)openLearnMore {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.flooz.me/about/invitation"]];
+}
+
 - (void)validCode {
     [_codeTextfield resignFirstResponder];
     
     if (_userDic[@"coupon"] && ![_userDic[@"coupon"] isBlank]) {
         [[Flooz sharedInstance] showLoadView];
+        _userDic[@"distinctId"] = [[Mixpanel sharedInstance] distinctId];
         [[Flooz sharedInstance] verifyInvitationCode:_userDic success:nil failure:nil];
     }
 }
@@ -121,21 +144,6 @@
     } else {
         [_validCode setEnabled:NO];
         [_validCode setBackgroundColor:[UIColor customBackground]];
-    }
-}
-
-- (void)showAskPopup {
-    if (_userDic[@"pendingInvitation"] && [_userDic[@"pendingInvitation"] boolValue]) {
-        [self.navigationController pushViewController:[PendingInvitationViewController new] animated:YES];
-    }
-    else {
-        [[[FLPopupAskInviteCode alloc] initWithUser:_userDic andCompletionBlock:^{
-            [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] askInvitationCode:_userDic success:^(id result) {
-                _userDic[@"pendingInvitation"] = @YES;
-                [self showAskPopup];
-            } failure:nil];
-        }] show];
     }
 }
 

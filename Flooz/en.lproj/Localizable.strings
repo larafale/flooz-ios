@@ -25,6 +25,8 @@
 "MSG_UPDATE" = "Bonne nouvelle ! Une nouvelle version de Flooz est disponible.";
 "BTN_UPDATE" = "Mettre à jour";
 
+"LEARN_MORE" = "En savoir plus";
+
 "SEND_COMMENT" = "Écrire un commentaire...";
 
 "NAV_LOGIN" = "Veuillez vous identifier";
@@ -150,9 +152,9 @@
 "MENU_REPORT_LINE" = "Signaler ce contenu";
 "MENU_REPORT_USER" = "Signaler";
 "MENU_BLOCK_USER" = "Bloquer";
-"MENU_REPORT_USER_CONTENT" = "\nÊtes-vous sur de vouloir signaler cet utilisateur ?";
-"MENU_REPORT_LINE_CONTENT" = "\nÊtes-vous sur de vouloir signaler ce contenu ?";
-"MENU_BLOCK_USER_CONTENT" = "\nÊtes-vous sur de vouloir bloquer cet utilisateur ?";
+"MENU_REPORT_USER_CONTENT" = "\nÊtes-vous sûr de vouloir signaler cet utilisateur ?";
+"MENU_REPORT_LINE_CONTENT" = "\nÊtes-vous sûr de vouloir signaler ce contenu ?";
+"MENU_BLOCK_USER_CONTENT" = "\nÊtes-vous sûr de vouloir bloquer cet utilisateur ?";
 
 "ACTIVITIES_NOTIFICATIONS" = "Notifications";
 "ACTIVITIES_NEW_NOTIFICATIONS" = "nouvelles notifications";
@@ -370,6 +372,9 @@
 "SIGNUP_PSEUDO_EXPLICATION" = "Donnez votre pseudo pour recevoir de l'argent. C'est votre identité, il est unique et non modifiable.";
 "SIGNUP_PHOTO_EXPLICATION" = "Une bonne photo est indispensable pour être reconnaissable ! Utilisez votre photo facebook ou ajoutez-en une !";
 "SIGNUP_PASSWORD_EXPLICATION" = "6 caractères min";
+
+"SIGNUP_PHONE_ALERT_TITLE" = "Confirmer votre numéro";
+"SIGNUP_PHONE_ALERT_CONTENT" = "\nVous allez recevoir un SMS de confirmation. Veuillez confirmer que le %@ est bien votre n° de mobile.";
 
 "SIGNUP_READ_CGU" = "En passant à l'étape suivante, vous déclarez accepter les conditions générales d'utilisation de Flooz.";
 

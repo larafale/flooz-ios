@@ -72,7 +72,7 @@
 
     [self.view setBackgroundColor:[UIColor customBackground]];
     
-    NSString *backImageName = @"timeline-back-";
+    NSString *backImageName = @"empty-timeline-";
     
     backImageName = [backImageName stringByAppendingString:currentFilter];
     

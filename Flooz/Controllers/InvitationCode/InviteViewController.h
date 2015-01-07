@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import <Social/Social.h>
 
-@interface InviteViewController : BaseViewController
+@interface InviteViewController : BaseViewController<TTTAttributedLabelDelegate>
 
 - (id)initWithUser:(NSDictionary *)_user;
 
