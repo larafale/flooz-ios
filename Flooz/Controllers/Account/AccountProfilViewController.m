@@ -56,7 +56,7 @@
     
     NSArray *missingFields = [Flooz sharedInstance].currentUser.json[@"missingFields"];
     
-    if ([missingFields containsObject:@"iban"])
+    if ([missingFields containsObject:@"sepa"])
         [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"incomplete": @YES}];
     else
         [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_BANK", @"")}];

@@ -19,6 +19,12 @@ typedef enum e_FLUserSelectedCanal {
     TimelineCanal
 } FLUserSelectedCanal;
 
+typedef enum e_FLUserKind {
+    FloozUser,
+    PhoneUser,
+    CactusUser
+} FLUserKind;
+
 @interface FLUser : NSObject
 
 @property (strong, nonatomic) NSString *userId;
@@ -31,10 +37,10 @@ typedef enum e_FLUserSelectedCanal {
 @property (strong, nonatomic) NSString *phone;
 @property (strong, nonatomic) NSString *birthdate;
 @property (strong, nonatomic) NSString *avatarURL;
+@property (strong, nonatomic) NSData *avatarData;
 @property (strong, nonatomic) NSString *profileCompletion;
 @property (strong, nonatomic) NSNumber *friendsCount;
 @property (strong, nonatomic) NSNumber *transactionsCount;
-@property (nonatomic)  BOOL haveStatsPending;
 @property (strong, nonatomic) NSString *selectedFrom;
 
 @property (strong, nonatomic) NSString *deviceToken;
@@ -45,6 +51,7 @@ typedef enum e_FLUserSelectedCanal {
 @property (strong, nonatomic) NSMutableDictionary *notificationsText;
 @property (strong, nonatomic) NSDictionary *checkDocuments;
 @property (strong, nonatomic) FLCreditCard *creditCard;
+@property (strong, nonatomic) NSMutableDictionary *blockObject;
 
 @property (strong, nonatomic) NSArray *friends;
 @property (strong, nonatomic) NSArray *friendsRecent;
@@ -54,6 +61,8 @@ typedef enum e_FLUserSelectedCanal {
 
 @property (nonatomic)  BOOL isFriendWaiting;
 
+@property (nonatomic)  FLUserKind userKind;
+
 @property (strong, nonatomic) NSString *record;
 @property (strong, nonatomic) NSString *device;
 @property (strong, nonatomic) NSDictionary *settings;
@@ -62,7 +71,6 @@ typedef enum e_FLUserSelectedCanal {
 @property (strong, nonatomic) NSDictionary *json;
 
 - (id)initWithJSON:(NSDictionary *)json;
-- (void)updateStatsPending:(NSDictionary *)json;
 
 - (NSString *)avatarURL:(CGSize)size;
 - (void)setSelectedCanal:(FLUserSelectedCanal)canal;

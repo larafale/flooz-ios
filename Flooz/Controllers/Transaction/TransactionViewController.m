@@ -112,7 +112,7 @@
     
     if (IS_IPHONE4)
         height += 15;
-
+    
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), height + PADDING_BOTTOM);
     [_contentView setScrollEnabled:YES];
 }
@@ -173,7 +173,7 @@
         
         [_headerView addSubview:reportMenuButton];
     }
-
+    
     {
         UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_headerView.frame) - heightHeader, 0.0f, heightHeader, heightHeader)];
         [closeButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
@@ -201,7 +201,7 @@
         else if (_transaction.social.scope == SocialScopePublic) {
             imageNamed = @"transaction-scope-public";
         }
-
+        
         UIImage *picto = [UIImage imageNamed:imageNamed];
         [view setImage:picto];
         [view setImageOffset:CGPointMake(-4, yOffset)];
@@ -313,6 +313,8 @@
 #pragma mark - Transaction Actions
 
 - (void)acceptTransaction {
+    static Boolean showAvalaible = YES;
+    
     NSDictionary *params = @{
                              @"id": [_transaction transactionId],
                              @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
@@ -320,14 +322,20 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateTransactionValidate:params success: ^(id result) {
-        if ([result objectForKey:@"confirmationText"]) {
-            FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept: ^{
+        if (showAvalaible) {
+            showAvalaible = NO;
+            if ([result objectForKey:@"confirmationText"]) {
+                FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept: ^{
+                    showAvalaible = YES;
+                    [self didTransactionValidated];
+                } refuse:^{
+                    showAvalaible = YES;
+                }];
+                [popup show];
+            }
+            else {
                 [self didTransactionValidated];
-            } refuse:NULL];
-            [popup show];
-        }
-        else {
-            [self didTransactionValidated];
+            }
         }
     } noCreditCard: ^{
         [self presentCreditCardController];
@@ -349,15 +357,16 @@
 }
 
 - (void)didTransactionValidated {
+    [[Flooz sharedInstance] showLoadView];
     CompleteBlock completeBlock = ^{
-        [[Flooz sharedInstance] showLoadView];
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             NSDictionary *params = @{
                                      @"id": [_transaction transactionId],
                                      @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
                                      };
-        
+            
+            [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] updateTransaction:params success: ^(id result) {
                 _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
                 [self reloadTransaction];
@@ -367,16 +376,23 @@
     
     if ([SecureCodeViewController canUseTouchID])
         [SecureCodeViewController useToucheID:completeBlock passcodeCallback:^{
-            SecureCodeViewController *secureVC = [SecureCodeViewController new];
-            secureVC.completeBlock = completeBlock;
-            UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:secureVC];
-            [self.formSheetController presentViewController:controller animated:YES completion:NULL];            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                SecureCodeViewController *secureVC = [SecureCodeViewController new];
+                secureVC.completeBlock = completeBlock;
+                UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:secureVC];
+                [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:NULL];
+                [[Flooz sharedInstance] hideLoadView];
+            });
+        } cancelCallback:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[Flooz sharedInstance] hideLoadView];
+            });
         }];
     else {
         SecureCodeViewController *secureVC = [SecureCodeViewController new];
         secureVC.completeBlock = completeBlock;
         UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:secureVC];
-        [self.formSheetController presentViewController:controller animated:YES completion:NULL];
+        [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:NULL];
     }
 }
 

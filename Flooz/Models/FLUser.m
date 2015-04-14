@@ -10,9 +10,19 @@
 
 @implementation FLUser
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.userKind = PhoneUser;
+        self.selectedFrom = nil;
+    }
+    return self;
+}
+
 - (id)initWithJSON:(NSDictionary *)json {
     self = [super init];
     if (self) {
+        self.userKind = FloozUser;
         [self setJSON:json];
         self.selectedFrom = nil;
     }
@@ -40,6 +50,7 @@
     _avatarURL = [json objectForKey:@"pic"];
     _profileCompletion = [json objectForKey:@"profileCompletion"];
     _hasSecureCode = [json objectForKey:@"secureCode"];
+    _blockObject = [json objectForKey:@"block"];
     
     if ([json objectForKey:@"birthdate"]) {
         NSArray *arrayB = [[json objectForKey:@"birthdate"] componentsSeparatedByString:@"-"];
@@ -57,13 +68,6 @@
     
     _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
     _transactionsCount = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"total"];
-    
-    _haveStatsPending = NO;
-    
-    NSNumber *statsPending = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"pending"];
-    if ([statsPending intValue] > 0) {
-        _haveStatsPending = YES;
-    }
     
     _settings = json[@"settings"];
     
@@ -180,7 +184,8 @@
         _device = json[@"settings"][@"device"];
     }
     
-    if (json[@"cactus"]) {
+    if (json[@"cactus"] || (json[@"isCactus"] && [json[@"isCactus"] boolValue])) {
+        _userKind = CactusUser;
         _username = nil;
     }
     
@@ -211,13 +216,6 @@
         }
     }
     return [array objectsAtIndexes:indexSet];
-}
-
-- (void)updateStatsPending:(NSDictionary *)json {
-    NSNumber *statsPending = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"pending"];
-    if ([statsPending intValue] > 0) {
-        _haveStatsPending = YES;
-    }
 }
 
 - (NSString *)avatarURL:(CGSize)size {

@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MZFormSheetController.h"
 
-@interface FLPopup : UIView {
-	UIView *background;
-
+@interface FLPopup : UIViewController {
 	void (^acceptBlock)(void);
 	void (^refuseBlock)(void);
 }
+
+@property (strong, nonatomic) MZFormSheetController *formSheet;
 
 - (id)initWithMessage:(NSString *)message accept:(void (^)())accept refuse:(void (^)())refuse;
 - (void)show;

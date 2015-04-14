@@ -10,31 +10,31 @@
 	<string>Flooz</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>370BCD61-3BA1-4E92-B9BD-0D9ED6FE290D</key>
-		<string>ssh://bitbucket.org/eviljojo22/eivo-flooz-ios.git</string>
+		<key>7434FE90F6186019A271FD95372605DE58779CB1</key>
+		<string>https://github.com/larafale/flooz-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Flooz.xcodeproj/project.xcworkspace</string>
+	<string>Flooz.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>370BCD61-3BA1-4E92-B9BD-0D9ED6FE290D</key>
+		<key>7434FE90F6186019A271FD95372605DE58779CB1</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://bitbucket.org/eviljojo22/eivo-flooz-ios.git</string>
+	<string>https://github.com/larafale/flooz-ios.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>370BCD61-3BA1-4E92-B9BD-0D9ED6FE290D</string>
+	<string>7434FE90F6186019A271FD95372605DE58779CB1</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>370BCD61-3BA1-4E92-B9BD-0D9ED6FE290D</string>
+			<string>7434FE90F6186019A271FD95372605DE58779CB1</string>
 			<key>IDESourceControlWCCName</key>
-			<string>flooz</string>
+			<string>flooz-ios</string>
 		</dict>
 	</array>
 </dict>

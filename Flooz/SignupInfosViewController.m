@@ -195,7 +195,14 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] checkSignup:self.userDic success: ^(id result) {
-        [self.navigationController pushViewController:[[SignupSecureCodeViewController alloc] initWithMode:SecureCodeModeChangeNew] animated:YES];
+        if (result[@"nextStep"]) {
+            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"nextStep"] withData:result[@"nextStepData"]];
+            if (nextViewController)
+                [self.navigationController pushViewController:nextViewController animated:YES];
+            else
+                [self.navigationController pushViewController:[[SignupSecureCodeViewController alloc] initWithMode:SecureCodeModeChangeNew] animated:YES];
+        } else
+            [self.navigationController pushViewController:[[SignupSecureCodeViewController alloc] initWithMode:SecureCodeModeChangeNew] animated:YES];
     } failure: ^(NSError *error) {
         [_lastname becomeFirstResponder];
     }];

@@ -110,10 +110,8 @@
 - (void)amountChange {
     if (dictionary[@"amount"] && ![dictionary[@"amount"] isBlank]) {
         [_confirmButton setEnabled:YES];
-        NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
-        [f setFormatterBehavior:NSNumberFormatterBehavior10_4];
-        [f setNumberStyle:NSNumberFormatterDecimalStyle];
-        NSNumber *numberAmount = [f numberFromString:dictionary[@"amount"]];
+        
+        NSNumber *numberAmount = [NSNumber numberWithFloat:[dictionary[@"amount"] floatValue]];
         
         [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), [[FLHelper formatedAmount:numberAmount withCurrency:NO withSymbol:NO] stringByAppendingString:@"€"]] forState:UIControlStateNormal];
     } else {

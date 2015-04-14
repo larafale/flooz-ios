@@ -44,8 +44,10 @@
 
 - (void)setNumber:(NSNumber *)number {
     self->_number = number;
-    [labelNumber setText:[_number stringValue]];
-    [labelNumber setAdjustsFontSizeToFitWidth:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [labelNumber setText:[_number stringValue]];
+        [labelNumber setAdjustsFontSizeToFitWidth:YES];
+    });
 }
 
 @end

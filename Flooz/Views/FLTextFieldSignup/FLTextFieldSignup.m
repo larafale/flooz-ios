@@ -151,7 +151,7 @@
 
 - (NSAttributedString *)placeHolderWithText:(NSString *)placeholder {
 	NSAttributedString *attributedText = [[NSAttributedString alloc]
-	                                      initWithString:NSLocalizedString(placeholder, nil)
+	                                      initWithString:NSLocalizedString(placeholder, placeholder)
 	                                          attributes:@{
 	                                          NSFontAttributeName: [UIFont customContentLight:18],
 	                                          NSForegroundColorAttributeName: [UIColor customPlaceholder]

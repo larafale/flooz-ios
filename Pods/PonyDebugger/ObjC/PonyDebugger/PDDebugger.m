@@ -98,17 +98,26 @@ void _PDLogObjectsImpl(NSString *severity, NSArray *arguments)
     UIDevice *device = [UIDevice currentDevice];
     
 #if TARGET_IPHONE_SIMULATOR
-    NSString *deviceName = [NSString stringWithFormat:@"%@'s Simulator", [[[NSProcessInfo processInfo] environment] objectForKey:@"USER"]];
+    NSDictionary *environment = [[NSProcessInfo processInfo] environment];
+    NSString *userName = [environment objectForKey:@"USER"];
+    if (!userName) {
+        NSString *simulatorHostHome = [environment objectForKey:@"SIMULATOR_HOST_HOME"];
+        if ([simulatorHostHome hasPrefix:@"/Users/"]) {
+            userName = [simulatorHostHome substringFromIndex:7];
+        }
+    }
+    NSString *deviceName = userName ? [NSString stringWithFormat:@"%@'s Simulator", userName] : @"iOS Simulator";
 #else
     NSString *deviceName = device.name;
 #endif
 
+    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"] ?: [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
         clientID, @"device_id",
         deviceName, @"device_name",
         device.localizedModel, @"device_model",
         [[NSBundle mainBundle] bundleIdentifier], @"app_id",
-        [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"], @"app_name",
+        appName, @"app_name",
         [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], @"app_version",
         [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"], @"app_build",
         nil];
@@ -124,7 +133,11 @@ void _PDLogObjectsImpl(NSString *severity, NSArray *arguments)
     if (appIconFile) {
         UIImage *appIcon = [UIImage imageNamed:appIconFile];
         if (appIcon) {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+            NSString *base64IconString = [UIImagePNGRepresentation(appIcon) base64EncodedStringWithOptions:0];
+#else
             NSString *base64IconString = [UIImagePNGRepresentation(appIcon) base64Encoding];
+#endif
             [parameters setObject:base64IconString forKey:@"app_icon_base64"];
         }
     }

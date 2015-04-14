@@ -163,11 +163,6 @@
 
 	if ([_transaction isAcceptable]) {
         refuseView.hidden = acceptView.hidden = NO;
-        CGFloat amount = [_transaction.amount floatValue];
-        if (amount < 0) {
-            amount = -amount;
-        }
-        [(PressedButton *)acceptView setTitle:[NSString stringWithFormat:@"PAYER %.2f€",amount] forState:UIControlStateNormal];
 	}
 	else if (_transaction.isCollect && _transaction.collectCanParticipate) {
 		participateView.hidden = NO;

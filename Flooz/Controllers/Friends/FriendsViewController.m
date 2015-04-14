@@ -100,6 +100,7 @@
 	_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
 	[self didReloadData];
+    [self reloadFriendsList];
 }
 
 - (void)viewDidUnload {
@@ -387,8 +388,8 @@
 	        [refreshControl endRefreshing];
 	        friendsSuggestion = result;
             [self reloadFriendsList];
-            [[Flooz sharedInstance] readFriendActivity:nil];
 		}];
+        [[Flooz sharedInstance] readFriendActivity:nil];
 	}];
 }
 

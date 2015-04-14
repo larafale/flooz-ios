@@ -10,17 +10,17 @@
 
 #import <MapKit/MapKit.h>
 #import "FLTransaction.h"
+#import "WYPopoverController.h"
+#import "FLPrivacySelectorViewController.h"
 
-@interface FLNewTransactionBar : UIView <CLLocationManagerDelegate> {
-	UIButton *localizeButton;
-	UIButton *imageButton;
-	UIButton *facebookButton;
-	UIButton *privacyButton;
-	UILabel *circle;
+@protocol FLNewTransactionBarDelegate <NSObject>
 
-	FLActionButton *askButton;
-	FLActionButton *sendButton;
+- (void) scopePopoverWillAppear;
+- (void) scopePopoverDidDisappear;
 
+@end
+
+@interface FLNewTransactionBar : UIView <CLLocationManagerDelegate, WYPopoverControllerDelegate, FLPrivacySelectorDelegate> {
 	SEL actionValidSend;
 	SEL actionValidCollect;
 
@@ -30,7 +30,17 @@
 	__weak UIViewController *currentController;
 }
 
+@property (weak) id <FLNewTransactionBarDelegate> delegate;
+@property (nonatomic, retain) UIButton *imageButton;;
+@property (nonatomic, retain) UIButton *facebookButton;;
+@property (nonatomic, retain) UIButton *privacyButton;;
+@property (nonatomic, retain) FLActionButton *askButton;;
+@property (nonatomic, retain) FLActionButton *sendButton;;
+
 - (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCollect:(SEL)actionCollect;
 - (void)reloadData;
+- (void)enablePaymentButtons:(BOOL)enable;
+- (void)hideChargeButton:(BOOL)hidden;
+- (void)hidePayButton:(BOOL)hidden;
 
 @end

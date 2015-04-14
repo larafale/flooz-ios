@@ -301,7 +301,7 @@ static BOOL canTouchID = YES;
     return NO;
 }
 
-+ (void)useToucheID:(CompleteBlock)successBlock passcodeCallback:(CompleteBlock)passcodeBlock {
++ (void)useToucheID:(CompleteBlock)successBlock passcodeCallback:(CompleteBlock)passcodeBlock cancelCallback:(CompleteBlock)cancelBlock {
     LAContext *laContext = [[LAContext alloc] init];
     
     laContext.localizedFallbackTitle = NSLocalizedString(@"SECORE_CODE_TOUCHID_FALLBACK", nil);
@@ -316,9 +316,10 @@ static BOOL canTouchID = YES;
                 passcodeBlock();
                 return;
             }
-            if (error.code == LAErrorUserCancel)
+            if (error.code == LAErrorUserCancel) {
+                cancelBlock();
                 return ;
-            else if (!error) {
+            } else if (!error) {
                 [appDelegate displayMessage:NSLocalizedString(@"GLOBAL_ERROR", nil) content:NSLocalizedString(@"SECORE_CODE_TOUCHID_ERROR", nil) style:FLAlertViewStyleError time:@3 delay:@0];
                 passcodeBlock();
             }
@@ -499,7 +500,7 @@ static BOOL canTouchID = YES;
 }
 
 - (void)didCodeForgetTouch {
-    [appDelegate displayMessage:@"Récupérez votre code" content:@"Veuillez vous identifiez pour réinitialiser votre code à 4 chiffres." style:FLAlertViewStyleInfo time:@3 delay:@0];
+    [appDelegate displayMessage:@"Récupérer votre code" content:@"Veuillez vous identifier pour réinitialiser votre code à 4 chiffres." style:FLAlertViewStyleInfo time:@3 delay:@0];
     currentSecureMode = SecureCodeModeForget;
     [self displayCorrectView];
 }
@@ -630,12 +631,12 @@ static BOOL canTouchID = YES;
             [self.navigationController setNavigationBarHidden:NO animated:YES];
             
             if (completion) {
-                _completeBlock();
+                completion();
             }
         }
     }
     else {
-        [self dismissViewControllerAnimated:YES completion:_completeBlock];
+        [self dismissViewControllerAnimated:YES completion:completion];
     }
 }
 

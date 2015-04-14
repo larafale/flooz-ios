@@ -21,6 +21,7 @@
 #import "FLActivity.h"
 #import "FLTrigger.h"
 #import "FLReport.h"
+#import "FLTexts.h"
 
 static NSString *kNotificationConnectionError = @"kNotificationConnectionError";
 static NSString *kNotificationRemoveWindowSubviews = @"kNotificationRemoveWindowSubviews";
@@ -31,6 +32,15 @@ static NSString *kNotificationAnswerAccessNotification = @"kNotificationAnswerAc
 static NSString *kNotificationRefreshTransaction = @"kNotificationRefreshTransaction";
 static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 
+static NSString *kSendContact = @"contactSended";
+
+static NSString *kUserData = @"userData";
+static NSString *kPublicTimelineData = @"publicTimelineData";
+static NSString *kFriendTimelineData = @"friendTimelineData";
+static NSString *kPrivateTimelineData = @"privateTimelineData";
+static NSString *kTextData = @"textData";
+static NSString *kNotificationsData = @"notifData";
+
 @interface Flooz : NSObject<UIAlertViewDelegate> {
 	AFHTTPRequestOperationManager *manager;
 	FLLoadView *loadView;
@@ -38,6 +48,7 @@ static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 	NSArray *_activitiesCached;
 }
 
+@property (strong, nonatomic) FLTexts *currentTexts;
 @property (strong, readonly) FLUser *currentUser;
 @property (strong, nonatomic) NSString *facebook_token;
 
@@ -59,8 +70,7 @@ static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
 - (void)askInvitationCode:(NSDictionary*)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)loginWithPseudoAndPassword:(NSDictionary *)user success:(void (^)(id result))success;
-- (void)loginWithCodeForUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
-- (void)loginWithPhone:(NSString *)phone;
+- (void)loginWithPhone:(NSString *)phone andCoupon:(NSString *)coupon;
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)passwordLost:(NSString *)email success:(void (^)(id result))success;
 - (NSString *)clearPhoneNumber:(NSString*)phone;
@@ -110,6 +120,7 @@ static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 - (void)createCreditCard:(NSDictionary *)creditCard atSignup:(BOOL)signup success:(void (^)(id result))success;
 - (void)abort3DSecure;
 
+- (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)inviteWithPhone:(NSString *)phone;
 - (void)invitationStrings:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)sendInvitationMetric:(NSString *)canal;

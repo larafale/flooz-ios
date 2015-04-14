@@ -10,4 +10,8 @@
 
 @interface SignupPhoneViewController : SignupBaseViewController
 
+@property (nonatomic, retain) NSString *coupon;
+
+- (id) initWithCoupon:(NSString *)coupon;
+
 @end

@@ -22,6 +22,7 @@
 	FLTextFieldSignup *_name;
 	FLTextFieldSignup *_userName;
 	FLTextFieldSignup *_birthday;
+    FLTextFieldSignup *_coupon;
 
 	NSMutableArray *fieldsView;
 	FLKeyboardView *inputView;
@@ -68,22 +69,22 @@
 		[_userName addForTextChangeTarget:self action:@selector(canValidate:)];
 		[_userName setUserInteractionEnabled:NO];
 		[_userName setEnable:NO];
-		[_contentView addSubview:_userName];
+//		[_contentView addSubview:_userName];
 	}
 
 	{
-		_birthday = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_BIRTHDAY" for:_userDic key:@"birthdate" position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(_userName.frame) + 3.0f)];
+		_birthday = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_BIRTHDAY" for:_userDic key:@"birthdate" position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(_name.frame) + 3.0f)];
 		[_birthday addForNextClickTarget:self action:@selector(focusOnNextInfo)];
 		[_birthday addForTextChangeTarget:self action:@selector(canValidate:)];
-		[_contentView addSubview:_birthday];
-		[fieldsView addObject:_birthday];
+//		[_contentView addSubview:_birthday];
+//		[fieldsView addObject:_birthday];
 
 		inputView = [FLKeyboardView new];
 		inputView.textField = _birthday.textfield;
 		_birthday.textfield.inputView = inputView;
 	}
 
-	height = CGRectGetMaxY(_birthday.frame);
+	height = CGRectGetMaxY(_name.frame);
     
     for (NSDictionary *dic in documents) {
         NSString *key = [[dic allKeys] firstObject];
@@ -112,11 +113,11 @@
 	_userDic = [NSMutableDictionary new];
 	[_userDic setObject:[NSMutableDictionary new] forKey:@"settings"];
 
-	if ([currentUser lastname]) {
+	if ([currentUser lastname] && ![[currentUser lastname] isBlank]) {
         NSString *text = [[currentUser lastname] stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[[currentUser lastname] substringToIndex:1] capitalizedString]];
 		[_userDic setObject:text forKey:@"lastName"];
 	}
-    if ([currentUser firstname]) {
+    if ([currentUser firstname] && ![[currentUser firstname] isBlank]) {
         NSString *text = [[currentUser firstname] stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[[currentUser firstname] substringToIndex:1] capitalizedString]];
 		[_userDic setObject:text forKey:@"firstName"];
 	}
@@ -296,7 +297,7 @@
 #pragma mark - imagePicker
 
 - (void)showImagePicker {
-    if ([[[Flooz sharedInstance] currentUser] settings][currentDocumentKey] && [[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 1) {
+    if ([[[Flooz sharedInstance] currentUser] settings][currentDocumentKey] && ([[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 1 || [[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 2)) {
         return;
     }
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {

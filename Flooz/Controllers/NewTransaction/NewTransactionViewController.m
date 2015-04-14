@@ -14,6 +14,7 @@
 #import "FLSelectAmount.h"
 #import "FLSelectFriendButton.h"
 #import "NewTransactionSelectTypeView.h"
+#import "FLPopupInformation.h"
 
 #import "CreditCardViewController.h"
 #import "TimelineViewController.h"
@@ -22,10 +23,13 @@
 #import "AppDelegate.h"
 
 #import "SecureCodeViewController.h"
-
+#import "FLTutoPopoverViewController.h"
 #import "UIView+FindFirstResponder.h"
+#import "FLPopoverTutoTheme.h"
 
 @interface NewTransactionViewController () {
+    FLUser *presetUser;
+    
     FLNewTransactionBar *transactionBar;
     FLNewTransactionBar *transactionBarKeyboard;
     FLNewTransactionBar *cameraBarKeyboard;
@@ -38,10 +42,22 @@
     FLTextView *content;
     
     FLSelectFriendButton *friend;
+    THContactPickerView *contactPickerView;
+    
+    FLUserPickerTableView *pickerTableView;
+    
+    FLTutoPopoverViewController *tutoPopover;
+    WYPopoverController *popoverController;
+    
     BOOL infoDisplayed;
     BOOL firstView;
     BOOL firstViewAmount;
     BOOL firstViewWhy;
+    BOOL isDemo;
+    
+    BOOL contactPickerVisible;
+    
+    int currentDemoStep;
     
     FLCameraKeyboard *camera;
     UIView *cameraView;
@@ -73,6 +89,7 @@
         transaction = [NSMutableDictionary new];
         
         currentPreset = nil;
+        presetUser = nil;
         
         transaction[@"random"] = [FLHelper generateRandomString];
         transaction[@"preset"] = @NO;
@@ -83,8 +100,11 @@
         firstView = YES;
         firstViewAmount = YES;
         firstViewWhy = NO;
+        isDemo = NO;
+        
         
         if (user) {
+            presetUser = user;
             transaction[@"to"] = [@"@" stringByAppendingString :[user username]];
             transaction[@"toTitle"] = [user fullname];
             
@@ -96,6 +116,7 @@
                 [transaction setValue:@{@"selectedFrom": user.selectedFrom} forKey:@"metrics"];
             }
         }
+        
     }
     return self;
 }
@@ -106,6 +127,7 @@
         transaction = [NSMutableDictionary new];
         
         currentPreset = preset;
+        presetUser = nil;
         
         transaction[@"preset"] = @YES;
         transaction[@"random"] = [FLHelper generateRandomString];
@@ -114,14 +136,11 @@
         
         infoDisplayed = NO;
         firstView = YES;
+        isDemo = preset.isDemo;
         
         if (preset.to) {
+            presetUser = preset.to;
             transaction[@"to"] = [@"@" stringByAppendingString :[preset.to username]];
-            transaction[@"toTitle"] = [preset.to fullname];
-            
-            if ([preset.to avatarURL]) {
-                transaction[@"toImageUrl"] = [preset.to avatarURL];
-            }
         }
         
         if (preset.title)
@@ -145,6 +164,7 @@
         if (preset.blockAmount)
             firstViewAmount = !preset.blockAmount;
         
+        currentDemoStep = 0;
         firstViewAmount = preset.focusAmount;
         firstViewWhy = preset.focusWhy;
     }
@@ -165,24 +185,41 @@
         ((FLNavigationController*)self.parentViewController).blockBack = currentPreset.blockBack;
     
     transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
+    [transactionBarKeyboard setDelegate:self];
     
     _offset = 0;
     
     {
-        CGRect frameFriend = CGRectMake(0, 0, PPScreenWidth() - 125, 50);
-        if (currentPreset)
-            friend = [[FLSelectFriendButton alloc] initWithFrame:frameFriend dictionary:transaction editable:!currentPreset.blockTo];
-        else
-            friend = [[FLSelectFriendButton alloc] initWithFrame:frameFriend dictionary:transaction];
+        THContactViewStyle *contactViewStyle = [[THContactViewStyle alloc] initWithTextColor:[UIColor whiteColor] gradientTop:[UIColor customMiddleBlue] gradientBottom:[UIColor customMiddleBlue] borderColor:[UIColor customMiddleBlue] borderWidth:0 cornerRadiusFactor:10.0f];
         
-        friend.delegate = self;
-        [friend hideSeparatorBottom];
+        THContactViewStyle *contactViewSelectedStyle = [[THContactViewStyle alloc] initWithTextColor:[UIColor whiteColor] gradientTop:[UIColor customBlue] gradientBottom:[UIColor customBlue] borderColor:[UIColor customBlue] borderWidth:0 cornerRadiusFactor:10.0f];
         
-        [_contentView addSubview:friend];
+        CGRect frameFriend = CGRectMake(0, 7, PPScreenWidth() - 100, 40);
+        contactPickerView = [[THContactPickerView alloc] initWithFrame:frameFriend];
+        contactPickerView.delegate = self;
+        [contactPickerView setPlaceholderLabelText:NSLocalizedString(@"FIELD_TRANSACTION_TO_PLACEHOLDER", nil)];
+        [contactPickerView setPlaceholderLabelTextColor:[UIColor customPlaceholder]];
+        [contactPickerView setPromptLabelText:NSLocalizedString(@"FIELD_TRANSACTION_TO", nil)];
+        [contactPickerView setPromptLabelTextColor:[UIColor whiteColor]];
+        [contactPickerView setMaxNumberOfLines:1];
+        [contactPickerView setLimitToOne:YES];
+        [contactPickerView setFont:[UIFont customTitleLight:17]];
+        [contactPickerView setContactViewStyle:contactViewStyle selectedStyle:contactViewSelectedStyle];
+        [contactPickerView setBackgroundColor:[UIColor customBackground]];
+        [contactPickerView setVerticalPadding:5.0f];
+        [contactPickerView.textField addTarget:self action:@selector(contactPickerDidBeginEditing) forControlEvents:UIControlEventEditingDidBegin];
+        [contactPickerView.textField addTarget:self action:@selector(contactPickerDidEndEditing) forControlEvents:UIControlEventEditingDidEnd];
         
-        _offset = CGRectGetMaxY(friend.frame);
+        if (currentPreset && currentPreset.blockTo)
+            [contactPickerView setUserInteractionEnabled:NO];
         
-        CGRect frameAmount = CGRectMake(CGRectGetMaxX(friend.frame), CGRectGetMinY(friend.frame), PPScreenWidth() - CGRectGetMaxX(friend.frame), CGRectGetHeight(friend.frame));
+        if (presetUser) {
+            [contactPickerView addContact:presetUser withName:(presetUser.fullname ? presetUser.fullname : presetUser.username)];
+        }
+        
+        [_contentView addSubview:contactPickerView];
+        
+        CGRect frameAmount = CGRectMake(CGRectGetWidth(contactPickerView.frame), CGRectGetMinY(contactPickerView.frame), PPScreenWidth() - CGRectGetWidth(contactPickerView.frame), 50);
         amountInput = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"0" for:transaction key:@"amount" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) andFrame:frameAmount delegate:nil];
         [amountInput hideSeparatorTop];
         [amountInput hideSeparatorBottom];
@@ -190,6 +227,7 @@
         if (currentPreset && currentPreset.blockAmount)
             [amountInput disableInput];
         [amountInput.textfield addTarget:self action:@selector(amountChange) forControlEvents:UIControlEventEditingChanged];
+        [amountInput.textfield addTarget:self action:@selector(amountDidBeginEditing) forControlEvents:UIControlEventEditingDidBegin];
         {
             [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
@@ -197,11 +235,24 @@
             _offset = CGRectGetMaxY(amountInput.frame);
         }
         
+        _offset = CGRectGetHeight(amountInput.frame);
+        
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, _offset, SCREEN_WIDTH, 1)];
+        [separator setBackgroundColor:[UIColor customMiddleBlue]];
+        [_contentView addSubview:separator];
+        
+        ++_offset;
+        
         NSString *contentPlaceholder = @"FIELD_TRANSACTION_CONTENT_PLACEHOLDER";
         
-        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" position:CGPointMake(0, _offset - 1)];
+        if (currentPreset && currentPreset.whyPlaceholder)
+            contentPlaceholder = currentPreset.whyPlaceholder;
+        
+        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" position:CGPointMake(0, _offset)];
         [content setInputAccessoryView:transactionBarKeyboard];
         [content hideSeparatorTop];
+        [content addTextChangeTarget:self action:@selector(contentChange)];
+        [content addTextFocusTarget:self action:@selector(contentFocus)];
         [_contentView addSubview:content];
         
         [self prepareImage];
@@ -211,8 +262,13 @@
         
         [content setWidth:PPScreenWidth() - CGRectGetWidth(imageTransaction.frame)];
         transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
+        [transactionBar setDelegate:self];
         
         CGRectSetHeight(_contentView.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
+        
+        pickerTableView = [[FLUserPickerTableView alloc] initWithFrame:CGRectMake(0, _offset, SCREEN_WIDTH, CGRectGetHeight(_contentView.frame) - _offset + CGRectGetHeight(transactionBar.frame))];
+        [pickerTableView setPickerDelegate:self];
+        
         [self.view addSubview:transactionBar];
         
         _offset = CGRectGetMaxY(content.frame);
@@ -226,7 +282,6 @@
     }
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame));
-    //    _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), offset + 100);
     
     [appDelegate.window addSubview:_blackScreen];
     [_blackScreen setHidden:YES];
@@ -241,6 +296,9 @@
     [super viewWillDisappear:animated];
     [cameraView setHidden:YES];
     cameraView = nil;
+    
+    if ([popoverController isPopoverVisible])
+        [popoverController dismissPopoverAnimated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -253,51 +311,367 @@
     CGRectSetY(transactionBar.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
     [friend reloadData];
     [self reloadTransactionBarData];
-    
+    [self validateView];
     [self registerForKeyboardNotifications];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if (currentPreset) {
+        if (currentPreset.blockBalance)
+            [((FLNavigationController*)self.parentViewController) setAmountHidden:YES];
+        else
+            [((FLNavigationController*)self.parentViewController) setAmountHidden:NO];
+    } else
+        [((FLNavigationController*)self.parentViewController) setAmountHidden:NO];
+    
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
     
-    if ([transaction objectForKey:@"toTitle"]) {
-        if (!infoDisplayed) {
-            infoDisplayed = YES;
+    if (isDemo) {
+        if (currentPreset.demoIntro) {
+            [[[FLPopupInformation alloc] initWithTitle:currentPreset.demoIntro[@"title"] andMessage:[[NSAttributedString alloc] initWithString:currentPreset.demoIntro[@"content"]] ok:^() {
+                if (currentPreset.demoSteps) {
+                    [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+                }
+            }] show];
+        } else if (currentPreset.demoSteps) {
+            [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+        }
+    } else {
+        if (firstViewAmount) {
+            [amountInput becomeFirstResponder];
+            firstViewAmount = NO;
+        }
+        
+        if (firstViewWhy) {
+            [content becomeFirstResponder];
+            firstViewWhy = NO;
         }
     }
+}
+
+- (void)validateView {
+    BOOL valid = YES;
     
-    if (firstViewAmount) {
-        [amountInput becomeFirstResponder];
-        firstViewAmount = NO;
+    if (!presetUser)
+        valid = NO;
+    
+    if (!transaction[@"amount"] || [transaction[@"amount"] isBlank] || [transaction[@"amount"] floatValue] < 0.5f)
+        valid = NO;
+    
+    if (!transaction[@"why"] || [transaction[@"why"] isBlank])
+        valid = NO;
+    
+    if (presetUser) {
+        if (presetUser.blockObject != nil) {
+            if ([presetUser.blockObject objectForKey:@"pay"] != nil && [[presetUser.blockObject objectForKey:@"pay"] boolValue]) {
+                [self hideChargeButton:false];
+                [self hidePayButton:true];
+            } else if ([presetUser.blockObject objectForKey:@"charge"] != nil && [[presetUser.blockObject objectForKey:@"charge"] boolValue]) {
+                [self hideChargeButton:true];
+                [self hidePayButton:false];
+            } else {
+                [self resetPaymentButtons];
+            }
+        } else {
+            [self resetPaymentButtons];
+        }
+    } else {
+        [self resetPaymentButtons];
     }
     
-    if (firstViewWhy) {
-        [content becomeFirstResponder];
-        firstViewWhy = NO;
+    [transactionBar enablePaymentButtons:valid];
+    [transactionBarKeyboard enablePaymentButtons:valid];
+    [cameraBarKeyboard enablePaymentButtons:valid];
+}
+
+- (void)hideChargeButton:(BOOL)hidden {
+    [transactionBar hideChargeButton:hidden];
+    [transactionBarKeyboard hideChargeButton:hidden];
+    [cameraBarKeyboard hideChargeButton:hidden];
+}
+
+- (void)hidePayButton:(BOOL)hidden {
+    [transactionBar hidePayButton:hidden];
+    [transactionBarKeyboard hidePayButton:hidden];
+    [cameraBarKeyboard hidePayButton:hidden];
+}
+
+- (void)resetPaymentButtons {
+    if ([transaction[@"preset"] boolValue]) {
+        if ([transaction[@"method"] isEqualToString:@"pay"]) {
+            [self hideChargeButton:true];
+            [self hidePayButton:false];
+        }
+        else if ([transaction[@"method"] isEqualToString:@"charge"]) {
+            [self hideChargeButton:false];
+            [self hidePayButton:true];
+        }
+    } else {
+        [self hideChargeButton:false];
+        [self hidePayButton:false];
     }
-    
-    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTuto) userInfo:nil repeats:NO];
+}
+
+- (void)contentChange {
+    [self validateView];
+}
+
+- (void)contentFocus {
+    if ([popoverController isPopoverVisible])
+        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale];
 }
 
 -(void)amountChange {
     FLNavigationController *nav = (FLNavigationController*)self.parentViewController;
     NSNumber *number = [NSNumber numberWithFloat:[amountInput.textfield.text floatValue]];
+    transaction[@"amount"] = amountInput.textfield.text;
     [nav setAmount:number];
-}
-
--(void)showTuto {
-    [appDelegate showTutoPage:TutoPageFlooz inController:self];
+    [self validateView];
 }
 
 - (void)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
 }
 
+#pragma mark - demo handler
+
+- (void) showDemoStepPopover:(NSDictionary*)stepData {
+    tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:stepData[@"title"] message:stepData[@"desc"] step:[NSNumber numberWithInt:currentDemoStep + 1] button:stepData[@"btn"] action:^(FLTutoPopoverViewController *viewController) {
+        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+            if ([stepData[@"focus"] isEqualToString:@"why"]) {
+                [content becomeFirstResponder];
+            }
+            else if ([stepData[@"focus"] isEqualToString:@"to"]) {
+                [contactPickerView becomeFirstResponder];
+            }
+            else if ([stepData[@"focus"] isEqualToString:@"scope"]) {
+                [transactionBar.privacyButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+            }
+            else if (currentDemoStep < currentPreset.demoSteps.count) {
+                [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+            }
+        }];
+    }];
+    popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
+    [popoverController setTheme:[FLPopoverTutoTheme theme]];
+    [popoverController setDelegate:self];
+    [popoverController setPassthroughViews:[self getDemoStepPopoverPassthroughViews:stepData[@"focus"]]];
+    
+    [popoverController presentPopoverFromRect:[self getDemoStepPopoverRect:stepData[@"focus"]] inView:[self getDemoStepPopoverView:stepData[@"focus"]] permittedArrowDirections:[self getDemoStepPopoverArrowDirection:stepData[@"focus"]] animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
+    ++currentDemoStep;
+    
+    if (currentDemoStep == currentPreset.demoSteps.count)
+        isDemo = false;
+}
+
+- (CGRect) getDemoStepPopoverRect:(NSString*)focus {
+    UIView *tmp = [self getDemoStepPopoverView:focus];
+    
+    CGRect retRec = tmp.bounds;
+    
+    if ([focus isEqualToString:@"why"]) {
+        retRec = CGRectMake(retRec.origin.x, retRec.origin.y, 150, 35);
+    } else if ([focus isEqualToString:@"scope"] || [focus isEqualToString:@"image"] || [focus isEqualToString:@"fb"] || [focus isEqualToString:@"pay"]) {
+        retRec = CGRectMake(retRec.origin.x, retRec.origin.y - 5, retRec.size.width, retRec.size.height);
+    } else if ([focus isEqualToString:@"amount"]) {
+        retRec = CGRectMake(retRec.origin.x + 15, retRec.origin.y - 5, retRec.size.width, retRec.size.height);
+    }
+    
+    return retRec;
+}
+
+- (UIView*) getDemoStepPopoverView:(NSString*)focus {
+    if ([focus isEqualToString:@"amount"]) {
+        return amountInput;
+    }
+    if ([focus isEqualToString:@"to"]) {
+        return contactPickerView;
+    }
+    if ([focus isEqualToString:@"fb"]) {
+        return transactionBar.facebookButton;
+    }
+    if ([focus isEqualToString:@"image"]) {
+        return transactionBar.imageButton;
+    }
+    if ([focus isEqualToString:@"scope"]) {
+        return transactionBar.privacyButton;
+    }
+    if ([focus isEqualToString:@"why"]) {
+        return content;
+    }
+    if ([focus isEqualToString:@"pay"]) {
+        return transactionBar.sendButton;
+    }
+    return nil;
+}
+
+- (WYPopoverArrowDirection) getDemoStepPopoverArrowDirection:(NSString*)focus {
+    if ([focus isEqualToString:@"amount"]) {
+        return WYPopoverArrowDirectionUp;
+    }
+    if ([focus isEqualToString:@"to"]) {
+        return WYPopoverArrowDirectionUp;
+    }
+    if ([focus isEqualToString:@"fb"]) {
+        return WYPopoverArrowDirectionDown;
+    }
+    if ([focus isEqualToString:@"image"]) {
+        return WYPopoverArrowDirectionDown;
+    }
+    if ([focus isEqualToString:@"scope"]) {
+        return WYPopoverArrowDirectionDown;
+    }
+    if ([focus isEqualToString:@"why"]) {
+        return WYPopoverArrowDirectionUp;
+    }
+    if ([focus isEqualToString:@"pay"]) {
+        return WYPopoverArrowDirectionDown;
+    }
+    return WYPopoverArrowDirectionAny;
+}
+
+- (NSArray*) getDemoStepPopoverPassthroughViews:(NSString*)focus {
+    if ([focus isEqualToString:@"to"]) {
+        return @[contactPickerView];
+    }
+    if ([focus isEqualToString:@"scope"]) {
+        return @[transactionBar.privacyButton];
+    }
+    if ([focus isEqualToString:@"why"]) {
+        return @[content];
+    }
+    if ([focus isEqualToString:@"pay"]) {
+        return @[transactionBar.sendButton];
+    }
+    return @[];
+}
+
+#pragma mark - transaction bar delegate
+
+- (void) scopePopoverWillAppear {
+    if (isDemo && [popoverController isPopoverVisible]) {
+        [popoverController dismissPopoverAnimated:NO];
+    }
+}
+
+- (void) scopePopoverDidDisappear {
+    if (isDemo && currentDemoStep < currentPreset.demoSteps.count) {
+        [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+    }
+}
+
+#pragma mark - popover delegate
+
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
+{
+    return NO;
+}
+
+- (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller
+{
+    
+}
+
+#pragma mark - contact picker delegate
+
+- (void)userSelected:(FLUser *)user {
+    presetUser = user;
+    if (user.userKind == CactusUser)
+        [contactPickerView addContact:user withName:user.phone];
+    else
+        [contactPickerView addContact:user withName:user.fullname];
+    
+    if (contactPickerVisible) {
+        [pickerTableView removeFromSuperview];
+        contactPickerVisible = NO;
+    }
+    if (isDemo && currentDemoStep < currentPreset.demoSteps.count) {
+        [self.view endEditing:YES];
+        [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+    }
+    else if (transaction[@"why"] && ![transaction[@"why"] isBlank])
+        [self.view endEditing:YES];
+    else
+        [content becomeFirstResponder];
+    [self validateView];
+}
+
+- (void)amountDidBeginEditing {
+    if (contactPickerVisible) {
+        [pickerTableView removeFromSuperview];
+        contactPickerVisible = NO;
+    }
+}
+
+- (void)contactPickerDidBeginEditing {
+    if (isDemo && [popoverController isPopoverVisible]) {
+        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale];
+    }
+    if (!contactPickerVisible) {
+        [pickerTableView initializeView];
+        [self.view addSubview:pickerTableView];
+        contactPickerVisible = YES;
+    }
+    [pickerTableView reloadData];
+}
+
+- (void)contactPickerDidEndEditing {
+    
+}
+
+- (void)contactPickerTextViewDidChange:(NSString *)textViewText {
+    [pickerTableView searchUser:textViewText];
+}
+
+- (void)contactPickerDidRemoveContact:(id)contact {
+    presetUser = nil;
+    [pickerTableView searchUser:contactPickerView.textField.text];
+    [self validateView];
+}
+
+- (void)contactPickerDidResize:(THContactPickerView *)contactPickerView {
+    
+}
+
+- (BOOL)contactPickerTextFieldShouldReturn:(UITextField *)textField {
+    NSString *text = textField.text;
+    text = [FLHelper formatedPhone:text];
+    if (text) {
+        FLUser *user = [FLUser new];
+        user.username = text;
+        user.phone = text;
+        user.userKind = CactusUser;
+        presetUser = user;
+        
+        [contactPickerView addContact:user withName:text];
+    } else {
+        [contactPickerView removeAllContacts];
+    }
+    if (contactPickerVisible) {
+        [pickerTableView removeFromSuperview];
+        contactPickerVisible = NO;
+    }
+    if (isDemo && currentDemoStep < currentPreset.demoSteps.count) {
+        [self.view endEditing:YES];
+        [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+    }
+    else if (transaction[@"why"] && ![transaction[@"why"] isBlank])
+        [self.view endEditing:YES];
+    else {
+        [content becomeFirstResponder];
+        [self validateView];
+        return NO;
+    }
+    [self validateView];
+    return YES;
+}
+
 #pragma mark - prepare Views
 
 - (void)prepareImage {
-    imageTransaction = [[UIImageView alloc] initWithFrame:CGRectMake(PPScreenWidth() - 14 - 80, _offset, 80, 80)];
+    imageTransaction = [[UIImageView alloc] initWithFrame:CGRectMake(PPScreenWidth() - 14 - 90, _offset + 10, 0, 0)];
     [_contentView addSubview:imageTransaction];
     [imageTransaction setMultipleTouchEnabled:YES];
     [imageTransaction setUserInteractionEnabled:YES];
@@ -389,16 +763,49 @@
 - (void)valid {
     [[self view] endEditing:YES];
     
+    static Boolean showAvalaible = YES;
+    
+    if (presetUser) {
+        if (presetUser.userKind == FloozUser) {
+            transaction[@"to"] = presetUser.username;
+            [transaction setValue:nil forKey:@"contact"];
+        } else if (presetUser.userKind == PhoneUser) {
+            transaction[@"to"] = presetUser.phone;
+            if (presetUser.firstname || presetUser.lastname) {
+                [transaction setValue:[NSMutableDictionary new] forKey:@"contact"];
+                
+                if (![presetUser.firstname isBlank]) {
+                    [[transaction objectForKey:@"contact"] setValue:presetUser.firstname forKey:@"firstName"];
+                }
+                
+                if (![presetUser.lastname isBlank]) {
+                    [[transaction objectForKey:@"contact"] setValue:presetUser.lastname forKey:@"lastName"];
+                }
+            }
+        } else {
+            transaction[@"to"] = presetUser.phone;
+        }
+    } else {
+        transaction[@"to"] = @"";
+        [transaction setValue:nil forKey:@"contact"];
+    }
+    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createTransactionValidate:transaction success: ^(id result) {
-        if ([result objectForKey:@"confirmationText"]) {
-            FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept: ^{
+        if (showAvalaible) {
+            showAvalaible = NO;
+            if ([result objectForKey:@"confirmationText"]) {
+                FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept: ^{
+                    showAvalaible = YES;
+                    [self didTransactionValidated];
+                } refuse:^{
+                    showAvalaible = YES;
+                }];
+                [popup show];
+            }
+            else {
                 [self didTransactionValidated];
-            } refuse:NULL];
-            [popup show];
-        }
-        else {
-            [self didTransactionValidated];
+            }
         }
     } noCreditCard: ^() {
         [self presentCreditCardController];
@@ -427,10 +834,33 @@
 
 #pragma mark - Keyboard Management
 
+- (void)adjustTableViewInsetTop:(CGFloat)topInset bottom:(CGFloat)bottomInset {
+    pickerTableView.contentInset = UIEdgeInsetsMake(topInset,
+                                                    pickerTableView.contentInset.left,
+                                                    bottomInset,
+                                                    pickerTableView.contentInset.right);
+    pickerTableView.scrollIndicatorInsets = pickerTableView.contentInset;
+}
+
+- (void)adjustTableViewInsetTop:(CGFloat)topInset {
+    [self adjustTableViewInsetTop:topInset bottom:pickerTableView.contentInset.bottom];
+}
+
+- (void)adjustTableViewInsetBottom:(CGFloat)bottomInset {
+    [self adjustTableViewInsetTop:pickerTableView.contentInset.top bottom:bottomInset];
+}
+
 - (void)registerForKeyboardNotifications {
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
     [self registerNotification:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
-    [self registerNotification:@selector(keyboardDidDisappear) name:UIKeyboardDidHideNotification object:nil];
+    [self registerNotification:@selector(keyboardDidDisappear:) name:UIKeyboardDidHideNotification object:nil];
     [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    CGRect kbRect = [self.view convertRect:[[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:self.view.window];
+    [self adjustTableViewInsetBottom:pickerTableView.frame.origin.y + pickerTableView.frame.size.height - kbRect.origin.y];
 }
 
 - (void)keyboardWillAppear:(NSNotification *)notification {
@@ -446,11 +876,17 @@
     [self dismissCamera];
 }
 
-- (void)keyboardDidDisappear {
+- (void)keyboardDidDisappear:(NSNotification *)notification {
     [self reloadTransactionBarData];
     transactionBar.hidden = NO;
     
     [content setMaxHeight:CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - CGRectGetMinY(content.frame)];
+    
+    if (contactPickerVisible) {
+        NSDictionary *info = [notification userInfo];
+        CGRect kbRect = [self.view convertRect:[[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:self.view.window];
+        [self adjustTableViewInsetBottom:pickerTableView.frame.origin.y + pickerTableView.frame.size.height - kbRect.origin.y];
+    }
 }
 
 - (void)keyboardWillDisappear {
@@ -466,6 +902,7 @@
 }
 
 - (void)didTransactionValidated {
+    [[Flooz sharedInstance] showLoadView];
     CompleteBlock completeBlock = ^{
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -473,9 +910,11 @@
             [[Flooz sharedInstance] createTransaction:transaction success: ^(NSDictionary *result) {
                 transaction[@"id"] = result[@"item"][@"_id"];
                 if (transaction[@"image"]) {
-                    [[Flooz sharedInstance] uploadTransactionPic:transaction[@"id"] image:transaction[@"image"] success:^(id result) {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
-                    } failure:nil];
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        [[Flooz sharedInstance] uploadTransactionPic:transaction[@"id"] image:transaction[@"image"] success:^(id result) {
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
+                        } failure:nil];
+                    });
                 }
                 
                 if (result[@"sms"] && [MFMessageComposeViewController canSendText]) {
@@ -499,35 +938,33 @@
     
     if ([SecureCodeViewController canUseTouchID])
         [SecureCodeViewController useToucheID:completeBlock passcodeCallback:^{
-            SecureCodeViewController *controller = [SecureCodeViewController new];
-            controller.completeBlock = completeBlock;
-            [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                SecureCodeViewController *controller = [SecureCodeViewController new];
+                controller.completeBlock = completeBlock;
+                [[Flooz sharedInstance] hideLoadView];
+                [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+            });
+        } cancelCallback:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[Flooz sharedInstance] hideLoadView];
+            });
         }];
     else {
         SecureCodeViewController *controller = [SecureCodeViewController new];
         controller.completeBlock = completeBlock;
+        [[Flooz sharedInstance] hideLoadView];
         [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
     }
 }
 
 - (void)dismissView {
-    UIViewController *vc = [self presentingViewController];
     
     [self dismissViewControllerAnimated:YES completion: ^{
-        if ([[[UIDevice currentDevice] systemVersion] intValue] < 8)
-            [vc dismissViewControllerAnimated:YES completion:nil];
-        
-        if ([[transaction objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypePayment]] || [[transaction  objectForKey:@"method"] isEqualToString:[FLTransaction transactionTypeToParams:TransactionTypeCharge]]) {
-            [appDelegate.revealSideViewController.timelineController reloadTable:TimelineFilterFriend andFocus:YES];
+        if (currentPreset && currentPreset.isDemo) {
+            [appDelegate askNotification];
         }
+        [appDelegate.revealSideViewController.timelineController reloadTable:TimelineFilterFriend andFocus:YES];
     }];
-    
-    if ([[[UIDevice currentDevice] systemVersion] intValue] >= 8 && [vc isKindOfClass:[FLNavigationController class]] && [vc.title isEqualToString:NSLocalizedString(@"NAV_NEW_FLOOZ_FRIENDS", nil)]) {
-        [vc.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [vc.view setBackgroundColor:[UIColor clearColor]];
-        [vc dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
@@ -566,13 +1003,15 @@
 - (void)presentCamera {
     if (cameraDisplayed) {
         [self dismissCamera];
-        [content becomeFirstResponder];
     }
     else {
-        [self dismissKeyboard:nil];
+        [self.view endEditing:YES];
         if (!cameraView) {
             if (!cameraBarKeyboard) {
                 cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
+                [cameraBarKeyboard setDelegate:self];
+                [self validateView];
+                [cameraBarKeyboard reloadData];
             }
             if (!camera) {
                 camera = [[FLCameraKeyboard alloc] initWithController:self height:216 delegate:self];
@@ -651,22 +1090,22 @@
 - (void)rotateImageWithRadians:(CGFloat)radian imageRotate:(UIImage *)rotateImage andImage:(UIImage *)image {
     [imageTransaction setAlpha:1.0];
     [imageTransaction setImage:rotateImage];
-    CGRectSetHeight(imageTransaction.frame, 80);
-    CGRectSetWidth(imageTransaction.frame, 80);
+    CGRectSetHeight(imageTransaction.frame, 90);
+    CGRectSetWidth(imageTransaction.frame, 90);
     [imageTransaction setContentMode:UIViewContentModeScaleAspectFit];
     
     CGFloat scaleFactor = [self scaleFactor];
     CGRectSetHeight(imageTransaction.frame, imageTransaction.image.size.height / scaleFactor);
     CGRectSetWidth(imageTransaction.frame, imageTransaction.image.size.width / scaleFactor);
     
-    CGRectSetY(imageTransaction.frame, 50);
+    CGRectSetY(imageTransaction.frame, 60);
     CGRectSetX(imageTransaction.frame, PPScreenWidth() - 14 - CGRectGetWidth(imageTransaction.frame));
     
     CGRectSetX(closeImage.frame, CGRectGetWidth(imageTransaction.frame) - CGRectGetWidth(closeImage.frame));
     
     [transaction setValue:UIImageJPEGRepresentation(rotateImage, 0.7) forKey:@"image"];
     [content setInputView:nil];
-    [content setWidth:PPScreenWidth() - CGRectGetWidth(imageTransaction.frame)];
+    [content setWidth:PPScreenWidth() - CGRectGetWidth(imageTransaction.frame) - 14];
 }
 
 - (CGFloat)scaleFactor {
@@ -687,6 +1126,9 @@
 }
 
 - (void)touchImage {
+    CGRectSetHeight(imageTransaction.frame, 0);
+    CGRectSetWidth(imageTransaction.frame, 0);
+    [content setWidth:PPScreenWidth() - CGRectGetWidth(imageTransaction.frame)];
     [imageTransaction setImage:nil];
     [imageTransaction setAlpha:0.0];
     [transaction setValue:@"" forKey:@"image"];
@@ -695,7 +1137,7 @@
 - (void)dismissCamera {
     if (cameraDisplayed) {
         [UIView animateWithDuration:0.3 animations: ^{
-            CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame) - CGRectGetHeight(cameraBarKeyboard.frame));
+            CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame));
         } completion: ^(BOOL finished) {
             [camera stopCamera];
             cameraDisplayed = NO;

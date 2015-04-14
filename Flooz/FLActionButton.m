@@ -53,6 +53,8 @@
     [self setBackgroundColor:[UIColor customBlue] forState:UIControlStateNormal];
     [self setBackgroundColor:[UIColor customBackground] forState:UIControlStateDisabled];
     [self setBackgroundColor:[UIColor customBlue:0.5] forState:UIControlStateHighlighted];
+    
+    [self.titleLabel setFont:[UIFont customContentRegular:20]];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
@@ -68,6 +70,30 @@
         [self.imageView setImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     } else {
         self.imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        [self addSubview:self.imageView];
+    }
+    
+    CGRectSetWidth(self.imageView.frame, size.width);
+    CGRectSetHeight(self.imageView.frame, size.height);
+    CGRectSetY(self.imageView.frame, (CGRectGetHeight(self.frame) - CGRectGetHeight(self.imageView.frame)) / 2.0f);
+    CGRectSetX(self.imageView.frame, 12.0f);
+    [self.imageView setContentScaleFactor:UIViewContentModeScaleAspectFit];
+    
+    self.tintColor = [self titleColorForState:self.state];
+}
+
+- (void)setImageWithURL:(NSString *)imageURL size:(CGSize)size {
+    if (imageView) {
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:imageURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [self.imageView setImage:image];
+        }];
+    } else {
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:imageURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [self.imageView setImage:image];
+        }];
         [self addSubview:self.imageView];
     }
     

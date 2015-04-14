@@ -19,7 +19,11 @@
 @property (nonatomic, retain) NSMutableDictionary *userDic;
 @property (nonatomic) CGFloat ratioiPhones;
 @property (nonatomic) CGFloat firstItemY;
+@property (nonatomic) NSDictionary *contentData;
 
 - (void)displayChanges;
++ (SignupBaseViewController *) getViewControllerForStep:(NSString *)step withData:(NSDictionary *)data;
+
+- (void)initWithData:(NSDictionary *)data;
 
 @end

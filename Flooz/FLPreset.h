@@ -13,15 +13,20 @@
 @property (nonatomic, retain) FLUser *to;
 @property (nonatomic, retain) NSNumber *amount;
 @property (nonatomic, retain) NSString *why;
+@property (nonatomic, retain) NSString *whyPlaceholder;
 @property (nonatomic) TransactionType type;
 @property (nonatomic, retain) NSDictionary *payload;
 @property (nonatomic) BOOL blockAmount;
 @property (nonatomic) BOOL blockTo;
 @property (nonatomic) BOOL blockBack;
 @property (nonatomic) BOOL blockWhy;
+@property (nonatomic) BOOL blockBalance;
 @property (nonatomic) BOOL focusAmount;
 @property (nonatomic) BOOL focusWhy;
+@property (nonatomic) BOOL isDemo;
 @property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSArray *demoSteps;
+@property (nonatomic, retain) NSDictionary *demoIntro;
 
 - (id)initWithJson:(NSDictionary *)json;
 

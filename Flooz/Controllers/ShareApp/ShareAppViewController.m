@@ -92,15 +92,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[Flooz sharedInstance] invitationStrings:^(NSDictionary *result) {
-        _code = result[@"item"][@"code"];
-        _appText = result[@"item"][@"text"];
-        _fbData = result[@"item"][@"facebook"];
-        _mailData = result[@"item"][@"mail"];
-        _twitterText = result[@"item"][@"twitter"];
-        _smsText = result[@"item"][@"sms"];
-        _viewTitle = result[@"item"][@"title"];
-        _h1 = result[@"item"][@"h1"];
+    if ([[Flooz sharedInstance] currentTexts]) {
+        _code = [[Flooz sharedInstance] currentTexts].shareCode;
+        _appText = [[Flooz sharedInstance] currentTexts].shareText;
+        _fbData = [[Flooz sharedInstance] currentTexts].shareFb;
+        _mailData = [[Flooz sharedInstance] currentTexts].shareMail;
+        _twitterText = [[Flooz sharedInstance] currentTexts].shareTwitter;
+        _smsText = [[Flooz sharedInstance] currentTexts].shareSms;
+        _viewTitle = [[Flooz sharedInstance] currentTexts].shareTitle;
+        _h1 = [[Flooz sharedInstance] currentTexts].shareHeader;
         
         if (!_code)
             _code = @"";
@@ -135,9 +135,58 @@
         
         if (_footerView)
             [_footerView removeFromSuperview];
-        [self createFooterView];
         
-    } failure:nil];
+        [self createFooterView];
+    }
+    
+    [[Flooz sharedInstance] textObjectFromApi:^(FLTexts *result) {
+        _code = result.shareCode;
+        _appText = result.shareText;
+        _fbData = result.shareFb;
+        _mailData = result.shareMail;
+        _twitterText = result.shareTwitter;
+        _smsText = result.shareSms;
+        _viewTitle = result.shareTitle;
+        _h1 = result.shareHeader;
+        
+        if (!_code)
+            _code = @"";
+        
+        [self setTitle:_viewTitle];
+        
+        [_titleLabel setText:_h1];
+        [_titleLabel sizeToFit];
+        CGRectSetWidth(_titleLabel.frame, CGRectGetWidth(_titleLabel.frame));
+        CGRectSetHeight(_titleLabel.frame, CGRectGetHeight(_titleLabel.frame));
+        [_titleLabel setCenter:_backImage.center];
+        
+        NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_appText[0]];
+        [text addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text.length)];
+        [text addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text.length)];
+        
+        NSMutableAttributedString *code = [[NSMutableAttributedString alloc] initWithString:_code];
+        [code addAttribute:NSForegroundColorAttributeName value:[UIColor customBlue] range:NSMakeRange(0, code.length)];
+        [code addAttribute:NSFontAttributeName value:[UIFont customContentBold:19] range:NSMakeRange(0, code.length)];
+        
+        NSMutableAttributedString *text2 = [[NSMutableAttributedString alloc] initWithString:_appText[1]];
+        [text2 addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text2.length)];
+        [text2 addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text2.length)];
+        
+        [text appendAttributedString:code];
+        [text appendAttributedString:text2];
+        
+        [_text setAttributedText:text];
+        [_text setTextAlignment:NSTextAlignmentCenter];
+        [_text sizeToFit];
+        CGRectSetX(_text.frame, (CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(_text.frame)) / 2);
+        
+        if (_footerView)
+            [_footerView removeFromSuperview];
+        
+        [self createFooterView];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -229,12 +278,14 @@
 }
 
 - (void)showPopover {
-    popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
-    popoverController.delegate = self;
-    
-    [popoverController presentPopoverFromRect:_text.bounds inView:_text permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-        [popoverViewController.button addTarget:self action:@selector(copyCode) forControlEvents:UIControlEventTouchUpInside];
-    }];
+    if (_code && ![_code isBlank]) {
+        popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
+        popoverController.delegate = self;
+        
+        [popoverController presentPopoverFromRect:_text.bounds inView:_text permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+            [popoverViewController.button addTarget:self action:@selector(copyCode) forControlEvents:UIControlEventTouchUpInside];
+        }];
+    }
 }
 
 - (void)copyCode {

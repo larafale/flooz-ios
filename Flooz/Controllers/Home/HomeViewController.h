@@ -8,13 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TransactionCellDelegate.h"
-#import "TransactionCell.h"
-#import "FLScrollViewIndicator.h"
+#import <EAIntroView/EAIntroView.h>
 
-@interface HomeViewController : GlobalViewController <UITableViewDataSource, UITableViewDelegate, TransactionCellDelegate> {
-	NSMutableArray *cells;
-	FLScrollViewIndicator *scrollViewIndicator;
+@interface HomeViewController : GlobalViewController <EAIntroDelegate> {
 }
 
 @end

@@ -83,6 +83,8 @@
         return TriggerFeedRead;
     else if ([param isEqualToString:@"invitation:show"])
         return TriggerShowInvitation;
+    else if ([param isEqualToString:@"http:call"])
+        return TriggerHttpCall;
     else
         return TriggerNone;
 }

@@ -20,6 +20,7 @@
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
 
 - (void)setImage:(UIImage *)image size:(CGSize)size;
+- (void)setImageWithURL:(NSString *)imageURL size:(CGSize)size;
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state;
 
 @end

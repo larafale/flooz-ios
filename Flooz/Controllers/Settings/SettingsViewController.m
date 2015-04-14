@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
-#import <UAAppReviewManager.h>
 
 #import "SettingsViewController.h"
 #import "WebViewController.h"
@@ -122,7 +121,10 @@
         }];
     }
     else if (indexPath.row == 6) {
-        [[Flooz sharedInstance] logout];
+        FLPopup *popup = [[FLPopup alloc] initWithMessage:NSLocalizedString(@"LOGOUT_INFO", nil) accept: ^{
+            [[Flooz sharedInstance] logout];
+        } refuse:NULL];
+        [popup show];
     }
 }
 

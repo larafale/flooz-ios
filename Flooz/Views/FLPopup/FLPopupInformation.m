@@ -7,6 +7,7 @@
 //
 
 #import "FLPopupInformation.h"
+#import "FLActionButton.h"
 
 #import "AppDelegate.h"
 
@@ -16,174 +17,133 @@
 #define BUTTON_HEIGHT 40.
 #define ANIMATION_DELAY 0.3
 
-@implementation FLPopupInformation
+@implementation FLPopupInformation {
+    CGFloat viewHeight;
+    CGFloat viewWidth;
+    
+    NSString *_title;
+    NSAttributedString *_msg;
+    NSString *_btn;
+    
+    UIFont *titleFont;
+    UIFont *msgFont;
+    
+    UIView *contentView;
+}
 
 - (id)initWithTitle:(NSString *)title andMessage:(NSAttributedString *)message ok:(void (^)())ok {
-    CGRect frame = CGRectMake(MARGE, 150, SCREEN_WIDTH - 2 * MARGE, 0);
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
         okBlock = ok;
-        [self commmonInit:title andMessage:message];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveRemoveWindowSubviews) name:kNotificationRemoveWindowSubviews object:nil];
+        [self commmonInit:title message:message button:NSLocalizedString(@"OK", nil)];
     }
     return self;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+- (id)initWithTitle:(NSString *)title message:(NSAttributedString *)message button:(NSString*)btn ok:(void (^)())ok {
+    self = [super init];
+    if (self) {
+        okBlock = ok;
+        [self commmonInit:title message:message button:btn];
+    }
+    return self;
 }
 
-- (void)commmonInit:(NSString *)title andMessage:(NSAttributedString *)message {
-    [FLHelper addMotionEffect:self];
+- (void)commmonInit:(NSString *)title message:(NSAttributedString *)message button:(NSString*)btn {
+    _title = title;
+    _msg = message;
+    _btn = btn;
     
-    CGFloat height = 15;
+    titleFont = [UIFont customContentBold:22];
+    msgFont = [UIFont customContentRegular:18];
     
-    {
-        self.backgroundColor = [UIColor customBlue];
-        self.layer.borderWidth = 1.;
-        self.layer.borderColor = [UIColor customSeparator].CGColor;
-        
-        self.layer.shadowColor = [UIColor blackColor].CGColor;
-        self.layer.shadowOffset = CGSizeMake(-1, -1);
-        self.layer.shadowOpacity = .5;
-    }
+    viewWidth = 250;
+    viewHeight = PADDING_TOP_BOTTOM;
     
-    {
-        UIImageView *view = [UIImageView imageNamed:@"white-logo"];
-        view.contentMode = UIViewContentModeScaleAspectFit;
-        
-        CGRectSetHeight(view.frame, 40);
-        CGRectSetXY(view.frame, (CGRectGetWidth(self.frame) - CGRectGetWidth(view.frame)) / 2., height);
-        
-        [self addSubview:view];
-        
-        height += CGRectGetHeight(view.frame);
-    }
+    NSDictionary *attributes = @{NSFontAttributeName: titleFont};
+    CGRect rect = [_title boundingRectWithSize:CGSizeMake(viewWidth - 2 * PADDING_LEFT_RIGHT - 5, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
     
-    height += 15;
+    viewHeight += rect.size.height + MARGE;
     
-    {
-        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_LEFT_RIGHT, height, CGRectGetWidth(self.frame) - 2 * PADDING_LEFT_RIGHT, 0)];
-        
-        view.font = [UIFont customContentBold:17];
-        view.textColor = [UIColor whiteColor];
-        view.textAlignment = NSTextAlignmentCenter;
-        view.numberOfLines = 0;
-        
-        view.text = title;
-        [view setHeightToFit];
-        
-        [self addSubview:view];
-        
-        height += CGRectGetHeight(view.frame);
-    }
+    attributes = @{NSFontAttributeName: msgFont};
+    rect = [_msg.string boundingRectWithSize:CGSizeMake(viewWidth - 2 * PADDING_LEFT_RIGHT - 5, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
     
-    height += 10;
+    viewHeight += rect.size.height + MARGE + BUTTON_HEIGHT + PADDING_TOP_BOTTOM;
     
-    {
-        UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_LEFT_RIGHT, height, CGRectGetWidth(self.frame) - 2 * PADDING_LEFT_RIGHT, 0)];
-        
-        view.font = [UIFont customContentRegular:14];
-        view.textColor = [UIColor whiteColor];
-        view.textAlignment = NSTextAlignmentCenter;
-        view.numberOfLines = 0;
-        
-        view.attributedText = message;
-        [view sizeToFit];
-        
-        [self addSubview:view];
-        
-        height += CGRectGetHeight(view.frame);
-    }
+    [self setPreferredContentSize:CGSizeMake(viewWidth, viewHeight)];
+}
+
+- (void)viewDidLoad {
+    CGFloat offsetY = PADDING_TOP_BOTTOM;
     
-    height += PADDING_TOP_BOTTOM;
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
+    [contentView setBackgroundColor:[UIColor whiteColor]];
     
-    {
-        UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(self.frame), BUTTON_HEIGHT)];
-        
-        [view setTitleColor:[UIColor customBlue] forState:UIControlStateNormal];
-        [view setBackgroundColor:[UIColor whiteColor]];
-        view.titleLabel.font = [UIFont customTitleBook:16];
-        
-        [view setTitle:[NSLocalizedString(@"OK", nil) uppercaseString] forState:UIControlStateNormal];
-        [view addTarget:self action:@selector(okTouch) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self addSubview:view];
-    }
+    [contentView.layer setMasksToBounds:YES];
+    [contentView.layer setCornerRadius:2];
     
-    height += BUTTON_HEIGHT;
+    UILabel *titleView = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_LEFT_RIGHT, offsetY, viewWidth - 2 * PADDING_LEFT_RIGHT, 0)];
+    titleView.font = titleFont;
+    titleView.textColor = [UIColor customBlue];
+    titleView.textAlignment = NSTextAlignmentCenter;
+    titleView.numberOfLines = 0;
     
-    CGRectSetHeight(self.frame, height);
-    self.center = appDelegate.window.center;
+    titleView.text = _title;
+    [titleView setHeightToFit];
+    
+    [contentView addSubview:titleView];
+    
+    offsetY += CGRectGetHeight(titleView.frame) + MARGE;
+    
+    UILabel *msgView = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_LEFT_RIGHT, offsetY, viewWidth - 2 * PADDING_LEFT_RIGHT - 5, 0)];
+    msgView.font = msgFont;
+    msgView.textColor = [UIColor customPlaceholder];
+    msgView.textAlignment = NSTextAlignmentCenter;
+    msgView.numberOfLines = 0;
+    
+    msgView.attributedText = _msg;
+    [msgView setHeightToFit];
+    
+    [contentView addSubview:msgView];
+    
+    offsetY += CGRectGetHeight(msgView.frame) + MARGE;
+    
+    FLActionButton *btn = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_LEFT_RIGHT, offsetY, viewWidth - 2 * PADDING_LEFT_RIGHT, BUTTON_HEIGHT) title:_btn];
+    [btn addTarget:self action:@selector(okTouch) forControlEvents:UIControlEventTouchUpInside];
+    
+    [contentView addSubview:btn];
+    
+    [self.view addSubview:contentView];
 }
 
 - (void)show {
     dispatch_async(dispatch_get_main_queue(), ^{
+        _formSheet = [[MZFormSheetController alloc] initWithViewController:self];
+        _formSheet.presentedFormSheetSize = self.preferredContentSize;
+        _formSheet.transitionStyle = MZFormSheetTransitionStyleSlideFromTop;
+        _formSheet.shadowRadius = 2.0;
+        _formSheet.shadowOpacity = 0.3;
+        _formSheet.shouldDismissOnBackgroundViewTap = NO;
+        _formSheet.shouldCenterVertically = YES;
+        _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
         
-        background = [[UIView alloc] initWithFrame:CGRectMakeWithSize(appDelegate.window.frame.size)];
-        background.backgroundColor = [UIColor customBackground:.6];
-        
-        CGAffineTransform tr = CGAffineTransformScale(self.transform, 1.1, 1.1);
-        self.transform = CGAffineTransformScale(self.transform, 0, 0);
-        
-        background.layer.opacity = 0;
-        
-        [appDelegate.window addSubview:background];
-        [appDelegate.window addSubview:self];
-        
-        [UIView animateWithDuration:0.1
-                         animations: ^{
-                             background.layer.opacity = 1;
-                         }];
-        
-        
-        [UIView animateWithDuration:ANIMATION_DELAY
-                         animations: ^{
-                             self.transform = tr;
-                         } completion: ^(BOOL finished) {
-                             [UIView animateWithDuration:.1
-                                              animations: ^{
-                                                  self.transform = CGAffineTransformIdentity;
-                                              }];
-                         }];
+        [[appDelegate myTopViewController] mz_presentFormSheetController:_formSheet animated:YES completionHandler:nil];
     });
 }
 
 - (void)dismiss:(void (^)())completion {
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [UIView animateWithDuration:ANIMATION_DELAY
-                         animations: ^{
-                             background.layer.opacity = 0;
-                         }
-         
-                         completion: ^(BOOL finished) {
-                             [background removeFromSuperview];
-                         }];
-        
-        [UIView animateWithDuration:ANIMATION_DELAY
-                         animations: ^{
-                             self.transform = CGAffineTransformScale(self.transform, 0, 0);
-                         }
-         
-                         completion: ^(BOOL finished) {
-                             [self removeFromSuperview];
-                             
-                             if (completion) {
-                                 completion();
-                             }
-                         }];
+        [[appDelegate myTopViewController] mz_dismissFormSheetControllerAnimated:YES completionHandler: ^(MZFormSheetController *formSheetController) {
+            _formSheet = nil;
+            if (completion) {
+                completion();
+            }
+        }];
     });
 }
 
 - (void)okTouch {
     [self dismiss:okBlock];
-}
-
-- (void)didReceiveRemoveWindowSubviews {
-    [background removeFromSuperview];
-    [self removeFromSuperview];
 }
 
 @end

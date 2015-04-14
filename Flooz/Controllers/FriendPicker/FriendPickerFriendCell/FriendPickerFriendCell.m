@@ -19,20 +19,20 @@
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-	if (self) {
-		[self createViews];
-	}
-	return self;
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self createViews];
+    }
+    return self;
 }
 
 + (CGFloat)getHeight {
-	return 54;
+    return 54;
 }
 
 - (void)setUser:(FLUser *)user {
-	self->_user = user;
-	[self prepareViews];
+    self->_user = user;
+    [self prepareViews];
 }
 
 #pragma mark - Create Views
@@ -40,11 +40,11 @@
 - (void)createViews {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor clearColor];
-
-	[self createAvatarView];
-	[self createNameView];
-	[self createSubTextView];
-	[self createCheckView];
+    
+    [self createAvatarView];
+    [self createNameView];
+    [self createSubTextView];
+    [self createCheckView];
 }
 
 - (void)createAvatarView {
@@ -72,22 +72,25 @@
 }
 
 - (void)createCheckView {
-	UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 30, CGRectGetHeight(self.contentView.frame) / 2., 15, 10)];
-	[self.contentView addSubview:view];
-
-	view.image = [UIImage imageNamed:@"navbar-check"];
+    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 30, CGRectGetHeight(self.contentView.frame) / 2., 15, 10)];
+    [self.contentView addSubview:view];
+    
+    view.image = [UIImage imageNamed:@"navbar-check"];
 }
 
 #pragma mark - Prepare Views
 
 - (void)prepareViews {
-	[self prepareAvatarView];
-	[self prepareNameView];
-	[self preparePhoneView];
+    [self prepareAvatarView];
+    [self prepareNameView];
+    [self preparePhoneView];
 }
 
 - (void)prepareAvatarView {
-    [_avatarView setImageFromUser:_user];
+    if (_user.userKind == PhoneUser)
+        [_avatarView setImageFromData:_user.avatarData];
+    else
+        [_avatarView setImageFromUser:_user];
 }
 
 - (void)prepareNameView {
@@ -95,7 +98,12 @@
 }
 
 - (void)preparePhoneView {
-    NSString *s = [@"@" stringByAppendingString : _user.username];
+    NSString *s = @"";
+    if (_user.userKind == PhoneUser || _user.userKind == CactusUser) {
+        s = _user.phone;
+    } else {
+      s = [@"@" stringByAppendingString : _user.username];
+    }
     _subLabel.text = s;
     CGSize expectedLabelS = [s sizeWithAttributes:
                              @{ NSFontAttributeName: _subLabel.font }];
@@ -103,8 +111,8 @@
 }
 
 - (void)setSelectedCheckView:(BOOL)selected {
-	UIImageView *checkView = [[self.contentView subviews] objectAtIndex:3];
-	checkView.hidden = !selected;
+    UIImageView *checkView = [[self.contentView subviews] objectAtIndex:3];
+    checkView.hidden = !selected;
 }
 
 @end

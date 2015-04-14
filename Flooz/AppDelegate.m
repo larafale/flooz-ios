@@ -8,12 +8,10 @@
 
 #import "Mixpanel.h"
 #import <Crashlytics/Crashlytics.h>
-#import <UAAppReviewManager.h>
 
 #import "AppDelegate.h"
 
 #import "FLPreset.h"
-#import "FLPopupReport.h"
 #import "IDMPhotoBrowser.h"
 #import "TutoViewController.h"
 #import "HomeViewController.h"
@@ -33,6 +31,8 @@
 
 @interface AppDelegate() {
     NSDictionary *tmpUser;
+    UIImage *tmpImage;
+    NSDictionary *pendingData;
 }
 
 @property (nonatomic, retain) NSString *appUpdateURI;
@@ -43,6 +43,8 @@
 @end
 
 @implementation AppDelegate
+
+@synthesize localIp;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -56,7 +58,11 @@
     
     [Crashlytics startWithAPIKey:@"4f18178e0b7894ec76bb6f01a60f34baf68acbf7"];
     
+#ifdef FLOOZ_DEV_LOCAL
+    [self initLocalTesting];
+#else
     [self launchRootController];
+#endif
     
     // initialisation de MagicalRecord
     // Pony Debugger
@@ -73,23 +79,16 @@
 #ifdef FLOOZ_DEV_API
     [Mixpanel sharedInstanceWithToken:@"82c134b277474d6143decdc6ae73d5c9"];
 #else
-    [Mixpanel sharedInstanceWithToken:@"86108691338079db55b5fac30140d895"];
+    [Mixpanel sharedInstanceWithToken:@"81df2d3dcfb7c866f37e78f1ad8aa1c4"];
 #endif
     
     [[Mixpanel sharedInstance] identify:[FLHelper generateRandomString]];
     
-    [self handlePushMessage:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] withApplication:application];
+#ifndef FLOOZ_DEV_LOCAL
+    if (!pendingData)
+        pendingData = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+#endif
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kKeyTutoTimeline] != nil) {
-        BOOL tutoBool = [[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimeline];
-        
-        [[NSUserDefaults standardUserDefaults] setBool:tutoBool forKey:kKeyTutoTimelineFriends];
-        [[NSUserDefaults standardUserDefaults] setBool:tutoBool forKey:kKeyTutoTimelinePrivate];
-        [[NSUserDefaults standardUserDefaults] setBool:tutoBool forKey:kKeyTutoTimelinePublic];
-        
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kKeyTutoTimeline];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
     return YES;
 }
 
@@ -102,9 +101,28 @@
     }
 }
 
+- (void)initLocalTesting {
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[SplashViewController new]];
+}
+
+- (void)initTestingWithIP:(NSString *)ip {
+    self.localIp = ip;
+    
+    if (![[Flooz sharedInstance] autologin]) {
+        HomeViewController *home = [HomeViewController new];
+        self.window.rootViewController = home;
+    }
+}
+
 - (void)didConnected {
     
     FLUser *currentUser = [[Flooz sharedInstance] currentUser];
+    
+    [[Flooz sharedInstance] textObjectFromApi:nil failure:nil];
+    [[Flooz sharedInstance] activitiesWithSuccess:nil failure:nil];
+    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:TransactionScopeFriend] success:nil failure:nil];
+    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:TransactionScopePublic] success:nil failure:nil];
+    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:TransactionScopePrivate] success:nil failure:nil];
     
     [[Mixpanel sharedInstance] identify:currentUser.userId];
     
@@ -196,14 +214,9 @@
 }
 
 - (void)showRequestInvitationCodeWithUser:(NSDictionary *)user {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SIGNUP_PHONE_ALERT_TITLE", nil) message:[NSString stringWithFormat:NSLocalizedString(@"SIGNUP_PHONE_ALERT_CONTENT", nil), user[@"phone"]] delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_EDIT", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_OK", nil), nil];
-    [alert setTag:125];
-    
-    tmpUser = user;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [alert show];
-    });
+    InviteViewController *invitVC = [[InviteViewController  alloc] initWithUser:user];
+    [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
+    [[self currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:invitVC] animated:YES completion:nil];
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user {
@@ -225,6 +238,7 @@
     
     [[Mixpanel sharedInstance] identify:[FLHelper generateRandomString]];
     
+    pendingData = nil;
     [self displayHome];
 }
 
@@ -233,8 +247,8 @@
     [self flipToViewController:home];
 }
 
-- (void)displaySignin {
-    signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:[SignupPhoneViewController new]];
+- (void)displaySignin:(NSString*)coupon {
+    signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:[[SignupPhoneViewController alloc] initWithCoupon:coupon]];
     [self flipToViewController:signupNavigationController];
 }
 
@@ -334,6 +348,21 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+#ifndef FLOOZ_DEV_LOCAL
+    if ([[Flooz sharedInstance] currentUser]) {
+        [[Flooz sharedInstance] startSocket];
+        [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
+    }
+#endif
+    
+    if ([[self currentController] isKindOfClass:[FLRevealContainerViewController class]]) {
+        double delayInSeconds = 0.5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+            [self handlePendingData];
+        });
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -368,18 +397,22 @@
 // During the Facebook login flow, your app passes control to the Facebook iOS app or Facebook in a mobile browser.
 // After authentication, your app will be called back with the session information.
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    if ([FBAppCall handleOpenURL:url sourceApplication:sourceApplication])
+        return YES;
+    else {
+        if ([url.scheme isEqualToString:@"flooz"]) {
+            NSDictionary *dic = [NSDictionary newWithJSONString:url.host];
+            if (dic && dic[@"data"])
+                pendingData = dic[@"data"];
+        }
+    }
+    
+    return YES;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
     [FBAppCall handleDidBecomeActive];
-    
-    if ([[Flooz sharedInstance] currentUser]) {
-        [[Flooz sharedInstance] startSocket];
-        [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{}];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
-    }
 }
 
 #pragma mark - Notifications Push
@@ -401,18 +434,24 @@
     if (state == UIApplicationStateActive)
         return;
     
-    [self handlePushMessage:userInfo withApplication:application];
+    pendingData = userInfo;
+}
+
+- (void)handlePendingData {
+    if (pendingData) {
+        [self handlePushMessage:pendingData withApplication:nil];
+        pendingData = nil;
+    }
 }
 
 - (void)handlePushMessage:(NSDictionary *)userInfo withApplication:(UIApplication *)application {
-    double delayInSeconds = 0.3;
+    NSDictionary *tmp = [userInfo copy];
+    double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        if ([[Flooz sharedInstance] currentUser] && userInfo) {
-            self.window.rootViewController = [self prepareMainViewController];
-            
-            [[Flooz sharedInstance] handleRequestTriggers:userInfo];
-            [[Flooz sharedInstance] displayPopupMessage:userInfo];
+        if ([[Flooz sharedInstance] currentUser] && tmp) {
+            [[Flooz sharedInstance] handleRequestTriggers:tmp];
+            [[Flooz sharedInstance] displayPopupMessage:tmp];
         }
     });
 }
@@ -450,6 +489,7 @@
         _formSheet.shouldCenterVertically = YES;
         _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
         _formSheet.shadowRadius = 0.0;
+        [[MZFormSheetController sharedBackgroundWindow] setBackgroundBlurEffect:NO];
         [[MZFormSheetController sharedBackgroundWindow] setBackgroundColor:[UIColor clearColor]];
         
         [vc mz_presentFormSheetController:_formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) { }];
@@ -724,13 +764,21 @@
     }
 }
 
+- (void)managerImageActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        UIImageWriteToSavedPhotosAlbum(tmpImage, nil, nil, nil);
+    }
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (actionSheet.tag == 1)
         [self managerGlobalActionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
-    if (actionSheet.tag == 2)
+    else if (actionSheet.tag == 2)
         [self managerUserActionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
-    if (actionSheet.tag == 3)
+    else if (actionSheet.tag == 3)
         [self managerReportActionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
+    else if (actionSheet.tag == 4)
+        [self managerImageActionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
 }
 
 - (BOOL)isFriend {
@@ -761,12 +809,58 @@
     [alertView show];
 }
 
-- (void)showAvatarView:(UIView *)view withUrl:(NSURL *)urlImage {
-    if (urlImage) {
-        IDMPhotoBrowser *controller = [[IDMPhotoBrowser alloc] initWithPhotoURLs:@[urlImage] animatedFromView:view];
-        controller.displayActionButton = NO;
-        [self presentViewC:controller animated:YES completion:NULL];
+- (void)showAvatarView:(UIImageView *)view withUrl:(NSURL *)urlImage {
+    if (urlImage && ![urlImage.absoluteString isEqualToString:@"/img/fake.png"]) {
+        [[SDImageCache sharedImageCache] queryDiskCacheForKey:urlImage.absoluteString done:^(UIImage *image, SDImageCacheType cacheType) {
+            if (image) {
+                JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+                imageInfo.image = image;
+                imageInfo.referenceRect = view.frame;
+                imageInfo.referenceView = view.superview;
+                imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
+                
+                JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                                       initWithImageInfo:imageInfo
+                                                       mode:JTSImageViewControllerMode_Image
+                                                       backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+                imageViewer.interactionsDelegate = self;
+                
+                [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
+            }
+        }];
+    } else if (urlImage) {
+        JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+        imageInfo.image = [UIImage imageNamed:@"fake"];
+        imageInfo.referenceRect = view.frame;
+        imageInfo.referenceView = view.superview;
+        imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
+        
+        JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                               initWithImageInfo:imageInfo
+                                               mode:JTSImageViewControllerMode_Image
+                                               backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+        imageViewer.interactionsDelegate = self;
+        
+        [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
     }
+}
+
+- (void)imageViewerDidLongPress:(JTSImageViewController *)imageViewer atRect:(CGRect)rect {
+    tmpImage = imageViewer.image;
+    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    NSMutableArray *menus = [NSMutableArray new];
+    
+    [menus addObject:NSLocalizedString(@"SAVE_IMAGE", nil)];
+    
+    for (NSString *menu in menus) {
+        [actionSheet addButtonWithTitle:menu];
+    }
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet setTag:4];
+    
+    [actionSheet showInView:self.window];
 }
 
 - (void)showNewTransactionController:(FLUser *)user transactionType:(NSUInteger)transactionType {
@@ -930,41 +1024,75 @@
             return;
         }
         
+        __block UIViewController *vc2 = vc;
+        
         [[self currentController] mz_dismissFormSheetControllerAnimated:NO completionHandler: ^(MZFormSheetController *formSheetController) {
             _formSheet = nil;
+            _lastTransactionID = transaction.transactionId;
+            if (!vc2) {
+                vc2 = [self myTopViewController];
+            }
+            
+            CGSize size = CGSizeMake(PPScreenWidth() - 52.0f, PPScreenHeight() - 45.0f * 2.0f);
+            if (IS_IPHONE4) {
+                size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
+            }
+            TransactionViewController *controller;
+            
+            controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath withSize:size];
+            if ([vc2 conformsToProtocol:@protocol(TransactionCellDelegate)]) {
+                controller.delegateController = (UIViewController <TransactionCellDelegate> *)vc2;
+            }
+            
+            if (focus) {
+                [controller focusOnComment];
+            }
+            
+            _formSheet = [[MZFormSheetController alloc] initWithViewController:controller];
+            _formSheet.presentedFormSheetSize = size;
+            _formSheet.transitionStyle = MZFormSheetTransitionStyleBounce;// MZFormSheetTransitionStyleSlideFromBottom;
+            _formSheet.shadowRadius = 2.0;
+            _formSheet.shadowOpacity = 0.3;
+            _formSheet.shouldDismissOnBackgroundViewTap = YES;
+            _formSheet.shouldCenterVertically = YES;
+            _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
+            
+            [vc2 mz_presentFormSheetController:_formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+            }];
+        }];
+    } else {
+        _lastTransactionID = transaction.transactionId;
+        if (!vc) {
+            vc = [self myTopViewController];
+        }
+        
+        CGSize size = CGSizeMake(PPScreenWidth() - 52.0f, PPScreenHeight() - 45.0f * 2.0f);
+        if (IS_IPHONE4) {
+            size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
+        }
+        TransactionViewController *controller;
+        
+        controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath withSize:size];
+        if ([vc conformsToProtocol:@protocol(TransactionCellDelegate)]) {
+            controller.delegateController = (UIViewController <TransactionCellDelegate> *)vc;
+        }
+        
+        if (focus) {
+            [controller focusOnComment];
+        }
+        
+        _formSheet = [[MZFormSheetController alloc] initWithViewController:controller];
+        _formSheet.presentedFormSheetSize = size;
+        _formSheet.transitionStyle = MZFormSheetTransitionStyleBounce;// MZFormSheetTransitionStyleSlideFromBottom;
+        _formSheet.shadowRadius = 2.0;
+        _formSheet.shadowOpacity = 0.3;
+        _formSheet.shouldDismissOnBackgroundViewTap = YES;
+        _formSheet.shouldCenterVertically = YES;
+        _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
+        
+        [vc mz_presentFormSheetController:_formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
         }];
     }
-    _lastTransactionID = transaction.transactionId;
-    if (!vc) {
-        vc = [self myTopViewController];
-    }
-    
-    CGSize size = CGSizeMake(PPScreenWidth() - 52.0f, PPScreenHeight() - 45.0f * 2.0f);
-    if (IS_IPHONE4) {
-        size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
-    }
-    TransactionViewController *controller;
-    
-    controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath withSize:size];
-    if ([vc conformsToProtocol:@protocol(TransactionCellDelegate)]) {
-        controller.delegateController = (UIViewController <TransactionCellDelegate> *)vc;
-    }
-    
-    if (focus) {
-        [controller focusOnComment];
-    }
-    
-    _formSheet = [[MZFormSheetController alloc] initWithViewController:controller];
-    _formSheet.presentedFormSheetSize = size;
-    _formSheet.transitionStyle = MZFormSheetTransitionStyleBounce;// MZFormSheetTransitionStyleSlideFromBottom;
-    _formSheet.shadowRadius = 2.0;
-    _formSheet.shadowOpacity = 0.3;
-    _formSheet.shouldDismissOnBackgroundViewTap = YES;
-    _formSheet.shouldCenterVertically = YES;
-    _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
-    
-    [vc mz_presentFormSheetController:_formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
-    }];
 }
 
 - (UIWindow *)topWindow {

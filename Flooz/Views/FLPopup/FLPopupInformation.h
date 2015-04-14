@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FLPopupInformation : UIView {
-	UIView *background;
+@interface FLPopupInformation : UIViewController {
 	void (^okBlock)(void);
 }
+
+@property (strong, nonatomic) MZFormSheetController *formSheet;
 
 - (id)initWithTitle:(NSString *)title andMessage:(NSAttributedString *)message ok:(void (^)())ok;
 - (void)show;

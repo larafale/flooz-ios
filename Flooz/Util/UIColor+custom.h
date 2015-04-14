@@ -34,6 +34,8 @@
 + (UIColor *)customBlueLight:(CGFloat)alpha;
 + (UIColor *)customBlueHover;
 + (UIColor *)customBlueHover:(CGFloat)alpha;
++ (UIColor *)customMiddleBlue;
++ (UIColor *)customMiddleBlue:(CGFloat)alpha;
 + (UIColor *)customGrey;
 
 + (UIColor *)customPlaceholder;
@@ -47,5 +49,8 @@
 
 + (UIColor *)customBackgroundSocial;
 + (UIColor *)customBackgroundSocial:(CGFloat)alpha;
+
++ (UIColor *)colorWithHex:(UInt32)col;
++ (UIColor *)colorWithHexString:(NSString *)str;
 
 @end

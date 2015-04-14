@@ -54,8 +54,9 @@
 - (void)setImageFromURL:(NSString *)url {
 	if (!url || [url isBlank] || [url isEqualToString:@"/img/nopic.png"]) {
 		[self showPlaceholder];
-	}
-	else {
+    } else if ([url isEqualToString:@"/img/fake.png"]) {
+        [self.avatar setImage:[UIImage imageNamed:@"fake"]];
+    } else {
 		[self hidePlaceholder];
 		[avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
 	}
@@ -67,8 +68,9 @@
 
 	if (!url || [url isBlank] || [url isEqualToString:@"/img/nopic.png"]) {
 		[self showPlaceholder];
-	}
-	else {
+	} else if ([url isEqualToString:@"/img/fake.png"]) {
+        [self.avatar setImage:[UIImage imageNamed:@"fake"]];
+    } else {
 		[self hidePlaceholder];
 		[avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
 

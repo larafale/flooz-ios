@@ -124,7 +124,6 @@
                     [[Flooz sharedInstance] showLoadView];
                     [[Flooz sharedInstance] uploadDocument:weakPic field:@"picId" success:NULL failure:NULL];
                 }
-                [self askContacts];
                 [appDelegate goToAccountViewController];
             } failure: ^(NSError *error) {
                 [self.navigationController popViewControllerAnimated:YES];
@@ -135,13 +134,6 @@
             [_codePinView clean];
         }
     }
-}
-
-- (void)askContacts {
-    [[Flooz sharedInstance] grantedAccessToContacts: ^(BOOL granted) {
-        [[Flooz sharedInstance] createContactList: ^(NSMutableArray *arrayContactAdressBook, NSMutableArray *arrayContactFlooz) {} atSignup:YES];
-        [appDelegate askNotification];
-    }];
 }
 
 @end

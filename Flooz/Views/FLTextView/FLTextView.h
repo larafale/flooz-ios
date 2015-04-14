@@ -12,13 +12,14 @@
 	__weak NSMutableDictionary *_dictionary;
 	NSString *_dictionaryKey;
 
-	UITextView *_textView;
 	UILabel *_placeholder;
 
 	UIView *separatorTop;
 
 	CGFloat maxHeight;
 }
+
+@property (nonatomic, retain) UITextView *textView;
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position;
 - (void)setInputAccessoryView:(UIView *)accessoryView;
@@ -27,5 +28,7 @@
 - (void)setInputView:(UIView *)inputView;
 - (void)setMaxHeight:(CGFloat)height;
 - (void)setWidth:(CGFloat)width;
+- (void)addTextChangeTarget:(id)instance action:(SEL)action;
+- (void)addTextFocusTarget:(id)instance action:(SEL)action;
 
 @end

@@ -11,7 +11,6 @@
 
 @interface SignupUsernameViewController () {
     FLTextFieldSignup *_userName;
-    FLKeyboardView *_inputView;
     
     FLActionButton *_nextButton;
 }
@@ -98,13 +97,19 @@
         [dic removeObjectForKey:@"picId"];
 
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] signupPassStep:@"nick" user:dic success:^(id result) {
-            [self.navigationController pushViewController:[SignupPhotoViewController new] animated:YES];
+        [[Flooz sharedInstance] signupPassStep:@"nick" user:dic success:^(NSDictionary *result) {
+            if (result[@"nextStep"]) {
+                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"nextStep"] withData:result[@"nextStepData"]];
+                if (nextViewController)
+                    [self.navigationController pushViewController:nextViewController animated:YES];
+                else
+                    [self.navigationController pushViewController:[SignupPhotoViewController new] animated:YES];
+            } else
+                [self.navigationController pushViewController:[SignupPhotoViewController new] animated:YES];
         } failure:^(NSError *error) {
             [_userName becomeFirstResponder];
         }];
     }
 }
-
 
 @end

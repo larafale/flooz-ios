@@ -30,11 +30,20 @@
     return self;
 }
 
+- (id) initWithCoupon:(NSString *)coupon {
+    self = [self init];
+    if (self) {
+        _coupon = coupon;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     _phoneField = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"NumMobile", @"") for:self.userDic key:@"phone" position:CGPointMake(SIGNUP_PADDING_SIDE, self.firstItemY + 20.0f)];
     CGRectSetX(_phoneField.frame, (SCREEN_WIDTH - _phoneField.frame.size.width) / 2);
+    [_phoneField.textfield setTextAlignment:NSTextAlignmentCenter];
     [_phoneField addForTextChangeTarget:self action:@selector(testPhoneNumber)];
     [_phoneField addForNextClickTarget:self action:@selector(testPhoneNumber)];
     [_mainBody addSubview:_phoneField];
@@ -84,13 +93,13 @@
 - (void)tryPhoneNumber {
     [self.view endEditing:YES];
     int lenght = ((NSString *)self.userDic[@"phone"]).UTF8String[0] == '0' ? 10 : 12;
-
+    
     if (self.userDic[@"phone"] && ![self.userDic[@"phone"] isBlank] && ((NSString *)self.userDic[@"phone"]).length >= lenght) {
         [_nextButton setEnabled:YES];
         
         [[Flooz sharedInstance] showLoadView];
         [appDelegate clearSavedViewController];
-        [[Flooz sharedInstance] loginWithPhone:self.userDic[@"phone"]];
+        [[Flooz sharedInstance] loginWithPhone:self.userDic[@"phone"] andCoupon:self.coupon];
     }
     else {
         [_phoneField.textfield becomeFirstResponder];

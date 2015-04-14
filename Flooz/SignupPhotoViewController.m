@@ -126,8 +126,15 @@
     [dic removeObjectForKey:@"picId"];
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] signupPassStep:@"image" user:dic success:^(id result) {
-        [self.navigationController pushViewController:[SignupInfosViewController new] animated:YES];
+    [[Flooz sharedInstance] signupPassStep:@"image" user:dic success:^(NSDictionary *result) {
+        if (result[@"nextStep"]) {
+            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"nextStep"] withData:result[@"nextStepData"]];
+            if (nextViewController)
+                [self.navigationController pushViewController:nextViewController animated:YES];
+            else
+                [self.navigationController pushViewController:[SignupInfosViewController new] animated:YES];
+        } else
+            [self.navigationController pushViewController:[SignupInfosViewController new] animated:YES];
     } failure:^(NSError *error) {
         
     }];

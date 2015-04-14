@@ -13,7 +13,7 @@
 #define MARGE_TOP 12.
 #define MARGE_BOTTOM 17.
 #define INPUTS_WIDTH 226.
-#define FONT_SIZE_MAX 50.
+#define FONT_SIZE_MAX 20.
 
 @implementation FLNewTransactionAmount
 
@@ -57,7 +57,7 @@
 	amount = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(currency.frame), MARGE_TOP, 0, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
 	amount2 = [[UITextField alloc] initWithFrame:CGRectMake(0, MARGE_TOP, 0, HEIGHT - MARGE_TOP - MARGE_BOTTOM)];
 
-	currency.font = [UIFont customTitleThin:55];
+	currency.font = [UIFont customTitleThin:25];
 	point.font = amount.font = amount2.font = [UIFont customTitleThin:FONT_SIZE_MAX];
 	currency.textColor = point.textColor = amount.textColor = amount2.textColor = [UIColor whiteColor];
 	amount.tintColor = amount2.tintColor = [UIColor clearColor];
@@ -81,7 +81,7 @@
 	FLKeyboardView *inputView2 = [FLKeyboardView new];
 	inputView2.textField = amount2;
 	amount2.inputView = inputView2;
-
+    
 	[self addSubview:currency];
 	[self addSubview:point];
 	[self addSubview:amount];

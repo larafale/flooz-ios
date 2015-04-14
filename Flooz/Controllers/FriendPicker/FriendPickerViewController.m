@@ -119,13 +119,13 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	if (section == 0) {
+	if (section == 2) {
 		return NSLocalizedString(@"FRIEND_PCIKER_SELECTION_CELL", nil);
 	}
-	else if (section == 1) {
+	else if (section == 0) {
 		return NSLocalizedString(@"FRIEND_PICKER_FRIENDS_RECENT", nil);
 	}
-	else if (section == 2) {
+	else if (section == 1) {
 		return NSLocalizedString(@"FRIEND_PICKER_FRIENDS", nil);
 	}
 
@@ -133,13 +133,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	if (section == 0 && (!_selectionText || [_selectionText isBlank] || ![_friendsSearch count])) {
+	if (section == 2 && (!_selectionText || [_selectionText isBlank] || ![_friendsSearch count])) {
 		return 0;
 	}
-	else if (section == 1 && [_friendsRecentFiltred count] == 0) {
+	else if (section == 0 && [_friendsRecentFiltred count] == 0) {
 		return 0;
 	}
-	else if (section == 2 && [_friendsFiltred count] == 0) {
+	else if (section == 1 && [_friendsFiltred count] == 0) {
 		return 0;
 	}
 	else if (section == 3 && [_contacts count] == 0) {
@@ -172,16 +172,16 @@
 }
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (section == 0) {
+	if (section == 2) {
 		if (_selectionText || ![_selectionText isBlank]) {
 			return [_friendsSearch count];
 		}
 		return 0;
 	}
-	else if (section == 1) {
+	else if (section == 0) {
 		return [_friendsRecentFiltred count];
 	}
-	else if (section == 2) {
+	else if (section == 1) {
 		return [_friendsFiltred count];
 	}
 
@@ -193,7 +193,7 @@
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == 0) {
+	if (indexPath.section == 2) {
 		static NSString *cellIdentifier = @"FriendAddCell";
 		FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
@@ -206,7 +206,7 @@
 		[cell hideAddButton];
 		return cell;
 	}
-	else if (indexPath.section == 1 || indexPath.section == 2) {
+	else if (indexPath.section == 0 || indexPath.section == 1) {
 		static NSString *cellIdentifierSelection = @"FriendPickerFriendCell";
 		FriendPickerFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSelection];
 
@@ -214,7 +214,7 @@
 			cell = [[FriendPickerFriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
 		}
 
-		if (indexPath.section == 1) {
+		if (indexPath.section == 0) {
 			[cell setUser:[_friendsRecentFiltred objectAtIndex:indexPath.row]];
 		}
 		else {
@@ -248,11 +248,11 @@
 	if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 2) {
 		FLUser *friend;
 
-		if (indexPath.section == 0) {
+		if (indexPath.section == 2) {
 			friend = _friendsSearch[indexPath.row];
             [friend setSelectedCanal:SearchCanal];
 		}
-		else if (indexPath.section == 1) {
+		else if (indexPath.section == 0) {
 			friend = [_friendsRecentFiltred objectAtIndex:indexPath.row];
             [friend setSelectedCanal:RecentCanal];
         }
@@ -423,7 +423,7 @@
 
 	[[Flooz sharedInstance] friendSearch:text forNewFlooz:YES success: ^(id result) {
 	    _friendsSearch = result;
-	    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+	    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
 	    [_tableView setContentOffset:CGPointZero animated:YES];
 	}];
 

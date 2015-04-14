@@ -42,7 +42,10 @@
 - (id)init {
     self = [super init];
     if (self) {
-#ifdef FLOOZ_DEV_API
+        
+#ifdef FLOOZ_DEV_LOCAL
+        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", [appDelegate localIp]]]];
+#elif FLOOZ_DEV_API
         manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://dev.flooz.me"]];
 #else
         manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
@@ -58,6 +61,7 @@
         _activitiesCached = @[];
         
         self.socketConnected = NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveUserData) name:kNotificationReloadCurrentUser object:nil];
     }
     return self;
 }
@@ -74,6 +78,108 @@
     [loadView hide];
 }
 
+#pragma mark - Save Data
+
+- (void) loadUserData {
+    NSString *userData = [UICKeyChainStore stringForKey:kUserData];
+    if (userData) {
+        NSDictionary *userJson = [NSDictionary newWithJSONString:userData];
+        if (userJson) {
+            _currentUser = [[FLUser alloc] initWithJSON:userJson];
+            _facebook_token = userJson[@"fb"][@"token"];
+            
+            [self checkDeviceToken];
+        }
+    }
+}
+
+- (void) loadTextData {
+    NSString *textData = [UICKeyChainStore stringForKey:kTextData];
+    if (textData) {
+        NSDictionary *textJson = [NSDictionary newWithJSONString:textData];
+        if (textJson) {
+            _currentTexts = [[FLTexts alloc] initWithJSON:textJson];
+        }
+    }
+}
+
+- (NSArray *) loadTimelineData:(TransactionScope)scope {
+    NSString *dataKey;
+    
+    switch (scope) {
+        case TransactionScopePublic:
+            dataKey = kPublicTimelineData;
+            break;
+        case TransactionScopePrivate:
+            dataKey = kPrivateTimelineData;
+            break;
+        case TransactionScopeFriend:
+            dataKey = kFriendTimelineData;
+            break;
+    }
+    
+    NSString *timelineData = [UICKeyChainStore stringForKey:dataKey];
+    if (timelineData) {
+        NSArray *timelineJson = [NSArray newWithJSONString:timelineData];
+        if (timelineJson) {
+            return [self createTransactionArrayFromSaveData:timelineJson];
+        }
+    }
+    return nil;
+}
+
+- (NSArray *) loadNotificationData {
+    NSString *notificationData = [UICKeyChainStore stringForKey:kNotificationsData];
+    if (notificationData) {
+        NSArray *notificationJson = [NSArray newWithJSONString:notificationData];
+        if (notificationJson) {
+            return [self createActivityArrayFromSaveData:notificationJson];
+        }
+    }
+    return nil;
+}
+
+- (void) saveUserData {
+    [UICKeyChainStore setString:[self.currentUser.json jsonStringWithPrettyPrint:NO] forKey:kUserData];
+}
+
+- (void) saveTextData {
+    [UICKeyChainStore setString:[self.currentTexts.json jsonStringWithPrettyPrint:NO] forKey:kTextData];
+}
+
+- (void) saveNotificationData:(NSArray *)notifs {
+    [UICKeyChainStore setString:[notifs jsonStringWithPrettyPrint:NO] forKey:kNotificationsData];
+}
+
+- (void) saveTimeline:(NSArray*)timeline forScope:(TransactionScope)scope {
+    if (timeline) {
+        NSString *dataKey;
+        
+        switch (scope) {
+            case TransactionScopePublic:
+                dataKey = kPublicTimelineData;
+                break;
+            case TransactionScopePrivate:
+                dataKey = kPrivateTimelineData;
+                break;
+            case TransactionScopeFriend:
+                dataKey = kFriendTimelineData;
+                break;
+        }
+        
+        [UICKeyChainStore setString:[timeline jsonStringWithPrettyPrint:NO] forKey:dataKey];
+    }
+}
+
+- (void) clearSaveData {
+    [UICKeyChainStore removeItemForKey:kUserData];
+    [UICKeyChainStore removeItemForKey:kPublicTimelineData];
+    [UICKeyChainStore removeItemForKey:kPrivateTimelineData];
+    [UICKeyChainStore removeItemForKey:kFriendTimelineData];
+    [UICKeyChainStore removeItemForKey:kTextData];
+    [UICKeyChainStore removeItemForKey:kNotificationsData];
+}
+
 #pragma mark -
 
 - (void)clearLogin {
@@ -83,6 +189,8 @@
     _access_token = nil;
     _facebook_token = nil;
     _activitiesCached = @[];
+    
+    [self clearSaveData];
     
     [UICKeyChainStore removeItemForKey:@"login-token"];
 }
@@ -102,13 +210,15 @@
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
-        [self updateCurrentUserAndAskResetCode:result];
         
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoFlooz];
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelineFriends];
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePublic];
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePrivate];
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoWelcome];
+        [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kSendContact];
+        
+        [self updateCurrentUserAndAskResetCode:result];
         
         if (success) {
             success(result);
@@ -144,22 +254,19 @@
 - (void)loginWithPseudoAndPassword:(NSDictionary *)user success:(void (^)(id result))success {
     id successBlock = ^(id result) {
         [self updateCurrentUserAndAskResetCode:result];
+        
+        [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoFlooz];
+        [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoTimelineFriends];
+        [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoTimelinePublic];
+        [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoTimelinePrivate];
+        [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoWelcome];
+        
         if (success) {
             success(result);
         }
     };
     
     [self requestPath:@"/login/basic" method:@"POST" params:user success:successBlock failure:NULL];
-}
-
-- (void)loginWithCodeForUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/login/basic" method:@"POST" params:user success: ^(id result) {
-        [self updateCurrentUserAfterConnect:result];
-        [appDelegate goToAccountViewController];
-        if (success) {
-            success(result);
-        }
-    } failure:failure];
 }
 
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -178,7 +285,7 @@
     return formatedPhone;
 }
 
-- (void)loginWithPhone:(NSString *)phone {
+- (void)loginWithPhone:(NSString *)phone andCoupon:(NSString *)coupon {
    	// Remove useless characters
     NSString *formatedPhone = [[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""]
                                 stringByReplacingOccurrencesOfString:@"." withString:@""]
@@ -189,7 +296,14 @@
         formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
     }
     
-    [self requestPath:@"/login" method:@"GET" params:@{ @"q": formatedPhone, @"distinctId": [Mixpanel sharedInstance].distinctId } success:nil failure:nil];
+    NSDictionary *params;
+    
+    if (coupon && ![coupon isBlank])
+        params = @{ @"q": formatedPhone, @"distinctId": [Mixpanel sharedInstance].distinctId, @"coupon": coupon };
+    else
+        params = @{ @"q": formatedPhone, @"distinctId": [Mixpanel sharedInstance].distinctId };
+    
+    [self requestPath:@"/login" method:@"GET" params:params success:nil failure:nil];
 }
 
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -227,20 +341,26 @@
 }
 
 - (void)updateCurrentUserWithSuccess:(void (^)())success failure:(void (^)(NSError *error))failure {
-    __block id successBlock = ^(id result) {
-        _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
-        _facebook_token = result[@"item"][@"fb"][@"token"];
+    if ([appDelegate shouldRefreshWithKey:kKeyLastUpdate]) {
+        __block id successBlock = ^(id result) {
+            _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
+            _facebook_token = result[@"item"][@"fb"][@"token"];
+            
+            [self checkDeviceToken];
+            [self saveSettingsObject:[NSDate date] withKey:kKeyLastUpdate];
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationReloadCurrentUser object:nil]];
+            
+            if (success) {
+                success();
+            }
+        };
         
-        [self checkDeviceToken];
-        [self saveSettingsObject:[NSDate date] withKey:kKeyLastUpdate];
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationReloadCurrentUser object:nil]];
-        
+        [self requestPath:@"/users/profile" method:@"GET" params:nil success:successBlock failure:failure];
+    } else {
         if (success) {
             success();
         }
-    };
-    
-    [self requestPath:@"/users/profile" method:@"GET" params:nil success:successBlock failure:failure];
+    }
 }
 
 - (void)updateUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -291,6 +411,32 @@
     }];
 }
 
+- (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        self.currentTexts = [[FLTexts alloc] initWithJSON:result[@"item"]];
+        [self saveTextData];
+        
+        if (success) {
+            success(self.currentTexts);
+        }
+    };
+    
+    id failureBlock = ^(NSError *error) {
+        if (![self connectionStatusFromError:error]) {
+            [self loadTextData];
+            if (self.currentTexts && success)
+                success(self.currentTexts);
+            else if (failure)
+                failure(error);
+        } else if (failure) {
+            failure(error);
+        }
+    };
+    
+    [self requestPath:@"/utils/texts" method:@"GET" params:nil success:successBlock failure:failureBlock];
+}
+
+
 - (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     [self timeline:scope state:nil success:success failure:failure];
 }
@@ -299,11 +445,22 @@
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
-        [_currentUser updateStatsPending:result];
-        
+        [self saveTimeline:result[@"items"] forScope:[FLTransaction transactionParamsToScope:scope]];
         if (success) {
             [self saveSettingsObject:[NSDate date] withKey:[NSString stringWithFormat:@"kLastUpdate%@", scope]];
             success(transactions, result[@"next"]);
+        }
+    };
+    
+    id failureBlock = ^(NSError *error) {
+        if (![self connectionStatusFromError:error]) {
+            NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
+            if (transactions && success)
+                success(transactions, nil);
+            else if (failure)
+                failure(error);
+        } else if (failure) {
+            failure(error);
         }
     };
     
@@ -315,7 +472,7 @@
         params = @{ @"scope": scope };
     }
     
-    [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failure];
+    [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failureBlock];
 }
 
 - (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
@@ -365,13 +522,28 @@
 - (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *activities = [self createActivityArrayFromResult:result];
+        _activitiesCached = activities;
+        [self saveNotificationData:result[@"items"]];
+        
         if (success) {
-            _activitiesCached = activities;
             success(activities, result[@"next"]);
         }
     };
     
-    [self requestPath:@"/feeds" method:@"GET" params:nil success:successBlock failure:failure];
+    id failureBlock = ^(NSError *error) {
+        if (![self connectionStatusFromError:error]) {
+            NSArray *activities = [self loadNotificationData];
+            _activitiesCached = activities;
+            if (activities && success)
+                success(activities, nil);
+            else if (failure)
+                failure(error);
+        } else if (failure) {
+            failure(error);
+        }
+    };
+    
+    [self requestPath:@"/feeds" method:@"GET" params:nil success:successBlock failure:failureBlock];
 }
 
 - (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success {
@@ -386,6 +558,12 @@
 }
 
 - (NSArray *)activitiesCached {
+    if ([_activitiesCached count] == 0)
+        _activitiesCached = [self loadNotificationData];
+    
+    if (_activitiesCached == nil)
+        return @[];
+    
     return _activitiesCached;
 }
 
@@ -416,13 +594,11 @@
     
     if (dic[@"toImage"])
         [dic removeObjectForKey:@"toImage"];
-   
+    
     if (dic[@"image"])
         [dic removeObjectForKey:@"image"];
     
     successBlock1 = ^(id result) {
-        [self updateCurrentUser];
-        
         if (success) {
             success(result);
         }
@@ -564,12 +740,12 @@
 
 - (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success {
     NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/request", friendId];
-    [self requestPath:path method:@"GET" params:@{@"metrics":@{@"selectedFrom": canal}} success:success failure:nil];
+    [self requestPath:path method:@"GET" params:(canal != nil ? @{@"metrics":@{@"selectedFrom": canal}} : nil) success:success failure:nil];
 }
 
 - (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz success:(void (^)(id result))success {
     id successBlock = ^(id result) {
-        NSMutableArray *friends = [self createFriendsArrayFromResult:result];
+        NSMutableArray *friends = [self createFriendsArrayFromSearchResult:result];
         if (success) {
             success(friends);
         }
@@ -603,6 +779,12 @@
 }
 
 #pragma mark -
+
+- (BOOL)connectionStatusFromError:(NSError *)error {
+    if (error.code == kCFURLErrorTimedOut || error.code == kCFURLErrorCannotConnectToHost || error.code == kCFURLErrorNotConnectedToInternet || error.code == kCFURLErrorNetworkConnectionLost)
+        return NO;
+    return YES;
+}
 
 - (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -651,7 +833,7 @@
             [self handleRequestTriggers:responseObject];
         }
         else {
-            [loadView hide];
+            [self hideLoadView];
             
             [self displayPopupMessage:responseObject];
             [self handleRequestTriggers:responseObject];
@@ -663,15 +845,12 @@
     };
     
     id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        [loadView hide];
+        [self hideLoadView];
         
         id statusCode = operation.responseObject[@"statusCode"];
         
-        if (error.code == kCFURLErrorTimedOut ||
-            error.code == kCFURLErrorCannotConnectToHost ||
-            error.code == kCFURLErrorNotConnectedToInternet ||
-            error.code == kCFURLErrorNetworkConnectionLost
-            ) {
+        if ((error.code == kCFURLErrorTimedOut || error.code == kCFURLErrorCannotConnectToHost || error.code == kCFURLErrorNotConnectedToInternet || error.code == kCFURLErrorNetworkConnectionLost
+             ) && ([method isEqualToString:@"POST"] || [method isEqualToString:@"PUT"] || [method isEqualToString:@"DELETE"])) {
             [appDelegate displayMessage:@"Erreur de connexion" content:@"La connexion internet semble interrompue :(" style:FLAlertViewStyleError time:@5 delay:@0];
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationConnectionError object:nil];
         }
@@ -705,7 +884,7 @@
         [manager DELETE:path parameters:params success:successBlock failure:failureBlock];
     }
     else {
-        [loadView hide];
+        [self hideLoadView];
     }
 }
 
@@ -769,7 +948,17 @@
     [self requestPath:@"/login/basic" method:@"POST" params:nil success:^(id result) {
         [self updateCurrentUserAfterConnect:result];
     } failure: ^(NSError *error) {
-        [self logout];
+        if ([self connectionStatusFromError:error])
+            [self logout];
+        else {
+            [self loadUserData];
+            if (!self.currentUser)
+                [self logout];
+            else {
+                [appDelegate didConnected];
+                [appDelegate goToAccountViewController];
+            }
+        }
     }];
     
     return YES;
@@ -929,7 +1118,7 @@
     }
     
     [self updateUser:@{ @"device": appDelegate.currentDeviceToken } success: ^(id result) {
-        _currentUser.deviceToken = appDelegate.currentDeviceToken;
+        
     } failure:nil];
 }
 
@@ -1069,33 +1258,37 @@
     [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
 }
 
+- (void)handleTriggerHttpCall:(NSDictionary *)data {
+    [self requestPath:data[@"url"] method:data[@"method"] params:data[@"body"] success:nil failure:nil];
+}
+
 - (void)handleTrigger:(FLTrigger*)trigger {
-    NSDictionary *triggerFuncs =
-    @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
-      [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
-      [NSNumber numberWithInt:TriggerShowAvatar]: NSStringFromSelector(@selector(handleTriggerAvatarShow:)),
-      [NSNumber numberWithInt:TriggerReloadProfile]: NSStringFromSelector(@selector(handleTriggerProfileReload:)),
-      [NSNumber numberWithInt:TriggerShowCard]: NSStringFromSelector(@selector(handleTriggerCardShow:)),
-      [NSNumber numberWithInt:TriggerShowFriend]: NSStringFromSelector(@selector(handleTriggerFriendShow:)),
-      [NSNumber numberWithInt:TriggerShowProfile]: NSStringFromSelector(@selector(handleTriggerProfileShow:)),
-      [NSNumber numberWithInt:TriggerReloadLine]: NSStringFromSelector(@selector(handleTriggerTransactionReload:)),
-      [NSNumber numberWithInt:TriggerShowLogin]: NSStringFromSelector(@selector(handleTriggerLoginShow:)),
-      [NSNumber numberWithInt:TriggerShowSignup]: NSStringFromSelector(@selector(handleTriggerSignupShow:)),
-      [NSNumber numberWithInt:TriggerShowSignupCode]: NSStringFromSelector(@selector(handleTriggerSignupCodeShow:)),
-      [NSNumber numberWithInt:TriggerLogout]: NSStringFromSelector(@selector(handleTriggerLogout:)),
-      [NSNumber numberWithInt:TriggerAppUpdate]: NSStringFromSelector(@selector(handleTriggerAppUpdate:)),
-      [NSNumber numberWithInt:TriggerShowContactInfo]: NSStringFromSelector(@selector(handleTriggerContactInfoShow:)),
-      [NSNumber numberWithInt:TriggerShowUserIdentity]: NSStringFromSelector(@selector(handleTriggerUserIdentityShow:)),
-      [NSNumber numberWithInt:TriggerShow3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureShow:)),
-      [NSNumber numberWithInt:TriggerComplete3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureComplete:)),
-      [NSNumber numberWithInt:TriggerResetPassword]: NSStringFromSelector(@selector(handleTriggerResetPassword:)),
-      [NSNumber numberWithInt:TriggerFail3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureFail:)),
-      [NSNumber numberWithInt:TriggerSecureCodeClear]: NSStringFromSelector(@selector(handleTriggerClearSecureCode:)),
-      [NSNumber numberWithInt:TriggerSecureCodeCheck]: NSStringFromSelector(@selector(handleTriggerCheckSecureCode:)),
-      [NSNumber numberWithInt:TriggerPresetLine]: NSStringFromSelector(@selector(handleTriggerPresetLine:)),
-      [NSNumber numberWithInt:TriggerReloadFriend]: NSStringFromSelector(@selector(handleTriggerFriendReload:)),
-      [NSNumber numberWithInt:TriggerFeedRead]: NSStringFromSelector(@selector(handleTriggerReadFeed:)),
-      [NSNumber numberWithInt:TriggerShowInvitation]: NSStringFromSelector(@selector(handleTriggerInvitationShow:))};
+    NSDictionary *triggerFuncs = @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
+                                   [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
+                                   [NSNumber numberWithInt:TriggerShowAvatar]: NSStringFromSelector(@selector(handleTriggerAvatarShow:)),
+                                   [NSNumber numberWithInt:TriggerReloadProfile]: NSStringFromSelector(@selector(handleTriggerProfileReload:)),
+                                   [NSNumber numberWithInt:TriggerShowCard]: NSStringFromSelector(@selector(handleTriggerCardShow:)),
+                                   [NSNumber numberWithInt:TriggerShowFriend]: NSStringFromSelector(@selector(handleTriggerFriendShow:)),
+                                   [NSNumber numberWithInt:TriggerShowProfile]: NSStringFromSelector(@selector(handleTriggerProfileShow:)),
+                                   [NSNumber numberWithInt:TriggerReloadLine]: NSStringFromSelector(@selector(handleTriggerTransactionReload:)),
+                                   [NSNumber numberWithInt:TriggerShowLogin]: NSStringFromSelector(@selector(handleTriggerLoginShow:)),
+                                   [NSNumber numberWithInt:TriggerShowSignup]: NSStringFromSelector(@selector(handleTriggerSignupShow:)),
+                                   [NSNumber numberWithInt:TriggerShowSignupCode]: NSStringFromSelector(@selector(handleTriggerSignupCodeShow:)),
+                                   [NSNumber numberWithInt:TriggerLogout]: NSStringFromSelector(@selector(handleTriggerLogout:)),
+                                   [NSNumber numberWithInt:TriggerAppUpdate]: NSStringFromSelector(@selector(handleTriggerAppUpdate:)),
+                                   [NSNumber numberWithInt:TriggerShowContactInfo]: NSStringFromSelector(@selector(handleTriggerContactInfoShow:)),
+                                   [NSNumber numberWithInt:TriggerShowUserIdentity]: NSStringFromSelector(@selector(handleTriggerUserIdentityShow:)),
+                                   [NSNumber numberWithInt:TriggerShow3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureShow:)),
+                                   [NSNumber numberWithInt:TriggerComplete3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureComplete:)),
+                                   [NSNumber numberWithInt:TriggerResetPassword]: NSStringFromSelector(@selector(handleTriggerResetPassword:)),
+                                   [NSNumber numberWithInt:TriggerFail3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureFail:)),
+                                   [NSNumber numberWithInt:TriggerSecureCodeClear]: NSStringFromSelector(@selector(handleTriggerClearSecureCode:)),
+                                   [NSNumber numberWithInt:TriggerSecureCodeCheck]: NSStringFromSelector(@selector(handleTriggerCheckSecureCode:)),
+                                   [NSNumber numberWithInt:TriggerPresetLine]: NSStringFromSelector(@selector(handleTriggerPresetLine:)),
+                                   [NSNumber numberWithInt:TriggerReloadFriend]: NSStringFromSelector(@selector(handleTriggerFriendReload:)),
+                                   [NSNumber numberWithInt:TriggerFeedRead]: NSStringFromSelector(@selector(handleTriggerReadFeed:)),
+                                   [NSNumber numberWithInt:TriggerShowInvitation]: NSStringFromSelector(@selector(handleTriggerInvitationShow:)),
+                                   [NSNumber numberWithInt:TriggerHttpCall]: NSStringFromSelector(@selector(handleTriggerHttpCall:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
         if ([trigger.delay isEqualToNumber:@0])
@@ -1138,7 +1331,9 @@
     
     NSString *url;
     
-#ifdef FLOOZ_DEV_API
+#ifdef FLOOZ_DEV_LOCAL
+    url = [NSString stringWithFormat:@"http://%@", [appDelegate localIp]];
+#elif FLOOZ_DEV_API
     url = @"http://dev.flooz.me:80";
 #else
     url = @"https://api.flooz.me:443";
@@ -1426,6 +1621,18 @@
 }
 
 #pragma mark - array from result dictionnary
+- (NSMutableArray *)createFriendsArrayFromSearchResult:(NSDictionary *)result {
+    NSMutableArray *arrayFriends = [NSMutableArray new];
+    NSArray *friends = result[@"items"];
+    if (friends) {
+        for (NSDictionary *json in friends) {
+            FLUser *friend = [[FLUser alloc] initWithJSON:json];
+            [arrayFriends addObject:friend];
+        }
+    }
+    return arrayFriends;
+}
+
 - (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result {
     NSMutableArray *arrayFriends = [NSMutableArray new];
     NSArray *friends = result[@"items"];
@@ -1476,9 +1683,33 @@
     return arrayActivities;
 }
 
+- (NSMutableArray *)createActivityArrayFromSaveData:(NSArray *)result {
+    NSMutableArray *arrayActivities = [NSMutableArray new];
+    NSArray *activities = result;
+    if (activities) {
+        for (NSDictionary *json in activities) {
+            FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
+            [arrayActivities addObject:activity];
+        }
+    }
+    return arrayActivities;
+}
+
 - (NSMutableArray *)createTransactionArrayFromResult:(NSDictionary *)result {
     NSMutableArray *arrayTransactions = [NSMutableArray new];
     NSArray *transactions = result[@"items"];
+    if (transactions) {
+        for (NSDictionary *json in transactions) {
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
+            [arrayTransactions addObject:transaction];
+        }
+    }
+    return arrayTransactions;
+}
+
+- (NSMutableArray *)createTransactionArrayFromSaveData:(NSArray *)result {
+    NSMutableArray *arrayTransactions = [NSMutableArray new];
+    NSArray *transactions = result;
     if (transactions) {
         for (NSDictionary *json in transactions) {
             FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];

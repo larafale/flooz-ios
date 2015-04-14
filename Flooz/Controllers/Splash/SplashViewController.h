@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SplashViewController : GlobalViewController
+@interface SplashViewController : GlobalViewController<UIAlertViewDelegate>
 
 @end

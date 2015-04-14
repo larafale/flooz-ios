@@ -180,7 +180,8 @@
 	_addressDic = [[currentUser address] mutableCopy];
 
 	documents = @[
-	        @{ @"HOME": @"justificatory" }
+	        @{ @"HOME": @"justificatory" },
+            @{ @"HOME2": @"justificatory2" }
 	    ];
 
 	registerButtonCount = 0;
@@ -188,7 +189,6 @@
 
 - (void)createDocumentsButtonWithKey:(NSString *)key andValue:(NSString *)value {
     UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, height, PPScreenWidth() - PADDING_SIDE * 2.0f, 45)];
-    [_contentView addSubview:view];
     height = CGRectGetMaxY(view.frame);
     
     [self registerButtonForAction:view];
@@ -214,6 +214,7 @@
     }
     
     [self createBottomBar:view];
+    [_contentView addSubview:view];
 }
 
 - (void)createBottomBar:(UIView *)view {
@@ -235,7 +236,9 @@
 		case 0:
 			action = @selector(didDocumentTouch);
 			break;
-
+        case 1:
+            action = @selector(didDocument2Touch);
+            break;
 		default:
 			action = nil;
 			break;
@@ -318,6 +321,11 @@
 	[self showImagePicker];
 }
 
+- (void)didDocument2Touch {
+    currentDocumentKey = [[documents[1] allValues] firstObject];
+    [self showImagePicker];
+}
+
 - (void)addTapGestureForDismissKeyboard {
 	UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
 	tapGesture.cancelsTouchesInView = NO;
@@ -352,7 +360,7 @@
 #pragma mark - imagePicker
 
 - (void)showImagePicker {
-    if ([[[Flooz sharedInstance] currentUser] settings][currentDocumentKey] && [[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 1) {
+    if ([[[Flooz sharedInstance] currentUser] settings][currentDocumentKey] && ([[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 1 || [[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 2)) {
         return;
     }
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {

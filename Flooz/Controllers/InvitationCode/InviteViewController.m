@@ -7,8 +7,6 @@
 //
 
 #import "InviteViewController.h"
-#import "FLPopupAskInviteCode.h"
-#import "FLPopupEnterInviteCode.h"
 #import "PendingInvitationViewController.h"
 
 @interface InviteViewController () {

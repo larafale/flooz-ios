@@ -197,7 +197,9 @@
 
 	//Add input to session
 	AVCaptureDeviceInput *newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:newCamera error:nil];
-	[captureSession addInput:newVideoInput];
+    
+    if (newVideoInput != nil)
+        [captureSession addInput:newVideoInput];
 
 	//Commit all the configuration changes at once
 	[captureSession commitConfiguration];

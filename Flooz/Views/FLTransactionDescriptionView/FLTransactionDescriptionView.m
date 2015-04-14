@@ -114,7 +114,7 @@
 	current_height += heightContent;
 
 	// Height for attachment
-    if ([transaction attachmentThumbURL]) {
+    if ([transaction attachmentURL]) {
         CGFloat heightAttach = 250 / (500 / rightViewWidth);
 		current_height += 6 + heightAttach;
 	}
@@ -358,13 +358,13 @@
 }
 
 - (void)prepareAttachmentView {
-	if ([_transaction attachmentThumbURL]) {
+	if ([_transaction attachmentURL]) {
         CGRectSetY(attachmentView.frame, height + 10.0f);
         CGFloat widthAttach = CGRectGetWidth(attachmentView.frame);
         CGFloat heightAttach = 250 / (500 / widthAttach);
 		CGRectSetHeight(attachmentView.frame, heightAttach);
     
-		[attachmentView setImageWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
+		[attachmentView setImageWithURL:[NSURL URLWithString:[_transaction attachmentURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
 	}
     else {
         CGRectSetY(attachmentView.frame, height);

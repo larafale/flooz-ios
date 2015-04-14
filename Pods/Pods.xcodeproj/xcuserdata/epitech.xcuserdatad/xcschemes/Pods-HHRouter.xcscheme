@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A93F4BCFA6F39B3E5B4E3698"
+               BlueprintIdentifier = "74BFB050B3C6FD263EDEF002"
                BuildableName = "libPods-HHRouter.a"
                BlueprintName = "Pods-HHRouter"
                ReferencedContainer = "container:Pods.xcodeproj">

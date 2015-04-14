@@ -41,6 +41,8 @@
 	currency.textColor = [UIColor whiteColor];
 	currency.text = symbol;
 	currency.textAlignment = NSTextAlignmentLeft;
+    [currency setUserInteractionEnabled:YES];
+    [currency addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(becomeFirstResponder)]];
 
 	[self addSubview:currency];
 }

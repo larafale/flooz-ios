@@ -23,6 +23,9 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <JTHelper.h>
 
+#import "NSDictionary+JSONHelper.h"
+#import "NSArray+JSONHelper.h"
+
 #import "JTImageLabel.h"
 #import "FLLoadView.h"
 #import "FLUserView.h"
@@ -35,6 +38,7 @@
 #import "FLReport.h"
 #import "FLHelper.h"
 #import "FLError.h"
+#import "FLTexts.h"
 #import "UIColor+custom.h"
 #import "UIFont+custom.h"
 #import "UIBarButtonItem+custom.h"

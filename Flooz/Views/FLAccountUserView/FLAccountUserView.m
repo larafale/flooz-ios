@@ -94,7 +94,7 @@
 }
 
 - (void)showWalletMessage {
-    UIImage *cbImage = [UIImage imageNamed:@"picto-cb-white"];
+    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
     CGSize newImgSize = CGSizeMake(20, 14);
     
     UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);

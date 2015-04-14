@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.delegate = self;
+    self.blockAmount = NO;
     [self customAppearence];
 }
 
@@ -64,7 +65,7 @@
     cbImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    cbItem = [[UIBarButtonItem alloc] initWithImage:cbImage style:UIBarButtonItemStylePlain target:self action:nil];
+    cbItem = [[UIBarButtonItem alloc] initWithImage:cbImage style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
     [cbItem setTintColor:[UIColor customBlue]];
     
     
@@ -81,7 +82,7 @@
     [self.view endEditing:YES];
     [self.view endEditing:NO];
     
-    UIImage *cbImage = [UIImage imageNamed:@"picto-cb-white"];
+    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
     CGSize newImgSize = CGSizeMake(20, 14);
     
     UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
@@ -98,7 +99,9 @@
     [string appendAttributedString:attachmentString];
     [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_2", nil)]];
     
-    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:nil] show];
+    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:^() {
+        
+    }] show];
 }
 
 - (void)popViewController {
@@ -107,19 +110,10 @@
 
 - (void)dismiss {
     [self.view endEditing:YES];
-    
-    UIViewController *vc = [self presentingViewController];
-    
+        
     [self dismissViewControllerAnimated:YES completion:^{
-        if ([[[UIDevice currentDevice] systemVersion] intValue] < 8)
-            [vc dismissViewControllerAnimated:YES completion:nil];
+
     }];
-    
-    if ([[[UIDevice currentDevice] systemVersion] intValue] >= 8 && [vc isKindOfClass:[FLNavigationController class]] && [vc.title isEqualToString:NSLocalizedString(@"NAV_NEW_FLOOZ_FRIENDS", nil)]) {
-        [vc.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [vc.view setBackgroundColor:[UIColor clearColor]];
-        [vc dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
@@ -135,13 +129,21 @@
         }
     }
     else
-        viewController.navigationItem.leftBarButtonItem = nil;
+        viewController.navigationItem.leftBarButtonItem = nil;    
+}
+
+- (void)setAmountHidden:(BOOL)hidden {
+    self.blockAmount = hidden;
     
-    if ([viewController isKindOfClass:[NewTransactionViewController class]]) {
-        if ([[Flooz sharedInstance].currentUser.amount isEqualToNumber:@0])
-            viewController.navigationItem.rightBarButtonItem = cbItem;
-        else
-            viewController.navigationItem.rightBarButtonItem = amountItem;
+    if ([controller isKindOfClass:[NewTransactionViewController class]]) {
+        if (self.blockAmount)
+            controller.navigationItem.rightBarButtonItem = nil;
+        else {
+            if ([[Flooz sharedInstance].currentUser.amount isEqualToNumber:@0])
+                controller.navigationItem.rightBarButtonItem = cbItem;
+            else
+                controller.navigationItem.rightBarButtonItem = amountItem;
+        }
     }
 }
 

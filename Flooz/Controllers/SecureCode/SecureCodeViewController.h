@@ -27,6 +27,6 @@ typedef void (^CompleteBlock)();
 + (void)clearSecureCode;
 + (NSString *)secureCodeForCurrentUser;
 + (BOOL)canUseTouchID;
-+ (void)useToucheID:(CompleteBlock)successBlock passcodeCallback:(CompleteBlock)passcodeBlock;
++ (void)useToucheID:(CompleteBlock)successBlock passcodeCallback:(CompleteBlock)passcodeBlock cancelCallback:(CompleteBlock)cancelBlock;
 
 @end

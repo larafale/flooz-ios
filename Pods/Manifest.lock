@@ -1,71 +1,71 @@
 PODS:
-  - AFNetworkActivityLogger (2.0.3):
-    - AFNetworking/NSURLConnection (~> 2.0)
-    - AFNetworking/NSURLSession (~> 2.0)
-  - AFNetworking (2.5.0):
-    - AFNetworking/NSURLConnection (= 2.5.0)
-    - AFNetworking/NSURLSession (= 2.5.0)
-    - AFNetworking/Reachability (= 2.5.0)
-    - AFNetworking/Security (= 2.5.0)
-    - AFNetworking/Serialization (= 2.5.0)
-    - AFNetworking/UIKit (= 2.5.0)
-  - AFNetworking/NSURLConnection (2.5.0):
+  - AFNetworking (2.5.2):
+    - AFNetworking/NSURLConnection (= 2.5.2)
+    - AFNetworking/NSURLSession (= 2.5.2)
+    - AFNetworking/Reachability (= 2.5.2)
+    - AFNetworking/Security (= 2.5.2)
+    - AFNetworking/Serialization (= 2.5.2)
+    - AFNetworking/UIKit (= 2.5.2)
+  - AFNetworking/NSURLConnection (2.5.2):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.0):
+  - AFNetworking/NSURLSession (2.5.2):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.0)
-  - AFNetworking/Security (2.5.0)
-  - AFNetworking/Serialization (2.5.0)
-  - AFNetworking/UIKit (2.5.0):
+  - AFNetworking/Reachability (2.5.2)
+  - AFNetworking/Security (2.5.2)
+  - AFNetworking/Serialization (2.5.2)
+  - AFNetworking/UIKit (2.5.2):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Bolts (1.1.3)
+  - Bolts (1.1.4)
   - DACircularProgress (2.2.0)
-  - Facebook-iOS-SDK (3.21.1):
+  - EAIntroView (2.7.0):
+    - EARestrictedScrollView (~> 0.1.0)
+  - EARestrictedScrollView (0.1.0)
+  - Facebook-iOS-SDK (3.23.2):
     - Bolts (~> 1.0)
-  - HHRouter (0.1.2)
-  - IDMPhotoBrowser (1.5.2):
+  - HHRouter (0.1.4)
+  - IDMPhotoBrowser (1.6.1):
     - AFNetworking
     - DACircularProgress
     - pop
-  - JTHelper (0.1.11)
-  - Mixpanel (2.6.2):
-    - Mixpanel/MPCategoryHelpers (= 2.6.2)
-  - Mixpanel/MPCategoryHelpers (2.6.2)
+  - JTHelper (0.1.12)
+  - JTSImageViewController (1.4)
+  - Mixpanel (2.7.3):
+    - Mixpanel/MPCategoryHelpers (= 2.7.3)
+  - Mixpanel/MPCategoryHelpers (2.7.3)
   - MZAppearance (1.1.3)
-  - MZFormSheetController (2.4.1):
+  - MZFormSheetController (3.0.2):
     - MZAppearance (~> 1.1.3)
-    - MZFormSheetController/Core (= 2.4.1)
-  - MZFormSheetController/Core (2.4.1):
+    - MZFormSheetController/Core (= 3.0.2)
+  - MZFormSheetController/Core (3.0.2):
     - MZAppearance (~> 1.1.3)
-  - NSDate+Calendar (0.0.6)
-  - PonyDebugger (0.4.0):
+  - NSDate+Calendar (0.0.7)
+  - PonyDebugger (0.4.3):
     - SocketRocket
   - pop (1.0.7)
   - PPHelpMe (1.0.2)
   - PPRevealSideViewController (1.2.0):
     - PPHelpMe
-  - SDWebImage (3.7.1):
-    - SDWebImage/Core (= 3.7.1)
-  - SDWebImage/Core (3.7.1)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
   - SMPageControl (1.2)
   - SocketRocket (0.2.0)
-  - TTTAttributedLabel (1.13.0)
-  - UAAppReviewManager (0.2.6)
-  - UICKeyChainStore (1.1.0)
-  - YLMoment (0.5.1)
+  - TTTAttributedLabel (1.13.3)
+  - UICKeyChainStore (2.0.4)
 
 DEPENDENCIES:
-  - AFNetworkActivityLogger
   - AFNetworking (~> 2.0)
+  - EAIntroView
   - Facebook-iOS-SDK (~> 3.15)
   - HHRouter (~> 0.1)
   - IDMPhotoBrowser (~> 1.3)
   - JTHelper (~> 0.1.1)
+  - JTSImageViewController
   - Mixpanel
   - MZFormSheetController
   - NSDate+Calendar
@@ -75,33 +75,31 @@ DEPENDENCIES:
   - SDWebImage (~> 3.7)
   - SMPageControl
   - TTTAttributedLabel
-  - UAAppReviewManager
   - UICKeyChainStore
-  - YLMoment
 
 SPEC CHECKSUMS:
-  AFNetworkActivityLogger: d6a2d2755fada3a1fbf1f490ec0dd92224e092a4
-  AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
-  Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
-  DACircularProgress: 3b41941891a56dc6aa17971f5322a9a38a6f446e
-  Facebook-iOS-SDK: 18c26e86ab25c17854a2ee2a8f60562099c6600f
-  HHRouter: 5ee831141a02565c42bd868d92fe7b8e105b4a5a
-  IDMPhotoBrowser: 9639f7c57bdf942dc4e214ff9d8108e08ebd3f27
-  JTHelper: 2ada36adc294d1f7bd80b42766933136fbc64cff
-  Mixpanel: c075cedebda3328ce1ee29a18429e265ce967cd8
-  MZAppearance: c88502c0c2345120630c34e09d5ff09e2969ba30
-  MZFormSheetController: 4b58486f5f1562b3905310b02e8dbbb5a0a94128
-  NSDate+Calendar: 73e0e7429de90201da3fb41f7165cccb85a59a48
-  PonyDebugger: 4f43d7c2f67aa5e26ca00ce6983421608a6eca6d
-  pop: 2f14a1ea61339767af9e66741b418c831b3844df
-  PPHelpMe: 42295095f70926b9406cf0911f262c00bf49a6cb
-  PPRevealSideViewController: ae3c739dd0fcd8ce1413de9b680a37e783c14afb
-  SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
-  SMPageControl: 506b0c561d3ddbe2d5df28cb33acc8e4b1f93f19
-  SocketRocket: 6c9cfd1592bea82262b4283dcda3a7de166af3b6
-  TTTAttributedLabel: a847b59a75c92d59f4eabc9cc1745704cff2dc36
-  UAAppReviewManager: f23428de9c9cd242c2ffd899e218ba3620bd0683
-  UICKeyChainStore: 257d869d42527b9853ebb11d6dc3ac377b270e72
-  YLMoment: a5e6733c66490fd736db325f5d339cb511bdfb54
+  AFNetworking: fefbce9660acb17f48ae0011292d4da0f457bf36
+  Bolts: f8e2f94edbf9fec7bb8de5ecaaa3aa6b7de6f64e
+  DACircularProgress: 0f92b77239d5f3c612fc66185e2998391ac8e054
+  EAIntroView: 9becdb1441712405346a3e6bc31b0d9a57b63b10
+  EARestrictedScrollView: 5ab3eadd9ea55282cc72df0daecb09803059e3a0
+  Facebook-iOS-SDK: cd87f0b2f0c1d9574b44e8fa2baacc275524bac3
+  HHRouter: 02cb552a091b8e01413d5c263a7cee4f49276a63
+  IDMPhotoBrowser: c8eb210679e1eb882018feae7c2220115571a5aa
+  JTHelper: d84a961a60a27623c595a7f6965fcafdefb88b9b
+  JTSImageViewController: 6a367b144e257db02cdfacdba78d684377d3777b
+  Mixpanel: 1d387d76800e07e953958c62c97fea27f13632dd
+  MZAppearance: c2937318234fd782e900fb178942278881ac5490
+  MZFormSheetController: 0cfda6f341a7c6d9054d596efad735a9fc0e7a1b
+  NSDate+Calendar: 30747b15cbeda4d835c39f5d597d8eaa2ddc3942
+  PonyDebugger: 52f96f501df018dc2b7153fa18464b82553e700c
+  pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
+  PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
+  PPRevealSideViewController: 2eefff99d726e145da229ae66a19247dbaeddad3
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
+  SocketRocket: 54a4ac2f354c4e8c51ef5dcd4a13bc556d4f2b7c
+  TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
+  UICKeyChainStore: 69eb0c3a6f669bccf16ba88de3b9069b71501361
 
-COCOAPODS: 0.36.0.beta.1
+COCOAPODS: 0.36.1

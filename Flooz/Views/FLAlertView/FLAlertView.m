@@ -13,6 +13,7 @@
 #define MARGE_LEFT 78.
 #define MARGE_RIGHT 20.
 #define MARGE_BOTTOM 15.
+#define MARGE 5.
 
 @implementation FLAlertView {
     NSDictionary *_infoAlert;
@@ -20,7 +21,7 @@
 }
 
 - (id)initWithFrame:(CGRect)frame {
-	frame = CGRectMake(0, 0, SCREEN_WIDTH, 0);
+	frame = CGRectMake(MARGE, STATUSBAR_HEIGHT, SCREEN_WIDTH - 2 * MARGE, 0);
 	self = [super initWithFrame:frame];
 	if (self) {
 		[self commonInit];
@@ -36,6 +37,8 @@
 
 - (void)commonInit {
 	self.clipsToBounds = YES;
+    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = 3;
 
 	UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touch)];
 	[self addGestureRecognizer:gesture];
@@ -45,7 +48,7 @@
     [self addGestureRecognizer:swipeUp];
 
 	{
-		titleView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, 30, SCREEN_WIDTH - MARGE_LEFT - MARGE_RIGHT, 17)];
+		titleView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, MARGE_BOTTOM, SCREEN_WIDTH - MARGE_LEFT - MARGE_RIGHT, 17)];
 		titleView.font = [UIFont customTitleExtraLight:17];
 		titleView.textColor = [UIColor whiteColor];
 
@@ -86,7 +89,7 @@
         contentView.text = _alert.content;
         
         [contentView setHeightToFit];
-        iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM + STATUSBAR_HEIGHT) / 2.);
+        iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM) / 2.);
         
         [self setType:_alert.type];
         
@@ -100,10 +103,12 @@
 }
 
 - (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style {
+    _alert = nil;
 	[self show:title content:content style:style time:nil delay:nil];
 }
 
 - (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay andDictionnary:(NSDictionary *)info {
+    _alert = nil;
 //    _infoAlert = info;
     [self show:title content:content style:style time:time delay:delay];
 }
@@ -128,7 +133,7 @@
 	    contentView.text = content;
 
 	    [contentView setHeightToFit];
-	    iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM + STATUSBAR_HEIGHT) / 2.);
+	    iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM) / 2.);
 
 	    [self setStyle:style];
 

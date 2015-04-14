@@ -17,8 +17,10 @@
 #import "SignupNavigationController.h"
 #import "SignupPhoneViewController.h"
 #import "SignupSMSViewController.h"
+#import "JTSImageViewController.h"
+#import "JTSImageInfo.h"
 
-#define REFRESH_INTERVAL 0
+#define REFRESH_INTERVAL 1
 
 static NSString *kKeyTutoFlooz = @"kKeyTutoFlooz";
 static NSString *kKeyLastUpdate = @"kKeyLastUpdate";
@@ -31,7 +33,7 @@ static NSString *kKeyAccessContacts = @"kKeyAccessContacts";
 static NSString *kNotificationCancelTimer = @"kNotificationCancelTimer";
 static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBarClick";
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, MFMailComposeViewControllerDelegate, PPRevealSideViewControllerDelegate, UIActionSheetDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, MFMailComposeViewControllerDelegate, PPRevealSideViewControllerDelegate, UIActionSheetDelegate, JTSImageViewControllerInteractionsDelegate> {
 	NSDate *lastErrorDate;
 	NSInteger lastErrorCode;
 
@@ -52,12 +54,16 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
     NSString *_lastTransactionID;
 }
 
+@property (nonatomic, retain) NSString *localIp;
 @property (nonatomic) BOOL canRefresh;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NSString *currentDeviceToken;
 @property (strong, nonatomic) MZFormSheetController *formSheet;
 @property (strong, nonatomic) FLRevealContainerViewController *revealSideViewController;
 
+- (void)initTestingWithIP:(NSString *)ip;
+
+- (void)handlePendingData;
 - (void)didConnected;
 - (void)goToAccountViewController;
 - (void)didDisconnected;
@@ -67,7 +73,7 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)showSignupWithUser:(NSDictionary *)user;
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user;
 
-- (void)displaySignin;
+- (void)displaySignin:(NSString*)coupon;
 - (void)displayError:(NSError *)error;
 - (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;
 - (void)displayMessage:(FLAlert*)alert;

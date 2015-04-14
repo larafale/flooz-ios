@@ -50,6 +50,8 @@ CGFloat const MZFormSheetPresentedControllerDefaultCornerRadius = 6.0;
 CGFloat const MZFormSheetPresentedControllerDefaultShadowRadius = 6.0;
 CGFloat const MZFormSheetPresentedControllerDefaultShadowOpacity = 0.5;
 
+CGFloat const MZFormSheetKeyboardMargin = 20.0;
+
 CGFloat const MZFormSheetControllerWindowTag = 10001;
 
 static const char* MZFormSheetControllerAssociatedKey = "MZFormSheetControllerAssociatedKey";
@@ -387,10 +389,13 @@ static BOOL MZFromSheetControllerIsViewControllerBasedStatusBarAppearance(void) 
 - (void)setPresentedFormSheetSize:(CGSize)presentedFormSheetSize
 {
     if (!CGSizeEqualToSize(_presentedFormSheetSize, presentedFormSheetSize)) {
-        _presentedFormSheetSize = presentedFormSheetSize;
+        _presentedFormSheetSize = CGSizeMake(nearbyintf(presentedFormSheetSize.width), nearbyintf(presentedFormSheetSize.height));
         
         CGPoint presentedFormCenter = self.presentedFSViewController.view.center;
-        self.presentedFSViewController.view.frame = CGRectMake(0, 0, _presentedFormSheetSize.width, _presentedFormSheetSize.height);
+        self.presentedFSViewController.view.frame = CGRectMake(presentedFormCenter.x - _presentedFormSheetSize.width / 2,
+                                                               presentedFormCenter.y - _presentedFormSheetSize.height / 2,
+                                                               _presentedFormSheetSize.width,
+                                                               _presentedFormSheetSize.height);
         self.presentedFSViewController.view.center = presentedFormCenter;
         
         // This will make sure that origin be in good position
@@ -607,9 +612,6 @@ static BOOL MZFromSheetControllerIsViewControllerBasedStatusBarAppearance(void) 
 
 #pragma mark - Transitions
 
-- (void)customTransitionEntryWithCompletionBlock:(MZFormSheetTransitionCompletionHandler)completionBlock {}
-- (void)customTransitionOutWithCompletionBlock:(MZFormSheetTransitionCompletionHandler)completionBlock {}
-
 - (void)transitionEntryWithCompletionBlock:(MZFormSheetTransitionCompletionHandler)completionBlock
 {
     Class transitionClass = [MZFormSheetController sharedTransitionClasses][@(self.transitionStyle)];
@@ -671,25 +673,27 @@ static BOOL MZFromSheetControllerIsViewControllerBasedStatusBarAppearance(void) 
     if (self.keyboardVisible && self.movementWhenKeyboardAppears != MZFormSheetWhenKeyboardAppearsDoNothing) {
         CGRect formSheetRect = self.presentedFSViewController.view.frame;
         CGRect screenRect = [self.screenFrameWhenKeyboardVisible CGRectValue];
-
-        if (screenRect.size.height > formSheetRect.size.height) {
-          switch (self.movementWhenKeyboardAppears) {
-            case MZFormSheetWhenKeyboardAppearsCenterVertically:
-              formSheetRect.origin.y = ([MZFormSheetController statusBarHeight] + screenRect.size.height - formSheetRect.size.height)/2 - screenRect.origin.y;
-              break;
-            case MZFormSheetWhenKeyboardAppearsMoveToTop:
-              formSheetRect.origin.y = self.top;
-              break;
-            case MZFormSheetWhenKeyboardAppearsMoveToTopInset:
-              formSheetRect.origin.y = self.topInset;
-              break;
-            default:
-              break;
-          }
+        
+        if (screenRect.size.height < CGRectGetMaxY(formSheetRect)) {
+            switch (self.movementWhenKeyboardAppears) {
+                case MZFormSheetWhenKeyboardAppearsCenterVertically:
+                    formSheetRect.origin.y = ([MZFormSheetController statusBarHeight] + screenRect.size.height - formSheetRect.size.height)/2 - screenRect.origin.y;
+                    break;
+                case MZFormSheetWhenKeyboardAppearsMoveToTop:
+                    formSheetRect.origin.y = self.top;
+                    break;
+                case MZFormSheetWhenKeyboardAppearsMoveToTopInset:
+                    formSheetRect.origin.y = self.topInset;
+                    break;
+                case MZFormSheetWhenKeyboardAppearsMoveAboveKeyboard:
+                    formSheetRect.origin.y = formSheetRect.origin.y + (screenRect.size.height - CGRectGetMaxY(formSheetRect)) - MZFormSheetKeyboardMargin;
+                default:
+                    break;
+            }
         } else {
-          formSheetRect.origin.y = self.top;
+            formSheetRect.origin.y = self.top;
         }
-
+        
         self.presentedFSViewController.view.frame = formSheetRect;
     } else if (self.shouldCenterVertically) {
         self.presentedFSViewController.view.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
@@ -730,8 +734,8 @@ static BOOL MZFromSheetControllerIsViewControllerBasedStatusBarAppearance(void) 
 - (void)willShowKeyboardNotification:(NSNotification *)notification
 {
     CGRect screenRect = [[notification userInfo][UIKeyboardFrameEndUserInfoKey] CGRectValue];
-
-    if (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+    
+    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && MZSystemVersionLessThan_iOS8()) {
         screenRect.size.height = [UIScreen mainScreen].bounds.size.width - screenRect.size.width;
         screenRect.size.width = [UIScreen mainScreen].bounds.size.height;
     } else {
@@ -937,11 +941,6 @@ static BOOL MZFromSheetControllerIsViewControllerBasedStatusBarAppearance(void) 
     }];
 }
 
-- (void)presentFormSheetController:(MZFormSheetController *)formSheetController animated:(BOOL)animated completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler
-{
-    [self mz_presentFormSheetController:formSheetController animated:animated completionHandler:completionHandler];
-}
-
 - (void)mz_presentFormSheetWithViewController:(UIViewController *)viewController animated:(BOOL)animated transitionStyle:(MZFormSheetTransitionStyle)transitionStyle completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler
 {
     MZFormSheetController *formSheetController = [[MZFormSheetController alloc] initWithViewController:viewController];
@@ -957,19 +956,10 @@ static BOOL MZFromSheetControllerIsViewControllerBasedStatusBarAppearance(void) 
     }];
 }
 
-- (void)presentFormSheetWithViewController:(UIViewController *)viewController animated:(BOOL)animated transitionStyle:(MZFormSheetTransitionStyle)transitionStyle completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler
-{
-    [self mz_presentFormSheetWithViewController:viewController animated:animated transitionStyle:transitionStyle completionHandler:completionHandler];
-}
 
 - (void)mz_presentFormSheetWithViewController:(UIViewController *)viewController animated:(BOOL)animated completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler
 {
     [self mz_presentFormSheetWithViewController:viewController animated:animated transitionStyle:MZFormSheetTransitionStyleSlideFromTop completionHandler:completionHandler];
-}
-
-- (void)presentFormSheetWithViewController:(UIViewController *)viewController animated:(BOOL)animated completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler
-{
-    [self mz_presentFormSheetWithViewController:viewController animated:animated completionHandler:completionHandler];
 }
 
 - (void)mz_dismissFormSheetControllerAnimated:(BOOL)animated completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler
@@ -989,9 +979,5 @@ static BOOL MZFromSheetControllerIsViewControllerBasedStatusBarAppearance(void) 
     }];
 }
 
-- (void)dismissFormSheetControllerAnimated:(BOOL)animated completionHandler:(MZFormSheetPresentationCompletionHandler)completionHandler
-{
-    [self mz_dismissFormSheetControllerAnimated:animated completionHandler:completionHandler];
-}
 
 @end

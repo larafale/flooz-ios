@@ -171,7 +171,7 @@
     NSDictionary *notification = [self notificationAtIndexPath:indexPath];
     NSString *rowKey = [notification objectForKey:@"rowKey"];
     
-    return [[[[Flooz sharedInstance] currentUser] notificationsText] objectForKey:rowKey];
+    return [[[[Flooz sharedInstance] currentTexts] notificationsText] objectForKey:rowKey];
 }
 
 - (BOOL)notificationValueAtIndexPath:(NSIndexPath *)indexPath {

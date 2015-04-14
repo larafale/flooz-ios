@@ -176,6 +176,9 @@
             [[Flooz sharedInstance] handleTrigger:trigger];
     }
     
+    if (activity.isForCompleteProfil)
+        [[Flooz sharedInstance] readTransactionWithId:@"profile" success:nil];
+    
     if (activity.isFriend) {
         [[Flooz sharedInstance] readFriendActivity:nil];
     }

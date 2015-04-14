@@ -9,7 +9,7 @@
 #import "SplashViewController.h"
 
 @interface SplashViewController () {
-	UIImageView *logo;
+    UIImageView *logo;
     UIImageView *title;
     UILabel *waitingLabel;
 }
@@ -19,25 +19,25 @@
 @implementation SplashViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self) {
-		// Custom initialization
-	}
-	return self;
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
-	[super viewDidLoad];
-
-	self.view.backgroundColor = [UIColor customBackground];
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor customBackground];
     
     NSString *imageNamed = @"LaunchImage";
     if (IS_IPHONE4) {
         imageNamed = [imageNamed stringByAppendingString:@"-iphone4"];
     }
-	logo = [UIImageView imageNamed:imageNamed];
-	logo.center = self.view.center;
-	[self.view addSubview:logo];
+    logo = [UIImageView imageNamed:imageNamed];
+    logo.center = self.view.center;
+    [self.view addSubview:logo];
     
     title = [UIImageView imageNamed:@"home-title"];
     title.frame = CGRectMake((PPScreenWidth() - CGRectGetWidth(title.frame)) / 2.0f, PPScreenHeight() * 2.0f / 3.0f, CGRectGetWidth(title.frame), CGRectGetHeight(title.frame));
@@ -49,9 +49,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-
-	[[self navigationController] setNavigationBarHidden:YES animated:YES];
+    [super viewWillAppear:animated];
+    
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     logo.center = self.view.center;
     CGRectSetY(title.frame, PPScreenHeight() * 2.0f / 3.0f);
     CGRectSetY(waitingLabel.frame, CGRectGetMaxY(title.frame) + 10.0f);
@@ -63,6 +63,24 @@
     logo.center = self.view.center;
     CGRectSetY(title.frame, PPScreenHeight() * 2.0f / 3.0f);
     CGRectSetY(waitingLabel.frame, CGRectGetMaxY(title.frame) + 10.0f);
+    
+#ifdef FLOOZ_DEV_LOCAL
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"IP Address"
+                                                    message:@"Enter custom IP address"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Local", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [[alert textFieldAtIndex:0] setText:@"192.168.1."];
+    [alert show];
+#endif
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0)
+        [appDelegate initTestingWithIP:@"dev.flooz.me:80"];
+    else
+        [appDelegate initTestingWithIP:[alertView textFieldAtIndex:0].text];
 }
 
 @end
