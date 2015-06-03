@@ -2,7 +2,7 @@
 //  FLNewTransactionBar.m
 //  Flooz
 //
-//  Created by jonathan on 1/27/2014.
+//  Created by olivier on 1/27/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -61,6 +61,7 @@
         
         [self createPrivacyButton];
         [self createFacebookButton];
+//        [self createQRCodeButton];
         [self createImageButton];
         [self createButtonSend];
         

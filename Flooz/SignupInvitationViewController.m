@@ -2,8 +2,8 @@
 //  SignupInvitationViewController.m
 //  Flooz
 //
-//  Created by Epitech on 4/1/15.
-//  Copyright (c) 2015 Jonathan Tribouharet. All rights reserved.
+//  Created by Olivier on 4/1/15.
+//  Copyright (c) 2015 olivier Tribouharet. All rights reserved.
 //
 
 #import "SignupInvitationViewController.h"
@@ -75,22 +75,35 @@
 }
 
 - (void)checkCoupon {
-    NSMutableDictionary *dic = [self.userDic mutableCopy];
-    if (dic[@"birthdate"])
-        [dic setObject:[[Flooz sharedInstance] formatBirthDate:self.userDic[@"birthdate"]] forKey:@"birthdate"];
-    if (self.userDic[@"picId"]) {
-        [dic setValue:@YES forKey:@"hasImage"];
-    }
-    else {
-        [dic setValue:@NO forKey:@"hasImage"];
-    }
-    [dic removeObjectForKey:@"picId"];
-    
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] signupPassStep:@"invitation" user:dic success:^(NSDictionary *result) {
-        SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"nextStep"] withData:result[@"nextStepData"]];
-        if (nextViewController)
-            [self.navigationController pushViewController:nextViewController animated:YES];
+    [[Flooz sharedInstance] signupPassStep:@"invitation" user:self.userDic success:^(NSDictionary *result) {
+        if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] signupPassStep:@"signup" user:self.userDic success:^(NSDictionary *result) {
+                [appDelegate resetTuto];
+                [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
+                
+                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+                
+                if (nextViewController) {
+                    SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+                    nextViewController.userDic = self.userDic;
+                    
+                    [self presentViewController:signupNavigationController animated:YES completion:nil];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        } else {
+            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+            
+            if (nextViewController) {
+                SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+                nextViewController.userDic = self.userDic;
+                
+                [self presentViewController:signupNavigationController animated:YES completion:nil];
+            }
+        }
     } failure:^(NSError *error) {
         [_coupon becomeFirstResponder];
     }];

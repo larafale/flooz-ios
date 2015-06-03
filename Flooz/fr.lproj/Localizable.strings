@@ -2,7 +2,7 @@
  Localizable.strings
  Flooz
  
- Created by jonathan on 1/2/2014.
+ Created by olivier on 1/2/2014.
  Copyright (c) 2014 Flooz. All rights reserved.
  */
 
@@ -76,7 +76,7 @@
 "FINALIZE_SIGNUP" = "Finaliser votre inscription";
 
 "INFORMATIONS_WHY" = "Sécurité";
-"INFORMATIONS_TERMS" = "Conditions d'utilisation";
+"INFORMATIONS_TERMS" = "CGU";
 "INFORMATIONS_FAQ" = "Questions / Réponses";
 "INFORMATIONS_PREVIEW" = "Visite Guidée";
 "INFORMATIONS_ABOUT" = "A Propos";
@@ -96,21 +96,26 @@
 "SOCIAL_FILTER_ACTIVITIES" = "ACTIVITE";
 
 "FIELD_COUPON" = "Code d'invitation (optionnel)";
-"FIELD_USERNAME" = "ex: batman";
+"FIELD_USERNAME" = "Pseudo";
 "FIELD_FIRSTNAME" = "Prénom";
 "FIELD_FULLNAME" = "Nom et Prénom";
 "FIELD_LASTNAME" = "Nom";
 "FIELD_PHONE" = "Numéro de mobile";
 "FIELD_EMAIL" = "Email";
 "FIELD_BIRTHDAY" = "Date de naissance      jj / mm / aa";
-"FIELD_PASSWORD" = "Mot de passe        6 car. minimum";
+"FIELD_PASSWORD" = "Mot de passe            6 car. min";
 "FIELD_PASSWORD_LOGIN" = "Mot de passe";
+"FIELD_SECRET_QUESTION" = "Choisissez une question secrète";
+"FIELD_SECRET_QUESTION_OTHER" = "Votre question ?";
+"FIELD_SECRET_ANSWER" = "Réponse";
 "FIELD_CODE" = "Code secret";
 "FIELD_ADDRESS" = "Adresse";
 "FIELD_ZIP_CODE" = "Code postal";
 "FIELD_CITY" = "Ville";
 "FIELD_SMS_CODE" = "Saisir le code reçu par SMS";
 "CASHOUT_FIELD" = "Saisir le montant à retirer";
+
+"CUSTOM_SECRET_QUESTION" = "Question personnalisée...";
 
 "FIELD_IBAN" = "Code IBAN";
 "FIELD_IBAN_PLACEHOLDER" = "FRXXXXXXXXXXXXXXXXXXXXXXXXX";
@@ -139,9 +144,10 @@
 
 "SIGNUP_FACEBOOK" = "Avec Facebook";
 
-"LOGIN_FACEBOOK" = "Photo de profil Facebook";
+"LOGIN_FACEBOOK" = "Facebook";
 "LOGIN_OR" = "ou";
 "LOGIN_PASSWORD_FORGOT" = "Oups, mot de passe oublié ?";
+"LOGIN_SECRET_FORGOT" = "Oups, réponse secrète oubliée ?";
 
 "MENU_NEW_TRANSACTION_EVENT" = "Collecter";
 "MENU_NEW_TRANSACTION_PAYMENT" = "Payer";
@@ -161,6 +167,8 @@
 "MENU_REPORT_USER_CONTENT" = "\nÊtes-vous sûr de vouloir signaler cet utilisateur ?";
 "MENU_REPORT_LINE_CONTENT" = "\nÊtes-vous sûr de vouloir signaler ce contenu ?";
 "MENU_BLOCK_USER_CONTENT" = "\nÊtes-vous sûr de vouloir bloquer cet utilisateur ?";
+"MENU_QRCODE" = "Afficher le QR Code";
+
 
 "ACTIVITIES_NOTIFICATIONS" = "Notifications";
 "ACTIVITIES_NEW_NOTIFICATIONS" = "nouvelles notifications";
@@ -172,6 +180,7 @@
 "ACCOUNT_BUTTON_INVITE" = "Inviter mes amis";
 "ACCOUNT_BUTTON_CASH_OUT" = "Virer à ma banque";
 "ACCOUNT_BUTTON_DIVERS" = "À propos";
+"ACCOUNT_BUTTON_QRCODE" = "Scanner un code";
 
 "INVITATION_BACKTEXT" = "Devenir ambassadeur";
 
@@ -182,6 +191,7 @@
 "FORGOT_RECIPIENTS" = "support@flooz.me";
 "FORGOT_OBJECT" = "Mot de passe oublié";
 "FORGOT_MESSAGE" = "J'ai oublié mon mot de passe. Je souhaite être contacté au %@";
+"FORGOT_SECRET" = "J'ai oublié mon mot de passe et la réponse à ma question secrète. Je souhaite être contacté au %@";
 
 "SETTINGS_INFORMATIONS" = "Informations";
 "SETTINGS_CODE" = "Code de sécurité";
@@ -211,6 +221,7 @@
 
 "SETTINGS_CODE" = "Code de sécurité";
 "SETTINGS_PASSWORD" = "Mot de passe";
+"SETTINGS_SECRET" = "Question Secrète";
 
 "SETTINGS_PREFERENCES" = "Préférences";
 "SETTINGS_FACEBOOK" = "Facebook";
@@ -220,6 +231,9 @@
 "SETTINGS_LOGOUT" = "Déconnexion";
 
 "SETTINGS_DEFAULT_SCOPE" = "Pratique ! Choisissez la visibilité par défaut de vos flooz. Vous avez toutefois la possibilité de la changer lors de chacun de vos paiements";
+
+"SETTINGS_SECRET_INFOS" = "Votre question actuelle est :";
+"SETTINGS_SECRET_DESC" = "Définir une question secrète vous permet de réinitialiser votre mot de passe en cas d'oubli.";
 
 "EDIT_ACCOUNT_SEND_SMS" = "Renvoyer SMS";
 "EDIT_ACCOUNT_SEND_MAIL" = "Renvoyer email";
@@ -396,7 +410,7 @@
 "SIGNUP_PHONE_ALERT_TITLE" = "Confirmer votre numéro";
 "SIGNUP_PHONE_ALERT_CONTENT" = "\nVous allez recevoir un SMS de confirmation. Veuillez confirmer que le %@ est bien votre n° de mobile.";
 
-"SIGNUP_READ_CGU" = "En passant à l'étape suivante, vous déclarez accepter les conditions générales d'utilisation de Flooz.";
+"SIGNUP_READ_CGU" = "En cliquant sur 'Inscription' vous déclarez accepter les CGU Flooz.";
 
 "SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
 "SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";
@@ -438,6 +452,8 @@
 
 "ERROR_ACCESS_CONTACT_TITLE" = "Accès aux contacts refusé";
 "ERROR_ACCESS_CONTACT_CONTENT" = "\nFlooz ne peut pas accéder à vos contacts. Vous pouvez modifier ces paramètres dans les réglages.";
+"ERROR_ACCESS_CAMERA_TITLE" = "Accès à l'appareil photo refusé";
+"ERROR_ACCESS_CAMERA_CONTENT" = "\nFlooz ne peut pas accéder à l'appareil photo. Vous pouvez modifier ces paramètres dans les réglages.";
 
 "GLOBAL_SETTINGS" = "Réglages";
 
@@ -459,7 +475,7 @@
 "SkipLast" = "C'est parti";
 "Skip" = "Passer";
 "Join" = "Rejoindre";
-"Login" = "J'ai déjà un compte";
+"Login" = "Connexion";
 "Connect" = "Se connecter";
-"Signup" = "Créer un compte";
+"Signup" = "Inscription";
 "Save" = "Enregistrer";

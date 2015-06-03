@@ -2,7 +2,7 @@
 //  SecureCodeViewController.m
 //  Flooz
 //
-//  Created by jonathan on 2014-03-17.
+//  Created by olivier on 2014-03-17.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -31,6 +31,16 @@
     FLTextFieldSignup *_passwordField;
     UIButton *_passwordForgetButton;
     FLActionButton *_nextButton;
+    
+    NSString *_userSecretQuestion;
+    
+    UILabel *_secretExplication;
+    UILabel *_secretQuestion;
+    FLTextFieldSignup *_secretAnswer;
+    FLTextFieldSignup *_secretPassword;
+    FLTextFieldSignup *_secretPasswordConfirm;
+    FLActionButton *_secretNextButton;
+    UIButton *_secretForgotButton;
     
     UIButton *_forgotButton;
     UIButton *_cleanButton;
@@ -171,6 +181,7 @@ static BOOL canTouchID = YES;
     [self prepareViewNormal];
     [self prepareViewLogin];
     [self prepareViewEdit];
+//    [self prepareViewSecret];
 }
 
 - (void)prepareViewNormal {
@@ -249,11 +260,54 @@ static BOOL canTouchID = YES;
     }
     
     {
-        _nextButton = [[FLActionButton alloc] initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(_passwordField.frame) + 10.0f, PPScreenWidth() - 20.0f * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil)];        
+        _nextButton = [[FLActionButton alloc] initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(_passwordField.frame) + 10.0f, PPScreenWidth() - 20.0f * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil)];
         [_nextButton setEnabled:NO];
         [_nextButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
         [_mainBody addSubview:_nextButton];
     }
+}
+
+- (void)prepareViewSecret {
+    
+    _secretExplication = [[UILabel alloc] initWithText:NSLocalizedString(@"SETTINGS_SECRET_INFOS", nil) textColor:[UIColor whiteColor] font:[UIFont customContentRegular:17] textAlignment:NSTextAlignmentCenter numberOfLines:0];
+    CGRectSetPosition(_secretExplication.frame, CGRectGetWidth(_mainBody.frame) / 2 - CGRectGetWidth(_secretExplication.frame) / 2, 20);
+    [_mainBody addSubview:_secretExplication];
+    
+    _secretQuestion = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_secretExplication.frame) + 10, CGRectGetWidth(_mainBody.frame) - 20, 20)];
+    [_secretQuestion setFont:[UIFont customContentRegular:18]];
+    [_secretQuestion setTextColor:[UIColor customBlue]];
+    [_secretQuestion setTextAlignment:NSTextAlignmentCenter];
+    [_mainBody addSubview:_secretQuestion];
+    
+    _secretAnswer = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_SECRET_ANSWER" for:_userDic key:@"secretAnswer" position:CGPointMake(20.0f, CGRectGetMaxY(_secretQuestion.frame))];
+    [_secretAnswer addForNextClickTarget:self action:@selector(checkNextOk)];
+    [_secretAnswer addForTextChangeTarget:self action:@selector(checkNextOk)];
+    [_mainBody addSubview:_secretAnswer];
+    
+    _secretPassword = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_NEW_PASSWORD" for:_userDic key:@"newPassword" position:CGPointMake(20.0f, CGRectGetMaxY(_secretAnswer.frame))];
+    [_secretPassword seTsecureTextEntry:YES];
+    [_secretPassword addForNextClickTarget:self action:@selector(checkNextOk)];
+    [_secretPassword addForTextChangeTarget:self action:@selector(checkNextOk)];
+    [_mainBody addSubview:_secretPassword];
+    
+    _secretPasswordConfirm = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_PASSWORD_CONFIRMATION" for:_userDic key:@"confirm" position:CGPointMake(20.0f, CGRectGetMaxY(_secretPassword.frame))];
+    [_secretPasswordConfirm seTsecureTextEntry:YES];
+    [_secretPasswordConfirm addForNextClickTarget:self action:@selector(checkNextOk)];
+    [_secretPasswordConfirm addForTextChangeTarget:self action:@selector(checkNextOk)];
+    [_mainBody addSubview:_secretPasswordConfirm];
+    
+    _secretNextButton = [[FLActionButton alloc] initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(_secretPasswordConfirm.frame) + 10.0f, PPScreenWidth() - 20.0f * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil)];
+    [_secretNextButton setEnabled:NO];
+    [_secretNextButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+    [_mainBody addSubview:_secretNextButton];
+
+    _secretForgotButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(_secretNextButton.frame) + 10, PPScreenWidth(), 30)];
+    _secretForgotButton.titleLabel.textAlignment = NSTextAlignmentRight;
+    _secretForgotButton.titleLabel.font = [UIFont customContentRegular:12];
+    [_secretForgotButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_secretForgotButton setTitle:NSLocalizedString(@"LOGIN_SECRET_FORGOT", nil) forState:UIControlStateNormal];
+    [_secretForgotButton addTarget:self action:@selector(didSecretForgetTouch) forControlEvents:UIControlEventTouchUpInside];
+    [_mainBody addSubview:_secretForgotButton];
 }
 
 - (void)prepareViewEdit {
@@ -351,6 +405,14 @@ static BOOL canTouchID = YES;
     [_nextButton setHidden:YES];
     [_touchIDButton setHidden:YES];
     
+    [_secretAnswer setHidden:YES];
+    [_secretExplication setHidden:YES];
+    [_secretNextButton setHidden:YES];
+    [_secretPassword setHidden:YES];
+    [_secretPasswordConfirm setHidden:YES];
+    [_secretQuestion setHidden:YES];
+    [_secretForgotButton setHidden:YES];
+    
     [_keyboardView setHidden:YES];
     
     if (currentSecureMode == SecureCodeModeNormal || currentSecureMode == SecureCodeModeChangeOld) {
@@ -388,6 +450,25 @@ static BOOL canTouchID = YES;
         [_textExplication setHidden:NO];
         [_codePinView setHidden:NO];
         [_keyboardView setHidden:NO];
+    }
+    else if (currentSecureMode == SecureCodeModeSecret) {
+        
+        [_secretQuestion setText:_userSecretQuestion];
+        [_secretQuestion setHeightToFit];
+        
+        CGRectSetY(_secretAnswer.frame, CGRectGetMaxY(_secretQuestion.frame) + 10);
+        CGRectSetY(_secretPassword.frame, CGRectGetMaxY(_secretAnswer.frame) + 10);
+        CGRectSetY(_secretPasswordConfirm.frame, CGRectGetMaxY(_secretPassword.frame) + 10);
+        CGRectSetY(_secretNextButton.frame, CGRectGetMaxY(_secretPasswordConfirm.frame) + 10);
+        CGRectSetY(_secretForgotButton.frame, CGRectGetMaxY(_secretNextButton.frame) + 10);
+        
+        [_secretAnswer setHidden:NO];
+        [_secretExplication setHidden:NO];
+        [_secretNextButton setHidden:NO];
+        [_secretPassword setHidden:NO];
+        [_secretPasswordConfirm setHidden:NO];
+        [_secretQuestion setHidden:NO];
+        [_secretForgotButton setHidden:NO];
     }
 }
 
@@ -499,6 +580,17 @@ static BOOL canTouchID = YES;
     [_codePinView clean];
 }
 
+- (void)didSecretForgetTouch {
+    NSString *number;
+    
+    if ([Flooz sharedInstance].currentUser != nil)
+        number = [Flooz sharedInstance].currentUser.phone;
+    else
+        number = _userDic[@"login"];
+
+    [appDelegate displayMailWithMessage:[NSString stringWithFormat:NSLocalizedString(@"FORGOT_SECRET", @""), number] object:NSLocalizedString(@"FORGOT_OBJECT", nil) recipients:@[NSLocalizedString(@"FORGOT_RECIPIENTS", nil)] andMessageError:NSLocalizedString(@"ALERT_NO_MAIL_MESSAGE", nil) inViewController:self];
+}
+
 - (void)didCodeForgetTouch {
     [appDelegate displayMessage:@"Récupérer votre code" content:@"Veuillez vous identifier pour réinitialiser votre code à 4 chiffres." style:FLAlertViewStyleInfo time:@3 delay:@0];
     currentSecureMode = SecureCodeModeForget;
@@ -506,36 +598,64 @@ static BOOL canTouchID = YES;
 }
 
 - (void)didPasswordForgetTouch {
-    
     NSString *number;
     
     if ([Flooz sharedInstance].currentUser != nil)
-        number = [Flooz sharedInstance].currentUser.phone;
+        number = [Flooz sharedInstance].currentUser.email;
     else
         number = _userDic[@"login"];
     
-    [appDelegate displayMailWithMessage:[NSString stringWithFormat:NSLocalizedString(@"FORGOT_MESSAGE", @""), number] object:NSLocalizedString(@"FORGOT_OBJECT", nil) recipients:@[NSLocalizedString(@"FORGOT_RECIPIENTS", nil)] andMessageError:NSLocalizedString(@"ALERT_NO_MAIL_MESSAGE", nil) inViewController:self];
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] passwordForget:number success:^(NSDictionary *result){
+//        if ([result[@"item"][@"type"] isEqualToString:@"password:secret"]) {
+//            _userSecretQuestion = result[@"item"][@"question"];
+//            currentSecureMode = SecureCodeModeSecret;
+//            [self displayCorrectView];
+//        } else {
+//            [appDelegate displayMailWithMessage:[NSString stringWithFormat:NSLocalizedString(@"FORGOT_MESSAGE", @""), number] object:NSLocalizedString(@"FORGOT_OBJECT", nil) recipients:@[NSLocalizedString(@"FORGOT_RECIPIENTS", nil)] andMessageError:NSLocalizedString(@"ALERT_NO_MAIL_MESSAGE", nil) inViewController:self];
+//        }
+    } failure:^(NSError *error) {
+//        [appDelegate displayMailWithMessage:[NSString stringWithFormat:NSLocalizedString(@"FORGOT_MESSAGE", @""), number] object:NSLocalizedString(@"FORGOT_OBJECT", nil) recipients:@[NSLocalizedString(@"FORGOT_RECIPIENTS", nil)] andMessageError:NSLocalizedString(@"ALERT_NO_MAIL_MESSAGE", nil) inViewController:self];
+    }];
 }
 
 - (BOOL)checkNextOk {
-    if (!_userDic[@"login"] || [_userDic[@"login"] isBlank]) {
-        [_usernameField becomeFirstResponder];
-        [_nextButton setEnabled:NO];
-        return NO;
+    if (currentSecureMode == SecureCodeModeSecret) {
+        if (!_userDic[@"secretAnswer"] || [_userDic[@"secretAnswer"] isBlank]) {
+            [_secretNextButton setEnabled:NO];
+            return NO;
+        }
+        if (!_userDic[@"newPassword"] || [_userDic[@"newPassword"] isBlank]) {
+            [_secretNextButton setEnabled:NO];
+            return NO;
+        }
+        if (!_userDic[@"confirm"] || [_userDic[@"confirm"] isBlank]) {
+            [_secretNextButton setEnabled:NO];
+            return NO;
+        }
+        
+        [_secretNextButton setEnabled:YES];
+        return YES;
+    } else {
+        if (!_userDic[@"login"] || [_userDic[@"login"] isBlank]) {
+            [_usernameField becomeFirstResponder];
+            [_nextButton setEnabled:NO];
+            return NO;
+        }
+        if (!_userDic[@"password"] || [_userDic[@"password"] length] < 1) {
+            [_passwordField becomeFirstResponder];
+            [_nextButton setEnabled:NO];
+            return NO;
+        }
+        
+        if (currentSecureMode == SecureCodeModeChangePass && ![_userDic[@"login"] isEqualToString:_userDic[@"password"]]) {
+            [_nextButton setEnabled:NO];
+            return NO;
+        }
+        
+        [_nextButton setEnabled:YES];
+        return YES;
     }
-    if (!_userDic[@"password"] || [_userDic[@"password"] length] < 1) {
-        [_passwordField becomeFirstResponder];
-        [_nextButton setEnabled:NO];
-        return NO;
-    }
-    
-    if (currentSecureMode == SecureCodeModeChangePass && ![_userDic[@"login"] isEqualToString:_userDic[@"password"]]) {
-        [_nextButton setEnabled:NO];
-        return NO;
-    }
-    
-    [_nextButton setEnabled:YES];
-    return YES;
 }
 
 - (void)login {
@@ -555,9 +675,27 @@ static BOOL canTouchID = YES;
                 }];
             } failure:nil];
         }
-        else if (isSignup) {
+        else if (currentSecureMode == SecureCodeModeSecret) {
             [[Flooz sharedInstance] showLoadView];
             
+            NSString *number;
+            if ([Flooz sharedInstance].currentUser != nil)
+                number = [Flooz sharedInstance].currentUser.phone;
+            else
+                number = _userDic[@"login"];
+
+            [[Flooz sharedInstance] updatePassword:@{@"phone" : number, @"newPassword": _userDic[@"newPassword"], @"confirm" : _userDic[@"confirm"], @"secretAnswer" : _userDic[@"secretAnswer"] } success:^(id result) {
+                if (isSignup) {
+                    currentSecureMode = SecureCodeModeForget;
+                    [self displayCorrectView];
+                } else {
+                    currentSecureMode = SecureCodeModeChangeNew;
+                    [self displayCorrectView];
+                }
+            } failure:nil];
+        }
+        else if (isSignup) {
+            [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] loginWithPseudoAndPassword:_userDic success: ^(id result) {
                 if ([_userDic[@"hasSecureCode"] boolValue])
                     [appDelegate goToAccountViewController];

@@ -21,7 +21,6 @@
 #import "SecureCodeViewController.h"
 #import "CashOutViewController.h"
 #import "PasswordViewController.h"
-#import "InformationsViewController.h"
 
 #import "MenuCell.h"
 
@@ -71,7 +70,11 @@
     else
         [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_COORDS", @"")}];
     
+    //    if ([missingFields containsObject:@"secret"])
+    //        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"incomplete": @YES}];
+    //    else
     [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_SECURITY", @"")}];
+    
     [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @"")}];
     [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_PRIVACY", @"")}];
     
@@ -112,7 +115,7 @@
     
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
     [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"INCOMPLETE_TIP", nil)]];
-
+    
     _tips = [UILabel newWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame) - 40, CGRectGetWidth(_mainBody.frame), 20)];
     [_tips setAttributedText:string];
     [_tips setTextAlignment:NSTextAlignmentCenter];

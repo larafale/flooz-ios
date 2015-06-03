@@ -85,6 +85,10 @@
         return TriggerShowInvitation;
     else if ([param isEqualToString:@"http:call"])
         return TriggerHttpCall;
+    else if ([param isEqualToString:@"popup:show"])
+        return TriggerShowPopup;
+    else if ([param isEqualToString:@"home:show"])
+        return TriggerShowHome;
     else
         return TriggerNone;
 }

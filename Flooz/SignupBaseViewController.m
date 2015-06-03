@@ -7,10 +7,7 @@
 //
 
 #import "SignupBaseViewController.h"
-#import "SignupInfosViewController.h"
-#import "SignupPhotoViewController.h"
 #import "SignupSecureCodeViewController.h"
-#import "SignupUsernameViewController.h"
 #import "SignupInvitationViewController.h"
 
 @implementation SignupBaseViewController
@@ -74,25 +71,17 @@
     [self.navigationController setNavigationBarHidden:YES];
 }
 
-+ (SignupBaseViewController *) getViewControllerForStep:(NSString *)step withData:(NSDictionary *)data {
-    if ([step isEqualToString:@"step-nick"]) {
-        SignupUsernameViewController *controller = [SignupUsernameViewController new];
-        [controller initWithData:data];
-        return controller;
-    } else if ([step isEqualToString:@"step-image"]) {
-        SignupPhotoViewController *controller = [SignupPhotoViewController new];
-        [controller initWithData:data];
-        return controller;
-    } else if ([step isEqualToString:@"step-infos"]) {
-        SignupInfosViewController *controller = [SignupInfosViewController new];
-        [controller initWithData:data];
-        return controller;
-    } else if ([step isEqualToString:@"step-invitation"]) {
++ (SignupBaseViewController *) getViewControllerForStep:(NSString *)step withData:(NSDictionary *)data {    
+    if ([step isEqualToString:@"invitation"]) {
         SignupInvitationViewController *controller = [SignupInvitationViewController new];
         [controller initWithData:data];
         return controller;
-    } else if ([step isEqualToString:@"step-securecode"]) {
+    } else if ([step isEqualToString:@"secureCode"]) {
         SignupSecureCodeViewController *controller = [[SignupSecureCodeViewController alloc] initWithMode:SecureCodeModeChangeNew];
+        [controller initWithData:data];
+        return controller;
+    } else if ([step isEqualToString:@"sms"]) {
+        SignupSMSViewController *controller = [SignupSMSViewController new];
         [controller initWithData:data];
         return controller;
     }

@@ -2,7 +2,7 @@
 //  FLPopup.h
 //  Flooz
 //
-//  Created by Jonathan on 23/07/14.
+//  Created by olivier on 23/07/14.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

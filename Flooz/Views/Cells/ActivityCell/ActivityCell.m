@@ -2,7 +2,7 @@
 //  ActivityCell.m
 //  Flooz
 //
-//  Created by jonathan on 2/17/2014.
+//  Created by olivier on 2/17/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -34,7 +34,7 @@
 	CGRect rect = [attributedText boundingRectWithSize:(CGSize) {widthCell - CONTENT_X - MARGE_RIGHT, CGFLOAT_MAX }
 	                                           options:NSStringDrawingUsesLineFragmentOrigin
 	                                           context:nil];
-	height += rect.size.height;
+	height += rect.size.height + 3; // +3 pour les emojis
 
 	// Date
 	height += DATE_VIEW_HEIGHT;
@@ -126,6 +126,7 @@
 - (void)prepareContentView {
 	labelText.text = [_activity content];
 	[labelText setHeightToFit];
+    CGRectSetHeight(labelText.frame, CGRectGetHeight(labelText.frame) + 3); // + 3 pour emojis
 
 	height = CGRectGetHeight(labelText.frame) + MARGE_TOP_BOTTOM + MARGE_TOP_BOTTOM + DATE_VIEW_HEIGHT;
 	if (height < MIN_HEIGHT) {

@@ -2,7 +2,7 @@
 //  FloozTests.m
 //  FloozTests
 //
-//  Created by jonathan on 12/26/2013.
+//  Created by olivier on 12/26/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 

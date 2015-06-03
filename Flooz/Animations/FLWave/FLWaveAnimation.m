@@ -2,7 +2,7 @@
 //  FLWaveAnimation.m
 //  Flooz
 //
-//  Created by jonathan on 2014-04-28.
+//  Created by olivier on 2014-04-28.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

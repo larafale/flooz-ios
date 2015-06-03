@@ -2,7 +2,7 @@
 //  SettingsViewController.m
 //  Flooz
 //
-//  Created by jonathan on 12/26/2013.
+//  Created by olivier on 12/26/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
@@ -59,6 +59,14 @@
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     [_mainBody addSubview:_tableView];
+    
+    UILabel *version = [[UILabel alloc] initWithText:[NSString stringWithFormat:@"Flooz %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:15] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    
+    [version widthToFit];
+    
+    CGRectSetPosition(version.frame, CGRectGetWidth(_mainBody.frame) / 2 - CGRectGetWidth(version.frame) / 2, CGRectGetHeight(_mainBody.frame) - 30);
+    
+    [_mainBody addSubview:version];
 }
 
 #pragma mark - TableView

@@ -94,7 +94,7 @@
 - (void)createNextButton {
 	_nextButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Save", nil)];
 
-    [_nextButton setEnabled:NO];
+    [_nextButton setEnabled:YES];
 }
 
 - (void)resetContentView {
@@ -134,7 +134,7 @@
 		cardNumberField.textfield.inputView = inputViewField;
 	}
 	{
-		UIImage *photo = [UIImage imageNamed:@"bar-camera"];
+        UIImage *photo = [UIImage imageNamed:@"bar-camera"];
 		UIButton *scanCardButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(cardNumberField.frame) - 50.0f, 0.0f, 50.0f, CGRectGetHeight(cardNumberField.frame))];
 		[scanCardButton setImage:photo forState:UIControlStateNormal];
 
@@ -246,24 +246,68 @@
 #pragma mark - ScanPay
 
 - (void)presentScanPayViewController {
-	ScanPayViewController *scanPayViewController = [[ScanPayViewController alloc] initWithToken:@"be38035037ed6ca3cba7089b" useConfirmationView:YES useManualEntry:YES];
+    
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    
+    if (authStatus == AVAuthorizationStatusAuthorized) {
+        ScanPayViewController *scanPayViewController = [[ScanPayViewController alloc] initWithToken:@"be38035037ed6ca3cba7089b" useConfirmationView:YES useManualEntry:YES];
+        
+        [scanPayViewController startScannerWithViewController:self success: ^(SPCreditCard *card) {
+            [_card setValue:card.number forKey:@"number"];
+            [_card setValue:card.cvc forKey:@"cvv"];
+            
+            NSString *expires = [NSString stringWithFormat:@"%@-%@", card.month, card.year];
+            
+            [_card setValue:expires forKey:@"expires"];
+            
+            for (FLTextFieldTitle2 * view in fieldsView) {
+                [view reloadData];
+            }
+            if ([self verifAllFieldForCB])
+                [self didValidTouch];
+        } cancel: ^{
+            [fieldsView[1] becomeFirstResponder];
+        }];
+    } else if (authStatus == AVAuthorizationStatusNotDetermined){
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if (granted){
+                ScanPayViewController *scanPayViewController = [[ScanPayViewController alloc] initWithToken:@"be38035037ed6ca3cba7089b" useConfirmationView:YES useManualEntry:YES];
+                
+                [scanPayViewController startScannerWithViewController:self success: ^(SPCreditCard *card) {
+                    [_card setValue:card.number forKey:@"number"];
+                    [_card setValue:card.cvc forKey:@"cvv"];
+                    
+                    NSString *expires = [NSString stringWithFormat:@"%@-%@", card.month, card.year];
+                    
+                    [_card setValue:expires forKey:@"expires"];
+                    
+                    for (FLTextFieldTitle2 * view in fieldsView) {
+                        [view reloadData];
+                    }
+                    if ([self verifAllFieldForCB])
+                        [self didValidTouch];
+                } cancel: ^{
+                    [fieldsView[1] becomeFirstResponder];
+                }];
+            } else {
 
-	[scanPayViewController startScannerWithViewController:self success: ^(SPCreditCard *card) {
-	    [_card setValue:card.number forKey:@"number"];
-	    [_card setValue:card.cvc forKey:@"cvv"];
+            }
+        }];
+    } else {
+        UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+        [curr setTag:125];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [curr show];
+        });
+    }
+}
 
-	    NSString *expires = [NSString stringWithFormat:@"%@-%@", card.month, card.year];
-
-	    [_card setValue:expires forKey:@"expires"];
-
-	    for (FLTextFieldTitle2 * view in fieldsView) {
-	        [view reloadData];
-		}
-	    if ([self verifAllFieldForCB])
-            [self didValidTouch];
-	} cancel: ^{
-	    [fieldsView[1] becomeFirstResponder];
-	}];
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 125 && buttonIndex == 1)
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL  URLWithString:UIApplicationOpenSettingsURLString]];
+    }
 }
 
 #pragma mark - Verification
@@ -293,10 +337,10 @@
 	if (!_card[@"number"] || !_card[@"cvv"] || !_card[@"expires"] || !_card[@"holder"] ||
 	    [_card[@"number"] isBlank] || [_card[@"cvv"] isBlank] || [_card[@"expires"] isBlank] || [_card[@"holder"] isBlank]) {
 		verifOk = NO;
-		[_nextButton setEnabled:NO];
+//		[_nextButton setEnabled:NO];
 	}
 	else {
-		[_nextButton setEnabled:YES];
+//		[_nextButton setEnabled:YES];
 	}
 	return verifOk;
 }

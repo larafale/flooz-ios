@@ -96,40 +96,59 @@
 }
 
 - (void)pinEnd:(NSString *)pin {
-    if (currentSecureMode == SecureCodeModeChangeNew) {
+    
+    if (self.contentData && self.contentData[@"confirm"] && [self.contentData[@"confirm"] boolValue] && currentSecureMode == SecureCodeModeChangeNew) {
         [self.userDic setValue:pin forKey:@"secureCode"];
-        [self.navigationController pushViewController:[[SignupSecureCodeViewController alloc] initWithMode:SecureCodeModeChangeConfirm] animated:YES];
-    }
-    else if (currentSecureMode == SecureCodeModeChangeConfirm) {
-        if ([self.userDic[@"secureCode"] isEqualToString:pin]) {
-            [[Flooz sharedInstance] showLoadView];
+        SignupSecureCodeViewController *nextView = [[SignupSecureCodeViewController alloc] initWithMode:SecureCodeModeChangeConfirm];
+        [nextView initWithData:self.contentData];
+        [self.navigationController pushViewController:nextView animated:YES];
+    } else {
+        if (currentSecureMode == SecureCodeModeChangeNew ||
+            (currentSecureMode == SecureCodeModeChangeConfirm && [self.userDic[@"secureCode"] isEqualToString:pin])) {
             
+            [self.userDic setValue:pin forKey:@"secureCode"];
+
+            [[Flooz sharedInstance] showLoadView];
             NSString *deviceToken = [appDelegate currentDeviceToken];
+            
             if (deviceToken) {
                 [self.userDic setValue:deviceToken forKeyPath:@"device"];
             }
-            NSData *dataPic = self.userDic[@"picId"];
-            
-            if (dataPic && [dataPic length] > 0)
-                self.userDic[@"hasImage"] = @YES;
-            
-            [self.userDic removeObjectForKey:@"picId"];
-            
-            __block NSData *weakPic = dataPic;
-            [[Flooz sharedInstance] signup:self.userDic success: ^(id result) {
-                [[Flooz sharedInstance] hideLoadView];
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] signupPassStep:@"secureCode" user:self.userDic success:^(NSDictionary *result) {
                 [UICKeyChainStore setString:pin forKey:[self keyForSecureCode]];
-                
-                if (weakPic && ![weakPic isEqual:[NSData new]]) {
+
+                if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
                     [[Flooz sharedInstance] showLoadView];
-                    [[Flooz sharedInstance] uploadDocument:weakPic field:@"picId" success:NULL failure:NULL];
+                    [[Flooz sharedInstance] signupPassStep:@"signup" user:self.userDic success:^(NSDictionary *result) {
+                        [appDelegate resetTuto];
+                        [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
+                        
+                        SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+                        
+                        if (nextViewController) {
+                            SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+                            nextViewController.userDic = self.userDic;
+                            
+                            [self presentViewController:signupNavigationController animated:YES completion:nil];
+                        }
+                    } failure:^(NSError *error) {
+                        
+                    }];
+                } else {
+                    SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+                    
+                    if (nextViewController) {
+                        SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+                        nextViewController.userDic = self.userDic;
+                        
+                        [self presentViewController:signupNavigationController animated:YES completion:nil];
+                    }
                 }
-                [appDelegate goToAccountViewController];
-            } failure: ^(NSError *error) {
-                [self.navigationController popViewControllerAnimated:YES];
+            } failure:^(NSError *error) {
+                
             }];
-        }
-        else {
+        } else {
             [_codePinView animationBadPin];
             [_codePinView clean];
         }

@@ -2,7 +2,7 @@
 //  FLHelper.h
 //  Flooz
 //
-//  Created by jonathan on 1/27/2014.
+//  Created by olivier on 1/27/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -26,5 +26,9 @@
 + (NSString *)momentWithDate:(NSDate *)date;
 
 + (void)addMotionEffect:(UIView *)view;
+
++ (UIImage *)createNonInterpolatedUIImageFromCIImage:(CIImage *)image withScale:(CGFloat)scale;
++ (CIImage *)createQRForString:(NSString *)qrString;
+
 
 @end

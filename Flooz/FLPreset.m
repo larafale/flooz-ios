@@ -36,23 +36,20 @@
     self.why = [json objectForKey:@"why"];
     self.whyPlaceholder = [json objectForKey:@"whyPlaceholder"];
     self.payload = [json objectForKey:@"payload"];
+    self.image = [json objectForKey:@"image"];
     
-    self.isDemo = [[json objectForKey:@"demo"] boolValue];
-    
-    if (self.isDemo) {
-        self.demoIntro = [json objectForKey:@"demoIntro"];
-        self.demoSteps = [json objectForKey:@"demoSteps"];
-    }
+    self.popup = [json objectForKey:@"popup"];
+    self.steps = [json objectForKey:@"steps"];
     
     self.title = [json objectForKey:@"title"];
     
     if ([json objectForKey:@"block"]) {
         if ([[json objectForKey:@"block"] objectForKey:@"amount"])
             self.blockAmount = [[[json objectForKey:@"block"] objectForKey:@"amount"] boolValue];
-
+        
         if ([[json objectForKey:@"block"] objectForKey:@"balance"])
             self.blockBalance = [[[json objectForKey:@"block"] objectForKey:@"balance"] boolValue];
-
+        
         if ([[json objectForKey:@"block"] objectForKey:@"to"])
             self.blockTo = [[[json objectForKey:@"block"] objectForKey:@"to"] boolValue];
         
@@ -61,7 +58,7 @@
         
         if ([[json objectForKey:@"block"] objectForKey:@"pay"])
             self.type = TransactionTypeCharge;
-
+        
         if ([[json objectForKey:@"block"] objectForKey:@"charge"])
             self.type = TransactionTypePayment;
         

@@ -19,7 +19,9 @@ typedef enum e_FLReportType {
 @property (nonatomic, retain) NSString *type;
 @property (nonatomic, retain) NSString *resourceID;
 @property (nonatomic, retain) NSString *content;
+@property (nonatomic, retain) FLTransaction *transaction;
 
 - (id)initWithType:(FLReportType)reportType id:(NSString *)objectID;
+- (id)initWithType:(FLReportType)reportType transac:(FLTransaction *)transac;
 
 @end

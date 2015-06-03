@@ -2,8 +2,8 @@
 //  FLLikePopoverViewController.h
 //  Flooz
 //
-//  Created by Epitech on 12/31/14.
-//  Copyright (c) 2014 Jonathan Tribouharet. All rights reserved.
+//  Created by Olivier on 12/31/14.
+//  Copyright (c) 2014 olivier Tribouharet. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

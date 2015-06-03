@@ -2,7 +2,7 @@
 //  FriendsViewController.m
 //  Flooz
 //
-//  Created by jonathan on 2/17/2014.
+//  Created by olivier on 2/17/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -11,7 +11,6 @@
 #import "FriendRequestCell.h"
 #import "FriendCell.h"
 #import "AppDelegate.h"
-#import "InviteFriendsViewController.h"
 #import "ShareAppViewController.h"
 
 @interface FriendsViewController () {
@@ -481,11 +480,6 @@
 
 - (void)keyboardWillDisappear {
 	_tableView.contentInset = UIEdgeInsetsZero;
-}
-
-- (void)displayInviteFriends {
-	UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[[InviteFriendsViewController alloc] init]];
-	[self presentViewController:controller animated:YES completion:NULL];
 }
 
 @end

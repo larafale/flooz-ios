@@ -2,7 +2,7 @@
 //  TransactionViewController.m
 //  Flooz
 //
-//  Created by jonathan on 2/5/2014.
+//  Created by olivier on 2/5/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -284,7 +284,7 @@
 #pragma mark - Actions
 
 - (void)showReportMenu {
-    [appDelegate showReportMenu:[[FLReport alloc] initWithType:ReportTransaction id:_transaction.transactionId]];
+    [appDelegate showReportMenu:[[FLReport alloc] initWithType:ReportTransaction transac:_transaction]];
 }
 
 - (void)dismiss {
@@ -380,8 +380,9 @@
                 SecureCodeViewController *secureVC = [SecureCodeViewController new];
                 secureVC.completeBlock = completeBlock;
                 UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:secureVC];
-                [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:NULL];
-                [[Flooz sharedInstance] hideLoadView];
+                [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:^{
+                    [[Flooz sharedInstance] hideLoadView];
+                }];
             });
         } cancelCallback:^{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -389,10 +390,14 @@
             });
         }];
     else {
-        SecureCodeViewController *secureVC = [SecureCodeViewController new];
-        secureVC.completeBlock = completeBlock;
-        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:secureVC];
-        [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:NULL];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            SecureCodeViewController *secureVC = [SecureCodeViewController new];
+            secureVC.completeBlock = completeBlock;
+            UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:secureVC];
+            [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:^{
+                [[Flooz sharedInstance] hideLoadView];
+            }];
+        });
     }
 }
 

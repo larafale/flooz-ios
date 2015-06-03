@@ -2,7 +2,7 @@
 //  NewTransactionViewController.m
 //  Flooz
 //
-//  Created by jonathan on 1/17/2014.
+//  Created by olivier on 1/17/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -13,7 +13,6 @@
 #import "FLNewTransactionBar.h"
 #import "FLSelectAmount.h"
 #import "FLSelectFriendButton.h"
-#import "NewTransactionSelectTypeView.h"
 #import "FLPopupInformation.h"
 
 #import "CreditCardViewController.h"
@@ -136,7 +135,7 @@
         
         infoDisplayed = NO;
         firstView = YES;
-        isDemo = preset.isDemo;
+        isDemo = preset.popup != NULL || preset.steps != NULL;
         
         if (preset.to) {
             presetUser = preset.to;
@@ -323,20 +322,40 @@
             [((FLNavigationController*)self.parentViewController) setAmountHidden:YES];
         else
             [((FLNavigationController*)self.parentViewController) setAmountHidden:NO];
+        
+        if (currentPreset.image) {
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:currentPreset.image] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
+             {
+                 if (image && !error && finished) {
+                     [self rotateImageWithRadians:0 imageRotate:image andImage:nil];
+                     currentPreset.image = @"";
+                 }
+             }];
+        }
     } else
         [((FLNavigationController*)self.parentViewController) setAmountHidden:NO];
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
     
     if (isDemo) {
-        if (currentPreset.demoIntro) {
-            [[[FLPopupInformation alloc] initWithTitle:currentPreset.demoIntro[@"title"] andMessage:[[NSAttributedString alloc] initWithString:currentPreset.demoIntro[@"content"]] ok:^() {
-                if (currentPreset.demoSteps) {
-                    [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+        if (currentPreset.popup) {
+            [[[FLPopupInformation alloc] initWithTitle:currentPreset.popup[@"title"] message:[[NSAttributedString alloc] initWithString:currentPreset.popup[@"content"]] button:currentPreset.popup[@"button"] ok:^() {
+                if (currentPreset.popup[@"triggers"]) {
+                    NSArray *triggers = currentPreset.popup[@"triggers"];
+                    for (NSDictionary *triggerData in triggers) {
+                        FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
+                        [[Flooz sharedInstance] handleTrigger:trigger];
+                    }
                 }
+
+                if (currentPreset.steps) {
+                    [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+                }
+                
+                currentPreset.popup = nil;
             }] show];
-        } else if (currentPreset.demoSteps) {
-            [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+        } else if (currentPreset.steps) {
+            [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
         }
     } else {
         if (firstViewAmount) {
@@ -354,14 +373,14 @@
 - (void)validateView {
     BOOL valid = YES;
     
-    if (!presetUser)
-        valid = NO;
-    
-    if (!transaction[@"amount"] || [transaction[@"amount"] isBlank] || [transaction[@"amount"] floatValue] < 0.5f)
-        valid = NO;
-    
-    if (!transaction[@"why"] || [transaction[@"why"] isBlank])
-        valid = NO;
+//    if (!presetUser)
+//        valid = NO;
+//    
+//    if (!transaction[@"amount"] || [transaction[@"amount"] isBlank] || [transaction[@"amount"] floatValue] < 0.5f)
+//        valid = NO;
+//    
+//    if (!transaction[@"why"] || [transaction[@"why"] isBlank])
+//        valid = NO;
     
     if (presetUser) {
         if (presetUser.blockObject != nil) {
@@ -408,6 +427,10 @@
             [self hideChargeButton:false];
             [self hidePayButton:true];
         }
+        else {
+            [self hideChargeButton:false];
+            [self hidePayButton:false];
+        }
     } else {
         [self hideChargeButton:false];
         [self hidePayButton:false];
@@ -449,8 +472,8 @@
             else if ([stepData[@"focus"] isEqualToString:@"scope"]) {
                 [transactionBar.privacyButton sendActionsForControlEvents:UIControlEventTouchUpInside];
             }
-            else if (currentDemoStep < currentPreset.demoSteps.count) {
-                [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+            else if (currentDemoStep < currentPreset.steps.count) {
+                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
             }
         }];
     }];
@@ -462,7 +485,7 @@
     [popoverController presentPopoverFromRect:[self getDemoStepPopoverRect:stepData[@"focus"]] inView:[self getDemoStepPopoverView:stepData[@"focus"]] permittedArrowDirections:[self getDemoStepPopoverArrowDirection:stepData[@"focus"]] animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
     ++currentDemoStep;
     
-    if (currentDemoStep == currentPreset.demoSteps.count)
+    if (currentDemoStep == currentPreset.steps.count)
         isDemo = false;
 }
 
@@ -557,8 +580,8 @@
 }
 
 - (void) scopePopoverDidDisappear {
-    if (isDemo && currentDemoStep < currentPreset.demoSteps.count) {
-        [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+    if (isDemo && currentDemoStep < currentPreset.steps.count) {
+        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
     }
 }
 
@@ -587,9 +610,9 @@
         [pickerTableView removeFromSuperview];
         contactPickerVisible = NO;
     }
-    if (isDemo && currentDemoStep < currentPreset.demoSteps.count) {
+    if (isDemo && currentDemoStep < currentPreset.steps.count) {
         [self.view endEditing:YES];
-        [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
     }
     else if (transaction[@"why"] && ![transaction[@"why"] isBlank])
         [self.view endEditing:YES];
@@ -618,7 +641,21 @@
 }
 
 - (void)contactPickerDidEndEditing {
-    
+    if (presetUser == nil && ![contactPickerView.textField.text isBlank]) {
+        NSString *text = contactPickerView.textField.text;
+        text = [FLHelper formatedPhone:text];
+        if (text) {
+            FLUser *user = [FLUser new];
+            user.username = text;
+            user.phone = text;
+            user.userKind = CactusUser;
+            presetUser = user;
+            
+            [contactPickerView addContact:user withName:text];
+        } else {
+            [contactPickerView removeAllContacts];
+        }
+    }
 }
 
 - (void)contactPickerTextViewDidChange:(NSString *)textViewText {
@@ -632,7 +669,7 @@
 }
 
 - (void)contactPickerDidResize:(THContactPickerView *)contactPickerView {
-    
+    return;
 }
 
 - (BOOL)contactPickerTextFieldShouldReturn:(UITextField *)textField {
@@ -653,9 +690,9 @@
         [pickerTableView removeFromSuperview];
         contactPickerVisible = NO;
     }
-    if (isDemo && currentDemoStep < currentPreset.demoSteps.count) {
+    if (isDemo && currentDemoStep < currentPreset.steps.count) {
         [self.view endEditing:YES];
-        [self showDemoStepPopover:currentPreset.demoSteps[currentDemoStep]];
+        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
     }
     else if (transaction[@"why"] && ![transaction[@"why"] isBlank])
         [self.view endEditing:YES];
@@ -675,6 +712,7 @@
     [_contentView addSubview:imageTransaction];
     [imageTransaction setMultipleTouchEnabled:YES];
     [imageTransaction setUserInteractionEnabled:YES];
+    [imageTransaction addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showFullscreenImage)]];
     
     closeImage = [UIButton newWithFrame:CGRectMake(40, 0, 40, 40)];
     [closeImage setImage:[UIImage imageNamed:@"image-close"] forState:UIControlStateNormal];
@@ -687,60 +725,24 @@
 
 #pragma mark -
 
-- (void)didAmountFixSelected {
-    [[self view] endEditing:YES];
+- (void)showFullscreenImage {
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.image = imageTransaction.image;
+    imageInfo.referenceRect = imageTransaction.frame;
+    imageInfo.referenceView = imageTransaction.superview;
+    imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
     
-    [transaction setValue:@100.0 forKey:@"amount"];
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+    imageViewer.interactionsDelegate = self;
     
-    [UIView animateWithDuration:.5 animations: ^{
-        CGRectSetHeight(amountInput.frame, [FLNewTransactionAmount height]);
-        CGRectSetY(content.frame, content.frame.origin.y + [FLNewTransactionAmount height]);
-        _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), CGRectGetMaxY(content.frame));
-    }];
+    [imageViewer showFromViewController:[appDelegate myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
 }
 
-- (void)didAmountFreeSelected {
-    // Sinon la valeur du clavier est sauvegarder a l envoi
-    [[self view] endEditing:YES];
+- (void)imageViewerDidLongPress:(JTSImageViewController *)imageViewer atRect:(CGRect)rect {
     
-    [transaction setValue:nil forKey:@"amount"];
-    [transaction setValue:nil forKey:@"goal"];
-    
-    [UIView animateWithDuration:.5 animations: ^{
-        CGRectSetHeight(amountInput.frame, 1);
-        CGRectSetY(content.frame, content.frame.origin.y - [FLNewTransactionAmount height]);
-        _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), CGRectGetMaxY(content.frame));
-    }];
-}
-
-- (void)didTypePaymentelected {
-    [[self view] endEditing:YES];
-    
-    // Car remit a zero par didTypeCollectSelected
-    [payementField didWalletTouch];
-    [self didWalletSelected];
-    
-    if (CGRectGetHeight(payementField.frame) <= 1) {
-        [UIView animateWithDuration:.5 animations: ^{
-            CGRectSetHeight(payementField.frame, [FLPaymentField height]);
-            CGRectSetY(content.frame, content.frame.origin.y + [FLPaymentField height]);
-            _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), CGRectGetMaxY(content.frame));
-        }];
-    }
-}
-
-- (void)didTypeCollectSelected {
-    [[self view] endEditing:YES];
-    
-    [transaction setValue:nil forKey:@"source"];
-    
-    if (CGRectGetHeight(payementField.frame) > 1) {
-        [UIView animateWithDuration:.5 animations: ^{
-            CGRectSetHeight(payementField.frame, 0);
-            CGRectSetY(content.frame, content.frame.origin.y - [FLPaymentField height] - 1);
-            _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), CGRectGetMaxY(content.frame));
-        }];
-    }
 }
 
 #pragma mark - callbacks
@@ -808,7 +810,7 @@
             }
         }
     } noCreditCard: ^() {
-        [self presentCreditCardController];
+//        [self presentCreditCardController];
     }];
 }
 
@@ -890,13 +892,17 @@
 }
 
 - (void)keyboardWillDisappear {
-    [content setMaxHeight:CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - CGRectGetMinY(content.frame)];
+    
 }
 
 #pragma mark - AlertView Delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
+    if (alertView.tag == 125 && buttonIndex == 1)
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL  URLWithString:UIApplicationOpenSettingsURLString]];
+    }
+    else if (buttonIndex == 1) {
         [self didTransactionValidated];
     }
 }
@@ -941,8 +947,9 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 SecureCodeViewController *controller = [SecureCodeViewController new];
                 controller.completeBlock = completeBlock;
-                [[Flooz sharedInstance] hideLoadView];
-                [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+                [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                    [[Flooz sharedInstance] hideLoadView];
+                }];
             });
         } cancelCallback:^{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -950,10 +957,13 @@
             });
         }];
     else {
-        SecureCodeViewController *controller = [SecureCodeViewController new];
-        controller.completeBlock = completeBlock;
-        [[Flooz sharedInstance] hideLoadView];
-        [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            SecureCodeViewController *controller = [SecureCodeViewController new];
+            controller.completeBlock = completeBlock;
+            [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                [[Flooz sharedInstance] hideLoadView];
+            }];
+        });
     }
 }
 
@@ -1006,33 +1016,80 @@
     }
     else {
         [self.view endEditing:YES];
-        if (!cameraView) {
-            if (!cameraBarKeyboard) {
-                cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
-                [cameraBarKeyboard setDelegate:self];
-                [self validateView];
-                [cameraBarKeyboard reloadData];
+        
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        
+        if (authStatus == AVAuthorizationStatusAuthorized) {
+            if (!cameraView) {
+                if (!cameraBarKeyboard) {
+                    cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
+                    [cameraBarKeyboard setDelegate:self];
+                    [self validateView];
+                    [cameraBarKeyboard reloadData];
+                }
+                if (!camera) {
+                    camera = [[FLCameraKeyboard alloc] initWithController:self height:216 delegate:self];
+                }
+                CGRectSetY(cameraBarKeyboard.frame, 0);
+                CGRectSetY(camera.frame, CGRectGetHeight(cameraBarKeyboard.frame));
+                
+                cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(cameraBarKeyboard.frame) + CGRectGetHeight(camera.frame))];
+                [cameraView addSubview:cameraBarKeyboard];
+                [cameraView addSubview:camera];
+                
+                CGRectSetY(cameraView.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(cameraBarKeyboard.frame));
+                
+                [appDelegate.window addSubview:cameraView];
             }
-            if (!camera) {
-                camera = [[FLCameraKeyboard alloc] initWithController:self height:216 delegate:self];
-            }
-            CGRectSetY(cameraBarKeyboard.frame, 0);
-            CGRectSetY(camera.frame, CGRectGetHeight(cameraBarKeyboard.frame));
-            
-            cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(cameraBarKeyboard.frame) + CGRectGetHeight(camera.frame))];
-            [cameraView addSubview:cameraBarKeyboard];
-            [cameraView addSubview:camera];
-            
-            CGRectSetY(cameraView.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(cameraBarKeyboard.frame));
-            
-            [appDelegate.window addSubview:cameraView];
+
+            [camera startCamera];
+            [UIView animateWithDuration:0.3 animations: ^{
+                CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame) - CGRectGetHeight(cameraView.frame));
+            } completion: ^(BOOL finished) {
+                cameraDisplayed = YES;
+            }];
+        } else if (authStatus == AVAuthorizationStatusNotDetermined){
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if (granted){
+                    if (!cameraView) {
+                        if (!cameraBarKeyboard) {
+                            cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
+                            [cameraBarKeyboard setDelegate:self];
+                            [self validateView];
+                            [cameraBarKeyboard reloadData];
+                        }
+                        if (!camera) {
+                            camera = [[FLCameraKeyboard alloc] initWithController:self height:216 delegate:self];
+                        }
+                        CGRectSetY(cameraBarKeyboard.frame, 0);
+                        CGRectSetY(camera.frame, CGRectGetHeight(cameraBarKeyboard.frame));
+                        
+                        cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(cameraBarKeyboard.frame) + CGRectGetHeight(camera.frame))];
+                        [cameraView addSubview:cameraBarKeyboard];
+                        [cameraView addSubview:camera];
+                        
+                        CGRectSetY(cameraView.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(cameraBarKeyboard.frame));
+                        
+                        [appDelegate.window addSubview:cameraView];
+                    }
+
+                    [camera startCamera];
+                    [UIView animateWithDuration:0.3 animations: ^{
+                        CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame) - CGRectGetHeight(cameraView.frame));
+                    } completion: ^(BOOL finished) {
+                        cameraDisplayed = YES;
+                    }];
+                } else {
+                    
+                }
+            }];
+        } else {
+            UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+            [curr setTag:125];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [curr show];
+            });
         }
-        [camera startCamera];
-        [UIView animateWithDuration:0.3 animations: ^{
-            CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame) - CGRectGetHeight(cameraView.frame));
-        } completion: ^(BOOL finished) {
-            cameraDisplayed = YES;
-        }];
     }
 }
 

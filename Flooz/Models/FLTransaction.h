@@ -2,7 +2,7 @@
 //  FLTransaction.h
 //  Flooz
 //
-//  Created by jonathan on 12/31/2013.
+//  Created by olivier on 12/31/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 

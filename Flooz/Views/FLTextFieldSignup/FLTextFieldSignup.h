@@ -53,5 +53,6 @@
 - (void)setEnable:(BOOL)enable;
 
 - (void)setDictionary:(NSMutableDictionary *)dic andKey:(NSString *)k;
+- (NSString *)dictionaryKey;
 
 @end

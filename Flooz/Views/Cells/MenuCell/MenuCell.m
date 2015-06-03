@@ -80,7 +80,8 @@
 - (void)prepareImageView {
     NSString *imageName = _menuDico[@"image"];
     if (imageName.length) {
-        [_imageMenu setImage:[UIImage imageNamed:imageName]];
+        [_imageMenu setImage:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        [_imageMenu setTintColor:[UIColor whiteColor]];
     }
     else {
         CGRectSetX(_titleMenu.frame, CGRectGetMidX(_imageMenu.frame));

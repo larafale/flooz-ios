@@ -2,7 +2,7 @@
 //  Flooz.m
 //  Flooz
 //
-//  Created by jonathan on 12/30/2013.
+//  Created by olivier on 12/30/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
@@ -27,6 +27,7 @@
 #import "3DSecureViewController.h"
 #import "SecureCodeViewController.h"
 #import "ShareAppViewController.h"
+#import "FLPopupInformation.h"
 
 #define APP_VERSION [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 
@@ -51,8 +52,10 @@
         manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
 #endif
         
-        manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
+        
+        [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+        [manager.requestSerializer setTimeoutInterval:10];
+        [manager setResponseSerializer:[AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers]];
         
         loadView = [FLLoadView new];
         
@@ -196,16 +199,37 @@
 }
 
 - (void)logout {
-    if ([_currentUser deviceToken]) {
-        [self requestPath:@"/users/logout" method:@"GET" params:@{ @"device":[_currentUser deviceToken] } success:nil failure:nil];
+    if (_currentUser) {
+        if ([_currentUser deviceToken]) {
+            [self requestPath:@"/users/logout" method:@"GET" params:@{ @"device":[_currentUser deviceToken] } success:^(id result) {
+                [manager.operationQueue cancelAllOperations];
+                
+                [self closeSocket];
+                [self clearLogin];
+                [appDelegate didDisconnected];
+                
+            } failure:^(NSError *error) {
+                [manager.operationQueue cancelAllOperations];
+                
+                [self closeSocket];
+                [self clearLogin];
+                [appDelegate didDisconnected];
+                
+            }];
+        } else {
+            [manager.operationQueue cancelAllOperations];
+            
+            [self closeSocket];
+            [self clearLogin];
+            [appDelegate didDisconnected];
+        }
+    } else {
+        [appDelegate didDisconnected];
     }
-    [self closeSocket];
-    [self clearLogin];
-    [appDelegate didDisconnected];
 }
 
 - (void)signupPassStep:(NSString *)step user:(NSMutableDictionary*)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:[NSString stringWithFormat:@"/users/signup/step-%@", step] method:@"POST" params:user success:success failure:failure];
+    [self requestPath:[NSString stringWithFormat:@"/signup/%@", step] method:@"POST" params:user success:success failure:failure];
 }
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -228,15 +252,27 @@
     NSMutableDictionary *_userDic = [user mutableCopy];
     [_userDic setObject:[self formatBirthDate:user[@"birthdate"]] forKey:@"birthdate"];
     
-    [self requestPath:@"/users/signup" method:@"POST" params:_userDic success:successBlock failure:failure];
+    [self requestPath:@"/signup" method:@"POST" params:_userDic success:successBlock failure:failure];
 }
 
 - (NSString *)formatBirthDate:(NSString *)birthdate {
-    NSArray *strings = [birthdate componentsSeparatedByString:@" / "];
-    NSString *day = strings[0];
-    NSString *month = strings[1];
-    NSString *year = strings[2];
-    return [NSString stringWithFormat:@"%@-%@-%@", year, month, day];
+    if ([birthdate isBlank])
+        return @"";
+    
+    NSArray *strings;
+    
+    if ([birthdate rangeOfString:@" "].location != NSNotFound)
+        strings = [birthdate componentsSeparatedByString:@" / "];
+    else
+        strings = [birthdate componentsSeparatedByString:@"/"];
+    
+    if (strings.count == 3) {
+        NSString *day = strings[0];
+        NSString *month = strings[1];
+        NSString *year = strings[2];
+        return [NSString stringWithFormat:@"%@-%@-%@", year, month, day];
+    }
+    return @"";
 }
 
 - (NSString *)formatBirthDateFromFacebook:(NSString *)birthdate {
@@ -303,7 +339,7 @@
     else
         params = @{ @"q": formatedPhone, @"distinctId": [Mixpanel sharedInstance].distinctId };
     
-    [self requestPath:@"/login" method:@"GET" params:params success:nil failure:nil];
+    [self requestPath:@"/login" method:@"POST" params:params success:nil failure:nil];
 }
 
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -311,6 +347,10 @@
     params[@"codeReset"] = @YES;
     
     [self requestPath:@"/login/basic" method:@"POST" params:params success:success failure:failure];
+}
+
+- (void)passwordForget:(NSString*)login success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/password/lost" method:@"POST" params:@{ @"email": login } success:success failure:failure];
 }
 
 - (void)passwordLost:(NSString *)email success:(void (^)(id result))success {
@@ -327,6 +367,10 @@
 
 - (void)updateCurrentUser {
     [self updateCurrentUserWithSuccess:^{}];
+}
+
+- (void)loadCactusData:(NSString*)identifier success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:[NSString stringWithFormat:@"/users/cactus/%@", identifier] method:@"GET" params:nil success:success failure:failure];
 }
 
 - (void)updateCurrentUserWithSuccess:(void (^)())success {
@@ -435,7 +479,6 @@
     
     [self requestPath:@"/utils/texts" method:@"GET" params:nil success:successBlock failure:failureBlock];
 }
-
 
 - (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     [self timeline:scope state:nil success:success failure:failure];
@@ -608,7 +651,7 @@
 }
 
 - (void)confirmTransactionSMS:(NSString *)floozId validate:(Boolean)validate success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:[NSString stringWithFormat:@"/flooz/%@/status", floozId] method:@"POST" params:@{@"validate":[NSNumber numberWithBool:validate]} success:success failure:failure];
+    [self requestPath:[NSString stringWithFormat:@"/flooz/%@/status", floozId] method:@"POST" params:@{@"validate":(validate ? @YES : @NO)} success:success failure:failure];
 }
 
 - (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -834,13 +877,13 @@
         }
         else {
             [self hideLoadView];
-            
-            [self displayPopupMessage:responseObject];
-            [self handleRequestTriggers:responseObject];
-            
+
             if (success) {
                 success(responseObject);
             }
+
+            [self displayPopupMessage:responseObject];
+            [self handleRequestTriggers:responseObject];            
         }
     };
     
@@ -872,7 +915,13 @@
         [manager GET:path parameters:params success:successBlock failure:failureBlock];
     }
     else if ([method isEqualToString:@"POST"] && constructingBodyWithBlock != NULL) {
-        [manager POST:path parameters:params constructingBodyWithBlock:constructingBodyWithBlock success:successBlock failure:failureBlock];
+        NSMutableURLRequest *request = [manager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:[[NSURL URLWithString:path relativeToURL:manager.baseURL] absoluteString] parameters:params constructingBodyWithBlock:constructingBodyWithBlock error:nil];
+        
+        [request setTimeoutInterval:60];
+        
+        AFHTTPRequestOperation *operation = [manager HTTPRequestOperationWithRequest:request success:successBlock failure:failureBlock];
+        [manager.operationQueue addOperation:operation];
+        //        [manager POST:path parameters:params constructingBodyWithBlock:constructingBodyWithBlock success:successBlock failure:failureBlock];
     }
     else if ([method isEqualToString:@"POST"]) {
         [manager POST:path parameters:params success:successBlock failure:failureBlock];
@@ -948,9 +997,9 @@
     [self requestPath:@"/login/basic" method:@"POST" params:nil success:^(id result) {
         [self updateCurrentUserAfterConnect:result];
     } failure: ^(NSError *error) {
-        if ([self connectionStatusFromError:error])
+        if ([self connectionStatusFromError:error] && error.code != 426)
             [self logout];
-        else {
+        else if (error.code != 426) {
             [self loadUserData];
             if (!self.currentUser)
                 [self logout];
@@ -1033,8 +1082,7 @@
 
 - (void)disconnectFacebook {
     _facebook_token = nil;
-    [self updateUser:@{ @"fb": @{}
-                        } success:nil failure:nil];
+    [self updateUser:@{ @"fb": @{} } success:nil failure:nil];
 }
 
 - (void)didConnectFacebook {
@@ -1063,33 +1111,10 @@
         }];
     }
     else {
-        [self requestPath:@"/login/facebook" method:@"POST" params:@{ @"token": _facebook_token } success: ^(id result) {
-            [self updateCurrentUserAfterConnectAndAskCode:result];
+        [self requestPath:@"/login/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
+            [self updateCurrentUserAfterConnect:result];
         } failure: ^(NSError *error) {
-            [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
-                [self hideLoadView];
-                
-                if (!error) {
-                    NSDictionary * user = @{
-                                            @"email": result[@"email"],
-                                            @"lastName": result[@"last_name"],
-                                            @"firstName": result[@"first_name"],
-                                            @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", result[@"id"]],
-                                            @"fb": @{
-                                                    @"email": result[@"email"],
-                                                    @"id": result[@"id"],
-                                                    @"name": result[@"name"],
-                                                    @"token": _facebook_token
-                                                    }
-                                            };
-                    
-                    [appDelegate showSignupAfterFacebookWithUser:user];
-                }
-                else {
-                    // An error occurred, we need to handle the error
-                    // See: https://developers.facebook.com/docs/ios/errors
-                }
-            }];
+            
         }];
     }
 }
@@ -1184,7 +1209,6 @@
 }
 
 - (void)handleTriggerSignupShow:(NSDictionary *)data {
-    [self sendSignupSMS:data[@"phone"]];
     [appDelegate showSignupWithUser:data];
 }
 
@@ -1262,6 +1286,22 @@
     [self requestPath:data[@"url"] method:data[@"method"] params:data[@"body"] success:nil failure:nil];
 }
 
+- (void)handleTriggerPopupShow:(NSDictionary *)data {
+    [[[FLPopupInformation alloc] initWithTitle:data[@"title"] message:[[NSAttributedString alloc] initWithString:data[@"content"]] button:data[@"button"] ok:^() {
+        if (data[@"triggers"]) {
+            NSArray *triggers = data[@"triggers"];
+            for (NSDictionary *triggerData in triggers) {
+                FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
+                [self handleTrigger:trigger];
+            }
+        }
+    }] show];
+}
+
+- (void)handleTriggerHomeShow:(NSDictionary *)data {
+    [appDelegate goToAccountViewController];
+}
+
 - (void)handleTrigger:(FLTrigger*)trigger {
     NSDictionary *triggerFuncs = @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
                                    [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
@@ -1288,7 +1328,9 @@
                                    [NSNumber numberWithInt:TriggerReloadFriend]: NSStringFromSelector(@selector(handleTriggerFriendReload:)),
                                    [NSNumber numberWithInt:TriggerFeedRead]: NSStringFromSelector(@selector(handleTriggerReadFeed:)),
                                    [NSNumber numberWithInt:TriggerShowInvitation]: NSStringFromSelector(@selector(handleTriggerInvitationShow:)),
-                                   [NSNumber numberWithInt:TriggerHttpCall]: NSStringFromSelector(@selector(handleTriggerHttpCall:))};
+                                   [NSNumber numberWithInt:TriggerHttpCall]: NSStringFromSelector(@selector(handleTriggerHttpCall:)),
+                                   [NSNumber numberWithInt:TriggerShowHome]: NSStringFromSelector(@selector(handleTriggerHomeShow:)),
+                                   [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
         if ([trigger.delay isEqualToNumber:@0])

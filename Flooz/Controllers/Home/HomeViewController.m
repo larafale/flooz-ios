@@ -2,7 +2,7 @@
 //  HomeViewController.m
 //  Flooz
 //
-//  Created by jonathan on 12/26/2013.
+//  Created by olivier on 12/26/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
@@ -11,25 +11,61 @@
 #import "AppDelegate.h"
 #import "TransactionViewController.h"
 #import "FLSlide.h"
+#import "FXBlurView.h"
+#import "WebViewController.h"
 
 @interface HomeViewController () {
-    UITableView *_tableView;
+    UIView *backgroundView;
+    UIView *homeView;
+    FXBlurView *loginView;
+    FXBlurView *signupView;
+    FXBlurView *forgetView;
     
-    UIView *_mainView;
-    UIView *_footerView;
+    iCarousel *carouselView;
+    UIPageControl *carouselControl;
+    UIImageView *backgroundImage;
     
-    UIImageView *logo;
-    FLActionButton *couponButton;
+    NSMutableDictionary *loginData;
+    NSMutableDictionary *signupData;
+    NSMutableDictionary *forgetData;
+    NSMutableDictionary *secretData;
+    
+    UIView *loginHeaderView;
+    UIView *loginFormView;
+    
+    UIScrollView *signupScrollView;
+    UIView *signupHeaderView;
+    UIView *signupFormView;
+    UIView *signupFbView;
+    //    UIView *signupFbPicView;
+    
+    NSMutableArray *signupFormFields;
+    
+    UILabel *secretQuestion;
+    
+    BOOL keyboardVisible;
+    BOOL loginVisible;
+    BOOL signupVisible;
+    BOOL homeVisible;
+    BOOL facebookVisible;
+    
+    NSTimer *carouselTimer;
 }
 
 @end
+
+#define CAROUSEL_AUTOSLIDE_TIMER 4.0f
 
 @implementation HomeViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+        keyboardVisible = NO;
+        loginVisible = NO;
+        signupVisible = NO;
+        homeVisible = YES;
+        facebookVisible = YES;
     }
     return self;
 }
@@ -37,35 +73,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor customBackground];
-    
-    {
-        UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
-        [backgroundImage setImage:[UIImage imageNamed:@"back-secure"]];
-        [self.view addSubview:backgroundImage];
-    }
-    
-    {
-        _mainView = [UIView newWithFrame:CGRectMake(0, STATUSBAR_HEIGHT, PPScreenWidth(), PPScreenHeight() - 150.0f - STATUSBAR_HEIGHT)];
-        [self.view addSubview:_mainView];
-    }
-    
-    [self createMainView];
-    
-    {
-        _footerView = [UIView newWithFrame:CGRectMake(0, CGRectGetMaxY(_mainView.frame), PPScreenWidth(), PPScreenHeight() - CGRectGetMaxY(_mainView.frame))];
-        [self.view addSubview:_footerView];
-    }
-    
-    [self createButtonSend];
-    
     [[Flooz sharedInstance] textObjectFromApi:^(id result) {
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IntroSliders"])
-            [self showIntro];
-        [self generateCouponButton];
-    } failure:^(NSError *error) {
+        [carouselControl setNumberOfPages:[Flooz sharedInstance].currentTexts.slider.slides.count];
+        [carouselView reloadData];
+        carouselTimer = [NSTimer scheduledTimerWithTimeInterval:CAROUSEL_AUTOSLIDE_TIMER target:self selector:@selector(changeCurrentCarouselPage) userInfo:nil repeats:NO];
+    } failure:nil];
+    
+    [self createBackgroundView];
+    [self createHomeView];
+    [self createLoginView];
+    [self createSignupView];
+    [self createForgetView];
+    
+    [self registerForKeyboardNotifications];
+    
+    if ([appDelegate branchParam]) {
+        if ([appDelegate branchParam][@"cactus"] && ![[appDelegate branchParam][@"cactus"] isBlank]) {
+            [[Flooz sharedInstance] loadCactusData:[appDelegate branchParam][@"cactus"] success:^(NSDictionary *result) {
+                [signupData addEntriesFromDictionary:result[@"item"]];
+                for (FLTextFieldSignup *textfield in signupFormFields) {
+                    [textfield reloadTextField];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
         
-    }];
+        if ([appDelegate branchParam][@"referrer"] && ![[appDelegate branchParam][@"referrer"] isBlank]) {
+            [signupData setObject:[appDelegate branchParam][@"referrer"] forKey:@"referrer"];
+        }
+    }
 }
 
 - (void)viewDidUnload {
@@ -73,129 +110,834 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)createMainView {
-    logo = [[UIImageView alloc] initWithImageName:@"home-title"];
-    [logo setFrame:CGRectMake(SCREEN_WIDTH / 2 - CGRectGetWidth(logo.frame) / 2, 60, CGRectGetWidth(logo.frame), CGRectGetHeight(logo.frame))];
-    [logo setContentMode:UIViewContentModeScaleAspectFit];
-    
-    [logo addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showIntro)]];
-    [logo setUserInteractionEnabled:YES];
-    
-    [_mainView addSubview:logo];
-}
-
-- (void)createButtonSend {
-    
-    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(50, 5, CGRectGetWidth(_footerView.frame) - 100, 50) title:NSLocalizedString(@"Signup", nil)];
-    signupButton.layer.masksToBounds = YES;
-    signupButton.layer.cornerRadius = 25;
-    
-    [signupButton setBackgroundColor:[UIColor customBackgroundHeader] forState:UIControlStateNormal];
-    [signupButton setBackgroundColor:[UIColor customBlue] forState:UIControlStateHighlighted];
-    [signupButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signupButton.titleLabel setFont:[UIFont customTitleLight:20]];
-    
-    [signupButton addTarget:self action:@selector(connect) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *loginButton = [[UIButton alloc] initWithFrame:CGRectMake(50, CGRectGetMaxY(signupButton.frame) + 20, CGRectGetWidth(_footerView.frame) - 100, 30)];
-    loginButton.backgroundColor = [UIColor clearColor];
-    
-    NSDictionary *underlineAttribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle), NSForegroundColorAttributeName: [UIColor customGreyPseudo]};
-    
-    [loginButton setAttributedTitle:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Login", nil) attributes:underlineAttribute] forState:UIControlStateNormal];
-    
-    [loginButton.titleLabel setFont:[UIFont customTitleLight:16]];
-    
-    [loginButton addTarget:self action:@selector(connect) forControlEvents:UIControlEventTouchUpInside];
-    
-    [_footerView addSubview:signupButton];
-    [_footerView addSubview:loginButton];
-}
-
-- (void)generateCouponButton {
-    NSDictionary *couponButtonData = [Flooz sharedInstance].currentTexts.couponButton;
-    
-    if (couponButtonData != nil) {
-        if (couponButton == nil) {
-            couponButton = [[FLActionButton alloc] initWithFrame:CGRectMake(50, CGRectGetHeight(_mainView.frame) - 70, CGRectGetWidth(_mainView.frame) - 100, 50)];
-            couponButton.layer.masksToBounds = YES;
-            couponButton.layer.cornerRadius = 25;
-            
-            [couponButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [couponButton.titleLabel setFont:[UIFont customTitleLight:20]];
-            
-            [couponButton addTarget:self action:@selector(connectWithCoupon) forControlEvents:UIControlEventTouchUpInside];
-            [_mainView addSubview:couponButton];
-        }
-        
-        [couponButton setTitle:couponButtonData[@"text"] forState:UIControlStateNormal];
-        
-        if (couponButtonData[@"icon"] && ![couponButtonData[@"icon"] isBlank])
-            [couponButton setImageWithURL:couponButtonData[@"icon"] size:CGSizeMake(20, 20)];
-        
-        [couponButton setBackgroundColor:[UIColor colorWithHexString:couponButtonData[@"bgcolor"]] forState:UIControlStateNormal];
-        [couponButton setBackgroundColor:[[UIColor colorWithHexString:couponButtonData[@"bgcolor"]] colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
-    }
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
 
-#pragma mark - button action
+#pragma mark - views creation
 
-- (void)connect {
-    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"IntroSliders"];
-    [appDelegate displaySignin:nil];
+- (void)createBackgroundView {
+    backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    
+    backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(backgroundView.frame), CGRectGetHeight(backgroundView.frame))];
+    [backgroundImage setImage:[UIImage imageNamed:@"back-secure"]];
+    
+    [backgroundView addSubview:backgroundImage];
+    
+    [self.view addSubview:backgroundView];
 }
 
-- (void)connectWithCoupon {
-    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"IntroSliders"];
-    [appDelegate displaySignin:[Flooz sharedInstance].currentTexts.couponButton[@"coupon"]];
+- (void)createHomeView {
+    
+    CGFloat carouselHorizontalMargin = 30;
+    CGFloat carouselTopMargin = 40;
+    CGFloat logoTopMargin = 40;
+    CGFloat actionButtonHeight = FLActionButtonDefaultHeight;
+    CGFloat actionHorizontalMargin = 30;
+    CGFloat actionVerticalMargin = 40;
+    
+    homeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    
+    UILabel *logoTextLabel = [[UILabel alloc] initWithText:@"Pay, Like," textColor:[UIColor whiteColor] font:[UIFont customTitleLight:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    
+    CGRectSetX(logoTextLabel.frame, CGRectGetWidth(homeView.frame) / 2 - CGRectGetWidth(logoTextLabel.frame) / 2);
+    CGRectSetY(logoTextLabel.frame, logoTopMargin);
+    
+    UIImageView *logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home-title"]];
+    [logoView setContentMode:UIViewContentModeScaleAspectFill];
+    
+    CGFloat scaleFactor = CGRectGetWidth(logoView.frame) / CGRectGetHeight(logoView.frame);
+    
+    CGRectSetWidth(logoView.frame, CGRectGetWidth(homeView.frame) - 150);
+    CGRectSetHeight(logoView.frame, CGRectGetWidth(logoView.frame) / scaleFactor);
+    
+    CGRectSetX(logoView.frame, CGRectGetWidth(homeView.frame) / 2 - CGRectGetWidth(logoView.frame) / 2);
+    CGRectSetY(logoView.frame, CGRectGetMaxY(logoTextLabel.frame) + 10);
+    
+    CGFloat carouselHeight = CGRectGetHeight(homeView.frame) - (CGRectGetMaxY(logoView.frame) + carouselTopMargin) - (2 * actionVerticalMargin + actionButtonHeight) - 20;
+    
+    carouselView = [[iCarousel alloc] initWithFrame:CGRectMake(carouselHorizontalMargin, CGRectGetMaxY(logoView.frame) + carouselTopMargin, CGRectGetWidth(homeView.frame) - carouselHorizontalMargin * 2, carouselHeight)];
+    [carouselView setDelegate:self];
+    [carouselView setDataSource:self];
+    [carouselView setType:iCarouselTypeLinear];
+    [carouselView setScrollEnabled:YES];
+    [carouselView setPagingEnabled:YES];
+    
+    carouselControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(carouselView.frame), CGRectGetWidth(homeView.frame), 20)];
+    [carouselControl addTarget:self action:@selector(updatePage:) forControlEvents:UIControlEventValueChanged];
+    [carouselControl setHidesForSinglePage:YES];
+    [carouselControl setNumberOfPages:0];
+    [carouselControl setCurrentPage:0];
+    
+    FLActionButton *loginHomeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(actionHorizontalMargin, CGRectGetMaxY(carouselControl.frame) + actionVerticalMargin, CGRectGetWidth(homeView.frame) / 2 - 1.5 * actionHorizontalMargin, actionButtonHeight) title:[NSLocalizedString(@"Login", nil) uppercaseString]];
+    [loginHomeButton.titleLabel setFont:[UIFont customContentRegular:15]];
+    [loginHomeButton addTarget:self action:@selector(didLoginHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    FLActionButton *signupHomeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(homeView.frame) / 2 + actionHorizontalMargin / 2, CGRectGetMaxY(carouselControl.frame) + actionVerticalMargin, CGRectGetWidth(homeView.frame) / 2 - 1.5 * actionHorizontalMargin, actionButtonHeight) title:[NSLocalizedString(@"Signup", nil) uppercaseString]];
+    [signupHomeButton.titleLabel setFont:[UIFont customContentRegular:15]];
+    [signupHomeButton addTarget:self action:@selector(didSignupHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    [homeView addSubview:logoTextLabel];
+    [homeView addSubview:logoView];
+    [homeView addSubview:carouselView];
+    [homeView addSubview:carouselControl];
+    [homeView addSubview:loginHomeButton];
+    [homeView addSubview:signupHomeButton];
+    
+    [self.view addSubview:homeView];
 }
 
-- (void)showIntro {
-    FLSlider *slider = [Flooz sharedInstance].currentTexts.slider;
-    if (slider && slider.slides.count > 0) {
-        NSMutableArray *slides = [NSMutableArray new];
+- (void)createLoginView {
+    
+    CGFloat titleTopMargin = 15;
+    CGFloat facebookTopMargin = 40;
+    CGFloat loginHorizontalMargin = 30;
+    CGFloat separatorVerticalMargin = 30;
+    
+    loginData = [NSMutableDictionary new];
+    
+    loginView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    [loginView setHidden:YES];
+    [loginView setDynamic:YES];
+    [loginView setBlurRadius:10];
+    [loginView setTintColor:[UIColor clearColor]];
+    [loginView setUnderlyingView:backgroundView];
+    
+    UIButton *loginBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 40, 40)];
+    [loginBackButton setContentMode:UIViewContentModeScaleAspectFit];
+    [loginBackButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
+    [loginBackButton addTarget:self action:@selector(didLoginBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UILabel *loginTitle = [[UILabel alloc] initWithText:@"Ravi de vous revoir !" textColor:[UIColor whiteColor] font:[UIFont customTitleLight:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    
+    CGRectSetX(loginTitle.frame, CGRectGetWidth(loginView.frame) / 2 - CGRectGetWidth(loginTitle.frame) / 2);
+    CGRectSetY(loginTitle.frame, titleTopMargin);
+    
+    FLActionButton *facebookLoginButton = [[FLActionButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(loginTitle.frame) + facebookTopMargin, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, FLActionButtonDefaultHeight)];
+    
+    [facebookLoginButton setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
+    [facebookLoginButton.titleLabel setFont:[UIFont customTitleExtraLight:17]];
+    [facebookLoginButton setBackgroundColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.6] forState:UIControlStateNormal];
+    [facebookLoginButton setBackgroundColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.3]  forState:UIControlStateDisabled];
+    [facebookLoginButton setBackgroundColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.3]  forState:UIControlStateHighlighted];
+    [facebookLoginButton setImage:[UIImage imageNamed:@"facebook"] size:CGSizeMake(16.0f, 16.0f)];
+    
+    [facebookLoginButton addTarget:self action:@selector(didFacebookLoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(facebookLoginButton.frame) + separatorVerticalMargin, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, 20)];
+    
+    {
+        UILabel *separatorLabel = [[UILabel alloc] initWithText:@"OU" textColor:[UIColor customPlaceholder] font:[UIFont customContentLight:12] textAlignment:NSTextAlignmentCenter numberOfLines:1];
         
-        EAIntroView *intro = [[EAIntroView alloc] initWithFrame:self.view.bounds andPages:slides];
+        CGRectSetX(separatorLabel.frame, CGRectGetWidth(separatorView.frame) / 2 - CGRectGetWidth(separatorLabel.frame) / 2);
+        CGRectSetY(separatorLabel.frame, CGRectGetHeight(separatorView.frame) / 2 - CGRectGetHeight(separatorLabel.frame) / 2);
         
-        [[slider.slides lastObject] enableLastPageConfig:intro];
+        UIView *leftSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 10, CGRectGetWidth(separatorView.frame) / 2 - CGRectGetWidth(separatorLabel.frame) / 2 - 10, 0.5)];
+        [leftSeparator setBackgroundColor:[UIColor customPlaceholder]];
         
-        for (FLSlide *slide in slider.slides) {
-            [slides addObject:slide.page];
-        }
+        UIView *rightSeparator = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(separatorView.frame) / 2 + CGRectGetWidth(separatorLabel.frame) / 2 + 10, 10, CGRectGetWidth(separatorView.frame) / 2 - CGRectGetWidth(separatorLabel.frame) / 2 - 10, 0.5)];
+        [rightSeparator setBackgroundColor:[UIColor customPlaceholder]];
         
-        [intro setPages:slides];
-        [intro setDelegate:self];
-        [intro setSkipButtonAlignment:EAViewAlignmentRight];
-        [intro setSkipButtonY:SCREEN_HEIGHT - 10];
-        [intro setSkipButtonSideMargin:20];
-        [intro.skipButton.titleLabel setFont:[UIFont customTitleLight:17]];
-        [intro.skipButton setTitle:NSLocalizedString(@"Skip", @"Skip") forState:UIControlStateNormal];
-        [intro setUseMotionEffects:YES];
-        [intro setTapToNext:YES];
-        [intro setEaseOutCrossDisolves:YES];
+        [separatorView addSubview:separatorLabel];
+        [separatorView addSubview:leftSeparator];
+        [separatorView addSubview:rightSeparator];
+    }
+    
+    loginHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(loginView.frame), CGRectGetMaxY(separatorView.frame))];
+    
+    [loginHeaderView addSubview:loginTitle];
+    [loginHeaderView addSubview:facebookLoginButton];
+    [loginHeaderView addSubview:separatorView];
+    
+    FLTextFieldSignup *phoneTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"NumMobile", @"") for:loginData key:@"phone" position:CGPointMake(loginHorizontalMargin, separatorVerticalMargin)];
+    
+    CGRectSetX(phoneTextfield.frame, (SCREEN_WIDTH - phoneTextfield.frame.size.width) / 2);
+    
+    FLTextFieldSignup *passwordTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PASSWORD_LOGIN", @"") for:loginData key:@"password" position:CGPointMake(loginHorizontalMargin, CGRectGetMaxY(phoneTextfield.frame) + 10)];
+    [passwordTextfield seTsecureTextEntry:YES];
+    
+    [phoneTextfield addForNextClickTarget:self action:@selector(becomeFirstResponder)];
+    
+    CGRectSetX(phoneTextfield.frame, (CGRectGetWidth(loginView.frame) - CGRectGetWidth(phoneTextfield.frame)) / 2);
+    
+    [phoneTextfield addForNextClickTarget:passwordTextfield action:@selector(becomeFirstResponder)];
+    
+    FLKeyboardView  *inputView = [FLKeyboardView new];
+    [inputView noneCloseButton];
+    inputView.textField = phoneTextfield.textfield;
+    phoneTextfield.textfield.inputView = inputView;
+    
+    FLActionButton *loginButton = [[FLActionButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + 30, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Login", nil)];
+    [loginButton addTarget:self action:@selector(didLoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *forgotPasswordButton = [[UIButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetHeight(loginView.frame) - CGRectGetMaxY(loginHeaderView.frame) - 30, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, 15)];
+    [forgotPasswordButton setTitle:NSLocalizedString(@"LOGIN_PASSWORD_FORGOT", nil) forState:UIControlStateNormal];
+    [forgotPasswordButton.titleLabel setFont:[UIFont customContentLight:14]];
+    [forgotPasswordButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
+    [forgotPasswordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [forgotPasswordButton addTarget:self action:@selector(didForgotPasswordButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    loginFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loginHeaderView.frame), CGRectGetWidth(loginView.frame), CGRectGetMaxY(forgotPasswordButton.frame) + separatorVerticalMargin)];
+    [loginFormView addSubview:phoneTextfield];
+    [loginFormView addSubview:passwordTextfield];
+    [loginFormView addSubview:loginButton];
+    [loginFormView addSubview:forgotPasswordButton];
+    
+    [loginView addSubview:loginHeaderView];
+    [loginView addSubview:loginFormView];
+    [loginView addSubview:loginBackButton];
+    
+    [self.view addSubview:loginView];
+}
+
+- (void)createSignupView {
+    
+    CGFloat titleTopMargin = 15;
+    CGFloat facebookTopMargin = 40;
+    CGFloat signupHorizontalMargin = 30;
+    CGFloat separatorVerticalMargin = 20;
+    CGFloat signupFormVerticalMargin = 10;
+    
+    signupData = [NSMutableDictionary new];
+    signupFormFields = [NSMutableArray new];
+    
+    signupView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    [signupView setDynamic:YES];
+    [signupView setBlurRadius:10];
+    [signupView setTintColor:[UIColor clearColor]];
+    [signupView setUnderlyingView:backgroundView];
+    [signupView setHidden:YES];
+    
+    signupScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetHeight(signupView.frame))];
+    [signupScrollView setScrollEnabled:NO];
+    [signupScrollView setBounces:NO];
+    
+    UIButton *signupBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 40, 40)];
+    [signupBackButton setContentMode:UIViewContentModeScaleAspectFit];
+    [signupBackButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
+    [signupBackButton addTarget:self action:@selector(didSignupBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *loginTitle = [[UILabel alloc] initWithText:@"Bienvenue !" textColor:[UIColor whiteColor] font:[UIFont customTitleLight:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    [loginTitle setTag:10];
+    
+    CGRectSetX(loginTitle.frame, CGRectGetWidth(signupView.frame) / 2 - CGRectGetWidth(loginTitle.frame) / 2);
+    CGRectSetY(loginTitle.frame, titleTopMargin);
+    
+    signupHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(signupScrollView.frame), CGRectGetMaxY(loginTitle.frame))];
+    
+    [signupHeaderView addSubview:signupBackButton];
+    [signupHeaderView addSubview:loginTitle];
+    
+    FLActionButton *facebookSignupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, facebookTopMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight)];
+    
+    [facebookSignupButton setTitle:NSLocalizedString(@"LOGIN_FACEBOOK", nil) forState:UIControlStateNormal];
+    [facebookSignupButton.titleLabel setFont:[UIFont customTitleExtraLight:17]];
+    [facebookSignupButton setBackgroundColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.6] forState:UIControlStateNormal];
+    [facebookSignupButton setBackgroundColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.3]  forState:UIControlStateDisabled];
+    [facebookSignupButton setBackgroundColor:[UIColor colorWithIntegerRed:59 green:87 blue:157 alpha:.3]  forState:UIControlStateHighlighted];
+    [facebookSignupButton setImage:[UIImage imageNamed:@"facebook"] size:CGSizeMake(16.0f, 16.0f)];
+    
+    [facebookSignupButton addTarget:self action:@selector(didFacebookSignupButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(facebookSignupButton.frame) + separatorVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, 20)];
+    
+    {
+        UILabel *separatorLabel = [[UILabel alloc] initWithText:@"OU" textColor:[UIColor customPlaceholder] font:[UIFont customContentLight:12] textAlignment:NSTextAlignmentCenter numberOfLines:1];
         
-        [intro showInView:self.view animateDuration:0.3];
+        CGRectSetX(separatorLabel.frame, CGRectGetWidth(separatorView.frame) / 2 - CGRectGetWidth(separatorLabel.frame) / 2);
+        CGRectSetY(separatorLabel.frame, CGRectGetHeight(separatorView.frame) / 2 - CGRectGetHeight(separatorLabel.frame) / 2);
+        
+        UIView *leftSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 10, CGRectGetWidth(separatorView.frame) / 2 - CGRectGetWidth(separatorLabel.frame) / 2 - 10, 0.5)];
+        [leftSeparator setBackgroundColor:[UIColor customPlaceholder]];
+        
+        UIView *rightSeparator = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(separatorView.frame) / 2 + CGRectGetWidth(separatorLabel.frame) / 2 + 10, 10, CGRectGetWidth(separatorView.frame) / 2 - CGRectGetWidth(separatorLabel.frame) / 2 - 10, 0.5)];
+        [rightSeparator setBackgroundColor:[UIColor customPlaceholder]];
+        
+        [separatorView addSubview:separatorLabel];
+        [separatorView addSubview:leftSeparator];
+        [separatorView addSubview:rightSeparator];
+    }
+    
+    signupFbView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(signupHeaderView.frame), CGRectGetWidth(signupScrollView.frame), CGRectGetMaxY(separatorView.frame))];
+    
+    [signupFbView addSubview:facebookSignupButton];
+    [signupFbView addSubview:separatorView];
+    
+    //    CGFloat size = 60;
+    //    FLUserView *picView = [[FLUserView alloc] initWithFrame:CGRectMake(((CGRectGetWidth(signupView.frame) - size) / 2.0) - 5.0f, signupFormVerticalMargin, size, size)];
+    //    [picView setTag:42];
+    //    [picView setContentMode:UIViewContentModeScaleAspectFit];
+    //
+    //    UILabel *presetFullName = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentLight:17] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    //    [presetFullName setTag:43];
+    //
+    //    CGRectSetWidth(presetFullName.frame, CGRectGetWidth(signupFormView.frame) - 2 * signupHorizontalMargin);
+    //    CGRectSetY(presetFullName.frame, CGRectGetMaxY(picView.frame) + signupFormVerticalMargin);
+    //
+    //    UILabel *presetEmail = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentLight:12] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    //    [presetEmail setTag:44];
+    //
+    //    CGRectSetWidth(presetEmail.frame, CGRectGetWidth(signupFormView.frame) - 2 * signupHorizontalMargin);
+    //    CGRectSetY(presetEmail.frame, CGRectGetMaxY(presetFullName.frame) + signupFormVerticalMargin / 2);
+    //
+    //    signupFbPicView = [[UIView alloc] initWithFrame:CGRectMake(0, signupFormVerticalMargin, CGRectGetWidth(signupView.frame), CGRectGetMaxX(presetEmail.frame))];
+    //    [signupFbPicView setHidden:YES];
+    //
+    //    [signupFbPicView addSubview:picView];
+    //    [signupFbPicView addSubview:presetFullName];
+    //    [signupFbPicView addSubview:presetEmail];
+    
+    FLTextFieldSignup *fullnameTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_LASTNAME", @"") for:signupData key:@"lastName" position:CGPointMake(signupHorizontalMargin, separatorVerticalMargin / 2) placeholder2:NSLocalizedString(@"FIELD_FIRSTNAME", @"") key2:@"firstName"];
+    [fullnameTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
+    
+    CGRectSetX(fullnameTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(fullnameTextfield.frame)) / 2);
+    
+    FLTextFieldSignup *usernameTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_USERNAME", @"") for:signupData key:@"nick" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(fullnameTextfield.frame) + signupFormVerticalMargin)];
+    [usernameTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
+    
+    CGRectSetX(usernameTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(usernameTextfield.frame)) / 2);
+    
+    FLTextFieldSignup *phoneTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE", @"") for:signupData key:@"phone" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(usernameTextfield.frame) + signupFormVerticalMargin)];
+    [phoneTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
+    
+    CGRectSetX(phoneTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(phoneTextfield.frame)) / 2);
+    
+    FLTextFieldSignup *emailTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_EMAIL", @"") for:signupData key:@"email" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(phoneTextfield.frame) + signupFormVerticalMargin)];
+    [emailTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
+    
+    CGRectSetX(emailTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(emailTextfield.frame)) / 2);
+    
+    FLTextFieldSignup *passwordTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PASSWORD", @"") for:signupData key:@"password" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(emailTextfield.frame) + signupFormVerticalMargin)];
+    [passwordTextfield seTsecureTextEntry:YES];
+    [passwordTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
+    
+    CGRectSetX(passwordTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(passwordTextfield.frame)) / 2);
+    
+    FLKeyboardView  *inputView = [FLKeyboardView new];
+    [inputView noneCloseButton];
+    inputView.textField = phoneTextfield.textfield;
+    phoneTextfield.textfield.inputView = inputView;
+    
+    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Signup", nil)];
+    [signupButton setTag:89];
+    [signupButton addTarget:self action:@selector(didSignupButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    TTTAttributedLabel *tttLabel = [TTTAttributedLabel newWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(signupButton.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, 45)];
+    {
+        NSString *labelText = NSLocalizedString(@"SIGNUP_READ_CGU", @"");
+        [tttLabel setNumberOfLines:0];
+        [tttLabel setLineBreakMode:NSLineBreakByWordWrapping];
+        [tttLabel setTextAlignment:NSTextAlignmentCenter];
+        [tttLabel setTextColor:[UIColor customPlaceholder]];
+        [tttLabel setFont:[UIFont customTitleExtraLight:13]];
+        NSRange CGURange = [labelText rangeOfString:NSLocalizedString(@"SIGNUP_READ_CGU", @"")];
+        [tttLabel setText:labelText afterInheritingLabelAttributesAndConfiguringWithBlock: ^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+            
+            return mutableAttributedString;
+        }];
+        [tttLabel sizeToFit];
+        [tttLabel setTag:90];
+        [tttLabel setLinkAttributes:@{ NSForegroundColorAttributeName : [UIColor customPlaceholder] }];
+        [tttLabel addLinkToURL:[NSURL URLWithString:@"action://show-CGU"] withRange:CGURange];
+        [tttLabel setDelegate:self];
+        CGRectSetX(tttLabel.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(tttLabel.frame)) / 2);
+    }
+    
+    signupFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(signupFbView.frame), CGRectGetWidth(signupScrollView.frame), CGRectGetMaxY(tttLabel.frame))];
+    
+    [signupFormFields addObject:fullnameTextfield];
+    [signupFormFields addObject:usernameTextfield];
+    [signupFormFields addObject:phoneTextfield];
+    [signupFormFields addObject:emailTextfield];
+    [signupFormFields addObject:passwordTextfield];
+    
+    [signupFormView addSubview:fullnameTextfield];
+    [signupFormView addSubview:usernameTextfield];
+    [signupFormView addSubview:phoneTextfield];
+    [signupFormView addSubview:emailTextfield];
+    [signupFormView addSubview:passwordTextfield];
+    [signupFormView addSubview:signupButton];
+    [signupFormView addSubview:tttLabel];
+    
+    //    [signupScrollView addSubview:signupFbPicView];
+    [signupScrollView addSubview:signupHeaderView];
+    [signupScrollView addSubview:signupFbView];
+    [signupScrollView addSubview:signupFormView];
+    
+    [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetMaxY(signupFormView.frame) + 10)];
+    
+    [signupView addSubview:signupScrollView];
+    
+    [self.view addSubview:signupView];
+}
+
+- (void)createForgetView {
+    CGFloat titleTopMargin = 40;
+    CGFloat forgetHorizontalMargin = 30;
+    CGFloat forgetFormVerticalMargin = 20;
+    
+    forgetData = [NSMutableDictionary new];
+    
+    forgetView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    [forgetView setDynamic:YES];
+    [forgetView setBlurRadius:10];
+    [forgetView setTintColor:[UIColor clearColor]];
+    [forgetView setUnderlyingView:backgroundView];
+    [forgetView setHidden:YES];
+    
+    UIButton *forgetBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 40, 40)];
+    [forgetBackButton setContentMode:UIViewContentModeScaleAspectFit];
+    [forgetBackButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
+    [forgetBackButton addTarget:self action:@selector(didForgetBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *forgetTitle = [[UILabel alloc] initWithText:@"Mot de passe oublié !" textColor:[UIColor whiteColor] font:[UIFont customTitleLight:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    
+    CGRectSetX(forgetTitle.frame, CGRectGetWidth(forgetView.frame) / 2 - CGRectGetWidth(forgetTitle.frame) / 2);
+    CGRectSetY(forgetTitle.frame, titleTopMargin);
+    
+    FLTextFieldSignup *forgetLoginTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_EMAIL", nil) for:forgetData key:@"email" position:CGPointMake(forgetHorizontalMargin, CGRectGetMaxY(forgetTitle.frame) + forgetFormVerticalMargin)];
+    
+    CGRectSetX(forgetLoginTextfield.frame, (CGRectGetWidth(forgetView.frame) - CGRectGetWidth(forgetLoginTextfield.frame)) / 2);
+    
+    FLActionButton *forgetButton = [[FLActionButton alloc] initWithFrame:CGRectMake(forgetHorizontalMargin, CGRectGetMaxY(forgetLoginTextfield.frame) + forgetFormVerticalMargin, CGRectGetWidth(forgetView.frame) - forgetHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil)];
+    [forgetButton addTarget:self action:@selector(didForgetNextButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    [forgetView addSubview:forgetBackButton];
+    [forgetView addSubview:forgetTitle];
+    [forgetView addSubview:forgetLoginTextfield];
+    [forgetView addSubview:forgetButton];
+    
+    [self.view addSubview:forgetView];
+}
+
+- (void)setUserDataForSignup:(NSDictionary*)data {
+    [signupData addEntriesFromDictionary:data];
+    
+    if (!signupVisible) {
+        [UIView transitionWithView:self.view
+                          duration:0.5f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [homeView setHidden:YES];
+                            [loginView setHidden:YES];
+                            [forgetView setHidden:YES];
+                            [signupView setHidden:NO];
+                        } completion:^(BOOL finished) {
+                            if (finished) {
+                                loginVisible = NO;
+                                signupVisible = YES;
+                                homeVisible = NO;
+                            }
+                            
+                            facebookVisible = NO;
+                            [signupFbView setHidden:YES];
+                            
+                            CGRectSetY(signupFormView.frame, CGRectGetMaxY(signupHeaderView.frame));
+                            
+                            [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetMaxY(signupFormView.frame) + 10)];
+                        }];
+    } else {
+        [signupFbView setHidden:YES];
+        facebookVisible = NO;
+        
+        CGRectSetY(signupFormView.frame, CGRectGetMaxY(signupHeaderView.frame));
+        
+        [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetMaxY(signupFormView.frame) + 10)];
+    }
+    
+    for (FLTextFieldSignup *textfield in signupFormFields) {
+        [textfield reloadTextField];
     }
 }
 
-#pragma mark - EAIntroView delegate
+#pragma mark - button action
 
-- (void)intro:(EAIntroView *)introView pageAppeared:(EAIntroPage *)page withIndex:(NSUInteger)pageIndex {
-    if (pageIndex == 0)
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+- (void)didLoginHomeButtonClick {
+    [UIView transitionWithView:self.view
+                      duration:0.5f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [homeView setHidden:YES];
+                        [loginView setHidden:NO];
+                    } completion:^(BOOL finished) {
+                        if (finished)
+                            loginVisible = YES;
+                    }];
 }
 
-- (void)introDidFinish:(EAIntroView *)introView {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+- (void)didSignupHomeButtonClick {
+    [UIView transitionWithView:self.view
+                      duration:0.5f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [homeView setHidden:YES];
+                        [signupView setHidden:NO];
+                    } completion:^(BOOL finished) {
+                        if (finished)
+                            signupVisible = YES;
+                    }];
+}
+
+- (void)didLoginBackButtonClick {
+    if (keyboardVisible) {
+        [self.view endEditing:YES];
+    } else {
+        [UIView transitionWithView:self.view
+                          duration:0.5f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [homeView setHidden:NO];
+                            [loginView setHidden:YES];
+                        } completion:^(BOOL finished) {
+                            if (finished) {
+                                loginVisible = NO;
+                                homeVisible = YES;
+                            }
+                        }];
+    }
+}
+
+- (void)didSignupBackButtonClick {
+    if (keyboardVisible) {
+        [self.view endEditing:YES];
+    } else {
+        [UIView transitionWithView:self.view
+                          duration:0.5f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [homeView setHidden:NO];
+                            [signupView setHidden:YES];
+                        } completion:^(BOOL finished) {
+                            if (finished) {
+                                signupVisible = NO;
+                                homeVisible = YES;
+                            }
+                        }];
+    }
+}
+
+- (void)didForgetBackButtonClick {
+    if (keyboardVisible) {
+        [self.view endEditing:YES];
+    } else {
+        [UIView transitionWithView:self.view
+                          duration:0.5f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [loginView setHidden:NO];
+                            [forgetView setHidden:YES];
+                        } completion:^(BOOL finished) {
+                            if (finished)
+                                loginVisible = YES;
+                        }];
+    }
+}
+
+- (void)didFacebookLoginButtonClick {
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] connectFacebook];
+}
+
+- (void)didFacebookSignupButtonClick {
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] connectFacebook];
+}
+
+- (void)didLoginButtonClick {
+    [[Flooz sharedInstance] showLoadView];
+    
+    if (!loginData[@"phone"])
+        [loginData setObject:@"" forKey:@"phone"];
+    
+    [[Flooz sharedInstance] loginWithPseudoAndPassword:@{@"login": loginData[@"phone"], @"password": loginData[@"password"]} success: ^(id result) {
+        [appDelegate goToAccountViewController];
+    }];
+}
+
+- (void)didForgotPasswordButtonClick {
+    [self.view endEditing:YES];
+    
+    [UIView transitionWithView:self.view
+                      duration:0.5f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [forgetView setHidden:NO];
+                        [loginView setHidden:YES];
+                    } completion:^(BOOL finished) {
+                        if (finished)
+                            loginVisible = NO;
+                    }];
+}
+
+- (void)didForgetNextButtonClick {
+    [[Flooz sharedInstance] passwordForget:forgetData[@"email"] success:^(NSDictionary *result){
+        [self didForgetBackButtonClick];
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+- (void)didSignupButtonClick {
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] signupPassStep:@"profile" user:signupData success:^(NSDictionary *result) {
+        if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] signupPassStep:@"signup" user:signupData success:^(NSDictionary *result) {
+                [appDelegate resetTuto];
+                [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
+                
+                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+                
+                if (nextViewController) {
+                    SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+                    nextViewController.userDic = signupData;
+                    
+                    [self presentViewController:signupNavigationController animated:YES completion:nil];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        } else {
+            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+            
+            if (nextViewController) {
+                SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+                nextViewController.userDic = signupData;
+                
+                [self presentViewController:signupNavigationController animated:YES completion:nil];
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+#pragma mark - Textfields Delegate
+
+- (void)signupTextFieldNext {
+    BOOL nextFocus = false;
+    
+    for (FLTextFieldSignup *field in signupFormFields) {
+        if (nextFocus && ![field isHidden]) {
+            [field becomeFirstResponder];
+            CGRect activeRect = field.frame;
+            activeRect.origin.x += signupFormView.frame.origin.x;
+            activeRect.origin.y += signupFormView.frame.origin.y;
+            
+            [signupScrollView scrollRectToVisible:activeRect animated:YES];
+            nextFocus = false;
+            break;
+        }
+        
+        if ([field isFirstResponder]) {
+            nextFocus = true;
+        }
+    }
+    
+    if (nextFocus)
+        [self.view endEditing:YES];
+}
+
+#pragma mark - iCarousel Data Source
+
+- (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel {
+    FLSlider *slider = [Flooz sharedInstance].currentTexts.slider;
+    
+    if (slider)
+        return slider.slides.count;
+    return 0;
+}
+
+
+- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
+    FLSlider *slider = [Flooz sharedInstance].currentTexts.slider;
+    
+    UIView *itemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(carousel.frame), CGRectGetHeight(carousel.frame))];
+    
+    UILabel *slideText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(itemView.frame), 20)];
+    [slideText setTextAlignment:NSTextAlignmentCenter];
+    [slideText setNumberOfLines:0];
+    [slideText setLineBreakMode:NSLineBreakByWordWrapping];
+    [slideText setFont:[UIFont customContentRegular:17]];
+    [slideText setTextColor:[UIColor whiteColor]];
+    [slideText setText:[slider.slides[index] text]];
+    [slideText sizeToFit];
+    
+    CGRectSetX(slideText.frame, CGRectGetWidth(itemView.frame) / 2 - CGRectGetWidth(slideText.frame) / 2);
+    CGRectSetY(slideText.frame, CGRectGetHeight(itemView.frame) - CGRectGetHeight(slideText.frame) - 20);
+    
+    [itemView addSubview:slideText];
+    
+    return itemView;
+}
+
+#pragma mark - iCarousel Delegate
+
+- (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value {
+    if (option == iCarouselOptionWrap)
+        return 1.0f;
+    else if (option == iCarouselOptionSpacing)
+        return 1.5f;
+    
+    return value;
+}
+
+- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel {
+    [carouselTimer invalidate];
+    carouselTimer = [NSTimer scheduledTimerWithTimeInterval:CAROUSEL_AUTOSLIDE_TIMER target:self selector:@selector(changeCurrentCarouselPage) userInfo:nil repeats:NO];
+    
+    [carouselControl setCurrentPage:carousel.currentItemIndex];
+}
+
+- (void)updatePage:(UIPageControl *)pageControl {
+    [carouselView scrollToItemAtIndex:pageControl.currentPage animated:YES];
+}
+
+- (void)changeCurrentCarouselPage {
+    unsigned long currentIndex = (carouselView.currentItemIndex + 1) % [Flooz sharedInstance].currentTexts.slider.slides.count;
+    
+    [carouselView scrollToItemAtIndex:currentIndex animated:YES];
+}
+
+#pragma mark - TTTAttributedLabel Delegate
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
+    if ([[url scheme] hasPrefix:@"action"]) {
+        if ([[url host] hasPrefix:@"show-CGU"]) {
+            [self displayCGU];
+        }
+    }
+}
+
+- (void)displayCGU {
+    WebViewController *controller = [WebViewController new];
+    controller.showCross = YES;
+    [controller setUrl:@"https://www.flooz.me/cgu?layout=webview"];
+    controller.title = NSLocalizedString(@"INFORMATIONS_TERMS", nil);
+    UINavigationController *controller2 = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:controller2 animated:YES completion:NULL];
+}
+
+#pragma mark - Keyboard Notifications
+
+- (void)registerForKeyboardNotifications {
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [self registerNotification:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [self registerNotification:@selector(keyboardDidDisappear:) name:UIKeyboardDidHideNotification object:nil];
+    [self registerNotification:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification {
+    
+}
+
+- (void)keyboardWillAppear:(NSNotification *)notification {
+    keyboardVisible = YES;
+    
+    if (loginVisible) {
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [loginHeaderView setAlpha:0.0f];
+            CGRectSetY(loginFormView.frame, 40);
+        } completion:^(BOOL finished) {
+            [loginHeaderView setHidden:YES];
+        }];
+    } else if (signupVisible) {
+        [signupScrollView setScrollEnabled:YES];
+        NSDictionary* info = [notification userInfo];
+        CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        
+        CGRectSetHeight(signupScrollView.frame, CGRectGetHeight(signupView.frame) - kbSize.height);
+        
+        if (facebookVisible) {
+            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                [signupFbView setAlpha:0.0f];
+                CGRectSetY(signupFormView.frame, CGRectGetMaxY(signupHeaderView.frame));
+                
+                [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetMaxY(signupFormView.frame) + 10)];
+                
+            } completion:^(BOOL finished) {
+                [signupFbView setHidden:YES];
+                
+                UIView *activeField = nil;
+                
+                for (FLTextFieldSignup *textfield in signupFormFields) {
+                    if ([textfield isFirstResponder]) {
+                        activeField = textfield;
+                        break;
+                    }
+                }
+                
+                CGRect activeRect = activeField.frame;
+                activeRect.origin.x += signupFormView.frame.origin.x;
+                activeRect.origin.y += signupFormView.frame.origin.y;
+                
+                [signupScrollView scrollRectToVisible:activeRect animated:YES];
+            }];
+        } else {
+            UIView *activeField = nil;
+            
+            for (FLTextFieldSignup *textfield in signupFormFields) {
+                if ([textfield isFirstResponder]) {
+                    activeField = textfield;
+                    break;
+                }
+            }
+            
+            CGRect activeRect = activeField.frame;
+            activeRect.origin.x += signupFormView.frame.origin.x;
+            activeRect.origin.y += signupFormView.frame.origin.y;
+            
+            [signupScrollView scrollRectToVisible:activeRect animated:YES];
+        }
+        
+    }
+}
+
+- (void)keyboardDidDisappear:(NSNotification *)notification {
+    
+}
+
+- (void)keyboardWillDisappear:(NSNotification *)notification {
+    keyboardVisible = NO;
+    
+    if (loginVisible) {
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            CGRectSetY(loginFormView.frame, CGRectGetMaxY(loginHeaderView.frame));
+        } completion:^(BOOL finished) {
+            [loginHeaderView setHidden:NO];
+            [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                [loginHeaderView setAlpha:1.0f];
+            } completion:nil];
+        }];
+    } else if (signupVisible) {
+        [signupScrollView setScrollEnabled:NO];
+        CGRectSetHeight(signupScrollView.frame, CGRectGetHeight(self.view.frame));
+        [signupScrollView scrollsToTop];
+        
+        if (facebookVisible) {
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                CGRectSetY(signupFormView.frame, CGRectGetMaxY(signupFbView.frame));
+            } completion:^(BOOL finished) {
+                [signupFbView setHidden:NO];
+                [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                    [signupFbView setAlpha:1.0f];
+                } completion:nil];
+            }];
+        }
+    }
 }
 
 @end

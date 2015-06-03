@@ -14,6 +14,7 @@
 @property (nonatomic, retain) NSNumber *amount;
 @property (nonatomic, retain) NSString *why;
 @property (nonatomic, retain) NSString *whyPlaceholder;
+@property (nonatomic, retain) NSString *image;
 @property (nonatomic) TransactionType type;
 @property (nonatomic, retain) NSDictionary *payload;
 @property (nonatomic) BOOL blockAmount;
@@ -25,8 +26,8 @@
 @property (nonatomic) BOOL focusWhy;
 @property (nonatomic) BOOL isDemo;
 @property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSArray *demoSteps;
-@property (nonatomic, retain) NSDictionary *demoIntro;
+@property (nonatomic, retain) NSArray *steps;
+@property (nonatomic, retain) NSDictionary *popup;
 
 - (id)initWithJson:(NSDictionary *)json;
 

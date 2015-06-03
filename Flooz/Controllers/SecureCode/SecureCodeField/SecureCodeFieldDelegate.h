@@ -2,7 +2,7 @@
 //  SecureCodeFieldDelegate.h
 //  Flooz
 //
-//  Created by jonathan on 2014-03-18.
+//  Created by olivier on 2014-03-18.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

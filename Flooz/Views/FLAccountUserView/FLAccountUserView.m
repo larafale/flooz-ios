@@ -2,7 +2,7 @@
 //  FLAccountUserView.m
 //  Flooz
 //
-//  Created by jonathan on 1/23/2014.
+//  Created by olivier on 1/23/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -20,10 +20,8 @@
 
 
 - (id)initWithWidth:(CGFloat)width {
-	self = [super initWithFrame:CGRectMakeSize(PPScreenWidth(), 243.0f)];
+	self = [super initWithFrame:CGRectMakeSize(PPScreenWidth(), 225.0f)];
 	if (self) {
-		[self setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"MenuBackground"]]];
-
 		_widthAvalaible = width;
 		[self commonInit];
 		[self reloadData];
@@ -34,7 +32,7 @@
 - (void)commonInit {
 	{
 		CGFloat size = 70.0;
-        userView = [[FLUserView alloc] initWithFrame:CGRectMake((_widthAvalaible - size) / 2., 20.0f, size, size)];
+        userView = [[FLUserView alloc] initWithFrame:CGRectMake((_widthAvalaible - size) / 2., 30.0f, size, size)];
         [userView setUserInteractionEnabled:YES];
 		[self addSubview:userView];
 	}
@@ -77,7 +75,7 @@
 
 	{
 		CGFloat size = 90.0f;
-		_wallet = [UIButton newWithFrame:CGRectMake((_widthAvalaible - size) / 2.0f, CGRectGetMaxY(username.frame) + 20.0f, size, 30.0f)];
+		_wallet = [UIButton newWithFrame:CGRectMake((_widthAvalaible - size) / 2.0f, CGRectGetMaxY(username.frame) + 15.0f, size, 30.0f)];
 
 		[_wallet.layer setBorderWidth:1.0f];
 		[_wallet.layer setBorderColor:[UIColor whiteColor].CGColor];

@@ -2,7 +2,7 @@
 //  FLUser.h
 //  Flooz
 //
-//  Created by jonathan on 1/20/2014.
+//  Created by olivier on 1/20/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -66,6 +66,7 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) NSString *record;
 @property (strong, nonatomic) NSString *device;
 @property (strong, nonatomic) NSDictionary *settings;
+@property (strong, nonatomic) NSDictionary *ux;
 @property (strong, nonatomic) NSString *invitCode;
 @property (strong, nonatomic) NSString *hasSecureCode;
 @property (strong, nonatomic) NSDictionary *json;

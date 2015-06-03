@@ -2,7 +2,7 @@
 //  TimelineViewController.m
 //  Flooz
 //
-//  Created by jonathan on 12/26/2013.
+//  Created by olivier on 12/26/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
@@ -10,7 +10,6 @@
 
 #import "TransactionCell.h"
 
-#import "MenuNewTransactionViewController.h"
 #import "NewTransactionViewController.h"
 #import "TransactionViewController.h"
 #import "NotificationsViewController.h"
@@ -289,7 +288,7 @@
 
 - (void)showTutoPublic {
     [self cancelTimer];
-
+    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePublic]) {
         [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoTimelinePublic];
         tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:NSLocalizedString(@"TUTO_PUBLIC_TITLE", nil) message:NSLocalizedString(@"TUTO_PUBLIC_MSG", nil) button:NSLocalizedString(@"GLOBAL_GOTIT", nil) action:^(FLTutoPopoverViewController *viewController) {
@@ -306,7 +305,7 @@
 
 - (void)showTutoPrivate {
     [self cancelTimer];
-
+    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePrivate]) {
         [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoTimelinePrivate];
         tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:NSLocalizedString(@"TUTO_PRIVATE_TITLE", nil) message:NSLocalizedString(@"TUTO_PRIVATE_MSG", nil) button:NSLocalizedString(@"GLOBAL_GOTIT", nil) action:^(FLTutoPopoverViewController *viewController) {
@@ -465,12 +464,21 @@
 - (void)presentMenuTransactionController {
     [[appDelegate myTopViewController] mz_dismissFormSheetControllerAnimated:NO completionHandler:nil];
     
-    NewTransactionViewController *newTransac = [[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeBase];
-    
-    FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:newTransac];
-    controller.modalPresentationStyle = UIModalPresentationCustom;
-    
-    [self presentViewController:controller animated:YES completion:NULL];
+    NSDictionary *ux = [[[Flooz sharedInstance] currentUser] ux];
+    if (ux && ux[@"homeButton"] && [ux[@"homeButton"] count] > 0) {
+        NSArray *triggers = ux[@"homeButton"];
+        for (NSDictionary *triggerData in triggers) {
+            FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
+            [[Flooz sharedInstance] handleTrigger:trigger];
+        }
+    } else {
+        NewTransactionViewController *newTransac = [[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeBase];
+        
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:newTransac];
+        controller.modalPresentationStyle = UIModalPresentationCustom;
+        
+        [self presentViewController:controller animated:YES completion:NULL];
+    }
 }
 
 - (void)showNextPage {
@@ -513,7 +521,7 @@
     if (filter) {
         selectedTitleIndex = filter;
     }
-
+    
     if (focus) {
         [self focusOnTimeline:filter];
     }

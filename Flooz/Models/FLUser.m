@@ -2,7 +2,7 @@
 //  FLUser.m
 //  Flooz
 //
-//  Created by jonathan on 1/20/2014.
+//  Created by olivier on 1/20/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -54,8 +54,10 @@
     
     if ([json objectForKey:@"birthdate"]) {
         NSArray *arrayB = [[json objectForKey:@"birthdate"] componentsSeparatedByString:@"-"];
-        NSString *birthdate = [NSString stringWithFormat:@"%@ / %@ / %@", [arrayB[2] substringToIndex:2], arrayB[1], arrayB[0]];
-        _birthdate = birthdate;
+        if (arrayB.count == 3) {
+            NSString *birthdate = [NSString stringWithFormat:@"%@ / %@ / %@", [arrayB[2] substringToIndex:2], arrayB[1], arrayB[0]];
+            _birthdate = birthdate;
+        }
     }
     
     if ([_avatarURL isEqualToString:@"/img/nopic.png"]) {
@@ -69,6 +71,7 @@
     _friendsCount = [NSNumber numberWithInteger:[[json objectForKey:@"friends"] count]];
     _transactionsCount = [[[json objectForKey:@"stats"] objectForKey:@"flooz"] objectForKey:@"total"];
     
+    _ux = json[@"ux"];
     _settings = json[@"settings"];
     
     {

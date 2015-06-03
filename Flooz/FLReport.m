@@ -33,4 +33,29 @@
     return self;
 }
 
+- (id)initWithType:(FLReportType)reportType transac:(FLTransaction *)transac  {
+    self = [super init];
+    if (self) {
+        
+        self.reportType = reportType;
+        
+        switch (reportType) {
+            case ReportTransaction:
+                self.type = @"line";
+                break;
+            case ReportUser:
+                self.type = @"user";
+                break;
+            default:
+                break;
+        }
+        
+        self.resourceID = [transac.transactionId copy];
+        self.transaction = transac;
+        self.content = @"";
+    }
+    return self;
+}
+
+
 @end

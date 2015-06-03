@@ -76,7 +76,8 @@ typedef enum {
 	SecureCodeModeChangeOld, // Ancien code pour le changer
 	SecureCodeModeChangeNew, // Nouveau code
 	SecureCodeModeChangeConfirm, // Nouveau code confirmation
-    SecureCodeModeChangePass // Changement du mot de passe
+    SecureCodeModeChangePass, // Changement du mot de passe
+    SecureCodeModeSecret // Changement du mot de passe avec la question secrete
 } SecureCodeMode;
 
 //#define SIMUL_FIRST_LAUNCH

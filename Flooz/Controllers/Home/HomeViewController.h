@@ -2,15 +2,17 @@
 //  HomeViewController.h
 //  Flooz
 //
-//  Created by jonathan on 12/26/2013.
+//  Created by olivier on 12/26/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-#import <EAIntroView/EAIntroView.h>
+#import "iCarousel.h"
 
-@interface HomeViewController : GlobalViewController <EAIntroDelegate> {
+@interface HomeViewController : GlobalViewController <iCarouselDataSource, iCarouselDelegate, TTTAttributedLabelDelegate> {
 }
+
+- (void)setUserDataForSignup:(NSDictionary*)data;
 
 @end

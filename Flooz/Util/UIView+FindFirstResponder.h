@@ -2,7 +2,7 @@
 //  UIView+FindFirstResponder.h
 //  Flooz
 //
-//  Created by jonathan on 2014-03-14.
+//  Created by olivier on 2014-03-14.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

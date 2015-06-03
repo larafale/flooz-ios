@@ -2,7 +2,7 @@
 //  UIColor+custom.h
 //  Flooz
 //
-//  Created by jonathan on 12/30/2013.
+//  Created by olivier on 12/30/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 

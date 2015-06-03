@@ -2,8 +2,8 @@
 //  FLTexts.m
 //  Flooz
 //
-//  Created by Epitech on 2/24/15.
-//  Copyright (c) 2015 Jonathan Tribouharet. All rights reserved.
+//  Created by Olivier on 2/24/15.
+//  Copyright (c) 2015 olivier Tribouharet. All rights reserved.
 //
 
 #import "FLTexts.h"
@@ -32,6 +32,7 @@
     self.notificationsText = json[@"notificationsText"];
     self.slider = [[FLSlider alloc] initWithJson:json[@"slider"]];
     self.couponButton = json[@"couponButton"];
+    self.secretQuestions = json[@"secretQuestions"];
 }
 
 @end

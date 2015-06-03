@@ -74,6 +74,70 @@
 	return self;
 }
 
+- (void)updateTextFieldFrame:(CGRect)currentFrame {
+    BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
+    CGFloat width = CGRectGetWidth(currentFrame) - MARGE_LEFT - MARGE_RIGHT;
+    if (!haveOneTextField) {
+        width = (width / 2.) - MARGE_MIDDLE_BAR;
+    }
+    
+    CGFloat maxHeight = CGRectGetHeight(currentFrame);
+    
+    CGFloat topMargin;
+    CGFloat height;
+    
+    if (maxHeight > 32) {
+        height = 32;
+        if (maxHeight > 37)
+            topMargin = 5;
+        else
+            topMargin = maxHeight - 32;
+    } else {
+        topMargin = 0;
+        height = maxHeight;
+    }
+
+    
+    if ([_dictionaryKey isEqualToString:@"iban"]) {
+        [_textfield setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
+    }
+    else {
+        [_textfield setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
+    }
+}
+
+- (void)updateTextField2Frame:(CGRect)currentFrame {
+    BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
+    if (haveOneTextField) {
+        return;
+    }
+    
+    CGFloat width = CGRectGetWidth(_textfield.frame);
+
+    CGFloat maxHeight = CGRectGetHeight(currentFrame);
+    
+    CGFloat topMargin;
+    CGFloat height;
+    
+    if (maxHeight > 32) {
+        height = 32;
+        if (maxHeight > 37)
+            topMargin = 5;
+        else
+            topMargin = maxHeight - 32;
+    } else {
+        topMargin = 0;
+        height = maxHeight;
+    }
+    
+    if ([_dictionaryKey isEqualToString:@"iban"]) {
+        [_textfield2 setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
+    }
+    else {
+        [_textfield2 setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
+    }
+}
+
 - (void)createTextField:(NSString *)placeholder {
 	BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
 	CGFloat width = CGRectGetWidth(self.frame) - MARGE_LEFT - MARGE_RIGHT;
@@ -118,16 +182,16 @@
 }
 
 - (void)createTextField2:(NSString *)placeholder {
-	BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
-	if (haveOneTextField) {
-		return;
-	}
-
-	CGFloat posXSeparator = CGRectGetMaxX(_textfield.frame) + MARGE_MIDDLE_BAR;
-	UIView *middleBar = [[UIView alloc] initWithFrame:CGRectMake(posXSeparator, 10, 1, CGRectGetHeight(self.frame) - 10)];
-	middleBar.backgroundColor = [UIColor customSeparator];
-
-	CGFloat width = CGRectGetWidth(_textfield.frame);
+    BOOL haveOneTextField = (_dictionaryKey2 == nil ? YES : NO);
+    if (haveOneTextField) {
+        return;
+    }
+    
+    CGFloat posXSeparator = CGRectGetMaxX(_textfield.frame) + MARGE_MIDDLE_BAR;
+    UIView *middleBar = [[UIView alloc] initWithFrame:CGRectMake(posXSeparator, 10, 1, CGRectGetHeight(self.frame) - 10)];
+    middleBar.backgroundColor = [UIColor customSeparator];
+    
+    CGFloat width = CGRectGetWidth(_textfield.frame);
 
 	_textfield2 = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(middleBar.frame) + MARGE_MIDDLE_BAR, 5, width, 32)];
 
@@ -160,6 +224,10 @@
 	return attributedText;
 }
 
+- (NSString *)dictionaryKey {
+    return _dictionaryKey;
+}
+
 - (void)createBottomBar {
 	bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(self.frame) - 1.0f, CGRectGetWidth(self.frame), 1.0f)];
 	bottomBar.backgroundColor = [UIColor customBackground];
@@ -175,7 +243,6 @@
 			[self callAction];
 		}
 		else {
-			[textField resignFirstResponder];
 			[_textfield2 becomeFirstResponder];
 		}
 	}
@@ -536,6 +603,14 @@
 
 - (void)callAction {
 	[_target performSelector:_action];
+}
+
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    
+    [bottomBar setFrame:CGRectMake(0.0f, CGRectGetHeight(self.frame) - 1.0f, CGRectGetWidth(self.frame), 1.0f)];
+    [self updateTextFieldFrame:frame];
+    [self updateTextFieldFrame:frame];
 }
 
 - (void)setEnable:(BOOL)enable {

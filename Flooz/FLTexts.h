@@ -2,8 +2,8 @@
 //  FLTexts.h
 //  Flooz
 //
-//  Created by Epitech on 2/24/15.
-//  Copyright (c) 2015 Jonathan Tribouharet. All rights reserved.
+//  Created by Olivier on 2/24/15.
+//  Copyright (c) 2015 olivier Tribouharet. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -23,6 +23,7 @@
 @property (nonatomic, retain) NSDictionary *json;
 @property (nonatomic, retain) FLSlider *slider;
 @property (nonatomic, retain) NSDictionary *couponButton;
+@property (nonatomic, retain) NSArray *secretQuestions;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

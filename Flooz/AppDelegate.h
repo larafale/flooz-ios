@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  Flooz
 //
-//  Created by jonathan on 12/26/2013.
+//  Created by olivier on 12/26/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
@@ -11,11 +11,9 @@
 
 #import "FLAlert.h"
 #import "FLAlertView.h"
-#import "TutoViewController.h"
 #import "MZFormSheetController.h"
 #import "FLRevealContainerViewController.h"
 #import "SignupNavigationController.h"
-#import "SignupPhoneViewController.h"
 #import "SignupSMSViewController.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
@@ -60,6 +58,7 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 @property (strong, nonatomic) NSString *currentDeviceToken;
 @property (strong, nonatomic) MZFormSheetController *formSheet;
 @property (strong, nonatomic) FLRevealContainerViewController *revealSideViewController;
+@property (nonatomic, retain) NSMutableDictionary *branchParam;
 
 - (void)initTestingWithIP:(NSString *)ip;
 
@@ -72,6 +71,8 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)showResetPasswordWithUser:(NSDictionary*)user;
 - (void)showSignupWithUser:(NSDictionary *)user;
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user;
+- (void)resetTuto;
+- (void)clearBranchParams;
 
 - (void)displaySignin:(NSString*)coupon;
 - (void)displayError:(NSError *)error;
@@ -82,7 +83,6 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error;
 
-- (void)showTutoPage:(TutoPage)tutoPage inController:(UIViewController*)vc;
 - (BOOL)showPreviewImage:(NSString *)imageNamed;
 - (void)showPreviewImages:(NSArray *)imagesNamed;
 - (void)showReportMenu:(FLReport *)report;

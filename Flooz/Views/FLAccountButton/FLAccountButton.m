@@ -2,7 +2,7 @@
 //  FLAccountButton.m
 //  Flooz
 //
-//  Created by jonathan on 1/24/2014.
+//  Created by olivier on 1/24/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

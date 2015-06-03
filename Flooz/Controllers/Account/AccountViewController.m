@@ -2,7 +2,7 @@
 //  AccountViewController.m
 //  Flooz
 //
-//  Created by jonathan on 1/24/2014.
+//  Created by olivier on 1/24/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -15,16 +15,17 @@
 #import "ShareAppViewController.h"
 #import "CashOutViewController.h"
 #import "SettingsViewController.h"
+#import "ScannerViewController.h"
 
 #import "FLWaveAnimation.h"
 #import "AppDelegate.h"
 #import "FLBadgeView.h"
 
 @interface AccountViewController () {
-	FLAccountUserView *userView;
-	UITableView *_tableView;
-	NSArray *_menuArray;
-	FLBadgeView *_badge;
+    FLAccountUserView *userView;
+    UITableView *_tableView;
+    NSArray *_menuArray;
+    FLBadgeView *_badge;
 }
 
 @end
@@ -32,160 +33,166 @@
 @implementation AccountViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self) {
-		self.title = NSLocalizedString(@"NAV_ACCOUNT", nil);
-	}
-	return self;
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = NSLocalizedString(@"NAV_ACCOUNT", nil);
+    }
+    return self;
 }
 
 - (void)loadView {
-	[super loadView];
+    [super loadView];
+    
+//    self.view.backgroundColor = [UIColor customBackgroundHeader];
+    [self.view setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"back-secure"]]];
 
-	self.view.backgroundColor = [UIColor customBackgroundHeader];
-
-	{
-		userView = [[FLAccountUserView alloc] initWithWidth:PPScreenWidth() - PADDING_NAV];
-		[userView addEditTarget:self action:@selector(showMenuAvatar)];
-	}
-
-	{
-		_menuArray = @[
-		        @{ @"image":@"account-button-profil",
-		           @"title":NSLocalizedString(@"ACCOUNT_BUTTON_PROFIL", @"") },
-		        @{ @"image":@"account-button-notification",
-		           @"title":NSLocalizedString(@"ACCOUNT_BUTTON_NOTIFICATION", @"") },
-		        @{ @"image":@"menu-share",
-		           @"title":NSLocalizedString(@"ACCOUNT_BUTTON_INVITE", @"") },
-		        @{ @"image":@"account-button-bank",
-		           @"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) },
-		        @{ @"image":@"account-button-divers",
-		           @"title":NSLocalizedString(@"ACCOUNT_BUTTON_DIVERS", nil) }
-		    ];
-
-		_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, PPStatusBarHeight(), PPScreenWidth(), PPScreenHeight() - PPStatusBarHeight()) style:UITableViewStyleGrouped];
-		[_tableView setBackgroundColor:[UIColor customBackgroundHeader]];
-		[_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-		[_tableView setBounces:NO];
-		[self.view addSubview:_tableView];
-		[_tableView setDelegate:self];
-		[_tableView setDataSource:self];
-	}
-
-	{
-		CGFloat sizeBadge = 22.0f;
-		if (IS_IPHONE4) {
-			sizeBadge = 17.0f;
-		}
-		CGRect frame = CGRectMake(0.0f, 0.0f, sizeBadge, sizeBadge);
-		_badge = [[FLBadgeView alloc] initWithFrame:frame];
-		[self reloadBadge];
-	}
-
-	[[Flooz sharedInstance] updateCurrentUserWithSuccess: ^{
-	    [self reloadCurrentUser];
-	}];
+    {
+        userView = [[FLAccountUserView alloc] initWithWidth:PPScreenWidth() - PADDING_NAV];
+        [userView addEditTarget:self action:@selector(showMenuAvatar)];
+    }
+    
+    {
+        _menuArray = @[
+                       @{ @"image":@"account-button-profil",
+                          @"title":NSLocalizedString(@"ACCOUNT_BUTTON_PROFIL", @"") },
+                       @{ @"image":@"account-button-notification",
+                          @"title":NSLocalizedString(@"ACCOUNT_BUTTON_NOTIFICATION", @"") },
+                       @{ @"image":@"menu-share",
+                          @"title":NSLocalizedString(@"ACCOUNT_BUTTON_INVITE", @"") },
+                       //                       @{ @"image":@"qrcode",
+                       //                          @"title":NSLocalizedString(@"ACCOUNT_BUTTON_QRCODE", nil) },
+                       @{ @"image":@"account-button-bank",
+                          @"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil) },
+                       @{ @"image":@"account-button-divers",
+                          @"title":NSLocalizedString(@"ACCOUNT_BUTTON_DIVERS", nil) }
+                       ];
+        
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, PPStatusBarHeight(), PPScreenWidth(), PPScreenHeight() - PPStatusBarHeight()) style:UITableViewStyleGrouped];
+        [_tableView setBackgroundColor:[UIColor clearColor]];
+        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        [_tableView setBounces:NO];
+        [self.view addSubview:_tableView];
+        [_tableView setDelegate:self];
+        [_tableView setDataSource:self];
+    }
+    
+    {
+        CGFloat sizeBadge = 22.0f;
+        if (IS_IPHONE4) {
+            sizeBadge = 17.0f;
+        }
+        CGRect frame = CGRectMake(0.0f, 0.0f, sizeBadge, sizeBadge);
+        _badge = [[FLBadgeView alloc] initWithFrame:frame];
+        [self reloadBadge];
+    }
+    
+    [[Flooz sharedInstance] updateCurrentUserWithSuccess: ^{
+        [self reloadCurrentUser];
+    }];
 }
 
 - (void)reloadBadge {
-	NSNumber *numberNotif = [[Flooz sharedInstance] notificationsCount];
-	[_badge setNumber:numberNotif];
-	if ([numberNotif intValue] == 0) {
-		[_badge setHidden:YES];
-	}
-	else {
-		[_badge setHidden:NO];
-	}
+    NSNumber *numberNotif = [[Flooz sharedInstance] notificationsCount];
+    [_badge setNumber:numberNotif];
+    if ([numberNotif intValue] == 0) {
+        [_badge setHidden:YES];
+    }
+    else {
+        [_badge setHidden:NO];
+    }
 }
 
 - (void)viewDidUnload {
-	[super viewDidUnload];
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	[self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
-	[self registerNotification:@selector(reloadBadge) name:@"newNotifications" object:nil];
-	[self registerNotification:@selector(editAvatarWith:) name:@"editAvatar" object:nil];
+    [super viewWillAppear:animated];
+    [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
+    [self registerNotification:@selector(reloadBadge) name:@"newNotifications" object:nil];
+    [self registerNotification:@selector(editAvatarWith:) name:@"editAvatar" object:nil];
 }
 
 #pragma mark - tableView delegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return _menuArray.count;
+    return _menuArray.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
+    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return CGRectGetHeight(userView.frame);
+    return CGRectGetHeight(userView.frame);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	return userView;
+    return userView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *cellIdentifier = @"MenuCell";
-	MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-
-	NSDictionary *menuDic = _menuArray[indexPath.row];
-	if (!cell) {
-		cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-		[cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-
-		NSString *title = menuDic[@"title"];
-		if ([title isEqualToString:NSLocalizedString(@"ACCOUNT_BUTTON_NOTIFICATION", @"")]) {
-			CGRectSetX(_badge.frame, CGRectGetMaxX(cell.imageMenu.frame) - CGRectGetWidth(_badge.frame) + 5.0f);
-			[cell addSubview:_badge];
-		}
-	}
-
-	[cell setMenu:menuDic];
-
-	return cell;
+    static NSString *cellIdentifier = @"MenuCell";
+    MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    NSDictionary *menuDic = _menuArray[indexPath.row];
+    if (!cell) {
+        cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
+        NSString *title = menuDic[@"title"];
+        if ([title isEqualToString:NSLocalizedString(@"ACCOUNT_BUTTON_NOTIFICATION", @"")]) {
+            CGRectSetX(_badge.frame, CGRectGetMaxX(cell.imageMenu.frame) - CGRectGetWidth(_badge.frame) + 5.0f);
+            [cell addSubview:_badge];
+        }
+    }
+    
+    [cell setMenu:menuDic];
+    
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return [MenuCell getHeight];
+    return [MenuCell getHeight];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.row == 0) {
-		[self profilSettings];
-	}
-	else if (indexPath.row == 1) {
-		[self notifications];
-	}
+    if (indexPath.row == 0) {
+        [self profilSettings];
+    }
+    else if (indexPath.row == 1) {
+        [self notifications];
+    }
     else if (indexPath.row == 2) {
-		[self inviteFriends];
-	}
-	else if (indexPath.row == 3) {
-		[self cashOut];
-	}
-	else if (indexPath.row == 4) {
-		[self settings];
-	}
+        [self inviteFriends];
+    }
+    //    else if (indexPath.row == 3) {
+    //        [self scanCode];
+    //    }
+    else if (indexPath.row == 3) {
+        [self cashOut];
+    }
+    else if (indexPath.row == 4) {
+        [self settings];
+    }
 }
 
 #pragma mark - SEGUE
 
 - (void)profilSettings {
-	[[Flooz sharedInstance] updateCurrentUser];
-	UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[AccountProfilViewController new]];
-	[self presentViewController:controller animated:YES completion:NULL];
+    [[Flooz sharedInstance] updateCurrentUser];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[AccountProfilViewController new]];
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)notifications {
-	UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
-	[self presentViewController:controller animated:YES completion:NULL];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)inviteFriends {
@@ -201,25 +208,30 @@
     }
 }
 
+- (void)scanCode {
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[ScannerViewController new]];
+    [self presentViewController:controller animated:YES completion:NULL];
+}
+
 - (void)cashOut {
-	[[Flooz sharedInstance] showLoadView];
-	[[Flooz sharedInstance] cashoutValidate: ^(id result) {
-	    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[CashOutViewController new]];
-	    [self presentViewController:controller animated:YES completion:NULL];
-	} failure: ^(NSError *error) {
-	    //[self presentEditAccountController];
-	}];
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] cashoutValidate: ^(id result) {
+        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[CashOutViewController new]];
+        [self presentViewController:controller animated:YES completion:NULL];
+    } failure: ^(NSError *error) {
+        //[self presentEditAccountController];
+    }];
 }
 
 - (void)settings {
-	UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[SettingsViewController new]];
-	[self presentViewController:controller animated:YES completion:NULL];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[SettingsViewController new]];
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)reloadCurrentUser {
-	[userView reloadData];
-	[_tableView reloadData];
-	[self reloadBadge];
+    [userView reloadData];
+    [_tableView reloadData];
+    [self reloadBadge];
 }
 
 #pragma mark - avatar
@@ -290,20 +302,44 @@
 }
 
 - (void)editAvatarWith:(NSNotification *)notification {
-	if ([notification.object isKindOfClass:[NSData class]]) {
-		NSData *imageData = (NSData *)notification.object;
-		[userView reloadAvatarWithImageData:imageData];
-	}
+    if ([notification.object isKindOfClass:[NSData class]]) {
+        NSData *imageData = (NSData *)notification.object;
+        [userView reloadAvatarWithImageData:imageData];
+    }
 }
 
 - (void)presentPhoto {
-    UIImagePickerController *cameraUI = [UIImagePickerController new];
-    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
-    cameraUI.delegate = self;
-    cameraUI.allowsEditing = YES;
-    [self presentViewController:cameraUI animated:YES completion: ^{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    }];
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    
+    if (authStatus == AVAuthorizationStatusAuthorized) {
+        UIImagePickerController *cameraUI = [UIImagePickerController new];
+        cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+        cameraUI.delegate = self;
+        cameraUI.allowsEditing = YES;
+        [self presentViewController:cameraUI animated:YES completion: ^{
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }];
+    } else if (authStatus == AVAuthorizationStatusNotDetermined){
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if (granted){
+                UIImagePickerController *cameraUI = [UIImagePickerController new];
+                cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+                cameraUI.delegate = self;
+                cameraUI.allowsEditing = YES;
+                [self presentViewController:cameraUI animated:YES completion: ^{
+                    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+                }];
+            } else {
+                
+            }
+        }];
+    } else {
+        UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+        [curr setTag:125];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [curr show];
+        });
+    }
 }
 
 - (void)presentLibrary {

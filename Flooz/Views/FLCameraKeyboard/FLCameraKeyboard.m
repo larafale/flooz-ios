@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
+#import <JPSVolumeButtonHandler.h>
 #import "FLCameraKeyboard.h"
 
 @implementation FLCameraKeyboard {
@@ -22,6 +23,8 @@
     
     CGFloat heightBase;
     CGFloat yStart;
+    
+    JPSVolumeButtonHandler *volumeButtonHandler;
 }
 
 - (id)initWithController:(UIViewController *)controller height:(CGFloat)height delegate:(id)delegate {
@@ -214,6 +217,16 @@
 }
 
 - (void)createShooterButton {
+//    volumeButtonHandler = [JPSVolumeButtonHandler volumeButtonHandlerWithUpBlock:^{
+//        if ([captureSession isRunning]) {
+//            [self captureStillImage];
+//        }
+//    } downBlock:^{
+//        if ([captureSession isRunning]) {
+//            [self captureStillImage];
+//        }
+//    }];
+    
 	shooterButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame) - 80.0) / 2.0f, CGRectGetHeight(self.frame) - 80.0, 80, 80)];
 	[shooterButton setImage:[UIImage imageNamed:@"camera-plus"] forState:UIControlStateNormal];
 	[shooterButton addTarget:self action:@selector(captureStillImage) forControlEvents:UIControlEventTouchUpInside];

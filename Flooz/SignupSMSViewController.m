@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
-#import "SignupUsernameViewController.h"
 #import "SignupSMSViewController.h"
 
 #define FULL_COUNTDOWN 60
@@ -18,7 +17,10 @@
     FLActionButton *_nextButton;
     
     NSTimer *_timer;
+    NSTimer *_ktimer;
     NSInteger _countDown;
+    
+    BOOL resetSMS;
 }
 
 @end
@@ -31,6 +33,7 @@
     if (self) {
         self.title = NSLocalizedString(@"SIGNUP_PAGE_TITLE_SMS", @"");
         self.userDic = [NSMutableDictionary new];
+        resetSMS = YES;
     }
     return self;
 }
@@ -62,8 +65,20 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if (resetSMS) {
+        [[Flooz sharedInstance] sendSignupSMS:self.userDic[@"phone"]];
+        resetSMS = NO;
+    }
+    
     [_codeField becomeFirstResponder];
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(reloadTimerView:) userInfo:nil repeats:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [_codeField resignFirstResponder];
 }
 
 - (void)reloadTimerView:(NSTimer*)timer {
@@ -92,7 +107,7 @@
 }
 
 - (void)codeChange {
-    if (self.userDic[@"smscode"] && ![self.userDic[@"smscode"] isBlank] && ((NSString *)self.userDic[@"smscode"]).length == 4) {
+    if (self.userDic[@"smscode"] && ![self.userDic[@"smscode"] isBlank] && [[self.userDic objectForKey:@"smscode"] length] == 4) {
         [_nextButton setTitle:NSLocalizedString(@"GLOBAL_VALIDATE", nil) forState:UIControlStateNormal];
         [_nextButton setEnabled:YES];
     } else if (self.userDic[@"smscode"] && ![self.userDic[@"smscode"] isBlank]) {
@@ -106,7 +121,7 @@
             countDownValue = @"";
         
         [_nextButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"SMS_REFRESH_CODE", nil), countDownValue] forState:UIControlStateNormal];
-
+        
         if (_countDown == 0)
             [_nextButton setEnabled:YES];
         else
@@ -119,31 +134,36 @@
 }
 
 - (void)nextStep {
-    if (self.userDic[@"smscode"] && ![self.userDic[@"smscode"] isBlank] && ((NSString *)self.userDic[@"smscode"]).length == 4) {
-        NSMutableDictionary *dic = [self.userDic mutableCopy];
-        if (dic[@"birthdate"])
-            [dic setObject:[[Flooz sharedInstance] formatBirthDate:self.userDic[@"birthdate"]] forKey:@"birthdate"];
-        if (self.userDic[@"picId"]) {
-            [dic setValue:@YES forKey:@"hasImage"];
-        }
-        else {
-            [dic setValue:@NO forKey:@"hasImage"];
-        }
-        [dic removeObjectForKey:@"picId"];
-        
+    if (self.userDic[@"smscode"] && ![self.userDic[@"smscode"] isBlank] && [[self.userDic objectForKey:@"smscode"] length] == 4) {
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] signupPassStep:@"sms" user:dic success:^(NSDictionary* result) {
-            [_timer invalidate];
-            _timer = nil;
-            if (result[@"nextStep"]) {
-                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"nextStep"] withData:result[@"nextStepData"]];
-                if (nextViewController)
-                    [self.navigationController pushViewController:nextViewController animated:YES];
-                else
-                    [self.navigationController pushViewController:[SignupUsernameViewController new] animated:YES];
-            } else
-                [self.navigationController pushViewController:[SignupUsernameViewController new] animated:YES];
-
+        [[Flooz sharedInstance] signupPassStep:@"sms" user:self.userDic success:^(NSDictionary *result) {
+            if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
+                [[Flooz sharedInstance] showLoadView];
+                [[Flooz sharedInstance] signupPassStep:@"signup" user:self.userDic success:^(NSDictionary *result) {
+                    [appDelegate resetTuto];
+                    [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
+                    
+                    SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+                    
+                    if (nextViewController) {
+                        SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+                        nextViewController.userDic = self.userDic;
+                        
+                        [self presentViewController:signupNavigationController animated:YES completion:nil];
+                    }
+                } failure:^(NSError *error) {
+                    
+                }];
+            } else {
+                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+                
+                if (nextViewController) {
+                    SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+                    nextViewController.userDic = self.userDic;
+                    
+                    [self presentViewController:signupNavigationController animated:YES completion:nil];
+                }
+            }
         } failure:^(NSError *error) {
             
         }];

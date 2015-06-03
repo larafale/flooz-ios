@@ -15,6 +15,7 @@
 @property (strong, nonatomic) MZFormSheetController *formSheet;
 
 - (id)initWithTitle:(NSString *)title andMessage:(NSAttributedString *)message ok:(void (^)())ok;
+- (id)initWithTitle:(NSString *)title message:(NSAttributedString *)message button:(NSString*)btn ok:(void (^)())ok;
 - (void)show;
 
 @end

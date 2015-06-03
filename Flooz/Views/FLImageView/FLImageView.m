@@ -2,7 +2,7 @@
 //  FLImageView.m
 //  Flooz
 //
-//  Created by jonathan on 3/3/2014.
+//  Created by olivier on 3/3/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

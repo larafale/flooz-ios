@@ -12,7 +12,6 @@
 #import "TransactionCellDelegate.h"
 #import "TransactionCell.h"
 
-#import "MenuNewTransactionViewController.h"
 #import "NewTransactionViewController.h"
 #import "TransactionViewController.h"
 

@@ -2,7 +2,7 @@
 //  Flooz.h
 //  Flooz
 //
-//  Created by jonathan on 12/30/2013.
+//  Created by olivier on 12/30/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
@@ -40,6 +40,7 @@ static NSString *kFriendTimelineData = @"friendTimelineData";
 static NSString *kPrivateTimelineData = @"privateTimelineData";
 static NSString *kTextData = @"textData";
 static NSString *kNotificationsData = @"notifData";
+static NSString *kBranchData = @"branchData";
 
 @interface Flooz : NSObject<UIAlertViewDelegate> {
 	AFHTTPRequestOperationManager *manager;
@@ -79,8 +80,10 @@ static NSString *kNotificationsData = @"notifData";
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (NSString *)formatBirthDate:(NSString *)birthdate;
 
+- (void)loadCactusData:(NSString*)identifier success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updateCurrentUser;
 - (void)updateCurrentUserWithSuccess:(void (^)())success;
+- (void)updateCurrentUserAndAskResetCode:(id)result;
 
 - (void)updateUser:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updatePassword:(NSDictionary *)password success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
@@ -95,6 +98,7 @@ static NSString *kNotificationsData = @"notifData";
 - (void)readTransactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 - (void)readTransactionsSuccess:(void (^)(id result))success;
 - (void)readFriendActivity:(void (^)(id result))success;
+- (void)passwordForget:(NSString*)phone success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;

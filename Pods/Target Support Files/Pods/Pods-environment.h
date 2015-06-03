@@ -10,67 +10,97 @@
 #define COCOAPODS_POD_AVAILABLE_AFNetworking
 #define COCOAPODS_VERSION_MAJOR_AFNetworking 2
 #define COCOAPODS_VERSION_MINOR_AFNetworking 5
-#define COCOAPODS_VERSION_PATCH_AFNetworking 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking 4
 
 // AFNetworking/NSURLConnection
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLConnection
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLConnection 2
 #define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLConnection 5
-#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection 4
 
 // AFNetworking/NSURLSession
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLSession
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLSession 2
 #define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLSession 5
-#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession 4
 
 // AFNetworking/Reachability
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_Reachability
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_Reachability 2
 #define COCOAPODS_VERSION_MINOR_AFNetworking_Reachability 5
-#define COCOAPODS_VERSION_PATCH_AFNetworking_Reachability 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Reachability 4
 
 // AFNetworking/Security
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_Security
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_Security 2
 #define COCOAPODS_VERSION_MINOR_AFNetworking_Security 5
-#define COCOAPODS_VERSION_PATCH_AFNetworking_Security 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Security 4
 
 // AFNetworking/Serialization
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_Serialization
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_Serialization 2
 #define COCOAPODS_VERSION_MINOR_AFNetworking_Serialization 5
-#define COCOAPODS_VERSION_PATCH_AFNetworking_Serialization 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Serialization 4
 
 // AFNetworking/UIKit
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_UIKit
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_UIKit 2
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 5
-#define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 4
+
+// ActionSheetPicker-3.0
+#define COCOAPODS_POD_AVAILABLE_ActionSheetPicker_3_0
+#define COCOAPODS_VERSION_MAJOR_ActionSheetPicker_3_0 1
+#define COCOAPODS_VERSION_MINOR_ActionSheetPicker_3_0 6
+#define COCOAPODS_VERSION_PATCH_ActionSheetPicker_3_0 2
 
 // Bolts
 #define COCOAPODS_POD_AVAILABLE_Bolts
 #define COCOAPODS_VERSION_MAJOR_Bolts 1
 #define COCOAPODS_VERSION_MINOR_Bolts 1
-#define COCOAPODS_VERSION_PATCH_Bolts 4
+#define COCOAPODS_VERSION_PATCH_Bolts 5
+
+// Bolts/AppLinks
+#define COCOAPODS_POD_AVAILABLE_Bolts_AppLinks
+#define COCOAPODS_VERSION_MAJOR_Bolts_AppLinks 1
+#define COCOAPODS_VERSION_MINOR_Bolts_AppLinks 1
+#define COCOAPODS_VERSION_PATCH_Bolts_AppLinks 5
+
+// Bolts/Tasks
+#define COCOAPODS_POD_AVAILABLE_Bolts_Tasks
+#define COCOAPODS_VERSION_MAJOR_Bolts_Tasks 1
+#define COCOAPODS_VERSION_MINOR_Bolts_Tasks 1
+#define COCOAPODS_VERSION_PATCH_Bolts_Tasks 5
+
+// Branch
+#define COCOAPODS_POD_AVAILABLE_Branch
+#define COCOAPODS_VERSION_MAJOR_Branch 0
+#define COCOAPODS_VERSION_MINOR_Branch 7
+#define COCOAPODS_VERSION_PATCH_Branch 6
 
 // DACircularProgress
 #define COCOAPODS_POD_AVAILABLE_DACircularProgress
 #define COCOAPODS_VERSION_MAJOR_DACircularProgress 2
-#define COCOAPODS_VERSION_MINOR_DACircularProgress 2
-#define COCOAPODS_VERSION_PATCH_DACircularProgress 0
+#define COCOAPODS_VERSION_MINOR_DACircularProgress 3
+#define COCOAPODS_VERSION_PATCH_DACircularProgress 1
 
 // EAIntroView
 #define COCOAPODS_POD_AVAILABLE_EAIntroView
 #define COCOAPODS_VERSION_MAJOR_EAIntroView 2
 #define COCOAPODS_VERSION_MINOR_EAIntroView 7
-#define COCOAPODS_VERSION_PATCH_EAIntroView 0
+#define COCOAPODS_VERSION_PATCH_EAIntroView 3
 
 // EARestrictedScrollView
 #define COCOAPODS_POD_AVAILABLE_EARestrictedScrollView
 #define COCOAPODS_VERSION_MAJOR_EARestrictedScrollView 0
 #define COCOAPODS_VERSION_MINOR_EARestrictedScrollView 1
 #define COCOAPODS_VERSION_PATCH_EARestrictedScrollView 0
+
+// FXBlurView
+#define COCOAPODS_POD_AVAILABLE_FXBlurView
+#define COCOAPODS_VERSION_MAJOR_FXBlurView 1
+#define COCOAPODS_VERSION_MINOR_FXBlurView 6
+#define COCOAPODS_VERSION_PATCH_FXBlurView 3
 
 // Facebook-iOS-SDK
 #define COCOAPODS_POD_AVAILABLE_Facebook_iOS_SDK
@@ -82,13 +112,19 @@
 #define COCOAPODS_POD_AVAILABLE_HHRouter
 #define COCOAPODS_VERSION_MAJOR_HHRouter 0
 #define COCOAPODS_VERSION_MINOR_HHRouter 1
-#define COCOAPODS_VERSION_PATCH_HHRouter 4
+#define COCOAPODS_VERSION_PATCH_HHRouter 5
 
 // IDMPhotoBrowser
 #define COCOAPODS_POD_AVAILABLE_IDMPhotoBrowser
 #define COCOAPODS_VERSION_MAJOR_IDMPhotoBrowser 1
 #define COCOAPODS_VERSION_MINOR_IDMPhotoBrowser 6
-#define COCOAPODS_VERSION_PATCH_IDMPhotoBrowser 1
+#define COCOAPODS_VERSION_PATCH_IDMPhotoBrowser 2
+
+// JPSVolumeButtonHandler
+#define COCOAPODS_POD_AVAILABLE_JPSVolumeButtonHandler
+#define COCOAPODS_VERSION_MAJOR_JPSVolumeButtonHandler 0
+#define COCOAPODS_VERSION_MINOR_JPSVolumeButtonHandler 0
+#define COCOAPODS_VERSION_PATCH_JPSVolumeButtonHandler 1
 
 // JTHelper
 #define COCOAPODS_POD_AVAILABLE_JTHelper
@@ -106,31 +142,37 @@
 #define COCOAPODS_POD_AVAILABLE_MZAppearance
 #define COCOAPODS_VERSION_MAJOR_MZAppearance 1
 #define COCOAPODS_VERSION_MINOR_MZAppearance 1
-#define COCOAPODS_VERSION_PATCH_MZAppearance 3
+#define COCOAPODS_VERSION_PATCH_MZAppearance 5
 
 // MZFormSheetController
 #define COCOAPODS_POD_AVAILABLE_MZFormSheetController
 #define COCOAPODS_VERSION_MAJOR_MZFormSheetController 3
 #define COCOAPODS_VERSION_MINOR_MZFormSheetController 0
-#define COCOAPODS_VERSION_PATCH_MZFormSheetController 2
+#define COCOAPODS_VERSION_PATCH_MZFormSheetController 3
 
 // MZFormSheetController/Core
 #define COCOAPODS_POD_AVAILABLE_MZFormSheetController_Core
 #define COCOAPODS_VERSION_MAJOR_MZFormSheetController_Core 3
 #define COCOAPODS_VERSION_MINOR_MZFormSheetController_Core 0
-#define COCOAPODS_VERSION_PATCH_MZFormSheetController_Core 2
+#define COCOAPODS_VERSION_PATCH_MZFormSheetController_Core 3
 
 // Mixpanel
 #define COCOAPODS_POD_AVAILABLE_Mixpanel
 #define COCOAPODS_VERSION_MAJOR_Mixpanel 2
-#define COCOAPODS_VERSION_MINOR_Mixpanel 7
-#define COCOAPODS_VERSION_PATCH_Mixpanel 3
+#define COCOAPODS_VERSION_MINOR_Mixpanel 8
+#define COCOAPODS_VERSION_PATCH_Mixpanel 1
 
 // Mixpanel/MPCategoryHelpers
 #define COCOAPODS_POD_AVAILABLE_Mixpanel_MPCategoryHelpers
 #define COCOAPODS_VERSION_MAJOR_Mixpanel_MPCategoryHelpers 2
-#define COCOAPODS_VERSION_MINOR_Mixpanel_MPCategoryHelpers 7
-#define COCOAPODS_VERSION_PATCH_Mixpanel_MPCategoryHelpers 3
+#define COCOAPODS_VERSION_MINOR_Mixpanel_MPCategoryHelpers 8
+#define COCOAPODS_VERSION_PATCH_Mixpanel_MPCategoryHelpers 1
+
+// Mixpanel/Mixpanel
+#define COCOAPODS_POD_AVAILABLE_Mixpanel_Mixpanel
+#define COCOAPODS_VERSION_MAJOR_Mixpanel_Mixpanel 2
+#define COCOAPODS_VERSION_MINOR_Mixpanel_Mixpanel 8
+#define COCOAPODS_VERSION_PATCH_Mixpanel_Mixpanel 1
 
 // NSDate+Calendar
 #define COCOAPODS_POD_AVAILABLE_NSDate_Calendar
@@ -191,6 +233,18 @@
 #define COCOAPODS_VERSION_MAJOR_UICKeyChainStore 2
 #define COCOAPODS_VERSION_MINOR_UICKeyChainStore 0
 #define COCOAPODS_VERSION_PATCH_UICKeyChainStore 4
+
+// XLForm
+#define COCOAPODS_POD_AVAILABLE_XLForm
+#define COCOAPODS_VERSION_MAJOR_XLForm 2
+#define COCOAPODS_VERSION_MINOR_XLForm 2
+#define COCOAPODS_VERSION_PATCH_XLForm 0
+
+// iCarousel
+#define COCOAPODS_POD_AVAILABLE_iCarousel
+#define COCOAPODS_VERSION_MAJOR_iCarousel 1
+#define COCOAPODS_VERSION_MINOR_iCarousel 8
+#define COCOAPODS_VERSION_PATCH_iCarousel 1
 
 // pop
 #define COCOAPODS_POD_AVAILABLE_pop

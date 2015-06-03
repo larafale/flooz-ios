@@ -2,7 +2,7 @@
 //  FLTextView.h
 //  Flooz
 //
-//  Created by jonathan on 1/28/2014.
+//  Created by olivier on 1/28/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

@@ -2,21 +2,22 @@
 //  AppDelegate.m
 //  Flooz
 //
-//  Created by jonathan on 12/26/2013.
+//  Created by olivier on 12/26/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
 #import "Mixpanel.h"
-#import <Crashlytics/Crashlytics.h>
+#import "Branch.h"
 
+#import <Crashlytics/Crashlytics.h>
+#import <Fabric/Fabric.h>
 #import "AppDelegate.h"
+
 
 #import "FLPreset.h"
 #import "IDMPhotoBrowser.h"
-#import "TutoViewController.h"
 #import "HomeViewController.h"
 #import "SplashViewController.h"
-#import "InviteViewController.h"
 #import "AccountViewController.h"
 #import "FriendsViewController.h"
 #import "TimelineViewController.h"
@@ -24,6 +25,7 @@
 #import "TransactionViewController.h"
 #import "AccountProfilViewController.h"
 #import "NewTransactionViewController.h"
+#import "UICKeyChainStore.h"
 
 #ifdef TARGET_IPHONE_SIMULATOR
 #import <PonyDebugger/PonyDebugger.h>
@@ -45,6 +47,7 @@
 @implementation AppDelegate
 
 @synthesize localIp;
+@synthesize branchParam;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -56,7 +59,20 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    [Fabric with:@[CrashlyticsKit]];
     [Crashlytics startWithAPIKey:@"4f18178e0b7894ec76bb6f01a60f34baf68acbf7"];
+    
+//    branchParam = [@{@"cactus":@"3010"} mutableCopy];
+    
+    [self loadBranchParams];
+    
+    Branch *branch = [Branch getInstance];
+    [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+        if ([params count] > 0) {
+            [branchParam addEntriesFromDictionary:params];
+            [self saveBranchParams];
+        }
+    }];
     
 #ifdef FLOOZ_DEV_LOCAL
     [self initLocalTesting];
@@ -90,6 +106,25 @@
 #endif
     
     return YES;
+}
+
+- (void)saveBranchParams {
+    if (branchParam)
+        [UICKeyChainStore setString:[branchParam jsonStringWithPrettyPrint:NO] forKey:kBranchData];
+}
+
+- (void)loadBranchParams {
+    NSString *textData = [UICKeyChainStore stringForKey:kBranchData];
+    if (textData) {
+        branchParam = [[NSDictionary newWithJSONString:textData] mutableCopy];
+    } else {
+        branchParam = [NSMutableDictionary new];
+    }
+}
+
+- (void)clearBranchParams {
+    [UICKeyChainStore removeItemForKey:kBranchData];
+    branchParam = [NSMutableDictionary new];
 }
 
 - (void)launchRootController {
@@ -127,6 +162,8 @@
     [[Mixpanel sharedInstance] identify:currentUser.userId];
     
     [[Flooz sharedInstance] startSocket];
+    
+    [self clearBranchParams];
 }
 
 - (UIViewController *)prepareMainViewController {
@@ -213,18 +250,40 @@
     [[self currentController] presentViewController:secureVC animated:YES completion:nil];
 }
 
-- (void)showRequestInvitationCodeWithUser:(NSDictionary *)user {
-    InviteViewController *invitVC = [[InviteViewController  alloc] initWithUser:user];
-    [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
-    [[self currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:invitVC] animated:YES completion:nil];
+- (void)resetTuto {
+    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoFlooz];
+    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelineFriends];
+    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePublic];
+    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePrivate];
+    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoWelcome];
+    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kSendContact];
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user {
-    [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
-    SignupSMSViewController *controller = [SignupSMSViewController new];
-    signupNavigationController.controller.userDic = [user mutableCopy];
-    [signupNavigationController.controller.userDic setObject:[Mixpanel sharedInstance].distinctId forKey:@"distinctId"];
-    [signupNavigationController pushViewController:controller animated:YES];
+    
+    NSMutableDictionary *fbData = [user mutableCopy];
+    NSMutableDictionary *userData = [NSMutableDictionary new];
+    
+    [userData setObject:fbData forKey:@"fb"];
+    [userData setObject:[Mixpanel sharedInstance].distinctId forKey:@"distinctId"];
+    
+    if (fbData[@"email"])
+        [userData setObject:fbData[@"email"] forKey:@"email"];
+    
+    if (fbData[@"lastName"])
+        [userData setObject:fbData[@"lastName"] forKey:@"lastName"];
+    
+    if (fbData[@"firstName"])
+        [userData setObject:fbData[@"firstName"] forKey:@"firstName"];
+    
+    if (fbData[@"id"])
+        [userData setObject:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", fbData[@"id"]] forKey:@"avatarURL"];
+    
+    if ([[self myTopViewController] isKindOfClass:[HomeViewController class]]) {
+        HomeViewController *home = (HomeViewController*)[self myTopViewController];
+        
+        [home setUserDataForSignup:userData];
+    }
 }
 
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user {
@@ -243,13 +302,9 @@
 }
 
 - (void)displayHome {
+    savedViewController = nil;
     HomeViewController *home = [HomeViewController new];
     [self flipToViewController:home];
-}
-
-- (void)displaySignin:(NSString*)coupon {
-    signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:[[SignupPhoneViewController alloc] initWithCoupon:coupon]];
-    [self flipToViewController:signupNavigationController];
 }
 
 - (void)displayError:(NSError *)error {
@@ -326,14 +381,6 @@
             [[Flooz sharedInstance] blockUser:currentUserForMenu.userId];
         }
     }
-    else if (alertView.tag == 125) {
-        if (buttonIndex == 1) {
-            InviteViewController *invitVC = [[InviteViewController  alloc] initWithUser:tmpUser];
-            [[[self currentController] presentingViewController] dismissViewControllerAnimated:NO completion:nil];
-            [[self currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:invitVC] animated:YES completion:nil];
-            tmpUser = nil;
-        }
-    }
 }
 
 #pragma mark -
@@ -355,14 +402,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
     }
 #endif
-    
-    if ([[self currentController] isKindOfClass:[FLRevealContainerViewController class]]) {
-        double delayInSeconds = 0.5;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-            [self handlePendingData];
-        });
-    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -397,13 +436,17 @@
 // During the Facebook login flow, your app passes control to the Facebook iOS app or Facebook in a mobile browser.
 // After authentication, your app will be called back with the session information.
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    if ([FBAppCall handleOpenURL:url sourceApplication:sourceApplication])
+    if ([[Branch getInstance] handleDeepLink:url]) {
+        return YES;
+    } else if ([FBAppCall handleOpenURL:url sourceApplication:sourceApplication])
         return YES;
     else {
         if ([url.scheme isEqualToString:@"flooz"]) {
-            NSDictionary *dic = [NSDictionary newWithJSONString:url.host];
-            if (dic && dic[@"data"])
-                pendingData = dic[@"data"];
+            if (url.host && ![url.host isBlank]) {
+                NSDictionary *dic = [NSDictionary newWithJSONString:url.host];
+                if (dic && dic[@"data"])
+                    pendingData = dic[@"data"];
+            }
         }
     }
     
@@ -413,6 +456,14 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
     [FBAppCall handleDidBecomeActive];
+    
+    if (pendingData) {
+        double delayInSeconds = 0.5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+            [self handlePendingData];
+        });
+    }
 }
 
 #pragma mark - Notifications Push
@@ -476,24 +527,6 @@
     [self.window addSubview:view];
     
     return YES;
-}
-
-- (void)showTutoPage:(TutoPage)tutoPage inController:(UIViewController*)vc {
-    TutoViewController *tuto = [[TutoViewController alloc] initWithTutoPage:tutoPage];
-    
-    if (![tuto hasAlreadySawTuto]) {
-        _formSheet = [[MZFormSheetController alloc] initWithViewController:tuto];
-        _formSheet.presentedFormSheetSize = CGSizeMake(PPScreenWidth(), PPScreenHeight());
-        _formSheet.transitionStyle = MZFormSheetTransitionStyleFade;// MZFormSheetTransitionStyleSlideFromBottom;
-        _formSheet.shouldDismissOnBackgroundViewTap = YES;
-        _formSheet.shouldCenterVertically = YES;
-        _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
-        _formSheet.shadowRadius = 0.0;
-        [[MZFormSheetController sharedBackgroundWindow] setBackgroundBlurEffect:NO];
-        [[MZFormSheetController sharedBackgroundWindow] setBackgroundColor:[UIColor clearColor]];
-        
-        [vc mz_presentFormSheetController:_formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) { }];
-    }
 }
 
 - (void)showPreviewImages:(NSArray *)imagesNamed {
@@ -613,6 +646,10 @@
 - (void)createReportAlertController {
     UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
+    //    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_QRCODE", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+    //        [self showQRCode];
+    //    }]];
+    
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REPORT_LINE", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
         [self showReportView];
     }]];
@@ -656,6 +693,7 @@
     UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
     NSMutableArray *menus = [NSMutableArray new];
     
+    //    [menus addObject:NSLocalizedString(@"MENU_QRCODE", nil)];
     [menus addObject:NSLocalizedString(@"MENU_REPORT_LINE", nil)];
     
     for (NSString *menu in menus) {
@@ -759,6 +797,11 @@
 }
 
 - (void)managerReportActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    //    if (buttonIndex == 0) {
+    //        [self showQRCode];
+    //    } else if (buttonIndex == 1) {
+    //        [self showReportView];
+    //    }
     if (buttonIndex == 0) {
         [self showReportView];
     }
@@ -801,6 +844,26 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"MENU_REPORT", nil) message:(self.currentReport.reportType == ReportUser ? NSLocalizedString(@"MENU_REPORT_USER_CONTENT", nil) : NSLocalizedString(@"MENU_REPORT_LINE_CONTENT", nil)) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_NO", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_YES", nil), nil];
     alertView.tag = 10;
     [alertView show];
+}
+
+- (void)showQRCode {
+    NSString *stringToEncode = @"http://www.google.com";
+    
+    CIImage *qrCode = [FLHelper createQRForString:stringToEncode];
+    
+    UIImage *qrCodeImg = [FLHelper createNonInterpolatedUIImageFromCIImage:qrCode withScale:2*[[UIScreen mainScreen] scale]];
+    
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.image = qrCodeImg;
+    imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
+    
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+    imageViewer.interactionsDelegate = self;
+    
+    [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOffscreen];
 }
 
 - (void)showBlockView {

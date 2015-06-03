@@ -2,7 +2,7 @@
 //  CashOutViewController.m
 //  Flooz
 //
-//  Created by jonathan on 2/13/2014.
+//  Created by olivier on 2/13/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -109,13 +109,13 @@
 
 - (void)amountChange {
     if (dictionary[@"amount"] && ![dictionary[@"amount"] isBlank]) {
-        [_confirmButton setEnabled:YES];
+//        [_confirmButton setEnabled:YES];
         
         NSNumber *numberAmount = [NSNumber numberWithFloat:[dictionary[@"amount"] floatValue]];
         
         [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), [[FLHelper formatedAmount:numberAmount withCurrency:NO withSymbol:NO] stringByAppendingString:@"€"]] forState:UIControlStateNormal];
     } else {
-        [_confirmButton setEnabled:NO];
+//        [_confirmButton setEnabled:NO];
         [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), @""] forState:UIControlStateNormal];
     }
 }
@@ -124,7 +124,7 @@
     _confirmButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, 34)];
 
     [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), @""] forState:UIControlStateNormal];
-    [_confirmButton setEnabled:NO];
+    [_confirmButton setEnabled:YES];
 }
 
 - (void)didValidTouch {

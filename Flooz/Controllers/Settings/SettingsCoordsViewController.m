@@ -420,15 +420,56 @@
     }
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 125 && buttonIndex == 1)
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL  URLWithString:UIApplicationOpenSettingsURLString]];
+    }
+}
+
 - (void)displayImagePickerWithType:(UIImagePickerControllerSourceType)type {
-    UIImagePickerController *cameraUI = [UIImagePickerController new];
-    cameraUI.sourceType = type;
-    cameraUI.delegate = self;
-    cameraUI.allowsEditing = YES;
-    
-    [self presentViewController:cameraUI animated:YES completion: ^{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    }];
+    if (type == UIImagePickerControllerSourceTypeCamera) {
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        
+        if (authStatus == AVAuthorizationStatusAuthorized) {
+            UIImagePickerController *cameraUI = [UIImagePickerController new];
+            cameraUI.sourceType = type;
+            cameraUI.delegate = self;
+            cameraUI.allowsEditing = YES;
+            [self presentViewController:cameraUI animated:YES completion: ^{
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+            }];
+        } else if (authStatus == AVAuthorizationStatusNotDetermined){
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if (granted){
+                    UIImagePickerController *cameraUI = [UIImagePickerController new];
+                    cameraUI.sourceType = type;
+                    cameraUI.delegate = self;
+                    cameraUI.allowsEditing = YES;
+                    [self presentViewController:cameraUI animated:YES completion: ^{
+                        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+                    }];
+                } else {
+                    
+                }
+            }];
+        } else {
+            UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+            [curr setTag:125];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [curr show];
+            });
+        }
+    } else {
+        UIImagePickerController *cameraUI = [UIImagePickerController new];
+        cameraUI.sourceType = type;
+        cameraUI.delegate = self;
+        cameraUI.allowsEditing = YES;
+        [self presentViewController:cameraUI animated:YES completion: ^{
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }];
+    }
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
