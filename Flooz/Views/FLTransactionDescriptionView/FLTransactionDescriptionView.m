@@ -7,7 +7,6 @@
 //
 
 #import "FLTransactionDescriptionView.h"
-#import "FLSocialView.h"
 #import "FLSocialButton.h"
 #import "FLLikePopoverViewController.h"
 
@@ -504,6 +503,11 @@
 }
 
 - (void)didUpdateTransactionData {
+    
+    [appDelegate.revealSideViewController.timelineController reloadTable:TimelineFilterFriend andFocus:NO];
+    [appDelegate.revealSideViewController.timelineController reloadTable:TimelineFilterPublic andFocus:NO];
+    [appDelegate.revealSideViewController.timelineController reloadTable:TimelineFilterPrivate andFocus:NO];
+
 	if (_parentController) {
 		[_parentController reloadTransaction];
 	}

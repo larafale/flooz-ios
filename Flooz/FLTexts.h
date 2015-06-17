@@ -11,6 +11,7 @@
 
 @interface FLTexts : NSObject
 
+@property (nonatomic, retain) NSString *card;
 @property (nonatomic, retain) NSString *shareCode;
 @property (nonatomic, retain) NSString *shareTitle;
 @property (nonatomic, retain) NSString *shareHeader;

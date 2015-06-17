@@ -89,6 +89,10 @@
         return TriggerShowPopup;
     else if ([param isEqualToString:@"home:show"])
         return TriggerShowHome;
+    else if ([param isEqualToString:@"iban:show"])
+        return TriggerShowIban;
+    else if ([param isEqualToString:@"tuto:reset"])
+        return TriggerResetTuto;
     else
         return TriggerNone;
 }

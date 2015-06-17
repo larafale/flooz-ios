@@ -17,6 +17,7 @@ typedef void (^CompleteBlock)();
 
 @interface SecureCodeViewController : GlobalViewController <CodePinDelegate, NumPadAppleDelegate>
 
+@property BOOL blockTouchID;
 @property BOOL isForChangeSecureCode;
 @property (strong, nonatomic) CompleteBlock completeBlock;
 @property (nonatomic) SecureCodeMode currentSecureMode;

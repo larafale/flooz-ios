@@ -11,6 +11,7 @@
 #import <AFURLRequestSerialization.h>
 #import <AFURLResponseSerialization.h>
 #import <AFHTTPRequestOperation.h>
+#import <GBDeviceInfo/GBDeviceInfo.h>
 
 #import "AppDelegate.h"
 
@@ -28,15 +29,18 @@
 #import "SecureCodeViewController.h"
 #import "ShareAppViewController.h"
 #import "FLPopupInformation.h"
+#import "SettingsBankViewController.h"
 
 #define APP_VERSION [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 
 @implementation Flooz
 
+@synthesize timelinePageSize;
+
 + (Flooz *)sharedInstance {
     static dispatch_once_t once;
-    static id instance;
-    dispatch_once(&once, ^{ instance = self.new; });
+    static Flooz *instance;
+    dispatch_once(&once, ^{ instance = self.new; instance.timelinePageSize = 20; });
     return instance;
 }
 
@@ -350,7 +354,7 @@
 }
 
 - (void)passwordForget:(NSString*)login success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/password/lost" method:@"POST" params:@{ @"email": login } success:success failure:failure];
+    [self requestPath:@"/users/password/lost" method:@"POST" params:@{ @"email": login } success:success failure:failure];
 }
 
 - (void)passwordLost:(NSString *)email success:(void (^)(id result))success {
@@ -488,6 +492,8 @@
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
+        self.timelinePageSize = [transactions count];
+        
         [self saveTimeline:result[@"items"] forScope:[FLTransaction transactionParamsToScope:scope]];
         if (success) {
             [self saveSettingsObject:[NSDate date] withKey:[NSString stringWithFormat:@"kLastUpdate%@", scope]];
@@ -498,9 +504,10 @@
     id failureBlock = ^(NSError *error) {
         if (![self connectionStatusFromError:error]) {
             NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
-            if (transactions && success)
+            if (transactions && success) {
+                self.timelinePageSize = [transactions count];
                 success(transactions, nil);
-            else if (failure)
+            } else if (failure)
                 failure(error);
         } else if (failure) {
             failure(error);
@@ -708,6 +715,18 @@
     [self requestPath:[NSString stringWithFormat:@"/social/comments/%@", comment[@"floozId"]] method:@"POST" params:comment success:success failure:failure];
 }
 
+- (void)cashoutValidate:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    NSMutableDictionary *tempDic = [NSMutableDictionary new];
+    
+    [tempDic setObject:@YES forKey:@"validate"];
+    [tempDic setObject:amount forKey:@"amount"];
+    
+    if ([SecureCodeViewController hasSecureCodeForCurrentUser])
+        [tempDic setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
+    
+    [self requestPath:@"/cashouts" method:@"POST" params:tempDic success:success failure:failure];
+}
+
 - (void)cashout:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     [self requestPath:@"/cashouts" method:@"POST" params:@{ @"amount": amount } success:success failure:failure];
 }
@@ -864,6 +883,16 @@
         path = [path stringByAppendingString:@"&via=ios"];
     }
     
+    if ([GBDeviceInfo deviceInfo]) {
+        if ([path rangeOfString:@"&os="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"&os=%lu-%lu-%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
+        }
+        
+        if ([path rangeOfString:@"&dmo="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        }
+    }
+    
     // Pour le nextUrl
     if ([path rangeOfString:@"&version="].location == NSNotFound) {
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&version=%@", APP_VERSION]];
@@ -877,13 +906,13 @@
         }
         else {
             [self hideLoadView];
-
+            
             if (success) {
                 success(responseObject);
             }
-
+            
             [self displayPopupMessage:responseObject];
-            [self handleRequestTriggers:responseObject];            
+            [self handleRequestTriggers:responseObject];
         }
     };
     
@@ -1176,6 +1205,10 @@
 - (void)handleTriggerCardShow:(NSDictionary *)data {
     CreditCardViewController *controller = [CreditCardViewController new];
     controller.showCross = YES;
+    
+    if (data && data[@"label"] && ![data[@"label"] isBlank])
+        controller.customLabel = data[@"label"];
+    
     [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
 }
 
@@ -1213,7 +1246,7 @@
 }
 
 - (void)handleTriggerSignupCodeShow:(NSDictionary *)data {
-    [appDelegate showRequestInvitationCodeWithUser:data];
+    
 }
 
 - (void)handleTriggerLogout:(NSDictionary *)data {
@@ -1302,6 +1335,15 @@
     [appDelegate goToAccountViewController];
 }
 
+- (void)handleTriggerIbanShow:(NSDictionary *)data {
+    SettingsBankViewController *controller = [SettingsBankViewController new];
+    [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
+}
+
+- (void)handleTriggerTutoShow:(NSDictionary *)data {
+    [appDelegate resetTuto:NO];
+}
+
 - (void)handleTrigger:(FLTrigger*)trigger {
     NSDictionary *triggerFuncs = @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
                                    [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
@@ -1330,6 +1372,8 @@
                                    [NSNumber numberWithInt:TriggerShowInvitation]: NSStringFromSelector(@selector(handleTriggerInvitationShow:)),
                                    [NSNumber numberWithInt:TriggerHttpCall]: NSStringFromSelector(@selector(handleTriggerHttpCall:)),
                                    [NSNumber numberWithInt:TriggerShowHome]: NSStringFromSelector(@selector(handleTriggerHomeShow:)),
+                                   [NSNumber numberWithInt:TriggerShowIban]: NSStringFromSelector(@selector(handleTriggerIbanShow:)),
+                                   [NSNumber numberWithInt:TriggerResetTuto]: NSStringFromSelector(@selector(handleTriggerTutoShow:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
@@ -1504,7 +1548,7 @@
             NSString *_email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
             
             [contactsEmail addObject:_email];
-        }
+         }
         
         
         ABMultiValueRef phoneNumbers = ABRecordCopyValue(ref, kABPersonPhoneProperty);
@@ -1516,7 +1560,16 @@
                 [contactsPhone addObject:formatedPhone];
             }
         }
+        
+        if (emailList)
+            CFRelease(emailList);
+
+        if (phoneNumbers)
+            CFRelease(phoneNumbers);
     }
+    
+    CFRelease(allPeople);
+    CFRelease(addressBook);
 }
 
 - (void)sendContactsAtSignup:(BOOL)signup WithParams:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {

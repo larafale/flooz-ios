@@ -23,9 +23,12 @@
 "GLOBAL_VALIDATE" = "Valider";
 "GLOBAL_GOTIT" = "J'ai compris";
 
+"WELCOME_BACK" = "Ravis de vous revoir !";
+"WELCOME" = "Bienvenue !";
+
 "SAVE_IMAGE" = "Enregistrer l'image";
 
-"LOGOUT_INFO" = "Êtes-vous sûr de vouloir vous déconnecter ?";
+"LOGOUT_INFO" = "Etes-vous sûr de vouloir vous déconnecter ?";
 
 "MSG_UPDATE" = "Bonne nouvelle ! Une nouvelle version de Flooz est disponible.";
 "BTN_UPDATE" = "Mettre à jour";
@@ -189,7 +192,7 @@
 "IDEA_MESSAGE" = "Voici quelques idées pour améliorer l'application :\n";
 
 "FORGOT_RECIPIENTS" = "support@flooz.me";
-"FORGOT_OBJECT" = "Mot de passe oublié";
+"FORGOT_OBJECT" = "Mot de passe oublié !";
 "FORGOT_MESSAGE" = "J'ai oublié mon mot de passe. Je souhaite être contacté au %@";
 "FORGOT_SECRET" = "J'ai oublié mon mot de passe et la réponse à ma question secrète. Je souhaite être contacté au %@";
 
@@ -283,7 +286,7 @@
 "FRIENDS_FRIENDS_SUGGESTION" = "Vous connaissez peut-être...";
 "FRIENDS_FRIENDS" = "Mes amis";
 "FRIENDS_EMPTY_MESSAGE" = "Ajoutez des amis pour retrouver leurs flooz dans votre fil d'actualité !";
-"FRIENDS_BUTTON_INVITE" = "Inviter ses amis";
+"FRIENDS_BUTTON_INVITE" = "Inviter mes amis";
 
 
 "FRIEND_PICKER_EMPTY_CELL_1" = "Sélectionnez un contact";
@@ -394,6 +397,7 @@
 "SIGNUP_PAGE_TITLE_Friends" = "Ajouter des amis";
 "SIGNUP_PAGE_TITLE_SMS" = "SMS de validation";
 "SIGNUP_PAGE_TITLE_Invitation" = "Êtes-vous invité ?";
+"SIGNUP_PAGE_TITLE_SECURE_CODE" = "100% Sécurisé";
 
 "SIGNUP_NEXT_BUTTON" = "Suivant";
 "SIGNUP_NEXT_BUTTON_ADD" = "Ajouter";
@@ -410,7 +414,7 @@
 "SIGNUP_PHONE_ALERT_TITLE" = "Confirmer votre numéro";
 "SIGNUP_PHONE_ALERT_CONTENT" = "\nVous allez recevoir un SMS de confirmation. Veuillez confirmer que le %@ est bien votre n° de mobile.";
 
-"SIGNUP_READ_CGU" = "En cliquant sur 'Inscription' vous déclarez accepter les CGU Flooz.";
+"SIGNUP_READ_CGU" = "En cliquant sur \"Inscription\" vous déclarez accepter les CGU Flooz.";
 
 "SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
 "SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";

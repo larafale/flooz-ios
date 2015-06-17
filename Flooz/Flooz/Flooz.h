@@ -52,12 +52,13 @@ static NSString *kBranchData = @"branchData";
 @property (strong, nonatomic) FLTexts *currentTexts;
 @property (strong, readonly) FLUser *currentUser;
 @property (strong, nonatomic) NSString *facebook_token;
+@property (strong, nonatomic) NSString *access_token;
 
 @property (strong, nonatomic) NSNumber *notificationsCount;
 @property (strong, nonatomic) NSArray *notifications;
-@property (strong, nonatomic) NSString *access_token;
 @property (strong, nonatomic) SIOSocket *socketIO;
 @property (nonatomic) Boolean socketConnected;
+@property (nonatomic) NSUInteger timelinePageSize;
 
 + (Flooz *)sharedInstance;
 
@@ -79,6 +80,7 @@ static NSString *kBranchData = @"branchData";
 - (void)blockUser:(NSString *)userId;
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (NSString *)formatBirthDate:(NSString *)birthdate;
+- (void)cashoutValidate:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)loadCactusData:(NSString*)identifier success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updateCurrentUser;

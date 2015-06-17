@@ -241,7 +241,7 @@
     else if (selectedTitleIndex == TimelineFilterPrivate)
         visibleIndexes = [timelinePrivate.tableView indexPathsForVisibleRows];
     
-    if ([[visibleIndexes lastObject] row] <= 50)
+    if ([[visibleIndexes lastObject] row] <= [[Flooz sharedInstance] timelinePageSize])
         reloadTimeline = YES;
     
     if (reloadTimeline)

@@ -83,7 +83,7 @@
         timer = [NSTimer scheduledTimerWithTimeInterval:[_alert.duration floatValue] target:self selector:@selector(hide) userInfo:nil repeats:NO];
         
         CGRectSetHeight(self.frame, 0);
-        [appDelegate.topWindow addSubview:self];
+        [[appDelegate topWindow] addSubview:self];
         
         titleView.text = _alert.title;
         contentView.text = _alert.content;
@@ -127,7 +127,7 @@
 	    timer = [NSTimer scheduledTimerWithTimeInterval:[time floatValue] target:self selector:@selector(hide) userInfo:nil repeats:NO];
         
         CGRectSetHeight(self.frame, 0);
-        [appDelegate.topWindow addSubview:self];
+        [[appDelegate topWindow] addSubview:self];
         
 	    titleView.text = title;
 	    contentView.text = content;

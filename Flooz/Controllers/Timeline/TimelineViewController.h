@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FLFilterView.h"
 #import "TransactionCellDelegate.h"
 #import "FLScrollViewIndicator.h"
 #import "FLTimelineTableViewController.h"

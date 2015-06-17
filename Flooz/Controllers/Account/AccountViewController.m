@@ -8,7 +8,6 @@
 
 #import "AccountViewController.h"
 #import "FLAccountUserView.h"
-#import "FLAccountButton.h"
 
 #import "AccountProfilViewController.h"
 #import "NotificationsViewController.h"
@@ -17,7 +16,6 @@
 #import "SettingsViewController.h"
 #import "ScannerViewController.h"
 
-#import "FLWaveAnimation.h"
 #import "AppDelegate.h"
 #import "FLBadgeView.h"
 

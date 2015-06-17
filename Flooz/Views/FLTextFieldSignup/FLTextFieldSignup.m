@@ -458,14 +458,7 @@
         
         return (newLength > 27) ? NO : YES;
     }
-    else if ([_dictionaryKey isEqualToString:@"smscode"]) {
-        if ([string isEqualToString:@"\r"] && textField.text.length > 0) {
-            return YES;
-        }
-
-        NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        return (newLength > 4) ? NO : YES;
-    }
+    
     if ([_dictionaryKey isEqualToString:@"amount"]) {
         if ([string isEqualToString:@"\r"] && textField.text.length > 0) {
             return YES;
@@ -598,6 +591,7 @@
 }
 
 - (BOOL)resignFirstResponder {
+    [super resignFirstResponder];
 	return [_textfield resignFirstResponder];
 }
 

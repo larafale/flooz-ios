@@ -71,10 +71,9 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)showResetPasswordWithUser:(NSDictionary*)user;
 - (void)showSignupWithUser:(NSDictionary *)user;
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user;
-- (void)resetTuto;
+- (void)resetTuto:(Boolean)value;
 - (void)clearBranchParams;
 
-- (void)displaySignin:(NSString*)coupon;
 - (void)displayError:(NSError *)error;
 - (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;
 - (void)displayMessage:(FLAlert*)alert;
@@ -102,7 +101,6 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)showFriendsController;
 - (void)showEditProfil;
 
-- (void)showRequestInvitationCodeWithUser:(NSDictionary *)user;
 - (BOOL)shouldRefreshWithKey:(NSString *)keyUpdate;
 - (void)displayMailWithMessage:(NSString *)message object:(NSString *)object recipients:(NSArray *)recipient andMessageError:(NSString *)messageError inViewController:(UIViewController *)vc;
 

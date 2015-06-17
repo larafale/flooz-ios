@@ -8,7 +8,6 @@
 
 #import "ShareAppViewController.h"
 
-#import "FLStartItem.h"
 #import "ContactCell.h"
 #import "FriendCell.h"
 #import "FriendPickerSearchBar.h"
@@ -324,31 +323,7 @@
 }
 
 - (void)sendWithFacebook {
-    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
-    {
-        SLComposeViewController *mySLComposerSheet;
-        
-        mySLComposerSheet = [[SLComposeViewController alloc] init];
-        mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        [mySLComposerSheet setInitialText:_fbData[@"message"]];
-        
-        [self presentViewController:mySLComposerSheet animated:YES completion:nil];
-        
-        [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-            NSString *output;
-            switch (result) {
-                case SLComposeViewControllerResultCancelled:
-                    output = @"Action Cancelled";
-                    break;
-                case SLComposeViewControllerResultDone:
-                    output = @"Post Successfull";
-                    [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
-                    break;
-                default:
-                    break;
-            }
-        }];
-    } else if ([FBDialogs canPresentShareDialog]) {
+    if ([FBDialogs canPresentShareDialog]) {
         FBLinkShareParams *params = [[FBLinkShareParams alloc] initWithLink:[NSURL URLWithString:_fbData[@"link"]] name:_fbData[@"name"] caption:_fbData[@"caption"] description:_fbData[@"description"] picture:nil];
         
         [FBDialogs presentShareDialogWithParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
@@ -403,10 +378,9 @@
 
 - (void)sendWithTwitter {
     
-    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
     {
         SLComposeViewController *mySLComposerSheet;
-        mySLComposerSheet = [[SLComposeViewController alloc] init];
         mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         [mySLComposerSheet setInitialText:_twitterText];
         
@@ -414,9 +388,6 @@
         [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
             NSString *output;
             switch (result) {
-                case SLComposeViewControllerResultCancelled:
-                    output = @"Action Cancelled";
-                    break;
                 case SLComposeViewControllerResultDone:
                     [[Flooz sharedInstance] sendInvitationMetric:@"twitter"];
                     break;

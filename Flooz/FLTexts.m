@@ -33,6 +33,7 @@
     self.slider = [[FLSlider alloc] initWithJson:json[@"slider"]];
     self.couponButton = json[@"couponButton"];
     self.secretQuestions = json[@"secretQuestions"];
+    self.card = json[@"card"];
 }
 
 @end

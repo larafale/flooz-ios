@@ -42,6 +42,7 @@
     self.steps = [json objectForKey:@"steps"];
     
     self.title = [json objectForKey:@"title"];
+    self.triggers = [json objectForKey:@"triggers"];
     
     if ([json objectForKey:@"block"]) {
         if ([[json objectForKey:@"block"] objectForKey:@"amount"])

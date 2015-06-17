@@ -71,6 +71,7 @@
     msgView.numberOfLines = 0;
     
     msgView.text = _msg;
+    
     [msgView setHeightToFit];
     
     [contentView addSubview:msgView];

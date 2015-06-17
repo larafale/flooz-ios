@@ -9,12 +9,8 @@
 #import "TransactionViewController.h"
 #import "SecureCodeViewController.h"
 
-#import "TransactionHeaderView.h"
 #import "TransactionActionsView.h"
 #import "TransactionUsersView.h"
-#import "TransactionUsersCollectView.h"
-#import "TransactionAmountView.h"
-#import "TransactionContentView.h"
 #import "TransactionCommentsView.h"
 #import "FLNewTransactionAmount.h"
 
@@ -338,7 +334,7 @@
             }
         }
     } noCreditCard: ^{
-        [self presentCreditCardController];
+//        [self presentCreditCardController];
     }];
 }
 

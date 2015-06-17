@@ -37,7 +37,7 @@
 - (void)createTitle {
     _titleMenu = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imageMenu.frame) + 20, 0.0f, CGRectGetWidth(self.frame) - CGRectGetMaxX(_imageMenu.frame) - 20.0f, [MenuCell getHeight])];
     _titleMenu.textColor = [UIColor whiteColor];
-    _titleMenu.font = [UIFont customTitleExtraLight:20];
+    _titleMenu.font = [UIFont customTitleLight:16];
 	[self.contentView addSubview:_titleMenu];
 }
 
@@ -90,7 +90,7 @@
 
 - (void)prepareTitleView {
 	NSString *title = _menuDico[@"title"];
-	[_titleMenu setText:title];
+	[_titleMenu setText:[title uppercaseString]];
 }
 
 - (void)prepareIndicatorView {

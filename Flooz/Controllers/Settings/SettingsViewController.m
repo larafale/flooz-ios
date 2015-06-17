@@ -42,10 +42,7 @@
                        @{ @"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", nil),
                           @"action":@"presentCashOutController" },
                        @{ @"title":NSLocalizedString(@"SETTINGS_RELOAD_TUTO", nil),
-                          @"action":@"reloadTuto" },
-                       @{ @"title":NSLocalizedString(@"SETTINGS_LOGOUT", nil),
-                          @"action":@"presentCashOutController" }
-                       ];
+                          @"action":@"reloadTuto" }];
 	}
 	return self;
 }
@@ -127,12 +124,6 @@
         [self dismissViewControllerAnimated:YES completion:^{
             [appDelegate popToMainView];
         }];
-    }
-    else if (indexPath.row == 6) {
-        FLPopup *popup = [[FLPopup alloc] initWithMessage:NSLocalizedString(@"LOGOUT_INFO", nil) accept: ^{
-            [[Flooz sharedInstance] logout];
-        } refuse:NULL];
-        [popup show];
     }
 }
 

@@ -26,6 +26,8 @@
 
 @implementation CreditCardViewController
 
+@synthesize customLabel;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
@@ -178,10 +180,17 @@
 	_contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), CGRectGetMaxY(_nextButton.frame) + 40);
 
     
-    UILabel *cbInfos = [[UILabel alloc] initWithText:NSLocalizedString(@"CREDIT_CARD_INFOS", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:8];
+    UILabel *cbInfos = [[UILabel alloc] initWithText:NSLocalizedString(@"CREDIT_CARD_INFOS", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
+    [cbInfos setLineBreakMode:NSLineBreakByWordWrapping];
+    
+    if (customLabel && ![customLabel isBlank])
+        [cbInfos setText:customLabel];
+    else if ([Flooz sharedInstance].currentTexts.card && ![[Flooz sharedInstance].currentTexts.card isBlank])
+        [cbInfos setText:[Flooz sharedInstance].currentTexts.card];
+    
     CGRectSetWidth(cbInfos.frame, CGRectGetWidth(_contentView.frame) - PADDING_SIDE * 2);
-    CGRectSetHeight(cbInfos.frame, 130);
-    CGRectSetXY(cbInfos.frame, PADDING_SIDE, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(cbInfos.frame) - PADDING_SIDE);
+    [cbInfos sizeToFit];
+    CGRectSetXY(cbInfos.frame, CGRectGetWidth(_contentView.frame) / 2 - CGRectGetWidth(cbInfos.frame) / 2, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(cbInfos.frame) - PADDING_SIDE);
     [_contentView addSubview:cbInfos];
     
     [self verifAllFieldForCB];
@@ -334,21 +343,21 @@
 
 - (BOOL)verifAllFieldForCB {
 	BOOL verifOk = YES;
-	if (!_card[@"number"] || !_card[@"cvv"] || !_card[@"expires"] || !_card[@"holder"] ||
-	    [_card[@"number"] isBlank] || [_card[@"cvv"] isBlank] || [_card[@"expires"] isBlank] || [_card[@"holder"] isBlank]) {
-		verifOk = NO;
-//		[_nextButton setEnabled:NO];
-	}
-	else {
-//		[_nextButton setEnabled:YES];
-	}
+//	if (!_card[@"number"] || !_card[@"cvv"] || !_card[@"expires"] || !_card[@"holder"] ||
+//	    [_card[@"number"] isBlank] || [_card[@"cvv"] isBlank] || [_card[@"expires"] isBlank] || [_card[@"holder"] isBlank]) {
+//		verifOk = NO;
+////		[_nextButton setEnabled:NO];
+//	}
+//	else {
+////		[_nextButton setEnabled:YES];
+//	}
 	return verifOk;
 }
 
 - (void)didValidTouch {
 	[[self view] endEditing:YES];
 
-    [_nextButton setEnabled:NO];
+//    [_nextButton setEnabled:NO];
     
 	[[Flooz sharedInstance] showLoadView];
 	[[Flooz sharedInstance] createCreditCard:_card atSignup:NO success: ^(id result) {

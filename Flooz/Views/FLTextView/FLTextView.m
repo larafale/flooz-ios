@@ -200,9 +200,6 @@
 }
 
 - (void)setHeight:(CGFloat)height {
-    if (height > maxHeight) {
-        height = maxHeight;
-    }
     //TODO: don't need to small textview if nothing underneath
     height = maxHeight;
     [super setHeight:height];

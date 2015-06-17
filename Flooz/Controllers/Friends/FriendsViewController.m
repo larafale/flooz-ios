@@ -51,7 +51,7 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.view.backgroundColor = [UIColor customBackgroundHeader];
+    [self.view setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"back-secure"]]];
     
 	_searchBar = [[FriendAddSearchBar alloc] initWithStartX:PADDING_NAV + 10.0f];
 	CGRectSetY(_searchBar.frame, PPStatusBarHeight());

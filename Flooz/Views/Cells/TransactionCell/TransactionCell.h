@@ -12,8 +12,6 @@
 #import "FLSocial.h"
 #import "FLTransactionDescriptionView.h"
 
-#import "FLSocialView.h"
-
 @interface TransactionCell : UITableViewCell {
 	CGFloat height;
 	FLTransactionDescriptionView *transactionDetailsView;

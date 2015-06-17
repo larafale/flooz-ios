@@ -60,7 +60,8 @@
 	_textfield.font = [UIFont customTitleThin:26];
 	_textfield.textAlignment = NSTextAlignmentLeft;
 	_textfield.textColor = [UIColor whiteColor];
-
+    _textfield.adjustsFontSizeToFitWidth = YES;
+    _textfield.minimumFontSize = 15;
 	_textfield.layer.sublayerTransform = CATransform3DMakeTranslation(0, 0, 0);
 
 	NSAttributedString *attributedText = [[NSAttributedString alloc]

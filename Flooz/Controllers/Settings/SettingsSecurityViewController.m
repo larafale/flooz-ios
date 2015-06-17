@@ -102,6 +102,7 @@
     if (indexPath.row == 0) {
         SecureCodeViewController *controller = [SecureCodeViewController new];
         controller.isForChangeSecureCode = YES;
+        controller.blockTouchID = YES;
         [[self navigationController] pushViewController:controller animated:YES];
     }
     else if (indexPath.row == 1) {

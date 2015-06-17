@@ -12,7 +12,6 @@
 #import "SettingsBankViewController.h"
 #import "SettingsIdentityViewController.h"
 #import "SettingsCoordsViewController.h"
-#import "EditAccountViewController.h"
 #import "SettingsSecurityViewController.h"
 #import "SettingsPreferencesViewController.h"
 #import "SettingsPrivacyController.h"
@@ -70,13 +69,11 @@
     else
         [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_COORDS", @"")}];
     
-    //    if ([missingFields containsObject:@"secret"])
-    //        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"incomplete": @YES}];
-    //    else
     [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_SECURITY", @"")}];
     
     [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @"")}];
-    [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_PRIVACY", @"")}];
+    
+    [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_LOGOUT", nil)}];
     
     if (missingFields.count || ![Flooz sharedInstance].currentUser.creditCard)
         [_tips setHidden:NO];
@@ -180,7 +177,10 @@
         [[self navigationController] pushViewController:[SettingsPreferencesViewController new] animated:YES];
     }
     else if (indexPath.row == 6) {
-        [[self navigationController] pushViewController:[SettingsPrivacyController new] animated:YES];
+        FLPopup *popup = [[FLPopup alloc] initWithMessage:NSLocalizedString(@"LOGOUT_INFO", nil) accept: ^{
+            [[Flooz sharedInstance] logout];
+        } refuse:NULL];
+        [popup show];
     }
 }
 

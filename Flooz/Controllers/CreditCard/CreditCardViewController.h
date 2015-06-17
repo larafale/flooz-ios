@@ -10,4 +10,6 @@
 
 @interface CreditCardViewController : BaseViewController
 
+@property (nonatomic, retain) NSString *customLabel;
+
 @end

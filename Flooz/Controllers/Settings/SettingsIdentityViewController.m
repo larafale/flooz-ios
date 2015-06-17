@@ -176,7 +176,7 @@
 
 - (void)createSaveButton {
 	_saveButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Save", nil)];
-	[_saveButton setEnabled:NO];
+	[_saveButton setEnabled:YES];
 }
 
 - (void)registerButtonForAction:(UIButton *)button {
@@ -221,20 +221,20 @@
 - (BOOL)canValidate:(FLTextFieldSignup *)textIcon {
 	BOOL canValidate = YES;
 
-	if (!_userDic[@"lastName"] || !_userDic[@"firstName"] || [_userDic[@"lastName"] isBlank] || [_userDic[@"firstName"] isBlank]) {
-		canValidate = NO;
-	}
-
-	if (!_userDic[@"birthdate"] || !([_userDic[@"birthdate"] length] == 12 || [_userDic[@"birthdate"] length] == 14)) {
-		canValidate = NO;
-	}
-
-	if (canValidate) {
-		[_saveButton setEnabled:YES];
-	}
-	else {
-		[_saveButton setEnabled:NO];
-	}
+//	if (!_userDic[@"lastName"] || !_userDic[@"firstName"] || [_userDic[@"lastName"] isBlank] || [_userDic[@"firstName"] isBlank]) {
+//		canValidate = NO;
+//	}
+//
+//	if (!_userDic[@"birthdate"] || !([_userDic[@"birthdate"] length] == 12 || [_userDic[@"birthdate"] length] == 14)) {
+//		canValidate = NO;
+//	}
+//
+//	if (canValidate) {
+//		[_saveButton setEnabled:YES];
+//	}
+//	else {
+//		[_saveButton setEnabled:NO];
+//	}
 	return canValidate;
 }
 

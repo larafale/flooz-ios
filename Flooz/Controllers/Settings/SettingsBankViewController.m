@@ -63,23 +63,24 @@
 - (void)createSaveButton {
 	_saveButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"SAVE_IBAN", nil)];
 
-	[_saveButton setEnabled:NO];
+	[_saveButton setEnabled:YES];
 }
 
 - (BOOL)canValidate:(FLTextFieldSignup *)textIcon {
 	BOOL canValidate = YES;
 
-	if (!_sepa[@"iban"] || [_sepa[@"iban"] isBlank] || [_sepa[@"iban"] length] < 27) {
-		canValidate = NO;
-	}
+//	if (!_sepa[@"iban"] || [_sepa[@"iban"] isBlank] || [_sepa[@"iban"] length] < 27) {
+//		canValidate = NO;
+//	}
+//
+//	if (canValidate) {
+//		[_saveButton setEnabled:YES];
+//	}
+//	else {
+//		[_saveButton setEnabled:NO];
+//	}
 
-	if (canValidate) {
-		[_saveButton setEnabled:YES];
-	}
-	else {
-		[_saveButton setEnabled:NO];
-	}
-	return canValidate;
+    return canValidate;
 }
 
 - (void)saveChanges {

@@ -77,7 +77,7 @@
         _amountInput = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
         [_amountInput addForNextClickTarget:self action:@selector(keyNext)];
         [_amountInput addForTextChangeTarget:self action:@selector(amountChange)];
-
+        
         inputView = [FLKeyboardView new];
         [inputView setKeyboardDecimal];
         inputView.textField = _amountInput.textfield;
@@ -109,20 +109,20 @@
 
 - (void)amountChange {
     if (dictionary[@"amount"] && ![dictionary[@"amount"] isBlank]) {
-//        [_confirmButton setEnabled:YES];
+        //        [_confirmButton setEnabled:YES];
         
         NSNumber *numberAmount = [NSNumber numberWithFloat:[dictionary[@"amount"] floatValue]];
         
         [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), [[FLHelper formatedAmount:numberAmount withCurrency:NO withSymbol:NO] stringByAppendingString:@"€"]] forState:UIControlStateNormal];
     } else {
-//        [_confirmButton setEnabled:NO];
+        //        [_confirmButton setEnabled:NO];
         [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), @""] forState:UIControlStateNormal];
     }
 }
 
 - (void)createConfirmButton {
     _confirmButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, 34)];
-
+    
     [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), @""] forState:UIControlStateNormal];
     [_confirmButton setEnabled:YES];
 }
@@ -130,27 +130,54 @@
 - (void)didValidTouch {
     [[self view] endEditing:YES];
     
-    if ([[dictionary objectForKey:@"amount"] floatValue] <= 0) {
-        return;
-    }
+    //    if ([[dictionary objectForKey:@"amount"] floatValue] <= 0) {
+    //        return;
+    //    }
     
     NSNumber *amount = [dictionary objectForKey:@"amount"];
     
-    //    [[Flooz sharedInstance] showLoadView];
-    //    [[Flooz sharedInstance] cashoutValidate:amount success:^(id result) {
-    CompleteBlock completeBlock = ^{
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] cashout:amount success: ^(id result) {
-            [self dismissViewController];
-        } failure:NULL];
-    };
+    if (!amount)
+        amount = @0;
     
-    SecureCodeViewController *controller = [SecureCodeViewController new];
-    controller.completeBlock = completeBlock;
-    [[self navigationController] pushViewController:controller animated:YES];
-    //    } failure:^(NSError *error) {
-    
-    //    }];
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] cashoutValidate:amount success:^(id result) {
+        CompleteBlock completeBlock = ^{
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] cashout:amount success: ^(id result) {
+                [self dismissViewController];
+            } failure:NULL];
+        };
+        
+        if ([SecureCodeViewController canUseTouchID])
+            [SecureCodeViewController useToucheID:completeBlock passcodeCallback:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    SecureCodeViewController *controller = [SecureCodeViewController new];
+                    controller.completeBlock = completeBlock;
+                    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                        [[Flooz sharedInstance] hideLoadView];
+                    }];
+                });
+            } cancelCallback:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[Flooz sharedInstance] hideLoadView];
+                });
+            }];
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                SecureCodeViewController *controller = [SecureCodeViewController new];
+                controller.completeBlock = completeBlock;
+                [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                    [[Flooz sharedInstance] hideLoadView];
+                }];
+            });
+        }
+//
+//        SecureCodeViewController *controller = [SecureCodeViewController new];
+//        controller.completeBlock = completeBlock;
+//        [[self navigationController] pushViewController:controller animated:YES];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 @end

@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSArray *steps;
 @property (nonatomic, retain) NSDictionary *popup;
+@property (nonatomic, retain) NSArray *triggers;
 
 - (id)initWithJson:(NSDictionary *)json;
 

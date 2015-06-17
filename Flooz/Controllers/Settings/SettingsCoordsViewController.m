@@ -227,7 +227,7 @@
 - (void)createSaveButton {
 	_saveButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Save", nil)];
 
-	[_saveButton setEnabled:NO];
+	[_saveButton setEnabled:YES];
 }
 
 - (void)registerButtonForAction:(UIButton *)button {
@@ -270,20 +270,20 @@
 - (BOOL)canValidate:(FLTextFieldSignup *)textIcon {
 	BOOL canValidate = YES;
 
-    if (!_userDic[@"phone"] || [_userDic[@"phone"] isBlank] || ((NSString *)_userDic[@"phone"]).length < 10) {
-        canValidate = NO;
-    }
-    
-    if (!_userDic[@"email"] || [_userDic[@"email"] isBlank]) {
-        canValidate = NO;
-    }
-    
-	if (canValidate) {
-		[_saveButton setEnabled:YES];
-	}
-	else {
-		[_saveButton setEnabled:NO];
-	}
+//    if (!_userDic[@"phone"] || [_userDic[@"phone"] isBlank] || ((NSString *)_userDic[@"phone"]).length < 10) {
+//        canValidate = NO;
+//    }
+//    
+//    if (!_userDic[@"email"] || [_userDic[@"email"] isBlank]) {
+//        canValidate = NO;
+//    }
+//    
+//	if (canValidate) {
+//		[_saveButton setEnabled:YES];
+//	}
+//	else {
+//		[_saveButton setEnabled:NO];
+//	}
 	return canValidate;
 }
 

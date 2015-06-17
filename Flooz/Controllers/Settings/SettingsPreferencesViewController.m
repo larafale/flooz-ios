@@ -8,6 +8,7 @@
 
 #import "SettingsPreferencesViewController.h"
 #import "SettingsNotificationsViewController.h"
+#import "SettingsPrivacyController.h"
 #import "FLSwitch.h"
 #import "MenuCell.h"
 
@@ -29,8 +30,10 @@
 
 		_menuArray = @[
 		        @{ @"title":NSLocalizedString(@"SETTINGS_FACEBOOK", @"") },
-		        @{ @"title":NSLocalizedString(@"SETTINGS_NOTIFICATION", @"") }
+		        @{ @"title":NSLocalizedString(@"SETTINGS_NOTIFICATION", @"") },
+                @{ @"title":NSLocalizedString(@"SETTINGS_PRIVACY", @"") }
 		    ];
+        
 	}
 	return self;
 }
@@ -105,6 +108,9 @@
 	if (indexPath.row == 1) {
 		[[self navigationController] pushViewController:[SettingsNotificationsViewController new] animated:YES];
 	}
+    else if (indexPath.row == 2) {
+        [[self navigationController] pushViewController:[SettingsPrivacyController new] animated:YES];
+    }
 }
 
 - (void)didSwitchChange {

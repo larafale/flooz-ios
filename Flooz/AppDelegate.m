@@ -55,14 +55,10 @@
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
     
-    _alertView = [FLAlertView new];
-    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [Fabric with:@[CrashlyticsKit]];
     [Crashlytics startWithAPIKey:@"4f18178e0b7894ec76bb6f01a60f34baf68acbf7"];
-    
-//    branchParam = [@{@"cactus":@"3010"} mutableCopy];
     
     [self loadBranchParams];
     
@@ -80,8 +76,6 @@
     [self launchRootController];
 #endif
     
-    // initialisation de MagicalRecord
-    // Pony Debugger
 #ifdef PONY_D
 #ifdef TARGET_IPHONE_SIMULATOR
     PDDebugger *debugger = [PDDebugger defaultInstance];
@@ -250,13 +244,13 @@
     [[self currentController] presentViewController:secureVC animated:YES completion:nil];
 }
 
-- (void)resetTuto {
-    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoFlooz];
-    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelineFriends];
-    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePublic];
-    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePrivate];
-    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoWelcome];
-    [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kSendContact];
+- (void)resetTuto:(Boolean)value {
+    [[Flooz sharedInstance] saveSettingsObject:[NSNumber numberWithBool:value] withKey:kKeyTutoFlooz];
+    [[Flooz sharedInstance] saveSettingsObject:[NSNumber numberWithBool:value] withKey:kKeyTutoTimelineFriends];
+    [[Flooz sharedInstance] saveSettingsObject:[NSNumber numberWithBool:value] withKey:kKeyTutoTimelinePublic];
+    [[Flooz sharedInstance] saveSettingsObject:[NSNumber numberWithBool:value] withKey:kKeyTutoTimelinePrivate];
+    [[Flooz sharedInstance] saveSettingsObject:[NSNumber numberWithBool:value] withKey:kKeyTutoWelcome];
+    [[Flooz sharedInstance] saveSettingsObject:[NSNumber numberWithBool:value] withKey:kSendContact];
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user {
@@ -330,10 +324,12 @@
 }
 
 - (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay {
+    _alertView = [FLAlertView new];
     [_alertView show:title content:content style:style time:time delay:delay andDictionnary:nil];
 }
 
 - (void)displayMessage:(FLAlert*)alert {
+    _alertView = [FLAlertView new];
     [_alertView show:alert];
 }
 
@@ -443,9 +439,17 @@
     else {
         if ([url.scheme isEqualToString:@"flooz"]) {
             if (url.host && ![url.host isBlank]) {
-                NSDictionary *dic = [NSDictionary newWithJSONString:url.host];
-                if (dic && dic[@"data"])
+                NSString *host = url.host;
+                NSDictionary *dic = [NSDictionary newWithJSONString:host];
+
+                if (dic && dic[@"data"]) {
+                    if (dic[@"data"][@"login"]) {
+                        NSString *token = dic[@"data"][@"login"];
+                        [UICKeyChainStore setString:token forKey:@"login-token"];
+                        [[Flooz sharedInstance] autologin];
+                    }
                     pendingData = dic[@"data"];
+                }
             }
         }
     }
@@ -454,7 +458,6 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    
     [FBAppCall handleDidBecomeActive];
     
     if (pendingData) {
@@ -464,6 +467,7 @@
             [self handlePendingData];
         });
     }
+    
 }
 
 #pragma mark - Notifications Push
@@ -1159,12 +1163,12 @@
 }
 
 - (UIWindow *)topWindow {
-    if (self.formSheet.formSheetWindow) {
-        return appDelegate.formSheet.formSheetWindow;
-    }
-    else {
-        return appDelegate.window;
-    }
+    if (self.formSheet.formSheetWindow && [self.formSheet.formSheetWindow isKeyWindow])
+        return self.formSheet.formSheetWindow;
+    else if ([self.window isKeyWindow])
+        return self.window;
+    else
+        return [UIApplication sharedApplication].keyWindow;
 }
 
 #pragma mark - PPRevealSideViewControllerDelegate

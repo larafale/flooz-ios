@@ -9,6 +9,7 @@
 #import "SignupBaseViewController.h"
 #import "SignupSecureCodeViewController.h"
 #import "SignupInvitationViewController.h"
+#import "SignupCreditCardViewController.h"
 
 @implementation SignupBaseViewController
 
@@ -56,7 +57,7 @@
         UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(17.0f, 0.0f, 30.0f, CGRectGetHeight(_headerView.frame))];
         
         [backButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
-        
+        [backButton setTag:666];
         [backButton addTarget:self action:@selector(dismissViewController) forControlEvents:UIControlEventTouchUpInside];
         [_headerView addSubview:backButton];
     }
@@ -82,6 +83,10 @@
         return controller;
     } else if ([step isEqualToString:@"sms"]) {
         SignupSMSViewController *controller = [SignupSMSViewController new];
+        [controller initWithData:data];
+        return controller;
+    } else if ([step isEqualToString:@"card"]) {
+        SignupCreditCardViewController *controller = [SignupCreditCardViewController new];
         [controller initWithData:data];
         return controller;
     }

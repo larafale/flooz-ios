@@ -11,7 +11,6 @@
 #import "FLNewTransactionAmount.h"
 #import "FLPaymentField.h"
 #import "FLNewTransactionBar.h"
-#import "FLSelectAmount.h"
 #import "FLSelectFriendButton.h"
 #import "FLPopupInformation.h"
 
@@ -53,6 +52,8 @@
     BOOL firstViewAmount;
     BOOL firstViewWhy;
     BOOL isDemo;
+    
+    NSTimer *demoTimer;
     
     BOOL contactPickerVisible;
     
@@ -151,8 +152,9 @@
             self.navigationItem.leftBarButtonItem = nil;
         }
         
-        if (preset.amount)
-            transaction[@"amount"] = [preset.amount stringValue];
+        if (preset.amount) {
+            transaction[@"amount"] = [FLHelper formatedAmount:preset.amount withCurrency:NO withSymbol:NO];
+        }
         
         if (preset.why)
             transaction[@"why"] = preset.why;
@@ -298,6 +300,11 @@
     
     if ([popoverController isPopoverVisible])
         [popoverController dismissPopoverAnimated:YES];
+    
+    if (demoTimer) {
+        [demoTimer invalidate];
+        demoTimer = nil;
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -318,6 +325,13 @@
     [super viewDidAppear:animated];
     
     if (currentPreset) {
+        if (currentPreset.triggers && currentPreset.triggers.count > 0) {
+            for (NSDictionary *trigger in currentPreset.triggers) {
+                [[Flooz sharedInstance] handleTrigger:[[FLTrigger alloc] initWithJson:trigger]];
+            }
+            
+            currentPreset.triggers = nil;
+        }
         if (currentPreset.blockBalance)
             [((FLNavigationController*)self.parentViewController) setAmountHidden:YES];
         else
@@ -338,25 +352,7 @@
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
     
     if (isDemo) {
-        if (currentPreset.popup) {
-            [[[FLPopupInformation alloc] initWithTitle:currentPreset.popup[@"title"] message:[[NSAttributedString alloc] initWithString:currentPreset.popup[@"content"]] button:currentPreset.popup[@"button"] ok:^() {
-                if (currentPreset.popup[@"triggers"]) {
-                    NSArray *triggers = currentPreset.popup[@"triggers"];
-                    for (NSDictionary *triggerData in triggers) {
-                        FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-                        [[Flooz sharedInstance] handleTrigger:trigger];
-                    }
-                }
-
-                if (currentPreset.steps) {
-                    [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-                }
-                
-                currentPreset.popup = nil;
-            }] show];
-        } else if (currentPreset.steps) {
-            [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-        }
+        demoTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(launchDemo) userInfo:nil repeats:NO];
     } else {
         if (firstViewAmount) {
             [amountInput becomeFirstResponder];
@@ -373,14 +369,14 @@
 - (void)validateView {
     BOOL valid = YES;
     
-//    if (!presetUser)
-//        valid = NO;
-//    
-//    if (!transaction[@"amount"] || [transaction[@"amount"] isBlank] || [transaction[@"amount"] floatValue] < 0.5f)
-//        valid = NO;
-//    
-//    if (!transaction[@"why"] || [transaction[@"why"] isBlank])
-//        valid = NO;
+    //    if (!presetUser)
+    //        valid = NO;
+    //
+    //    if (!transaction[@"amount"] || [transaction[@"amount"] isBlank] || [transaction[@"amount"] floatValue] < 0.5f)
+    //        valid = NO;
+    //
+    //    if (!transaction[@"why"] || [transaction[@"why"] isBlank])
+    //        valid = NO;
     
     if (presetUser) {
         if (presetUser.blockObject != nil) {
@@ -459,6 +455,30 @@
 }
 
 #pragma mark - demo handler
+
+- (void)launchDemo {
+    [demoTimer invalidate];
+    demoTimer = nil;
+    if (currentPreset.popup) {
+        [[[FLPopupInformation alloc] initWithTitle:currentPreset.popup[@"title"] message:[[NSAttributedString alloc] initWithString:currentPreset.popup[@"content"]] button:currentPreset.popup[@"button"] ok:^() {
+            if (currentPreset.popup[@"triggers"]) {
+                NSArray *triggers = currentPreset.popup[@"triggers"];
+                for (NSDictionary *triggerData in triggers) {
+                    FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
+                    [[Flooz sharedInstance] handleTrigger:trigger];
+                }
+            }
+            
+            if (currentPreset.steps) {
+                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+            }
+            
+            currentPreset.popup = nil;
+        }] show];
+    } else if (currentPreset.steps) {
+        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+    }
+}
 
 - (void) showDemoStepPopover:(NSDictionary*)stepData {
     tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:stepData[@"title"] message:stepData[@"desc"] step:[NSNumber numberWithInt:currentDemoStep + 1] button:stepData[@"btn"] action:^(FLTutoPopoverViewController *viewController) {
@@ -637,7 +657,7 @@
         [self.view addSubview:pickerTableView];
         contactPickerVisible = YES;
     }
-    [pickerTableView reloadData];
+    [pickerTableView searchUser:contactPickerView.textField.text];
 }
 
 - (void)contactPickerDidEndEditing {
@@ -653,7 +673,7 @@
             
             [contactPickerView addContact:user withName:text];
         } else {
-            [contactPickerView removeAllContacts];
+//            [contactPickerView removeAllContacts];
         }
     }
 }
@@ -810,7 +830,7 @@
             }
         }
     } noCreditCard: ^() {
-//        [self presentCreditCardController];
+        //        [self presentCreditCardController];
     }];
 }
 
@@ -1041,7 +1061,7 @@
                 
                 [appDelegate.window addSubview:cameraView];
             }
-
+            
             [camera startCamera];
             [UIView animateWithDuration:0.3 animations: ^{
                 CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame) - CGRectGetHeight(cameraView.frame));
@@ -1072,7 +1092,7 @@
                         
                         [appDelegate.window addSubview:cameraView];
                     }
-
+                    
                     [camera startCamera];
                     [UIView animateWithDuration:0.3 animations: ^{
                         CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame) - CGRectGetHeight(cameraView.frame));

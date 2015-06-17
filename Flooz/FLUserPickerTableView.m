@@ -77,6 +77,9 @@
     if ([searchString isEqualToString:@""]){
         [timer invalidate];
         _filteredContacts = [_friendsRecent copy];
+        
+        if ([_filteredContacts count] == 0)
+            _filteredContacts = _contactsFromAdressBook;
     } else {
         [self didFilterChange];
     }
@@ -176,6 +179,13 @@
             
             [self reloadData];
         }];
+    } else {
+        _filteredContacts = [_friendsRecent copy];
+        
+        if ([_filteredContacts count] == 0)
+            _filteredContacts = _contactsFromAdressBook;
+        
+        [self reloadData];
     }
 }
 

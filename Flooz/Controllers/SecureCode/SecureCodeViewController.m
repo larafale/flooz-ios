@@ -62,6 +62,14 @@ static BOOL canTouchID = YES;
 
 @synthesize currentSecureMode;
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.blockTouchID = NO;
+    }
+    return self;
+}
+
 - (id)initWithUser:(NSDictionary *)_user {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -261,7 +269,7 @@ static BOOL canTouchID = YES;
     
     {
         _nextButton = [[FLActionButton alloc] initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(_passwordField.frame) + 10.0f, PPScreenWidth() - 20.0f * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil)];
-        [_nextButton setEnabled:NO];
+        [_nextButton setEnabled:YES];
         [_nextButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
         [_mainBody addSubview:_nextButton];
     }
@@ -416,14 +424,16 @@ static BOOL canTouchID = YES;
     [_keyboardView setHidden:YES];
     
     if (currentSecureMode == SecureCodeModeNormal || currentSecureMode == SecureCodeModeChangeOld) {
+        CGRectSetY(_textExplication.frame, 0);
+        CGRectSetY(_codePinView.frame, CGRectGetMaxY(_textExplication.frame) - 5.0f);
+
         [backgroundImage setHidden:NO];
         [_textExplication setHidden:NO];
-        
         [_codePinView setHidden:NO];
         [_padNumber setHidden:NO];
         [_forgotButton setHidden:NO];
         [_cleanButton setHidden:YES];
-        if ([[self class] canUseTouchID] && canTouchID) {
+        if ([[self class] canUseTouchID] && canTouchID && !self.blockTouchID) {
             [_touchIDButton setHidden:NO];
         }
     }
@@ -447,6 +457,10 @@ static BOOL canTouchID = YES;
         [_usernameField becomeFirstResponder];
     }
     else if (currentSecureMode == SecureCodeModeChangeNew || currentSecureMode == SecureCodeModeChangeConfirm) {
+        
+        CGRectSetY(_textExplication.frame, CGRectGetMinY(_keyboardView.frame) / 2 - 30);
+        CGRectSetY(_codePinView.frame, CGRectGetMaxY(_textExplication.frame) - 5.0f);
+
         [_textExplication setHidden:NO];
         [_codePinView setHidden:NO];
         [_keyboardView setHidden:NO];
@@ -620,42 +634,43 @@ static BOOL canTouchID = YES;
 }
 
 - (BOOL)checkNextOk {
-    if (currentSecureMode == SecureCodeModeSecret) {
-        if (!_userDic[@"secretAnswer"] || [_userDic[@"secretAnswer"] isBlank]) {
-            [_secretNextButton setEnabled:NO];
-            return NO;
-        }
-        if (!_userDic[@"newPassword"] || [_userDic[@"newPassword"] isBlank]) {
-            [_secretNextButton setEnabled:NO];
-            return NO;
-        }
-        if (!_userDic[@"confirm"] || [_userDic[@"confirm"] isBlank]) {
-            [_secretNextButton setEnabled:NO];
-            return NO;
-        }
-        
-        [_secretNextButton setEnabled:YES];
-        return YES;
-    } else {
-        if (!_userDic[@"login"] || [_userDic[@"login"] isBlank]) {
-            [_usernameField becomeFirstResponder];
-            [_nextButton setEnabled:NO];
-            return NO;
-        }
-        if (!_userDic[@"password"] || [_userDic[@"password"] length] < 1) {
-            [_passwordField becomeFirstResponder];
-            [_nextButton setEnabled:NO];
-            return NO;
-        }
-        
-        if (currentSecureMode == SecureCodeModeChangePass && ![_userDic[@"login"] isEqualToString:_userDic[@"password"]]) {
-            [_nextButton setEnabled:NO];
-            return NO;
-        }
-        
-        [_nextButton setEnabled:YES];
-        return YES;
-    }
+//    if (currentSecureMode == SecureCodeModeSecret) {
+//        if (!_userDic[@"secretAnswer"] || [_userDic[@"secretAnswer"] isBlank]) {
+//            [_secretNextButton setEnabled:NO];
+//            return NO;
+//        }
+//        if (!_userDic[@"newPassword"] || [_userDic[@"newPassword"] isBlank]) {
+//            [_secretNextButton setEnabled:NO];
+//            return NO;
+//        }
+//        if (!_userDic[@"confirm"] || [_userDic[@"confirm"] isBlank]) {
+//            [_secretNextButton setEnabled:NO];
+//            return NO;
+//        }
+//        
+//        [_secretNextButton setEnabled:YES];
+//        return YES;
+//    } else {
+//        if (!_userDic[@"login"] || [_userDic[@"login"] isBlank]) {
+//            [_usernameField becomeFirstResponder];
+//            [_nextButton setEnabled:NO];
+//            return NO;
+//        }
+//        if (!_userDic[@"password"] || [_userDic[@"password"] length] < 1) {
+//            [_passwordField becomeFirstResponder];
+//            [_nextButton setEnabled:NO];
+//            return NO;
+//        }
+//        
+//        if (currentSecureMode == SecureCodeModeChangePass && ![_userDic[@"login"] isEqualToString:_userDic[@"password"]]) {
+//            [_nextButton setEnabled:NO];
+//            return NO;
+//        }
+//        
+//        [_nextButton setEnabled:YES];
+//        return YES;
+//    }
+    return YES;
 }
 
 - (void)login {
