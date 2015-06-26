@@ -229,7 +229,6 @@
                 actionsView = [[TransactionActionsView alloc] initWithFrame:CGRectMake(20.0f, 0.0f, CGRectGetWidth(floozerView.frame) - 2 * 20.0f, 0)];
                 actionsView.transaction = _transaction;
                 actionsView.delegate = self;
-                [FLHelper addMotionEffect:actionsView];
                 height1 += CGRectGetHeight(actionsView.frame) / 2.0f;
                 height += CGRectGetHeight(actionsView.frame) / 2.0f;
             }

@@ -66,6 +66,21 @@
     [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
         if ([params count] > 0) {
             [branchParam addEntriesFromDictionary:params];
+            
+            if (branchParam[@"data"] && ![branchParam[@"data"] isBlank]) {
+                NSDictionary *dataParam = [NSDictionary newWithJSONString:branchParam[@"data"]];
+                
+                if (dataParam) {
+                    if ([Flooz sharedInstance].currentUser) {
+                        [self handlePushMessage:dataParam withApplication:nil];
+                    } else {
+                        NSMutableDictionary *tmp = [pendingData mutableCopy];
+                        [tmp addEntriesFromDictionary:dataParam];
+                        pendingData = tmp;
+                    }
+                }
+            }
+            
             [self saveBranchParams];
         }
     }];
@@ -459,15 +474,14 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBAppCall handleDidBecomeActive];
-    
-    if (pendingData) {
+
+    if (pendingData && [Flooz sharedInstance].currentUser) {
         double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
             [self handlePendingData];
         });
     }
-    
 }
 
 #pragma mark - Notifications Push

@@ -94,6 +94,78 @@
     return nil;
 }
 
++ (void)handleSignupRequestResponse:(NSDictionary *)result withUserData:(NSDictionary *)signupData andViewController:(UIViewController *)viewController {
+    if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
+        NSString *deviceToken = [appDelegate currentDeviceToken];
+        
+        if (deviceToken) {
+            [signupData setValue:deviceToken forKey:@"device"];
+        }
+        
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] signupPassStep:@"signup" user:[signupData mutableCopy] success:^(NSDictionary *result) {
+            [appDelegate resetTuto:YES];
+            [appDelegate clearBranchParams];
+            [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
+            
+            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+            
+            if (nextViewController) {
+                SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+                nextViewController.userDic = [signupData mutableCopy];
+                
+                [viewController presentViewController:signupNavigationController animated:YES completion:nil];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    } else {
+        SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+        
+        if (nextViewController) {
+            SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
+            nextViewController.userDic = [signupData mutableCopy];
+            
+            [viewController presentViewController:signupNavigationController animated:YES completion:nil];
+        }
+    }
+}
+
++ (void)handleSignupRequestResponse:(NSDictionary *)result withUserData:(NSDictionary *)signupData andNavigationController:(UINavigationController *)navController {
+    if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
+        NSString *deviceToken = [appDelegate currentDeviceToken];
+        
+        if (deviceToken) {
+            [signupData setValue:deviceToken forKey:@"device"];
+        }
+        
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] signupPassStep:@"signup" user:[signupData mutableCopy] success:^(NSDictionary *result) {
+            [appDelegate resetTuto:YES];
+            [appDelegate clearBranchParams];
+            [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
+            
+            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+            
+            if (nextViewController) {
+                nextViewController.userDic = [signupData mutableCopy];
+                
+                [navController pushViewController:nextViewController animated:YES];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    } else {
+        SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+        
+        if (nextViewController) {
+            nextViewController.userDic = [signupData mutableCopy];
+            
+            [navController pushViewController:nextViewController animated:YES];
+        }
+    }
+}
+
 - (void)displayChanges {
 
 }

@@ -131,31 +131,33 @@
     if (self.userDic[@"smscode"] && ![self.userDic[@"smscode"] isBlank]) {
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] signupPassStep:@"sms" user:self.userDic success:^(NSDictionary *result) {
-            if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
-                [[Flooz sharedInstance] showLoadView];
-                [[Flooz sharedInstance] signupPassStep:@"signup" user:self.userDic success:^(NSDictionary *result) {
-                    [appDelegate resetTuto:YES];
-                    [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
-                    
-                    SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-                    
-                    if (nextViewController) {
-                        nextViewController.userDic = self.userDic;
-                        
-                        [self.navigationController pushViewController:nextViewController animated:YES];
-                    }
-                } failure:^(NSError *error) {
-                    
-                }];
-            } else {
-                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-                
-                if (nextViewController) {
-                    nextViewController.userDic = self.userDic;
-                    
-                    [self.navigationController pushViewController:nextViewController animated:YES];
-                }
-            }
+            [SignupBaseViewController handleSignupRequestResponse:result withUserData:self.userDic andNavigationController:self.navigationController];
+
+//            if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
+//                [[Flooz sharedInstance] showLoadView];
+//                [[Flooz sharedInstance] signupPassStep:@"signup" user:self.userDic success:^(NSDictionary *result) {
+//                    [appDelegate resetTuto:YES];
+//                    [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
+//                    
+//                    SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+//                    
+//                    if (nextViewController) {
+//                        nextViewController.userDic = self.userDic;
+//                        
+//                        [self.navigationController pushViewController:nextViewController animated:YES];
+//                    }
+//                } failure:^(NSError *error) {
+//                    
+//                }];
+//            } else {
+//                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+//                
+//                if (nextViewController) {
+//                    nextViewController.userDic = self.userDic;
+//                    
+//                    [self.navigationController pushViewController:nextViewController animated:YES];
+//                }
+//            }
         } failure:^(NSError *error) {
             
         }];

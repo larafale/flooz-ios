@@ -23,6 +23,8 @@
 
 - (void)displayChanges;
 + (SignupBaseViewController *) getViewControllerForStep:(NSString *)step withData:(NSDictionary *)data;
++ (void)handleSignupRequestResponse:(NSDictionary *)result withUserData:(NSDictionary *)signupData andViewController:(UIViewController *)viewController;
++ (void)handleSignupRequestResponse:(NSDictionary *)result withUserData:(NSDictionary *)signupData andNavigationController:(UINavigationController *)navController;
 
 - (void)initWithData:(NSDictionary *)data;
 

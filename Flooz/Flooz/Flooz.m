@@ -781,7 +781,7 @@
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success {
     NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/%@", dictionary[@"id"], dictionary[@"action"]];
-    [self requestPath:path method:@"GET" params:nil success:success failure:nil];
+    [self requestPath:path method:@"POST" params:nil success:success failure:nil];
 }
 
 - (void)friendsSuggestion:(void (^)(id result))success {
@@ -797,12 +797,12 @@
 
 - (void)friendRemove:(NSString *)friendId success:(void (^)())success {
     NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/delete", friendId];
-    [self requestPath:path method:@"GET" params:nil success:success failure:nil];
+    [self requestPath:path method:@"POST" params:nil success:success failure:nil];
 }
 
 - (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success {
     NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/request", friendId];
-    [self requestPath:path method:@"GET" params:(canal != nil ? @{@"metrics":@{@"selectedFrom": canal}} : nil) success:success failure:nil];
+    [self requestPath:path method:@"POST" params:(canal != nil ? @{@"metrics":@{@"selectedFrom": canal}} : nil) success:success failure:nil];
 }
 
 - (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz success:(void (^)(id result))success {
@@ -888,7 +888,7 @@
             path = [path stringByAppendingString:[NSString stringWithFormat:@"&os=%lu-%lu-%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
         }
         
-        if ([path rangeOfString:@"&dmo="].location == NSNotFound) {
+        if ([path rangeOfString:@"&mo="].location == NSNotFound) {
             path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
         }
     }

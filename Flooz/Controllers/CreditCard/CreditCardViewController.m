@@ -272,8 +272,6 @@
             for (FLTextFieldTitle2 * view in fieldsView) {
                 [view reloadData];
             }
-            if ([self verifAllFieldForCB])
-                [self didValidTouch];
         } cancel: ^{
             [fieldsView[1] becomeFirstResponder];
         }];
@@ -293,8 +291,6 @@
                     for (FLTextFieldTitle2 * view in fieldsView) {
                         [view reloadData];
                     }
-                    if ([self verifAllFieldForCB])
-                        [self didValidTouch];
                 } cancel: ^{
                     [fieldsView[1] becomeFirstResponder];
                 }];

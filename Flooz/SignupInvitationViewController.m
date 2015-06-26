@@ -41,7 +41,7 @@
     
     NSString *placeholder = NSLocalizedString(@"FIELD_COUPON", nil);
     NSString *buttonText = NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil);
-
+    
     if (self.contentData) {
         if (self.contentData[@"placeholder"])
             placeholder = self.contentData[@"placeholder"];
@@ -49,8 +49,8 @@
         if (self.contentData[@"button"])
             buttonText = self.contentData[@"button"];
     }
-
-    {        
+    
+    {
         _coupon = [[FLTextFieldSignup alloc] initWithPlaceholder:placeholder for:self.userDic key:@"coupon" position:CGPointMake(SIGNUP_PADDING_SIDE, self.firstItemY)];
         
         [_coupon addForNextClickTarget:self action:@selector(checkCoupon)];
@@ -77,31 +77,33 @@
 - (void)checkCoupon {
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] signupPassStep:@"invitation" user:self.userDic success:^(NSDictionary *result) {
-        if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
-            [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] signupPassStep:@"signup" user:self.userDic success:^(NSDictionary *result) {
-                [appDelegate resetTuto:YES];
-                [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
-                
-                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-                
-                if (nextViewController) {
-                    nextViewController.userDic = self.userDic;
-                    
-                    [self.navigationController pushViewController:nextViewController animated:YES];
-                }
-            } failure:^(NSError *error) {
-                
-            }];
-        } else {
-            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-            
-            if (nextViewController) {
-                nextViewController.userDic = self.userDic;
-                
-                [self.navigationController pushViewController:nextViewController animated:YES];
-            }
-        }
+        [SignupBaseViewController handleSignupRequestResponse:result withUserData:self.userDic andNavigationController:self.navigationController];
+        
+        //        if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
+        //            [[Flooz sharedInstance] showLoadView];
+        //            [[Flooz sharedInstance] signupPassStep:@"signup" user:self.userDic success:^(NSDictionary *result) {
+        //                [appDelegate resetTuto:YES];
+        //                [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
+        //
+        //                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+        //
+        //                if (nextViewController) {
+        //                    nextViewController.userDic = self.userDic;
+        //
+        //                    [self.navigationController pushViewController:nextViewController animated:YES];
+        //                }
+        //            } failure:^(NSError *error) {
+        //
+        //            }];
+        //        } else {
+        //            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
+        //
+        //            if (nextViewController) {
+        //                nextViewController.userDic = self.userDic;
+        //
+        //                [self.navigationController pushViewController:nextViewController animated:YES];
+        //            }
+        //        }
     } failure:^(NSError *error) {
         [_coupon becomeFirstResponder];
     }];
