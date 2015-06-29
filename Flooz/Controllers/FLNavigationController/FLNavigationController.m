@@ -110,10 +110,7 @@
 
 - (void)dismiss {
     [self.view endEditing:YES];
-        
-    [self dismissViewControllerAnimated:YES completion:^{
-
-    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {

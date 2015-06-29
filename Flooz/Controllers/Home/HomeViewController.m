@@ -700,37 +700,12 @@
 
 - (void)didSignupButtonClick {
     [self.view endEditing:YES];
+    
+    [signupData setObject:[[Mixpanel sharedInstance] distinctId] forKey:@"distinctId"];
+    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] signupPassStep:@"profile" user:signupData success:^(NSDictionary *result) {
         [SignupBaseViewController handleSignupRequestResponse:result withUserData:signupData andViewController:self];
-        
-//        if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
-//            [[Flooz sharedInstance] showLoadView];
-//            [[Flooz sharedInstance] signupPassStep:@"signup" user:signupData success:^(NSDictionary *result) {
-//                [appDelegate resetTuto:YES];
-//                [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
-//                
-//                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-//                
-//                if (nextViewController) {
-//                    SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
-//                    nextViewController.userDic = signupData;
-//                    
-//                    [self presentViewController:signupNavigationController animated:YES completion:nil];
-//                }
-//            } failure:^(NSError *error) {
-//                
-//            }];
-//        } else {
-//            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-//            
-//            if (nextViewController) {
-//                SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
-//                nextViewController.userDic = signupData;
-//                
-//                [self presentViewController:signupNavigationController animated:YES completion:nil];
-//            }
-//        }
     } failure:^(NSError *error) {
         
     }];

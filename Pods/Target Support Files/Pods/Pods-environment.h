@@ -75,8 +75,8 @@
 // Branch
 #define COCOAPODS_POD_AVAILABLE_Branch
 #define COCOAPODS_VERSION_MAJOR_Branch 0
-#define COCOAPODS_VERSION_MINOR_Branch 8
-#define COCOAPODS_VERSION_PATCH_Branch 2
+#define COCOAPODS_VERSION_MINOR_Branch 9
+#define COCOAPODS_VERSION_PATCH_Branch 3
 
 // DACircularProgress
 #define COCOAPODS_POD_AVAILABLE_DACircularProgress
@@ -88,12 +88,12 @@
 #define COCOAPODS_POD_AVAILABLE_EAIntroView
 #define COCOAPODS_VERSION_MAJOR_EAIntroView 2
 #define COCOAPODS_VERSION_MINOR_EAIntroView 7
-#define COCOAPODS_VERSION_PATCH_EAIntroView 3
+#define COCOAPODS_VERSION_PATCH_EAIntroView 4
 
 // EARestrictedScrollView
 #define COCOAPODS_POD_AVAILABLE_EARestrictedScrollView
 #define COCOAPODS_VERSION_MAJOR_EARestrictedScrollView 0
-#define COCOAPODS_VERSION_MINOR_EARestrictedScrollView 1
+#define COCOAPODS_VERSION_MINOR_EARestrictedScrollView 2
 #define COCOAPODS_VERSION_PATCH_EARestrictedScrollView 0
 
 // FXBlurView
@@ -159,14 +159,14 @@
 // MZFormSheetController
 #define COCOAPODS_POD_AVAILABLE_MZFormSheetController
 #define COCOAPODS_VERSION_MAJOR_MZFormSheetController 3
-#define COCOAPODS_VERSION_MINOR_MZFormSheetController 0
-#define COCOAPODS_VERSION_PATCH_MZFormSheetController 3
+#define COCOAPODS_VERSION_MINOR_MZFormSheetController 1
+#define COCOAPODS_VERSION_PATCH_MZFormSheetController 0
 
 // MZFormSheetController/Core
 #define COCOAPODS_POD_AVAILABLE_MZFormSheetController_Core
 #define COCOAPODS_VERSION_MAJOR_MZFormSheetController_Core 3
-#define COCOAPODS_VERSION_MINOR_MZFormSheetController_Core 0
-#define COCOAPODS_VERSION_PATCH_MZFormSheetController_Core 3
+#define COCOAPODS_VERSION_MINOR_MZFormSheetController_Core 1
+#define COCOAPODS_VERSION_PATCH_MZFormSheetController_Core 0
 
 // Mixpanel
 #define COCOAPODS_POD_AVAILABLE_Mixpanel
@@ -238,18 +238,18 @@
 #define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
 #define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
 #define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 13
-#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 3
+#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 4
 
 // UICKeyChainStore
 #define COCOAPODS_POD_AVAILABLE_UICKeyChainStore
 #define COCOAPODS_VERSION_MAJOR_UICKeyChainStore 2
 #define COCOAPODS_VERSION_MINOR_UICKeyChainStore 0
-#define COCOAPODS_VERSION_PATCH_UICKeyChainStore 5
+#define COCOAPODS_VERSION_PATCH_UICKeyChainStore 6
 
 // XLForm
 #define COCOAPODS_POD_AVAILABLE_XLForm
-#define COCOAPODS_VERSION_MAJOR_XLForm 2
-#define COCOAPODS_VERSION_MINOR_XLForm 2
+#define COCOAPODS_VERSION_MAJOR_XLForm 3
+#define COCOAPODS_VERSION_MINOR_XLForm 0
 #define COCOAPODS_VERSION_PATCH_XLForm 0
 
 // iCarousel

@@ -235,32 +235,6 @@
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] signupPassStep:@"cardSkip" user:nil success: ^(id result) {
         [SignupBaseViewController handleSignupRequestResponse:result withUserData:self.userDic andNavigationController:self.navigationController];
-
-//        if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
-//            [[Flooz sharedInstance] showLoadView];
-//            [[Flooz sharedInstance] signupPassStep:@"signup" user:self.userDic success:^(NSDictionary *result) {
-//                [appDelegate resetTuto:YES];
-//                [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
-//                
-//                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-//                
-//                if (nextViewController) {
-//                    nextViewController.userDic = self.userDic;
-//                    
-//                    [self.navigationController pushViewController:nextViewController animated:YES];
-//                }
-//            } failure:^(NSError *error) {
-//                
-//            }];
-//        } else {
-//            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-//            
-//            if (nextViewController) {
-//                nextViewController.userDic = self.userDic;
-//                
-//                [self.navigationController pushViewController:nextViewController animated:YES];
-//            }
-//        }
     } failure:^(NSError *error) {
         
     }];
@@ -269,39 +243,9 @@
 - (void)didValidTouch {
     [[self view] endEditing:YES];
     
-    //    [_nextButton setEnabled:NO];
-    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] signupPassStep:@"card" user:_card success: ^(id result) {
         [SignupBaseViewController handleSignupRequestResponse:result withUserData:self.userDic andNavigationController:self.navigationController];
-
-//        if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
-//            [[Flooz sharedInstance] showLoadView];
-//            [[Flooz sharedInstance] signupPassStep:@"signup" user:self.userDic success:^(NSDictionary *result) {
-//                [appDelegate resetTuto:YES];
-//                [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
-//                
-//                SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-//                
-//                if (nextViewController) {
-//                    SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
-//                    nextViewController.userDic = self.userDic;
-//                    
-//                    [self presentViewController:signupNavigationController animated:YES completion:nil];
-//                }
-//            } failure:^(NSError *error) {
-//                
-//            }];
-//        } else {
-//            SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
-//            
-//            if (nextViewController) {
-//                SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
-//                nextViewController.userDic = self.userDic;
-//                
-//                [self presentViewController:signupNavigationController animated:YES completion:nil];
-//            }
-//        }
     } failure:^(NSError *error) {
         
     }];

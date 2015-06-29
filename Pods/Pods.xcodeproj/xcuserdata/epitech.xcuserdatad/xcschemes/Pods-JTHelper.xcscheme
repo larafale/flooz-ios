@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "381671ACB15748DB7C809DBB"
+               BlueprintIdentifier = "924B0D8AAE2EF22003E5B839"
                BuildableName = "libPods-JTHelper.a"
                BlueprintName = "Pods-JTHelper"
                ReferencedContainer = "container:Pods.xcodeproj">

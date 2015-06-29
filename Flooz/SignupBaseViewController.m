@@ -98,12 +98,14 @@
     if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
         NSString *deviceToken = [appDelegate currentDeviceToken];
         
+        NSMutableDictionary *mutableData = [signupData mutableCopy];
+        
         if (deviceToken) {
-            [signupData setValue:deviceToken forKey:@"device"];
+            [mutableData setObject:deviceToken forKey:@"device"];
         }
         
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] signupPassStep:@"signup" user:[signupData mutableCopy] success:^(NSDictionary *result) {
+        [[Flooz sharedInstance] signupPassStep:@"signup" user:mutableData success:^(NSDictionary *result) {
             [appDelegate resetTuto:YES];
             [appDelegate clearBranchParams];
             [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
@@ -112,7 +114,7 @@
             
             if (nextViewController) {
                 SignupNavigationController *signupNavigationController = [[SignupNavigationController alloc] initWithRootViewController:nextViewController];
-                nextViewController.userDic = [signupData mutableCopy];
+                nextViewController.userDic = mutableData;
                 
                 [viewController presentViewController:signupNavigationController animated:YES completion:nil];
             }
@@ -135,12 +137,14 @@
     if ([result[@"step"][@"next"] isEqualToString:@"signup"]) {
         NSString *deviceToken = [appDelegate currentDeviceToken];
         
+        NSMutableDictionary *mutableData = [signupData mutableCopy];
+        
         if (deviceToken) {
-            [signupData setValue:deviceToken forKey:@"device"];
+            [mutableData setObject:deviceToken forKey:@"device"];
         }
         
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] signupPassStep:@"signup" user:[signupData mutableCopy] success:^(NSDictionary *result) {
+        [[Flooz sharedInstance] signupPassStep:@"signup" user:mutableData success:^(NSDictionary *result) {
             [appDelegate resetTuto:YES];
             [appDelegate clearBranchParams];
             [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
@@ -148,7 +152,7 @@
             SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
             
             if (nextViewController) {
-                nextViewController.userDic = [signupData mutableCopy];
+                nextViewController.userDic = mutableData;
                 
                 [navController pushViewController:nextViewController animated:YES];
             }
