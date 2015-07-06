@@ -53,7 +53,6 @@
 		_status = TransactionStatusExpired;
 	}
 
-
 	_amount = [json objectForKey:@"amount"];
 	if (_amount && [[json objectForKey:@"payer"] isEqualToNumber:@1]) {
 		_amount = [NSNumber numberWithFloat:([_amount floatValue] * -1.)];
@@ -94,10 +93,7 @@
 		_isAcceptable = NO;
 
 		if (_status == TransactionStatusPending) {
-			if ([[json objectForKey:@"actions"] count] == 1) {
-				_isCancelable = YES;
-			}
-			else if ([[json objectForKey:@"actions"] count] == 2) {
+            if ([[json objectForKey:@"actions"] count] == 2) {
 				_isAcceptable = YES;
 			}
 		}
@@ -134,31 +130,9 @@
 	if ([json objectForKey:@"text3d"]) {
 		_text3d = [json objectForKey:@"text3d"];
 	}
-
-	_isCollect = [[json objectForKey:@"isCollect"] boolValue];
-
-	_collectCanParticipate = NO; //Collect removed
-	if ([[[[Flooz sharedInstance] currentUser] userId] isEqual:[_to userId]]) {
-		_collectCanParticipate = NO;
-	}
-
-	if ([json objectForKey:@"collect"]) {
-		NSMutableArray *colllectUsers = [NSMutableArray new];
-
-		for (NSDictionary *userJSON in json[@"collect"][@"froms"]) {
-			FLUser *user = [[FLUser alloc] initWithJSON:userJSON];
-			if (user) {
-				[colllectUsers addObject:user];
-			}
-		}
-
-		_collectUsers = colllectUsers;
-	}
-
-	_collectTitle = json[@"collect"][@"title"];
-
+    
 	_haveAction = NO;
-	if (_isPrivate && _status == TransactionStatusPending) {
+	if (_isPrivate && _isAcceptable) {
 		_haveAction = YES;
 	}
 }

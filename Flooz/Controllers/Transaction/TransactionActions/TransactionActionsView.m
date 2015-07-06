@@ -164,12 +164,6 @@
 	if ([_transaction isAcceptable]) {
         refuseView.hidden = acceptView.hidden = NO;
 	}
-	else if (_transaction.isCollect && _transaction.collectCanParticipate) {
-		participateView.hidden = NO;
-	}
-	else {
-		waitingView.hidden = NO;
-	}
 }
 
 - (void)didAcceptTouch {

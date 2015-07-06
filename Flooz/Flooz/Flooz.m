@@ -306,7 +306,7 @@
         }
     };
     
-    [self requestPath:@"/login/basic" method:@"POST" params:user success:successBlock failure:NULL];
+    [self requestPath:@"/users/login" method:@"POST" params:user success:successBlock failure:NULL];
 }
 
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -325,32 +325,11 @@
     return formatedPhone;
 }
 
-- (void)loginWithPhone:(NSString *)phone andCoupon:(NSString *)coupon {
-   	// Remove useless characters
-    NSString *formatedPhone = [[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                stringByReplacingOccurrencesOfString:@"." withString:@""]
-                               stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    
-    // Replace +33 with 0
-    if ([formatedPhone hasPrefix:@"+33"]) {
-        formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
-    }
-    
-    NSDictionary *params;
-    
-    if (coupon && ![coupon isBlank])
-        params = @{ @"q": formatedPhone, @"distinctId": [Mixpanel sharedInstance].distinctId, @"coupon": coupon };
-    else
-        params = @{ @"q": formatedPhone, @"distinctId": [Mixpanel sharedInstance].distinctId };
-    
-    [self requestPath:@"/login" method:@"POST" params:params success:nil failure:nil];
-}
-
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     NSMutableDictionary *params = [user mutableCopy];
     params[@"codeReset"] = @YES;
     
-    [self requestPath:@"/login/basic" method:@"POST" params:params success:success failure:failure];
+    [self requestPath:@"/users/login" method:@"POST" params:params success:success failure:failure];
 }
 
 - (void)passwordForget:(NSString*)login success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -893,6 +872,10 @@
         }
     }
     
+    if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [[UIDevice currentDevice] identifierForVendor].UUIDString]];
+    }
+                
     // Pour le nextUrl
     if ([path rangeOfString:@"&version="].location == NSNotFound) {
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&version=%@", APP_VERSION]];
@@ -926,7 +909,7 @@
             [appDelegate displayMessage:@"Erreur de connexion" content:@"La connexion internet semble interrompue :(" style:FLAlertViewStyleError time:@5 delay:@0];
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationConnectionError object:nil];
         }
-        else if (([statusCode intValue] == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && _access_token && ![path isEqualToString:@"/login/basic"]) {
+        else if (([statusCode intValue] == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && _access_token && ![path isEqualToString:@"/users/login"]) {
             [self displayPopupMessage:operation.responseObject];
             [self handleRequestTriggers:operation.responseObject];
         }
@@ -1023,7 +1006,7 @@
     
     _access_token = token;
     
-    [self requestPath:@"/login/basic" method:@"POST" params:nil success:^(id result) {
+    [self requestPath:@"/users/login" method:@"POST" params:nil success:^(id result) {
         [self updateCurrentUserAfterConnect:result];
     } failure: ^(NSError *error) {
         if ([self connectionStatusFromError:error] && error.code != 426)
@@ -1140,7 +1123,7 @@
         }];
     }
     else {
-        [self requestPath:@"/login/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
+        [self requestPath:@"/users/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
             [self updateCurrentUserAfterConnect:result];
         } failure: ^(NSError *error) {
             

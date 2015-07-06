@@ -144,7 +144,7 @@
 		[scanCardButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, -size.height + 10.0f, -size.width)];
 
 		[scanCardButton addTarget:self action:@selector(presentScanPayViewController) forControlEvents:UIControlEventTouchUpInside];
-        if (!IS_IPHONE4) {
+        if (!IS_IPHONE_4) {
             //Not working with iphone 4
             [cardNumberField addSubview:scanCardButton];
         }

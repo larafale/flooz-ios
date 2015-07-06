@@ -179,21 +179,21 @@
     _textView.keyboardAppearance = UIKeyboardAppearanceDark;
 }
 
-- (void)setMaxHeight:(CGFloat)height {
-    maxHeight = height;
-    
-    if (_textView.contentSize.height > CGRectGetHeight(_textView.frame)) {
-        if (_textView.contentSize.height < maxHeight) {
-            [self setHeight:_textView.contentSize.height];
-        }
-        else {
-            [self setHeight:maxHeight];
-        }
-    }
-    else {
-        [self setHeight:maxHeight];
-    }
-}
+//- (void)setMaxHeight:(CGFloat)height {
+//    maxHeight = height;
+//    
+//    if (_textView.contentSize.height > CGRectGetHeight(_textView.frame)) {
+//        if (_textView.contentSize.height < maxHeight) {
+//            [self setHeight:_textView.contentSize.height];
+//        }
+//        else {
+//            [self setHeight:maxHeight];
+//        }
+//    }
+//    else {
+//        [self setHeight:maxHeight];
+//    }
+//}
 
 - (void)setWidth:(CGFloat)width {
     [super setWidth:width];

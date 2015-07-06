@@ -22,11 +22,11 @@
 @property (nonatomic, retain) UITextView *textView;
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position;
+- (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey frame:(CGRect)frame;
 - (void)setInputAccessoryView:(UIView *)accessoryView;
 - (void)setHeight:(CGFloat)height;
 - (void)hideSeparatorTop;
 - (void)setInputView:(UIView *)inputView;
-- (void)setMaxHeight:(CGFloat)height;
 - (void)setWidth:(CGFloat)width;
 - (void)addTextChangeTarget:(id)instance action:(SEL)action;
 - (void)addTextFocusTarget:(id)instance action:(SEL)action;

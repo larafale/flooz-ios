@@ -10,41 +10,53 @@
 
 @implementation NumPadAppleStyle
 
-- (id)initWithHeight:(CGFloat)height {
-	self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, height)];
-	if (self) {
-		[self createNumPad];
-	}
-	return self;
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self createNumPad];
+    }
+    return self;
 }
 
 - (void)createNumPad {
-	CGFloat offsetX;
+    CGFloat xMargin;
+    CGFloat yMargin;
+    CGFloat offsetX;
 	CGFloat offsetY = 0.0f;
-	CGFloat sizeButton = 74.5f;
+	CGFloat sizeButton = 75.0f;
 
-    if (IS_IPHONE4)
-        sizeButton = 63.0f;
+    if (IS_IPHONE_6 || IS_IPHONE_6P)
+        sizeButton = 80.0f;
+    
+    if (IS_IPHONE_4)
+        sizeButton = 65.0f;
+    
+    xMargin = (CGRectGetWidth(self.frame) - (3 * sizeButton)) / 4;
+    yMargin = (CGRectGetHeight(self.frame) - (4 * sizeButton)) / 3;
+    
+    if (xMargin > yMargin)
+        xMargin = yMargin;
+    else
+        yMargin = xMargin;
+    
+    offsetY = (CGRectGetHeight(self.frame) - (4 * sizeButton) - (3 * yMargin)) / 2;
+    offsetX = (CGRectGetWidth(self.frame) - (3 * sizeButton) - (4 * yMargin)) / 2;
     
 	for (int l = 1; l <= 3; l++) {
-		offsetX = 27.5;
+        offsetX = (CGRectGetWidth(self.frame) - (3 * sizeButton) - (4 * yMargin)) / 2 + xMargin;
         
-        if (IS_IPHONE4)
+        if (IS_IPHONE_4)
             offsetX = 44.0f;
         
 		for (int c = 1; c <= 3; c++) {
 			[self addSubview:[self numButton:c + (l - 1) * 3 withX:offsetX Y:offsetY andSize:sizeButton]];
 
-			offsetX += sizeButton + 20.0f;
+			offsetX += sizeButton + xMargin;
 		}
-		offsetY += CGRectGetWidth(self.frame) / 3.0f - 20.0f;
-		if (IS_IPHONE4) {
-			offsetY -= 5.0f;
-		}
+        offsetY += sizeButton + yMargin;
 	}
-	offsetX = 27.5f + sizeButton + 20.0f;
-    if (IS_IPHONE4)
-        offsetX = 44.0f + sizeButton + 20.0f;
+    
+    offsetX = (CGRectGetWidth(self.frame) - (3 * sizeButton) - (4 * yMargin)) / 2 + 2 * xMargin + sizeButton;
 
 	[self addSubview:[self numButton:0 withX:offsetX Y:offsetY andSize:sizeButton]];
 }

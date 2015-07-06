@@ -51,8 +51,12 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-    [self.view setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"back-secure"]]];
     
+    UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING_NAV, 0, PPScreenWidth() - PADDING_NAV, PPScreenHeight())];
+    [background setImage:[UIImage imageNamed:@"back-secure"]];
+    [background setContentMode:UIViewContentModeScaleAspectFill];
+    [self.view addSubview:background];
+
 	_searchBar = [[FriendAddSearchBar alloc] initWithStartX:PADDING_NAV + 10.0f];
 	CGRectSetY(_searchBar.frame, PPStatusBarHeight());
 	[_searchBar setDelegate:self];
@@ -64,7 +68,7 @@
     backgroudImage.contentMode = UIViewContentModeScaleAspectFit;
     CGFloat newWidth = PPScreenWidth() - PADDING_NAV;
     
-    if (IS_IPHONE4)
+    if (IS_IPHONE_4)
         newWidth -= 25;
     
     CGFloat newHeight = newWidth * CGRectGetHeight(backgroudImage.frame) / CGRectGetWidth(backgroudImage.frame);
@@ -73,7 +77,7 @@
     CGRectSetPosition(backgroudImage.frame, CGRectGetWidth(_backgroundView.frame) / 2 - newWidth / 2, 0);
 
     CGFloat margin = 20;
-    if (IS_IPHONE4)
+    if (IS_IPHONE_4)
         margin = 10;
     
     FLActionButton *shareButton = [[FLActionButton alloc] initWithFrame:CGRectMake(30.0f, CGRectGetHeight(backgroudImage.frame) + margin, PPScreenWidth() - PADDING_NAV - 60.0f, FLActionButtonDefaultHeight) title:NSLocalizedString(@"FRIENDS_BUTTON_INVITE", nil)];

@@ -76,7 +76,7 @@
     _text = [[FLClearActionTextView alloc] initWithFrame:CGRectMake(20, 220, CGRectGetWidth(_mainBody.frame) - 40, 100)];
     [_text addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
     
-    if (IS_IPHONE4) {
+    if (IS_IPHONE_4) {
         CGRectSetY(_text.frame, 200);
     }
     

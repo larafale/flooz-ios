@@ -32,7 +32,7 @@
     self.view.backgroundColor = [UIColor customBackground];
     
     NSString *imageNamed = @"LaunchImage";
-    if (IS_IPHONE4) {
+    if (IS_IPHONE_4) {
         imageNamed = [imageNamed stringByAppendingString:@"-iphone4"];
     }
     logo = [UIImageView imageNamed:imageNamed];
@@ -40,7 +40,14 @@
     [self.view addSubview:logo];
     
     title = [UIImageView imageNamed:@"home-title"];
-    title.frame = CGRectMake((PPScreenWidth() - CGRectGetWidth(title.frame)) / 2.0f, PPScreenHeight() * 2.0f / 3.0f, CGRectGetWidth(title.frame), CGRectGetHeight(title.frame));
+    [title setContentMode:UIViewContentModeScaleAspectFit];
+    
+    CGFloat scaleFactor = CGRectGetWidth(title.frame) / CGRectGetHeight(title.frame);
+    
+    CGRectSetWidth(title.frame, PPScreenWidth() - 150);
+    CGRectSetHeight(title.frame, CGRectGetWidth(title.frame) / scaleFactor);
+    CGRectSetX(title.frame, PPScreenWidth() / 2 - CGRectGetWidth(title.frame) / 2);
+
     [self.view addSubview:title];
     
     waitingLabel = [UILabel newWithText:@"chargement..." textColor:[UIColor customBlue] font:[UIFont customTitleBook:18] textAlignment:NSTextAlignmentCenter numberOfLines:1];

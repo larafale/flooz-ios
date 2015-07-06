@@ -14,7 +14,7 @@
 
 @property (weak, nonatomic) UIViewController <NumPadAppleDelegate> *delegate;
 
-- (id)initWithHeight:(CGFloat)height;
+- (id)initWithFrame:(CGRect)frame;
 
 @end
 

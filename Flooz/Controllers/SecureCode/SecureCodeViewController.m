@@ -122,11 +122,12 @@ static BOOL canTouchID = YES;
 - (void)viewDidLoad {
     [super viewDidLoad];
     {
-        NSString *imageNamed = @"LaunchImage";
-        if (IS_IPHONE4) {
-            imageNamed = [imageNamed stringByAppendingString:@"-iphone4"];
-        }
+        NSString *imageNamed = @"back-secure";
         backgroundImage = [UIImageView newWithImage:[UIImage imageNamed:imageNamed]];
+        [backgroundImage setContentMode:UIViewContentModeScaleAspectFill];
+        
+        [backgroundImage setFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
+        
         [self.view addSubview:backgroundImage];
     }
     
@@ -139,8 +140,14 @@ static BOOL canTouchID = YES;
     {
         UIImage *logoTitle = [UIImage imageNamed:@"home-title"];
         UIImageView *title = [[UIImageView alloc] initWithImage:logoTitle];
+        [title setContentMode:UIViewContentModeScaleAspectFit];
         [_headerView addSubview:title];
         
+        CGFloat scaleFactor = CGRectGetWidth(title.frame) / CGRectGetHeight(title.frame);
+        
+        CGRectSetWidth(title.frame, 150);
+        CGRectSetHeight(title.frame, CGRectGetWidth(title.frame) / scaleFactor);
+
         CGRectSetX(title.frame, (CGRectGetWidth(_headerView.frame) - CGRectGetWidth(title.frame)) / 2.0f);
         CGRectSetY(title.frame, (CGRectGetHeight(_headerView.frame) - CGRectGetHeight(title.frame)) / 2.0f);
     }
@@ -201,9 +208,7 @@ static BOOL canTouchID = YES;
     }
     
     {
-        _padNumber = [[NumPadAppleStyle alloc] initWithHeight:CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_codePinView.frame) - 20.0f];
-        CGRectSetY(_padNumber.frame, CGRectGetMaxY(_codePinView.frame) + 10.0f);
-        CGRectSetX(_padNumber.frame, (PPScreenWidth() - CGRectGetWidth(_padNumber.frame)) / 2.0f);
+        _padNumber = [[NumPadAppleStyle alloc] initWithFrame:CGRectMake(5,  CGRectGetMaxY(_codePinView.frame) + 10.0f, PPScreenWidth() - 10, CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_codePinView.frame) - 20.0f)];
         [_padNumber setDelegate:self];
         [_mainBody addSubview:_padNumber];
     }

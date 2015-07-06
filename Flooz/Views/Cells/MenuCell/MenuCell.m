@@ -22,7 +22,7 @@
 }
 
 + (CGFloat)getHeight {
-    if (IS_IPHONE4) {
+    if (IS_IPHONE_4) {
         return 40.0f;
     }
 	return 50.0f;

@@ -249,11 +249,11 @@
         if (currentPreset && currentPreset.whyPlaceholder)
             contentPlaceholder = currentPreset.whyPlaceholder;
         
-        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" position:CGPointMake(0, _offset)];
+        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" frame:CGRectMake(0, _offset, PPScreenWidth(), CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _offset)];
         [content setInputAccessoryView:transactionBarKeyboard];
-        [content hideSeparatorTop];
         [content addTextChangeTarget:self action:@selector(contentChange)];
         [content addTextFocusTarget:self action:@selector(contentFocus)];
+        
         [_contentView addSubview:content];
         
         [self prepareImage];
@@ -261,7 +261,6 @@
         if (currentPreset && currentPreset.blockWhy)
             [content setUserInteractionEnabled:!currentPreset.blockWhy];
         
-        [content setWidth:PPScreenWidth() - CGRectGetWidth(imageTransaction.frame)];
         transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
         [transactionBar setDelegate:self];
         
@@ -890,10 +889,9 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    if (keyboardHeight > 216 + CGRectGetHeight(transactionBarKeyboard.frame)) {
-        keyboardHeight = 216 + CGRectGetHeight(transactionBarKeyboard.frame);
-    }
-    [content setMaxHeight:CGRectGetHeight(_contentView.frame) - keyboardHeight - CGRectGetMinY(content.frame)];
+    [content setHeight:CGRectGetHeight(_contentView.frame) - keyboardHeight - CGRectGetHeight(amountInput.frame) - 1];
+
+//    [content setMaxHeight:CGRectGetHeight(_contentView.frame) - keyboardHeight - CGRectGetMinY(content.frame)];
     
     [self dismissCamera];
 }
@@ -902,7 +900,9 @@
     [self reloadTransactionBarData];
     transactionBar.hidden = NO;
     
-    [content setMaxHeight:CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - CGRectGetMinY(content.frame)];
+    [content setHeight:CGRectGetHeight(_contentView.frame) - CGRectGetMinY(content.frame)];
+
+//    [content setMaxHeight:CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - CGRectGetMinY(content.frame)];
     
     if (contactPickerVisible) {
         NSDictionary *info = [notification userInfo];

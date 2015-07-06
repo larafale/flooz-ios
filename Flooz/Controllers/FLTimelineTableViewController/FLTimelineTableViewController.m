@@ -76,7 +76,7 @@
     
     backImageName = [backImageName stringByAppendingString:currentFilter];
     
-    if (IS_IPHONE4)
+    if (IS_IPHONE_4)
         backImageName = [backImageName stringByAppendingString:@"-iphone4"];
     
     _backgroundImage = [[UIImageView alloc] initWithFrame:frameTable];
@@ -178,7 +178,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (transactions.count > indexPath.row) {
         FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-        [appDelegate showTransaction:transaction inController:nil withIndexPath:indexPath focusOnComment:NO];
+        [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
     }
 }
 

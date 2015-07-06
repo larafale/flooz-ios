@@ -41,9 +41,11 @@
 - (void)loadView {
     [super loadView];
     
-//    self.view.backgroundColor = [UIColor customBackgroundHeader];
-    [self.view setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"back-secure"]]];
-
+    UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth() - PADDING_NAV, PPScreenHeight())];
+    [backgroundImage setImage:[UIImage imageNamed:@"back-secure"]];
+    [backgroundImage setContentMode:UIViewContentModeScaleAspectFill];
+    [self.view addSubview:backgroundImage];
+    
     {
         userView = [[FLAccountUserView alloc] initWithWidth:PPScreenWidth() - PADDING_NAV];
         [userView addEditTarget:self action:@selector(showMenuAvatar)];
@@ -76,7 +78,7 @@
     
     {
         CGFloat sizeBadge = 22.0f;
-        if (IS_IPHONE4) {
+        if (IS_IPHONE_4) {
             sizeBadge = 17.0f;
         }
         CGRect frame = CGRectMake(0.0f, 0.0f, sizeBadge, sizeBadge);

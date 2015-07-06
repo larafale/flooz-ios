@@ -106,7 +106,7 @@
     [_contentView addSubview:actionsView];
     [self createCommentsView];
     
-    if (IS_IPHONE4)
+    if (IS_IPHONE_4)
         height += 15;
     
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), height + PADDING_BOTTOM);
@@ -140,7 +140,7 @@
     
     height += CGRectGetHeight(commentsView.frame);
     
-    if (IS_IPHONE4)
+    if (IS_IPHONE_4)
         height += 15;
     
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_contentView.frame), height + PADDING_BOTTOM);

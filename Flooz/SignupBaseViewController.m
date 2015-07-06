@@ -147,6 +147,7 @@
         [[Flooz sharedInstance] signupPassStep:@"signup" user:mutableData success:^(NSDictionary *result) {
             [appDelegate resetTuto:YES];
             [appDelegate clearBranchParams];
+            [appDelegate clearPendingData];
             [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
             
             SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];

@@ -136,6 +136,10 @@
     branchParam = [NSMutableDictionary new];
 }
 
+- (void)clearPendingData {
+    pendingData = nil;
+}
+
 - (void)launchRootController {
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[SplashViewController new]];
     
@@ -1115,7 +1119,7 @@
             }
             
             CGSize size = CGSizeMake(PPScreenWidth() - 52.0f, PPScreenHeight() - 45.0f * 2.0f);
-            if (IS_IPHONE4) {
+            if (IS_IPHONE_4) {
                 size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
             }
             TransactionViewController *controller;
@@ -1148,7 +1152,7 @@
         }
         
         CGSize size = CGSizeMake(PPScreenWidth() - 52.0f, PPScreenHeight() - 45.0f * 2.0f);
-        if (IS_IPHONE4) {
+        if (IS_IPHONE_4) {
             size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
         }
         TransactionViewController *controller;

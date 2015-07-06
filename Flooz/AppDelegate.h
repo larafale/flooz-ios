@@ -73,6 +73,7 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)showSignupAfterFacebookWithUser:(NSDictionary *)user;
 - (void)resetTuto:(Boolean)value;
 - (void)clearBranchParams;
+- (void)clearPendingData;
 
 - (void)displayError:(NSError *)error;
 - (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;

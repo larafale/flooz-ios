@@ -3218,9 +3218,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5CAD606A67C6A9CC082F6489 /* Pods.recette.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3240,7 +3240,8 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = Flooz;
-				PROVISIONING_PROFILE = "17ccc930-983f-45e4-a01f-390cbd3492eb";
+				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3273,8 +3274,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5CAD606A67C6A9CC082F6489 /* Pods.recette.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3297,7 +3299,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "783a361b-749b-4dc6-854b-a08a293dd777";
+				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3386,9 +3388,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DC453423FBACAB6C0B7E6680 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3408,7 +3410,8 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8e674d82-5e7a-46c5-a6d5-d75a1e3f13f8";
+				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3419,9 +3422,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B48C8D51E38315E83190602F /* Pods.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3441,6 +3444,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "3b8c90ae-a5c2-49ed-981a-6356c9576052";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3499,8 +3503,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DC453423FBACAB6C0B7E6680 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3523,6 +3528,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
+				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3533,8 +3539,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B48C8D51E38315E83190602F /* Pods.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3557,7 +3564,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "783a361b-749b-4dc6-854b-a08a293dd777";
+				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3610,9 +3617,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E21FE25B89234484429CFEE5 /* Pods.local.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3632,7 +3639,8 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8e674d82-5e7a-46c5-a6d5-d75a1e3f13f8";
+				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3669,8 +3677,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E21FE25B89234484429CFEE5 /* Pods.local.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3694,6 +3703,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
+				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3704,8 +3714,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DC453423FBACAB6C0B7E6680 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3730,7 +3740,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3741,8 +3751,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E21FE25B89234484429CFEE5 /* Pods.local.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3768,7 +3778,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3779,8 +3789,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B48C8D51E38315E83190602F /* Pods.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3805,7 +3815,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3816,8 +3826,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5CAD606A67C6A9CC082F6489 /* Pods.recette.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3842,7 +3852,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;

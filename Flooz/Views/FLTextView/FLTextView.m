@@ -17,7 +17,7 @@
 }
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position {
-    self = [super initWithFrame:CGRectMake(0, position.y, SCREEN_WIDTH, 3 * 39)];
+    self = [super initWithFrame:CGRectMake(position.x, position.y, SCREEN_WIDTH, 3 * 39)];
     if (self) {
         _dictionary = dictionary;
         _dictionaryKey = dictionaryKey;
@@ -29,17 +29,29 @@
     return self;
 }
 
+- (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey frame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        _dictionary = dictionary;
+        _dictionaryKey = dictionaryKey;
+        [self setBackgroundColor:[UIColor customBackground]];
+        [self createTextView:placeholder];
+        maxHeight = CGFLOAT_MAX;
+    }
+    return self;
+}
+
 - (void)createTextView:(NSString *)placeholder {
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(5, 0, CGRectGetWidth(self.frame) - 20, CGRectGetHeight(self.frame))];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(5, 0, CGRectGetWidth(self.frame) - 10, CGRectGetHeight(self.frame))];
     
     _textView.backgroundColor = [UIColor clearColor];
     _textView.autocorrectionType = UITextAutocorrectionTypeYes;
     _textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     _textView.keyboardAppearance = UIKeyboardAppearanceDark;
     _textView.scrollEnabled = YES;
-    
+    [_textView setShowsVerticalScrollIndicator:YES];
     _textView.delegate = self;
-    
+
     _textView.font = [UIFont customContentLight:16];
     _textView.textColor = [UIColor whiteColor];
     
@@ -109,7 +121,7 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    static const NSUInteger MAX_NUMBER_OF_LINES_ALLOWED = 10;
+    static const NSUInteger MAX_NUMBER_OF_LINES_ALLOWED = 15;
     
     NSMutableString *t = [NSMutableString stringWithString:textView.text];
     [t replaceCharactersInRange:range withString:text];
@@ -124,7 +136,6 @@
     
     if (numberOfLines >= MAX_NUMBER_OF_LINES_ALLOWED)
         return NO;
-    
     
     // Now check for word wrapping onto newline.
     NSAttributedString *t2 = [[NSAttributedString alloc]
@@ -149,12 +160,10 @@
          lineCount++;
      }];
     
-    return (lineCount <= MAX_NUMBER_OF_LINES_ALLOWED);
+    return lineCount <= LINE_MAX;
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
-    [self setHeight:_textView.contentSize.height];
-    
     if ([textView.text isBlank]) {
         _placeholder.hidden = NO;
         [_dictionary setValue:nil forKey:_dictionaryKey];
@@ -191,8 +200,6 @@
     [_textView resignFirstResponder];
     _textView.inputView = inputView;
     [_textView becomeFirstResponder];
-    
-    [self setHeight:_textView.contentSize.height];
 }
 
 - (BOOL)becomeFirstResponder {
@@ -200,10 +207,8 @@
 }
 
 - (void)setHeight:(CGFloat)height {
-    //TODO: don't need to small textview if nothing underneath
-    height = maxHeight;
     [super setHeight:height];
-    [_textView setHeight:height];
+    CGRectSetHeight(_textView.frame, height);
 }
 
 - (void)responderContent {
@@ -211,25 +216,9 @@
     _textView.keyboardAppearance = UIKeyboardAppearanceDark;
 }
 
-- (void)setMaxHeight:(CGFloat)height {
-    maxHeight = height;
-    
-    if (_textView.contentSize.height > CGRectGetHeight(_textView.frame)) {
-        if (_textView.contentSize.height < maxHeight) {
-            [self setHeight:_textView.contentSize.height];
-        }
-        else {
-            [self setHeight:maxHeight];
-        }
-    }
-    else {
-        [self setHeight:maxHeight];
-    }
-}
-
 - (void)setWidth:(CGFloat)width {
     [super setWidth:width];
-    [_textView setWidth:width - 20];
+    [_textView setWidth:width - 10];
 }
 
 @end

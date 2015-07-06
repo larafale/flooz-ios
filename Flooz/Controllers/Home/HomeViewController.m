@@ -157,7 +157,7 @@
     CGRectSetY(logoTextLabel.frame, logoTopMargin);
     
     UIImageView *logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home-title"]];
-    [logoView setContentMode:UIViewContentModeScaleAspectFill];
+    [logoView setContentMode:UIViewContentModeScaleAspectFit];
     
     CGFloat scaleFactor = CGRectGetWidth(logoView.frame) / CGRectGetHeight(logoView.frame);
     
@@ -287,7 +287,7 @@
     FLActionButton *loginButton = [[FLActionButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + 30, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Login", nil)];
     [loginButton addTarget:self action:@selector(didLoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *forgotPasswordButton = [[UIButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetHeight(loginView.frame) - CGRectGetMaxY(loginHeaderView.frame) - 30, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, 15)];
+    UIButton *forgotPasswordButton = [[UIButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(loginButton.frame) + 15, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, 15)];
     [forgotPasswordButton setTitle:NSLocalizedString(@"LOGIN_PASSWORD_FORGOT", nil) forState:UIControlStateNormal];
     [forgotPasswordButton.titleLabel setFont:[UIFont customContentLight:14]];
     [forgotPasswordButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
@@ -327,7 +327,7 @@
     
     signupScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetHeight(signupView.frame))];
-    if (!IS_IPHONE4)
+    if (!IS_IPHONE_4)
         [signupScrollView setScrollEnabled:NO];
     [signupScrollView setBounces:NO];
     
@@ -834,12 +834,13 @@
     keyboardVisible = YES;
     
     if (loginVisible) {
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            [loginHeaderView setAlpha:0.0f];
-            CGRectSetY(loginFormView.frame, 40);
-        } completion:^(BOOL finished) {
-            [loginHeaderView setHidden:YES];
-        }];
+        if (!IS_IPHONE_6 && !IS_IPHONE_6P)
+            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                [loginHeaderView setAlpha:0.0f];
+                CGRectSetY(loginFormView.frame, 40);
+            } completion:^(BOOL finished) {
+                [loginHeaderView setHidden:YES];
+            }];
     } else if (signupVisible) {
         [signupScrollView setScrollEnabled:YES];
         NSDictionary* info = [notification userInfo];
@@ -925,16 +926,17 @@
     keyboardVisible = NO;
     
     if (loginVisible) {
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            CGRectSetY(loginFormView.frame, CGRectGetMaxY(loginHeaderView.frame));
-        } completion:^(BOOL finished) {
-            [loginHeaderView setHidden:NO];
-            [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-                [loginHeaderView setAlpha:1.0f];
-            } completion:nil];
-        }];
+        if (!IS_IPHONE_6 && !IS_IPHONE_6P)
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                CGRectSetY(loginFormView.frame, CGRectGetMaxY(loginHeaderView.frame));
+            } completion:^(BOOL finished) {
+                [loginHeaderView setHidden:NO];
+                [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                    [loginHeaderView setAlpha:1.0f];
+                } completion:nil];
+            }];
     } else if (signupVisible) {
-        if (!IS_IPHONE4)
+        if (!IS_IPHONE_4)
             [signupScrollView setScrollEnabled:NO];
         
         CGRectSetHeight(signupScrollView.frame, PPScreenHeight());

@@ -53,7 +53,7 @@
 }
 
 - (void)createDetailsView {
-	transactionDetailsView = [[FLTransactionDescriptionView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(self.frame), MIN_HEIGHT) transaction:_transaction indexPath:_indexPath andAvatar:YES];
+	transactionDetailsView = [[FLTransactionDescriptionView alloc] initWithFrame:CGRectMakeSize(PPScreenWidth(), MIN_HEIGHT) transaction:_transaction indexPath:_indexPath andAvatar:YES];
 	transactionDetailsView.delegate = _delegateController;
 	[self.contentView addSubview:transactionDetailsView];
 }
