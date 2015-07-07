@@ -93,6 +93,8 @@
         return TriggerShowIban;
     else if ([param isEqualToString:@"tuto:reset"])
         return TriggerResetTuto;
+    else if ([param isEqualToString:@"view:close"])
+        return TriggerCloseView;
     else
         return TriggerNone;
 }

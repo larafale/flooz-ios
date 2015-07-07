@@ -41,7 +41,8 @@ typedef enum e_FLTriggerType {
     TriggerShowPopup,
     TriggerShowHome,
     TriggerShowIban,
-    TriggerResetTuto
+    TriggerResetTuto,
+    TriggerCloseView
 } FLTriggerType;
 
 @property (nonatomic) FLTriggerType type;

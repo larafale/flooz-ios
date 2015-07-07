@@ -750,7 +750,7 @@
 }
 
 - (void)abort3DSecure {
-    [self requestPath:@"/cards/3ds/abort" method:@"GET" params:nil success:nil failure:nil];
+    [self requestPath:@"/psp/3ds/abort" method:@"GET" params:nil success:nil failure:nil];
 }
 
 - (void)inviteWithPhone:(NSString *)phone {
@@ -1320,11 +1320,16 @@
 
 - (void)handleTriggerIbanShow:(NSDictionary *)data {
     SettingsBankViewController *controller = [SettingsBankViewController new];
+    controller.showCross = YES;
     [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)handleTriggerTutoShow:(NSDictionary *)data {
     [appDelegate resetTuto:NO];
+}
+
+- (void)handleTriggerViewClose:(NSDictionary *)data {
+    [[appDelegate currentController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)handleTrigger:(FLTrigger*)trigger {
@@ -1357,6 +1362,7 @@
                                    [NSNumber numberWithInt:TriggerShowHome]: NSStringFromSelector(@selector(handleTriggerHomeShow:)),
                                    [NSNumber numberWithInt:TriggerShowIban]: NSStringFromSelector(@selector(handleTriggerIbanShow:)),
                                    [NSNumber numberWithInt:TriggerResetTuto]: NSStringFromSelector(@selector(handleTriggerTutoShow:)),
+                                   [NSNumber numberWithInt:TriggerCloseView]: NSStringFromSelector(@selector(handleTriggerViewClose:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
