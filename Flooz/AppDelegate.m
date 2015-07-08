@@ -59,7 +59,7 @@
     
     [Fabric with:@[CrashlyticsKit]];
     [Crashlytics startWithAPIKey:@"4f18178e0b7894ec76bb6f01a60f34baf68acbf7"];
-    
+
     [self loadBranchParams];
     
     Branch *branch = [Branch getInstance];
