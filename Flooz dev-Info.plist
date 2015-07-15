@@ -85,5 +85,10 @@
 	<false/>
 	<key>branch_key</key>
 	<string>key_live_ipnB3ABZ5HPHhFU0IZGmEjpoByfw0qM2</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

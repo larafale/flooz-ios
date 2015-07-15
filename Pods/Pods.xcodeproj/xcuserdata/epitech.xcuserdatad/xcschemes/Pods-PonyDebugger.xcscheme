@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1F3274DA7CBB0E8A6C715D2A"
+               BlueprintIdentifier = "3E994E083EF1B79C4EFFEC69"
                BuildableName = "libPods-PonyDebugger.a"
                BlueprintName = "Pods-PonyDebugger"
                ReferencedContainer = "container:Pods.xcodeproj">

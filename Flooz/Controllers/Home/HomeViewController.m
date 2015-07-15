@@ -100,10 +100,6 @@
                 
             }];
         }
-        
-        if ([appDelegate branchParam][@"referrer"] && ![[appDelegate branchParam][@"referrer"] isBlank]) {
-            [signupData setObject:[appDelegate branchParam][@"referrer"] forKey:@"referrer"];
-        }
     }
 }
 
@@ -702,6 +698,12 @@
     [self.view endEditing:YES];
     
     [signupData setObject:[[Mixpanel sharedInstance] distinctId] forKey:@"distinctId"];
+    
+    if ([appDelegate branchParam]) {
+        if ([appDelegate branchParam][@"referrer"] && ![[appDelegate branchParam][@"referrer"] isBlank]) {
+            [signupData setObject:[appDelegate branchParam][@"referrer"] forKey:@"referrer"];
+        }
+    }
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] signupPassStep:@"profile" user:signupData success:^(NSDictionary *result) {

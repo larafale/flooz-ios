@@ -3221,6 +3221,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3240,7 +3241,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = Flooz;
-				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
+				PROVISIONING_PROFILE = "07157e7f-ad1c-460b-8828-a9564de5d695";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3277,6 +3278,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3299,7 +3301,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
+				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3391,6 +3393,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3410,7 +3413,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
+				PROVISIONING_PROFILE = "07157e7f-ad1c-460b-8828-a9564de5d695";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3424,7 +3427,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
+				CODE_SIGN_IDENTITY = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3506,6 +3510,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3528,7 +3533,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
+				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3542,6 +3547,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3564,7 +3570,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
+				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3620,6 +3626,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3639,7 +3646,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
+				PROVISIONING_PROFILE = "07157e7f-ad1c-460b-8828-a9564de5d695";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3680,6 +3687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3703,7 +3711,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
+				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
