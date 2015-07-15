@@ -30,7 +30,7 @@
     
     self.view.backgroundColor = [UIColor customBackgroundHeader];
     
-    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, STATUSBAR_HEIGHT, PPScreenWidth(), 60.0f)];
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 60.0f)];
     _headerView.backgroundColor = [UIColor customBackgroundHeader];
     [self.view addSubview:_headerView];
     
@@ -54,18 +54,12 @@
             else if (self.showCross) {
                 [backButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
             }
-            else {
-                [backButton setImage:[UIImage imageNamed:@"navbar-left"] forState:UIControlStateNormal];
-            }
         }
         else if (self.showBack) {
             [backButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
         }
         else if (self.showCross) {
             [backButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
-        }
-        else {
-            [backButton setImage:[UIImage imageNamed:@"navbar-left"] forState:UIControlStateNormal];
         }
         
         [backButton addTarget:self action:@selector(dismissViewController) forControlEvents:UIControlEventTouchUpInside];

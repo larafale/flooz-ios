@@ -128,7 +128,7 @@
     CGSize scrollableSize = CGSizeMake(CGRectGetWidth(_scrollView.frame) * _viewControllers.count, 0.0);
     [_scrollView setContentSize:scrollableSize];
     
-    [self prepareCrossButton];
+//    [self prepareCrossButton];
     [self prepareTitleViews];
     [self preparePin];
     [self addStackButton];
@@ -188,11 +188,13 @@
         [butLeft addSubview: _badge];
     }
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:butLeft];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:butLeft];
+    self.navigationItem.leftBarButtonItem = nil;
     
     UIButton *butRight = [UIButton buttonWithBackgroundImageName:@"navbar-right"];
     [butRight addTarget:self action:@selector(showRightView) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:butRight];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:butRight];
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 -(void)longPress:(UIGestureRecognizer *)longPress {
@@ -246,8 +248,6 @@
     
     if (reloadTimeline)
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(reloadCurrentTimeline) userInfo:nil repeats:NO];
-    
-    [self registerNotification:@selector(reloadBadge) name:@"newNotifications" object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

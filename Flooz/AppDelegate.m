@@ -13,7 +13,7 @@
 #import <Fabric/Fabric.h>
 #import "AppDelegate.h"
 
-
+#import "FLTabBarController.h"
 #import "FLPreset.h"
 #import "IDMPhotoBrowser.h"
 #import "HomeViewController.h"
@@ -54,6 +54,8 @@
     
     self.window.backgroundColor = [UIColor customBackground];
     [self.window makeKeyAndVisible];
+    
+    [self.window setTintColor:[UIColor customBlue]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
@@ -180,19 +182,22 @@
 }
 
 - (UIViewController *)prepareMainViewController {
-    TimelineViewController *homePage = [TimelineViewController new];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:homePage];
-    [navController.navigationBar setTranslucent:NO];
-    [navController.navigationBar setBarTintColor:[UIColor customBackgroundHeader]];
-    [navController.navigationBar setTintColor:[UIColor whiteColor]];
-    [navController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                         [UIColor customBlue], NSForegroundColorAttributeName,
-                                                         [UIFont customTitleBook:16.0], NSFontAttributeName, nil]];
     
-    self.revealSideViewController = [[FLRevealContainerViewController alloc] initWithRootViewController:navController];
-    self.revealSideViewController.delegate = self;
+    FLTabBarController *tabBarController = [FLTabBarController new];
+//    
+//    TimelineViewController *homePage = [TimelineViewController new];
+//    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:homePage];
+//    [navController.navigationBar setTranslucent:NO];
+//    [navController.navigationBar setBarTintColor:[UIColor customBackgroundHeader]];
+//    [navController.navigationBar setTintColor:[UIColor whiteColor]];
+//    [navController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+//                                                         [UIColor customBlue], NSForegroundColorAttributeName,
+//                                                         [UIFont customTitleBook:16.0], NSFontAttributeName, nil]];
+//    
+//    self.revealSideViewController = [[FLRevealContainerViewController alloc] initWithRootViewController:navController];
+//    self.revealSideViewController.delegate = self;
     
-    return self.revealSideViewController;
+    return tabBarController;
 }
 
 - (void)goToAccountViewController {
@@ -311,6 +316,7 @@
     [[Mixpanel sharedInstance] identify:[FLHelper generateRandomString]];
     
     pendingData = nil;
+    [Flooz sharedInstance].notificationsCount = @0;
     [self displayHome];
 }
 

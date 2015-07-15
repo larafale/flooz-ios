@@ -41,13 +41,13 @@
 - (void)loadView {
     [super loadView];
     
-    UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth() - PADDING_NAV, PPScreenHeight())];
+    UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [backgroundImage setImage:[UIImage imageNamed:@"back-secure"]];
     [backgroundImage setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:backgroundImage];
     
     {
-        userView = [[FLAccountUserView alloc] initWithWidth:PPScreenWidth() - PADDING_NAV];
+        userView = [[FLAccountUserView alloc] initWithWidth:PPScreenWidth()];
         [userView addEditTarget:self action:@selector(showMenuAvatar)];
     }
     
@@ -186,18 +186,24 @@
 
 - (void)profilSettings {
     [[Flooz sharedInstance] updateCurrentUser];
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[AccountProfilViewController new]];
-    [self presentViewController:controller animated:YES completion:NULL];
+//    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[AccountProfilViewController new]];
+//    [self presentViewController:controller animated:YES completion:NULL];
+    
+    [self.navigationController pushViewController:[AccountProfilViewController new] animated:YES];
 }
 
 - (void)notifications {
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
-    [self presentViewController:controller animated:YES completion:NULL];
+//    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
+//    [self presentViewController:controller animated:YES completion:NULL];
+
+    [self.navigationController pushViewController:[NotificationsViewController new] animated:YES];
 }
 
 - (void)inviteFriends {
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
-    [self presentViewController:controller animated:YES completion:NULL];
+//    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
+//    [self presentViewController:controller animated:YES completion:NULL];
+
+    [self.navigationController pushViewController:[ShareAppViewController new] animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -209,23 +215,29 @@
 }
 
 - (void)scanCode {
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[ScannerViewController new]];
-    [self presentViewController:controller animated:YES completion:NULL];
+//    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[ScannerViewController new]];
+//    [self presentViewController:controller animated:YES completion:NULL];
+    
+    [self.navigationController pushViewController:[ScannerViewController new] animated:YES];
 }
 
 - (void)cashOut {
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] cashoutValidate: ^(id result) {
-        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[CashOutViewController new]];
-        [self presentViewController:controller animated:YES completion:NULL];
+//        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[CashOutViewController new]];
+//        [self presentViewController:controller animated:YES completion:NULL];
+        
+        [self.navigationController pushViewController:[CashOutViewController new] animated:YES];
     } failure: ^(NSError *error) {
         //[self presentEditAccountController];
     }];
 }
 
 - (void)settings {
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[SettingsViewController new]];
-    [self presentViewController:controller animated:YES completion:NULL];
+//    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[SettingsViewController new]];
+//    [self presentViewController:controller animated:YES completion:NULL];
+
+    [self.navigationController pushViewController:[SettingsViewController new] animated:YES];
 }
 
 - (void)reloadCurrentUser {

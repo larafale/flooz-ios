@@ -37,7 +37,6 @@
         notificationsArray = [NSMutableArray new];
         isLoaded = NO;
         nextPageIsLoading = NO;
-        self.showCross = YES;
     }
     return self;
 }
@@ -71,6 +70,11 @@
         isLoaded = YES;
         [self handleRefresh];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[Flooz sharedInstance] readTransactionsSuccess:NULL];
 }
 
 - (void)loadCachedActivities {
@@ -111,11 +115,6 @@
         nextPageIsLoading = NO;
         [_tableView reloadData];
     }];
-}
-
-- (void)dismissViewController {
-    [super dismissViewController];
-    [[Flooz sharedInstance] readTransactionsSuccess:NULL];
 }
 
 #pragma mark - TableView

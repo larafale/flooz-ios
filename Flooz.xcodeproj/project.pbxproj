@@ -309,6 +309,9 @@
 		C938EFCE1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
 		C938EFCF1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
 		C938EFD01AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
+		C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
+		C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
+		C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C95772711A9C7BB400CD6BC0 /* FLTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772701A9C7BB400CD6BC0 /* FLTexts.m */; };
 		C95772721A9C7BB400CD6BC0 /* FLTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772701A9C7BB400CD6BC0 /* FLTexts.m */; };
 		C95772731A9C7BB400CD6BC0 /* FLTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772701A9C7BB400CD6BC0 /* FLTexts.m */; };
@@ -502,12 +505,6 @@
 		C9A265561ACC460700859B32 /* SignupInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A265551ACC460700859B32 /* SignupInvitationViewController.m */; };
 		C9A265571ACC460700859B32 /* SignupInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A265551ACC460700859B32 /* SignupInvitationViewController.m */; };
 		C9A265581ACC460700859B32 /* SignupInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A265551ACC460700859B32 /* SignupInvitationViewController.m */; };
-		C9A488BA1A9236AE008B27B7 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9A488B71A9236AE008B27B7 /* CountryPicker.bundle */; };
-		C9A488BB1A9236AE008B27B7 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9A488B71A9236AE008B27B7 /* CountryPicker.bundle */; };
-		C9A488BC1A9236AE008B27B7 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9A488B71A9236AE008B27B7 /* CountryPicker.bundle */; };
-		C9A488BD1A9236AE008B27B7 /* CountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A488B91A9236AE008B27B7 /* CountryPicker.m */; };
-		C9A488BE1A9236AE008B27B7 /* CountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A488B91A9236AE008B27B7 /* CountryPicker.m */; };
-		C9A488BF1A9236AE008B27B7 /* CountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A488B91A9236AE008B27B7 /* CountryPicker.m */; };
 		C9A7BE601A27801200195AFC /* FLPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A7BE5F1A27801200195AFC /* FLPreset.m */; };
 		C9A7BE611A2788D800195AFC /* FLPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A7BE5F1A27801200195AFC /* FLPreset.m */; };
 		C9AE778F1ACA917B00CFF0AF /* FLSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AE778E1ACA917B00CFF0AF /* FLSlider.m */; };
@@ -885,6 +882,8 @@
 		C93118471A1F7E0B008C6EEC /* FLReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReport.m; sourceTree = "<group>"; };
 		C938EFCC1AE68C5900A3F740 /* ScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerViewController.h; sourceTree = "<group>"; };
 		C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
+		C950540C1B4E7E9A00B9FB2C /* FLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTabBarController.h; sourceTree = "<group>"; };
+		C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTabBarController.m; sourceTree = "<group>"; };
 		C957726F1A9C7BB400CD6BC0 /* FLTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTexts.h; sourceTree = "<group>"; };
 		C95772701A9C7BB400CD6BC0 /* FLTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTexts.m; sourceTree = "<group>"; };
 		C95772751A9CBDB400CD6BC0 /* FriendPickerEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendPickerEmptyCell.h; sourceTree = "<group>"; };
@@ -921,9 +920,6 @@
 		C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetViewController.m; sourceTree = "<group>"; };
 		C9A265541ACC460700859B32 /* SignupInvitationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupInvitationViewController.h; sourceTree = "<group>"; };
 		C9A265551ACC460700859B32 /* SignupInvitationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupInvitationViewController.m; sourceTree = "<group>"; };
-		C9A488B71A9236AE008B27B7 /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CountryPicker.bundle; sourceTree = "<group>"; };
-		C9A488B81A9236AE008B27B7 /* CountryPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryPicker.h; sourceTree = "<group>"; };
-		C9A488B91A9236AE008B27B7 /* CountryPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryPicker.m; sourceTree = "<group>"; };
 		C9A7BE5E1A27801200195AFC /* FLPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPreset.h; sourceTree = "<group>"; };
 		C9A7BE5F1A27801200195AFC /* FLPreset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPreset.m; sourceTree = "<group>"; };
 		C9AE778D1ACA917B00CFF0AF /* FLSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSlider.h; sourceTree = "<group>"; };
@@ -1392,6 +1388,7 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C950540B1B4E7E6600B9FB2C /* FLTabBarController */,
 				C938EFCB1AE68C1D00A3F740 /* Scanner */,
 				C90B947D1A00E94F00E2C53B /* 3DSecure */,
 				2F444C7E19ED6D7A00ACE12E /* FLNavigationController */,
@@ -1461,7 +1458,6 @@
 				C99A514D1AF7D67000342F8C /* IQActionSheetPickerView */,
 				C9CB21EE1A95E9D30064389A /* THContactPicker */,
 				C975BAF41A92BB8E000E5AEA /* YLMoment */,
-				C9A488B61A9236AE008B27B7 /* CountryPicker */,
 				C905A8D71A56D5AC00473963 /* SIOSocket */,
 				C95AED991A49B5E500000FB3 /* WYPopoverController */,
 				C966473619FFE9EC000851AF /* Modal Transitions */,
@@ -2093,6 +2089,15 @@
 			name = Scanner;
 			sourceTree = "<group>";
 		};
+		C950540B1B4E7E6600B9FB2C /* FLTabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				C950540C1B4E7E9A00B9FB2C /* FLTabBarController.h */,
+				C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */,
+			);
+			name = FLTabBarController;
+			sourceTree = "<group>";
+		};
 		C95772741A9CBD8C00CD6BC0 /* FriendPickerEmptyCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2160,16 +2165,6 @@
 				C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */,
 			);
 			name = IQActionSheetPickerView;
-			sourceTree = "<group>";
-		};
-		C9A488B61A9236AE008B27B7 /* CountryPicker */ = {
-			isa = PBXGroup;
-			children = (
-				C9A488B71A9236AE008B27B7 /* CountryPicker.bundle */,
-				C9A488B81A9236AE008B27B7 /* CountryPicker.h */,
-				C9A488B91A9236AE008B27B7 /* CountryPicker.m */,
-			);
-			path = CountryPicker;
 			sourceTree = "<group>";
 		};
 		C9AE778C1ACA915400CFF0AF /* Sliders */ = {
@@ -2416,7 +2411,6 @@
 				AB3D08A4186CA11A00CF8380 /* Images.xcassets in Resources */,
 				C9D4E7071B18BD380096725B /* Flooz local-Info.plist in Resources */,
 				ABF46A10187575C600E92A77 /* Localizable.strings in Resources */,
-				C9A488BA1A9236AE008B27B7 /* CountryPicker.bundle in Resources */,
 				AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2445,7 +2439,6 @@
 				ABAA4008197E96BF009F29EF /* Rene Bieder - Gentona Book.otf in Resources */,
 				ABAA400A197E96BF009F29EF /* TransactionViewController.xib in Resources */,
 				ABAA400D197E96BF009F29EF /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
-				C9A488BB1A9236AE008B27B7 /* CountryPicker.bundle in Resources */,
 				ABAA400E197E96BF009F29EF /* PasswordViewController.xib in Resources */,
 				C9CB21FC1A95E9D30064389A /* THContactPickerViewController.xib in Resources */,
 				C9D4E7081B18BD380096725B /* Flooz local-Info.plist in Resources */,
@@ -2482,7 +2475,6 @@
 				C98013271A76921000019682 /* Rene Bieder - Gentona Book.otf in Resources */,
 				C98013291A76921000019682 /* TransactionViewController.xib in Resources */,
 				C980132A1A76921000019682 /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
-				C9A488BC1A9236AE008B27B7 /* CountryPicker.bundle in Resources */,
 				C980132B1A76921000019682 /* PasswordViewController.xib in Resources */,
 				C9CB21FD1A95E9D30064389A /* THContactPickerViewController.xib in Resources */,
 				C9D4E7091B18BD380096725B /* Flooz local-Info.plist in Resources */,
@@ -2777,6 +2769,7 @@
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
 				AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */,
+				C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				2F50155319EDC46E00F61380 /* GlobalViewController.m in Sources */,
 				AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */,
 				ABE9144E18915E9F003AC722 /* FLUserView.m in Sources */,
@@ -2790,7 +2783,6 @@
 				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
 				C90B94801A00E96900E2C53B /* 3DSecureViewController.m in Sources */,
 				AB5EB6EF188214F000D81AF6 /* SettingsViewController.m in Sources */,
-				C9A488BD1A9236AE008B27B7 /* CountryPicker.m in Sources */,
 				AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */,
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
@@ -2927,6 +2919,7 @@
 				ABAA3FCA197E96BF009F29EF /* NewTransactionSelectTypeView.m in Sources */,
 				C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				ABAA3FCD197E96BF009F29EF /* FLAccountUserView.m in Sources */,
+				C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				ABAA3FCE197E96BF009F29EF /* TimelineViewController.m in Sources */,
 				ABAA3FCF197E96BF009F29EF /* FLSocial.m in Sources */,
 				ABAA3FD0197E96BF009F29EF /* FriendCell.m in Sources */,
@@ -2940,7 +2933,6 @@
 				ABAA3FDA197E96BF009F29EF /* UIView+FindFirstResponder.m in Sources */,
 				ABAA3FDB197E96BF009F29EF /* FLScrollViewIndicator.m in Sources */,
 				ABAA3FDC197E96BF009F29EF /* SettingsViewController.m in Sources */,
-				C9A488BE1A9236AE008B27B7 /* CountryPicker.m in Sources */,
 				ABAA3FDD197E96BF009F29EF /* LoadingCell.m in Sources */,
 				ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */,
 				ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */,
@@ -3069,6 +3061,7 @@
 				C98012DB1A76921000019682 /* NewTransactionSelectTypeView.m in Sources */,
 				C98012DC1A76921000019682 /* SettingsPrivacyController.m in Sources */,
 				C98012DF1A76921000019682 /* FLAccountUserView.m in Sources */,
+				C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C98012E01A76921000019682 /* TimelineViewController.m in Sources */,
 				C98012E11A76921000019682 /* FLSocial.m in Sources */,
 				C98012E21A76921000019682 /* FriendCell.m in Sources */,
@@ -3082,7 +3075,6 @@
 				C98012EE1A76921000019682 /* UIView+FindFirstResponder.m in Sources */,
 				C98012EF1A76921000019682 /* FLScrollViewIndicator.m in Sources */,
 				C98012F01A76921000019682 /* SettingsViewController.m in Sources */,
-				C9A488BF1A9236AE008B27B7 /* CountryPicker.m in Sources */,
 				C98012F11A76921000019682 /* LoadingCell.m in Sources */,
 				C98012F21A76921000019682 /* FLAlertView.m in Sources */,
 				C98012F31A76921000019682 /* UIColor+custom.m in Sources */,
@@ -3221,6 +3213,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3240,7 +3233,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = Flooz;
-				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3277,6 +3270,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3299,7 +3293,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
+				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3391,6 +3385,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3410,7 +3405,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3425,6 +3420,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3506,6 +3502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3528,7 +3525,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
+				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3542,6 +3539,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3564,7 +3562,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
+				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3620,6 +3618,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3639,7 +3638,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee26e5eb-5c96-4562-a9e0-8f17c5e5d373";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3680,6 +3679,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3703,7 +3703,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "5c6183ba-3d7f-487a-a51c-1a8f54a8ec67";
+				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3717,6 +3717,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3753,6 +3754,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3790,6 +3792,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",
@@ -3826,6 +3829,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CODE_SIGN_IDENTITY = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
 					"$(inherited)",

@@ -121,9 +121,11 @@
         if (navigationController.viewControllers.count == 1 && !navigationController.parentViewController) {
             viewController.navigationItem.leftBarButtonItem = closeItem;
         }
-        else {
+        else if (!navigationController.parentViewController) {
             viewController.navigationItem.leftBarButtonItem = backItem;
         }
+        else
+            viewController.navigationItem.leftBarButtonItem = nil;
     }
     else
         viewController.navigationItem.leftBarButtonItem = nil;    

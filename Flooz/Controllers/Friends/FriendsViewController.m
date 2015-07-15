@@ -52,21 +52,20 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
     
-    UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING_NAV, 0, PPScreenWidth() - PADDING_NAV, PPScreenHeight())];
+    UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [background setImage:[UIImage imageNamed:@"back-secure"]];
     [background setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:background];
 
-	_searchBar = [[FriendAddSearchBar alloc] initWithStartX:PADDING_NAV + 10.0f];
-	CGRectSetY(_searchBar.frame, PPStatusBarHeight());
+	_searchBar = [[FriendAddSearchBar alloc] initWithStartX:0 + 10.0f];
 	[_searchBar setDelegate:self];
 	[self.view addSubview:_searchBar];
 
-    _backgroundView = [UIView newWithFrame:CGRectMake(PADDING_NAV, CGRectGetMaxY(_searchBar.frame), PPScreenWidth() - PADDING_NAV, PPScreenHeight() - CGRectGetMaxY(_searchBar.frame))];
+    _backgroundView = [UIView newWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBar.frame), PPScreenWidth(), PPScreenHeight() - CGRectGetMaxY(_searchBar.frame))];
     
     UIImageView *backgroudImage = [UIImageView newWithImage:[UIImage imageNamed:@"background-friends"]];
     backgroudImage.contentMode = UIViewContentModeScaleAspectFit;
-    CGFloat newWidth = PPScreenWidth() - PADDING_NAV;
+    CGFloat newWidth = PPScreenWidth();
     
     if (IS_IPHONE_4)
         newWidth -= 25;
@@ -80,13 +79,13 @@
     if (IS_IPHONE_4)
         margin = 10;
     
-    FLActionButton *shareButton = [[FLActionButton alloc] initWithFrame:CGRectMake(30.0f, CGRectGetHeight(backgroudImage.frame) + margin, PPScreenWidth() - PADDING_NAV - 60.0f, FLActionButtonDefaultHeight) title:NSLocalizedString(@"FRIENDS_BUTTON_INVITE", nil)];
+    FLActionButton *shareButton = [[FLActionButton alloc] initWithFrame:CGRectMake(30.0f, CGRectGetHeight(backgroudImage.frame) + margin, PPScreenWidth() - 60.0f, FLActionButtonDefaultHeight) title:NSLocalizedString(@"FRIENDS_BUTTON_INVITE", nil)];
     [shareButton addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
     
     [_backgroundView addSubview:backgroudImage];
     [_backgroundView addSubview:shareButton];
     
-	_tableView = [[FLTableView alloc] initWithFrame:CGRectMake(PADDING_NAV, CGRectGetMaxY(_searchBar.frame), PPScreenWidth() - PADDING_NAV, PPScreenHeight() - CGRectGetMaxY(_searchBar.frame)) style:UITableViewStylePlain];
+	_tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBar.frame), PPScreenWidth(), PPScreenHeight() - CGRectGetMaxY(_searchBar.frame)) style:UITableViewStylePlain];
 	[_tableView setDelegate:self];
 	[_tableView setDataSource:self];
 	[self.view addSubview:_tableView];

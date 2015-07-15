@@ -67,7 +67,7 @@
 }
 
 - (void)createTextView {
-    widthLabel = cellWidth - (CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE + 50.0f);
+    widthLabel = cellWidth - (CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE);
 	_nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE, 17.0f, widthLabel, 11)];
 
 	_nameLabel.font = [UIFont customContentBold:13];
@@ -86,7 +86,7 @@
 }
 
 - (void)createButtonView {
-	_addButton = [[FriendButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_nameLabel.frame) - 50.0f, 13, 28, 28)];
+	_addButton = [[FriendButton alloc] initWithFrame:CGRectMake(cellWidth - 45, 13, 28, 28)];
 
 	[_addButton setImage:[UIImage imageNamed:@"friends-field-add"] forState:UIControlStateNormal];
 	[_addButton setImage:[UIImage imageNamed:@"friends-field-in"] forState:UIControlStateSelected];

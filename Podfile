@@ -25,5 +25,6 @@ pod 'iCarousel'
 pod 'FXBlurView'
 pod 'Branch'
 pod 'GBDeviceInfo'
+pod 'RDVTabBarController'
 
 link_with 'Flooz', 'Flooz dev', 'Flooz local', 'FloozTests'

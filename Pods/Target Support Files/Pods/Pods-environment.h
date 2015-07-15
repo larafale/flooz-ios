@@ -75,8 +75,8 @@
 // Branch
 #define COCOAPODS_POD_AVAILABLE_Branch
 #define COCOAPODS_VERSION_MAJOR_Branch 0
-#define COCOAPODS_VERSION_MINOR_Branch 9
-#define COCOAPODS_VERSION_PATCH_Branch 3
+#define COCOAPODS_VERSION_MINOR_Branch 10
+#define COCOAPODS_VERSION_PATCH_Branch 0
 
 // DACircularProgress
 #define COCOAPODS_POD_AVAILABLE_DACircularProgress
@@ -125,12 +125,6 @@
 #define COCOAPODS_VERSION_MAJOR_HHRouter 0
 #define COCOAPODS_VERSION_MINOR_HHRouter 1
 #define COCOAPODS_VERSION_PATCH_HHRouter 5
-
-// Hoko
-#define COCOAPODS_POD_AVAILABLE_Hoko
-#define COCOAPODS_VERSION_MAJOR_Hoko 2
-#define COCOAPODS_VERSION_MINOR_Hoko 0
-#define COCOAPODS_VERSION_PATCH_Hoko 2
 
 // IDMPhotoBrowser
 #define COCOAPODS_POD_AVAILABLE_IDMPhotoBrowser
@@ -216,6 +210,12 @@
 #define COCOAPODS_VERSION_MINOR_PonyDebugger 4
 #define COCOAPODS_VERSION_PATCH_PonyDebugger 3
 
+// RDVTabBarController
+#define COCOAPODS_POD_AVAILABLE_RDVTabBarController
+#define COCOAPODS_VERSION_MAJOR_RDVTabBarController 1
+#define COCOAPODS_VERSION_MINOR_RDVTabBarController 1
+#define COCOAPODS_VERSION_PATCH_RDVTabBarController 9
+
 // SDWebImage
 #define COCOAPODS_POD_AVAILABLE_SDWebImage
 #define COCOAPODS_VERSION_MAJOR_SDWebImage 3
@@ -237,7 +237,7 @@
 // SocketRocket
 #define COCOAPODS_POD_AVAILABLE_SocketRocket
 #define COCOAPODS_VERSION_MAJOR_SocketRocket 0
-#define COCOAPODS_VERSION_MINOR_SocketRocket 2
+#define COCOAPODS_VERSION_MINOR_SocketRocket 4
 #define COCOAPODS_VERSION_PATCH_SocketRocket 0
 
 // TTTAttributedLabel
