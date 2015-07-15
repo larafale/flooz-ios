@@ -514,6 +514,7 @@
         return;
     
     pendingData = userInfo;
+    [self handlePendingData];
 }
 
 - (void)handlePendingData {
