@@ -26,13 +26,13 @@
 
 - (void)commonInit {
 	{
-		conainterView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame), 0, 0, CGRectGetHeight(self.frame))];
+		containerView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame), 0, 0, CGRectGetHeight(self.frame))];
 
-		conainterView.backgroundColor = [UIColor customBackgroundHeader:.5];
-		conainterView.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;
-		conainterView.clipsToBounds = YES; // pour quand on anime que le texte ne depasse pas
+		containerView.backgroundColor = [UIColor customBackgroundHeader:.5];
+		containerView.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;
+		containerView.clipsToBounds = YES; // pour quand on anime que le texte ne depasse pas
 
-		[self addSubview:conainterView];
+		[self addSubview:containerView];
 	}
 
 	{
@@ -42,43 +42,29 @@
 
 		[label setImageOffset:CGPointMake(-5, 0)];
 
-		[conainterView addSubview:label];
+		[containerView addSubview:label];
 	}
 }
 
 - (void)setTransaction:(FLTransaction *)transaction {
 	if (currentScope != transaction.social.scope) {
-		currentScope = transaction.social.scope;
-		NSString *imageNamed = nil;
 
-		if (transaction.social.scope == SocialScopeFriend) {
-			imageNamed = @"transaction-scope-friend";
-		}
-		else if (transaction.social.scope == SocialScopePrivate) {
-			imageNamed = @"transaction-scope-private";
-		}
-		else if (transaction.social.scope == SocialScopePublic) {
-			imageNamed = @"transaction-scope-public";
-		}
-
-		[label setImage:[UIImage imageNamed:imageNamed]];
 	}
-
 
 	if ([label.text isEqualToString:[transaction when]]) {
 		return;
 	}
 
 	label.text = [transaction when];
-	CGFloat newLabelWidth = [label widthToFit] + LABEL_MARGIN + 25 + 8; // 25 icone
+	CGFloat newLabelWidth = [label widthToFit] + LABEL_MARGIN + 8;
 
 	[UIView animateWithDuration:.5
 	                      delay:0
 	                    options:UIViewAnimationOptionBeginFromCurrentState
 	                 animations: ^{
 	    CGRectSetWidth(label.frame, newLabelWidth);
-	    CGRectSetWidth(conainterView.frame, newLabelWidth);
-	    CGRectSetX(conainterView.frame,  CGRectGetWidth(self.frame) - newLabelWidth);
+	    CGRectSetWidth(containerView.frame, newLabelWidth);
+	    CGRectSetX(containerView.frame,  CGRectGetWidth(self.frame) - newLabelWidth);
 	} completion:NULL];
 }
 

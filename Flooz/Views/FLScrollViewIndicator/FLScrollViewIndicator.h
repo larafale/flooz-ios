@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface FLScrollViewIndicator : UIView {
-	UIView *conainterView;
+	UIView *containerView;
 	JTImageLabel *label;
 	SocialScope currentScope;
 }

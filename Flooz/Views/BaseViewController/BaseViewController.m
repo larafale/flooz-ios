@@ -32,7 +32,7 @@
     
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 60.0f)];
     _headerView.backgroundColor = [UIColor customBackgroundHeader];
-    [self.view addSubview:_headerView];
+//    [self.view addSubview:_headerView];
     
     {
         _headTitle = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_headerView.frame), CGRectGetHeight(_headerView.frame))];
@@ -66,14 +66,13 @@
         [_headerView addSubview:backButton];
     }
     
-    _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(_headerView.frame), PPScreenWidth(), PPScreenHeight() - CGRectGetMaxY(_headerView.frame))];
+    _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), PPScreenHeight() - CGRectGetMaxY(_headerView.frame))];
     _mainBody.backgroundColor = [UIColor customBackgroundHeader];
     [self.view addSubview:_mainBody];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)setTitle:(NSString *)title {

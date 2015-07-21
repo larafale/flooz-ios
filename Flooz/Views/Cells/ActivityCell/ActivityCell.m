@@ -11,7 +11,7 @@
 #define MIN_HEIGHT 60
 #define MARGE_TOP_BOTTOM 10.
 #define MARGE_LEFT 10.
-#define MARGE_RIGHT 20.
+#define MARGE_RIGHT 10.
 #define CONTENT_X 80.
 #define DATE_VIEW_HEIGHT 15.
 
@@ -53,7 +53,7 @@
 
 - (void)createViews {
 	self.selectionStyle = UITableViewCellSelectionStyleNone;
-	self.backgroundColor = [UIColor customBackgroundHeader];
+	self.backgroundColor = [UIColor customBackground];
 
 	[self createSeparatorView];
 	[self createReadView];

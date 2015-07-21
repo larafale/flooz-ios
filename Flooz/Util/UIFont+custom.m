@@ -15,7 +15,7 @@
 }
 
 + (UIFont *)customTitleNav {
-    return [UIFont fontWithName:@"Gentona-ExtraLight" size:24];
+    return [UIFont fontWithName:@"Gentona-ExtraLight" size:20];
 }
 
 + (UIFont *)customTitleLight:(NSInteger)size {

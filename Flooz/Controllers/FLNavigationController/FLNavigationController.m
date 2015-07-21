@@ -23,6 +23,8 @@
 
 @implementation FLNavigationController
 
+@synthesize shadowImage;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.delegate = self;
@@ -67,15 +69,32 @@
     
     cbItem = [[UIBarButtonItem alloc] initWithImage:cbImage style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
     [cbItem setTintColor:[UIColor customBlue]];
+
     
-    
-    {
-        self.navigationBar.backgroundColor = [UIColor colorWithRed:0. green:0. blue:0. alpha:.2];
-        self.navigationBar.layer.shadowOpacity = .2;
-        self.navigationBar.layer.shadowOffset = CGSizeMake(0, 3.5);
-        self.navigationBar.layer.shadowRadius = 1;
-        self.navigationBar.clipsToBounds = NO;
-    }
+    [self.navigationBar setBackgroundImage:[UIImage new]
+                       forBarPosition:UIBarPositionAny
+                           barMetrics:UIBarMetricsDefault];
+
+    shadowImage = self.navigationBar.shadowImage;
+
+    [self.navigationBar setShadowImage:[UIImage new]];
+
+    [self showShadow];
+}
+
+- (void)showShadow {
+    self.navigationBar.backgroundColor = [UIColor colorWithRed:0. green:0. blue:0. alpha:.2];
+    self.navigationBar.layer.shadowOpacity = .3;
+    self.navigationBar.layer.shadowOffset = CGSizeMake(0, 2);
+    self.navigationBar.layer.shadowRadius = 1;
+    self.navigationBar.clipsToBounds = NO;
+}
+
+- (void)hideShadow {
+    self.navigationBar.backgroundColor = [UIColor colorWithRed:0. green:0. blue:0. alpha:.2];
+    self.navigationBar.layer.shadowOffset = CGSizeMake(0, 0);
+    self.navigationBar.layer.shadowRadius = 0;
+    self.navigationBar.clipsToBounds = NO;
 }
 
 - (void)amountInfos {
@@ -115,6 +134,8 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     
+    [self showShadow];
+
     controller = viewController;
     
     if (!self.blockBack) {
@@ -128,7 +149,7 @@
             viewController.navigationItem.leftBarButtonItem = nil;
     }
     else
-        viewController.navigationItem.leftBarButtonItem = nil;    
+        viewController.navigationItem.leftBarButtonItem = nil;
 }
 
 - (void)setAmountHidden:(BOOL)hidden {

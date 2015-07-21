@@ -37,17 +37,18 @@
     
     [self.tabBar setBarStyle:UIBarStyleDefault];
     [self.tabBar setBarTintColor:[UIColor customBackgroundHeader]];
+    [self.tabBar setTranslucent:NO];
     
-    [[UITabBarItem appearance] setTitleTextAttributes: @{NSFontAttributeName: [UIFont customContentRegular:10]} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont customContentRegular:10]} forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes: @{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customBlue]} forState:UIControlStateSelected];
     
     NSMutableArray *tabBarItems = [NSMutableArray new];
     
-    homeItem = [[UITabBarItem alloc] initWithTitle:@"Accueil" image:[UIImage imageNamed:@"menu-home"] tag:0];
-    notifItem = [[UITabBarItem alloc] initWithTitle:@"Notifs" image:[UIImage imageNamed:@"menu-notifications"] tag:1];
+    homeItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-home"] tag:0];
+    notifItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-notifications"] tag:1];
     floozItem = [[UITabBarItem alloc] initWithTitle:nil image:[UIImage imageNamed:@"friends-field-add"] tag:2];
-    friendsItem = [[UITabBarItem alloc] initWithTitle:@"Amis" image:[UIImage imageNamed:@"menu-friends"] tag:3];
-    profileItem = [[UITabBarItem alloc] initWithTitle:@"Compte" image:[UIImage imageNamed:@"menu-account"] tag:4];
+    friendsItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-shop"] tag:3];
+    profileItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-account"] tag:4];
     
     FLNavigationController *homeNavigationController = [[FLNavigationController alloc] initWithRootViewController:[TimelineViewController new]];
     FLNavigationController *notifNavigationController = [[FLNavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
@@ -58,6 +59,12 @@
     int offset = 7;
     UIEdgeInsets imageInset = UIEdgeInsetsMake(offset, 0, -offset, 0);
     floozItem.imageInsets = imageInset;
+
+    homeItem.imageInsets = imageInset;
+    notifItem.imageInsets = imageInset;
+    friendsItem.imageInsets = imageInset;
+    profileItem.imageInsets = imageInset;
+
     
     [[homeNavigationController.viewControllers objectAtIndex:0] setTabBarItem:homeItem];
     [[notifNavigationController.viewControllers objectAtIndex:0] setTabBarItem:notifItem];

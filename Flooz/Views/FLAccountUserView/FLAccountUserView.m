@@ -15,14 +15,14 @@
 	UILabel *_percentComplete;
 
 	UIButton *_wallet;
-	CGFloat _widthAvalaible;
+    UIImage *shadowImage;
 }
 
-
-- (id)initWithWidth:(CGFloat)width {
+- (id)initWithShadow:(UIImage *)shadow {
 	self = [super initWithFrame:CGRectMakeSize(PPScreenWidth(), 225.0f)];
 	if (self) {
-		_widthAvalaible = width;
+        shadowImage = shadow;
+        [self setBackgroundColor:[UIColor customBackgroundHeader]];
 		[self commonInit];
 		[self reloadData];
 	}
@@ -30,58 +30,33 @@
 }
 
 - (void)commonInit {
-	{
-		CGFloat size = 70.0;
-        userView = [[FLUserView alloc] initWithFrame:CGRectMake((_widthAvalaible - size) / 2., 30.0f, size, size)];
-        [userView setUserInteractionEnabled:YES];
-		[self addSubview:userView];
-	}
 
-	{
-		fullname = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(userView.frame) + 5.0f, _widthAvalaible, 17)];
-
-		fullname.font = [UIFont customTitleExtraLight:18];
-		fullname.textAlignment = NSTextAlignmentCenter;
-        fullname.textColor = [UIColor whiteColor];
-        [fullname setUserInteractionEnabled:YES];
-
-		[self addSubview:fullname];
-	}
-
-	{
-		username = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(fullname.frame), _widthAvalaible, 20)];
-
-		username.font = [UIFont customContentLight:13];
-		username.textAlignment = NSTextAlignmentCenter;
-        username.textColor = [UIColor whiteColor];
-        [username setUserInteractionEnabled:YES];
-
-		[self addSubview:username];
-	}
-
-    // Masqué pour le lancement
-//	CGFloat xView = 0.0f;
-//	CGFloat width = _widthAvalaible / 3.0f;
-//	CGFloat height = 30.0f;
 //	{
-//		_numberFlooz = [self prepareInfoWithTitle:@"Flooz" xStart:xView width:width height:height];
+//		username = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 20)];
 //
-//		xView += _widthAvalaible / 3.0f;
-//		_numberFriends = [self prepareInfoWithTitle:@"Amis" xStart:xView width:width height:height];
+//		username.font = [UIFont customContentLight:15];
+//		username.textAlignment = NSTextAlignmentCenter;
+//        username.textColor = [UIColor whiteColor];
 //
-//		xView += _widthAvalaible / 3.0f;
-//		_percentComplete = [self prepareInfoWithTitle:@"Complet" xStart:xView width:width height:height];
+//		[self addSubview:username];
 //	}
 
+    {
+        CGFloat size = 50.0;
+        userView = [[FLUserView alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 - size / 2, 10, size, size)];
+        [userView setUserInteractionEnabled:YES];
+        [self addSubview:userView];
+    }
+
 	{
-		CGFloat size = 90.0f;
-		_wallet = [UIButton newWithFrame:CGRectMake((_widthAvalaible - size) / 2.0f, CGRectGetMaxY(username.frame) + 15.0f, size, 30.0f)];
+		_wallet = [UIButton newWithFrame:CGRectMake(0, CGRectGetMaxY(userView.frame) + 10, PPScreenWidth(), 35.0f)];
 
-		[_wallet.layer setBorderWidth:1.0f];
-		[_wallet.layer setBorderColor:[UIColor whiteColor].CGColor];
+//		[_wallet.layer setBorderWidth:1.0f];
+//		[_wallet.layer setBorderColor:[UIColor whiteColor].CGColor];
 		[_wallet.layer setCornerRadius:4.0f];
+        [_wallet setBackgroundColor:[UIColor customBackground]];
 
-		_wallet.titleLabel.font = [UIFont customTitleLight:15];
+		_wallet.titleLabel.font = [UIFont customTitleExtraLight:18];
 		_wallet.titleLabel.textAlignment = NSTextAlignmentCenter;
 		_wallet.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 2.0f, 0.0f);
         
@@ -89,6 +64,13 @@
 
 		[self addSubview:_wallet];
 	}
+    
+    CGRectSetHeight(self.frame, CGRectGetMaxY(_wallet.frame) - CGRectGetHeight(_wallet.frame) / 2);
+
+    self.layer.shadowOpacity = .3;
+    self.layer.shadowOffset = CGSizeMake(0, 2);
+    self.layer.shadowRadius = 1;
+    self.clipsToBounds = NO;
 }
 
 - (void)showWalletMessage {
@@ -112,27 +94,6 @@
     [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:nil] show];
 }
 
-- (UILabel *)prepareInfoWithTitle:(NSString *)title xStart:(CGFloat)xView width:(CGFloat)width height:(CGFloat)height {
-	UIView *vFlooz = [UIView newWithFrame:CGRectMake(xView, CGRectGetMaxY(username.frame) + 10.0f, width, height)];
-	[self addSubview:vFlooz];
-
-	UILabel *topLabel = [UILabel newWithFrame:CGRectMake(0.0f, 0.0f, width, height / 2.0f)];
-	[topLabel setTextColor:[UIColor whiteColor]];
-	[topLabel setFont:[UIFont customTitleBook:12]];
-	[topLabel setTextAlignment:NSTextAlignmentCenter];
-	[topLabel setText:@"0"];
-	[vFlooz addSubview:topLabel];
-
-	UILabel *label = [UILabel newWithFrame:CGRectMake(0.0f, CGRectGetMaxY(topLabel.frame), width, height / 2.0f)];
-	[label setTextColor:[UIColor whiteColor]];
-	[label setFont:[UIFont customTitleLight:15]];
-	[label setTextAlignment:NSTextAlignmentCenter];
-	[label setText:title];
-	[vFlooz addSubview:label];
-
-	return topLabel;
-}
-
 - (void)reloadData {
 	user = [[Flooz sharedInstance] currentUser];
 
@@ -145,7 +106,10 @@
 	[_numberFlooz setText:[user.transactionsCount stringValue]];
 	[_numberFriends setText:[user.friendsCount stringValue]];
 	[_percentComplete setText:user.profileCompletion];
-	[_wallet setTitle:[FLHelper formatedAmount:user.amount withSymbol:NO] forState:UIControlStateNormal];
+	[_wallet setTitle:[NSString stringWithFormat:@"Solde %@", [FLHelper formatedAmount:user.amount withSymbol:NO]] forState:UIControlStateNormal];
+    
+    CGRectSetWidth(_wallet.frame, [_wallet.titleLabel.text widthOfString:_wallet.titleLabel.font] + 30);
+    CGRectSetX(_wallet.frame, PPScreenWidth() / 2 - CGRectGetWidth(_wallet.frame) / 2);
 }
 
 - (void)reloadAvatarWithImageData:(NSData *)imageData {

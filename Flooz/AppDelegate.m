@@ -182,22 +182,9 @@
 }
 
 - (UIViewController *)prepareMainViewController {
+    self.tabBarController = [FLTabBarController new];
     
-    FLTabBarController *tabBarController = [FLTabBarController new];
-//    
-//    TimelineViewController *homePage = [TimelineViewController new];
-//    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:homePage];
-//    [navController.navigationBar setTranslucent:NO];
-//    [navController.navigationBar setBarTintColor:[UIColor customBackgroundHeader]];
-//    [navController.navigationBar setTintColor:[UIColor whiteColor]];
-//    [navController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-//                                                         [UIColor customBlue], NSForegroundColorAttributeName,
-//                                                         [UIFont customTitleBook:16.0], NSFontAttributeName, nil]];
-//    
-//    self.revealSideViewController = [[FLRevealContainerViewController alloc] initWithRootViewController:navController];
-//    self.revealSideViewController.delegate = self;
-    
-    return tabBarController;
+    return self.tabBarController;
 }
 
 - (void)goToAccountViewController {

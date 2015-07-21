@@ -25,6 +25,7 @@
 
 #import "NSDictionary+JSONHelper.h"
 #import "NSArray+JSONHelper.h"
+#import "NSString+custom.h"
 
 #import "JTImageLabel.h"
 #import "FLLoadView.h"

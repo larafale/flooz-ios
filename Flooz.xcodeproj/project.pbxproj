@@ -295,6 +295,9 @@
 		C9015E441B0F1FD500903BA9 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9015E411B0F1FD500903BA9 /* Fabric.framework */; };
 		C905A8DB1A56D5BE00473963 /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C905A8DA1A56D5BE00473963 /* SIOSocket.m */; };
 		C905A8DC1A56D5BE00473963 /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C905A8DA1A56D5BE00473963 /* SIOSocket.m */; };
+		C907297E1B59569900BA691C /* NSString+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C907297D1B59569900BA691C /* NSString+custom.m */; };
+		C907297F1B59569900BA691C /* NSString+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C907297D1B59569900BA691C /* NSString+custom.m */; };
+		C90729801B59569900BA691C /* NSString+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C907297D1B59569900BA691C /* NSString+custom.m */; };
 		C9088B6C1A51A22200026FE9 /* SignupBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */; };
 		C9088B6D1A51A22200026FE9 /* SignupBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */; };
 		C908A3EB1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = C908A3EA1A9F211F00A07818 /* FLPopoverTutoTheme.m */; };
@@ -870,6 +873,8 @@
 		C905A8D81A56D5BE00473963 /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
 		C905A8D91A56D5BE00473963 /* SIOSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOSocket.h; sourceTree = "<group>"; };
 		C905A8DA1A56D5BE00473963 /* SIOSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOSocket.m; sourceTree = "<group>"; };
+		C907297C1B59569900BA691C /* NSString+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+custom.h"; sourceTree = "<group>"; };
+		C907297D1B59569900BA691C /* NSString+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+custom.m"; sourceTree = "<group>"; };
 		C9088B6A1A51A22200026FE9 /* SignupBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupBaseViewController.h; sourceTree = "<group>"; };
 		C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupBaseViewController.m; sourceTree = "<group>"; };
 		C908A3E91A9F211F00A07818 /* FLPopoverTutoTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPopoverTutoTheme.h; sourceTree = "<group>"; };
@@ -1533,6 +1538,8 @@
 				C9ED41281A9B7ABA000C4D7A /* NSArray+JSONHelper.m */,
 				C908A3E91A9F211F00A07818 /* FLPopoverTutoTheme.h */,
 				C908A3EA1A9F211F00A07818 /* FLPopoverTutoTheme.m */,
+				C907297C1B59569900BA691C /* NSString+custom.h */,
+				C907297D1B59569900BA691C /* NSString+custom.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -2685,6 +2692,7 @@
 				2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */,
 				C9CB22041A95E9D30064389A /* THContactViewStyle.m in Sources */,
 				2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
+				C907297E1B59569900BA691C /* NSString+custom.m in Sources */,
 				C9B1866D1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
 				C9B4AA6A1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
 				ABC1115B18ACE4C700C3C52D /* TransactionUsersView.m in Sources */,
@@ -2835,6 +2843,7 @@
 				C9EB88591B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				2FC8873819C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
 				2FE983EB19CB82E700E05501 /* NumPadAppleStyle.m in Sources */,
+				C907297F1B59569900BA691C /* NSString+custom.m in Sources */,
 				ABAA3F84197E96BF009F29EF /* FriendPickerContactCell.m in Sources */,
 				C9CB22051A95E9D30064389A /* THContactViewStyle.m in Sources */,
 				ABAA3F85197E96BF009F29EF /* FriendPickerSearchBar.m in Sources */,
@@ -2977,6 +2986,7 @@
 				C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				C98012861A76921000019682 /* FLTextFieldSignup.m in Sources */,
 				C98012871A76921000019682 /* NumPadAppleStyle.m in Sources */,
+				C90729801B59569900BA691C /* NSString+custom.m in Sources */,
 				C98012891A76921000019682 /* FriendPickerContactCell.m in Sources */,
 				C9CB22061A95E9D30064389A /* THContactViewStyle.m in Sources */,
 				C980128A1A76921000019682 /* FriendPickerSearchBar.m in Sources */,

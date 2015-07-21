@@ -61,6 +61,8 @@
 @end
 
 @implementation TimelineViewController {
+    UIBarButtonItem *amountItem;
+    
     TestScrollView *_scrollView;
     UILabel *_titleLabel;
     
@@ -97,11 +99,18 @@
     CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
     [self.view addSubview:shadow];
     
+    NSDictionary *attributes = @{
+                                 NSForegroundColorAttributeName: [UIColor customBlue],
+                                 NSFontAttributeName: [UIFont customContentLight:15]
+                                 };
+    
+    amountItem = [[UIBarButtonItem alloc] initWithTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:YES] style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
+    [amountItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
     posXPosition = 0.0f;
     posXBase = 0.0f;
     
-    CGFloat height = PPScreenHeight() - NAVBAR_HEIGHT - PPStatusBarHeight();
+    CGFloat height = PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight();
     
     _scrollView = [[TestScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), height)];
     [_scrollView setBackgroundColor:[UIColor customBackground]];
@@ -128,12 +137,20 @@
     CGSize scrollableSize = CGSizeMake(CGRectGetWidth(_scrollView.frame) * _viewControllers.count, 0.0);
     [_scrollView setContentSize:scrollableSize];
     
-//    [self prepareCrossButton];
     [self prepareTitleViews];
     [self preparePin];
-    [self addStackButton];
     
     [self registerNotification:@selector(reloadCurrentTimeline) name:kNotificationReloadTimeline object:nil];
+    [self registerNotification:@selector(reloadBalanceItem) name:kNotificationReloadCurrentUser object:nil];
+}
+
+- (void)amountInfos {
+    [appDelegate.tabBarController setSelectedIndex:4];
+}
+
+- (void)reloadBalanceItem {
+    
+    [amountItem setTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:YES]];
 }
 
 - (void)reloadCurrentTimeline {
@@ -167,53 +184,11 @@
     [self updateViewsPositions];
 }
 
-- (void)addStackButton {
-    UIButton *butLeft = [UIButton buttonWithBackgroundImageName:@"navbar-left"];
-    
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLeftView)];
-    singleTap.numberOfTapsRequired = 1;
-    [butLeft addGestureRecognizer:singleTap];
-    
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    doubleTap.numberOfTapsRequired = 2;
-    [butLeft addGestureRecognizer:doubleTap];
-    
-    [singleTap requireGestureRecognizerToFail:doubleTap];
-    
-    {
-        CGFloat sizeBadge = 20.0f;
-        CGRect frame = CGRectMake(CGRectGetWidth(butLeft.frame) - sizeBadge / 2.0f - 2.0f, -5.0f, sizeBadge, sizeBadge);
-        _badge = [[FLBadgeView alloc] initWithFrame:frame];
-        [self reloadBadge];
-        [butLeft addSubview: _badge];
-    }
-    
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:butLeft];
-    self.navigationItem.leftBarButtonItem = nil;
-    
-    UIButton *butRight = [UIButton buttonWithBackgroundImageName:@"navbar-right"];
-    [butRight addTarget:self action:@selector(showRightView) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:butRight];
-    self.navigationItem.rightBarButtonItem = nil;
-}
-
--(void)longPress:(UIGestureRecognizer *)longPress {
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
-    [self presentViewController:controller animated:YES completion:NULL];
-}
-
-- (void)showLeftView {
-    [[Flooz sharedInstance] updateCurrentUser];
-    [appDelegate.revealSideViewController popLeftController];
-}
-
-- (void)showRightView {
-    [[Flooz sharedInstance] updateCurrentUser];
-    [appDelegate.revealSideViewController popRightController];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [amountItem setTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO]];
+    self.navigationItem.rightBarButtonItem = amountItem;
     
     posXBase = 0.0f;
     [self cancelTimer];
@@ -317,17 +292,6 @@
         [popoverController setDelegate:self];
         
         [popoverController presentPopoverFromRect:_titlesView.bounds inView:_titlesView permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
-    }
-}
-
-- (void)reloadBadge {
-    NSNumber *numberNotif = [[Flooz sharedInstance] notificationsCount];
-    [_badge setNumber:numberNotif];
-    if ([numberNotif intValue] == 0) {
-        [_badge setHidden:YES];
-    }
-    else {
-        [_badge setHidden:NO];
     }
 }
 

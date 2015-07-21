@@ -17,6 +17,7 @@
 #import "SignupSMSViewController.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
+#import "FLTabBarController.h"
 
 #define REFRESH_INTERVAL 1
 
@@ -58,6 +59,7 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 @property (strong, nonatomic) NSString *currentDeviceToken;
 @property (strong, nonatomic) MZFormSheetController *formSheet;
 @property (strong, nonatomic) FLRevealContainerViewController *revealSideViewController;
+@property (strong, nonatomic) FLTabBarController *tabBarController;
 @property (nonatomic, retain) NSMutableDictionary *branchParam;
 
 - (void)initTestingWithIP:(NSString *)ip;

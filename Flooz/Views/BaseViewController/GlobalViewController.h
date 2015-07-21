@@ -11,5 +11,6 @@
 @interface GlobalViewController : UIViewController
 
 - (void)dismissViewController;
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view;
 
 @end

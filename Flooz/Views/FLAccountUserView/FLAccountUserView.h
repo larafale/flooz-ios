@@ -16,7 +16,7 @@
 	UILabel *fullname;
 }
 
-- (id)initWithWidth:(CGFloat)width;
+- (id)initWithShadow:(UIImage *)shadow;
 - (void)reloadData;
 - (void)addEditTarget:(id)target action:(SEL)action;
 - (void)reloadAvatarWithImageData:(NSData *)imageData;
