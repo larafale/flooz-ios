@@ -3747,7 +3747,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "1ba9a146-2c39-4411-8e6c-8897112ab862";
+				PROVISIONING_PROFILE = "b4ce1bea-6f68-4c17-ba69-f85ab2ff044c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3784,7 +3784,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "1ba9a146-2c39-4411-8e6c-8897112ab862";
+				PROVISIONING_PROFILE = "b4ce1bea-6f68-4c17-ba69-f85ab2ff044c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3820,7 +3820,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "1ba9a146-2c39-4411-8e6c-8897112ab862";
+				PROVISIONING_PROFILE = "b4ce1bea-6f68-4c17-ba69-f85ab2ff044c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3856,7 +3856,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "1ba9a146-2c39-4411-8e6c-8897112ab862";
+				PROVISIONING_PROFILE = "b4ce1bea-6f68-4c17-ba69-f85ab2ff044c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;

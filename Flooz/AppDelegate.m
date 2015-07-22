@@ -26,6 +26,7 @@
 #import "AccountProfilViewController.h"
 #import "NewTransactionViewController.h"
 #import "UICKeyChainStore.h"
+#import "SignupNavigationController.h"
 
 #ifdef TARGET_IPHONE_SIMULATOR
 #import <PonyDebugger/PonyDebugger.h>
@@ -71,16 +72,14 @@
                 NSDictionary *dataParam = [NSDictionary newWithJSONString:branchParam[@"data"]];
                 
                 if (dataParam) {
-                    if ([Flooz sharedInstance].currentUser) {
-                        [self handlePushMessage:dataParam withApplication:nil];
-                    } else {
-                        NSMutableDictionary *tmp = [pendingData mutableCopy];
-                        [tmp addEntriesFromDictionary:dataParam];
-                        pendingData = tmp;
-                    }
+                    NSMutableDictionary *tmp = [pendingData mutableCopy];
+                    if (tmp == nil)
+                        tmp = [NSMutableDictionary new];
+                    [tmp addEntriesFromDictionary:dataParam];
+                    pendingData = tmp;
+                    [self handlePendingData];
                 }
             }
-            
             [self saveBranchParams];
         }
     }];
@@ -133,7 +132,7 @@
 
 - (void)clearBranchParams {
     [UICKeyChainStore removeItemForKey:kBranchData];
-    branchParam = [NSMutableDictionary new];
+    [branchParam removeAllObjects];
 }
 
 - (void)clearPendingData {
@@ -141,7 +140,7 @@
 }
 
 - (void)launchRootController {
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[SplashViewController new]];
+    self.window.rootViewController = [SplashViewController new];
     
     if (![[Flooz sharedInstance] autologin]) {
         HomeViewController *home = [HomeViewController new];
@@ -150,7 +149,7 @@
 }
 
 - (void)initLocalTesting {
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[SplashViewController new]];
+    self.window.rootViewController = [SplashViewController new];
 }
 
 - (void)initTestingWithIP:(NSString *)ip {
@@ -175,8 +174,6 @@
     [[Mixpanel sharedInstance] identify:currentUser.userId];
     
     [[Flooz sharedInstance] startSocket];
-    
-    [self clearBranchParams];
 }
 
 - (UIViewController *)prepareMainViewController {
@@ -415,6 +412,14 @@
         [[Flooz sharedInstance] startSocket];
         [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{}];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
+        if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+                [self handlePendingData];
+            });
+        }
+        [self clearBranchParams];
     }
 #endif
 }
@@ -479,13 +484,19 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBAppCall handleDidBecomeActive];
 
-    if (pendingData && [Flooz sharedInstance].currentUser) {
+    if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
         double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
             [self handlePendingData];
         });
     }
+}
+
+- (BOOL)isViewAfterAuthentication {
+    if (![[self myTopViewController] isKindOfClass:[SplashViewController class]] && ![[self myTopViewController] isKindOfClass:[SplashViewController class]] && ![[self myTopViewController] isKindOfClass:[SignupNavigationController class]])
+        return YES;
+    return NO;
 }
 
 #pragma mark - Notifications Push
@@ -512,7 +523,7 @@
 }
 
 - (void)handlePendingData {
-    if (pendingData) {
+    if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
         [self handlePushMessage:pendingData withApplication:nil];
         pendingData = nil;
     }
@@ -523,7 +534,7 @@
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        if ([[Flooz sharedInstance] currentUser] && tmp) {
+        if ([[Flooz sharedInstance] currentUser] && tmp && [self isViewAfterAuthentication]) {
             [[Flooz sharedInstance] handleRequestTriggers:tmp];
             [[Flooz sharedInstance] displayPopupMessage:tmp];
         }

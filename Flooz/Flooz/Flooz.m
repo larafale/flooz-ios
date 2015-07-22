@@ -1030,7 +1030,7 @@
 - (void)getInfoFromFacebook {
     [[FBSession activeSession] closeAndClearTokenInformation];
     
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_birthday", @"user_friends", @"publish_actions"]
+    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_birthday", @"user_friends"]
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
@@ -1084,7 +1084,7 @@
 - (void)connectFacebook {
     [[FBSession activeSession] closeAndClearTokenInformation];
     
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile,email,user_friends,publish_actions"]
+    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile,email,user_friends"]
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
