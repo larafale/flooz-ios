@@ -104,7 +104,7 @@
                                  NSFontAttributeName: [UIFont customContentLight:15]
                                  };
     
-    amountItem = [[UIBarButtonItem alloc] initWithTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:YES] style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
+    amountItem = [[UIBarButtonItem alloc] initWithTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO] style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
     [amountItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
     posXPosition = 0.0f;
@@ -149,8 +149,7 @@
 }
 
 - (void)reloadBalanceItem {
-    
-    [amountItem setTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:YES]];
+    [amountItem setTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO]];
 }
 
 - (void)reloadCurrentTimeline {

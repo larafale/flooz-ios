@@ -15,6 +15,15 @@
 #import "CashOutViewController.h"
 #import "SettingsViewController.h"
 #import "ScannerViewController.h"
+#import "CreditCardViewController.h"
+#import "SettingsBankViewController.h"
+#import "SettingsCoordsViewController.h"
+#import "SettingsIdentityViewController.h"
+#import "SettingsPreferencesViewController.h"
+#import "SettingsSecurityViewController.h"
+#import "WebViewController.h"
+
+#import "AccountCell.h"
 
 #import "AppDelegate.h"
 #import "FLBadgeView.h"
@@ -50,35 +59,40 @@
     }
     
     {
-       
+        
         _menuDic = @[
                      @{@"title":@"Compte",
                        @"items":@[
-                             @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil)},
-                             @{@"title":NSLocalizedString(@"SETTINGS_CARD", @"")},
-                             @{@"title":NSLocalizedString(@"SETTINGS_BANK", @"")},
-                             @{@"title":NSLocalizedString(@"SETTINGS_IDENTITY", @"")},
-                             @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @"")}
-                             ]
+                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_IDENTITY", @""), @"action":@"identity"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords"}
+                               ]
                        },
                      @{@"title":@"Reglages",
                        @"items":@[
-                             @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @"")},
-                             @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @"")}
-                             ]
+                               @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
+                               ]
                        },
                      @{@"title":@"Divers",
                        @"items":@[
-                             @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @"")},
-                             @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @"")},
-                             @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @"")},
-                             @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @"")},
-                             @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @"")},
-                             ]
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @""), @"action":@"terms", @"page":@"cgu"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @""), @"action":@"contact", @"page":@"contact"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @""), @"action":@"critics"}
+                               ]
+                       },
+                     @{@"title":@"",
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"SETTINGS_LOGOUT", @""), @"action":@"logout"}
+                               ]
                        }
                      ];
         
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), PPScreenHeight() - PPTabBarHeight() * 2) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight()) style:UITableViewStyleGrouped];
         [_tableView setBackgroundColor:[UIColor clearColor]];
         [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
         [_tableView setSeparatorColor:[UIColor customBackground]];
@@ -104,7 +118,7 @@
     label.text = [Flooz sharedInstance].currentUser.fullname;
     
     [titleView addSubview:label];
-
+    
     UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(label.frame) , PPScreenWidth(), 20)];
     
     username.font = [UIFont customTitleExtraLight:15];
@@ -148,79 +162,174 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0)
         return 1;
+    else if (section == _menuDic.count + 1)
+        return 1;
     else
         return [[[_menuDic objectAtIndex:section - 1] objectForKey:@"items"] count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return _menuDic.count + 1;
+    return _menuDic.count + 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0)
         return CGRectGetHeight(userView.frame);
+    else if (section == _menuDic.count + 1)
+        return CGFLOAT_MIN;
     else
-        return 30;
+        return 40;
 }
 
 - (CGFloat)tableView:(nonnull UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0;
+    return CGFLOAT_MIN;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0)
         return userView;
-    else {
-        
+    else if (section == _menuDic.count + 1) {
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
+        return headerView;
+    } else {
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
         
-        UILabel *headerTitle = [[UILabel alloc] initWithText:[[[_menuDic objectAtIndex:section - 1] objectForKey:@"title"] uppercaseString] textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+        UILabel *headerTitle = [[UILabel alloc] initWithText:[[[_menuDic objectAtIndex:section - 1] objectForKey:@"title"] uppercaseString] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:15]];
         
         [headerView addSubview:headerTitle];
         
         CGRectSetX(headerTitle.frame, 14);
-        CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2);
+        CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2 + 5);
         
         return headerView;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"MenuCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    static NSString *cellIdentifier = @"AccountCell";
     
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    }
-    
-    if (indexPath.section > 0) {
-        NSDictionary *rowDic = [[[_menuDic objectAtIndex:indexPath.section - 1] objectForKey:@"items"] objectAtIndex:indexPath.row];
         
-        [cell setBackgroundColor:[UIColor customBackgroundHeader]];
-        [cell.textLabel setText:rowDic[@"title"]];
-        [cell.textLabel setTextColor:[UIColor customPlaceholder]];
-        [cell.textLabel setFont:[UIFont customContentLight:15]];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    } else {
-        [cell setAccessoryType:UITableViewCellAccessoryNone];
-        [cell.textLabel setText:@""];
-    }
+        return cell;
+    } else if (indexPath.section == _menuDic.count + 1) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LastCell"];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
+        [cell setBackgroundColor:[UIColor customBackground]];
+        
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        
+        UILabel *version = [[UILabel alloc] initWithText:[NSString stringWithFormat:@"Flooz %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        
+        [version widthToFit];
+        
+        CGRectSetPosition(version.frame, CGRectGetWidth(cell.contentView.frame) / 2 - CGRectGetWidth(version.frame) / 2, CGRectGetHeight(cell.contentView.frame) - 30);
 
-    //    [cell setMenu:menuDic];
+        [cell.contentView addSubview:version];
+        
+        return cell;
+    }
     
-    return cell;
+    AccountCell *accountCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (!accountCell) {
+        accountCell = [[AccountCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        [accountCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    }
+    
+    NSDictionary *rowDic = [[[_menuDic objectAtIndex:indexPath.section - 1] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    [accountCell setMenu:rowDic];
+    
+    return accountCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0)
         return 0;
+    else if (indexPath.section == _menuDic.count + 1)
+        return 45;
     else
-        return 40;
+        return [AccountCell getHeight];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *rowDic = [[[_menuDic objectAtIndex:indexPath.section - 1] objectForKey:@"items"] objectAtIndex:indexPath.row];
+    NSString *action = rowDic[@"action"];
+    
+    if ([action isEqualToString:@"cashout"]) {
+        [[self navigationController] pushViewController:[CashOutViewController new] animated:YES];
+    } else if ([action isEqualToString:@"card"]) {
+        [[self navigationController] pushViewController:[CreditCardViewController new] animated:YES];
+    } else if ([action isEqualToString:@"bank"]) {
+        [[self navigationController] pushViewController:[SettingsBankViewController new] animated:YES];
+    } else if ([action isEqualToString:@"identity"]) {
+        [[self navigationController] pushViewController:[SettingsIdentityViewController new] animated:YES];
+    } else if ([action isEqualToString:@"coords"]) {
+        [[self navigationController] pushViewController:[SettingsCoordsViewController new] animated:YES];
+    } else if ([action isEqualToString:@"security"]) {
+        [[self navigationController] pushViewController:[SettingsSecurityViewController new] animated:YES];
+    } else if ([action isEqualToString:@"rate"]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?pageNumber=0&sortOrdering=1&type=Purple+Software&mt=8&id=940393916"]];
+    } else if ([action isEqualToString:@"faq"]) {
+        [self goToWebView:rowDic];
+    } else if ([action isEqualToString:@"cgu"]) {
+        [self goToWebView:rowDic];
+    } else if ([action isEqualToString:@"contact"]) {
+        [self goToWebView:rowDic];
+    } else if ([action isEqualToString:@"critics"]) {
+        [self presentIdeaCritics];
+    } else if ([action isEqualToString:@"preferences"]) {
+        [[self navigationController] pushViewController:[SettingsPreferencesViewController new] animated:YES];
+    } else if ([action isEqualToString:@"logout"]) {
+        FLPopup *popup = [[FLPopup alloc] initWithMessage:NSLocalizedString(@"LOGOUT_INFO", nil) accept: ^{
+            [[Flooz sharedInstance] logout];
+        } refuse:NULL];
+        [popup show];
+    }
+}
 
+- (void) goToWebView:(NSDictionary *)dic {
+    NSString *url = [NSString stringWithFormat:@"%@?layout=webview", dic[@"page"]];
+    NSString *link = dic[@"action"];
+    NSString *title = NSLocalizedString([@"INFORMATIONS_" stringByAppendingString:[link uppercaseString]], nil);
+    
+    WebViewController *controller = [WebViewController new];
+    [controller setUrl:[@"https://www.flooz.me/" stringByAppendingString : url]];
+    controller.title = title;
+    [[self navigationController] pushViewController:controller animated:YES];
+}
+
+- (void)presentIdeaCritics {
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
+        [mailComposer setMailComposeDelegate:self];
+        [mailComposer.navigationBar setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor blackColor] }];
+        [mailComposer setNavigationBarHidden:NO animated:YES];
+        
+        [mailComposer setToRecipients:@[NSLocalizedString(@"IDEA_RECIPIENTS", nil)]];
+        [mailComposer setMessageBody:NSLocalizedString(@"IDEA_MESSAGE", nil) isHTML:NO];
+        [mailComposer setSubject:NSLocalizedString(@"IDEA_OBJECT", nil)];
+        
+        [self presentViewController:mailComposer animated:YES completion: ^{
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }];
+    }
+    else {
+        [appDelegate displayMessage:NSLocalizedString(@"ALERT_NO_MAIL_TITLE", nil) content:NSLocalizedString(@"ALERT_NO_MAIL_MESSAGE1", nil) style:FLAlertViewStyleInfo time:nil delay:nil];
+    }
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [self dismissViewControllerAnimated:YES completion: ^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        if (result == MFMailComposeResultSent) {
+            [appDelegate displayMessage:@"Merci" content:@"Merci pour vos idées et votre contribution afin d'améliorer Flooz." style:FLAlertViewStyleSuccess time:nil delay:nil];
+        }
+        else if (result == MFMailComposeResultFailed) {
+        }
+    }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -231,62 +340,6 @@
 }
 
 #pragma mark - SEGUE
-
-//- (void)profilSettings {
-//    [[Flooz sharedInstance] updateCurrentUser];
-//    //    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[AccountProfilViewController new]];
-//    //    [self presentViewController:controller animated:YES completion:NULL];
-//    
-//    [self.navigationController pushViewController:[AccountProfilViewController new] animated:YES];
-//}
-//
-//- (void)notifications {
-//    //    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
-//    //    [self presentViewController:controller animated:YES completion:NULL];
-//    
-//    [self.navigationController pushViewController:[NotificationsViewController new] animated:YES];
-//}
-//
-//- (void)inviteFriends {
-//    //    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
-//    //    [self presentViewController:controller animated:YES completion:NULL];
-//    
-//    [self.navigationController pushViewController:[ShareAppViewController new] animated:YES];
-//}
-//
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    if (alertView.tag == 125 && buttonIndex == 1)
-//    {
-//        [[UIApplication sharedApplication] openURL:[NSURL  URLWithString:UIApplicationOpenSettingsURLString]];
-//    }
-//}
-//
-//- (void)scanCode {
-//    //    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[ScannerViewController new]];
-//    //    [self presentViewController:controller animated:YES completion:NULL];
-//    
-//    [self.navigationController pushViewController:[ScannerViewController new] animated:YES];
-//}
-//
-//- (void)cashOut {
-//    [[Flooz sharedInstance] showLoadView];
-//    [[Flooz sharedInstance] cashoutValidate: ^(id result) {
-//        //        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[CashOutViewController new]];
-//        //        [self presentViewController:controller animated:YES completion:NULL];
-//        
-//        [self.navigationController pushViewController:[CashOutViewController new] animated:YES];
-//    } failure: ^(NSError *error) {
-//        //[self presentEditAccountController];
-//    }];
-//}
-//
-//- (void)settings {
-//    //    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[SettingsViewController new]];
-//    //    [self presentViewController:controller animated:YES completion:NULL];
-//    
-//    [self.navigationController pushViewController:[SettingsViewController new] animated:YES];
-//}
 
 - (void)reloadCurrentUser {
     [userView reloadData];

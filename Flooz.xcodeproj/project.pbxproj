@@ -315,6 +315,9 @@
 		C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
+		C95254D61B5E7BC300D88096 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95254D51B5E7BC300D88096 /* AccountCell.m */; };
+		C95254D71B5E7BC300D88096 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95254D51B5E7BC300D88096 /* AccountCell.m */; };
+		C95254D81B5E7BC300D88096 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95254D51B5E7BC300D88096 /* AccountCell.m */; };
 		C95772711A9C7BB400CD6BC0 /* FLTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772701A9C7BB400CD6BC0 /* FLTexts.m */; };
 		C95772721A9C7BB400CD6BC0 /* FLTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772701A9C7BB400CD6BC0 /* FLTexts.m */; };
 		C95772731A9C7BB400CD6BC0 /* FLTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772701A9C7BB400CD6BC0 /* FLTexts.m */; };
@@ -889,6 +892,8 @@
 		C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
 		C950540C1B4E7E9A00B9FB2C /* FLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTabBarController.h; sourceTree = "<group>"; };
 		C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTabBarController.m; sourceTree = "<group>"; };
+		C95254D41B5E7BC300D88096 /* AccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountCell.h; sourceTree = "<group>"; };
+		C95254D51B5E7BC300D88096 /* AccountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountCell.m; sourceTree = "<group>"; };
 		C957726F1A9C7BB400CD6BC0 /* FLTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTexts.h; sourceTree = "<group>"; };
 		C95772701A9C7BB400CD6BC0 /* FLTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTexts.m; sourceTree = "<group>"; };
 		C95772751A9CBDB400CD6BC0 /* FriendPickerEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendPickerEmptyCell.h; sourceTree = "<group>"; };
@@ -1625,6 +1630,7 @@
 		AB5EB6F91882157300D81AF6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C95254D31B5E7B9200D88096 /* AccountCell */,
 				2FDD682C19D09CDA00719E89 /* MenuCell */,
 				2FD2460019A24DC4008DCFB5 /* ContactCell */,
 				AB2FB54918B2319E0079AA1D /* ActivityCell */,
@@ -2103,6 +2109,15 @@
 				C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */,
 			);
 			name = FLTabBarController;
+			sourceTree = "<group>";
+		};
+		C95254D31B5E7B9200D88096 /* AccountCell */ = {
+			isa = PBXGroup;
+			children = (
+				C95254D41B5E7BC300D88096 /* AccountCell.h */,
+				C95254D51B5E7BC300D88096 /* AccountCell.m */,
+			);
+			name = AccountCell;
 			sourceTree = "<group>";
 		};
 		C95772741A9CBD8C00CD6BC0 /* FriendPickerEmptyCell */ = {
@@ -2680,6 +2695,7 @@
 				ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */,
 				ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */,
 				ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */,
+				C95254D61B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C975BB051A92BB8E000E5AEA /* YLMoment.m in Sources */,
 				2F0F6B0319DF3EC5004CA223 /* SettingsIdentityViewController.m in Sources */,
 				C9CB22091A9615C10064389A /* FLPrivacySelectorViewController.m in Sources */,
@@ -2831,6 +2847,7 @@
 				C966474219FFEB80000851AF /* AnimatedTransitioning.m in Sources */,
 				C966473E19FFEA28000851AF /* TransitionDelegate.m in Sources */,
 				C9AF4BE719F7C340005C696B /* AvatarMenu.m in Sources */,
+				C95254D71B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C9C7EE9519F695E8009FE292 /* FLTrigger.m in Sources */,
 				C975BB061A92BB8E000E5AEA /* YLMoment.m in Sources */,
 				C9C7EE9619F695E8009FE292 /* FLAlert.m in Sources */,
@@ -2974,6 +2991,7 @@
 				C980127B1A76921000019682 /* AnimatedTransitioning.m in Sources */,
 				C980127C1A76921000019682 /* TransitionDelegate.m in Sources */,
 				C980127D1A76921000019682 /* AvatarMenu.m in Sources */,
+				C95254D81B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C980127E1A76921000019682 /* FLTrigger.m in Sources */,
 				C975BB071A92BB8E000E5AEA /* YLMoment.m in Sources */,
 				C980127F1A76921000019682 /* FLAlert.m in Sources */,
