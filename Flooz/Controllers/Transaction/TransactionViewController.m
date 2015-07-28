@@ -9,6 +9,7 @@
 #import "TransactionViewController.h"
 #import "SecureCodeViewController.h"
 
+#import "FLTransactionDescriptionView.h"
 #import "TransactionActionsView.h"
 #import "TransactionUsersView.h"
 #import "TransactionCommentsView.h"
@@ -179,14 +180,11 @@
     }
     
     {
-        JTImageLabel *view = [[JTImageLabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_headerView.frame), heightHeader)];
-        view.textAlignment = NSTextAlignmentCenter;
-        view.textColor = [UIColor whiteColor];
-        view.font = [UIFont customContentLight:11];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_headerView.frame), heightHeader)];
         
-        view.text = [FLHelper momentWithDate:[_transaction date]];
+        UIImageView *scopeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+        [scopeImage setTintColor:[UIColor whiteColor]];
         
-        float yOffset = -1;
         NSString *imageNamed = @"";
         if (_transaction.social.scope == SocialScopeFriend) {
             imageNamed = @"transaction-scope-friend";
@@ -198,12 +196,23 @@
             imageNamed = @"transaction-scope-public";
         }
         
-        UIImage *picto = [UIImage imageNamed:imageNamed];
-        [view setImage:picto];
-        [view setImageOffset:CGPointMake(-4, yOffset)];
+        [scopeImage setImage:[[UIImage imageNamed:imageNamed] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
         
-        [view setWidthToFit];
-        CGRectSetX(view.frame, (CGRectGetWidth(_headerView.frame) - CGRectGetWidth(view.frame) + picto.size.width) / 2.0f);
+        UILabel *headerMoment = [[UILabel alloc] initWithText:[FLHelper momentWithDate:[_transaction date]] textColor:[UIColor whiteColor] font:[UIFont customContentLight:12] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+        
+        CGFloat momentWidth = [headerMoment.text widthOfString:headerMoment.font];
+        
+        CGFloat headerWidth = momentWidth + CGRectGetWidth(scopeImage.frame) + 5;
+        
+        CGRectSetWidth(view.frame, headerWidth);
+        CGRectSetX(view.frame, CGRectGetWidth(_headerView.frame) / 2 - headerWidth / 2);
+        
+        [view addSubview:scopeImage];
+        [view addSubview:headerMoment];
+        
+        CGRectSetX(headerMoment.frame, CGRectGetWidth(scopeImage.frame) + 5);
+        CGRectSetHeight(headerMoment.frame, heightHeader);
+        CGRectSetY(scopeImage.frame, heightHeader / 2 - CGRectGetHeight(scopeImage.frame) / 2);
         
         [_headerView addSubview:view];
     }
@@ -333,7 +342,7 @@
             }
         }
     } noCreditCard: ^{
-//        [self presentCreditCardController];
+        //        [self presentCreditCardController];
     }];
 }
 
@@ -451,7 +460,6 @@
 
 - (void)presentCreditCardController {
     CreditCardViewController *controller = [CreditCardViewController new];
-    controller.showCross = YES;
     [self presentViewController:controller animated:YES completion:NULL];
 }
 

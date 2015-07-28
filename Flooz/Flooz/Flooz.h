@@ -39,6 +39,7 @@ static NSString *kPublicTimelineData = @"publicTimelineData";
 static NSString *kFriendTimelineData = @"friendTimelineData";
 static NSString *kPrivateTimelineData = @"privateTimelineData";
 static NSString *kTextData = @"textData";
+static NSString *kInvitationData = @"invitationData";
 static NSString *kNotificationsData = @"notifData";
 static NSString *kBranchData = @"branchData";
 
@@ -49,6 +50,7 @@ static NSString *kBranchData = @"branchData";
 	NSArray *_activitiesCached;
 }
 
+@property (strong, nonatomic) FLInvitationTexts *invitationTexts;
 @property (strong, nonatomic) FLTexts *currentTexts;
 @property (strong, readonly) FLUser *currentUser;
 @property (strong, nonatomic) NSString *facebook_token;
@@ -125,6 +127,7 @@ static NSString *kBranchData = @"branchData";
 - (void)createCreditCard:(NSDictionary *)creditCard atSignup:(BOOL)signup success:(void (^)(id result))success;
 - (void)abort3DSecure;
 
+- (void)invitationText:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)inviteWithPhone:(NSString *)phone;
 - (void)invitationStrings:(void (^)(id result))success failure:(void (^)(NSError *error))failure;

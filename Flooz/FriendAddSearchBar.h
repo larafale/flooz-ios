@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet id <FriendAddSearchBarDelegate> delegate;
 
 - (id)initWithStartX:(CGFloat)xStart;
+- (id)initWithFrame:(CGRect)frame;
 - (void)close;
 
 @end

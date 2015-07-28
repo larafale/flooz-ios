@@ -48,6 +48,7 @@
     self = [super init];
     if (self) {
         
+        NSLog(@"IP Adress : %@", [NSString stringWithFormat:@"http://%@", [appDelegate localIp]]);
 #ifdef FLOOZ_DEV_LOCAL
         manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", [appDelegate localIp]]]];
 #elif FLOOZ_DEV_API
@@ -100,6 +101,16 @@
     }
 }
 
+- (void) loadInvitationData {
+    NSString *invitationData = [UICKeyChainStore stringForKey:kInvitationData];
+    if (invitationData) {
+        NSDictionary *textJson = [NSDictionary newWithJSONString:invitationData];
+        if (textJson) {
+            _invitationTexts = [[FLInvitationTexts alloc] initWithJSON:textJson];
+        }
+    }
+}
+
 - (void) loadTextData {
     NSString *textData = [UICKeyChainStore stringForKey:kTextData];
     if (textData) {
@@ -148,6 +159,10 @@
 
 - (void) saveUserData {
     [UICKeyChainStore setString:[self.currentUser.json jsonStringWithPrettyPrint:NO] forKey:kUserData];
+}
+
+- (void) saveInvitationData {
+    [UICKeyChainStore setString:[self.invitationTexts.json jsonStringWithPrettyPrint:NO] forKey:kInvitationData];
 }
 
 - (void) saveTextData {
@@ -438,6 +453,32 @@
     }];
 }
 
+- (void)invitationText:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        self.invitationTexts = [[FLInvitationTexts alloc] initWithJSON:result[@"item"]];
+        [self saveInvitationData];
+        
+        if (success) {
+            success(self.invitationTexts);
+        }
+    };
+    
+    id failureBlock = ^(NSError *error) {
+        if (![self connectionStatusFromError:error]) {
+            [self loadInvitationData];
+            if (self.invitationTexts && success)
+                success(self.invitationTexts);
+            else if (failure)
+                failure(error);
+        } else if (failure) {
+            failure(error);
+        }
+    };
+    
+    [self requestPath:@"/invitations/text" method:@"GET" params:nil success:successBlock failure:failureBlock];
+}
+
+
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         self.currentTexts = [[FLTexts alloc] initWithJSON:result[@"item"]];
@@ -599,10 +640,17 @@
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
 {
     NSMutableDictionary *tempTransaction = [transaction mutableCopy];
-    [tempTransaction removeObjectForKey:@"image"];
+
+    if (tempTransaction[@"image"]) {
+        [tempTransaction removeObjectForKey:@"image"];
+        [tempTransaction setObject:@YES forKey:@"hasImage"];
+    }
+
     [tempTransaction removeObjectForKey:@"toImage"];
     [tempTransaction removeObjectForKey:@"preset"];
+    
     tempTransaction[@"validate"] = @"true";
+    
     if ([SecureCodeViewController hasSecureCodeForCurrentUser])
         [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
     
@@ -624,8 +672,10 @@
     if (dic[@"toImage"])
         [dic removeObjectForKey:@"toImage"];
     
-    if (dic[@"image"])
+    if (dic[@"image"]) {
         [dic removeObjectForKey:@"image"];
+        [dic setObject:@YES forKey:@"hasImage"];
+    }
     
     successBlock1 = ^(id result) {
         if (success) {
@@ -1030,7 +1080,7 @@
 - (void)getInfoFromFacebook {
     [[FBSession activeSession] closeAndClearTokenInformation];
     
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_birthday", @"user_friends", @"publish_actions"]
+    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_birthday", @"user_friends"]
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
@@ -1187,12 +1237,11 @@
 
 - (void)handleTriggerCardShow:(NSDictionary *)data {
     CreditCardViewController *controller = [CreditCardViewController new];
-    controller.showCross = YES;
     
     if (data && data[@"label"] && ![data[@"label"] isBlank])
         controller.customLabel = data[@"label"];
     
-    [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
+    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)handleTriggerFriendReload:(NSDictionary *)data {
@@ -1243,18 +1292,18 @@
 
 - (void)handleTriggerContactInfoShow:(NSDictionary *)data {
     SettingsCoordsViewController *controller = [SettingsCoordsViewController new];
-    [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
+    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)handleTriggerUserIdentityShow:(NSDictionary *)data {
     SettingsIdentityViewController *controller = [SettingsIdentityViewController new];
-    [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
+    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)handleTrigger3DSecureShow:(NSDictionary *)data {
     Secure3DViewController *controller = [Secure3DViewController createInstance];
     [controller setHtmlContent:data[@"html"]];
-    [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
+    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)handleTrigger3DSecureComplete:(NSDictionary *)data {
@@ -1295,7 +1344,7 @@
 
 - (void)handleTriggerInvitationShow:(NSDictionary *)data {
     ShareAppViewController *controller = [ShareAppViewController new];
-    [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
+    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)handleTriggerHttpCall:(NSDictionary *)data {
@@ -1320,7 +1369,6 @@
 
 - (void)handleTriggerIbanShow:(NSDictionary *)data {
     SettingsBankViewController *controller = [SettingsBankViewController new];
-    controller.showCross = YES;
     [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
 }
 

@@ -32,7 +32,6 @@ static Secure3DViewController *instance = nil;
     self = [super init];
     if (self) {
         self.isAtSignup = NO;
-        self.showCross = YES;
         self.title = NSLocalizedString(@"NAV_3DSECURE", nil);
     }
     return self;

@@ -12,6 +12,7 @@
 #import "PasswordViewController.h"
 #import "SettingsSecretViewController.h"
 #import "MenuCell.h"
+#import "AccountCell.h"
 
 @interface SettingsSecurityViewController () {
     UITableView *_tableView;
@@ -43,18 +44,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //    NSArray *missingFields = [Flooz sharedInstance].currentUser.json[@"missingFields"];
-    
     _menuArray = [NSMutableArray new];
     
     [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_CODE", @"") }];
     
     [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_PASSWORD", @"") }];
-    
-    //    if ([missingFields containsObject:@"secret"])
-    //        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_SECRET", @""), @"incomplete": @YES}];
-    //    else
-    //        [_menuArray addObject:@{ @"title":NSLocalizedString(@"SETTINGS_SECRET", @"")}];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -65,13 +59,7 @@
 #pragma mark - TableView
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return (CGRectGetHeight(_tableView.frame) - [_menuArray count] * [MenuCell getHeight] ) / 3.0f;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *v = [UIView newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_tableView.frame), [self tableView:_tableView heightForHeaderInSection:section])];
-    [v setBackgroundColor:[UIColor customBackgroundHeader]];
-    return v;
+    return CGFLOAT_MIN;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -79,23 +67,22 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MenuCell getHeight];
+    return [AccountCell getHeight];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"MenuCell";
-    MenuCell *cell = (MenuCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    static NSString *cellIdentifier = @"AccountCell";
+    AccountCell *accountCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if (!cell) {
-        cell = [[MenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        [cell setAccessoryView:[UIImageView imageNamed:@"arrow-right-accessory"]];
+    if (!accountCell) {
+        accountCell = [[AccountCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        [accountCell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
-    NSDictionary *dic = _menuArray[indexPath.row];
-    [cell setMenu:dic];
+    NSDictionary *rowDic = _menuArray[indexPath.row];
+    [accountCell setMenu:rowDic];
     
-    return cell;
+    return accountCell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,9 +95,6 @@
     else if (indexPath.row == 1) {
         [[self navigationController] pushViewController:[PasswordViewController new] animated:YES];
     }
-    //    else if (indexPath.row == 2) {
-    //        [[self navigationController] pushViewController:[SettingsSecretViewController new] animated:YES];
-    //    }
 }
 
 @end

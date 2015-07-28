@@ -22,6 +22,7 @@
 #import "SettingsPreferencesViewController.h"
 #import "SettingsSecurityViewController.h"
 #import "WebViewController.h"
+#import "FriendsViewController.h"
 
 #import "AccountCell.h"
 
@@ -59,38 +60,7 @@
     }
     
     {
-        
-        _menuDic = @[
-                     @{@"title":@"Compte",
-                       @"items":@[
-                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
-                               @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card"},
-                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank"},
-                               @{@"title":NSLocalizedString(@"SETTINGS_IDENTITY", @""), @"action":@"identity"},
-                               @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords"}
-                               ]
-                       },
-                     @{@"title":@"Reglages",
-                       @"items":@[
-                               @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
-                               @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
-                               ]
-                       },
-                     @{@"title":@"Divers",
-                       @"items":@[
-                               @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
-                               @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
-                               @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @""), @"action":@"terms", @"page":@"cgu"},
-                               @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @""), @"action":@"contact", @"page":@"contact"},
-                               @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @""), @"action":@"critics"}
-                               ]
-                       },
-                     @{@"title":@"",
-                       @"items":@[
-                               @{@"title":NSLocalizedString(@"SETTINGS_LOGOUT", @""), @"action":@"logout"}
-                               ]
-                       }
-                     ];
+        [self reloadData];
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight()) style:UITableViewStyleGrouped];
         [_tableView setBackgroundColor:[UIColor clearColor]];
@@ -105,6 +75,9 @@
     [[Flooz sharedInstance] updateCurrentUserWithSuccess: ^{
         [self reloadCurrentUser];
     }];
+
+    [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
+    [self registerNotification:@selector(editAvatarWith:) name:@"editAvatar" object:nil];
 }
 
 - (void)prepareTitleViews {
@@ -151,10 +124,75 @@
         [(FLNavigationController*)self.navigationController hideShadow];
 }
 
+- (void)reloadData {
+    
+    int cardNotifs = 0;
+    int bankNotifs = 0;
+    int coordsNotifs = 0;
+    int friendsNotifs = 0;
+    int identityNotifs = 0;
+    
+    FLUser *currentUser = [Flooz sharedInstance].currentUser;
+    
+    NSArray *missingFields = currentUser.json[@"missingFields"];
+    
+    if (!currentUser.creditCard)
+        cardNotifs = 1;
+    
+    if ([missingFields containsObject:@"sepa"])
+        bankNotifs = 1;
+    
+    if ([missingFields containsObject:@"cniRecto"])
+        identityNotifs++;
+    
+    if ([missingFields containsObject:@"cniVerso"])
+        identityNotifs++;
+    
+    if ([missingFields containsObject:@"address"])
+        coordsNotifs++;
+    
+    if ([missingFields containsObject:@"justificatory"])
+        coordsNotifs++;
+    
+    friendsNotifs = [currentUser.metrics[@"pendingFriend"] intValue];
+    
+    _menuDic = @[
+                 @{@"title":@"Compte",
+                   @"items":@[
+                           @{@"title":NSLocalizedString(@"NAV_FRIENDS", @""), @"action":@"friends", @"notif":@(friendsNotifs)},
+                           @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                           @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
+                           @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
+                           @{@"title":NSLocalizedString(@"SETTINGS_IDENTITY", @""), @"action":@"identity", @"notif":@(identityNotifs)},
+                           @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)}
+                           ]
+                   },
+                 @{@"title":@"Reglages",
+                   @"items":@[
+                           @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
+                           @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
+                           ]
+                   },
+                 @{@"title":@"Divers",
+                   @"items":@[
+                           @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
+                           @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
+                           @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @""), @"action":@"terms", @"page":@"cgu"},
+                           @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @""), @"action":@"contact", @"page":@"contact"},
+                           @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @""), @"action":@"critics"},
+                           @{@"title":NSLocalizedString(@"SETTINGS_LOGOUT", @""), @"action":@"logout"}
+                           ]
+                   }
+                 ];
+    
+    
+    [_tableView reloadData];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
-    [self registerNotification:@selector(editAvatarWith:) name:@"editAvatar" object:nil];
+    
+    [self reloadData];
 }
 
 #pragma mark - tableView delegates
@@ -194,7 +232,7 @@
     } else {
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
         
-        UILabel *headerTitle = [[UILabel alloc] initWithText:[[[_menuDic objectAtIndex:section - 1] objectForKey:@"title"] uppercaseString] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:15]];
+        UILabel *headerTitle = [[UILabel alloc] initWithText:[[[_menuDic objectAtIndex:section - 1] objectForKey:@"title"] uppercaseString] textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
         
         [headerView addSubview:headerTitle];
         
@@ -226,7 +264,7 @@
         [version widthToFit];
         
         CGRectSetPosition(version.frame, CGRectGetWidth(cell.contentView.frame) / 2 - CGRectGetWidth(version.frame) / 2, CGRectGetHeight(cell.contentView.frame) - 30);
-
+        
         [cell.contentView addSubview:version];
         
         return cell;
@@ -262,6 +300,8 @@
         [[self navigationController] pushViewController:[CashOutViewController new] animated:YES];
     } else if ([action isEqualToString:@"card"]) {
         [[self navigationController] pushViewController:[CreditCardViewController new] animated:YES];
+    } else if ([action isEqualToString:@"friends"]) {
+        [[self navigationController] pushViewController:[FriendsViewController new] animated:YES];
     } else if ([action isEqualToString:@"bank"]) {
         [[self navigationController] pushViewController:[SettingsBankViewController new] animated:YES];
     } else if ([action isEqualToString:@"identity"]) {
@@ -274,7 +314,7 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?pageNumber=0&sortOrdering=1&type=Purple+Software&mt=8&id=940393916"]];
     } else if ([action isEqualToString:@"faq"]) {
         [self goToWebView:rowDic];
-    } else if ([action isEqualToString:@"cgu"]) {
+    } else if ([action isEqualToString:@"terms"]) {
         [self goToWebView:rowDic];
     } else if ([action isEqualToString:@"contact"]) {
         [self goToWebView:rowDic];
@@ -312,7 +352,9 @@
         [mailComposer setMessageBody:NSLocalizedString(@"IDEA_MESSAGE", nil) isHTML:NO];
         [mailComposer setSubject:NSLocalizedString(@"IDEA_OBJECT", nil)];
         
+        [[Flooz sharedInstance] showLoadView];
         [self presentViewController:mailComposer animated:YES completion: ^{
+            [[Flooz sharedInstance] hideLoadView];
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
         }];
     }
@@ -343,7 +385,7 @@
 
 - (void)reloadCurrentUser {
     [userView reloadData];
-    [_tableView reloadData];
+    [self reloadData];
 }
 
 #pragma mark - avatar

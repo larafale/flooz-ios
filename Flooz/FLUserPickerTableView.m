@@ -25,7 +25,7 @@
         
         self.delegate = self;
         self.dataSource = self;
-        self.backgroundColor = [UIColor customBackground];
+        self.backgroundColor = [UIColor customBackgroundHeader];
         self.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         self.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
         self.separatorColor = [UIColor customMiddleBlue];

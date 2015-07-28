@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "WYPopoverController.h"
+
 @interface FLPopoverTutoTheme : NSObject
 
 + (WYPopoverTheme *) theme;

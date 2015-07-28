@@ -76,7 +76,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "Mixpanel/Mixpanel/MPCloseBtn@2x.png"
   install_resource "Mixpanel/Mixpanel/MPNotification.storyboard"
   install_resource "Mixpanel/Mixpanel/MPSurvey.storyboard"
-  install_resource "XLForm/XLForm/XLForm.bundle"
 fi
 if [[ "$CONFIGURATION" == "Local" ]]; then
   install_resource "IDMPhotoBrowser/Classes/IDMPhotoBrowser.bundle"
@@ -97,7 +96,6 @@ if [[ "$CONFIGURATION" == "Local" ]]; then
   install_resource "Mixpanel/Mixpanel/MPCloseBtn@2x.png"
   install_resource "Mixpanel/Mixpanel/MPNotification.storyboard"
   install_resource "Mixpanel/Mixpanel/MPSurvey.storyboard"
-  install_resource "XLForm/XLForm/XLForm.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "IDMPhotoBrowser/Classes/IDMPhotoBrowser.bundle"
@@ -118,7 +116,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "Mixpanel/Mixpanel/MPCloseBtn@2x.png"
   install_resource "Mixpanel/Mixpanel/MPNotification.storyboard"
   install_resource "Mixpanel/Mixpanel/MPSurvey.storyboard"
-  install_resource "XLForm/XLForm/XLForm.bundle"
 fi
 if [[ "$CONFIGURATION" == "Recette" ]]; then
   install_resource "IDMPhotoBrowser/Classes/IDMPhotoBrowser.bundle"
@@ -139,7 +136,6 @@ if [[ "$CONFIGURATION" == "Recette" ]]; then
   install_resource "Mixpanel/Mixpanel/MPCloseBtn@2x.png"
   install_resource "Mixpanel/Mixpanel/MPNotification.storyboard"
   install_resource "Mixpanel/Mixpanel/MPSurvey.storyboard"
-  install_resource "XLForm/XLForm/XLForm.bundle"
 fi
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

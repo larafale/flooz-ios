@@ -29,8 +29,8 @@
     self = [super init];
     if (self) {
         
-        viewHeight = (LIKE_CELL_HEIGHT * 3) + 20;
-        viewWidth = 131;
+        viewHeight = ([self tableView:_tableView heightForRowAtIndexPath:[NSIndexPath new]] * 3) + 20 + [self tableView:_tableView heightForHeaderInSection:0];
+        viewWidth = 200;
         
         [self setPreferredContentSize:CGSizeMake(viewWidth, viewHeight)];
         self.modalInPopover = NO;
@@ -50,6 +50,23 @@
     
     [self.view addSubview:_tableView];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+}
+
+- (CGFloat)tableView:(nonnull UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 20;
+}
+
+- (UIView*)tableView:(nonnull UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_tableView.frame), [self tableView:tableView heightForHeaderInSection:section])];
+    
+    UILabel *headerTitle = [[UILabel alloc] initWithText:@"Qui peut le voir :" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+    
+    CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2);
+    CGRectSetX(headerTitle.frame, 10);
+    
+    [headerView addSubview:headerTitle];
+    
+    return headerView;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

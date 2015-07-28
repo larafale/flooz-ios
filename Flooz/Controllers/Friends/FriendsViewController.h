@@ -12,7 +12,7 @@
 
 #import "FriendCell.h"
 
-@interface FriendsViewController : GlobalViewController <UITableViewDataSource, UITableViewDelegate, FriendRequestCellDelegate, FriendAddSearchBarDelegate, UIActionSheetDelegate> {
+@interface FriendsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, FriendRequestCellDelegate, FriendAddSearchBarDelegate, UIActionSheetDelegate> {
 	UIRefreshControl *refreshControl;
 }
 

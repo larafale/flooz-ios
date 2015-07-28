@@ -53,7 +53,7 @@
 
 - (void)createViews {
 	self.selectionStyle = UITableViewCellSelectionStyleNone;
-	self.backgroundColor = [UIColor customBackground];
+	self.backgroundColor = [UIColor customBackgroundHeader];
 
 	[self createSeparatorView];
 	[self createReadView];

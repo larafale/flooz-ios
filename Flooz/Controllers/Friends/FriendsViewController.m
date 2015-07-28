@@ -51,17 +51,14 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-    
-    UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
-    [background setImage:[UIImage imageNamed:@"back-secure"]];
-    [background setContentMode:UIViewContentModeScaleAspectFill];
-    [self.view addSubview:background];
 
-	_searchBar = [[FriendAddSearchBar alloc] initWithStartX:0 + 10.0f];
+    _searchBar = [[FriendAddSearchBar alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth() - 100, 40)];
 	[_searchBar setDelegate:self];
-	[self.view addSubview:_searchBar];
+    [_searchBar sizeToFit];
+    
+    self.navigationItem.titleView = _searchBar;
 
-    _backgroundView = [UIView newWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBar.frame), PPScreenWidth(), PPScreenHeight() - CGRectGetMaxY(_searchBar.frame))];
+    _backgroundView = [UIView newWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     
     UIImageView *backgroudImage = [UIImageView newWithImage:[UIImage imageNamed:@"background-friends"]];
     backgroudImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -85,21 +82,22 @@
     [_backgroundView addSubview:backgroudImage];
     [_backgroundView addSubview:shareButton];
     
-	_tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBar.frame), PPScreenWidth(), PPScreenHeight() - CGRectGetMaxY(_searchBar.frame)) style:UITableViewStylePlain];
+	_tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame)) style:UITableViewStylePlain];
 	[_tableView setDelegate:self];
 	[_tableView setDataSource:self];
-	[self.view addSubview:_tableView];
-    [self.view addSubview:_backgroundView];
+    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    [_tableView setSeparatorColor:[UIColor customBackground]];
+
+    [_mainBody addSubview:_tableView];
+    [_mainBody addSubview:_backgroundView];
 
 	refreshControl = [UIRefreshControl new];
     [refreshControl setTintColor:[UIColor customBlueLight]];
 	[refreshControl addTarget:self action:@selector(didReloadData) forControlEvents:UIControlEventValueChanged];
 	[_tableView addSubview:refreshControl];
 
-	_tableView.backgroundColor = [UIColor clearColor];
+	_tableView.backgroundColor = [UIColor customBackgroundHeader];
 	_backgroundView.hidden = YES;
-
-	_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
 	[self didReloadData];
     [self reloadFriendsList];
@@ -112,8 +110,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	[self.navigationController setNavigationBarHidden:NO animated:YES];
-    
+
 	[self registerForKeyboardNotifications];
 	[self registerNotification:@selector(scrollViewDidScroll:) name:kNotificationCloseKeyboard object:nil];
 	[self registerNotification:@selector(didReloadData) name:kNotificationRemoveFriend object:nil];
@@ -123,6 +120,10 @@
 - (void)showShareView {
     ShareAppViewController *controller = [ShareAppViewController new];
     [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 #pragma mark - TableView
@@ -181,7 +182,7 @@
 		return 0;
 	}
 
-	return 26;
+	return 35;
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -193,20 +194,17 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	CGFloat heigth = [self tableView:tableView heightForHeaderInSection:section];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
+    headerView.backgroundColor = [UIColor customBackground];
 
-	UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), heigth)];
-	view.backgroundColor = [UIColor customBackground];
-
-	{
-		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 0, CGRectGetWidth(view.frame) - 10.0f, CGRectGetHeight(view.frame))]; // x = 24
-		label.textColor = [UIColor customBlue];
-		label.font = [UIFont customContentRegular:14];
-		label.text = [self tableView:tableView titleForHeaderInSection:section];
-		[view addSubview:label];
-	}
-
-	return view;
+    UILabel *headerTitle = [[UILabel alloc] initWithText:[self tableView:tableView titleForHeaderInSection:section] textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+    
+    [headerView addSubview:headerTitle];
+    
+    CGRectSetX(headerTitle.frame, 14);
+    CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2 + 5);
+    
+    return headerView;
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

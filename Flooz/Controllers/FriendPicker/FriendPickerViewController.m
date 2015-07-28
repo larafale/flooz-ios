@@ -37,7 +37,6 @@
 		_selectedIndexPath = [NSMutableArray new];
         
         self.title = NSLocalizedString(@"NAV_NEW_FLOOZ_FRIENDS", nil);
-        self.showCross = YES;
         
         self.isFirstView = NO;
         

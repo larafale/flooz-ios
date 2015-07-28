@@ -13,14 +13,12 @@
 #import "FLTimelineTableViewController.h"
 #import "TimelineDelegate.h"
 #import "WYPopoverController.h"
+#import "FLFilterPopoverViewController.h"
 
-@interface TestScrollView : UIScrollView <UIGestureRecognizerDelegate>
-@end
+@interface TimelineViewController : GlobalViewController <UIScrollViewDelegate, TimelineDelegate, WYPopoverControllerDelegate, FLFilterPopoverDelegate, UITableViewDelegate, UITableViewDataSource, TransactionCellDelegate> {
 
-@interface TimelineViewController : GlobalViewController <UIScrollViewDelegate, TimelineDelegate, WYPopoverControllerDelegate> {
-	FLTimelineTableViewController *timelineFriend;
-	FLTimelineTableViewController *timelinePublic;
-	FLTimelineTableViewController *timelinePrivate;
 }
+
+@property (nonatomic) FLTableView *tableView;
 
 @end

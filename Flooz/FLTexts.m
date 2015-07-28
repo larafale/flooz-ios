@@ -21,14 +21,6 @@
 - (void)setJSON:(NSDictionary *)json {
     self.json = json;
     
-    self.shareCode = json[@"code"];
-    self.shareText = json[@"text"];
-    self.shareFb = json[@"facebook"];
-    self.shareMail = json[@"mail"];
-    self.shareTwitter = json[@"twitter"];
-    self.shareSms = json[@"sms"];
-    self.shareTitle = json[@"title"];
-    self.shareHeader = json[@"h1"];
     self.notificationsText = json[@"notificationsText"];
     self.slider = [[FLSlider alloc] initWithJson:json[@"slider"]];
     self.couponButton = json[@"couponButton"];

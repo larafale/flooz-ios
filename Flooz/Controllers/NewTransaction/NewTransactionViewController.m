@@ -266,7 +266,7 @@
         
         CGRectSetHeight(_contentView.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
         
-        pickerTableView = [[FLUserPickerTableView alloc] initWithFrame:CGRectMake(0, _offset, SCREEN_WIDTH, CGRectGetHeight(_contentView.frame) - _offset + CGRectGetHeight(transactionBar.frame))];
+        pickerTableView = [[FLUserPickerTableView alloc] initWithFrame:CGRectMake(0, _offset, PPScreenWidth(), CGRectGetHeight(_contentView.frame) - _offset + CGRectGetHeight(transactionBar.frame))];
         [pickerTableView setPickerDelegate:self];
         
         [self.view addSubview:transactionBar];
@@ -890,8 +890,6 @@
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
     [content setHeight:CGRectGetHeight(_contentView.frame) - keyboardHeight - CGRectGetHeight(amountInput.frame) - 1];
-
-//    [content setMaxHeight:CGRectGetHeight(_contentView.frame) - keyboardHeight - CGRectGetMinY(content.frame)];
     
     [self dismissCamera];
 }
@@ -901,8 +899,6 @@
     transactionBar.hidden = NO;
     
     [content setHeight:CGRectGetHeight(_contentView.frame) - CGRectGetMinY(content.frame)];
-
-//    [content setMaxHeight:CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - CGRectGetMinY(content.frame)];
     
     if (contactPickerVisible) {
         NSDictionary *info = [notification userInfo];
@@ -993,7 +989,6 @@
         if (currentPreset && currentPreset.isDemo) {
             [appDelegate askNotification];
         }
-        [appDelegate.revealSideViewController.timelineController reloadTable:TimelineFilterFriend andFocus:YES];
     }];
 }
 

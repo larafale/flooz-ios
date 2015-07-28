@@ -63,8 +63,6 @@ PODS:
     - SocketRocket
   - pop (1.0.7)
   - PPHelpMe (1.0.2)
-  - PPRevealSideViewController (1.2.0):
-    - PPHelpMe
   - RDVTabBarController (1.1.9)
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
@@ -73,7 +71,6 @@ PODS:
   - SocketRocket (0.4)
   - TTTAttributedLabel (1.13.4)
   - UICKeyChainStore (2.0.6)
-  - XLForm (3.0.0)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
@@ -94,13 +91,11 @@ DEPENDENCIES:
   - NSDate+Calendar
   - PonyDebugger
   - PPHelpMe
-  - PPRevealSideViewController (~> 1.2.0)
   - RDVTabBarController
   - SDWebImage (~> 3.7)
   - SMPageControl
   - TTTAttributedLabel
   - UICKeyChainStore
-  - XLForm
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: cc9f90ae785070623e9b972270013c3242190fb0
@@ -127,13 +122,11 @@ SPEC CHECKSUMS:
   PonyDebugger: 52f96f501df018dc2b7153fa18464b82553e700c
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
   PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
-  PPRevealSideViewController: 2eefff99d726e145da229ae66a19247dbaeddad3
   RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
   SocketRocket: 01443933b7bc362621325f4607b80b4286a99707
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   UICKeyChainStore: c5719c814e8bd69e74e4a0fc09daf8f4d6257a59
-  XLForm: 10fc7eb9e2d5df21a515fa3a794f4e26319abd0e
 
-COCOAPODS: 0.37.1
+COCOAPODS: 0.38.0.beta.2

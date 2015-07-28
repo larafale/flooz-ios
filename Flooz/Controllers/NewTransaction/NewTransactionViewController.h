@@ -22,6 +22,7 @@
 #import "FLNewTransactionBar.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
+#import "FLTransactionDescriptionView.h"
 
 #define kImageCapturedSuccessfully @"imageCapturedSuccessfully"
 #define degreesToRadians(degrees) ((degrees) / 180.0 * M_PI)

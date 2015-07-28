@@ -32,7 +32,8 @@ typedef NS_ENUM (NSInteger, TransactionStatus) {
 typedef NS_ENUM (NSInteger, TransactionScope) {
 	TransactionScopePublic,
 	TransactionScopeFriend,
-	TransactionScopePrivate
+	TransactionScopePrivate,
+    TransactionScopeAll
 };
 
 typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {

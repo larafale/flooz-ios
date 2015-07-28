@@ -52,6 +52,8 @@
     _hasSecureCode = [json objectForKey:@"secureCode"];
     _blockObject = [json objectForKey:@"block"];
     
+    _metrics = [json objectForKey:@"metrics"];
+    
     if ([json objectForKey:@"birthdate"]) {
         NSArray *arrayB = [[json objectForKey:@"birthdate"] componentsSeparatedByString:@"-"];
         if (arrayB.count == 3) {

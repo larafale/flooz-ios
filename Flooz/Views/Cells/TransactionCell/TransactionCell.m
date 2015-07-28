@@ -7,7 +7,6 @@
 //
 
 #import "TransactionCell.h"
-
 #import "CreditCardViewController.h"
 
 #define MARGE_TOP_BOTTOM 10.
@@ -20,7 +19,7 @@
 	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 	if (self) {
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
-		self.backgroundColor = [UIColor customBackground];
+		self.backgroundColor = [UIColor customBackgroundHeader];
 		_delegateController = delegate;
 		[self createViews];
 	}

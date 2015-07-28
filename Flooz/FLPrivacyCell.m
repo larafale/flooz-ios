@@ -15,10 +15,13 @@
 
     CGRect imgFrame = [[self imageView] frame];
     imgFrame.origin.x = 10;
+    imgFrame.size.height = 15;
+    imgFrame.size.width = 15;
+    imgFrame.origin.y = 5;
     [[self imageView] setFrame:imgFrame];
     
     CGRect textFrame = [[self textLabel] frame];
-    textFrame.origin.x = 40;
+    textFrame.origin.x = 35;
     [[self textLabel] setFrame:textFrame];
 }
 

@@ -17,7 +17,6 @@ typedef enum {
 
 @protocol TimelineDelegate <NSObject>
 
-- (void)reloadTable:(TimelineFilter)filter andFocus:(BOOL)focus;
-- (void)focusOnTimeline:(TimelineFilter)filter;
+- (void)reloadTableView;
 
 @end

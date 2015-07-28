@@ -12,12 +12,12 @@
 #import "FLAlert.h"
 #import "FLAlertView.h"
 #import "MZFormSheetController.h"
-#import "FLRevealContainerViewController.h"
 #import "SignupNavigationController.h"
 #import "SignupSMSViewController.h"
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "FLTabBarController.h"
+#import "FLPreset.h"
 
 #define REFRESH_INTERVAL 1
 
@@ -32,7 +32,7 @@ static NSString *kKeyAccessContacts = @"kKeyAccessContacts";
 static NSString *kNotificationCancelTimer = @"kNotificationCancelTimer";
 static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBarClick";
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, MFMailComposeViewControllerDelegate, PPRevealSideViewControllerDelegate, UIActionSheetDelegate, JTSImageViewControllerInteractionsDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, MFMailComposeViewControllerDelegate, UIActionSheetDelegate, JTSImageViewControllerInteractionsDelegate> {
 	NSDate *lastErrorDate;
 	NSInteger lastErrorCode;
 
@@ -58,7 +58,6 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NSString *currentDeviceToken;
 @property (strong, nonatomic) MZFormSheetController *formSheet;
-@property (strong, nonatomic) FLRevealContainerViewController *revealSideViewController;
 @property (strong, nonatomic) FLTabBarController *tabBarController;
 @property (nonatomic, retain) NSMutableDictionary *branchParam;
 

@@ -48,7 +48,7 @@
         self.backgroundColor = [UIColor customMiddleBlue];
         paymentButtonWidth = (widthBar / 4.0f) - marginH - (marginH / 2);
         actionButtonHeight = actionButtonWidth = paymentButtonHeight = heightBar - (marginV * 2.0f);
-        actionButtonMargin = ((widthBar / 2.0f) - (3.0f * actionButtonWidth)) / 4.0f;
+        actionButtonMargin = ((widthBar / 2.0f) - (2.0f * actionButtonWidth)) / 3.0f;
         
         
         _dictionary = dictionary;
@@ -60,7 +60,7 @@
         locationManager.delegate = self;
         
         [self createPrivacyButton];
-        [self createFacebookButton];
+//        [self createFacebookButton];
 //        [self createQRCodeButton];
         [self createImageButton];
         [self createButtonSend];
@@ -90,7 +90,8 @@
         
         privacyListController.currentScope = currentIndex;
         
-        [privacyButton setImage:[FLTransaction transactionScopeToImage:currentIndex] forState:UIControlStateNormal];
+        [privacyButton setImage:[[FLTransaction transactionScopeToImage:currentIndex] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [privacyButton setTintColor:[UIColor whiteColor]];
         
         [_dictionary setValue:[FLTransaction transactionScopeToParams:currentIndex] forKey:@"scope"];
     }
@@ -156,7 +157,8 @@
 
 - (void)createImageButton {
     imageButton = [[UIButton alloc] initWithFrame:CGRectMake((actionButtonMargin * 2) + actionButtonWidth, marginV, actionButtonWidth, actionButtonHeight)];
-    [imageButton setImage:[UIImage imageNamed:@"bar-camera"] forState:UIControlStateNormal];
+    [imageButton setImage:[[UIImage imageNamed:@"bar-camera"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [imageButton setTintColor:[UIColor whiteColor]];
     
     [imageButton addTarget:self action:@selector(didImageButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     
@@ -220,7 +222,7 @@
 
 - (void)scopeChange:(TransactionScope)scope {
     [_dictionary setValue:[FLTransaction transactionScopeToParams:scope] forKey:@"scope"];
-    [privacyButton setImage:[FLTransaction transactionScopeToImage:scope] forState:UIControlStateNormal];
+    [privacyButton setImage:[[FLTransaction transactionScopeToImage:scope] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     
     [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
         if (self.delegate)

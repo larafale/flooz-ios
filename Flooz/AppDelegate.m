@@ -26,6 +26,7 @@
 #import "AccountProfilViewController.h"
 #import "NewTransactionViewController.h"
 #import "UICKeyChainStore.h"
+#import "SignupNavigationController.h"
 
 #ifdef TARGET_IPHONE_SIMULATOR
 #import <PonyDebugger/PonyDebugger.h>
@@ -73,16 +74,14 @@
                 NSDictionary *dataParam = [NSDictionary newWithJSONString:branchParam[@"data"]];
                 
                 if (dataParam) {
-                    if ([Flooz sharedInstance].currentUser) {
-                        [self handlePushMessage:dataParam withApplication:nil];
-                    } else {
-                        NSMutableDictionary *tmp = [pendingData mutableCopy];
-                        [tmp addEntriesFromDictionary:dataParam];
-                        pendingData = tmp;
-                    }
+                    NSMutableDictionary *tmp = [pendingData mutableCopy];
+                    if (tmp == nil)
+                        tmp = [NSMutableDictionary new];
+                    [tmp addEntriesFromDictionary:dataParam];
+                    pendingData = tmp;
+                    [self handlePendingData];
                 }
             }
-            
             [self saveBranchParams];
         }
     }];
@@ -135,7 +134,7 @@
 
 - (void)clearBranchParams {
     [UICKeyChainStore removeItemForKey:kBranchData];
-    branchParam = [NSMutableDictionary new];
+    [branchParam removeAllObjects];
 }
 
 - (void)clearPendingData {
@@ -143,7 +142,7 @@
 }
 
 - (void)launchRootController {
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[SplashViewController new]];
+    self.window.rootViewController = [SplashViewController new];
     
     if (![[Flooz sharedInstance] autologin]) {
         HomeViewController *home = [HomeViewController new];
@@ -152,7 +151,7 @@
 }
 
 - (void)initLocalTesting {
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[SplashViewController new]];
+    self.window.rootViewController = [SplashViewController new];
 }
 
 - (void)initTestingWithIP:(NSString *)ip {
@@ -177,8 +176,6 @@
     [[Mixpanel sharedInstance] identify:currentUser.userId];
     
     [[Flooz sharedInstance] startSocket];
-    
-    [self clearBranchParams];
 }
 
 - (UIViewController *)prepareMainViewController {
@@ -408,6 +405,14 @@
         [[Flooz sharedInstance] startSocket];
         [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{}];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
+        if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+                [self handlePendingData];
+            });
+        }
+        [self clearBranchParams];
     }
 #endif
 }
@@ -472,13 +477,19 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBAppCall handleDidBecomeActive];
 
-    if (pendingData && [Flooz sharedInstance].currentUser) {
+    if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
         double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
             [self handlePendingData];
         });
     }
+}
+
+- (BOOL)isViewAfterAuthentication {
+    if (![[self myTopViewController] isKindOfClass:[SplashViewController class]] && ![[self myTopViewController] isKindOfClass:[SplashViewController class]] && ![[self myTopViewController] isKindOfClass:[SignupNavigationController class]])
+        return YES;
+    return NO;
 }
 
 #pragma mark - Notifications Push
@@ -505,7 +516,7 @@
 }
 
 - (void)handlePendingData {
-    if (pendingData) {
+    if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
         [self handlePushMessage:pendingData withApplication:nil];
         pendingData = nil;
     }
@@ -516,7 +527,7 @@
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        if ([[Flooz sharedInstance] currentUser] && tmp) {
+        if ([[Flooz sharedInstance] currentUser] && tmp && [self isViewAfterAuthentication]) {
             [[Flooz sharedInstance] handleRequestTriggers:tmp];
             [[Flooz sharedInstance] displayPopupMessage:tmp];
         }
@@ -946,7 +957,7 @@
     [self dismissControllersAnimated:YES completion: ^{
         [self popToMainView];
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
-        [self.revealSideViewController presentViewController:controller animated:YES completion:NULL];
+        [self.tabBarController presentViewController:controller animated:YES completion:NULL];
     }];
 }
 
@@ -955,28 +966,32 @@
         [self dismissControllersAnimated:YES completion: ^{
             [self popToMainView];
             FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithPreset:preset]];
-            [self.revealSideViewController presentViewController:controller animated:YES completion:NULL];
+            [self.tabBarController presentViewController:controller animated:YES completion:NULL];
         }];
     });
 }
 
 - (void)showFriendsController {
     [[Flooz sharedInstance] updateCurrentUser];
-    [self dismissControllersAnimated:YES completion: ^{
-        [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionRight withOffset:PADDING_NAV animated:YES];
-    }];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissControllersAnimated:YES completion: ^{
+            [self popToMainView];
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
+            [self.tabBarController presentViewController:controller animated:YES completion:NULL];
+        }];
+    });
 }
 
 - (void)showEditProfil {
     [[Flooz sharedInstance] updateCurrentUser];
     [self dismissControllersAnimated:YES completion: ^{
-        UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[AccountProfilViewController new]];
-        [self.revealSideViewController presentViewController:controller animated:YES completion:NULL];
+        [self.tabBarController setSelectedIndex:4];
     }];
 }
 
 - (void)popToMainView {
-    [self.revealSideViewController popViewControllerAnimated:YES];
+    [(UINavigationController*)self.tabBarController.selectedViewController popViewControllerAnimated:YES];
 }
 
 - (void)lockForUpdate:(NSString *)updateUrl {
@@ -1181,40 +1196,6 @@
         return self.window;
     else
         return [UIApplication sharedApplication].keyWindow;
-}
-
-#pragma mark - PPRevealSideViewControllerDelegate
-
-- (void)handleOpenClosedEventsAndEnableSubviews:(BOOL)enable {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCancelTimer object:nil];
-    UINavigationController *nav = (UINavigationController *)_revealSideViewController.rootViewController;
-    for (UIView *vi in[nav.visibleViewController.view subviews])  // this is the best way to keep functional the gestures
-        [vi setUserInteractionEnabled:enable];
-}
-
-- (void)pprevealSideViewController:(PPRevealSideViewController *)controller willPopToController:(UIViewController *)centerController {
-    [self.revealSideViewController.view endEditing:YES];
-    [self handleOpenClosedEventsAndEnableSubviews:YES]; // Just to be sure in case we reuse the view
-}
-
-- (void)pprevealSideViewController:(PPRevealSideViewController *)controller didPopToController:(UIViewController *)centerController {
-    [self handleOpenClosedEventsAndEnableSubviews:YES];
-}
-
-- (void)pprevealSideViewController:(PPRevealSideViewController *)controller didPushController:(UIViewController *)pushedController {
-    [self handleOpenClosedEventsAndEnableSubviews:NO];
-}
-
-- (void)pprevealSideViewController:(PPRevealSideViewController *)controller didManuallyMoveCenterControllerWithOffset:(CGFloat)offset {
-    CGFloat xRight = PADDING_NAV - (PPScreenWidth() / 2 - PADDING_NAV - 10.0f) + offset / 2;
-    xRight = MAX(0, MIN(xRight, PPScreenWidth()));
-    [self.revealSideViewController.rightViewController.view setXOrigin:xRight];
-    
-    CGFloat xLeft = - offset / 2 + 30.0f;
-    xLeft = MIN(0, xLeft);
-    [self.revealSideViewController.leftViewController.view setXOrigin:xLeft];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCancelTimer object:nil];
 }
 
 @end

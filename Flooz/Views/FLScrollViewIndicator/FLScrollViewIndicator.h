@@ -10,7 +10,8 @@
 
 @interface FLScrollViewIndicator : UIView {
 	UIView *containerView;
-	JTImageLabel *label;
+	UILabel *label;
+    UIImageView *scopeImage;
 	SocialScope currentScope;
 }
 

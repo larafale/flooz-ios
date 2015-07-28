@@ -11,6 +11,7 @@
 #import "NewTransactionViewController.h"
 #import "FriendsViewController.h"
 #import "AccountViewController.h"
+#import "ShareAppViewController.h"
 
 #import "FLTabBarController.h"
 
@@ -22,7 +23,7 @@
     UITabBarItem *homeItem;
     UITabBarItem *notifItem;
     UITabBarItem *floozItem;
-    UITabBarItem *friendsItem;
+    UITabBarItem *shareItem;
     UITabBarItem *profileItem;
 }
 
@@ -38,58 +39,107 @@
     [self.tabBar setBarStyle:UIBarStyleDefault];
     [self.tabBar setBarTintColor:[UIColor customBackgroundHeader]];
     [self.tabBar setTranslucent:NO];
+    [self.tabBar setBackgroundImage:[UIImage new]];
+    [self.tabBar setShadowImage:[UIImage new]];
     
     [[UITabBarItem appearance] setTitleTextAttributes: @{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customBlue]} forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customBlue]} forState:UIControlStateSelected];    
     
     NSMutableArray *tabBarItems = [NSMutableArray new];
     
-    homeItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-home"] tag:0];
-    notifItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-notifications"] tag:1];
+    homeItem = [[UITabBarItem alloc] initWithTitle:@"Accueil" image:[UIImage imageNamed:@"menu-home"] tag:0];
+    notifItem = [[UITabBarItem alloc] initWithTitle:@"Notifs" image:[UIImage imageNamed:@"menu-notifications"] tag:1];
     floozItem = [[UITabBarItem alloc] initWithTitle:nil image:[UIImage imageNamed:@"friends-field-add"] tag:2];
-    friendsItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-shop"] tag:3];
-    profileItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-account"] tag:4];
+    shareItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-share"] tag:3];
+    profileItem = [[UITabBarItem alloc] initWithTitle:@"Compte" image:[UIImage imageNamed:@"menu-account"] tag:4];
     
     FLNavigationController *homeNavigationController = [[FLNavigationController alloc] initWithRootViewController:[TimelineViewController new]];
     FLNavigationController *notifNavigationController = [[FLNavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
     FLNavigationController *floozNavigationController = [[FLNavigationController alloc] initWithRootViewController:[UIViewController new]];
-    FLNavigationController *friendsNavigationController = [[FLNavigationController alloc] initWithRootViewController:[FriendsViewController new]];
+    FLNavigationController *shareNavigationController = [[FLNavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
     FLNavigationController *profileNavigationController = [[FLNavigationController alloc] initWithRootViewController:[AccountViewController new]];
+    
+    if ([[Flooz sharedInstance] invitationTexts]) {
+        [shareItem setTitle:[[Flooz sharedInstance] invitationTexts].shareTitle];
+    }
+    
+    [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
+        [shareItem setTitle:result.shareTitle];
+    } failure:^(NSError *error) {
+        
+    }];
     
     int offset = 7;
     UIEdgeInsets imageInset = UIEdgeInsetsMake(offset, 0, -offset, 0);
     floozItem.imageInsets = imageInset;
-
-    homeItem.imageInsets = imageInset;
-    notifItem.imageInsets = imageInset;
-    friendsItem.imageInsets = imageInset;
-    profileItem.imageInsets = imageInset;
-
     
     [[homeNavigationController.viewControllers objectAtIndex:0] setTabBarItem:homeItem];
     [[notifNavigationController.viewControllers objectAtIndex:0] setTabBarItem:notifItem];
     [[floozNavigationController.viewControllers objectAtIndex:0] setTabBarItem:floozItem];
-    [[friendsNavigationController.viewControllers objectAtIndex:0] setTabBarItem:friendsItem];
+    [[shareNavigationController.viewControllers objectAtIndex:0] setTabBarItem:shareItem];
     [[profileNavigationController.viewControllers objectAtIndex:0] setTabBarItem:profileItem];
     
     [tabBarItems addObject:homeNavigationController];
     [tabBarItems addObject:notifNavigationController];
     [tabBarItems addObject:floozNavigationController];
-    [tabBarItems addObject:friendsNavigationController];
+    [tabBarItems addObject:shareNavigationController];
     [tabBarItems addObject:profileNavigationController];
     
     [self setViewControllers:tabBarItems];
     
     [self setSelectedIndex:0];
+    
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
 
-    [self registerNotification:@selector(reloadBadge) name:@"newNotifications" object:nil];
+    self.tabBar.layer.shadowOpacity = .3;
+    self.tabBar.layer.shadowOffset = CGSizeMake(0, -2);
+    self.tabBar.layer.shadowRadius = 1;
+    self.tabBar.clipsToBounds = NO;
+    self.tabBar.layer.shadowPath = shadowPath.CGPath;
     
     [self reloadBadge];
+    [self reloadCurrentUser];
+    
+    [self registerNotification:@selector(reloadBadge) name:@"newNotifications" object:nil];
+    [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
 }
 
 - (void)viewDidUnload {
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)reloadCurrentUser {
+    int accountNotifs = 0;
+    
+    FLUser *currentUser = [Flooz sharedInstance].currentUser;
+    
+    NSArray *missingFields = currentUser.json[@"missingFields"];
+    
+    if (!currentUser.creditCard)
+        accountNotifs++;
+    
+    if ([missingFields containsObject:@"sepa"])
+        accountNotifs++;
+    
+    if ([missingFields containsObject:@"cniRecto"])
+        accountNotifs++;
+    
+    if ([missingFields containsObject:@"cniVerso"])
+        accountNotifs++;
+    
+    if ([missingFields containsObject:@"address"])
+        accountNotifs++;
+    
+    if ([missingFields containsObject:@"justificatory"])
+        accountNotifs++;
+    
+    accountNotifs += [currentUser.metrics[@"pendingFriend"] intValue];
+    
+    if (accountNotifs > 0)
+        [profileItem setBadgeValue:[@(accountNotifs) stringValue]];
+    else
+        [profileItem setBadgeValue:nil];
 }
 
 -(void) addCenterButtonWithImage:(UIImage*)buttonImage highlightImage:(UIImage*)highlightImage

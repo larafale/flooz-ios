@@ -10,12 +10,7 @@
 #import "AppDelegate.h"
 
 @interface BaseViewController : GlobalViewController {
-    UILabel *_headTitle;
-    UIView *_headerView;
     UIView *_mainBody;
 }
-
-@property (nonatomic) BOOL showBack;
-@property (nonatomic) BOOL showCross;
 
 @end

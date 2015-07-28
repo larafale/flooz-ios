@@ -17,77 +17,48 @@
 #import "AppDelegate.h"
 #import "FLBadgeView.h"
 #import "TransitionDelegate.h"
-#import "FLTutoPopoverViewController.h"
-#import "FLPopoverTutoTheme.h"
-
-#define RATIO_TITLE_CONTENT 2.6
-#define FADE_EFFECT_RATIO 1.2
-#define OFFSET_BETWEEN_TITLES (CGRectGetWidth(self.navigationItem.titleView.frame) / RATIO_TITLE_CONTENT)
-#define WIDTH_TITLE_VIEW (PPScreenWidth() - 52.0f * 2.0f)
-
-@implementation TestScrollView
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if ([gestureRecognizer.view isKindOfClass:[TestScrollView class]]) {
-        TestScrollView *ts = (TestScrollView *)gestureRecognizer.view;
-        CGFloat xVelocity = fabs([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] ? [(UIPanGestureRecognizer*)gestureRecognizer velocityInView:gestureRecognizer.view].x : 0.0f);
-        
-        CGFloat yVelocity = fabs([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] ? [(UIPanGestureRecognizer*)gestureRecognizer velocityInView:gestureRecognizer.view].y : 0.0f);
-        
-        CGFloat xTranslation = fabs([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] ? [(UIPanGestureRecognizer*)gestureRecognizer translationInView:gestureRecognizer.view].x : 0.0f);
-        
-        CGFloat yTranslation = fabs([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] ? [(UIPanGestureRecognizer*)gestureRecognizer translationInView:gestureRecognizer.view].y : 0.0f);
-        
-        if ([otherGestureRecognizer.view isKindOfClass:[FLTableView class]]) {
-            FLTableView *v = (FLTableView *)otherGestureRecognizer.view;
-            
-            if (xTranslation > yTranslation && xVelocity > yVelocity && yTranslation == 0)
-            {
-                if (ts.contentOffset.x == 0 || ts.contentOffset.x == PPScreenWidth() || ts.contentOffset.x == PPScreenWidth() * 2)
-                    return YES;
-                else {
-                    v.scrollEnabled = NO;
-                    v.scrollEnabled = YES;
-                    return NO;
-                }
-            }
-            else if (yTranslation > 0)
-                return NO;
-        }
-    }
-    return YES;
-}
-
-@end
 
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
+    UIBarButtonItem *filterItem;
     
-    TestScrollView *_scrollView;
-    UILabel *_titleLabel;
-    
-    CGFloat posXBase;
-    CGFloat posXPosition;
-    
-    UIButton *_crossButton;
-    NSMutableArray *_viewControllers;
-    
-    UIView *_titlesView;
-    TimelineFilter selectedTitleIndex;
-    NSMutableArray *_digitArray;
-    
-    FLBadgeView *_badge;
     NSTimer *_timer;
-    
-    FLTutoPopoverViewController *tutoPopover;
+        
     WYPopoverController *popoverController;
+    FLFilterPopoverViewController *filterListController;
+    TransactionScope currentScope;
+    
+    NSMutableArray *transactions;
+    
+    NSMutableSet *rowsWithPaymentField;
+    
+    NSString *_nextPageUrl;
+    BOOL nextPageIsLoading;
+    
+    UIRefreshControl *refreshControl;
+    
+    FLScrollViewIndicator *scrollViewIndicator;
+    
+    NSMutableArray *transactionsLoaded;
+    
+    NSMutableArray *cells;
+    
+    BOOL isReloading;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"NAV_TIMELINE", nil);
-        _viewControllers = [NSMutableArray new];
+        self.title = @"Accueil";
+        
+        transactions = [NSMutableArray new];
+        rowsWithPaymentField = [NSMutableSet new];
+        nextPageIsLoading = NO;
+        
+        transactionsLoaded = [NSMutableArray new];
+        cells = [NSMutableArray new];
+        
+        currentScope = TransactionScopeAll;
     }
     return self;
 }
@@ -95,10 +66,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImageView *shadow = [UIImageView imageNamed:@"tableview-shadow"];
-    CGRectSetY(shadow.frame, self.view.frame.size.height - shadow.frame.size.height);
-    [self.view addSubview:shadow];
-    
+    [self.view setBackgroundColor:[UIColor customBackgroundHeader]];
+
     NSDictionary *attributes = @{
                                  NSForegroundColorAttributeName: [UIColor customBlue],
                                  NSFontAttributeName: [UIFont customContentLight:15]
@@ -107,45 +76,39 @@
     amountItem = [[UIBarButtonItem alloc] initWithTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO] style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
     [amountItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
-    posXPosition = 0.0f;
-    posXBase = 0.0f;
-    
+    filterItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"filter"] style:UIBarButtonItemStylePlain target:self action:@selector(changeFilter)];
+
     CGFloat height = PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight();
     
-    _scrollView = [[TestScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), height)];
-    [_scrollView setBackgroundColor:[UIColor customBackground]];
-    [_scrollView setScrollEnabled:YES];
-    [_scrollView setBounces:YES];
-    [_scrollView setPagingEnabled:YES];
-    [_scrollView setDelegate:self];
-    [self.view addSubview:_scrollView];
+    filterListController = [FLFilterPopoverViewController new];
+    filterListController.delegate = self;
+    filterListController.currentScope = currentScope;
+    
+    _tableView = [FLTableView newWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), height)];
+    [_tableView setDelegate:self];
+    [_tableView setDataSource:self];
+    [_tableView setScrollsToTop:YES];
+    [_tableView setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:_tableView];
+    
+    // Padding pour que le dernier element au dessus du +
+    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMakeSize(PPScreenWidth(), 70)];
+    
+    refreshControl = [UIRefreshControl new];
+    [refreshControl setTintColor:[UIColor customBlueLight]];
+    [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
+    [_tableView addSubview:refreshControl];
     
     {
-        timelineFriend = [[FLTimelineTableViewController alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_scrollView.frame)) andFilter:@"friend"];
-        [_viewControllers addObject:timelineFriend];
-        [self displayContentController:timelineFriend];
-        
-        timelinePublic = [[FLTimelineTableViewController alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_scrollView.frame)) andFilter:@"public"];
-        [_viewControllers addObject:timelinePublic];
-        [self displayContentController:timelinePublic];
-        
-        timelinePrivate = [[FLTimelineTableViewController alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_scrollView.frame)) andFilter:@"private"];
-        [_viewControllers addObject:timelinePrivate];
-        [self displayContentController:timelinePrivate];
+        scrollViewIndicator = [FLScrollViewIndicator new];
+        scrollViewIndicator.hidden = YES;
+        [self.view addSubview:scrollViewIndicator];
     }
-    
-    CGSize scrollableSize = CGSizeMake(CGRectGetWidth(_scrollView.frame) * _viewControllers.count, 0.0);
-    [_scrollView setContentSize:scrollableSize];
-    
-    [self prepareTitleViews];
-    [self preparePin];
     
     [self registerNotification:@selector(reloadCurrentTimeline) name:kNotificationReloadTimeline object:nil];
     [self registerNotification:@selector(reloadBalanceItem) name:kNotificationReloadCurrentUser object:nil];
-}
-
-- (void)amountInfos {
-    [appDelegate.tabBarController setSelectedIndex:4];
+    [self registerNotification:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
+    [self registerNotification:@selector(statusBarHit) name:kNotificationTouchStatusBarClick object:nil];
 }
 
 - (void)reloadBalanceItem {
@@ -154,15 +117,10 @@
 
 - (void)reloadCurrentTimeline {
     [self cancelTimer];
-    [self reloadTable:selectedTitleIndex andFocus:NO];
+    [self reloadTableView];
 }
 
 - (void)displayContentController:(UIViewController *)content {
-    [self addChildViewController:content];                 // 1
-    CGRect frame = CGRectMake([_scrollView.subviews count] * PPScreenWidth(), 0.0f, CGRectGetWidth(_scrollView.frame), CGRectGetHeight(_scrollView.frame));
-    content.view.frame = frame; // 2
-    [_scrollView addSubview:content.view];
-    [content didMoveToParentViewController:self];          // 3
 }
 
 - (void)hideContentController:(UIViewController *)content {
@@ -171,25 +129,12 @@
     [content removeFromParentViewController];      // 3
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat pageWidth = scrollView.frame.size.width;
-    float fractionalPage = scrollView.contentOffset.x / pageWidth;
-    NSInteger page = lround(fractionalPage);
-    if (selectedTitleIndex != page) {
-        selectedTitleIndex = (TimelineFilter)page;
-        [self updatePin];
-        [self reloadTable:selectedTitleIndex andFocus:NO];
-    }
-    [self updateViewsPositions];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [amountItem setTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO]];
     self.navigationItem.rightBarButtonItem = amountItem;
     
-    posXBase = 0.0f;
     [self cancelTimer];
 }
 
@@ -198,7 +143,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self cancelTimer];
     popoverController = nil;
-    tutoPopover = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -210,18 +154,14 @@
     
     NSArray *visibleIndexes;
     
-    if (selectedTitleIndex == TimelineFilterFriend)
-        visibleIndexes = [timelineFriend.tableView indexPathsForVisibleRows];
-    else if (selectedTitleIndex == TimelineFilterPublic)
-        visibleIndexes = [timelinePublic.tableView indexPathsForVisibleRows];
-    else if (selectedTitleIndex == TimelineFilterPrivate)
-        visibleIndexes = [timelinePrivate.tableView indexPathsForVisibleRows];
-    
+    visibleIndexes = [_tableView indexPathsForVisibleRows];
     if ([[visibleIndexes lastObject] row] <= [[Flooz sharedInstance] timelinePageSize])
         reloadTimeline = YES;
     
     if (reloadTimeline)
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(reloadCurrentTimeline) userInfo:nil repeats:NO];
+
+    self.navigationItem.leftBarButtonItem = filterItem;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -234,268 +174,262 @@
     _timer = nil;
 }
 
--(void)showTuto {
-    [self cancelTimer];
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoWelcome]) {
-        [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoWelcome];
-        tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:NSLocalizedString(@"TUTO_WELCOME_TITLE", nil) message:NSLocalizedString(@"TUTO_WELCOME_MSG", nil) button:NSLocalizedString(@"GLOBAL_GOTIT", nil) action:^(FLTutoPopoverViewController *viewController) {
-            [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-                [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoTimelineFriends];
-                tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:NSLocalizedString(@"TUTO_FRIENDS_TITLE", nil) message:NSLocalizedString(@"TUTO_FRIENDS_MSG", nil) button:NSLocalizedString(@"GLOBAL_GOTIT", nil) action:^(FLTutoPopoverViewController *viewController) {
-                    [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-                    }];
-                }];
-                popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
-                [popoverController setTheme:[FLPopoverTutoTheme theme]];
-                [popoverController setDelegate:self];
-                
-                [popoverController presentPopoverFromRect:_titlesView.bounds inView:_titlesView permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
-            }];
-        }];
-        popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
-        [popoverController setTheme:[FLPopoverTutoTheme theme]];
-        [popoverController setDelegate:self];
-        
-        [popoverController presentPopoverFromRect:_crossButton.bounds inView:_crossButton permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
-    }
-}
+#pragma mark - Table view data source
+#pragma mark - TableView
 
-- (void)showTutoPublic {
-    [self cancelTimer];
+- (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (_nextPageUrl && ![_nextPageUrl isBlank]) {
+        return [transactions count] + 1;
+    }
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePublic]) {
-        [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoTimelinePublic];
-        tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:NSLocalizedString(@"TUTO_PUBLIC_TITLE", nil) message:NSLocalizedString(@"TUTO_PUBLIC_MSG", nil) button:NSLocalizedString(@"GLOBAL_GOTIT", nil) action:^(FLTutoPopoverViewController *viewController) {
-            [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-            }];
-        }];
-        popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
-        [popoverController setTheme:[FLPopoverTutoTheme theme]];
-        [popoverController setDelegate:self];
-        
-        [popoverController presentPopoverFromRect:_titlesView.bounds inView:_titlesView permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
-    }
+    return [transactions count];
 }
 
-- (void)showTutoPrivate {
-    [self cancelTimer];
+- (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row >= [transactions count]) {
+        return [LoadingCell getHeight];
+    }
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePrivate]) {
-        [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoTimelinePrivate];
-        tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:NSLocalizedString(@"TUTO_PRIVATE_TITLE", nil) message:NSLocalizedString(@"TUTO_PRIVATE_MSG", nil) button:NSLocalizedString(@"GLOBAL_GOTIT", nil) action:^(FLTutoPopoverViewController *viewController) {
-            [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-            }];
-        }];
-        popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
-        [popoverController setTheme:[FLPopoverTutoTheme theme]];
-        [popoverController setDelegate:self];
-        
-        [popoverController presentPopoverFromRect:_titlesView.bounds inView:_titlesView permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
+    for (NSIndexPath *currentIndexPath in rowsWithPaymentField) {
+        if ([currentIndexPath isEqual:indexPath]) {
+            return 122;
+        }
+    }
+    
+    FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
+    return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
+}
+
+- (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == [transactions count]) {
+        static LoadingCell *footerView;
+        if (!footerView) {
+            footerView = [LoadingCell new];
+        }
+        footerView.hidden = refreshControl.isRefreshing;
+        return footerView;
+    }
+    
+    static NSString *cellIdentifier = @"TransactionCell";
+    TransactionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (!cell) {
+        cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier andDelegate:self];
+        [cells addObject:cell];
+    }
+    
+    FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
+    
+    [cell setTransaction:transaction];
+    [cell setIndexPath:indexPath];
+    
+    if (_nextPageUrl && ![_nextPageUrl isBlank] && !nextPageIsLoading && indexPath.row == [transactions count] - 1) {
+        [self loadNextPage];
+    }
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (transactions.count > indexPath.row) {
+        FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
+        [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
     }
 }
 
-#pragma mark - popover delegate
-
-- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
-{
-    return YES;
+- (void)handleRefresh {
+    [refreshControl beginRefreshing];
+    [self reloadTableView];
 }
 
-- (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller
-{
-    if ([((FLTutoPopoverViewController*)controller.contentViewController).titleString isEqualToString:NSLocalizedString(@"TUTO_WELCOME_TITLE", nil)]) {
-        [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kKeyTutoTimelineFriends];
-        tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:NSLocalizedString(@"TUTO_FRIENDS_TITLE", nil) message:NSLocalizedString(@"TUTO_FRIENDS_MSG", nil) button:NSLocalizedString(@"GLOBAL_GOTIT", nil) action:^(FLTutoPopoverViewController *viewController) {
-            [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-            }];
-        }];
-        popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
-        [popoverController setTheme:[FLPopoverTutoTheme theme]];
-        [popoverController setDelegate:self];
-        
-        [popoverController presentPopoverFromRect:_titlesView.bounds inView:_titlesView permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
+- (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+}
+
+- (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+    [rowsWithPaymentField removeObject:indexPath];
+    [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
+    
+    [_tableView beginUpdates];
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [_tableView endUpdates];
+}
+
+- (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+    [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:YES];
+}
+
+- (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath {
+    NSMutableSet *rowsToReload = [rowsWithPaymentField mutableCopy];
+    
+    [rowsWithPaymentField removeAllObjects];
+    [rowsWithPaymentField addObject:indexPath];
+    [rowsToReload addObject:indexPath];
+    
+    [_tableView beginUpdates];
+    [_tableView reloadRowsAtIndexPaths:[rowsToReload allObjects] withRowAnimation:UITableViewRowAnimationNone];
+    [_tableView endUpdates];
+}
+
+- (BOOL)transactionAlreadyLoaded:(FLTransaction *)transaction {
+    if ([transactionsLoaded containsObject:[transaction transactionId]]) {
+        return YES;
     }
-    [self cancelTimer];
+    
+    [transactionsLoaded addObject:[transaction transactionId]];
+    
+    return NO;
 }
 
+- (void)resetTransactionsLoaded {
+    [transactionsLoaded removeAllObjects];
+}
+
+- (void)loadNextPage {
+    if (!_nextPageUrl || [_nextPageUrl isBlank]) {
+        return;
+    }
+    
+    nextPageIsLoading = YES;
+    
+    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl) {
+        [transactions addObjectsFromArray:result];
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
+        [_tableView reloadData];
+    }];
+}
+
+#pragma mark - ScrollViewIndicator
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    // Fin du scroll
+    [self hideScrollViewIndicator];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    // Lache d un coup
+    [self hideScrollViewIndicator];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (_tableView.contentOffset.y > 0) {
+        [self refreshScrollViewIndicator];
+    }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self hideScrollViewIndicator];
+}
+
+- (void)refreshScrollViewIndicator {
+    if ([transactions count] == 0) {
+        scrollViewIndicator.hidden = YES;
+        return;
+    }
+    
+    [scrollViewIndicator.layer removeAllAnimations];
+    scrollViewIndicator.hidden = NO;
+    scrollViewIndicator.layer.opacity = 1;
+    
+    CGFloat y = _tableView.frame.origin.y + (_tableView.contentOffset.y / _tableView.contentSize.height) * CGRectGetHeight(_tableView.frame);
+    
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + y - _tableView.frame.origin.y + CGRectGetHeight(scrollViewIndicator.frame) / 2.)];
+    
+    // Loading view
+    if (indexPath.row >= [transactions count]) {
+        return;
+    }
+    
+    if (!indexPath) {
+        [self hideScrollViewIndicator];
+        return;
+    }
+    
+    FLTransaction *transaction = transactions[indexPath.row];
+    
+    [scrollViewIndicator setTransaction:transaction];
+    
+    CGRectSetY(scrollViewIndicator.frame, y);
+}
+
+- (void)hideScrollViewIndicator {
+    [UIView animateWithDuration:.3 animations: ^{
+        scrollViewIndicator.layer.opacity = 0;
+    } completion: ^(BOOL finished) {
+        if (finished) {
+            scrollViewIndicator.hidden = YES;
+        }
+        scrollViewIndicator.layer.opacity = 1;
+    }];
+}
+
+- (void)reloadTableView {
+    
+    if (isReloading) {
+        return;
+    }
+    
+    if (![transactions count]) {
+        isReloading = YES;
+        self.tableView.contentOffset = CGPointMake(0, -refreshControl.frame.size.height);
+        [refreshControl beginRefreshing];
+    }
+    
+    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:currentScope] success: ^(id result, NSString *nextPageUrl) {
+        transactions = [result mutableCopy];
+        
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
+
+        [self didFilterChange];
+        isReloading = NO;
+    } failure:^(NSError *error) {
+        isReloading = NO;
+        [_tableView setContentOffset:CGPointZero animated:YES];
+        [refreshControl endRefreshing];
+    }];
+}
+
+- (void)didFilterChange {
+    if ([refreshControl isRefreshing] || isReloading) {
+        [_tableView setContentOffset:CGPointZero animated:YES];
+        [refreshControl endRefreshing];
+    }
+    rowsWithPaymentField = [NSMutableSet new];
+    [_tableView reloadData];
+}
 
 #pragma mark -
 
-- (void)updateViewsPositions {
-    posXPosition = posXBase - _scrollView.contentOffset.x / RATIO_TITLE_CONTENT;
-    NSInteger index = 0;
-    for (UILabel *view in[_titlesView subviews]) {
-        if ([view isKindOfClass:[UILabel class]]) {
-            CGRectSetX(view.frame, posXPosition + index * PPScreenWidth() / RATIO_TITLE_CONTENT);
-            
-            CGFloat progress = fabs(view.frame.origin.x / view.frame.size.width * 2.0f);
-            view.layer.opacity = 1. - (progress * FADE_EFFECT_RATIO);
-            index++;
-        }
-    }
+
+- (void)didReceiveNotificationConnectionError {
+    [refreshControl endRefreshing];
 }
 
-- (void)prepareTitleViews {
-    _titlesView = [[UIView alloc] initWithFrame:CGRectMake(52.0f, 0.0f, WIDTH_TITLE_VIEW, 40.0f)];
-    [_titlesView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextPage)]];
-    self.navigationItem.titleView = _titlesView;
-    
-    for (UIViewController *controller in _viewControllers) {
-        [self createLabelForController:controller];
-    }
-    
-    selectedTitleIndex = TimelineFilterFriend;
-    [self reloadTable:selectedTitleIndex andFocus:NO];
-    [self updateViewsPositions];
-    
-    {
-        UIImage *shad = [UIImage imageNamed:@"navbar-shadow-complete"];
-        UIImageView *shadow = [UIImageView newWithImage:shad];
-        CGRectSetWidth(shadow.frame, PPScreenWidth());
-        CGRectSetHeight(shadow.frame, NAVBAR_HEIGHT - 4.0f);
-        [self.navigationController.navigationBar addSubview:shadow];
-    }
+- (void)statusBarHit {
+    [_tableView setContentOffset:CGPointZero animated:YES];
 }
 
-- (void)createLabelForController:(UIViewController *)controller {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f - 10.0f, WIDTH_TITLE_VIEW, NAVBAR_HEIGHT)];
-    
-    label.font = [UIFont customTitleNav];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor customBlue];
-    label.text = controller.title;
-    
-    [_titlesView addSubview:label];
+- (void)amountInfos {
+    [appDelegate.tabBarController setSelectedIndex:4];
 }
 
-- (void)preparePin {
-    _digitArray = [NSMutableArray new];
+- (void)changeFilter {
+    popoverController = [[WYPopoverController alloc] initWithContentViewController:filterListController];
+    popoverController.delegate = self;
     
-    UIView *pinView = [UIView newWithFrame:CGRectMake((CGRectGetWidth(_titlesView.frame) - 30.0f) / 2.0f, NAVBAR_HEIGHT - 20.0f, 30.0f, 10.0f)];
-    [_titlesView addSubview:pinView];
-    
-    CGFloat x = 0.0f;
-    CGFloat width = CGRectGetWidth(pinView.frame) / _viewControllers.count;
-    CGFloat height = CGRectGetHeight(pinView.frame);
-    
-    for (int i = 0; i < _viewControllers.count; i++) {
-        UILabel *l = [UILabel newWithFrame:CGRectMake(x, 0.0f, width, height)];
-        [l setTextAlignment:NSTextAlignmentCenter];
-        [l setFont:[UIFont customTitleBook:12]];
-        [l setText:@"●"];
-        
-        [pinView addSubview:l];
-        [_digitArray addObject:l];
-        
-        x += CGRectGetWidth(pinView.frame) / _viewControllers.count;
-    }
-    [self updatePin];
+    [popoverController presentPopoverFromBarButtonItem:filterItem permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];    
 }
 
-- (void)updatePin {
-    NSInteger index = 0;
-    for (UILabel *l in _digitArray) {
-        if (index == selectedTitleIndex) {
-            [l setTextColor:[UIColor customBlue]];
-        }
-        else {
-            [l setTextColor:[UIColor colorWithIntegerRed:49 green:63 blue:78 alpha:1.0f]];
-        }
-        index++;
-    }
-}
-
-#pragma mark - Cross button
-
-- (void)prepareCrossButton {
-    UIImage *buttonImage = [UIImage imageNamed:@"menu-new-transaction"];
-    _crossButton = [[UIButton alloc] initWithFrame:CGRectMakeSize(buttonImage.size.width, buttonImage.size.height)];
-    [_crossButton setImage:buttonImage forState:UIControlStateNormal];
-    [self.view addSubview:_crossButton];
-    
-    CGFloat y = PPScreenHeight() - NAVBAR_HEIGHT - PPStatusBarHeight() - buttonImage.size.height - 20;
-    CGRectSetY(_crossButton.frame, y);
-    _crossButton.center = CGPointMake(PPScreenWidth() / 2.0f, _crossButton.center.y);
-    
-    [_crossButton addTarget:self action:@selector(didCrossButtonTouch) forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)didCrossButtonTouch {
-    [self presentMenuTransactionController];
-}
-
-- (void)presentMenuTransactionController {
-    [[appDelegate myTopViewController] mz_dismissFormSheetControllerAnimated:NO completionHandler:nil];
-    
-    NSDictionary *ux = [[[Flooz sharedInstance] currentUser] ux];
-    if (ux && ux[@"homeButton"] && [ux[@"homeButton"] count] > 0) {
-        NSArray *triggers = ux[@"homeButton"];
-        for (NSDictionary *triggerData in triggers) {
-            FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-            [[Flooz sharedInstance] handleTrigger:trigger];
-        }
-    } else {
-        NewTransactionViewController *newTransac = [[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeBase];
-        
-        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:newTransac];
-        controller.modalPresentationStyle = UIModalPresentationCustom;
-        
-        [self presentViewController:controller animated:YES completion:NULL];
-    }
-}
-
-- (void)showNextPage {
-    if (selectedTitleIndex == TimelineFilterFriend)
-        [self smoothFocusOnTimeline:TimelineFilterPublic];
-    else if (selectedTitleIndex == TimelineFilterPublic)
-        [self smoothFocusOnTimeline:TimelineFilterPrivate];
-    else if (selectedTitleIndex == TimelineFilterPrivate)
-        [self smoothFocusOnTimeline:TimelineFilterFriend];
-}
-
-- (void)reloadTable:(TimelineFilter)filter andFocus:(BOOL)focus {
-    BOOL tutoAvalaible;
-    switch (filter) {
-        case TimelineFilterPublic:
-            if (!_timer && ![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePublic] && selectedTitleIndex == filter && [[appDelegate myTopViewController] isKindOfClass:[FLRevealContainerViewController class]]) {
-                _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTutoPublic) userInfo:nil repeats:NO];
-            }
-            [timelinePublic reloadTableView];
-            break;
-            
-        case TimelineFilterFriend:
-            tutoAvalaible = [[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoWelcome];
-            if (!_timer && !tutoAvalaible && selectedTitleIndex == filter && [[appDelegate myTopViewController] isKindOfClass:[FLRevealContainerViewController class]]) {
-                _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTuto) userInfo:nil repeats:NO];
-            }
-            [timelineFriend reloadTableView];
-            break;
-            
-        case TimelineFilterPrivate:
-            if (!_timer && ![[NSUserDefaults standardUserDefaults] boolForKey:kKeyTutoTimelinePrivate] && selectedTitleIndex == filter && [[appDelegate myTopViewController] isKindOfClass:[FLRevealContainerViewController class]]) {
-                _timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(showTutoPrivate) userInfo:nil repeats:NO];
-            }
-            [timelinePrivate reloadTableView];
-            break;
-            
-        default:
-            break;
-    }
-    if (filter) {
-        selectedTitleIndex = filter;
+- (void)scopeChange:(TransactionScope)scope {
+    if (scope != currentScope) {
+        currentScope = scope;
+        transactions = [NSMutableArray new];
+        [_tableView reloadData];
+        [self reloadTableView];
     }
     
-    if (focus) {
-        [self focusOnTimeline:filter];
-    }
-}
-
-- (void)focusOnTimeline:(TimelineFilter)filter {
-    [_scrollView setContentOffset:CGPointMake(PPScreenWidth() * filter, 0.0f)];
-}
-
-- (void)smoothFocusOnTimeline:(TimelineFilter)filter {
-    [_scrollView setContentOffset:CGPointMake(PPScreenWidth() * filter, 0.0f) animated:YES];
+    [popoverController dismissPopoverAnimated:YES];
 }
 
 @end

@@ -17,7 +17,6 @@
 
 @interface ShareAppViewController () {
     UIView *_footerView;
-    UIView *_mainBody;
     
     UIButton *_shareFB;
     UIButton *_shareTwitter;
@@ -27,6 +26,7 @@
     UIImageView *_backImage;
     
     UILabel *_titleLabel;
+    UILabel *_subtitleLabel;
     
     FLClearActionTextView *_text;
     
@@ -57,22 +57,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(_headerView.frame) + STATUSBAR_HEIGHT, PPScreenWidth(), PPScreenHeight() - CGRectGetHeight(_headerView.frame) - STATUSBAR_HEIGHT)];
-    _mainBody.backgroundColor = [UIColor customBackgroundHeader];
-    [self.view addSubview:_mainBody];
-    
-    _backImage = [[UIImageView alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(_mainBody.frame) - 40, 200)];
-    [_backImage setImage:[[UIImage imageNamed:@"people"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-    [_backImage setTintColor:[UIColor customBlue]];
+    _backImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
+    [_backImage setImage:[UIImage imageNamed:@"back-secure"]];
     [_backImage setContentMode:UIViewContentModeScaleAspectFit];
     
     [_mainBody addSubview:_backImage];
     
     _titleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentBold:27] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    [_titleLabel setUserInteractionEnabled:YES];
+    [_titleLabel setUserInteractionEnabled:NO];
     
     [_mainBody addSubview:_titleLabel];
+ 
+    _subtitleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentBold:27] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    [_subtitleLabel setUserInteractionEnabled:YES];
     
+    [_mainBody addSubview:_subtitleLabel];
+
     _text = [[FLClearActionTextView alloc] initWithFrame:CGRectMake(20, 220, CGRectGetWidth(_mainBody.frame) - 40, 100)];
     [_text addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
     
@@ -91,27 +91,31 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([[Flooz sharedInstance] currentTexts]) {
-        _code = [[Flooz sharedInstance] currentTexts].shareCode;
-        _appText = [[Flooz sharedInstance] currentTexts].shareText;
-        _fbData = [[Flooz sharedInstance] currentTexts].shareFb;
-        _mailData = [[Flooz sharedInstance] currentTexts].shareMail;
-        _twitterText = [[Flooz sharedInstance] currentTexts].shareTwitter;
-        _smsText = [[Flooz sharedInstance] currentTexts].shareSms;
-        _viewTitle = [[Flooz sharedInstance] currentTexts].shareTitle;
-        _h1 = [[Flooz sharedInstance] currentTexts].shareHeader;
+    if ([[Flooz sharedInstance] invitationTexts]) {
+        _code = [[Flooz sharedInstance] invitationTexts].shareCode;
+        _appText = [[Flooz sharedInstance] invitationTexts].shareText;
+        _fbData = [[Flooz sharedInstance] invitationTexts].shareFb;
+        _mailData = [[Flooz sharedInstance] invitationTexts].shareMail;
+        _twitterText = [[Flooz sharedInstance] invitationTexts].shareTwitter;
+        _smsText = [[Flooz sharedInstance] invitationTexts].shareSms;
+        _viewTitle = [[Flooz sharedInstance] invitationTexts].shareTitle;
+        _h1 = [[Flooz sharedInstance] invitationTexts].shareHeader;
         
         if (!_code)
             _code = @"";
         
-        [self setTitle:_viewTitle];
+        [self.navigationItem setTitle:_viewTitle];
         
         [_titleLabel setText:_h1];
         [_titleLabel sizeToFit];
-        CGRectSetWidth(_titleLabel.frame, CGRectGetWidth(_titleLabel.frame));
-        CGRectSetHeight(_titleLabel.frame, CGRectGetHeight(_titleLabel.frame));
         [_titleLabel setCenter:_backImage.center];
-        
+        CGRectSetY(_titleLabel.frame, 40);
+ 
+        [_subtitleLabel setText:_h1];
+        [_subtitleLabel sizeToFit];
+        [_subtitleLabel setCenter:_backImage.center];
+        CGRectSetY(_subtitleLabel.frame, CGRectGetMaxY(_titleLabel.frame) + 10);
+
         NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_appText[0]];
         [text addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text.length)];
         [text addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text.length)];
@@ -136,56 +140,56 @@
             [_footerView removeFromSuperview];
         
         [self createFooterView];
+    } else {
+        [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
+            _code = result.shareCode;
+            _appText = result.shareText;
+            _fbData = result.shareFb;
+            _mailData = result.shareMail;
+            _twitterText = result.shareTwitter;
+            _smsText = result.shareSms;
+            _viewTitle = result.shareTitle;
+            _h1 = result.shareHeader;
+            
+            if (!_code)
+                _code = @"";
+            
+            [self setTitle:_viewTitle];
+            
+            [_titleLabel setText:_h1];
+            [_titleLabel sizeToFit];
+            CGRectSetWidth(_titleLabel.frame, CGRectGetWidth(_titleLabel.frame));
+            CGRectSetHeight(_titleLabel.frame, CGRectGetHeight(_titleLabel.frame));
+            [_titleLabel setCenter:_backImage.center];
+            
+            NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_appText[0]];
+            [text addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text.length)];
+            [text addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text.length)];
+            
+            NSMutableAttributedString *code = [[NSMutableAttributedString alloc] initWithString:_code];
+            [code addAttribute:NSForegroundColorAttributeName value:[UIColor customBlue] range:NSMakeRange(0, code.length)];
+            [code addAttribute:NSFontAttributeName value:[UIFont customContentBold:19] range:NSMakeRange(0, code.length)];
+            
+            NSMutableAttributedString *text2 = [[NSMutableAttributedString alloc] initWithString:_appText[1]];
+            [text2 addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text2.length)];
+            [text2 addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text2.length)];
+            
+            [text appendAttributedString:code];
+            [text appendAttributedString:text2];
+            
+            [_text setAttributedText:text];
+            [_text setTextAlignment:NSTextAlignmentCenter];
+            [_text sizeToFit];
+            CGRectSetX(_text.frame, (CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(_text.frame)) / 2);
+            
+            if (_footerView)
+                [_footerView removeFromSuperview];
+            
+            [self createFooterView];
+        } failure:^(NSError *error) {
+            
+        }];
     }
-    
-    [[Flooz sharedInstance] textObjectFromApi:^(FLTexts *result) {
-        _code = result.shareCode;
-        _appText = result.shareText;
-        _fbData = result.shareFb;
-        _mailData = result.shareMail;
-        _twitterText = result.shareTwitter;
-        _smsText = result.shareSms;
-        _viewTitle = result.shareTitle;
-        _h1 = result.shareHeader;
-        
-        if (!_code)
-            _code = @"";
-        
-        [self setTitle:_viewTitle];
-        
-        [_titleLabel setText:_h1];
-        [_titleLabel sizeToFit];
-        CGRectSetWidth(_titleLabel.frame, CGRectGetWidth(_titleLabel.frame));
-        CGRectSetHeight(_titleLabel.frame, CGRectGetHeight(_titleLabel.frame));
-        [_titleLabel setCenter:_backImage.center];
-        
-        NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_appText[0]];
-        [text addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text.length)];
-        [text addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text.length)];
-        
-        NSMutableAttributedString *code = [[NSMutableAttributedString alloc] initWithString:_code];
-        [code addAttribute:NSForegroundColorAttributeName value:[UIColor customBlue] range:NSMakeRange(0, code.length)];
-        [code addAttribute:NSFontAttributeName value:[UIFont customContentBold:19] range:NSMakeRange(0, code.length)];
-        
-        NSMutableAttributedString *text2 = [[NSMutableAttributedString alloc] initWithString:_appText[1]];
-        [text2 addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text2.length)];
-        [text2 addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text2.length)];
-        
-        [text appendAttributedString:code];
-        [text appendAttributedString:text2];
-        
-        [_text setAttributedText:text];
-        [_text setTextAlignment:NSTextAlignmentCenter];
-        [_text sizeToFit];
-        CGRectSetX(_text.frame, (CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(_text.frame)) / 2);
-        
-        if (_footerView)
-            [_footerView removeFromSuperview];
-        
-        [self createFooterView];
-    } failure:^(NSError *error) {
-        
-    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

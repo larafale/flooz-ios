@@ -103,7 +103,6 @@
 	tapGesture.cancelsTouchesInView = NO;
 	[_mainBody addGestureRecognizer:tapGesture];
 	[_contentView addGestureRecognizer:tapGesture];
-	[_headerView addGestureRecognizer:tapGesture];
 	[self registerForKeyboardNotifications];
 }
 

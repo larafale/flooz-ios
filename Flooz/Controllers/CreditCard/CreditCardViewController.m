@@ -89,7 +89,6 @@
 	tapGesture.cancelsTouchesInView = NO;
 	[_mainBody addGestureRecognizer:tapGesture];
 	[_contentView addGestureRecognizer:tapGesture];
-	[_headerView addGestureRecognizer:tapGesture];
 	[self registerForKeyboardNotifications];
 }
 
@@ -136,9 +135,10 @@
 		cardNumberField.textfield.inputView = inputViewField;
 	}
 	{
-        UIImage *photo = [UIImage imageNamed:@"bar-camera"];
+        UIImage *photo = [[UIImage imageNamed:@"bar-camera"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 		UIButton *scanCardButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(cardNumberField.frame) - 50.0f, 0.0f, 50.0f, CGRectGetHeight(cardNumberField.frame))];
 		[scanCardButton setImage:photo forState:UIControlStateNormal];
+        [scanCardButton setTintColor:[UIColor customPlaceholder]];
 
 		CGSize size = photo.size;
 		[scanCardButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, -size.height + 10.0f, -size.width)];

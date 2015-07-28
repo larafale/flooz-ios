@@ -812,7 +812,6 @@
 
 - (void)displayCGU {
     WebViewController *controller = [WebViewController new];
-    controller.showCross = YES;
     [controller setUrl:@"https://www.flooz.me/cgu?layout=webview"];
     controller.title = NSLocalizedString(@"INFORMATIONS_TERMS", nil);
     UINavigationController *controller2 = [[UINavigationController alloc] initWithRootViewController:controller];

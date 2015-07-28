@@ -70,7 +70,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor customBackground]];
+    [self.view setBackgroundColor:[UIColor customBackgroundHeader]];
     
     NSString *backImageName = @"empty-timeline-";
     
@@ -112,7 +112,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //	[self reloadTableView];
+    [self reloadTableView];
 }
 
 - (void)statusBarHit {
@@ -123,26 +123,29 @@
 #pragma mark - TableView
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_nextPageUrl && ![_nextPageUrl isBlank]) {
-        return [transactions count] + 1;
-    }
-    
-    return [transactions count];
+    //    if (_nextPageUrl && ![_nextPageUrl isBlank]) {
+    //        return [transactions count] + 1;
+    //    }
+    //
+    //    return [transactions count];
+    return 0;
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row >= [transactions count]) {
-        return [LoadingCell getHeight];
-    }
+    //    if (indexPath.row >= [transactions count]) {
+    //        return [LoadingCell getHeight];
+    //    }
+    //
+    //    for (NSIndexPath *currentIndexPath in rowsWithPaymentField) {
+    //        if ([currentIndexPath isEqual:indexPath]) {
+    //            return 122;
+    //        }
+    //    }
+    //
+    //    FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
+    //    return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
     
-    for (NSIndexPath *currentIndexPath in rowsWithPaymentField) {
-        if ([currentIndexPath isEqual:indexPath]) {
-            return 122;
-        }
-    }
-    
-    FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-    return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -185,7 +188,7 @@
 #pragma mark - Filters
 
 - (void)reloadTableView {
-        
+    
     if (isReloading) {
         return;
     }

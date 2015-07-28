@@ -46,8 +46,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight()) style:UITableViewStylePlain];
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
-    [_tableView setSeparatorInset:UIEdgeInsetsZero];
-    [_tableView setBackgroundColor:[UIColor customBackground]];
+    [_tableView setBackgroundColor:[UIColor customBackgroundHeader]];
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     [_mainBody addSubview:_tableView];
@@ -66,10 +65,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (!isLoaded) {
-        isLoaded = YES;
-        [self handleRefresh];
-    }
+    [self handleRefresh];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -181,7 +177,7 @@
     if (activity.isFriend) {
         [[Flooz sharedInstance] readFriendActivity:nil];
     }
- 
+    
     [tableView reloadData];
 }
 

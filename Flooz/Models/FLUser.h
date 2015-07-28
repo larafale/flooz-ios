@@ -45,6 +45,7 @@ typedef enum e_FLUserKind {
 
 @property (strong, nonatomic) NSString *deviceToken;
 
+@property (strong, nonatomic) NSMutableDictionary *metrics;
 @property (strong, nonatomic) NSMutableDictionary *address;
 @property (strong, nonatomic) NSMutableDictionary *sepa;
 @property (strong, nonatomic) NSMutableDictionary *notifications;

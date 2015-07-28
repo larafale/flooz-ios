@@ -139,7 +139,7 @@
 "FIELD_TRANSACTION_TITLE" = "Pour :";
 "FIELD_TRANSACTION_TITLE_PLACEHOLDER" = "Restaurant entre amis";
 "FIELD_TRANSACTION_TO" = "À :";
-"FIELD_TRANSACTION_TO_PLACEHOLDER" = "saisir nom, pseudo ou 06";
+"FIELD_TRANSACTION_TO_PLACEHOLDER" = "nom, pseudo ou 06";
 "FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Ex: Pour le resto";
 "FIELD_TRANSACTION_EVENT_PLACEHOLDER" = "Ex: Pour le resto";
 "FIELD_TRANSACTION_SELECT_FRIEND" = "A qui ?";
@@ -197,7 +197,6 @@
 "FORGOT_SECRET" = "J'ai oublié mon mot de passe et la réponse à ma question secrète. Je souhaite être contacté au %@";
 
 "SETTINGS_INFORMATIONS" = "Informations";
-"SETTINGS_CODE" = "Code de sécurité";
 "SETTINGS_RIB" = "RIB";
 "SETTINGS_PRIVACY" = "Partage & confidentialité";
 "SETTINGS_DOCUMENTS" = "Justificatifs";
@@ -222,8 +221,8 @@
 "TUTO_PRIVATE_TITLE" = "Fil privé";
 "TUTO_PRIVATE_MSG" = "Retrouvez ici uniquement les paiements qui vous concernent.";
 
-"SETTINGS_CODE" = "Code de sécurité";
-"SETTINGS_PASSWORD" = "Mot de passe";
+"SETTINGS_CODE" = "Changer son code de sécurité";
+"SETTINGS_PASSWORD" = "Changer son mot de passe";
 "SETTINGS_SECRET" = "Question Secrète";
 
 "SETTINGS_PREFERENCES" = "Préférences";
@@ -268,9 +267,9 @@
 "TRANSACTION_TYPE_PAYMENT" = "PAYMENT";
 "TRANSACTION_TYPE_COLLECTION" = "COLLECTION";
 
-"TRANSACTION_SCOPE_PUBLIC" = "Public";
-"TRANSACTION_SCOPE_FRIEND" = "Amis";
-"TRANSACTION_SCOPE_PRIVATE" = "Privé";
+"TRANSACTION_SCOPE_PUBLIC" = "Tout le monde";
+"TRANSACTION_SCOPE_FRIEND" = "Mes amis et moi";
+"TRANSACTION_SCOPE_PRIVATE" = "Moi";
 
 "FILTER_SCOPE_PUBLIC" = "PUBLIC";
 "FILTER_SCOPE_FRIEND" = "AMIS";
@@ -290,7 +289,7 @@
 
 
 "FRIEND_PICKER_EMPTY_CELL_1" = "Sélectionnez un contact";
-"FRIEND_PICKER_EMPTY_CELL_2" = "même s'il n'est pas encore sur Flooz";
+"FRIEND_PICKER_EMPTY_CELL_2" = "ou entrez un n° de mobile";
 "FRIEND_PCIKER_PLACEHOLDER2" = "Rechercher";
 "FRIEND_PCIKER_PLACEHOLDER" = "Chercher un contact / Entrer un 06";
 "FRIEND_PICKER_FRIENDS_RECENT" = "Contacts Récents";
@@ -463,9 +462,8 @@
 
 "SAVE_IBAN" = "Enregistrer mon IBAN";
 
-"WALLET_INFOS_TITLE" = "Moyen de paiement";
-"WALLET_INFOS_CONTENT" = "Quand vous payez, Flooz utilise votre porte-monnaie si vous disposez des fonds suffisants pour couvrir la totalité du paiement, sinon, c'est votre CB qui sera utilisée.";
-"WALLET_INFOS_CONTENT_1" = "Quand vous payez, Flooz utilise votre porte-monnaie si vous disposez des fonds suffisants pour couvrir la totalité du paiement, sinon, c'est votre CB ";
+"WALLET_INFOS_TITLE" = "Solde";
+"WALLET_INFOS_CONTENT_1" = "Quand vous payez, Flooz utilise votre solde si les fonds sont suffisants pour couvrir la totalité du paiement, sinon, c'est votre CB ";
 "WALLET_INFOS_CONTENT_2" = " qui est utilisée.";
 
 "FLOOZ_BALANCE" = "Votre solde Flooz";

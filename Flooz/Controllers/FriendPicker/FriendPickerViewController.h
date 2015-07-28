@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "FriendPickerSearchBar.h"
+#import "NewTransactionViewController.h"
 
 @interface FriendPickerViewController : BaseViewController <FriendPickerSearchBarDelegate, UITableViewDataSource, UITableViewDelegate> {
 	NSMutableArray *_contactsFromAdressBook;

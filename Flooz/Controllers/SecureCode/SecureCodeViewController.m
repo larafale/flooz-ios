@@ -111,6 +111,7 @@ static BOOL canTouchID = YES;
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.tabBarController.tabBar setHidden:YES];
     
     if (_isForChangeSecureCode) {
         currentSecureMode = SecureCodeModeChangeOld;
@@ -159,7 +160,9 @@ static BOOL canTouchID = YES;
         [_headerView addSubview:backButton];
     }
     
-    _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(_headerView.frame), PPScreenWidth(), PPScreenHeight() - CGRectGetMaxY(_headerView.frame))];
+    CGFloat bodyHeight = PPScreenHeight() - CGRectGetMaxY(_headerView.frame);
+        
+    _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(_headerView.frame), PPScreenWidth(), bodyHeight)];
     [self.view addSubview:_mainBody];
     
     {
@@ -188,6 +191,12 @@ static BOOL canTouchID = YES;
     [self prepareViews];
     
     currentValue = @"";
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.tabBarController.tabBar setHidden:NO];
 }
 
 #pragma mark - prepare Views
@@ -625,56 +634,10 @@ static BOOL canTouchID = YES;
         number = _userDic[@"login"];
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] passwordForget:number success:^(NSDictionary *result){
-//        if ([result[@"item"][@"type"] isEqualToString:@"password:secret"]) {
-//            _userSecretQuestion = result[@"item"][@"question"];
-//            currentSecureMode = SecureCodeModeSecret;
-//            [self displayCorrectView];
-//        } else {
-//            [appDelegate displayMailWithMessage:[NSString stringWithFormat:NSLocalizedString(@"FORGOT_MESSAGE", @""), number] object:NSLocalizedString(@"FORGOT_OBJECT", nil) recipients:@[NSLocalizedString(@"FORGOT_RECIPIENTS", nil)] andMessageError:NSLocalizedString(@"ALERT_NO_MAIL_MESSAGE", nil) inViewController:self];
-//        }
-    } failure:^(NSError *error) {
-//        [appDelegate displayMailWithMessage:[NSString stringWithFormat:NSLocalizedString(@"FORGOT_MESSAGE", @""), number] object:NSLocalizedString(@"FORGOT_OBJECT", nil) recipients:@[NSLocalizedString(@"FORGOT_RECIPIENTS", nil)] andMessageError:NSLocalizedString(@"ALERT_NO_MAIL_MESSAGE", nil) inViewController:self];
-    }];
+    [[Flooz sharedInstance] passwordForget:number success:nil failure:nil];
 }
 
 - (BOOL)checkNextOk {
-//    if (currentSecureMode == SecureCodeModeSecret) {
-//        if (!_userDic[@"secretAnswer"] || [_userDic[@"secretAnswer"] isBlank]) {
-//            [_secretNextButton setEnabled:NO];
-//            return NO;
-//        }
-//        if (!_userDic[@"newPassword"] || [_userDic[@"newPassword"] isBlank]) {
-//            [_secretNextButton setEnabled:NO];
-//            return NO;
-//        }
-//        if (!_userDic[@"confirm"] || [_userDic[@"confirm"] isBlank]) {
-//            [_secretNextButton setEnabled:NO];
-//            return NO;
-//        }
-//        
-//        [_secretNextButton setEnabled:YES];
-//        return YES;
-//    } else {
-//        if (!_userDic[@"login"] || [_userDic[@"login"] isBlank]) {
-//            [_usernameField becomeFirstResponder];
-//            [_nextButton setEnabled:NO];
-//            return NO;
-//        }
-//        if (!_userDic[@"password"] || [_userDic[@"password"] length] < 1) {
-//            [_passwordField becomeFirstResponder];
-//            [_nextButton setEnabled:NO];
-//            return NO;
-//        }
-//        
-//        if (currentSecureMode == SecureCodeModeChangePass && ![_userDic[@"login"] isEqualToString:_userDic[@"password"]]) {
-//            [_nextButton setEnabled:NO];
-//            return NO;
-//        }
-//        
-//        [_nextButton setEnabled:YES];
-//        return YES;
-//    }
     return YES;
 }
 

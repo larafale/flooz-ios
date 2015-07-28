@@ -41,16 +41,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_mainBody.frame)) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame)) style:UITableViewStyleGrouped];
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
     [_tableView setBackgroundColor:[UIColor customBackgroundHeader]];
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     [_mainBody addSubview:_tableView];
-    
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    [self setExtendedLayoutIncludesOpaqueBars:YES];
 }
 
 #pragma mark - TableView
@@ -65,7 +62,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    return 35;
 }
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -78,24 +75,18 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMakeSize(CGRectGetWidth(tableView.frame), height)];
     
-    view.backgroundColor = [UIColor customBackground];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
+    headerView.backgroundColor = [UIColor customBackground];
     
-    {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 0.0f, CGRectGetWidth(tableView.frame) - 20.0f, height)];
-        
-        label.textColor = [UIColor customBlueLight];
-        label.font = [UIFont customContentRegular:14];
-        
-        label.text = [self tableView:tableView titleForHeaderInSection:section];
-        [label setWidthToFit];
-        
-        [view addSubview:label];
-    }
+    UILabel *headerTitle = [[UILabel alloc] initWithText:[self tableView:tableView titleForHeaderInSection:section] textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
     
-    return view;
+    [headerView addSubview:headerTitle];
+    
+    CGRectSetX(headerTitle.frame, 14);
+    CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2 + 5);
+    
+    return headerView;
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
