@@ -32,6 +32,7 @@
 
 	[activityIndicatorView startAnimating];
 	activityIndicatorView.center = self.center;
+    CGRectSetX(activityIndicatorView.frame, PPScreenWidth() / 2 - CGRectGetWidth(activityIndicatorView.frame) / 2);
 }
 
 @end

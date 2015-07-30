@@ -43,6 +43,8 @@
     
     UILabel *secretQuestion;
     
+    UIButton *clearSponsorField;
+    
     BOOL keyboardVisible;
     BOOL loginVisible;
     BOOL signupVisible;
@@ -414,12 +416,27 @@
     
     CGRectSetX(passwordTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(passwordTextfield.frame)) / 2);
     
+    FLTextFieldSignup *sponsorTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_SPONSOR", @"") for:signupData key:@"sponsor" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + signupFormVerticalMargin)];
+    [sponsorTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
+    [sponsorTextfield addForTextChangeTarget:self action:@selector(signupSponsorChange)];
+    
+    CGRectSetX(sponsorTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(sponsorTextfield.frame)) / 2);
+    
+    clearSponsorField = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(sponsorTextfield.frame) - 25, CGRectGetHeight(sponsorTextfield.frame) / 2 - 10, 20, 20)];
+    [clearSponsorField setContentMode:UIViewContentModeScaleAspectFit];
+    [clearSponsorField setTintColor:[UIColor customPlaceholder]];
+    [clearSponsorField setImage:[[UIImage imageNamed:@"close-activities"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [clearSponsorField addTarget:self action:@selector(didClearSponsorButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [clearSponsorField setHidden:YES];
+    
+    [sponsorTextfield addSubview:clearSponsorField];
+    
     FLKeyboardView  *inputView = [FLKeyboardView new];
     [inputView noneCloseButton];
     inputView.textField = phoneTextfield.textfield;
     phoneTextfield.textfield.inputView = inputView;
     
-    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Signup", nil)];
+    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(sponsorTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Signup", nil)];
     [signupButton setTag:89];
     [signupButton addTarget:self action:@selector(didSignupButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
@@ -451,12 +468,14 @@
     [signupFormFields addObject:phoneTextfield];
     [signupFormFields addObject:emailTextfield];
     [signupFormFields addObject:passwordTextfield];
+    [signupFormFields addObject:sponsorTextfield];
     
     [signupFormView addSubview:fullnameTextfield];
     [signupFormView addSubview:usernameTextfield];
     [signupFormView addSubview:phoneTextfield];
     [signupFormView addSubview:emailTextfield];
     [signupFormView addSubview:passwordTextfield];
+    [signupFormView addSubview:sponsorTextfield];
     [signupFormView addSubview:signupButton];
     [signupFormView addSubview:tttLabel];
     
@@ -562,6 +581,20 @@
 }
 
 #pragma mark - button action
+
+- (void)didClearSponsorButtonClick {
+    FLTextFieldSignup *sponsorTextfield;
+    
+    for (FLTextFieldSignup *textfield in signupFormFields) {
+        if ([textfield.dictionaryKey isEqualToString:@"sponsor"]) {
+            sponsorTextfield  = textfield;
+            break;
+        }
+    }
+    
+    [sponsorTextfield setTextOfTextField:@""];
+    clearSponsorField.hidden = YES;
+}
 
 - (void)didLoginHomeButtonClick {
     [UIView transitionWithView:self.view
@@ -714,6 +747,22 @@
 }
 
 #pragma mark - Textfields Delegate
+
+- (void)signupSponsorChange {
+    FLTextFieldSignup *sponsorTextfield;
+    
+    for (FLTextFieldSignup *textfield in signupFormFields) {
+        if ([textfield.dictionaryKey isEqualToString:@"sponsor"]) {
+            sponsorTextfield  = textfield;
+            break;
+        }
+    }
+    
+    if (sponsorTextfield.textfield.text.length > 0)
+        clearSponsorField.hidden = NO;
+    else
+        clearSponsorField.hidden = YES;
+}
 
 - (void)signupTextFieldNext {
     BOOL nextFocus = false;

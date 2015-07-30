@@ -108,6 +108,15 @@
         [[Flooz sharedInstance] signupPassStep:@"signup" user:mutableData success:^(NSDictionary *result) {
             [appDelegate resetTuto:YES];
             [appDelegate clearBranchParams];
+            [appDelegate clearPendingData];
+
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoFlooz];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelineFriends];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePublic];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePrivate];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoWelcome];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kSendContact];
+
             [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
             
             SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];
@@ -148,6 +157,14 @@
             [appDelegate resetTuto:YES];
             [appDelegate clearBranchParams];
             [appDelegate clearPendingData];
+            
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoFlooz];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelineFriends];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePublic];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePrivate];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoWelcome];
+            [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kSendContact];
+            
             [[Flooz sharedInstance] updateCurrentUserAndAskResetCode:result];
             
             SignupBaseViewController *nextViewController = [SignupBaseViewController getViewControllerForStep:result[@"step"][@"next"] withData:result[@"step"]];

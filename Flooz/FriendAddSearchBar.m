@@ -49,7 +49,7 @@
 }
 
 - (void)createSearchView {
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-10, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     
     _searchBar.placeholder = NSLocalizedString(@"SEARCH_FRIENDS", nil);
     _searchBar.delegate = self;

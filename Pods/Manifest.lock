@@ -1,5 +1,5 @@
 PODS:
-  - ActionSheetPicker-3.0 (1.6.2)
+  - ActionSheetPicker-3.0 (1.7.0)
   - AFNetworking (2.5.4):
     - AFNetworking/NSURLConnection (= 2.5.4)
     - AFNetworking/NSURLSession (= 2.5.4)
@@ -27,7 +27,7 @@ PODS:
   - Bolts/AppLinks (1.2.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.0)
-  - Branch (0.10.0)
+  - Branch (0.10.5)
   - DACircularProgress (2.3.1)
   - EAIntroView (2.7.4):
     - EARestrictedScrollView (~> 0.2.0)
@@ -47,11 +47,9 @@ PODS:
   - JPSVolumeButtonHandler (0.0.1)
   - JTHelper (0.1.12)
   - JTSImageViewController (1.4)
-  - Mixpanel (2.8.1):
-    - Mixpanel/Mixpanel (= 2.8.1)
-  - Mixpanel/Mixpanel (2.8.1):
-    - Mixpanel/MPCategoryHelpers
-  - Mixpanel/MPCategoryHelpers (2.8.1)
+  - Mixpanel (2.8.2):
+    - Mixpanel/Mixpanel (= 2.8.2)
+  - Mixpanel/Mixpanel (2.8.2)
   - MZAppearance (1.1.5)
   - MZFormSheetController (3.1.0):
     - MZAppearance
@@ -59,14 +57,14 @@ PODS:
   - MZFormSheetController/Core (3.1.0):
     - MZAppearance
   - NSDate+Calendar (0.0.7)
-  - PonyDebugger (0.4.3):
+  - PonyDebugger (0.4.5):
     - SocketRocket
   - pop (1.0.7)
   - PPHelpMe (1.0.2)
   - RDVTabBarController (1.1.9)
-  - SDWebImage (3.7.2):
-    - SDWebImage/Core (= 3.7.2)
-  - SDWebImage/Core (3.7.2)
+  - SDWebImage (3.7.3):
+    - SDWebImage/Core (= 3.7.3)
+  - SDWebImage/Core (3.7.3)
   - SMPageControl (1.2)
   - SocketRocket (0.4)
   - TTTAttributedLabel (1.13.4)
@@ -98,10 +96,10 @@ DEPENDENCIES:
   - UICKeyChainStore
 
 SPEC CHECKSUMS:
-  ActionSheetPicker-3.0: cc9f90ae785070623e9b972270013c3242190fb0
+  ActionSheetPicker-3.0: 6516052442fc8ca8f3cc4b3c7aa0436de12373df
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
-  Branch: d31fe46ca1b969e6ab20e8e29d6541036a5f8cfb
+  Branch: c12209a965c1f93083fb515084a4f5b8cbfc7c56
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: 50b85eedf414260e61330070ffe5947e72493a62
   EARestrictedScrollView: f86d61e16c61d3e93c84f8e96e83122a2a3b7631
@@ -115,18 +113,18 @@ SPEC CHECKSUMS:
   JPSVolumeButtonHandler: 03ecb2d55acbe4499631c8d9fe221f7af48569d4
   JTHelper: d84a961a60a27623c595a7f6965fcafdefb88b9b
   JTSImageViewController: 6a367b144e257db02cdfacdba78d684377d3777b
-  Mixpanel: 93c4825025e6380ced273ed7178496282e385077
+  Mixpanel: f4d71ac2a306e7cda6ad03d4a2be249a0fd7a967
   MZAppearance: 6e9dc64e42074c0a19812a327f590746c3283bab
   MZFormSheetController: a29e904f8832bcaa08a9751106e10beb4df751df
   NSDate+Calendar: 30747b15cbeda4d835c39f5d597d8eaa2ddc3942
-  PonyDebugger: 52f96f501df018dc2b7153fa18464b82553e700c
+  PonyDebugger: 1c60f7c876bdb6a8b6bf0f0269087f8a234fafa7
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
   PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
   RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
-  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
   SocketRocket: 01443933b7bc362621325f4607b80b4286a99707
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   UICKeyChainStore: c5719c814e8bd69e74e4a0fc09daf8f4d6257a59
 
-COCOAPODS: 0.38.0.beta.2
+COCOAPODS: 0.38.2

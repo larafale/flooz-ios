@@ -48,7 +48,6 @@
     self = [super init];
     if (self) {
         
-        NSLog(@"IP Adress : %@", [NSString stringWithFormat:@"http://%@", [appDelegate localIp]]);
 #ifdef FLOOZ_DEV_LOCAL
         manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", [appDelegate localIp]]]];
 #elif FLOOZ_DEV_API
@@ -125,8 +124,8 @@
     NSString *dataKey;
     
     switch (scope) {
-        case TransactionScopePublic:
-            dataKey = kPublicTimelineData;
+        case TransactionScopeAll:
+            dataKey = kAllTimelineData;
             break;
         case TransactionScopePrivate:
             dataKey = kPrivateTimelineData;
@@ -178,8 +177,8 @@
         NSString *dataKey;
         
         switch (scope) {
-            case TransactionScopePublic:
-                dataKey = kPublicTimelineData;
+            case TransactionScopeAll:
+                dataKey = kAllTimelineData;
                 break;
             case TransactionScopePrivate:
                 dataKey = kPrivateTimelineData;
@@ -195,7 +194,7 @@
 
 - (void) clearSaveData {
     [UICKeyChainStore removeItemForKey:kUserData];
-    [UICKeyChainStore removeItemForKey:kPublicTimelineData];
+    [UICKeyChainStore removeItemForKey:kAllTimelineData];
     [UICKeyChainStore removeItemForKey:kPrivateTimelineData];
     [UICKeyChainStore removeItemForKey:kFriendTimelineData];
     [UICKeyChainStore removeItemForKey:kTextData];
@@ -453,6 +452,10 @@
     }];
 }
 
+- (void)sendDiscountCode:(NSDictionary *)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/users/promo" method:@"POST" params:code success:success failure:failure];
+}
+
 - (void)invitationText:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         self.invitationTexts = [[FLInvitationTexts alloc] initWithJSON:result[@"item"]];
@@ -478,6 +481,9 @@
     [self requestPath:@"/invitations/text" method:@"GET" params:nil success:successBlock failure:failureBlock];
 }
 
+- (void)invitationFacebook:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/invitations/facebook" method:@"POST" params:nil success:success failure:failure];
+}
 
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
@@ -1165,6 +1171,7 @@
                                         };
                 
                 [self updateUser:user success:nil failure:nil];
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationFbConnect object:nil]];
             }
             else {
                 // An error occurred, we need to handle the error
@@ -1260,25 +1267,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil];
 }
 
-- (void)handleTriggerLoginShow:(NSDictionary *)data {
-    [self clearLogin];
-    NSMutableDictionary *user = [NSMutableDictionary new];
-    
-    if (data[@"phone"])
-        user[@"login"] = data[@"phone"];
-    
-    if (data[@"secureCode"])
-        user[@"hasSecureCode"] = data[@"secureCode"];
-    
-    [appDelegate askForSecureCodeWithUser:user];
-}
-
 - (void)handleTriggerSignupShow:(NSDictionary *)data {
     [appDelegate showSignupWithUser:data];
-}
-
-- (void)handleTriggerSignupCodeShow:(NSDictionary *)data {
-    
 }
 
 - (void)handleTriggerLogout:(NSDictionary *)data {
@@ -1320,10 +1310,6 @@
     }];
 }
 
-- (void)handleTriggerResetPassword:(NSDictionary *)data {
-    [appDelegate showResetPasswordWithUser:data];
-}
-
 - (void)handleTriggerClearSecureCode:(NSDictionary *)data {
     [SecureCodeViewController clearSecureCode];
 }
@@ -1363,6 +1349,15 @@
     }] show];
 }
 
+- (void)handleTriggerContactsSend:(NSDictionary *)data {
+    [self grantedAccessToContacts: ^(BOOL granted) {
+        if (granted) {
+            [[Flooz sharedInstance] createContactList:nil atSignup:YES];
+        }
+    }];
+
+}
+
 - (void)handleTriggerHomeShow:(NSDictionary *)data {
     [appDelegate goToAccountViewController];
 }
@@ -1389,16 +1384,13 @@
                                    [NSNumber numberWithInt:TriggerShowFriend]: NSStringFromSelector(@selector(handleTriggerFriendShow:)),
                                    [NSNumber numberWithInt:TriggerShowProfile]: NSStringFromSelector(@selector(handleTriggerProfileShow:)),
                                    [NSNumber numberWithInt:TriggerReloadLine]: NSStringFromSelector(@selector(handleTriggerTransactionReload:)),
-                                   [NSNumber numberWithInt:TriggerShowLogin]: NSStringFromSelector(@selector(handleTriggerLoginShow:)),
                                    [NSNumber numberWithInt:TriggerShowSignup]: NSStringFromSelector(@selector(handleTriggerSignupShow:)),
-                                   [NSNumber numberWithInt:TriggerShowSignupCode]: NSStringFromSelector(@selector(handleTriggerSignupCodeShow:)),
                                    [NSNumber numberWithInt:TriggerLogout]: NSStringFromSelector(@selector(handleTriggerLogout:)),
                                    [NSNumber numberWithInt:TriggerAppUpdate]: NSStringFromSelector(@selector(handleTriggerAppUpdate:)),
                                    [NSNumber numberWithInt:TriggerShowContactInfo]: NSStringFromSelector(@selector(handleTriggerContactInfoShow:)),
                                    [NSNumber numberWithInt:TriggerShowUserIdentity]: NSStringFromSelector(@selector(handleTriggerUserIdentityShow:)),
                                    [NSNumber numberWithInt:TriggerShow3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureShow:)),
                                    [NSNumber numberWithInt:TriggerComplete3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureComplete:)),
-                                   [NSNumber numberWithInt:TriggerResetPassword]: NSStringFromSelector(@selector(handleTriggerResetPassword:)),
                                    [NSNumber numberWithInt:TriggerFail3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureFail:)),
                                    [NSNumber numberWithInt:TriggerSecureCodeClear]: NSStringFromSelector(@selector(handleTriggerClearSecureCode:)),
                                    [NSNumber numberWithInt:TriggerSecureCodeCheck]: NSStringFromSelector(@selector(handleTriggerCheckSecureCode:)),
@@ -1411,6 +1403,7 @@
                                    [NSNumber numberWithInt:TriggerShowIban]: NSStringFromSelector(@selector(handleTriggerIbanShow:)),
                                    [NSNumber numberWithInt:TriggerResetTuto]: NSStringFromSelector(@selector(handleTriggerTutoShow:)),
                                    [NSNumber numberWithInt:TriggerCloseView]: NSStringFromSelector(@selector(handleTriggerViewClose:)),
+                                   [NSNumber numberWithInt:TriggerSendContacts]: NSStringFromSelector(@selector(handleTriggerContactsSend:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
@@ -1629,7 +1622,6 @@
 - (void)createContactList:(void (^)(NSMutableArray *arrayContactAdressBook, NSMutableArray *arrayContactFlooz))lists atSignup:(BOOL)signup {
     [self getContactList: ^(NSMutableArray *arrayContacts, NSMutableArray *arrayServer) {
         arrayContacts = [[self sortedArray:arrayContacts withKey:@"name" ascending:YES] mutableCopy];
-        [self showLoadView];
         [self sendContactsAtSignup:signup WithParams:@{ @"phones": arrayServer } success: ^(id result) {
             NSMutableArray *arrayFlooz = [self createFriendsArrayFromResult:result];
             NSMutableArray *arrayAB = [self removeFloozerFromArray:arrayFlooz inArray:arrayContacts];

@@ -27,7 +27,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"NAV_PASSWORD", nil);
+        self.title = NSLocalizedString(@"SETTINGS_PASSWORD", nil);
         
         _password = [NSMutableDictionary new];
         fieldsView = [NSMutableArray new];

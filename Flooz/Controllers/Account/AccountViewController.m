@@ -23,6 +23,7 @@
 #import "SettingsSecurityViewController.h"
 #import "WebViewController.h"
 #import "FriendsViewController.h"
+#import "DiscountCodeViewController.h"
 
 #import "AccountCell.h"
 
@@ -164,7 +165,8 @@
                            @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
                            @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
                            @{@"title":NSLocalizedString(@"SETTINGS_IDENTITY", @""), @"action":@"identity", @"notif":@(identityNotifs)},
-                           @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)}
+                           @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
+                           @{@"title":[Flooz sharedInstance].currentTexts.menu[@"title"], @"action":@"sponsor"}
                            ]
                    },
                  @{@"title":@"Reglages",
@@ -258,14 +260,10 @@
         [cell setBackgroundColor:[UIColor customBackground]];
         
         cell.textLabel.backgroundColor = [UIColor clearColor];
-        
-        UILabel *version = [[UILabel alloc] initWithText:[NSString stringWithFormat:@"Flooz %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-        
-        [version widthToFit];
-        
-        CGRectSetPosition(version.frame, CGRectGetWidth(cell.contentView.frame) / 2 - CGRectGetWidth(version.frame) / 2, CGRectGetHeight(cell.contentView.frame) - 30);
-        
-        [cell.contentView addSubview:version];
+        cell.textLabel.textColor = [UIColor customPlaceholder];
+        cell.textLabel.font = [UIFont customContentRegular:14];
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.text = [NSString stringWithFormat:@"Flooz %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
         
         return cell;
     }
@@ -327,6 +325,8 @@
             [[Flooz sharedInstance] logout];
         } refuse:NULL];
         [popup show];
+    } else if ([action isEqualToString:@"sponsor"]) {
+        [[self navigationController] pushViewController:[DiscountCodeViewController new] animated:YES];
     }
 }
 

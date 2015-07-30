@@ -21,6 +21,7 @@
 - (void)setJSON:(NSDictionary *)json {
     self.json = json;
     
+    self.shareSubheader = json[@"h2"];
     self.shareCode = json[@"code"];
     self.shareText = json[@"text"];
     self.shareFb = json[@"facebook"];

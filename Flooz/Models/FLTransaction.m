@@ -208,6 +208,8 @@
         return TransactionScopeFriend;
     if ([param isEqualToString:@"private"])
         return TransactionScopePrivate;
+    if ([param isEqualToString:@"all"])
+        return TransactionScopeAll;
     return TransactionScopePublic;
 }
 

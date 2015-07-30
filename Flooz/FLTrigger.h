@@ -21,16 +21,13 @@ typedef enum e_FLTriggerType {
     TriggerShowProfile,
     TriggerShowFriend,
     TriggerReloadLine,
-    TriggerShowLogin,
     TriggerShowSignup,
-    TriggerShowSignupCode,
     TriggerLogout,
     TriggerAppUpdate,
     TriggerShowContactInfo,
     TriggerShowUserIdentity,
     TriggerShow3DSecure,
     TriggerComplete3DSecure,
-    TriggerResetPassword,
     TriggerFail3DSecure,
     TriggerSecureCodeClear,
     TriggerSecureCodeCheck,
@@ -42,7 +39,8 @@ typedef enum e_FLTriggerType {
     TriggerShowHome,
     TriggerShowIban,
     TriggerResetTuto,
-    TriggerCloseView
+    TriggerCloseView,
+    TriggerSendContacts
 } FLTriggerType;
 
 @property (nonatomic) FLTriggerType type;

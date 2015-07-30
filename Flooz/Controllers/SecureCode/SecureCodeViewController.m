@@ -111,7 +111,6 @@ static BOOL canTouchID = YES;
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.tabBarController.tabBar setHidden:YES];
     
     if (_isForChangeSecureCode) {
         currentSecureMode = SecureCodeModeChangeOld;
@@ -195,8 +194,6 @@ static BOOL canTouchID = YES;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [self.tabBarController.tabBar setHidden:NO];
 }
 
 #pragma mark - prepare Views
@@ -228,6 +225,7 @@ static BOOL canTouchID = YES;
         [_forgotButton addTarget:self action:@selector(didCodeForgetTouch) forControlEvents:UIControlEventTouchUpInside];
         [_forgotButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_forgotButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
+        [_forgotButton setUserInteractionEnabled:YES];
         [_mainBody addSubview:_forgotButton];
     }
     

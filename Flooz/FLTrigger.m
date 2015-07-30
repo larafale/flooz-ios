@@ -53,10 +53,6 @@
         return TriggerShowProfile;
     else if ([param isEqualToString:@"signup:show"])
         return TriggerShowSignup;
-    else if ([param isEqualToString:@"login:show"])
-        return TriggerShowLogin;
-    else if ([param isEqualToString:@"signup:invitation"])
-        return TriggerShowSignupCode;
     else if ([param isEqualToString:@"logout"])
         return TriggerLogout;
     else if ([param isEqualToString:@"app:update"])
@@ -69,8 +65,6 @@
         return TriggerShow3DSecure;
     else if ([param isEqualToString:@"3dSecure:complete"])
         return TriggerComplete3DSecure;
-    else if ([param isEqualToString:@"password:change"])
-        return TriggerResetPassword;
     else if ([param isEqualToString:@"3dSecure:fail"])
         return TriggerFail3DSecure;
     else if ([param isEqualToString:@"secureCode:clear"])
@@ -95,6 +89,8 @@
         return TriggerResetTuto;
     else if ([param isEqualToString:@"view:close"])
         return TriggerCloseView;
+    else if ([param isEqualToString:@"contacts:send"])
+        return TriggerSendContacts;
     else
         return TriggerNone;
 }

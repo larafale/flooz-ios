@@ -24,8 +24,8 @@
     self.notificationsText = json[@"notificationsText"];
     self.slider = [[FLSlider alloc] initWithJson:json[@"slider"]];
     self.couponButton = json[@"couponButton"];
-    self.secretQuestions = json[@"secretQuestions"];
     self.card = json[@"card"];
+    self.menu = json[@"menu"];
 }
 
 @end

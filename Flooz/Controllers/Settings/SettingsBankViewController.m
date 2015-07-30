@@ -36,7 +36,7 @@
 	[_mainBody addSubview:_contentView];
 
 	{
-		_IBAN = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_IBAN_PLACEHOLDER" for:_sepa key:@"iban" position:CGPointMake(PADDING_SIDE, 0.0f)];
+		_IBAN = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_IBAN_PLACEHOLDER" for:_sepa key:@"iban" position:CGPointMake(PADDING_SIDE, PADDING_SIDE)];
 		[_IBAN addForTextChangeTarget:self action:@selector(canValidate:)];
 		[_contentView addSubview:_IBAN];
 	}
@@ -68,17 +68,6 @@
 
 - (BOOL)canValidate:(FLTextFieldSignup *)textIcon {
 	BOOL canValidate = YES;
-
-//	if (!_sepa[@"iban"] || [_sepa[@"iban"] isBlank] || [_sepa[@"iban"] length] < 27) {
-//		canValidate = NO;
-//	}
-//
-//	if (canValidate) {
-//		[_saveButton setEnabled:YES];
-//	}
-//	else {
-//		[_saveButton setEnabled:NO];
-//	}
 
     return canValidate;
 }

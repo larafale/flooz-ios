@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSDictionary *json;
 @property (nonatomic, retain) FLSlider *slider;
 @property (nonatomic, retain) NSDictionary *couponButton;
-@property (nonatomic, retain) NSArray *secretQuestions;
+@property (nonatomic, retain) NSDictionary *menu;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

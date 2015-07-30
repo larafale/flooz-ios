@@ -17,13 +17,15 @@
 #import "AppDelegate.h"
 #import "FLBadgeView.h"
 #import "TransitionDelegate.h"
+#import "UICKeyChainStore.h"
 
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
     UIBarButtonItem *filterItem;
     
     NSTimer *_timer;
-        
+    NSTimer *_backTimer;
+    
     WYPopoverController *popoverController;
     FLFilterPopoverViewController *filterListController;
     TransactionScope currentScope;
@@ -58,7 +60,14 @@
         transactionsLoaded = [NSMutableArray new];
         cells = [NSMutableArray new];
         
-        currentScope = TransactionScopeAll;
+        NSString *filterData = [UICKeyChainStore stringForKey:kFilterData];
+        
+        if (filterData && ![filterData isBlank])
+            currentScope = [FLTransaction transactionParamsToScope:filterData];
+        else {
+            currentScope = TransactionScopeAll;
+            [UICKeyChainStore setString:[FLTransaction transactionScopeToParams:currentScope] forKey:kFilterData];
+        }
     }
     return self;
 }
@@ -172,6 +181,8 @@
 - (void)cancelTimer {
     [_timer invalidate];
     _timer = nil;
+    [_backTimer invalidate];
+    _backTimer = nil;
 }
 
 #pragma mark - Table view data source
@@ -299,6 +310,23 @@
     }];
 }
 
+- (void)showEmptyBack {
+    NSString *imageName;
+    
+    if (currentScope == TransactionScopePrivate)
+        imageName = @"empty-timeline-private";
+    else if (currentScope == TransactionScopeFriend)
+        imageName = @"empty-timeline-friend";
+    
+    if (imageName) {
+        UIImageView *imgBackView = [[UIImageView alloc] initWithFrame:_tableView.frame];
+        CGRectSetXY(imgBackView.frame, 0, 0);
+        [imgBackView setContentMode:UIViewContentModeScaleAspectFill];
+        [imgBackView setImage:[UIImage imageNamed:imageName]];
+        _tableView.backgroundView = imgBackView;
+    }
+}
+
 #pragma mark - ScrollViewIndicator
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -377,8 +405,17 @@
     
     [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:currentScope] success: ^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
-        
         _nextPageUrl = nextPageUrl;
+        
+        if (transactions.count == 0) {
+            if (_backTimer) {
+                [_backTimer invalidate];
+                _backTimer = nil;
+            }
+            _backTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showEmptyBack) userInfo:nil repeats:NO];
+        } else
+            _tableView.backgroundView = nil;
+        
         nextPageIsLoading = NO;
 
         [self didFilterChange];
@@ -423,6 +460,7 @@
 
 - (void)scopeChange:(TransactionScope)scope {
     if (scope != currentScope) {
+        [UICKeyChainStore setString:[FLTransaction transactionScopeToParams:scope] forKey:kFilterData];
         currentScope = scope;
         transactions = [NSMutableArray new];
         [_tableView reloadData];

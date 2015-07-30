@@ -243,6 +243,7 @@
             [self didAddressBookPermissionGranted];
         }
         else {
+            
         }
     }];
 }
@@ -290,7 +291,7 @@
     
     _contactsFromAdressBook = [self processContacts:_contactsFromAdressBook];
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kSendContact]) {
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:kSendContact] || ![[NSUserDefaults standardUserDefaults] boolForKey:kSendContact]) {
         [[Flooz sharedInstance] createContactList:^(NSMutableArray *arrayContactAdressBook, NSMutableArray *arrayContactFlooz) {
             [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kSendContact];
         } atSignup:YES];

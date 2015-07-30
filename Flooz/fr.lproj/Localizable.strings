@@ -72,7 +72,7 @@
 
 "SHARE_FACEBOOK" = "FB";
 "SHARE_SMS" = "SMS";
-"SHARE_TWITTER" = "TWEETER";
+"SHARE_TWITTER" = "TWITTER";
 "SHARE_MAIL" = "E-MAIL";
 "SHARE_CLIPBOARD" = "Copier le code";
 
@@ -117,6 +117,7 @@
 "FIELD_CITY" = "Ville";
 "FIELD_SMS_CODE" = "Saisir le code reçu par SMS";
 "CASHOUT_FIELD" = "Saisir le montant à retirer";
+"FIELD_SPONSOR" = "Code parrain ?";
 
 "CUSTOM_SECRET_QUESTION" = "Question personnalisée...";
 
@@ -197,7 +198,6 @@
 "FORGOT_SECRET" = "J'ai oublié mon mot de passe et la réponse à ma question secrète. Je souhaite être contacté au %@";
 
 "SETTINGS_INFORMATIONS" = "Informations";
-"SETTINGS_CODE" = "Code de sécurité";
 "SETTINGS_RIB" = "RIB";
 "SETTINGS_PRIVACY" = "Partage & confidentialité";
 "SETTINGS_DOCUMENTS" = "Justificatifs";
@@ -222,8 +222,8 @@
 "TUTO_PRIVATE_TITLE" = "Fil privé";
 "TUTO_PRIVATE_MSG" = "Retrouvez ici uniquement les paiements qui vous concernent.";
 
-"SETTINGS_CODE" = "Code de sécurité";
-"SETTINGS_PASSWORD" = "Mot de passe";
+"SETTINGS_CODE" = "Changer mon code de sécurité";
+"SETTINGS_PASSWORD" = "Changer mon mot de passe";
 "SETTINGS_SECRET" = "Question Secrète";
 
 "SETTINGS_PREFERENCES" = "Préférences";
@@ -270,7 +270,7 @@
 
 "TRANSACTION_SCOPE_PUBLIC" = "Tout le monde";
 "TRANSACTION_SCOPE_FRIEND" = "Mes amis et moi";
-"TRANSACTION_SCOPE_PRIVATE" = "Moi uniquement";
+"TRANSACTION_SCOPE_PRIVATE" = "Moi";
 
 "FILTER_SCOPE_PUBLIC" = "PUBLIC";
 "FILTER_SCOPE_FRIEND" = "AMIS";

@@ -72,7 +72,7 @@
 
 "SHARE_FACEBOOK" = "FB";
 "SHARE_SMS" = "SMS";
-"SHARE_TWITTER" = "TWEETER";
+"SHARE_TWITTER" = "TWITTER";
 "SHARE_MAIL" = "E-MAIL";
 "SHARE_CLIPBOARD" = "Copier le code";
 
@@ -117,6 +117,7 @@
 "FIELD_CITY" = "Ville";
 "FIELD_SMS_CODE" = "Saisir le code reçu par SMS";
 "CASHOUT_FIELD" = "Saisir le montant à retirer";
+"FIELD_SPONSOR" = "Code parrain ?";
 
 "CUSTOM_SECRET_QUESTION" = "Question personnalisée...";
 
@@ -221,8 +222,8 @@
 "TUTO_PRIVATE_TITLE" = "Fil privé";
 "TUTO_PRIVATE_MSG" = "Retrouvez ici uniquement les paiements qui vous concernent.";
 
-"SETTINGS_CODE" = "Changer son code de sécurité";
-"SETTINGS_PASSWORD" = "Changer son mot de passe";
+"SETTINGS_CODE" = "Changer mon code de sécurité";
+"SETTINGS_PASSWORD" = "Changer mon mot de passe";
 "SETTINGS_SECRET" = "Question Secrète";
 
 "SETTINGS_PREFERENCES" = "Préférences";

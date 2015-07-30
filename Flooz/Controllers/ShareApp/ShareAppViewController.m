@@ -31,12 +31,13 @@
     FLClearActionTextView *_text;
     
     NSString *_code;
-    NSArray *_appText;
-    NSDictionary *_fbData;
+    NSString *_appText;
+    NSString *_fbData;
     NSDictionary *_mailData;
     NSString *_twitterText;
     NSString *_smsText;
     NSString *_h1;
+    NSString *_h2;
     NSString *_viewTitle;
     
     WYPopoverController *popoverController;
@@ -59,23 +60,26 @@
     
     _backImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     [_backImage setImage:[UIImage imageNamed:@"back-secure"]];
-    [_backImage setContentMode:UIViewContentModeScaleAspectFit];
+    [_backImage setContentMode:UIViewContentModeScaleAspectFill];
     
     [_mainBody addSubview:_backImage];
     
-    _titleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentBold:27] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    _titleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:15] textAlignment:NSTextAlignmentCenter numberOfLines:1];
     [_titleLabel setUserInteractionEnabled:NO];
     
     [_mainBody addSubview:_titleLabel];
  
-    _subtitleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentBold:27] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    _subtitleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor customBlue] font:[UIFont customContentBold:35] textAlignment:NSTextAlignmentCenter numberOfLines:1];
     [_subtitleLabel setUserInteractionEnabled:YES];
+    [_subtitleLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
     
     [_mainBody addSubview:_subtitleLabel];
 
-    _text = [[FLClearActionTextView alloc] initWithFrame:CGRectMake(20, 220, CGRectGetWidth(_mainBody.frame) - 40, 100)];
-    [_text addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
-    
+    _text = [[FLClearActionTextView alloc] initWithFrame:CGRectMake(20, 250, CGRectGetWidth(_mainBody.frame) - 40, 100)];
+    [_text setTextColor:[UIColor customWhite]];
+    [_text setFont:[UIFont customContentRegular:18]];
+    [_text setTextAlignment:NSTextAlignmentCenter];
+
     if (IS_IPHONE_4) {
         CGRectSetY(_text.frame, 200);
     }
@@ -100,6 +104,7 @@
         _smsText = [[Flooz sharedInstance] invitationTexts].shareSms;
         _viewTitle = [[Flooz sharedInstance] invitationTexts].shareTitle;
         _h1 = [[Flooz sharedInstance] invitationTexts].shareHeader;
+        _h2 = [[Flooz sharedInstance] invitationTexts].shareSubheader;
         
         if (!_code)
             _code = @"";
@@ -109,30 +114,14 @@
         [_titleLabel setText:_h1];
         [_titleLabel sizeToFit];
         [_titleLabel setCenter:_backImage.center];
-        CGRectSetY(_titleLabel.frame, 40);
+        CGRectSetY(_titleLabel.frame, 50);
  
-        [_subtitleLabel setText:_h1];
+        [_subtitleLabel setText:_h2];
         [_subtitleLabel sizeToFit];
         [_subtitleLabel setCenter:_backImage.center];
-        CGRectSetY(_subtitleLabel.frame, CGRectGetMaxY(_titleLabel.frame) + 10);
-
-        NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_appText[0]];
-        [text addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text.length)];
-        [text addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text.length)];
+        CGRectSetY(_subtitleLabel.frame, CGRectGetMaxY(_titleLabel.frame) + 15);
         
-        NSMutableAttributedString *code = [[NSMutableAttributedString alloc] initWithString:_code];
-        [code addAttribute:NSForegroundColorAttributeName value:[UIColor customBlue] range:NSMakeRange(0, code.length)];
-        [code addAttribute:NSFontAttributeName value:[UIFont customContentBold:19] range:NSMakeRange(0, code.length)];
-        
-        NSMutableAttributedString *text2 = [[NSMutableAttributedString alloc] initWithString:_appText[1]];
-        [text2 addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text2.length)];
-        [text2 addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text2.length)];
-        
-        [text appendAttributedString:code];
-        [text appendAttributedString:text2];
-        
-        [_text setAttributedText:text];
-        [_text setTextAlignment:NSTextAlignmentCenter];
+        [_text setText:_appText];
         [_text sizeToFit];
         CGRectSetX(_text.frame, (CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(_text.frame)) / 2);
         
@@ -140,6 +129,8 @@
             [_footerView removeFromSuperview];
         
         [self createFooterView];
+    
+        CGRectSetY(_text.frame, CGRectGetMinY(_footerView.frame) - CGRectGetHeight(_text.frame) - 50);
     } else {
         [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
             _code = result.shareCode;
@@ -150,35 +141,24 @@
             _smsText = result.shareSms;
             _viewTitle = result.shareTitle;
             _h1 = result.shareHeader;
-            
+            _h2 = result.shareSubheader;
+
             if (!_code)
                 _code = @"";
             
-            [self setTitle:_viewTitle];
+            [self.navigationItem setTitle:_viewTitle];
             
             [_titleLabel setText:_h1];
             [_titleLabel sizeToFit];
-            CGRectSetWidth(_titleLabel.frame, CGRectGetWidth(_titleLabel.frame));
-            CGRectSetHeight(_titleLabel.frame, CGRectGetHeight(_titleLabel.frame));
             [_titleLabel setCenter:_backImage.center];
+            CGRectSetY(_titleLabel.frame, 50);
             
-            NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_appText[0]];
-            [text addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text.length)];
-            [text addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text.length)];
+            [_subtitleLabel setText:_h2];
+            [_subtitleLabel sizeToFit];
+            [_subtitleLabel setCenter:_backImage.center];
+            CGRectSetY(_subtitleLabel.frame, CGRectGetMaxY(_titleLabel.frame) + 15);
             
-            NSMutableAttributedString *code = [[NSMutableAttributedString alloc] initWithString:_code];
-            [code addAttribute:NSForegroundColorAttributeName value:[UIColor customBlue] range:NSMakeRange(0, code.length)];
-            [code addAttribute:NSFontAttributeName value:[UIFont customContentBold:19] range:NSMakeRange(0, code.length)];
-            
-            NSMutableAttributedString *text2 = [[NSMutableAttributedString alloc] initWithString:_appText[1]];
-            [text2 addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text2.length)];
-            [text2 addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text2.length)];
-            
-            [text appendAttributedString:code];
-            [text appendAttributedString:text2];
-            
-            [_text setAttributedText:text];
-            [_text setTextAlignment:NSTextAlignmentCenter];
+            [_text setText:_appText];
             [_text sizeToFit];
             CGRectSetX(_text.frame, (CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(_text.frame)) / 2);
             
@@ -186,10 +166,14 @@
                 [_footerView removeFromSuperview];
             
             [self createFooterView];
+            
+            CGRectSetY(_text.frame, CGRectGetMinY(_footerView.frame) - CGRectGetHeight(_text.frame) - 50);
+            
         } failure:^(NSError *error) {
             
         }];
     }
+    [self registerNotification:@selector(showFbConfirmBox) name:kNotificationFbConnect object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -198,6 +182,10 @@
     popoverViewController = [ClipboardPopoverViewController new];
     [popoverViewController setPreferredContentSize:CGSizeMake(120, 35)];
     popoverViewController.modalInPopover = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)createFooterView {
@@ -285,7 +273,7 @@
         popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
         popoverController.delegate = self;
         
-        [popoverController presentPopoverFromRect:_text.bounds inView:_text permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+        [popoverController presentPopoverFromRect:_subtitleLabel.bounds inView:_subtitleLabel permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
             [popoverViewController.button addTarget:self action:@selector(copyCode) forControlEvents:UIControlEventTouchUpInside];
         }];
     }
@@ -327,45 +315,22 @@
 }
 
 - (void)sendWithFacebook {
-    if ([FBDialogs canPresentShareDialog]) {
-        FBLinkShareParams *params = [[FBLinkShareParams alloc] initWithLink:[NSURL URLWithString:_fbData[@"link"]] name:_fbData[@"name"] caption:_fbData[@"caption"] description:_fbData[@"description"] picture:nil];
-        
-        [FBDialogs presentShareDialogWithParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-            if(error) {
-                // An error occurred, we need to handle the error
-            } else {
-                [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
-            }
-        }];
-    } else {
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       _fbData[@"name"] , @"name",
-                                       _fbData[@"caption"], @"caption",
-                                       _fbData[@"description"], @"description",
-                                       _fbData[@"link"], @"link",
-                                       nil];
-        
-        [FBWebDialogs presentFeedDialogModallyWithSession:nil
-                                               parameters:params
-                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                                                      if (error) {
-                                                          NSLog(@"Error publishing story: %@", error.description);
-                                                      } else {
-                                                          if (result == FBWebDialogResultDialogNotCompleted) {
-                                                              NSLog(@"User cancelled.");
-                                                          } else {
-                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
-                                                              
-                                                              if (![urlParams valueForKey:@"post_id"]) {
-                                                                  NSLog(@"User cancelled.");
-                                                                  
-                                                              } else {
-                                                                  [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
-                                                              }
-                                                          }
-                                                      }
-                                                  }];
+    if ([[Flooz sharedInstance] facebook_token]) {
+        [self showFbConfirmBox];
     }
+    else {
+        [[Flooz sharedInstance] connectFacebook];
+    }
+}
+
+- (void)showFbConfirmBox {
+    FLPopup *fbPopup = [[FLPopup alloc] initWithMessage:_fbData accept:^{
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] invitationFacebook:nil failure:nil];
+    } refuse:^{
+        
+    }];
+    [fbPopup show];
 }
 
 - (NSDictionary*)parseURLParams:(NSString *)query {

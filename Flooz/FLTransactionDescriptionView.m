@@ -393,11 +393,11 @@
             CGRectSetWidth(likeText.frame, CGRectGetWidth(rightView.frame));
         }
         else {
-            NSString *tmp = [@(social.commentsCount) stringValue];
+            NSString *nbComments = [self castNumber:social.commentsCount];
             commentText.hidden = NO;
-            [commentText setTitle:tmp forState:UIControlStateNormal];
+            [commentText setTitle:nbComments forState:UIControlStateNormal];
             
-            CGFloat labelSize = [tmp widthOfString:[UIFont customContentRegular:FONT_SIZE_LIKE]];
+            CGFloat labelSize = [nbComments widthOfString:[UIFont customContentRegular:FONT_SIZE_LIKE]];
             CGRectSetWidth(commentText.frame, labelSize + 12 * 3);
             
             CGRectSetX(likeText.frame, CGRectGetWidth(commentText.frame));

@@ -23,6 +23,7 @@
 #import "FLReport.h"
 #import "FLTexts.h"
 
+static NSString *kNotificationFbConnect = @"kNotificationFbConnect";
 static NSString *kNotificationConnectionError = @"kNotificationConnectionError";
 static NSString *kNotificationRemoveWindowSubviews = @"kNotificationRemoveWindowSubviews";
 static NSString *kNotificationCloseKeyboard = @"kNotificationCloseKeyboard";
@@ -34,8 +35,9 @@ static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 
 static NSString *kSendContact = @"contactSended";
 
+static NSString *kFilterData = @"filterData";
 static NSString *kUserData = @"userData";
-static NSString *kPublicTimelineData = @"publicTimelineData";
+static NSString *kAllTimelineData = @"allTimelineData";
 static NSString *kFriendTimelineData = @"friendTimelineData";
 static NSString *kPrivateTimelineData = @"privateTimelineData";
 static NSString *kTextData = @"textData";
@@ -82,6 +84,7 @@ static NSString *kBranchData = @"branchData";
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (NSString *)formatBirthDate:(NSString *)birthdate;
 - (void)cashoutValidate:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)sendDiscountCode:(NSDictionary *)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)loadCactusData:(NSString*)identifier success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updateCurrentUser;
@@ -127,6 +130,7 @@ static NSString *kBranchData = @"branchData";
 - (void)createCreditCard:(NSDictionary *)creditCard atSignup:(BOOL)signup success:(void (^)(id result))success;
 - (void)abort3DSecure;
 
+- (void)invitationFacebook:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)invitationText:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)inviteWithPhone:(NSString *)phone;

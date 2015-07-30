@@ -10,7 +10,6 @@
 
 #import "SecureCodeViewController.h"
 #import "PasswordViewController.h"
-#import "SettingsSecretViewController.h"
 #import "MenuCell.h"
 #import "AccountCell.h"
 
@@ -90,7 +89,9 @@
         SecureCodeViewController *controller = [SecureCodeViewController new];
         controller.isForChangeSecureCode = YES;
         controller.blockTouchID = YES;
+        self.hidesBottomBarWhenPushed = YES;
         [[self navigationController] pushViewController:controller animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
     }
     else if (indexPath.row == 1) {
         [[self navigationController] pushViewController:[PasswordViewController new] animated:YES];

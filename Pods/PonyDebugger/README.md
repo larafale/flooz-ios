@@ -2,6 +2,10 @@
 
 PonyDebugger
 ============
+[![CI Status](https://travis-ci.org/square/PonyDebugger.svg?branch=master)](https://travis-ci.org/square/PonyDebugger)
+[![Version](https://img.shields.io/cocoapods/v/PonyDebugger.svg)](http://cocoadocs.org/docsets/PonyDebugger)
+[![License](https://img.shields.io/cocoapods/l/PonyDebugger.svg)](http://cocoadocs.org/docsets/PonyDebugger)
+[![Platform](https://img.shields.io/cocoapods/p/PonyDebugger.svg)](http://cocoadocs.org/docsets/PonyDebugger)
 
 PonyDebugger is a remote debugging toolset.  It is a client library and gateway
 server combination that uses Chrome Developer Tools on your browser to debug
@@ -120,7 +124,7 @@ preference pane.
 
 ```sh
 
-curl -sk https://cloud.github.com/downloads/square/PonyDebugger/bootstrap-ponyd.py | \
+curl -s https://cloud.github.com/downloads/square/PonyDebugger/bootstrap-ponyd.py | \
   python - --ponyd-symlink=/usr/local/bin/ponyd ~/Library/PonyDebugger
 ```
 
@@ -371,7 +375,7 @@ request, we'll make sure you're in the list of people who have signed a CLA.
 
 Some useful links:
 
-- [Chrome Remote Debugging Documentation](https://developers.google.com/chrome-developer-tools/docs/protocol/tot/index)
+- [Chrome Remote Debugging Documentation](https://developer.chrome.com/devtools/docs/protocol/tot)
 - [WebKit Inspector Protocol Definition on GitHub](https://github.com/WebKit/webkit/blob/master/Source/WebCore/inspector/Inspector.json)
 
 

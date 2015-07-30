@@ -37,8 +37,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
-		self.title = NSLocalizedString(@"NAV_FRIENDS", nil);
-
 		friendsSearch = @[];
 		friendsRequest = @[];
 		friendsSuggestion = @[];
@@ -52,34 +50,33 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-    _searchBar = [[FriendAddSearchBar alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth() - 100, 40)];
+    CGFloat searchMargin;
+    
+    if (IS_IPHONE_4)
+        searchMargin = 150;
+    else if (IS_IPHONE_5)
+        searchMargin = 120;
+    else if (IS_IPHONE_6)
+        searchMargin = 100;
+    else
+        searchMargin = 90;
+    
+    _searchBar = [[FriendAddSearchBar alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth() - searchMargin, 40)];
 	[_searchBar setDelegate:self];
     [_searchBar sizeToFit];
     
     self.navigationItem.titleView = _searchBar;
 
     _backgroundView = [UIView newWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
+    [_backgroundView setBackgroundColor:[UIColor customBackgroundHeader]];
     
-    UIImageView *backgroudImage = [UIImageView newWithImage:[UIImage imageNamed:@"background-friends"]];
-    backgroudImage.contentMode = UIViewContentModeScaleAspectFit;
-    CGFloat newWidth = PPScreenWidth();
-    
-    if (IS_IPHONE_4)
-        newWidth -= 25;
-    
-    CGFloat newHeight = newWidth * CGRectGetHeight(backgroudImage.frame) / CGRectGetWidth(backgroudImage.frame);
-
-    CGRectSetWidthHeight(backgroudImage.frame, newWidth, newHeight);
-    CGRectSetPosition(backgroudImage.frame, CGRectGetWidth(_backgroundView.frame) / 2 - newWidth / 2, 0);
-
     CGFloat margin = 20;
     if (IS_IPHONE_4)
         margin = 10;
     
-    FLActionButton *shareButton = [[FLActionButton alloc] initWithFrame:CGRectMake(30.0f, CGRectGetHeight(backgroudImage.frame) + margin, PPScreenWidth() - 60.0f, FLActionButtonDefaultHeight) title:NSLocalizedString(@"FRIENDS_BUTTON_INVITE", nil)];
+    FLActionButton *shareButton = [[FLActionButton alloc] initWithFrame:CGRectMake(30.0f, CGRectGetHeight(_backgroundView.frame) - 40 - FLActionButtonDefaultHeight, PPScreenWidth() - 60.0f, FLActionButtonDefaultHeight) title:NSLocalizedString(@"FRIENDS_BUTTON_INVITE", nil)];
     [shareButton addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
     
-    [_backgroundView addSubview:backgroudImage];
     [_backgroundView addSubview:shareButton];
     
 	_tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame)) style:UITableViewStylePlain];
@@ -118,8 +115,7 @@
 }
 
 - (void)showShareView {
-    ShareAppViewController *controller = [ShareAppViewController new];
-    [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
+    [self.tabBarController setSelectedIndex:3];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

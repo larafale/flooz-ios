@@ -51,6 +51,7 @@
 - (BOOL)isFirstResponder;
 - (BOOL)resignFirstResponder;
 - (void)setEnable:(BOOL)enable;
+- (void)setTextOfTextField:(NSString *)text;
 
 - (void)setDictionary:(NSMutableDictionary *)dic andKey:(NSString *)k;
 - (NSString *)dictionaryKey;
