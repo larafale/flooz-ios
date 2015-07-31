@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface SettingsIdentityViewController : BaseViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
+@interface SettingsDocumentsViewController : BaseViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 
 @end

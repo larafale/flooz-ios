@@ -23,7 +23,6 @@
 #import "TimelineViewController.h"
 #import "SecureCodeViewController.h"
 #import "TransactionViewController.h"
-#import "AccountProfilViewController.h"
 #import "NewTransactionViewController.h"
 #import "UICKeyChainStore.h"
 #import "SignupNavigationController.h"
@@ -62,7 +61,7 @@
     
     [Fabric with:@[CrashlyticsKit]];
     [Crashlytics startWithAPIKey:@"4f18178e0b7894ec76bb6f01a60f34baf68acbf7"];
-
+    
     [self loadBranchParams];
     
     Branch *branch = [Branch getInstance];
@@ -458,7 +457,7 @@
             if (url.host && ![url.host isBlank]) {
                 NSString *host = url.host;
                 NSDictionary *dic = [NSDictionary newWithJSONString:host];
-
+                
                 if (dic && dic[@"data"]) {
                     if (dic[@"data"][@"login"]) {
                         NSString *token = dic[@"data"][@"login"];
@@ -476,7 +475,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBAppCall handleDidBecomeActive];
-
+    
+#ifndef FLOOZ_DEV_LOCAL
     if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
         double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -484,6 +484,7 @@
             [self handlePendingData];
         });
     }
+#endif
 }
 
 - (BOOL)isViewAfterAuthentication {
@@ -516,10 +517,12 @@
 }
 
 - (void)handlePendingData {
+#ifndef FLOOZ_DEV_LOCAL
     if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
         [self handlePushMessage:pendingData withApplication:nil];
         pendingData = nil;
     }
+#endif
 }
 
 - (void)handlePushMessage:(NSDictionary *)userInfo withApplication:(UIApplication *)application {
@@ -527,10 +530,12 @@
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+#ifndef FLOOZ_DEV_LOCAL
         if ([[Flooz sharedInstance] currentUser] && tmp && [self isViewAfterAuthentication]) {
             [[Flooz sharedInstance] handleRequestTriggers:tmp];
             [[Flooz sharedInstance] displayPopupMessage:tmp];
         }
+#endif
     });
 }
 
@@ -954,26 +959,22 @@
 }
 
 - (void)showNewTransactionController:(FLUser *)user transactionType:(NSUInteger)transactionType {
-    [self dismissControllersAnimated:YES completion: ^{
-        [self popToMainView];
+    dispatch_async(dispatch_get_main_queue(), ^{
         FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
         [self.tabBarController presentViewController:controller animated:YES completion:NULL];
-    }];
+    });
 }
 
 - (void)showPresetNewTransactionController:(FLPreset *)preset {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self dismissControllersAnimated:YES completion: ^{
-            [self popToMainView];
-            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithPreset:preset]];
-            [self.tabBarController presentViewController:controller animated:YES completion:NULL];
-        }];
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithPreset:preset]];
+        [self.tabBarController presentViewController:controller animated:YES completion:NULL];
     });
 }
 
 - (void)showFriendsController {
     [[Flooz sharedInstance] updateCurrentUser];
-
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self dismissControllersAnimated:YES completion: ^{
             [self popToMainView];
@@ -986,6 +987,7 @@
 - (void)showEditProfil {
     [[Flooz sharedInstance] updateCurrentUser];
     [self dismissControllersAnimated:YES completion: ^{
+        [((FLNavigationController*)self.tabBarController.viewControllers[4]) popToRootViewControllerAnimated:NO];
         [self.tabBarController setSelectedIndex:4];
     }];
 }

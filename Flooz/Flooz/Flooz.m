@@ -23,13 +23,14 @@
 
 #import "AvatarMenu.h"
 #import "CreditCardViewController.h"
-#import "SettingsIdentityViewController.h"
+#import "SettingsDocumentsViewController.h"
 #import "SettingsCoordsViewController.h"
 #import "3DSecureViewController.h"
 #import "SecureCodeViewController.h"
 #import "ShareAppViewController.h"
 #import "FLPopupInformation.h"
 #import "SettingsBankViewController.h"
+#import "FLTabBarController.h"
 
 #define APP_VERSION [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 
@@ -47,7 +48,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        
+
 #ifdef FLOOZ_DEV_LOCAL
         manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", [appDelegate localIp]]]];
 #elif FLOOZ_DEV_API
@@ -482,7 +483,7 @@
 }
 
 - (void)invitationFacebook:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/invitations/facebook" method:@"POST" params:nil success:success failure:failure];
+    [self requestPath:@"/invitations/facebook" method:@"GET" params:nil success:success failure:failure];
 }
 
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -646,12 +647,12 @@
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
 {
     NSMutableDictionary *tempTransaction = [transaction mutableCopy];
-
+    
     if (tempTransaction[@"image"]) {
         [tempTransaction removeObjectForKey:@"image"];
         [tempTransaction setObject:@YES forKey:@"hasImage"];
     }
-
+    
     [tempTransaction removeObjectForKey:@"toImage"];
     [tempTransaction removeObjectForKey:@"preset"];
     
@@ -931,7 +932,7 @@
     if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [[UIDevice currentDevice] identifierForVendor].UUIDString]];
     }
-                
+    
     // Pour le nextUrl
     if ([path rangeOfString:@"&version="].location == NSNotFound) {
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&version=%@", APP_VERSION]];
@@ -1243,12 +1244,14 @@
 }
 
 - (void)handleTriggerCardShow:(NSDictionary *)data {
-    CreditCardViewController *controller = [CreditCardViewController new];
-    
-    if (data && data[@"label"] && ![data[@"label"] isBlank])
-        controller.customLabel = data[@"label"];
-    
-    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CreditCardViewController *controller = [CreditCardViewController new];
+        
+        if (data && data[@"label"] && ![data[@"label"] isBlank])
+            controller.customLabel = data[@"label"];
+        
+        [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    });
 }
 
 - (void)handleTriggerFriendReload:(NSDictionary *)data {
@@ -1281,19 +1284,25 @@
 }
 
 - (void)handleTriggerContactInfoShow:(NSDictionary *)data {
-    SettingsCoordsViewController *controller = [SettingsCoordsViewController new];
-    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SettingsCoordsViewController *controller = [SettingsCoordsViewController new];
+        [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    });
 }
 
-- (void)handleTriggerUserIdentityShow:(NSDictionary *)data {
-    SettingsIdentityViewController *controller = [SettingsIdentityViewController new];
-    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+- (void)handleTriggerUserDocumentsShow:(NSDictionary *)data {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SettingsDocumentsViewController *controller = [SettingsDocumentsViewController new];
+        [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    });
 }
 
 - (void)handleTrigger3DSecureShow:(NSDictionary *)data {
-    Secure3DViewController *controller = [Secure3DViewController createInstance];
-    [controller setHtmlContent:data[@"html"]];
-    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        Secure3DViewController *controller = [Secure3DViewController createInstance];
+        [controller setHtmlContent:data[@"html"]];
+        [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    });
 }
 
 - (void)handleTrigger3DSecureComplete:(NSDictionary *)data {
@@ -1329,8 +1338,19 @@
 }
 
 - (void)handleTriggerInvitationShow:(NSDictionary *)data {
-    ShareAppViewController *controller = [ShareAppViewController new];
-    [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *tmp = [appDelegate currentController];
+        
+        if ([tmp isKindOfClass:[FLTabBarController class]]) {
+            [((FLTabBarController*)tmp) setSelectedIndex:3];
+        }
+        else if ([tmp tabBarController]) {
+            [[tmp tabBarController] setSelectedIndex:3];
+        } else {
+            ShareAppViewController *controller = [ShareAppViewController new];
+            [tmp presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+        }
+    });
 }
 
 - (void)handleTriggerHttpCall:(NSDictionary *)data {
@@ -1355,7 +1375,7 @@
             [[Flooz sharedInstance] createContactList:nil atSignup:YES];
         }
     }];
-
+    
 }
 
 - (void)handleTriggerHomeShow:(NSDictionary *)data {
@@ -1364,7 +1384,7 @@
 
 - (void)handleTriggerIbanShow:(NSDictionary *)data {
     SettingsBankViewController *controller = [SettingsBankViewController new];
-    [[appDelegate currentController] presentViewController:controller animated:YES completion:NULL];
+    [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:NULL];
 }
 
 - (void)handleTriggerTutoShow:(NSDictionary *)data {
@@ -1372,7 +1392,7 @@
 }
 
 - (void)handleTriggerViewClose:(NSDictionary *)data {
-    [[appDelegate currentController] dismissViewControllerAnimated:YES completion:nil];
+    [[appDelegate myTopViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)handleTrigger:(FLTrigger*)trigger {
@@ -1388,7 +1408,7 @@
                                    [NSNumber numberWithInt:TriggerLogout]: NSStringFromSelector(@selector(handleTriggerLogout:)),
                                    [NSNumber numberWithInt:TriggerAppUpdate]: NSStringFromSelector(@selector(handleTriggerAppUpdate:)),
                                    [NSNumber numberWithInt:TriggerShowContactInfo]: NSStringFromSelector(@selector(handleTriggerContactInfoShow:)),
-                                   [NSNumber numberWithInt:TriggerShowUserIdentity]: NSStringFromSelector(@selector(handleTriggerUserIdentityShow:)),
+                                   [NSNumber numberWithInt:TriggerShowUserDocuments]: NSStringFromSelector(@selector(handleTriggerUserDocumentsShow:)),
                                    [NSNumber numberWithInt:TriggerShow3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureShow:)),
                                    [NSNumber numberWithInt:TriggerComplete3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureComplete:)),
                                    [NSNumber numberWithInt:TriggerFail3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureFail:)),
@@ -1578,7 +1598,7 @@
             NSString *_email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emailList, i);
             
             [contactsEmail addObject:_email];
-         }
+        }
         
         
         ABMultiValueRef phoneNumbers = ABRecordCopyValue(ref, kABPersonPhoneProperty);
@@ -1593,7 +1613,7 @@
         
         if (emailList)
             CFRelease(emailList);
-
+        
         if (phoneNumbers)
             CFRelease(phoneNumbers);
     }

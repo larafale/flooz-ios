@@ -10,7 +10,6 @@
 
 #import "SecureCodeViewController.h"
 #import "PasswordViewController.h"
-#import "MenuCell.h"
 #import "AccountCell.h"
 
 @interface SettingsSecurityViewController () {

@@ -206,8 +206,8 @@
 
 "SETTINGS_CARD" = "Carte bancaire";
 "SETTINGS_BANK" = "Compte bancaire";
-"SETTINGS_IDENTITY" = "Identité";
-"SETTINGS_COORDS" = "Coordonnées";
+"SETTINGS_DOCUMENTS" = "Mes documents";
+"SETTINGS_COORDS" = "Mes informations";
 "SETTINGS_SECURITY" = "Sécurité";
 "SETTINGS_PREFERENCES" = "Préférences";
 "SETTINGS_PRIVACY" = "Partage & vie privée";

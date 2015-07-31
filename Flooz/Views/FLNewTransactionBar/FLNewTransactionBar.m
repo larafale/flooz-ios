@@ -60,8 +60,6 @@
         locationManager.delegate = self;
         
         [self createPrivacyButton];
-//        [self createFacebookButton];
-//        [self createQRCodeButton];
         [self createImageButton];
         [self createButtonSend];
         
@@ -163,18 +161,6 @@
     [imageButton addTarget:self action:@selector(didImageButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:imageButton];
-}
-
-- (void)createFacebookButton {
-    facebookButton = [[UIButton alloc] initWithFrame:CGRectMake((actionButtonMargin * 3) + (actionButtonWidth * 2), marginV, actionButtonWidth, actionButtonHeight)];
-    
-    [facebookButton setImage:[UIImage imageNamed:@"bar-facebook"] forState:UIControlStateNormal];
-    [facebookButton setImage:[UIImage imageNamed:@"bar-facebook-blue"] forState:UIControlStateSelected];
-    [facebookButton setImage:[UIImage imageNamed:@"bar-facebook-blue"] forState:UIControlStateHighlighted];
-    
-    [facebookButton addTarget:self action:@selector(didFacebookButtonTouch) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self addSubview:facebookButton];
 }
 
 - (void)createPrivacyButton {

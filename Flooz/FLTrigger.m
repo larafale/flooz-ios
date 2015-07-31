@@ -57,10 +57,10 @@
         return TriggerLogout;
     else if ([param isEqualToString:@"app:update"])
         return TriggerAppUpdate;
-    else if ([param isEqualToString:@"contactInfo:show"])
+    else if ([param isEqualToString:@"informations:show"])
         return TriggerShowContactInfo;
-    else if ([param isEqualToString:@"identity:show"])
-        return TriggerShowUserIdentity;
+    else if ([param isEqualToString:@"documents:show"])
+        return TriggerShowUserDocuments;
     else if ([param isEqualToString:@"3dSecure:show"])
         return TriggerShow3DSecure;
     else if ([param isEqualToString:@"3dSecure:complete"])

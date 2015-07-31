@@ -10,7 +10,6 @@
 #import "SettingsNotificationsViewController.h"
 #import "SettingsPrivacyController.h"
 #import "FLSwitch.h"
-#import "MenuCell.h"
 #import "AccountCell.h"
 
 @interface SettingsPreferencesViewController () {

@@ -25,7 +25,7 @@ typedef enum e_FLTriggerType {
     TriggerLogout,
     TriggerAppUpdate,
     TriggerShowContactInfo,
-    TriggerShowUserIdentity,
+    TriggerShowUserDocuments,
     TriggerShow3DSecure,
     TriggerComplete3DSecure,
     TriggerFail3DSecure,

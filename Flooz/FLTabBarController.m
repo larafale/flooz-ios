@@ -49,7 +49,7 @@
     
     homeItem = [[UITabBarItem alloc] initWithTitle:@"Accueil" image:[UIImage imageNamed:@"menu-home"] tag:0];
     notifItem = [[UITabBarItem alloc] initWithTitle:@"Notifs" image:[UIImage imageNamed:@"menu-notifications"] tag:1];
-    floozItem = [[UITabBarItem alloc] initWithTitle:nil image:[UIImage imageNamed:@"friends-field-add"] tag:2];
+    floozItem = [[UITabBarItem alloc] initWithTitle:nil image:[[UIImage imageNamed:@"friends-field-add"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] tag:2];
     shareItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-share"] tag:3];
     profileItem = [[UITabBarItem alloc] initWithTitle:@"Compte" image:[UIImage imageNamed:@"menu-account"] tag:4];
     
@@ -114,25 +114,25 @@
     
     FLUser *currentUser = [Flooz sharedInstance].currentUser;
     
-    NSArray *missingFields = currentUser.json[@"missingFields"];
-    
-    if (!currentUser.creditCard)
-        accountNotifs++;
-    
-    if ([missingFields containsObject:@"sepa"])
-        accountNotifs++;
-    
-    if ([missingFields containsObject:@"cniRecto"])
-        accountNotifs++;
-    
-    if ([missingFields containsObject:@"cniVerso"])
-        accountNotifs++;
-    
-    if ([missingFields containsObject:@"address"])
-        accountNotifs++;
-    
-    if ([missingFields containsObject:@"justificatory"])
-        accountNotifs++;
+//    NSArray *missingFields = currentUser.json[@"missingFields"];
+//    
+//    if (!currentUser.creditCard)
+//        accountNotifs++;
+//    
+//    if ([missingFields containsObject:@"sepa"])
+//        accountNotifs++;
+//    
+//    if ([missingFields containsObject:@"cniRecto"])
+//        accountNotifs++;
+//    
+//    if ([missingFields containsObject:@"cniVerso"])
+//        accountNotifs++;
+//    
+//    if ([missingFields containsObject:@"address"])
+//        accountNotifs++;
+//    
+//    if ([missingFields containsObject:@"justificatory"])
+//        accountNotifs++;
     
     accountNotifs += [currentUser.metrics[@"pendingFriend"] intValue];
     

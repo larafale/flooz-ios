@@ -31,12 +31,11 @@
     
     self.view.backgroundColor = [UIColor customBackground];
     
-    NSString *imageNamed = @"LaunchImage";
-    if (IS_IPHONE_4) {
-        imageNamed = [imageNamed stringByAppendingString:@"-iphone4"];
-    }
+    NSString *imageNamed = @"back-secure";
+
     logo = [UIImageView imageNamed:imageNamed];
-    logo.center = self.view.center;
+    [logo setContentMode:UIViewContentModeScaleAspectFit];
+    [logo setFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [self.view addSubview:logo];
     
     title = [UIImageView imageNamed:@"home-title"];
@@ -77,8 +76,12 @@
                                                    delegate:self
                                           cancelButtonTitle:@"Cancel"
                                           otherButtonTitles:@"Local", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    [[alert textFieldAtIndex:1] setSecureTextEntry:NO];
     [[alert textFieldAtIndex:0] setText:@"192.168.1."];
+    [[alert textFieldAtIndex:1] setText:@"3002"];
+    [[alert textFieldAtIndex:0] setPlaceholder:@"IP"];
+    [[alert textFieldAtIndex:1] setPlaceholder:@"Port"];
     [alert show];
 #endif
 }
@@ -87,7 +90,7 @@
     if (buttonIndex == 0)
         [appDelegate initTestingWithIP:@"dev.flooz.me:80"];
     else
-        [appDelegate initTestingWithIP:[alertView textFieldAtIndex:0].text];
+        [appDelegate initTestingWithIP:[NSString stringWithFormat:@"%@:%@", [alertView textFieldAtIndex:0].text, [alertView textFieldAtIndex:1].text]];
 }
 
 @end

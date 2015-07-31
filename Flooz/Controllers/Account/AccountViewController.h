@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MenuCell.h"
-
 @interface AccountViewController : GlobalViewController <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @end

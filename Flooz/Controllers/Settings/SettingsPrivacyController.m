@@ -38,9 +38,9 @@
     height += CGRectGetHeight(label.frame) + 20.0f;
     
     UISegmentedControl *control = [[UISegmentedControl alloc] initWithFrame:CGRectMake(PADDING_SIDE, height, CGRectGetWidth(self.view.frame) - 2 * PADDING_SIDE, 27)];
-    [control insertSegmentWithTitle:[FLTransaction transactionScopeToText:TransactionScopePublic] atIndex:TransactionScopePublic animated:NO];
-    [control insertSegmentWithTitle:[FLTransaction transactionScopeToText:TransactionScopeFriend] atIndex:TransactionScopeFriend animated:NO];
-    [control insertSegmentWithTitle:[FLTransaction transactionScopeToText:TransactionScopePrivate] atIndex:TransactionScopePrivate animated:NO];
+    [control insertSegmentWithTitle:@"Tous" atIndex:TransactionScopePublic animated:NO];
+    [control insertSegmentWithTitle:@"Mes amis" atIndex:TransactionScopeFriend animated:NO];
+    [control insertSegmentWithTitle:@"Moi" atIndex:TransactionScopePrivate animated:NO];
     [control setTintColor:[UIColor customBlue]];
     [control addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
     

@@ -64,20 +64,20 @@
         inputViewField.textField = cardNumberField.textfield;
         cardNumberField.textfield.inputView = inputViewField;
     }
-    {
-        UIImage *photo = [UIImage imageNamed:@"bar-camera"];
-        UIButton *scanCardButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(cardNumberField.frame) - 50.0f, 0.0f, 50.0f, CGRectGetHeight(cardNumberField.frame))];
-        [scanCardButton setImage:photo forState:UIControlStateNormal];
-        
-        CGSize size = photo.size;
-        [scanCardButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, -size.height + 10.0f, -size.width)];
-        
-        [scanCardButton addTarget:self action:@selector(presentScanPayViewController) forControlEvents:UIControlEventTouchUpInside];
-        if (!IS_IPHONE_4) {
-            //Not working with iphone 4
-            [cardNumberField addSubview:scanCardButton];
-        }
-    }
+//    {
+//        UIImage *photo = [UIImage imageNamed:@"bar-camera"];
+//        UIButton *scanCardButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(cardNumberField.frame) - 50.0f, 0.0f, 50.0f, CGRectGetHeight(cardNumberField.frame))];
+//        [scanCardButton setImage:photo forState:UIControlStateNormal];
+//        
+//        CGSize size = photo.size;
+//        [scanCardButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, -size.height + 10.0f, -size.width)];
+//        
+//        [scanCardButton addTarget:self action:@selector(presentScanPayViewController) forControlEvents:UIControlEventTouchUpInside];
+//        if (!IS_IPHONE_4) {
+//            //Not working with iphone 4
+//            [cardNumberField addSubview:scanCardButton];
+//        }
+//    }
     
     FLTextFieldTitle2 *expireField = [[FLTextFieldTitle2 alloc] initWithTitle:@"" placeholder:@"SIGNUP_FIELD_CARD_EXPIRES_PLACEHOLDER" for:_card key:@"expires" position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(cardNumberField.frame) - 2.0f)];
     [expireField setKeyboardType:UIKeyboardTypeDecimalPad];

@@ -25,14 +25,14 @@
 @implementation DiscountCodeViewController
 
 - (void)viewDidLoad {
-    self.title = [Flooz sharedInstance].currentTexts.menu[@"title"];
+    self.title = [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"];
     [super viewDidLoad];
     
     _contentView = [UIScrollView newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     [_mainBody addSubview:_contentView];
     
     {
-        _sponsor = [[FLTextFieldSignup alloc] initWithPlaceholder:[Flooz sharedInstance].currentTexts.menu[@"placeholder"] for:_data key:@"code" position:CGPointMake(PADDING_SIDE, PADDING_SIDE)];
+        _sponsor = [[FLTextFieldSignup alloc] initWithPlaceholder:[Flooz sharedInstance].currentTexts.menu[@"promo"][@"placeholder"] for:_data key:@"code" position:CGPointMake(PADDING_SIDE, PADDING_SIDE)];
         [_sponsor addForTextChangeTarget:self action:@selector(canValidate:)];
         [_contentView addSubview:_sponsor];
     }
@@ -42,6 +42,15 @@
         CGRectSetY(_saveButton.frame, CGRectGetMaxY(_sponsor.frame) + 10.0f);
         [_saveButton addTarget:self action:@selector(saveChanges) forControlEvents:UIControlEventTouchUpInside];
         [_contentView addSubview:_saveButton];
+        
+        UILabel *infos = [[UILabel alloc] initWithText:[Flooz sharedInstance].currentTexts.menu[@"promo"][@"info"] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
+        [infos setLineBreakMode:NSLineBreakByWordWrapping];
+        
+        CGRectSetWidth(infos.frame, CGRectGetWidth(_contentView.frame) - PADDING_SIDE * 2);
+        [infos sizeToFit];
+        CGRectSetXY(infos.frame, CGRectGetWidth(_contentView.frame) / 2 - CGRectGetWidth(infos.frame) / 2, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(infos.frame) - PADDING_SIDE);
+        [_contentView addSubview:infos];
+
     }
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), CGRectGetMaxY(_saveButton.frame));
     

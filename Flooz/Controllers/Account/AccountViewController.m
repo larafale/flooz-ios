@@ -9,16 +9,14 @@
 #import "AccountViewController.h"
 #import "FLAccountUserView.h"
 
-#import "AccountProfilViewController.h"
 #import "NotificationsViewController.h"
 #import "ShareAppViewController.h"
 #import "CashOutViewController.h"
-#import "SettingsViewController.h"
 #import "ScannerViewController.h"
 #import "CreditCardViewController.h"
 #import "SettingsBankViewController.h"
 #import "SettingsCoordsViewController.h"
-#import "SettingsIdentityViewController.h"
+#import "SettingsDocumentsViewController.h"
 #import "SettingsPreferencesViewController.h"
 #import "SettingsSecurityViewController.h"
 #import "WebViewController.h"
@@ -131,7 +129,7 @@
     int bankNotifs = 0;
     int coordsNotifs = 0;
     int friendsNotifs = 0;
-    int identityNotifs = 0;
+    int docNotifs = 0;
     
     FLUser *currentUser = [Flooz sharedInstance].currentUser;
     
@@ -144,16 +142,16 @@
         bankNotifs = 1;
     
     if ([missingFields containsObject:@"cniRecto"])
-        identityNotifs++;
+        docNotifs++;
     
     if ([missingFields containsObject:@"cniVerso"])
-        identityNotifs++;
+        docNotifs++;
     
     if ([missingFields containsObject:@"address"])
         coordsNotifs++;
     
     if ([missingFields containsObject:@"justificatory"])
-        coordsNotifs++;
+        docNotifs++;
     
     friendsNotifs = [currentUser.metrics[@"pendingFriend"] intValue];
     
@@ -164,9 +162,9 @@
                            @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                            @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
                            @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
-                           @{@"title":NSLocalizedString(@"SETTINGS_IDENTITY", @""), @"action":@"identity", @"notif":@(identityNotifs)},
                            @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
-                           @{@"title":[Flooz sharedInstance].currentTexts.menu[@"title"], @"action":@"sponsor"}
+                           @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
+                           @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
                            ]
                    },
                  @{@"title":@"Reglages",
@@ -302,8 +300,8 @@
         [[self navigationController] pushViewController:[FriendsViewController new] animated:YES];
     } else if ([action isEqualToString:@"bank"]) {
         [[self navigationController] pushViewController:[SettingsBankViewController new] animated:YES];
-    } else if ([action isEqualToString:@"identity"]) {
-        [[self navigationController] pushViewController:[SettingsIdentityViewController new] animated:YES];
+    } else if ([action isEqualToString:@"documents"]) {
+        [[self navigationController] pushViewController:[SettingsDocumentsViewController new] animated:YES];
     } else if ([action isEqualToString:@"coords"]) {
         [[self navigationController] pushViewController:[SettingsCoordsViewController new] animated:YES];
     } else if ([action isEqualToString:@"security"]) {

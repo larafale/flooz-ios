@@ -6,23 +6,19 @@
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
-#import "SettingsIdentityViewController.h"
+#import "SettingsDocumentsViewController.h"
 
 #import "FLKeyboardView.h"
 
 #define PADDING_SIDE 20.0f
 
-@interface SettingsIdentityViewController () {
+@interface SettingsDocumentsViewController () {
 	UIScrollView *_contentView;
 
 	NSMutableDictionary *_userDic;
 	NSMutableDictionary *_sepa;
 
 	FLUserView *userView;
-	FLTextFieldSignup *_name;
-	FLTextFieldSignup *_userName;
-	FLTextFieldSignup *_birthday;
-    FLTextFieldSignup *_coupon;
 
 	NSMutableArray *fieldsView;
 	FLKeyboardView *inputView;
@@ -41,10 +37,10 @@
 
 @end
 
-@implementation SettingsIdentityViewController
+@implementation SettingsDocumentsViewController
 
 - (void)viewDidLoad {
-	self.title = NSLocalizedString(@"SETTINGS_IDENTITY", @"");
+	self.title = NSLocalizedString(@"SETTINGS_DOCUMENTS", @"");
 	[super viewDidLoad];
 
 	[self initWithInfo];
@@ -55,36 +51,7 @@
     _contentView = [UIScrollView newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
 	[_mainBody addSubview:_contentView];
     
-	{
-		_name = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_FIRSTNAME" for:_userDic key:@"firstName" position:CGPointMake(PADDING_SIDE, 0.0f) placeholder2:@"FIELD_LASTNAME" key2:@"lastName"];
-		[_name addForNextClickTarget:self action:@selector(focusOnNextInfo)];
-		[_name addForTextChangeTarget:self action:@selector(canValidate:)];
-		[_contentView addSubview:_name];
-		[fieldsView addObject:_name];
-	}
-
-	{
-		_userName = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_USERNAME" for:_userDic key:@"nick" position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(_name.frame) + 3.0f)];
-		[_userName addForNextClickTarget:self action:@selector(focusOnNextInfo)];
-		[_userName addForTextChangeTarget:self action:@selector(canValidate:)];
-		[_userName setUserInteractionEnabled:NO];
-		[_userName setEnable:NO];
-//		[_contentView addSubview:_userName];
-	}
-
-	{
-		_birthday = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_BIRTHDAY" for:_userDic key:@"birthdate" position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(_name.frame) + 3.0f)];
-		[_birthday addForNextClickTarget:self action:@selector(focusOnNextInfo)];
-		[_birthday addForTextChangeTarget:self action:@selector(canValidate:)];
-//		[_contentView addSubview:_birthday];
-//		[fieldsView addObject:_birthday];
-
-		inputView = [FLKeyboardView new];
-		inputView.textField = _birthday.textfield;
-		_birthday.textfield.inputView = inputView;
-	}
-
-	height = CGRectGetMaxY(_name.frame);
+	height = 5.0f;
     
     for (NSDictionary *dic in documents) {
         NSString *key = [[dic allKeys] firstObject];
@@ -92,13 +59,16 @@
         [self createDocumentsButtonWithKey:key andValue:value];
     }
 
-	{
-		[self createSaveButton];
-		CGRectSetY(_saveButton.frame, height + 10.0f);
-		[_saveButton addTarget:self action:@selector(saveChanges) forControlEvents:UIControlEventTouchUpInside];
-		[_contentView addSubview:_saveButton];
-    }
-    _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), CGRectGetMaxY(_saveButton.frame));
+    UILabel *infos = [[UILabel alloc] initWithText:[Flooz sharedInstance].currentTexts.menu[@"documents"][@"info"] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
+    [infos setLineBreakMode:NSLineBreakByWordWrapping];
+    
+    CGRectSetWidth(infos.frame, CGRectGetWidth(_contentView.frame) - PADDING_SIDE * 2);
+    [infos sizeToFit];
+    CGRectSetXY(infos.frame, CGRectGetWidth(_contentView.frame) / 2 - CGRectGetWidth(infos.frame) / 2, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(infos.frame) - PADDING_SIDE);
+
+    [_contentView addSubview:infos];
+    
+    _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), height);
     
     [self addTapGestureForDismissKeyboard];
 }
@@ -108,30 +78,12 @@
 }
 
 - (void)initWithInfo {
-	FLUser *currentUser = [[Flooz sharedInstance] currentUser];
-
-	_userDic = [NSMutableDictionary new];
-	[_userDic setObject:[NSMutableDictionary new] forKey:@"settings"];
-
-	if ([currentUser lastname] && ![[currentUser lastname] isBlank]) {
-        NSString *text = [[currentUser lastname] stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[[currentUser lastname] substringToIndex:1] capitalizedString]];
-		[_userDic setObject:text forKey:@"lastName"];
-	}
-    if ([currentUser firstname] && ![[currentUser firstname] isBlank]) {
-        NSString *text = [[currentUser firstname] stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[[currentUser firstname] substringToIndex:1] capitalizedString]];
-		[_userDic setObject:text forKey:@"firstName"];
-	}
-	if ([currentUser username]) {
-		[_userDic setObject:[currentUser username] forKey:@"nick"];
-	}
-    if ([currentUser birthdate]) {
-        [_userDic setObject:[currentUser birthdate] forKey:@"birthdate"];
-    }
-	_sepa = [[currentUser sepa] mutableCopy];
 
 	documents = @[
 	        @{ @"CARD_ID_RECTO": @"cniRecto" },
-	        @{ @"CARD_ID_VERSO": @"cniVerso" }
+	        @{ @"CARD_ID_VERSO": @"cniVerso" },
+            @{ @"HOME": @"justificatory" },
+            @{ @"HOME2": @"justificatory2" }
 	    ];
     
 	registerButtonCount = 0;
@@ -174,11 +126,6 @@
     [view addSubview:bottomBar];
 }
 
-- (void)createSaveButton {
-	_saveButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Save", nil)];
-	[_saveButton setEnabled:YES];
-}
-
 - (void)registerButtonForAction:(UIButton *)button {
 	SEL action;
 	switch (registerButtonCount) {
@@ -189,6 +136,14 @@
 		case 1:
 			action = @selector(didDocumentTouch1);
 			break;
+            
+        case 2:
+            action = @selector(didDocumentTouch2);
+            break;
+            
+        case 3:
+            action = @selector(didDocumentTouch3);
+            break;
 
 		default:
 			action = nil;
@@ -199,60 +154,6 @@
 	registerButtonCount++;
 }
 
-- (void)focusOnNextInfo {
-	NSInteger index = 0;
-	for (FLTextFieldSignup *tf in fieldsView) {
-		if ([tf isFirstResponder]) {
-			if (index < fieldsView.count - 1) {
-				[fieldsView[index + 1] becomeFirstResponder];
-				break;
-			}
-			else {
-				if (![self canValidate:tf]) {
-					[fieldsView[0] becomeFirstResponder];
-					break;
-				}
-			}
-		}
-		index++;
-	}
-}
-
-- (BOOL)canValidate:(FLTextFieldSignup *)textIcon {
-	BOOL canValidate = YES;
-
-//	if (!_userDic[@"lastName"] || !_userDic[@"firstName"] || [_userDic[@"lastName"] isBlank] || [_userDic[@"firstName"] isBlank]) {
-//		canValidate = NO;
-//	}
-//
-//	if (!_userDic[@"birthdate"] || !([_userDic[@"birthdate"] length] == 12 || [_userDic[@"birthdate"] length] == 14)) {
-//		canValidate = NO;
-//	}
-//
-//	if (canValidate) {
-//		[_saveButton setEnabled:YES];
-//	}
-//	else {
-//		[_saveButton setEnabled:NO];
-//	}
-	return canValidate;
-}
-
-- (void)saveChanges {
-	if (![self canValidate:nil]) {
-		return;
-	}
-
-	[[self view] endEditing:YES];
-
-	_userDic[@"settings"] = @{ @"sepa": _sepa };
-
-	[[Flooz sharedInstance] showLoadView];
-	[[Flooz sharedInstance] updateUser:_userDic success: ^(id result) {
-	    [self dismissViewController];
-	} failure:NULL];
-}
-
 - (void)didDocumentTouch0 {
 	currentDocumentKey = [[documents[0] allValues] firstObject];
 	[self showImagePicker];
@@ -261,6 +162,16 @@
 - (void)didDocumentTouch1 {
 	currentDocumentKey = [[documents[1] allValues] firstObject];
 	[self showImagePicker];
+}
+
+- (void)didDocumentTouch2 {
+    currentDocumentKey = [[documents[2] allValues] firstObject];
+    [self showImagePicker];
+}
+
+- (void)didDocumentTouch3 {
+    currentDocumentKey = [[documents[3] allValues] firstObject];
+    [self showImagePicker];
 }
 
 - (void)addTapGestureForDismissKeyboard {
