@@ -202,7 +202,6 @@ static BOOL canTouchID = YES;
     [self prepareViewNormal];
     [self prepareViewLogin];
     [self prepareViewEdit];
-//    [self prepareViewSecret];
 }
 
 - (void)prepareViewNormal {
@@ -221,7 +220,7 @@ static BOOL canTouchID = YES;
     
     {
         _forgotButton = [UIButton newWithFrame:CGRectMake(0.0f, CGRectGetHeight(_mainBody.frame) - 50.0f, PPScreenWidth() / 3.0f, 40.0f)];
-        [_forgotButton setTitle:NSLocalizedString(@"Forgot", @"") forState:UIControlStateNormal];
+        [_forgotButton setTitle:NSLocalizedString(@"GLOBAL_FORGET", @"") forState:UIControlStateNormal];
         [_forgotButton addTarget:self action:@selector(didCodeForgetTouch) forControlEvents:UIControlEventTouchUpInside];
         [_forgotButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_forgotButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
@@ -231,7 +230,7 @@ static BOOL canTouchID = YES;
     
     {
         _cleanButton = [UIButton newWithFrame:CGRectMake(PPScreenWidth() / 3.0f * 2.0f, CGRectGetHeight(_mainBody.frame) - 50.0f, PPScreenWidth() / 3.0f, 40.0f)];
-        [_cleanButton setTitle:NSLocalizedString(@"Erase", @"") forState:UIControlStateNormal];
+        [_cleanButton setTitle:NSLocalizedString(@"GLOBAL_ERASE", @"") forState:UIControlStateNormal];
         [_cleanButton addTarget:self action:@selector(clean) forControlEvents:UIControlEventTouchUpInside];
         [_cleanButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_cleanButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
@@ -285,49 +284,6 @@ static BOOL canTouchID = YES;
         [_nextButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
         [_mainBody addSubview:_nextButton];
     }
-}
-
-- (void)prepareViewSecret {
-    
-    _secretExplication = [[UILabel alloc] initWithText:NSLocalizedString(@"SETTINGS_SECRET_INFOS", nil) textColor:[UIColor whiteColor] font:[UIFont customContentRegular:17] textAlignment:NSTextAlignmentCenter numberOfLines:0];
-    CGRectSetPosition(_secretExplication.frame, CGRectGetWidth(_mainBody.frame) / 2 - CGRectGetWidth(_secretExplication.frame) / 2, 20);
-    [_mainBody addSubview:_secretExplication];
-    
-    _secretQuestion = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_secretExplication.frame) + 10, CGRectGetWidth(_mainBody.frame) - 20, 20)];
-    [_secretQuestion setFont:[UIFont customContentRegular:18]];
-    [_secretQuestion setTextColor:[UIColor customBlue]];
-    [_secretQuestion setTextAlignment:NSTextAlignmentCenter];
-    [_mainBody addSubview:_secretQuestion];
-    
-    _secretAnswer = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_SECRET_ANSWER" for:_userDic key:@"secretAnswer" position:CGPointMake(20.0f, CGRectGetMaxY(_secretQuestion.frame))];
-    [_secretAnswer addForNextClickTarget:self action:@selector(checkNextOk)];
-    [_secretAnswer addForTextChangeTarget:self action:@selector(checkNextOk)];
-    [_mainBody addSubview:_secretAnswer];
-    
-    _secretPassword = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_NEW_PASSWORD" for:_userDic key:@"newPassword" position:CGPointMake(20.0f, CGRectGetMaxY(_secretAnswer.frame))];
-    [_secretPassword seTsecureTextEntry:YES];
-    [_secretPassword addForNextClickTarget:self action:@selector(checkNextOk)];
-    [_secretPassword addForTextChangeTarget:self action:@selector(checkNextOk)];
-    [_mainBody addSubview:_secretPassword];
-    
-    _secretPasswordConfirm = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_PASSWORD_CONFIRMATION" for:_userDic key:@"confirm" position:CGPointMake(20.0f, CGRectGetMaxY(_secretPassword.frame))];
-    [_secretPasswordConfirm seTsecureTextEntry:YES];
-    [_secretPasswordConfirm addForNextClickTarget:self action:@selector(checkNextOk)];
-    [_secretPasswordConfirm addForTextChangeTarget:self action:@selector(checkNextOk)];
-    [_mainBody addSubview:_secretPasswordConfirm];
-    
-    _secretNextButton = [[FLActionButton alloc] initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(_secretPasswordConfirm.frame) + 10.0f, PPScreenWidth() - 20.0f * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"SIGNUP_NEXT_BUTTON", nil)];
-    [_secretNextButton setEnabled:NO];
-    [_secretNextButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
-    [_mainBody addSubview:_secretNextButton];
-
-    _secretForgotButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(_secretNextButton.frame) + 10, PPScreenWidth(), 30)];
-    _secretForgotButton.titleLabel.textAlignment = NSTextAlignmentRight;
-    _secretForgotButton.titleLabel.font = [UIFont customContentRegular:12];
-    [_secretForgotButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_secretForgotButton setTitle:NSLocalizedString(@"LOGIN_SECRET_FORGOT", nil) forState:UIControlStateNormal];
-    [_secretForgotButton addTarget:self action:@selector(didSecretForgetTouch) forControlEvents:UIControlEventTouchUpInside];
-    [_mainBody addSubview:_secretForgotButton];
 }
 
 - (void)prepareViewEdit {

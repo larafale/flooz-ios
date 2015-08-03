@@ -30,7 +30,7 @@
     if (self) {
         
         viewHeight = ([self tableView:_tableView heightForRowAtIndexPath:[NSIndexPath new]] * 3) + 20 + [self tableView:_tableView heightForHeaderInSection:0];
-        viewWidth = 155;
+        viewWidth = 165;
         
         [self setPreferredContentSize:CGSizeMake(viewWidth, viewHeight)];
         self.modalInPopover = NO;
@@ -53,13 +53,13 @@
 }
 
 - (CGFloat)tableView:(nonnull UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0;
+    return 25;
 }
 
 - (UIView*)tableView:(nonnull UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_tableView.frame), [self tableView:tableView heightForHeaderInSection:section])];
     
-    UILabel *headerTitle = [[UILabel alloc] initWithText:@"Filtre :" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+    UILabel *headerTitle = [[UILabel alloc] initWithText:NSLocalizedString(@"TIMELINE_FILTER_TITLE", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
     
     CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2);
     CGRectSetX(headerTitle.frame, 10);
@@ -96,15 +96,15 @@
     switch (indexPath.row) {
         case 0:
             scope = TransactionScopeAll;
-            title = @"Tous";
+            title = NSLocalizedString(@"TIMELINE_FILTER_ALL", nil);
             break;
         case 1:
             scope = TransactionScopeFriend;
-            title = @"Mes amis & moi";
+            title = NSLocalizedString(@"TIMELINE_FILTER_FRIENDS", nil);
             break;
         case 2:
             scope = TransactionScopePrivate;
-            title = @"Moi uniquement";
+            title = NSLocalizedString(@"TIMELINE_FILTER_PRIVATE", nil);
             break;
     }
     

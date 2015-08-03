@@ -35,7 +35,7 @@
 - (void)presentCamera;
 
 @property (weak, nonatomic) IBOutlet FLValidNavBar *navBar;
-@property (weak, nonatomic) IBOutlet UIScrollView *contentView;
+@property (retain, nonatomic) UIView *contentView;
 
 @property (retain) AVCaptureStillImageOutput *stillImageOutput;
 

@@ -6,12 +6,15 @@
  Copyright (c) 2014 Flooz. All rights reserved.
  */
 
+/************************************/
+/*              GLOBAL              */
+/************************************/
+
 "GLOBAL_OR" = "ou";
-"GLOBAL_OK" = "Ok";
+"GLOBAL_OK" = "OK";
 "GLOBAL_BY" = "par";
 "GLOBAL_ERROR" =  "Erreur";
 "GLOBAL_CANCEL" = "Annuler";
-"GLOBAL_INVITE" = "Inviter";
 "GLOBAL_CAMERA" = "Appareil photo";
 "GLOBAL_ALBUMS" = "Albums";
 "GLOBAL_EURO" = "€";
@@ -21,83 +24,20 @@
 "GLOBAL_EDIT" = "Changer";
 "GLOBAL_UPDATE" = "Mise à jour disponible !";
 "GLOBAL_VALIDATE" = "Valider";
-"GLOBAL_GOTIT" = "J'ai compris";
+"GLOBAL_SETTINGS" = "Réglages";
+"GLOBAL_FORGET" = "Oublié";
+"GLOBAL_ERASE" = "Effacer";
+"GLOBAL_CONFIRM" = "Confirmer";
+"GLOBAL_LOGIN" = "Connexion";
+"GLOBAL_SIGNUP" = "Inscription";
+"GLOBAL_SAVE" = "Enregistrer";
+"GLOBAL_NEXT" = "Suivant";
 
-"WELCOME_BACK" = "Ravis de vous revoir !";
-"WELCOME" = "Bienvenue !";
+/************************************/
+/*              FIELDS              */
+/************************************/
 
-"SAVE_IMAGE" = "Enregistrer l'image";
-
-"LOGOUT_INFO" = "Etes-vous sûr de vouloir vous déconnecter ?";
-
-"MSG_UPDATE" = "Bonne nouvelle ! Une nouvelle version de Flooz est disponible.";
-"BTN_UPDATE" = "Mettre à jour";
-
-"LEARN_MORE" = "En savoir plus";
-
-"SEND_COMMENT" = "Ajouter un commentaire...";
-
-"NAV_LOGIN" = "Veuillez vous identifier";
-"NAV_SIGNUP" = "S'inscrire";
-"NAV_ACCOUNT" = "Mon profil";
-"NAV_SETTINGS" = "Paramètres";
-"NAV_SOCIAL" = "Cagnottes";
-"NAV_EVENTS" = "Cagnottes";
-"NAV_TIMELINE" = "Flooz";
-"NAV_EDIT_ACCOUNT" = "Modifier";
-"NAV_INFORMATIONS" = "Informations";
-"NAV_NOTIFICATIONS" = "Notifications";
-"NAV_CASHOUT" = "Virement";
-"NAV_RIB" = "RIB";
-"NAV_PASSWORD" = "Modifier";
-"NAV_PASSWORD_FORGET" = "MDP oublié";
-"NAV_CREDIT_CARD" = "Carte bancaire";
-"NAV_CREDIT_CARD_ADD" = "Ajouter une CB";
-"NAV_EVENT_PARTICIPANTS" = "Participants";
-"NAV_FRIENDS" = "Mes amis";
-"NAV_DOCUMENTS" = "Justificatifs";
-"NAV_SECURE_CODE" = "Sécurité";
-"NAV_INVITE" = "Inviter des amis";
-"NAV_NEW_FLOOZ_FRIENDS" = "Choisir un destinataire";
-"NAV_3DSECURE" = "3D Secure";
-
-"HOME_LOGIN" = "Connexion";
-"HOME_SIGNUP" = "S'inscrire";
-
-"CREDIT_CARD_SCAN" = "Scanner ma carte, c'est plus rapide !";
-"CREDIT_CARD_REMOVE" = "Supprimer cette carte";
-"CREDIT_CARD_INFOS" = "Vos données bancaires ne sont pas stockées dans l'application. Elles sont cryptées et conservées chez Rentabiliweb, établissement de paiement certifié PCI-DSS niveau 1, soit le plus haut niveau d'exigence en matière de sécurité des données bancaires sur Internet. Vous pouvez supprimer votre carte bancaire à tout moment.";
-
-"NEW_TRANSACTION" = "Flooz";
-
-"SHARE_FACEBOOK" = "FB";
-"SHARE_SMS" = "SMS";
-"SHARE_TWITTER" = "TWITTER";
-"SHARE_MAIL" = "E-MAIL";
-"SHARE_CLIPBOARD" = "Copier le code";
-
-"FINALIZE_SIGNUP" = "Finaliser votre inscription";
-
-"INFORMATIONS_WHY" = "Sécurité";
-"INFORMATIONS_TERMS" = "CGU";
-"INFORMATIONS_FAQ" = "Questions / Réponses";
-"INFORMATIONS_PREVIEW" = "Visite Guidée";
-"INFORMATIONS_ABOUT" = "A Propos";
-"INFORMATIONS_CONTACT" = "Contactez-nous";
-"INFORMATIONS_RATE" = "Noter sur l'App Store";
-
-"NOTIFICATIONS_SECTION_FEED" = "Feed";
-"NOTIFICATIONS_SECTION_PUSH" = "Push";
-"NOTIFICATIONS_SECTION_PHONE" = "SMS";
-"NOTIFICATIONS_SECTION_EMAIL" = "Email";
-
-"PAYEMENT_FIELD_WALLET" = "Porte-monnaie";
-"PAYEMENT_FIELD_CARD" = "Carte Bancaire";
-
-"SOCIAL_FILTER_FRIENDS" = "Amis";
-"SOCIAL_FILTER_EVENTS" = "Cagnotte";
-"SOCIAL_FILTER_ACTIVITIES" = "ACTIVITE";
-
+"FIELD_PHONE_NUMBER" = "Entrez votre n° de mobile";
 "FIELD_COUPON" = "Code d'invitation (optionnel)";
 "FIELD_USERNAME" = "Pseudo";
 "FIELD_FIRSTNAME" = "Prénom";
@@ -105,21 +45,14 @@
 "FIELD_LASTNAME" = "Nom";
 "FIELD_PHONE" = "Numéro de mobile";
 "FIELD_EMAIL" = "Email";
-"FIELD_BIRTHDAY" = "Date de naissance      jj / mm / aa";
-"FIELD_PASSWORD" = "Mot de passe            6 car. min";
+"FIELD_PASSWORD" = "Mot de passe (6 car. min)";
 "FIELD_PASSWORD_LOGIN" = "Mot de passe";
-"FIELD_SECRET_QUESTION" = "Choisissez une question secrète";
-"FIELD_SECRET_QUESTION_OTHER" = "Votre question ?";
-"FIELD_SECRET_ANSWER" = "Réponse";
 "FIELD_CODE" = "Code secret";
 "FIELD_ADDRESS" = "Adresse";
 "FIELD_ZIP_CODE" = "Code postal";
 "FIELD_CITY" = "Ville";
 "FIELD_SMS_CODE" = "Saisir le code reçu par SMS";
-"CASHOUT_FIELD" = "Saisir le montant à retirer";
 "FIELD_SPONSOR" = "Code parrain ?";
-
-"CUSTOM_SECRET_QUESTION" = "Question personnalisée...";
 
 "FIELD_IBAN" = "Code IBAN";
 "FIELD_IBAN_PLACEHOLDER" = "FRXXXXXXXXXXXXXXXXXXXXXXXXX";
@@ -129,31 +62,120 @@
 "FIELD_CARD_NUMBER" = "Numero de carte";
 "FIELD_CARD_EXPIRES" = "Date d'expiration";
 "FIELD_CARD_EXPIRES_PLACEHOLDER" = "MMYY";
-"FIELD_CARD_CVV" = "Cryptogramme";
 "FIELD_CARD_CVV_PLACEHOLDER" = "Code à 3 chiffres au dos de la carte ";
 
 "FIELD_CURRENT_PASSWORD" = "Mot de passe actuel";
 "FIELD_NEW_PASSWORD" = "Nouveau mot de passe";
 "FIELD_PASSWORD_CONFIRMATION" = "Confirmation";
 
-"FIELD_TRANSACTION_DATE" = "Se termine le :";
-"FIELD_TRANSACTION_TITLE" = "Pour :";
-"FIELD_TRANSACTION_TITLE_PLACEHOLDER" = "Restaurant entre amis";
 "FIELD_TRANSACTION_TO" = "À :";
 "FIELD_TRANSACTION_TO_PLACEHOLDER" = "nom, pseudo ou 06";
 "FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Ex: Pour le resto";
-"FIELD_TRANSACTION_EVENT_PLACEHOLDER" = "Ex: Pour le resto";
 "FIELD_TRANSACTION_SELECT_FRIEND" = "A qui ?";
-"FIELD_TRANSACTION_HIDE" = "Masquer ma participation";
 
-"SIGNUP_FACEBOOK" = "Avec Facebook";
+"CASHOUT_FIELD" = "Saisir le montant à retirer";
+
+
+/************************************/
+/*          SIGNUP / LOGIN          */
+/************************************/
+
+"WELCOME" = "Bienvenue !";
+"WELCOME_BACK" = "Ravis de vous revoir !";
 
 "LOGIN_FACEBOOK" = "Facebook";
 "LOGIN_OR" = "ou";
 "LOGIN_PASSWORD_FORGOT" = "Oups, mot de passe oublié ?";
 "LOGIN_SECRET_FORGOT" = "Oups, réponse secrète oubliée ?";
 
-"MENU_NEW_TRANSACTION_EVENT" = "Collecter";
+"SIGNUP_PAGE_TITLE_SMS" = "SMS de validation";
+"SIGNUP_PAGE_TITLE_Invitation" = "Êtes-vous invité ?";
+"SIGNUP_PAGE_TITLE_SECURE_CODE" = "100% Sécurisé";
+
+"SIGNUP_NEXT_BUTTON" = "Suivant";
+"SIGNUP_NEXT_BUTTON_ADD" = "Ajouter";
+"SIGNUP_SKIP_BUTTON" = "Plus tard";
+
+"SIGNUP_CAPTURE_BUTTON" = "Prendre une photo";
+"SIGNUP_ALBUM_BUTTON" = "Album photo";
+"SIGNUP_PHOTO_FACEBOOK" = "Photo Facebook";
+
+"SIGNUP_READ_CGU" = "En cliquant sur \"Inscription\" vous déclarez accepter les CGU Flooz.";
+
+"SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
+"SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";
+"SIGNUP_FIELD_CARD_EXPIRES_PLACEHOLDER" = "Date d'expiration (MM-YY)";
+"SIGNUP_FIELD_CARD_CVV_PLACEHOLDER" = "CVV (3 chiffres au dos)";
+
+"SMS_REFRESH_CODE" = "Renvoyer le code %@";
+
+/************************************/
+/*            SETTINGS              */
+/************************************/
+
+"SETTINGS_CARD" = "Carte bancaire";
+"SETTINGS_BANK" = "Compte bancaire";
+"SETTINGS_DOCUMENTS" = "Mes documents";
+"SETTINGS_COORDS" = "Mes informations";
+"SETTINGS_SECURITY" = "Sécurité";
+"SETTINGS_PREFERENCES" = "Préférences";
+"SETTINGS_PRIVACY" = "Partage & vie privée";
+
+"SETTINGS_CODE" = "Changer mon code de sécurité";
+"SETTINGS_PASSWORD" = "Changer mon mot de passe";
+
+"SETTINGS_FACEBOOK" = "Facebook";
+"SETTINGS_NOTIFICATION" = "Notifications";
+
+"SETTINGS_IDEAS_CRITICS" = "Idées / Critiques";
+"SETTINGS_LOGOUT" = "Déconnexion";
+
+"SETTINGS_DEFAULT_SCOPE" = "Pratique ! Choisissez la visibilité par défaut de vos flooz. Vous avez toutefois la possibilité de la changer lors de chacun de vos paiements";
+
+"SECORE_CODE_TEXT_CURRENT" = "Entrez votre code secret";
+"SECORE_CODE_TEXT_OLD" = "Entrez votre ancien code";
+"SECORE_CODE_TEXT_NEW" = "Choisissez un code secret";
+"SECORE_CODE_TEXT_CONFIRM" = "Confirmez votre nouveau code";
+"SECORE_CODE_TEXT_CHANGE_PASS" = "Modifier votre mot de passe";
+"SECORE_CODE_TOUCHID_MSG" = "Valider avec votre empreinte.";
+"SECORE_CODE_TOUCHID" = "Touch ID";
+"SECORE_CODE_TOUCHID_FALLBACK" = "Entrer mon code";
+"SECORE_CODE_TOUCHID_ERROR" = "Votre empreinte n'est pas enregistrée dans ce téléphone.";
+
+"SECORE_CODE_TEXT_LOGIN" = "Identifiez vous pour réinitialiser votre code";
+"SECURE_CODE_FORGOT" = "Code oublié ?";
+
+"SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser vos paiements en cas de perte/vol de votre mobile.";
+"SECORE_CODE_TEXT_SIGNUP_NEW" = "Choisissez un code secret";
+"SECORE_CODE_TEXT_SIGNUP_CONFIRM" = "Veuillez retaper votre code";
+
+"DOCUMENTS_CARD_ID_RECTO" = "Carte d’identité (Recto)";
+"DOCUMENTS_CARD_ID_VERSO" = "Carte d’identité (Verso)";
+"DOCUMENTS_HOME" = "Justificatif de domicile (< 3 mois)";
+"DOCUMENTS_HOME2" = "Complément justificatif (optionnel)";
+
+"NOTIFICATIONS_SECTION_FEED" = "Feed";
+"NOTIFICATIONS_SECTION_PUSH" = "Push";
+"NOTIFICATIONS_SECTION_PHONE" = "SMS";
+"NOTIFICATIONS_SECTION_EMAIL" = "Email";
+
+/************************************/
+/*            TAB BAR               */
+/************************************/
+
+"TAB_BAR_HOME" = "Accueil";
+"TAB_BAR_NOTIFICATIONS" = "Notifs";
+"TAB_BAR_SHARE" = "";
+"TAB_BAR_ACCOUNT" = "Compte";
+
+/************************************/
+/*              MENU                */
+/************************************/
+
+"MENU_ACCOUNT" = "Compte";
+"MENU_SETTINGS" = "Réglages";
+"MENU_OTHER" = "Divers";
+
 "MENU_NEW_TRANSACTION_PAYMENT" = "Payer";
 "MENU_NEW_TRANSACTION_COLLECT" = "Réclamer";
 
@@ -173,283 +195,31 @@
 "MENU_BLOCK_USER_CONTENT" = "\nÊtes-vous sûr de vouloir bloquer cet utilisateur ?";
 "MENU_QRCODE" = "Afficher le QR Code";
 
+"LOGOUT_INFO" = "Etes-vous sûr de vouloir vous déconnecter ?";
 
-"ACTIVITIES_NOTIFICATIONS" = "Notifications";
-"ACTIVITIES_NEW_NOTIFICATIONS" = "nouvelles notifications";
+"INFORMATIONS_TERMS" = "CGU";
+"INFORMATIONS_FAQ" = "Questions / Réponses";
+"INFORMATIONS_CONTACT" = "Contactez-nous";
+"INFORMATIONS_RATE" = "Noter sur l'App Store";
 
-"INCOMPLETE_TIP" = "  Complétez votre profil pour finaliser votre inscription.";
+/************************************/
+/*           NAVIGATION             */
+/************************************/
 
-"ACCOUNT_BUTTON_PROFIL" = "Mon profil";
-"ACCOUNT_BUTTON_NOTIFICATION" = "Notifications";
-"ACCOUNT_BUTTON_INVITE" = "Inviter mes amis";
-"ACCOUNT_BUTTON_CASH_OUT" = "Virer à ma banque";
-"ACCOUNT_BUTTON_DIVERS" = "À propos";
-"ACCOUNT_BUTTON_QRCODE" = "Scanner un code";
+"NAV_NOTIFICATIONS" = "Notifications";
+"NAV_CREDIT_CARD" = "Carte bancaire";
+"NAV_CREDIT_CARD_ADD" = "Ajouter une CB";
+"NAV_FRIENDS" = "Mes amis";
+"NAV_NEW_FLOOZ_FRIENDS" = "Choisir un destinataire";
+"NAV_3DSECURE" = "3D Secure";
 
-"INVITATION_BACKTEXT" = "Devenir ambassadeur";
-
-"IDEA_RECIPIENTS" = "hello@flooz.me";
-"IDEA_OBJECT" = "Idées / Critiques";
-"IDEA_MESSAGE" = "Voici quelques idées pour améliorer l'application :\n";
-
-"FORGOT_RECIPIENTS" = "support@flooz.me";
-"FORGOT_OBJECT" = "Mot de passe oublié !";
-"FORGOT_MESSAGE" = "J'ai oublié mon mot de passe. Je souhaite être contacté au %@";
-"FORGOT_SECRET" = "J'ai oublié mon mot de passe et la réponse à ma question secrète. Je souhaite être contacté au %@";
-
-"SETTINGS_INFORMATIONS" = "Informations";
-"SETTINGS_RIB" = "RIB";
-"SETTINGS_PRIVACY" = "Partage & confidentialité";
-"SETTINGS_DOCUMENTS" = "Justificatifs";
-
-"SMS_REFRESH_CODE" = "Renvoyer le code %@";
-
-"SETTINGS_CARD" = "Carte bancaire";
-"SETTINGS_BANK" = "Compte bancaire";
-"SETTINGS_DOCUMENTS" = "Mes documents";
-"SETTINGS_COORDS" = "Mes informations";
-"SETTINGS_SECURITY" = "Sécurité";
-"SETTINGS_PREFERENCES" = "Préférences";
-"SETTINGS_PRIVACY" = "Partage & vie privée";
-"SETTINGS_RELOAD_TUTO" = "Redémarrer le tutoriel";
-
-"TUTO_WELCOME_TITLE" = "Nouveau Flooz";
-"TUTO_WELCOME_MSG" = "Pour envoyer ou réclamer de l’argent à vos amis, c'est par ici que ça se passe ! ";
-"TUTO_FRIENDS_TITLE" = "Fil d'actualité";
-"TUTO_FRIENDS_MSG" = "Retrouvez ici vos paiements et ceux partagés par vos amis.";
-"TUTO_PUBLIC_TITLE" = "Fil public";
-"TUTO_PUBLIC_MSG" = "Retrouvez ici tous les paiements partagés en « Public » par les membres.";
-"TUTO_PRIVATE_TITLE" = "Fil privé";
-"TUTO_PRIVATE_MSG" = "Retrouvez ici uniquement les paiements qui vous concernent.";
-
-"SETTINGS_CODE" = "Changer mon code de sécurité";
-"SETTINGS_PASSWORD" = "Changer mon mot de passe";
-"SETTINGS_SECRET" = "Question Secrète";
-
-"SETTINGS_PREFERENCES" = "Préférences";
-"SETTINGS_FACEBOOK" = "Facebook";
-"SETTINGS_NOTIFICATION" = "Notifications";
-
-"SETTINGS_IDEAS_CRITICS" = "Idées / Critiques";
-"SETTINGS_LOGOUT" = "Déconnexion";
-
-"SETTINGS_DEFAULT_SCOPE" = "Pratique ! Choisissez la visibilité par défaut de vos flooz. Vous avez toutefois la possibilité de la changer lors de chacun de vos paiements";
-
-"SETTINGS_SECRET_INFOS" = "Votre question actuelle est :";
-"SETTINGS_SECRET_DESC" = "Définir une question secrète vous permet de réinitialiser votre mot de passe en cas d'oubli.";
-
-"EDIT_ACCOUNT_SEND_SMS" = "Renvoyer SMS";
-"EDIT_ACCOUNT_SEND_MAIL" = "Renvoyer email";
-"EDIT_ACCOUNT_PERSONAL_INFO" = "Adresse Postale";
-"EDIT_ACCOUNT_SOCIAL_INFO" = "Réseaux sociaux";
-"EDIT_ACCOUNT_FACEBOOK" = "Facebook";
-
-"CELL_SOCIAL_COMMENT" = "Commenter";
-"CELL_SOCIAL_LIKE" = "J'aime";
-
-"FRIEND_PCIKER_SELECTION_CELL" = "Résultats";
-
-"FRIEND_REQUEST_ACCEPT" = "Accepter";
-"FRIEND_REQUEST_REFUSE" = "Refuser";
-
-"TRANSACTION_FIELD_GOAL" = "Montant / pers. (facultatif)";
-
-"TRANSACTION_ACTION_ACCEPT" = "ACCEPTER";
-"TRANSACTION_ACTION_REFUSE" = "REFUSER";
-"TRANSACTION_ACTION_CANCEL" = "ANNULER";
-"TRANSACTION_ACTION_WAITING" = "EN ATTENTE";
-
-"TRANSACTION_STATUS_ACCEPTED" = "Accepted";
-"TRANSACTION_STATUS_REFUSED" = "Refused";
-"TRANSACTION_STATUS_PENDING" = "Waiting";
-"TRANSACTION_STATUS_CANCELED" = "Canceled";
-"TRANSACTION_STATUS_EXPIRED" = "Expired";
-
-"TRANSACTION_TYPE_PAYMENT" = "PAYMENT";
-"TRANSACTION_TYPE_COLLECTION" = "COLLECTION";
-
-"TRANSACTION_SCOPE_PUBLIC" = "Tout le monde";
-"TRANSACTION_SCOPE_FRIEND" = "Mes amis et moi";
-"TRANSACTION_SCOPE_PRIVATE" = "Moi";
-
-"FILTER_SCOPE_PUBLIC" = "PUBLIC";
-"FILTER_SCOPE_FRIEND" = "AMIS";
-"FILTER_SCOPE_PRIVATE" = "MOI";
-
-"EVENT_SCOPE_FRIEND" = "Ouverte aux amis";
-"EVENT_SCOPE_PRIVATE" = "Sur invitation";
-
-"FRIENDS_FRIENDS_SEARCH" = "Recherche";
-"SEARCH_FRIENDS" = "Rechercher des amis";
-"FRIENDS_SEARCH_FRIENDS" = "Mes amis";
-"FRIENDS_FRIENDS_REQUEST" = "Demandes en attente";
-"FRIENDS_FRIENDS_SUGGESTION" = "Vous connaissez peut-être...";
-"FRIENDS_FRIENDS" = "Mes amis";
-"FRIENDS_EMPTY_MESSAGE" = "Ajoutez des amis pour retrouver leurs flooz dans votre fil d'actualité !";
-"FRIENDS_BUTTON_INVITE" = "Inviter mes amis";
-
-
-"FRIEND_PICKER_EMPTY_CELL_1" = "Sélectionnez un contact";
-"FRIEND_PICKER_EMPTY_CELL_2" = "ou entrez un n° de mobile";
-"FRIEND_PCIKER_PLACEHOLDER2" = "Rechercher";
-"FRIEND_PCIKER_PLACEHOLDER" = "Chercher un contact / Entrer un 06";
-"FRIEND_PICKER_FRIENDS_RECENT" = "Contacts Récents";
-"FRIEND_PICKER_FRIENDS" = "Mes amis";
-"FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";
-
-"EVENT_AMOUNT" = "Argent récolté";
-"EVENT_AMOUNT_FREE" = "Montant libre";
-
-"EVENT_HEADER_MONEY_COLLECTED" = "Collectés";
-"EVENT_HEADER_DAY_LEFT" = "Jours restants";
-"EVENT_HEADER_DAY_LEFT_CLOSED" = "Clôturée";
-
-"EVENT_START_BY" = "Créée par ";
-
-"EVENT_INVITE_PARTICIPANT" = "Inviter des amis";
-"EVENT_PARTICIPANTS" = "Participants";
-"EVENT_PARTICIPANTS_S" = "Participant(s)";
-"EVENT_PARTICIPANTS_INVITED" = "%.2d AUTRES PARTICIPANTS";
-"EVENT_PARTICIPANT_INVITE" = "Inviter des amis";
-
-"EVENT_ACTION_REFUSE" = "REFUSER";
-"EVENT_ACTION_CANCEL" = "ANNULER";
-"EVENT_ACTION_DECLINE" = "DECLINER L'INVITATION";
-"EVENT_ACTION_PARTICIPATE" = "PARTICIPER À LA CAGNOTTE";
-"EVENT_ACTION_ACCEPT" = "ACCEPTER";
-
-"EVENT_ACTION_COLLECT" = "Clôturer et encaisser";
-"EVENT_ACTION_OFFER" = "OFFRIR";
-
-"EVENT_STATUS_ACCEPTED" = "J'y participe";
-"EVENT_STATUS_WAITING" = "Invité";
-
-"SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser vos paiements en cas de perte/vol de votre mobile.";
-"SECORE_CODE_TEXT_SIGNUP_NEW" = "Choisissez un code secret";
-"SECORE_CODE_TEXT_SIGNUP_CONFIRM" = "Veuillez retaper votre code";
-
-"SECORE_CODE_TEXT_CURRENT" = "Entrez votre code secret";
-"SECORE_CODE_TEXT_OLD" = "Entrez votre ancien code";
-"SECORE_CODE_TEXT_NEW" = "Choisissez un code secret";
-"SECORE_CODE_TEXT_CONFIRM" = "Confirmez votre nouveau code";
-"SECORE_CODE_TEXT_CHANGE_PASS" = "Modifier votre mot de passe";
-"SECORE_CODE_TOUCHID_MSG" = "Valider avec votre empreinte.";
-"SECORE_CODE_TOUCHID" = "Touch ID";
-"SECORE_CODE_TOUCHID_FALLBACK" = "Entrer mon code";
-"SECORE_CODE_TOUCHID_ERROR" = "Votre empreinte n'est pas enregistrée dans ce téléphone.";
-
-"SECORE_CODE_TEXT_LOGIN" = "Identifiez vous pour réinitialiser votre code";
-"SECURE_CODE_FORGOT" = "Code oublié ?";
-
-"DOCUMENTS_CARD_ID_RECTO" = "Carte d’identité (Recto)";
-"DOCUMENTS_CARD_ID_VERSO" = "Carte d’identité (Verso)";
-"DOCUMENTS_HOME" = "Justificatif de domicile (< 3 mois)";
-"DOCUMENTS_HOME2" = "Complément justificatif (optionnel)";
-
-"SHARE_APP_ALERT_TITLE" = "Merci de partager Flooz";
-"SHARE_APP_ALERT_CONTENT" = "\nPensez-y, il est indispensable de posseder un iPhone (4S et +) pour utiliser Flooz.";
-
-"INVITE_CODE_TEXT" = "Invitez vos amis sur Flooz grâce à votre code d'invitation : ";
-"INVITE_MESSAGE" = "Offrez à vos amis la possibilité d'accéder à l'application !";
-"INVITE_CODE_CODE" = "Votre code";
-"INVITE_CODE_SHARE" = "Partagez mon code";
-"INVITATION_CODE_EXPLICATION" = "Seules les personnes invitées peuvent rejoindre la Flooz Family.";
-"INVITATION_CODE_WAITING_EXPLICATION" = "Votre demande d'invitation a bien était prise en compte.\nVous recevrez très bientôt un email d'invitation !";
-"ALREADY_FLOOZ" = "Déjà sur\nFlooz";
-"INVITATION_CODE_ACCESS" = "J'ai déjà une\ninvitation";
-"INVITATION_CODE_ACCESS_LONG" = "J'ai déjà une invitation";
-"INVITATION_CODE_ASK" = "Réclamer un code d'invitation";
-"INVITATION_CODE_PLACEHOLDER" = "Entrez votre code d'invit.";
-"INVITATION_CODE_ASK_NAME_PLACEHOLDER" = "Votre nom et prénom";
-"INVITATION_CODE_ASK_EMAIL_PLACEHOLDER" = "Votre adresse email";
-
-"SIGNUP_HEAD_TITLE" = "Bienvenue sur Flooz";
-"SIGNUP_VIEW_1_TITLE_1" = "PAYEZ VOS AMIS";
-"SIGNUP_VIEW_1_SUBTITLE_1" = "Choisissez un contact, entrez un montant et un bref message, c’est envoyé !";
-"SIGNUP_VIEW_1_TITLE_2" = "EN TOUTE SÉCURITÉ";
-"SIGNUP_VIEW_1_SUBTITLE_2" = "Un code secret à 4 chiffres sécurise chaque paiement.";
-"SIGNUP_VIEW_1_TITLE_3" = "100% GRATUIT";
-"SIGNUP_VIEW_1_SUBTITLE_3" = "Aucun frais à aucun moment, simplement gratuit... que du bonheur!";
-"SIGNUP_VIEW_1_BUTTON" = "Commencez";
-
-"SIGNUP_HEAD_TITLE_2" = "Créer votre compte";
-"SIGNUP_VIEW_2_TITLE_1" = "INSCRIPTION RAPIDE";
-"SIGNUP_VIEW_2_SUBTITLE_1" = "Vous êtes à quelques secondes de votre 1er Flooz !";
-"SIGNUP_VIEW_2_TITLE_2" = "PRÉPAREZ VOTRE CARTE";
-"SIGNUP_VIEW_2_SUBTITLE_2" = "Liez votre carte bancaire une fois seulement.";
-"SIGNUP_VIEW_2_TITLE_3" = "AJOUTER DES AMIS";
-"SIGNUP_VIEW_2_SUBTITLE_3" = "Retrouvez vos amis déjà présents sur Flooz ou invitez-les.";
-"SIGNUP_VIEW_2_BUTTON" = "Démarrez l'expérience Flooz";
-
-"SIGNUP_VIEW_IGNORE_BUTTON" = "Plus tard";
-"SIGNUP_VIEW_IGNORE_BUTTON_2" = "Terminer";
-
-"NumMobile" = "Entrez votre n° de mobile";
-"SIGNUP_PAGE_PHONE_MESSAGE" = "Un lien de confirmation vous sera\nenvoyé par SMS";
-
-"SIGNUP_PAGE_TITLE_Phone" = "N° de mobile";
-"SIGNUP_PAGE_TITLE_Pseudo" = "Créez votre pseudo";
-"SIGNUP_PAGE_TITLE_Photo" = "Soyez reconnaissable";
-"SIGNUP_PAGE_TITLE_Info" = "Informations";
-"SIGNUP_PAGE_TITLE_CB" = "Ajouter une carte bancaire";
-"SIGNUP_PAGE_TITLE_Ask1" = "Accepter les notifications";
-"SIGNUP_PAGE_TITLE_Ask2" = "Accéder à vos contacts";
-"SIGNUP_PAGE_TITLE_Friends" = "Ajouter des amis";
-"SIGNUP_PAGE_TITLE_SMS" = "SMS de validation";
-"SIGNUP_PAGE_TITLE_Invitation" = "Êtes-vous invité ?";
-"SIGNUP_PAGE_TITLE_SECURE_CODE" = "100% Sécurisé";
-
-"SIGNUP_NEXT_BUTTON" = "Suivant";
-"SIGNUP_NEXT_BUTTON_ADD" = "Ajouter";
-"SIGNUP_SKIP_BUTTON" = "Plus tard";
-
-"SIGNUP_CAPTURE_BUTTON" = "Prendre une photo";
-"SIGNUP_ALBUM_BUTTON" = "Album photo";
-"SIGNUP_PHOTO_FACEBOOK" = "Photo Facebook";
-
-"SIGNUP_PSEUDO_EXPLICATION" = "Donnez votre pseudo pour recevoir de l'argent. C'est votre identité, il est unique et non modifiable.";
-"SIGNUP_PHOTO_EXPLICATION" = "Une bonne photo est indispensable pour être reconnaissable ! Utilisez votre photo facebook ou ajoutez-en une !";
-"SIGNUP_PASSWORD_EXPLICATION" = "6 caractères min";
-
-"SIGNUP_PHONE_ALERT_TITLE" = "Confirmer votre numéro";
-"SIGNUP_PHONE_ALERT_CONTENT" = "\nVous allez recevoir un SMS de confirmation. Veuillez confirmer que le %@ est bien votre n° de mobile.";
-
-"SIGNUP_READ_CGU" = "En cliquant sur \"Inscription\" vous déclarez accepter les CGU Flooz.";
-
-"SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
-"SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";
-"SIGNUP_FIELD_CARD_EXPIRES_PLACEHOLDER" = "Date d'expiration (MM-YY)";
-"SIGNUP_FIELD_CARD_CVV_PLACEHOLDER" = "CVV (3 chiffres au dos)";
-
-"SIGNUP_FRIENDS_MESSAGE1" = "Pour être alerté quand vous recevez un paiement, vous devez autoriser Flooz à vous envoyer des notifications.";
-"SIGNUP_FRIENDS_MESSAGE2" = "Pour envoyer de l'argent à vos amis, vous devez autoriser Flooz à accéder à votre carnet d'adresse.";
-
-"Send_Button_Mobile" = "Suivant";
-"Invite_Friends_Button" = "Inviter";
-"ALERT_CONTACT_DENIES_ACCESS" = "Vous n'avez pas autorisé à lire les contacts!\nVous passez directement à l'étape suivante.";
-"ALERT_CONTACT_DENIES_ACCESS_PREVIOUS" = "Vous n'avez pas autorisé à lire les contacts précédemment!\nVous passez directement à l'étape suivante.";
-"ALERT_CONTACT_MESSAGE_FAILED" = "L'envoi de votre message a échoué, essayez de recommencer.";
-
-"CONTACT_PICKER_NON_FLOOZ" = "Invitez les sur Flooz";
-"CONTACT_PICKER_FLOOZ" = "Déjà sur Flooz";
-
-"textmotdepasse" = "6 caractères minimum";
-"Invite_Friends_Message_SMS" = "Prends cette appli elle est vraiment top pour s'échanger de l'argent http://flooz.me/download utilise ce code pour l'inscription ";
-
-"SECURE_LOGIN_TITLE" = "Sécurité";
-"CODE_INVITATION_TITLE" = "Êtes-vous invité ?";
-"CODE_INVITATION_PLACEHOLDER" = "Entrez votre code d'invit.";
-"CODE_INVITATION_PLACEHOLDER" = "Entre ton code d'invitation...";
-"CODE_INVITATION_EXPLICATION" = "Tu voudrais Floozer mais t'es pas invité ?\nRéclame ton code à un ami ou prend contact avec nous via twitter ou téléphone.";
+/************************************/
+/*         ALERTS / ERROR           */
+/************************************/
 
 "ALERT_NO_MAIL_TITLE" = "Oups aucun compte Mail";
 "ALERT_NO_MAIL_MESSAGE1" = "Veuillez configurer un compte Mail pour nous envoyer vos suggestion à hello@flooz.me";
 "ALERT_NO_MAIL_MESSAGE" = "Veuillez configurer un compte Mail pour pouvoir envoyer des e-mails.";
-
-"POPUP_WALLET_MESSAGE" = "Ceci est votre porte-monnaie Flooz !\n\nQuand quelqu'un vous paie par Flooz, le paiement est crédité sur votre porte-monnaie.\n\nQuand vous payez quelqu'un par Flooz, vous n'avez pas besoin d'ajouter de fonds sur votre porte-monnaie. L'argent sera débité automatiquement de votre porte-monnaie si vous avez assez d'argent pour couvrir la totalité du paiement, sinon, c'est votre carte bancaire qui sera utilisée.";
-"POPUP_REPORT_TITLE" = "Le contenu sera signale";
-"POPUP_REPORT_PLACEHOLDER" = "Commentaire ...";
-
 
 "CASH_OUT_MESSAGE" = "Virez la totalité ou une partie de votre porte-monnaie sur votre compte bancaire.";
 "CASHOUT_BUTTON" = "Virer %@";
@@ -459,8 +229,6 @@
 "ERROR_ACCESS_CAMERA_TITLE" = "Accès à l'appareil photo refusé";
 "ERROR_ACCESS_CAMERA_CONTENT" = "\nFlooz ne peut pas accéder à l'appareil photo. Vous pouvez modifier ces paramètres dans les réglages.";
 
-"GLOBAL_SETTINGS" = "Réglages";
-
 "SAVE_IBAN" = "Enregistrer mon IBAN";
 
 "WALLET_INFOS_TITLE" = "Solde";
@@ -469,16 +237,111 @@
 
 "FLOOZ_BALANCE" = "Votre solde Flooz";
 
-"ABC" = "ABC";
-"Forgot" = "Oublié";
-"Erase" = "Effacer";
-"Confirm" = "Confirmer";
-"OK" = "OK";
+"MSG_UPDATE" = "Bonne nouvelle ! Une nouvelle version de Flooz est disponible.";
+"BTN_UPDATE" = "Mettre à jour";
 
-"SkipLast" = "C'est parti";
-"Skip" = "Passer";
-"Join" = "Rejoindre";
-"Login" = "Connexion";
-"Connect" = "Se connecter";
-"Signup" = "Inscription";
-"Save" = "Enregistrer";
+/************************************/
+/*             ACCOUNT              */
+/************************************/
+
+"CREDIT_CARD_REMOVE" = "Supprimer cette carte";
+"CREDIT_CARD_INFOS" = "Vos données bancaires ne sont pas stockées dans l'application. Elles sont cryptées et conservées chez Rentabiliweb, établissement de paiement certifié PCI-DSS niveau 1, soit le plus haut niveau d'exigence en matière de sécurité des données bancaires sur Internet. Vous pouvez supprimer votre carte bancaire à tout moment.";
+
+"SAVE_IMAGE" = "Enregistrer l'image";
+
+"ACCOUNT_BUTTON_NOTIFICATION" = "Notifications";
+"ACCOUNT_BUTTON_CASH_OUT" = "Virer à ma banque";
+"ACCOUNT_BUTTON_QRCODE" = "Scanner un code";
+
+
+"EDIT_ACCOUNT_SEND_SMS" = "Renvoyer SMS";
+"EDIT_ACCOUNT_SEND_MAIL" = "Renvoyer email";
+
+
+/************************************/
+/*           TRANSACTIONS           */
+/************************************/
+
+"NEW_TRANSACTION" = "Flooz";
+
+"TRANSACTION_ACTION_ACCEPT" = "ACCEPTER";
+"TRANSACTION_ACTION_REFUSE" = "REFUSER";
+"TRANSACTION_ACTION_CANCEL" = "ANNULER";
+"TRANSACTION_ACTION_WAITING" = "EN ATTENTE";
+
+"TRANSACTION_STATUS_ACCEPTED" = "Accepted";
+"TRANSACTION_STATUS_REFUSED" = "Refused";
+"TRANSACTION_STATUS_PENDING" = "Waiting";
+
+"TRANSACTION_SCOPE_TITLE" = "Qui peut voir ça :";
+"TRANSACTION_SCOPE_PUBLIC" = "Tout le monde";
+"TRANSACTION_SCOPE_FRIEND" = "Mes amis et moi";
+"TRANSACTION_SCOPE_PRIVATE" = "Moi";
+
+"SEND_COMMENT" = "Ajouter un commentaire...";
+
+"PAYEMENT_FIELD_WALLET" = "Porte-monnaie";
+"PAYEMENT_FIELD_CARD" = "Carte Bancaire";
+
+"CELL_SOCIAL_COMMENT" = "Commenter";
+"CELL_SOCIAL_LIKE" = "J'aime";
+
+/************************************/
+/*             FRIENDS              */
+/************************************/
+
+"FRIEND_PICKER_RESULT" = "Résultats";
+
+"FRIEND_REQUEST_ACCEPT" = "Accepter";
+"FRIEND_REQUEST_REFUSE" = "Refuser";
+
+"SEARCH_FRIENDS" = "Rechercher des amis";
+"FRIENDS_FRIENDS" = "Mes amis";
+"FRIENDS_FRIENDS_SEARCH" = "Recherche";
+"FRIENDS_FRIENDS_REQUEST" = "Demandes en attente";
+"FRIENDS_FRIENDS_SUGGESTION" = "Vous connaissez peut-être...";
+"FRIENDS_BUTTON_INVITE" = "Inviter mes amis";
+
+"FRIEND_PICKER_EMPTY_CELL_1" = "Sélectionnez un contact";
+"FRIEND_PICKER_EMPTY_CELL_2" = "ou entrez un n° de mobile";
+"FRIEND_PCIKER_PLACEHOLDER" = "Chercher un contact / Entrer un 06";
+"FRIEND_PICKER_FRIENDS_RECENT" = "Contacts Récents";
+"FRIEND_PICKER_FRIENDS" = "Mes amis";
+"FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";
+
+/************************************/
+/*          SHARE / EMAIL           */
+/************************************/
+
+"SHARE_FACEBOOK" = "FB";
+"SHARE_SMS" = "SMS";
+"SHARE_TWITTER" = "TWITTER";
+"SHARE_MAIL" = "E-MAIL";
+"SHARE_CLIPBOARD" = "Copier le code";
+
+"IDEA_RECIPIENTS" = "hello@flooz.me";
+"IDEA_OBJECT" = "Idées / Critiques";
+"IDEA_MESSAGE" = "Voici quelques idées pour améliorer l'application :\n";
+"IDEA_THX_TITLE" = "Merci";
+"IDEA_THX_CONTENT" = "Merci pour vos idées et votre contribution afin d'améliorer Flooz.";
+
+"FORGOT_RECIPIENTS" = "support@flooz.me";
+"FORGOT_OBJECT" = "Mot de passe oublié !";
+"FORGOT_MESSAGE" = "J'ai oublié mon mot de passe. Je souhaite être contacté au %@";
+
+/************************************/
+/*             TIMELINE             */
+/************************************/
+
+"TIMELINE_FILTER_TITLE" = "Filtrer les paiements :";
+"TIMELINE_FILTER_ALL" = "Tous";
+"TIMELINE_FILTER_FRIENDS" = "Mes amis & moi";
+"TIMELINE_FILTER_PRIVATE" = "Moi uniquement";
+
+/************************************/
+/*              OTHER               */
+/************************************/
+
+
+"KEYBOARD_ABC" = "ABC";
+

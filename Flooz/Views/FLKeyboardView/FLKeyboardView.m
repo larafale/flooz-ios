@@ -56,7 +56,7 @@
 }
 
 - (void)setKeyboardChangeable {
-	[closeButton setTitle:NSLocalizedString(@"ABC", @"") forState:UIControlStateNormal];
+	[closeButton setTitle:NSLocalizedString(@"KEYBOARD_ABC", @"") forState:UIControlStateNormal];
 	[closeButton.titleLabel setFont:[UIFont customTitleThin:20]];
 	[closeButton setImage:nil forState:UIControlStateNormal];
 	[closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
@@ -65,7 +65,7 @@
 }
 
 - (FLKeyboardView *)setKeyboardValidateWithTarget:(id)target action:(SEL)action {
-	[closeButton setTitle:NSLocalizedString(@"Send_Button_Mobile", @"") forState:UIControlStateNormal];
+	[closeButton setTitle:NSLocalizedString(@"GLOBAL_NEXT", @"") forState:UIControlStateNormal];
 	[closeButton.titleLabel setFont:[UIFont customTitleThin:26]];
 	[closeButton setImage:nil forState:UIControlStateNormal];
 	[closeButton removeTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];

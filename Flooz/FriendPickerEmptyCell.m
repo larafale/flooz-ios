@@ -36,7 +36,7 @@
 }
 
 - (void)createTextView1 {
-    _textLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(0, [FriendPickerEmptyCell getHeight] / 2 - 20.0f , CGRectGetWidth(self.contentView.frame), 20.0f)];
+    _textLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(0, [FriendPickerEmptyCell getHeight] / 2 - 20.0f , PPScreenWidth(), 20.0f)];
     
     _textLabel1.font = [UIFont customContentBold:15];
     _textLabel1.textColor = [UIColor customPlaceholder];
@@ -47,7 +47,7 @@
 }
 
 - (void)createTextView2 {
-    _textLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(0, [FriendPickerEmptyCell getHeight] / 2 , CGRectGetWidth(self.contentView.frame), 20.0f)];
+    _textLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(0, [FriendPickerEmptyCell getHeight] / 2 , PPScreenWidth(), 20.0f)];
     
     _textLabel2.font = [UIFont customContentBold:15];
     _textLabel2.textColor = [UIColor customPlaceholder];

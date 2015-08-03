@@ -65,11 +65,11 @@
     UIButton *closeImage;
     
     CGFloat _offset;
-    UIView *_blackScreen;
     
     BOOL cameraDisplayed;
     NSTimer *timerForSlider;
     CGFloat heightTarget;
+    CGFloat pictureZoneSize;
 }
 
 @end
@@ -177,10 +177,13 @@
     
     [self registerForKeyboardNotifications];
     
+    transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
+    [transactionBar setDelegate:self];
+
+    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - PPStatusBarHeight() - NAVBAR_HEIGHT - CGRectGetHeight(transactionBar.frame))];
+    [self.view addSubview:self.contentView];
+    
     self.view.backgroundColor = [UIColor customBackground];
-    _blackScreen = [UIView newWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
-    [_blackScreen setBackgroundColor:[UIColor customBackground]];
-    [_blackScreen setAlpha:0.0];
     
     if (currentPreset && currentPreset.blockBack)
         ((FLNavigationController*)self.parentViewController).blockBack = currentPreset.blockBack;
@@ -261,15 +264,8 @@
         if (currentPreset && currentPreset.blockWhy)
             [content setUserInteractionEnabled:!currentPreset.blockWhy];
         
-        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
-        [transactionBar setDelegate:self];
-        
-        CGRectSetHeight(_contentView.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
-        
-        pickerTableView = [[FLUserPickerTableView alloc] initWithFrame:CGRectMake(0, _offset, PPScreenWidth(), CGRectGetHeight(_contentView.frame) - _offset + CGRectGetHeight(transactionBar.frame))];
+        pickerTableView = [[FLUserPickerTableView alloc] initWithFrame:CGRectMake(0, _offset, PPScreenWidth(), CGRectGetHeight(_contentView.frame) - _offset)];
         [pickerTableView setPickerDelegate:self];
-        
-        [self.view addSubview:transactionBar];
         
         _offset = CGRectGetMaxY(content.frame);
         
@@ -281,10 +277,8 @@
         [payementField didWalletTouch];
     }
     
-    CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame));
-    
-    [appDelegate.window addSubview:_blackScreen];
-    [_blackScreen setHidden:YES];
+    CGRectSetY(transactionBar.frame,  CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
+    [self.view addSubview:transactionBar];
 }
 
 - (void)viewDidUnload {
@@ -348,7 +342,7 @@
     } else
         [((FLNavigationController*)self.parentViewController) setAmountHidden:NO];
     
-    CGRectSetY(transactionBar.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame));
+    CGRectSetY(transactionBar.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
     
     if (isDemo) {
         demoTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(launchDemo) userInfo:nil repeats:NO];
@@ -727,13 +721,15 @@
 #pragma mark - prepare Views
 
 - (void)prepareImage {
-    imageTransaction = [[UIImageView alloc] initWithFrame:CGRectMake(PPScreenWidth() - 14 - 90, _offset + 10, 0, 0)];
+    pictureZoneSize = (PPScreenWidth() / 100.0f) * 40;
+    
+    imageTransaction = [[UIImageView alloc] initWithFrame:CGRectMake(PPScreenWidth() - 14 - pictureZoneSize, _offset + 10, 0, 0)];
     [_contentView addSubview:imageTransaction];
     [imageTransaction setMultipleTouchEnabled:YES];
     [imageTransaction setUserInteractionEnabled:YES];
     [imageTransaction addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showFullscreenImage)]];
     
-    closeImage = [UIButton newWithFrame:CGRectMake(40, 0, 40, 40)];
+    closeImage = [UIButton newWithFrame:CGRectMake(pictureZoneSize - 45, 0, 40, 40)];
     [closeImage setImage:[UIImage imageNamed:@"image-close"] forState:UIControlStateNormal];
     [closeImage addTarget:self action:@selector(touchImage) forControlEvents:UIControlEventTouchUpInside];
     [closeImage setImageEdgeInsets:UIEdgeInsetsMake(2, 15, 15, 2)];
@@ -901,9 +897,7 @@
     [content setHeight:CGRectGetHeight(_contentView.frame) - CGRectGetMinY(content.frame)];
     
     if (contactPickerVisible) {
-        NSDictionary *info = [notification userInfo];
-        CGRect kbRect = [self.view convertRect:[[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:self.view.window];
-        [self adjustTableViewInsetBottom:pickerTableView.frame.origin.y + pickerTableView.frame.size.height - kbRect.origin.y];
+        [self adjustTableViewInsetBottom:0];
     }
 }
 
@@ -1099,7 +1093,7 @@
                 }
             }];
         } else {
-            UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+            UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
             [curr setTag:125];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [curr show];
@@ -1162,8 +1156,8 @@
 - (void)rotateImageWithRadians:(CGFloat)radian imageRotate:(UIImage *)rotateImage andImage:(UIImage *)image {
     [imageTransaction setAlpha:1.0];
     [imageTransaction setImage:rotateImage];
-    CGRectSetHeight(imageTransaction.frame, 90);
-    CGRectSetWidth(imageTransaction.frame, 90);
+    CGRectSetHeight(imageTransaction.frame, pictureZoneSize);
+    CGRectSetWidth(imageTransaction.frame, pictureZoneSize);
     [imageTransaction setContentMode:UIViewContentModeScaleAspectFit];
     
     CGFloat scaleFactor = [self scaleFactor];

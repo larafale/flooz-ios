@@ -183,11 +183,11 @@
     [carouselControl setNumberOfPages:0];
     [carouselControl setCurrentPage:0];
     
-    FLActionButton *loginHomeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(actionHorizontalMargin, CGRectGetMaxY(carouselControl.frame) + actionVerticalMargin, CGRectGetWidth(homeView.frame) / 2 - 1.5 * actionHorizontalMargin, actionButtonHeight) title:[NSLocalizedString(@"Login", nil) uppercaseString]];
+    FLActionButton *loginHomeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(actionHorizontalMargin, CGRectGetMaxY(carouselControl.frame) + actionVerticalMargin, CGRectGetWidth(homeView.frame) / 2 - 1.5 * actionHorizontalMargin, actionButtonHeight) title:[NSLocalizedString(@"GLOBAL_LOGIN", nil) uppercaseString]];
     [loginHomeButton.titleLabel setFont:[UIFont customContentRegular:15]];
     [loginHomeButton addTarget:self action:@selector(didLoginHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    FLActionButton *signupHomeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(homeView.frame) / 2 + actionHorizontalMargin / 2, CGRectGetMaxY(carouselControl.frame) + actionVerticalMargin, CGRectGetWidth(homeView.frame) / 2 - 1.5 * actionHorizontalMargin, actionButtonHeight) title:[NSLocalizedString(@"Signup", nil) uppercaseString]];
+    FLActionButton *signupHomeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(homeView.frame) / 2 + actionHorizontalMargin / 2, CGRectGetMaxY(carouselControl.frame) + actionVerticalMargin, CGRectGetWidth(homeView.frame) / 2 - 1.5 * actionHorizontalMargin, actionButtonHeight) title:[NSLocalizedString(@"GLOBAL_SIGNUP", nil) uppercaseString]];
     [signupHomeButton.titleLabel setFont:[UIFont customContentRegular:15]];
     [signupHomeButton addTarget:self action:@selector(didSignupHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
@@ -264,7 +264,7 @@
     [loginHeaderView addSubview:facebookLoginButton];
     [loginHeaderView addSubview:separatorView];
     
-    FLTextFieldSignup *phoneTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"NumMobile", @"") for:loginData key:@"phone" position:CGPointMake(loginHorizontalMargin, separatorVerticalMargin)];
+    FLTextFieldSignup *phoneTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE_NUMBER", @"") for:loginData key:@"phone" position:CGPointMake(loginHorizontalMargin, separatorVerticalMargin)];
     
     CGRectSetX(phoneTextfield.frame, (SCREEN_WIDTH - phoneTextfield.frame.size.width) / 2);
     
@@ -282,7 +282,7 @@
     inputView.textField = phoneTextfield.textfield;
     phoneTextfield.textfield.inputView = inputView;
     
-    FLActionButton *loginButton = [[FLActionButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + 30, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Login", nil)];
+    FLActionButton *loginButton = [[FLActionButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + 30, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_LOGIN", nil)];
     [loginButton addTarget:self action:@selector(didLoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *forgotPasswordButton = [[UIButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(loginButton.frame) + 15, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, 15)];
@@ -436,7 +436,7 @@
     inputView.textField = phoneTextfield.textfield;
     phoneTextfield.textfield.inputView = inputView;
     
-    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(sponsorTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Signup", nil)];
+    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(sponsorTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SIGNUP", nil)];
     [signupButton setTag:89];
     [signupButton addTarget:self action:@selector(didSignupButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
@@ -863,7 +863,7 @@
     WebViewController *controller = [WebViewController new];
     [controller setUrl:@"https://www.flooz.me/cgu?layout=webview"];
     controller.title = NSLocalizedString(@"INFORMATIONS_TERMS", nil);
-    UINavigationController *controller2 = [[UINavigationController alloc] initWithRootViewController:controller];
+    UINavigationController *controller2 = [[FLNavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:controller2 animated:YES completion:NULL];
 }
 

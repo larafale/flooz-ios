@@ -28,6 +28,7 @@
     self.title = [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"];
     [super viewDidLoad];
     
+    _data = [NSMutableDictionary new];
     _contentView = [UIScrollView newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     [_mainBody addSubview:_contentView];
     
@@ -58,7 +59,7 @@
 }
 
 - (void)createSaveButton {
-    _saveButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"Save", nil)];
+    _saveButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SAVE", nil)];
     
     [_saveButton setEnabled:YES];
 }

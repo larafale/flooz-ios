@@ -87,8 +87,8 @@
 	[self dismissViewControllerAnimated:YES completion: ^{
 	    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 	    if (result == MFMailComposeResultSent) {
-	        //[appDelegate displayMessage:@"Merci" content:@"Merci pour vos idées et votre contribution afin d'améliorer Flooz." style:FLAlertViewStyleSuccess time:nil delay:nil];
-		}
+
+        }
 	    else if (result == MFMailComposeResultFailed) {
 		}
 	}];

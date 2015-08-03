@@ -80,7 +80,6 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 - (id)initWithJSON:(NSDictionary *)json;
 
 - (NSString *)statusText;
-- (NSString *)typeText;
 
 + (NSString *)transactionScopeToText:(TransactionScope)scope;
 + (UIImage *)transactionScopeToImage:(TransactionScope)scope;

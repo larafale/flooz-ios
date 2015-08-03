@@ -29,9 +29,6 @@
     self.text = json[@"text"];
     self.imgURL = json[@"image"];
     self.skipText = json[@"skip"];
-    
-    if (!self.skipText || [self.skipText isBlank])
-        self.skipText = NSLocalizedString(@"SkipLast", nil);
 }
 
 

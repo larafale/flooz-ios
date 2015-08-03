@@ -10,7 +10,6 @@
 
 #import "TransactionCellDelegate.h"
 #import "FLScrollViewIndicator.h"
-#import "FLTimelineTableViewController.h"
 #import "TimelineDelegate.h"
 #import "WYPopoverController.h"
 #import "FLFilterPopoverViewController.h"

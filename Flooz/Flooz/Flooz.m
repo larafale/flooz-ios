@@ -325,7 +325,7 @@
 }
 
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:[NSString stringWithFormat:@"/utils/asserts/secureCode/%@", secureCode] method:@"GET" params:nil success:success failure:failure];
+    [self requestPath:@"/utils/asserts" method:@"POST" params:@{@"secureCode": secureCode} success:success failure:failure];
 }
 
 - (NSString *)clearPhoneNumber:(NSString*)phone {
@@ -1004,10 +1004,6 @@
     else {
         [self hideLoadView];
     }
-}
-
-- (void)verifyInvitationCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:[NSString stringWithFormat:@"/utils/exists/coupon/%@", user[@"coupon"]] method:@"GET" params:user success:success failure:failure];
 }
 
 - (void)sendSignupSMS:(NSString *)phone {
@@ -1887,7 +1883,7 @@
         if (![[NSUserDefaults standardUserDefaults] boolForKey:kKeyAccessContacts]) {
             if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
             {
-                UIAlertView* curr1=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CONTACT_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CONTACT_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+                UIAlertView* curr1=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CONTACT_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CONTACT_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
                 [curr1 setTag:125];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [curr1 show];
@@ -1895,7 +1891,7 @@
             }
             else
             {
-                UIAlertView* curr2=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CONTACT_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CONTACT_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView* curr2=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CONTACT_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CONTACT_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:nil, nil];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [curr2 show];
                 });

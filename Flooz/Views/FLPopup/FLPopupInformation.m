@@ -35,7 +35,7 @@
     self = [super init];
     if (self) {
         okBlock = ok;
-        [self commmonInit:title message:message button:NSLocalizedString(@"OK", nil)];
+        [self commmonInit:title message:message button:NSLocalizedString(@"GLOBAL_OK", nil)];
     }
     return self;
 }
@@ -45,7 +45,7 @@
     if (self) {
         okBlock = ok;
         
-        NSString *button = (btn && ![btn isBlank] ? btn : NSLocalizedString(@"OK", nil));
+        NSString *button = (btn && ![btn isBlank] ? btn : NSLocalizedString(@"GLOBAL_OK", nil));
         
         [self commmonInit:title message:message button:button];
     }

@@ -25,6 +25,7 @@
     UITabBarItem *floozItem;
     UITabBarItem *shareItem;
     UITabBarItem *profileItem;
+    UIButton *centerButton;
 }
 
 @end
@@ -33,7 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self setDelegate:self];
     
     [self.tabBar setBarStyle:UIBarStyleDefault];
@@ -43,15 +44,15 @@
     [self.tabBar setShadowImage:[UIImage new]];
     
     [[UITabBarItem appearance] setTitleTextAttributes: @{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]} forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customBlue]} forState:UIControlStateSelected];    
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customBlue]} forState:UIControlStateSelected];
     
     NSMutableArray *tabBarItems = [NSMutableArray new];
     
-    homeItem = [[UITabBarItem alloc] initWithTitle:@"Accueil" image:[UIImage imageNamed:@"menu-home"] tag:0];
-    notifItem = [[UITabBarItem alloc] initWithTitle:@"Notifs" image:[UIImage imageNamed:@"menu-notifications"] tag:1];
-    floozItem = [[UITabBarItem alloc] initWithTitle:nil image:[[UIImage imageNamed:@"friends-field-add"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] tag:2];
-    shareItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"menu-share"] tag:3];
-    profileItem = [[UITabBarItem alloc] initWithTitle:@"Compte" image:[UIImage imageNamed:@"menu-account"] tag:4];
+    homeItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_HOME", nil) image:[UIImage imageNamed:@"menu-home"] tag:0];
+    notifItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_NOTIFICATIONS", nil) image:[UIImage imageNamed:@"menu-notifications"] tag:1];
+    floozItem = [[UITabBarItem alloc] initWithTitle:nil image:[UIImage new] tag:2];
+    shareItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_SHARE", nil) image:[UIImage imageNamed:@"menu-share"] tag:3];
+    profileItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_ACCOUNT", nil) image:[UIImage imageNamed:@"menu-account"] tag:4];
     
     FLNavigationController *homeNavigationController = [[FLNavigationController alloc] initWithRootViewController:[TimelineViewController new]];
     FLNavigationController *notifNavigationController = [[FLNavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
@@ -69,9 +70,7 @@
         
     }];
     
-    int offset = 7;
-    UIEdgeInsets imageInset = UIEdgeInsetsMake(offset, 0, -offset, 0);
-    floozItem.imageInsets = imageInset;
+    [self addCenterButtonWithImage:[UIImage imageNamed:@"add-flooz-plus"] highlightImage:nil];
     
     [[homeNavigationController.viewControllers objectAtIndex:0] setTabBarItem:homeItem];
     [[notifNavigationController.viewControllers objectAtIndex:0] setTabBarItem:notifItem];
@@ -90,7 +89,7 @@
     [self setSelectedIndex:0];
     
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.tabBar.bounds];
-
+    
     self.tabBar.layer.shadowOpacity = .3;
     self.tabBar.layer.shadowOffset = CGSizeMake(0, -2);
     self.tabBar.layer.shadowRadius = 1;
@@ -114,26 +113,6 @@
     
     FLUser *currentUser = [Flooz sharedInstance].currentUser;
     
-//    NSArray *missingFields = currentUser.json[@"missingFields"];
-//    
-//    if (!currentUser.creditCard)
-//        accountNotifs++;
-//    
-//    if ([missingFields containsObject:@"sepa"])
-//        accountNotifs++;
-//    
-//    if ([missingFields containsObject:@"cniRecto"])
-//        accountNotifs++;
-//    
-//    if ([missingFields containsObject:@"cniVerso"])
-//        accountNotifs++;
-//    
-//    if ([missingFields containsObject:@"address"])
-//        accountNotifs++;
-//    
-//    if ([missingFields containsObject:@"justificatory"])
-//        accountNotifs++;
-    
     accountNotifs += [currentUser.metrics[@"pendingFriend"] intValue];
     
     if (accountNotifs > 0)
@@ -144,23 +123,36 @@
 
 -(void) addCenterButtonWithImage:(UIImage*)buttonImage highlightImage:(UIImage*)highlightImage
 {
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
-    button.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height);
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
+    centerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    centerButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+    centerButton.contentMode = UIViewContentModeScaleAspectFit;
+    centerButton.frame = CGRectMake(0.0, 0.0, 70.0f, 70.0f);
+    [centerButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [centerButton setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
+    [centerButton addTarget:self action:@selector(openNewFlooz) forControlEvents:UIControlEventTouchUpInside];
+    centerButton.center = self.tabBar.center;
     
-    CGFloat heightDifference = buttonImage.size.height - self.tabBar.frame.size.height;
-    if (heightDifference < 0)
-        button.center = self.tabBar.center;
-    else
-    {
-        CGPoint center = self.tabBar.center;
-        center.y = center.y - heightDifference/2.0;
-        button.center = center;
+    [self.view addSubview:centerButton];
+}
+
+- (void)openNewFlooz {
+    [[appDelegate myTopViewController] mz_dismissFormSheetControllerAnimated:NO completionHandler:nil];
+    
+    NSDictionary *ux = [[[Flooz sharedInstance] currentUser] ux];
+    if (ux && ux[@"homeButton"] && [ux[@"homeButton"] count] > 0) {
+        NSArray *triggers = ux[@"homeButton"];
+        for (NSDictionary *triggerData in triggers) {
+            FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
+            [[Flooz sharedInstance] handleTrigger:trigger];
+        }
+    } else {
+        NewTransactionViewController *newTransac = [[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeBase];
+        
+        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:newTransac];
+        controller.modalPresentationStyle = UIModalPresentationCustom;
+        
+        [self presentViewController:controller animated:YES completion:NULL];
     }
-    
-    [self.view addSubview:button];
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {

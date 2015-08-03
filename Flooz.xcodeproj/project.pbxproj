@@ -18,8 +18,6 @@
 		2F0F6B0819DF5432004CA223 /* SettingsCoordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6B0619DF5432004CA223 /* SettingsCoordsViewController.m */; };
 		2F1307E919D9C1790062D194 /* FLSocialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F1307E819D9C1790062D194 /* FLSocialButton.m */; };
 		2F1307EA19D9C1790062D194 /* FLSocialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F1307E819D9C1790062D194 /* FLSocialButton.m */; };
-		2F3EB4C919D3454700C65FBC /* FLTimelineTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3EB4C819D3454700C65FBC /* FLTimelineTableViewController.m */; };
-		2F3EB4CA19D3454700C65FBC /* FLTimelineTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3EB4C819D3454700C65FBC /* FLTimelineTableViewController.m */; };
 		2F444C8119ED6DAD00ACE12E /* FLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F444C8019ED6DAD00ACE12E /* FLNavigationController.m */; };
 		2F444C8219ED6DAD00ACE12E /* FLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F444C8019ED6DAD00ACE12E /* FLNavigationController.m */; };
 		2F49762619E472CA0089947F /* SettingsNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F49762519E472CA0089947F /* SettingsNotificationsViewController.m */; };
@@ -435,7 +433,6 @@
 		C98012F21A76921000019682 /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
 		C98012F31A76921000019682 /* UIColor+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */; };
 		C98012F41A76921000019682 /* FLSelectFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093118A3BF5400517389 /* FLSelectFriendButton.m */; };
-		C98012F61A76921000019682 /* FLTimelineTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3EB4C819D3454700C65FBC /* FLTimelineTableViewController.m */; };
 		C98012F71A76921000019682 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50918C4A5D80073B947 /* WebViewController.m */; };
 		C98012F81A76921000019682 /* FriendPickerSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115E18ACE4FE00C3C52D /* FriendPickerSelectionCell.m */; };
 		C98012F91A76921000019682 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6D9188214F000D81AF6 /* HomeViewController.m */; };
@@ -616,8 +613,6 @@
 		2F1307E819D9C1790062D194 /* FLSocialButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSocialButton.m; path = Views/FLSocialButton/FLSocialButton.m; sourceTree = "<group>"; };
 		2F21172E19D46D3200CCA109 /* TimelineDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineDelegate.h; sourceTree = "<group>"; };
 		2F21173019D4AA3100CCA109 /* FLTransactionDescriptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTransactionDescriptionView.h; path = Views/FLTransactionDescriptionView/FLTransactionDescriptionView.h; sourceTree = "<group>"; };
-		2F3EB4C719D3454700C65FBC /* FLTimelineTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FLTimelineTableViewController.h; path = Controllers/FLTimelineTableViewController/FLTimelineTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		2F3EB4C819D3454700C65FBC /* FLTimelineTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTimelineTableViewController.m; path = Controllers/FLTimelineTableViewController/FLTimelineTableViewController.m; sourceTree = "<group>"; };
 		2F444C7F19ED6DAD00ACE12E /* FLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNavigationController.h; path = Controllers/FLNavigationController/FLNavigationController.h; sourceTree = "<group>"; };
 		2F444C8019ED6DAD00ACE12E /* FLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNavigationController.m; path = Controllers/FLNavigationController/FLNavigationController.m; sourceTree = "<group>"; };
 		2F49762419E472CA0089947F /* SettingsNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsNotificationsViewController.h; sourceTree = "<group>"; };
@@ -1103,15 +1098,6 @@
 			name = FLTransactionDescriptionView;
 			sourceTree = "<group>";
 		};
-		2F3EB4C219D3449E00C65FBC /* FLTimelineTableViewController */ = {
-			isa = PBXGroup;
-			children = (
-				2F3EB4C719D3454700C65FBC /* FLTimelineTableViewController.h */,
-				2F3EB4C819D3454700C65FBC /* FLTimelineTableViewController.m */,
-			);
-			name = FLTimelineTableViewController;
-			sourceTree = "<group>";
-		};
 		2F444C7E19ED6D7A00ACE12E /* FLNavigationController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1374,7 +1360,6 @@
 				C9160D531B6A6A1D00A379DA /* DiscountCode */,
 				2F444C7E19ED6D7A00ACE12E /* FLNavigationController */,
 				C950540B1B4E7E6600B9FB2C /* FLTabBarController */,
-				2F3EB4C219D3449E00C65FBC /* FLTimelineTableViewController */,
 				ABF7093318A3C4FE00517389 /* FriendPicker */,
 				AB2FB55918B2B4600079AA1D /* Friends */,
 				AB5EB6D7188214F000D81AF6 /* Home */,
@@ -2787,7 +2772,6 @@
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */,
-				2F3EB4C919D3454700C65FBC /* FLTimelineTableViewController.m in Sources */,
 				AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */,
 				ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,
@@ -2937,7 +2921,6 @@
 				ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */,
 				ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */,
 				ABAA3FE0197E96BF009F29EF /* FLSelectFriendButton.m in Sources */,
-				2F3EB4CA19D3454700C65FBC /* FLTimelineTableViewController.m in Sources */,
 				ABAA3FE1197E96BF009F29EF /* WebViewController.m in Sources */,
 				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
 				ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */,
@@ -3079,7 +3062,6 @@
 				C98012F21A76921000019682 /* FLAlertView.m in Sources */,
 				C98012F31A76921000019682 /* UIColor+custom.m in Sources */,
 				C98012F41A76921000019682 /* FLSelectFriendButton.m in Sources */,
-				C98012F61A76921000019682 /* FLTimelineTableViewController.m in Sources */,
 				C98012F71A76921000019682 /* WebViewController.m in Sources */,
 				C98012F81A76921000019682 /* FriendPickerSelectionCell.m in Sources */,
 				C98012F91A76921000019682 /* HomeViewController.m in Sources */,

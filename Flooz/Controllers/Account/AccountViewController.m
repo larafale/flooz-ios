@@ -156,7 +156,7 @@
     friendsNotifs = [currentUser.metrics[@"pendingFriend"] intValue];
     
     _menuDic = @[
-                 @{@"title":@"Compte",
+                 @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
                    @"items":@[
                            @{@"title":NSLocalizedString(@"NAV_FRIENDS", @""), @"action":@"friends", @"notif":@(friendsNotifs)},
                            @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
@@ -167,13 +167,13 @@
                            @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
                            ]
                    },
-                 @{@"title":@"Reglages",
+                 @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
                    @"items":@[
                            @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
                            @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
                            ]
                    },
-                 @{@"title":@"Divers",
+                 @{@"title":NSLocalizedString(@"MENU_OTHER", @""),
                    @"items":@[
                            @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
                            @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
@@ -237,7 +237,7 @@
         [headerView addSubview:headerTitle];
         
         CGRectSetX(headerTitle.frame, 14);
-        CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2 + 5);
+        CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2 + 1);
         
         return headerView;
     }
@@ -365,7 +365,7 @@
     [self dismissViewControllerAnimated:YES completion: ^{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         if (result == MFMailComposeResultSent) {
-            [appDelegate displayMessage:@"Merci" content:@"Merci pour vos idées et votre contribution afin d'améliorer Flooz." style:FLAlertViewStyleSuccess time:nil delay:nil];
+            [appDelegate displayMessage:NSLocalizedString(@"IDEA_THX_TITLE", nil) content:NSLocalizedString(@"IDEA_THX_CONTENT", nil) style:FLAlertViewStyleSuccess time:nil delay:nil];
         }
         else if (result == MFMailComposeResultFailed) {
         }
@@ -486,7 +486,7 @@
             }
         }];
     } else {
-        UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+        UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
         [curr setTag:125];
         dispatch_async(dispatch_get_main_queue(), ^{
             [curr show];

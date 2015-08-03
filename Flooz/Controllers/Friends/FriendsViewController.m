@@ -198,7 +198,7 @@
     [headerView addSubview:headerTitle];
     
     CGRectSetX(headerTitle.frame, 14);
-    CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2 + 5);
+    CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2 + 1);
     
     return headerView;
 }

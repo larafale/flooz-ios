@@ -155,15 +155,6 @@
     }
 }
 
-- (NSString *)typeText {
-    if ([self type] == TransactionTypePayment) {
-        return NSLocalizedString(@"TRANSACTION_TYPE_PAYMENT", nil);
-    }
-    else {
-        return NSLocalizedString(@"TRANSACTION_TYPE_COLLECTION", nil);
-    }
-}
-
 + (NSString *)transactionScopeToText:(TransactionScope)scope {
     NSString *key = nil;
     

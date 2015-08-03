@@ -59,7 +59,7 @@
 - (UIView*)tableView:(nonnull UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_tableView.frame), [self tableView:tableView heightForHeaderInSection:section])];
     
-    UILabel *headerTitle = [[UILabel alloc] initWithText:@"Qui peut le voir :" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+    UILabel *headerTitle = [[UILabel alloc] initWithText:NSLocalizedString(@"TRANSACTION_SCOPE_TITLE", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
     
     CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2);
     CGRectSetX(headerTitle.frame, 10);

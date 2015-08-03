@@ -18,6 +18,7 @@
 #import "FLBadgeView.h"
 #import "TransitionDelegate.h"
 #import "UICKeyChainStore.h"
+#import "FLPopupInformation.h"
 
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
@@ -51,7 +52,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"Accueil";
+        self.title = NSLocalizedString(@"TAB_BAR_HOME", nil);
         
         transactions = [NSMutableArray new];
         rowsWithPaymentField = [NSMutableSet new];
@@ -82,7 +83,7 @@
                                  NSFontAttributeName: [UIFont customContentLight:15]
                                  };
     
-    amountItem = [[UIBarButtonItem alloc] initWithTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO] style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
+    amountItem = [[UIBarButtonItem alloc] initWithTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO] style:UIBarButtonItemStylePlain target:self action:@selector(showWalletMessage)];
     [amountItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
     filterItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"filter"] style:UIBarButtonItemStylePlain target:self action:@selector(changeFilter)];
@@ -118,6 +119,27 @@
     [self registerNotification:@selector(reloadBalanceItem) name:kNotificationReloadCurrentUser object:nil];
     [self registerNotification:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
     [self registerNotification:@selector(statusBarHit) name:kNotificationTouchStatusBarClick object:nil];
+}
+
+- (void)showWalletMessage {
+    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
+    CGSize newImgSize = CGSizeMake(20, 14);
+    
+    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
+    [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
+    cbImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+    attachment.image = cbImage;
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_1", nil)];
+    [string appendAttributedString:attachmentString];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_2", nil)]];
+    
+    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:nil] show];
 }
 
 - (void)reloadBalanceItem {
