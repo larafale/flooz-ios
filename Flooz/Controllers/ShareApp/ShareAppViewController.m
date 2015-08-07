@@ -27,11 +27,12 @@
     
     UILabel *_titleLabel;
     UILabel *_subtitleLabel;
+    UILabel *_codeLabel;
     
     FLClearActionTextView *_text;
     
     NSString *_code;
-    NSString *_appText;
+    NSArray *_appText;
     NSString *_fbData;
     NSDictionary *_mailData;
     NSString *_twitterText;
@@ -64,26 +65,36 @@
     
     [_mainBody addSubview:_backImage];
     
-    _titleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customTitleExtraLight:15] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    _titleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor customBlue] font:[UIFont customContentBold:28] textAlignment:NSTextAlignmentCenter numberOfLines:0];
     [_titleLabel setUserInteractionEnabled:NO];
-    
+    [_titleLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    CGRectSetWidth(_titleLabel.frame, CGRectGetWidth(_mainBody.frame) - 20);
+
     [_mainBody addSubview:_titleLabel];
  
-    _subtitleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor customBlue] font:[UIFont customContentBold:35] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    [_subtitleLabel setUserInteractionEnabled:YES];
-    [_subtitleLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
+    _subtitleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15] textAlignment:NSTextAlignmentCenter numberOfLines:0];
+    [_subtitleLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [_subtitleLabel setUserInteractionEnabled:NO];
+    CGRectSetWidth(_subtitleLabel.frame, CGRectGetWidth(_mainBody.frame) - 20);
+    [_subtitleLabel setHidden:YES];
     
     [_mainBody addSubview:_subtitleLabel];
 
+    _codeLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor customBlue] font:[UIFont customContentBold:20] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    [_codeLabel setUserInteractionEnabled:YES];
+    [_codeLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
+    [_codeLabel setHidden:YES];
+
+    [_mainBody addSubview:_codeLabel];
+
     _text = [[FLClearActionTextView alloc] initWithFrame:CGRectMake(20, 250, CGRectGetWidth(_mainBody.frame) - 40, 100)];
     [_text setTextColor:[UIColor customWhite]];
-    [_text setFont:[UIFont customContentRegular:18]];
+    [_text setFont:[UIFont customContentRegular:16]];
     [_text setTextAlignment:NSTextAlignmentCenter];
+    [_text addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
 
-    if (IS_IPHONE_4) {
-        CGRectSetY(_text.frame, 200);
-    }
-    
+    CGRectSetWidth(_text.frame, CGRectGetWidth(_mainBody.frame) - 20);
+
     [_text setEditable:NO];
     [_text setBounces:NO];
     [_text setScrollEnabled:NO];
@@ -109,28 +120,7 @@
         if (!_code)
             _code = @"";
         
-        [self.navigationItem setTitle:_viewTitle];
-        
-        [_titleLabel setText:_h1];
-        [_titleLabel sizeToFit];
-        [_titleLabel setCenter:_backImage.center];
-        CGRectSetY(_titleLabel.frame, 50);
- 
-        [_subtitleLabel setText:_h2];
-        [_subtitleLabel sizeToFit];
-        [_subtitleLabel setCenter:_backImage.center];
-        CGRectSetY(_subtitleLabel.frame, CGRectGetMaxY(_titleLabel.frame) + 15);
-        
-        [_text setText:_appText];
-        [_text sizeToFit];
-        CGRectSetX(_text.frame, (CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(_text.frame)) / 2);
-        
-        if (_footerView)
-            [_footerView removeFromSuperview];
-        
-        [self createFooterView];
-    
-        CGRectSetY(_text.frame, CGRectGetMinY(_footerView.frame) - CGRectGetHeight(_text.frame) - 50);
+        [self prepareViews];
     } else {
         [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
             _code = result.shareCode;
@@ -146,34 +136,58 @@
             if (!_code)
                 _code = @"";
             
-            [self.navigationItem setTitle:_viewTitle];
-            
-            [_titleLabel setText:_h1];
-            [_titleLabel sizeToFit];
-            [_titleLabel setCenter:_backImage.center];
-            CGRectSetY(_titleLabel.frame, 50);
-            
-            [_subtitleLabel setText:_h2];
-            [_subtitleLabel sizeToFit];
-            [_subtitleLabel setCenter:_backImage.center];
-            CGRectSetY(_subtitleLabel.frame, CGRectGetMaxY(_titleLabel.frame) + 15);
-            
-            [_text setText:_appText];
-            [_text sizeToFit];
-            CGRectSetX(_text.frame, (CGRectGetWidth(_mainBody.frame) - CGRectGetWidth(_text.frame)) / 2);
-            
-            if (_footerView)
-                [_footerView removeFromSuperview];
-            
-            [self createFooterView];
-            
-            CGRectSetY(_text.frame, CGRectGetMinY(_footerView.frame) - CGRectGetHeight(_text.frame) - 50);
-            
+            [self prepareViews];
         } failure:^(NSError *error) {
             
         }];
     }
     [self registerNotification:@selector(showFbConfirmBox) name:kNotificationFbConnect object:nil];
+}
+
+- (void)prepareViews {
+    [self.navigationItem setTitle:_viewTitle];
+    
+    if (_footerView)
+        [_footerView removeFromSuperview];
+    
+    [self createFooterView];
+ 
+    [_codeLabel setText:[NSString stringWithFormat:@"“%@”", _code]];
+    [_codeLabel sizeToFit];
+    [_codeLabel setCenter:_backImage.center];
+    CGRectSetY(_codeLabel.frame, CGRectGetMinY(_footerView.frame) - CGRectGetHeight(_codeLabel.frame) - 25);
+
+    [_subtitleLabel setText:_h2];
+    [_subtitleLabel setHeightToFit];
+    [_subtitleLabel setCenter:_backImage.center];
+    CGRectSetY(_subtitleLabel.frame, CGRectGetMinY(_codeLabel.frame) - CGRectGetHeight(_subtitleLabel.frame) - 10);
+    
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_appText[0]];
+    [text addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text.length)];
+    [text addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text.length)];
+    
+    NSMutableAttributedString *code = [[NSMutableAttributedString alloc] initWithString:_code];
+    [code addAttribute:NSForegroundColorAttributeName value:[UIColor customBlue] range:NSMakeRange(0, code.length)];
+    [code addAttribute:NSFontAttributeName value:[UIFont customContentBold:19] range:NSMakeRange(0, code.length)];
+    
+    NSMutableAttributedString *text2 = [[NSMutableAttributedString alloc] initWithString:_appText[1]];
+    [text2 addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text2.length)];
+    [text2 addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text2.length)];
+    
+    [text appendAttributedString:code];
+    [text appendAttributedString:text2];
+    
+    [_text setAttributedText:text];
+    [_text setTextAlignment:NSTextAlignmentCenter];
+    [_text sizeToFit];
+    [_text setCenter:_backImage.center];
+    CGRectSetY(_text.frame, CGRectGetMinY(_footerView.frame) - CGRectGetHeight(_text.frame) - 60);
+    
+    [_titleLabel setText:_h1];
+    [_titleLabel setHeightToFit];
+    [_titleLabel setCenter:_backImage.center];
+//    CGRectSetY(_titleLabel.frame, (CGRectGetHeight(_mainBody.frame) - (CGRectGetHeight(_mainBody.frame) - CGRectGetMinY(_text.frame))) / 2 - CGRectGetHeight(_titleLabel.frame) / 2);
+    CGRectSetY(_titleLabel.frame, 80);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -273,7 +287,7 @@
         popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
         popoverController.delegate = self;
         
-        [popoverController presentPopoverFromRect:_subtitleLabel.bounds inView:_subtitleLabel permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+        [popoverController presentPopoverFromRect:_text.bounds inView:_text permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
             [popoverViewController.button addTarget:self action:@selector(copyCode) forControlEvents:UIControlEventTouchUpInside];
         }];
     }

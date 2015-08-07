@@ -132,26 +132,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    
-    [self showShadow];
-
-    controller = viewController;
-    
-    if (!self.blockBack) {
-        if (navigationController.viewControllers.count == 1 && !navigationController.parentViewController) {
-            viewController.navigationItem.leftBarButtonItem = closeItem;
-        }
-        else if (!navigationController.parentViewController) {
-            viewController.navigationItem.leftBarButtonItem = backItem;
-        }
-        else
-            viewController.navigationItem.leftBarButtonItem = nil;
-    }
-    else
-        viewController.navigationItem.leftBarButtonItem = nil;
-}
-
 - (void)setAmountHidden:(BOOL)hidden {
     self.blockAmount = hidden;
     
@@ -176,11 +156,42 @@
         controller.navigationItem.rightBarButtonItem = cbItem;
     }
     else {
-        [amountItem setTitle:[NSString stringWithFormat:@"%.2f €", tmp]];
+        [amountItem setTitle:[FLHelper formatedAmount:@(tmp) withSymbol:NO]];
         
         if (controller.navigationItem.rightBarButtonItem != amountItem)
             controller.navigationItem.rightBarButtonItem = amountItem;
     }
 }
+
+#pragma marks - UINavigationControllerDelegate
+
+- (void)navigationController:(nonnull UINavigationController *)navigationController didShowViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated {
+    if (_navigationDelegate)
+        [_navigationDelegate navigationController:navigationController didShowViewController:viewController animated:animated];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [self showShadow];
+    
+    controller = viewController;
+    
+    if (!self.blockBack) {
+        if (navigationController.viewControllers.count == 1 && !navigationController.parentViewController) {
+            viewController.navigationItem.leftBarButtonItem = closeItem;
+        }
+        else if (!navigationController.parentViewController) {
+            viewController.navigationItem.leftBarButtonItem = backItem;
+        }
+        else
+            viewController.navigationItem.leftBarButtonItem = nil;
+    }
+    else
+        viewController.navigationItem.leftBarButtonItem = nil;
+
+    
+    if (_navigationDelegate)
+        [_navigationDelegate navigationController:navigationController willShowViewController:viewController animated:animated];
+}
+
 
 @end

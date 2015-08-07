@@ -425,7 +425,7 @@
 	isSearching = YES;
 
 	[[Flooz sharedInstance] showLoadView];
-	[[Flooz sharedInstance] friendSearch:text forNewFlooz:NO success: ^(id result) {
+    [[Flooz sharedInstance] friendSearch:text forNewFlooz:NO withPhones:@[] success: ^(id result) {
 	    friendsSearch = result;
         [self displayBackOrNot];
 	    [_tableView reloadData];

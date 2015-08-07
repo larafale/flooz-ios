@@ -18,7 +18,7 @@
 @property (nonatomic, retain) NSString *shareTwitter;
 @property (nonatomic, retain) NSDictionary *shareMail;
 @property (nonatomic, retain) NSString *shareFb;
-@property (nonatomic, retain) NSString *shareText;
+@property (nonatomic, retain) NSArray *shareText;
 @property (nonatomic, retain) NSDictionary *json;
 
 - (id)initWithJSON:(NSDictionary *)json;

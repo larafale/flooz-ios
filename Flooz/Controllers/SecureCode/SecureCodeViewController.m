@@ -24,6 +24,7 @@
     NSString *tempNewSecureCode;
     
     UILabel *_textExplication;
+    UILabel *_newCodeExplication;
     
     FLKeyboardView *_keyboardView;
     
@@ -287,6 +288,16 @@ static BOOL canTouchID = YES;
 }
 
 - (void)prepareViewEdit {
+    _newCodeExplication = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), 40)];
+    _newCodeExplication.textColor = [UIColor customGrey];
+    _newCodeExplication.font = [UIFont customTitleLight:18];
+    _newCodeExplication.numberOfLines = 0;
+    _newCodeExplication.textAlignment = NSTextAlignmentCenter;
+    _newCodeExplication.text = [Flooz sharedInstance].currentTexts.json[@"secureCode"];
+    [_newCodeExplication setHeightToFit];
+    
+    [_mainBody addSubview:_newCodeExplication];
+
     _keyboardView = [FLKeyboardView new];
     CGRectSetY(_keyboardView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(_keyboardView.frame));
     [_mainBody addSubview:_keyboardView];
@@ -389,6 +400,7 @@ static BOOL canTouchID = YES;
     [_secretQuestion setHidden:YES];
     [_secretForgotButton setHidden:YES];
     
+    [_newCodeExplication setHidden:YES];
     [_keyboardView setHidden:YES];
     
     if (currentSecureMode == SecureCodeModeNormal || currentSecureMode == SecureCodeModeChangeOld) {
@@ -428,7 +440,9 @@ static BOOL canTouchID = YES;
         
         CGRectSetY(_textExplication.frame, CGRectGetMinY(_keyboardView.frame) / 2 - 30);
         CGRectSetY(_codePinView.frame, CGRectGetMaxY(_textExplication.frame) - 5.0f);
+        CGRectSetY(_newCodeExplication.frame, CGRectGetMaxY(_codePinView.frame) + 5.0f);
 
+        [_newCodeExplication setHidden:NO];
         [_textExplication setHidden:NO];
         [_codePinView setHidden:NO];
         [_keyboardView setHidden:NO];

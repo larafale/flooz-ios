@@ -93,7 +93,7 @@
     }
     
     {
-        UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetHeight(_mainBody.frame) - 60.0f, CGRectGetWidth(_mainBody.frame) - PADDING_SIDE*2.0f, 60.0f)];
+        UILabel *firstTimeText = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(_confirmButton.frame) + PADDING_SIDE, CGRectGetWidth(_mainBody.frame) - PADDING_SIDE*2.0f, 60.0f)];
         firstTimeText.textColor = [UIColor customGrey];
         firstTimeText.font = [UIFont customTitleExtraLight:14];
         firstTimeText.numberOfLines = 0;

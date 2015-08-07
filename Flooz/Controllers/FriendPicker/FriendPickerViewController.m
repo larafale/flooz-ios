@@ -420,7 +420,7 @@
 	_friendsFiltred = friendsFiltred;
 	_friendsRecentFiltred = friendsRecentFiltred;
 
-	[[Flooz sharedInstance] friendSearch:text forNewFlooz:YES success: ^(id result) {
+    [[Flooz sharedInstance] friendSearch:text forNewFlooz:YES withPhones:@[] success: ^(id result) {
 	    _friendsSearch = result;
 	    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
 	    [_tableView setContentOffset:CGPointZero animated:YES];

@@ -325,7 +325,7 @@
 }
 
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/utils/asserts" method:@"POST" params:@{@"secureCode": secureCode} success:success failure:failure];
+    [self requestPath:@"/utils/asserts" method:@"POST" params:@{@"field": @"secureCode", @"value": secureCode} success:success failure:failure];
 }
 
 - (NSString *)clearPhoneNumber:(NSString*)phone {
@@ -841,7 +841,7 @@
     [self requestPath:path method:@"POST" params:(canal != nil ? @{@"metrics":@{@"selectedFrom": canal}} : nil) success:success failure:nil];
 }
 
-- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz success:(void (^)(id result))success {
+- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result))success {
     id successBlock = ^(id result) {
         NSMutableArray *friends = [self createFriendsArrayFromSearchResult:result];
         if (success) {
@@ -853,7 +853,7 @@
     if (newFlooz) {
         path = [path stringByAppendingString:@"?context=newFlooz"];
     }
-    [self requestPath:path method:@"GET" params:@{ @"q" : text } success:successBlock failure:nil];
+    [self requestPath:path method:@"GET" params:@{ @"q" : text, @"phones" : phones } success:successBlock failure:nil];
 }
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -990,7 +990,6 @@
         
         AFHTTPRequestOperation *operation = [manager HTTPRequestOperationWithRequest:request success:successBlock failure:failureBlock];
         [manager.operationQueue addOperation:operation];
-        //        [manager POST:path parameters:params constructingBodyWithBlock:constructingBodyWithBlock success:successBlock failure:failureBlock];
     }
     else if ([method isEqualToString:@"POST"]) {
         [manager POST:path parameters:params success:successBlock failure:failureBlock];

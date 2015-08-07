@@ -141,7 +141,7 @@ static NSString *kBranchData = @"branchData";
 - (void)friendsSuggestion:(void (^)(id result))success;
 - (void)friendRemove:(NSString *)friendId success:(void (^)())success;
 - (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success;
-- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz success:(void (^)(id result))success;
+- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result))success;
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 

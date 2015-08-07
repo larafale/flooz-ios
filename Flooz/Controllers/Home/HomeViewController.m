@@ -758,9 +758,9 @@
         }
     }
     
-    if (sponsorTextfield.textfield.text.length > 0)
-        clearSponsorField.hidden = NO;
-    else
+//    if (sponsorTextfield.textfield.text.length > 0)
+//        clearSponsorField.hidden = NO;
+//    else
         clearSponsorField.hidden = YES;
 }
 

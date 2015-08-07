@@ -49,7 +49,7 @@
         
         CGRectSetWidth(infos.frame, CGRectGetWidth(_contentView.frame) - PADDING_SIDE * 2);
         [infos sizeToFit];
-        CGRectSetXY(infos.frame, CGRectGetWidth(_contentView.frame) / 2 - CGRectGetWidth(infos.frame) / 2, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(infos.frame) - PADDING_SIDE);
+        CGRectSetXY(infos.frame, CGRectGetWidth(_contentView.frame) / 2 - CGRectGetWidth(infos.frame) / 2, CGRectGetMaxY(_saveButton.frame) + PADDING_SIDE);
         [_contentView addSubview:infos];
 
     }

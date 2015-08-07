@@ -52,7 +52,7 @@
 "FIELD_ZIP_CODE" = "Code postal";
 "FIELD_CITY" = "Ville";
 "FIELD_SMS_CODE" = "Saisir le code reçu par SMS";
-"FIELD_SPONSOR" = "Code parrain ?";
+"FIELD_SPONSOR" = "Code parrain (optionnel)";
 
 "FIELD_IBAN" = "Code IBAN";
 "FIELD_IBAN_PLACEHOLDER" = "FRXXXXXXXXXXXXXXXXXXXXXXXXX";
@@ -273,10 +273,10 @@
 "TRANSACTION_STATUS_REFUSED" = "Refused";
 "TRANSACTION_STATUS_PENDING" = "Waiting";
 
-"TRANSACTION_SCOPE_TITLE" = "Qui peut voir ça :";
+"TRANSACTION_SCOPE_TITLE" = "Qui peut voir ce Flooz :";
 "TRANSACTION_SCOPE_PUBLIC" = "Tout le monde";
-"TRANSACTION_SCOPE_FRIEND" = "Mes amis et moi";
-"TRANSACTION_SCOPE_PRIVATE" = "Moi";
+"TRANSACTION_SCOPE_FRIEND" = "Mes amis & moi";
+"TRANSACTION_SCOPE_PRIVATE" = "Moi uniquement";
 
 "SEND_COMMENT" = "Ajouter un commentaire...";
 

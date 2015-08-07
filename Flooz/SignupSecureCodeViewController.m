@@ -71,7 +71,21 @@
         [_mainBody addSubview:keyboardView];
     }
     
-    CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(_codePinView.frame));
+    UILabel *infos;
+    {
+        infos = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, CGRectGetMaxY(_codePinView.frame) + 25.0f, PPScreenWidth() - 30.0f, 50)];
+        infos.textColor = [UIColor customGrey];
+        infos.font = [UIFont customTitleLight:18];
+        infos.numberOfLines = 0;
+        [infos setLineBreakMode:NSLineBreakByWordWrapping];
+        infos.textAlignment = NSTextAlignmentCenter;
+        infos.text = [Flooz sharedInstance].currentTexts.json[@"secureCode"];
+        [infos setHeightToFit];
+        
+        [_mainContent addSubview:infos];
+    }
+    
+    CGRectSetHeight(_mainContent.frame, CGRectGetMaxY(infos.frame));
     [_mainContent setCenter:CGPointMake(PPScreenWidth() / 2, (CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(keyboardView.frame)) / 2)];
     [_mainBody addSubview:_mainContent];
 }

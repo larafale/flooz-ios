@@ -25,6 +25,7 @@
     self = [super init];
     if (self) {
         self.title = NSLocalizedString(@"SETTINGS_SECURITY", nil);
+        self.hidesBottomBarWhenPushed = NO;
     }
     return self;
 }
@@ -88,9 +89,7 @@
         SecureCodeViewController *controller = [SecureCodeViewController new];
         controller.isForChangeSecureCode = YES;
         controller.blockTouchID = YES;
-        self.hidesBottomBarWhenPushed = YES;
-        [[self navigationController] pushViewController:controller animated:YES];
-        self.hidesBottomBarWhenPushed = NO;
+        [self presentViewController:controller animated:YES completion:nil];
     }
     else if (indexPath.row == 1) {
         [[self navigationController] pushViewController:[PasswordViewController new] animated:YES];

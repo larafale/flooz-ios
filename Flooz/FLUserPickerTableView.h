@@ -18,12 +18,12 @@
     NSMutableArray *_contactsFromAdressBook;
     NSMutableArray *_contactsFiltered;
     
-    NSArray *_friendsSearch;
-    NSArray *_friends;
-    NSArray *_friendsRecent;
+    NSMutableArray *_friendsSearch;
+    NSMutableArray *_friends;
+    NSMutableArray *_friendsRecent;
     
-    NSArray *_friendsFiltred;
-    NSArray *_friendsRecentFiltred;
+    NSMutableArray *_friendsFiltred;
+    NSMutableArray *_friendsRecentFiltred;
 
     NSMutableArray *_filteredContacts;
 

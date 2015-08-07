@@ -74,7 +74,7 @@
     [[Flooz sharedInstance] updateCurrentUserWithSuccess: ^{
         [self reloadCurrentUser];
     }];
-
+    
     [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
     [self registerNotification:@selector(editAvatarWith:) name:@"editAvatar" object:nil];
 }
@@ -289,42 +289,44 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *rowDic = [[[_menuDic objectAtIndex:indexPath.section - 1] objectForKey:@"items"] objectAtIndex:indexPath.row];
-    NSString *action = rowDic[@"action"];
-    
-    if ([action isEqualToString:@"cashout"]) {
-        [[self navigationController] pushViewController:[CashOutViewController new] animated:YES];
-    } else if ([action isEqualToString:@"card"]) {
-        [[self navigationController] pushViewController:[CreditCardViewController new] animated:YES];
-    } else if ([action isEqualToString:@"friends"]) {
-        [[self navigationController] pushViewController:[FriendsViewController new] animated:YES];
-    } else if ([action isEqualToString:@"bank"]) {
-        [[self navigationController] pushViewController:[SettingsBankViewController new] animated:YES];
-    } else if ([action isEqualToString:@"documents"]) {
-        [[self navigationController] pushViewController:[SettingsDocumentsViewController new] animated:YES];
-    } else if ([action isEqualToString:@"coords"]) {
-        [[self navigationController] pushViewController:[SettingsCoordsViewController new] animated:YES];
-    } else if ([action isEqualToString:@"security"]) {
-        [[self navigationController] pushViewController:[SettingsSecurityViewController new] animated:YES];
-    } else if ([action isEqualToString:@"rate"]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?pageNumber=0&sortOrdering=1&type=Purple+Software&mt=8&id=940393916"]];
-    } else if ([action isEqualToString:@"faq"]) {
-        [self goToWebView:rowDic];
-    } else if ([action isEqualToString:@"terms"]) {
-        [self goToWebView:rowDic];
-    } else if ([action isEqualToString:@"contact"]) {
-        [self goToWebView:rowDic];
-    } else if ([action isEqualToString:@"critics"]) {
-        [self presentIdeaCritics];
-    } else if ([action isEqualToString:@"preferences"]) {
-        [[self navigationController] pushViewController:[SettingsPreferencesViewController new] animated:YES];
-    } else if ([action isEqualToString:@"logout"]) {
-        FLPopup *popup = [[FLPopup alloc] initWithMessage:NSLocalizedString(@"LOGOUT_INFO", nil) accept: ^{
-            [[Flooz sharedInstance] logout];
-        } refuse:NULL];
-        [popup show];
-    } else if ([action isEqualToString:@"sponsor"]) {
-        [[self navigationController] pushViewController:[DiscountCodeViewController new] animated:YES];
+    if (indexPath.section != _menuDic.count + 1) {
+        NSDictionary *rowDic = [[[_menuDic objectAtIndex:indexPath.section - 1] objectForKey:@"items"] objectAtIndex:indexPath.row];
+        NSString *action = rowDic[@"action"];
+        
+        if ([action isEqualToString:@"cashout"]) {
+            [[self navigationController] pushViewController:[CashOutViewController new] animated:YES];
+        } else if ([action isEqualToString:@"card"]) {
+            [[self navigationController] pushViewController:[CreditCardViewController new] animated:YES];
+        } else if ([action isEqualToString:@"friends"]) {
+            [[self navigationController] pushViewController:[FriendsViewController new] animated:YES];
+        } else if ([action isEqualToString:@"bank"]) {
+            [[self navigationController] pushViewController:[SettingsBankViewController new] animated:YES];
+        } else if ([action isEqualToString:@"documents"]) {
+            [[self navigationController] pushViewController:[SettingsDocumentsViewController new] animated:YES];
+        } else if ([action isEqualToString:@"coords"]) {
+            [[self navigationController] pushViewController:[SettingsCoordsViewController new] animated:YES];
+        } else if ([action isEqualToString:@"security"]) {
+            [[self navigationController] pushViewController:[SettingsSecurityViewController new] animated:YES];
+        } else if ([action isEqualToString:@"rate"]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?pageNumber=0&sortOrdering=1&type=Purple+Software&mt=8&id=940393916"]];
+        } else if ([action isEqualToString:@"faq"]) {
+            [self goToWebView:rowDic];
+        } else if ([action isEqualToString:@"terms"]) {
+            [self goToWebView:rowDic];
+        } else if ([action isEqualToString:@"contact"]) {
+            [self goToWebView:rowDic];
+        } else if ([action isEqualToString:@"critics"]) {
+            [self presentIdeaCritics];
+        } else if ([action isEqualToString:@"preferences"]) {
+            [[self navigationController] pushViewController:[SettingsPreferencesViewController new] animated:YES];
+        } else if ([action isEqualToString:@"logout"]) {
+            FLPopup *popup = [[FLPopup alloc] initWithMessage:NSLocalizedString(@"LOGOUT_INFO", nil) accept: ^{
+                [[Flooz sharedInstance] logout];
+            } refuse:NULL];
+            [popup show];
+        } else if ([action isEqualToString:@"sponsor"]) {
+            [[self navigationController] pushViewController:[DiscountCodeViewController new] animated:YES];
+        }
     }
 }
 

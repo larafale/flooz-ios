@@ -80,10 +80,10 @@
         
         if ([_filteredContacts count] == 0)
             _filteredContacts = _contactsFromAdressBook;
+        [self reloadData];
     } else {
         [self didFilterChange];
     }
-    [self reloadData];
 }
 
 - (void)didFilterChange {
@@ -92,11 +92,6 @@
     }
     
     if (!_selectionText || [_selectionText isBlank]) {
-        //        _filteredContacts = [_friendsRecent copy];
-        //
-        //        if ([_filteredContacts count] == 0)
-        //            _filteredContacts = _contactsFromAdressBook;
-        
         [self reloadData];
         return;
     }
@@ -138,8 +133,51 @@
         
         _contactsFiltered = contactsFiltered;
         
-        [[Flooz sharedInstance] friendSearch:_selectionText forNewFlooz:YES success: ^(id result) {
+        NSMutableArray *phoneArray = [NSMutableArray new];
+        
+        if (_contactsFiltered.count < 50) {
+            for (FLUser *tmp in _contactsFiltered) {
+                [phoneArray addObject:tmp.phone];
+            }
+        }
+        
+        [[Flooz sharedInstance] friendSearch:_selectionText forNewFlooz:YES withPhones:phoneArray success: ^(id result) {
             _friendsSearch = result;
+            
+            _filteredContacts = [NSMutableArray new];
+            NSMutableArray *commonUsers = [NSMutableArray new];
+            NSMutableArray *commonContacts = [NSMutableArray new];
+            
+            for (FLUser *user in _friendsSearch) {
+                for (FLUser *user2 in _contactsFiltered) {
+                    BOOL common = NO;
+                    if ([user2.phone isEqualToString:user.phone]) {
+                        [commonContacts addObject:user2];
+                        common = YES;
+                    }
+                    
+                    if (common && ![commonUsers containsObject:user]) {
+                        [commonUsers addObject:user];
+                    }
+                }
+            }
+            
+            for (FLUser *rUser in commonUsers) {
+                [_friendsSearch removeObject:rUser];
+            }
+            
+            for (FLUser *rUser in commonContacts) {
+                [_contactsFiltered removeObject:rUser];
+            }
+            
+            if (commonUsers.count > 0)
+                [_filteredContacts addObjectsFromArray:commonUsers];
+            
+            if (_contactsFiltered.count > 0)
+                [_filteredContacts addObjectsFromArray:_contactsFiltered];
+            
+            if (_friendsSearch.count > 0)
+                [_filteredContacts addObjectsFromArray:_friendsSearch];
             
             [self reloadData];
         }];
@@ -164,11 +202,7 @@
             return NSLocalizedString(@"FRIEND_PICKER_ADDRESS_BOOK", nil);
         }
     } else {
-        if (section == 0) {
-            return NSLocalizedString(@"FRIEND_PICKER_RESULT", nil);
-        } else {
-            return NSLocalizedString(@"FRIEND_PICKER_ADDRESS_BOOK", nil);
-        }
+        return NSLocalizedString(@"FRIEND_PICKER_RESULT", nil);
     }
 }
 
@@ -187,16 +221,7 @@
             return 0;
         }
     } else {
-        if (section == 0) {
-            if ((!_friendsSearch.count && !_contactsFiltered.count) || _friendsSearch.count)
-                return 35;
-            else
-                return 0;
-        } else {
-            if ([_contactsFiltered count])
-                return 35;
-            return 0;
-        }
+        return 35;
     }
 }
 
@@ -220,7 +245,7 @@
             return [FriendPickerFriendCell getHeight];
         return [FriendPickerEmptyCell getHeight];
     } else {
-        if (![_friendsSearch count] || ![_contactsFiltered count])
+        if (![_filteredContacts count])
             return [FriendPickerFriendCell getHeight];
         return [FriendPickerEmptyCell getHeight];
     };
@@ -239,18 +264,16 @@
             return [_contactsFromAdressBook count];
         }
     } else {
-        if (section == 0) {
-            if ([_friendsSearch count] || [_contactsFiltered count])
-                return [_friendsSearch count];
-            return 1;
-        } else {
-            return [_contactsFiltered count];
-        }
+        if ([_filteredContacts count])
+            return [_filteredContacts count];
+        return 1;
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    if (!_selectionText || [_selectionText isBlank])
+        return 2;
+    return 1;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -268,13 +291,9 @@
             currentUser = _contactsFromAdressBook[indexPath.row];
         }
     } else {
-        if (indexPath.section == 0) {
-            if (![_friendsSearch count] && ![_contactsFiltered count])
-                return [self createEmptyCell:tableView];
-            currentUser = _friendsSearch[indexPath.row];
-        } else {
-            currentUser = _contactsFiltered[indexPath.row];
-        }
+        if (![_filteredContacts count])
+            return [self createEmptyCell:tableView];
+        currentUser = _filteredContacts[indexPath.row];
     }
     
     static NSString *cellIdentifierSelection = @"FriendPickerFriendCell";
@@ -304,7 +323,7 @@
     [timer invalidate];
     
     if (self.pickerDelegate) {
-        FLUser *currentUser;
+        FLUser *currentUser = nil;
         
         if (!_selectionText || [_selectionText isBlank]) {
             if (indexPath.section == 0 && [_friendsRecent count]) {
@@ -317,15 +336,12 @@
                 currentUser = _contactsFromAdressBook[indexPath.row];
             }
         } else {
-            if (indexPath.section == 0) {
-                if (![_friendsSearch count] && ![_contactsFiltered count])
-                    return;
-                currentUser = _friendsSearch[indexPath.row];
-            } else {
-                currentUser = _contactsFiltered[indexPath.row];
-            }
+            if (![_filteredContacts count])
+                return;
+            currentUser = _filteredContacts[indexPath.row];
         }
-        [self.pickerDelegate userSelected:currentUser];
+        if (currentUser)
+            [self.pickerDelegate userSelected:currentUser];
     }
 }
 

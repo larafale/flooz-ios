@@ -10,6 +10,8 @@
 
 @interface FLNavigationController : UINavigationController <UINavigationControllerDelegate>
 
+@property (nonatomic) id<UINavigationControllerDelegate> navigationDelegate;
+
 @property (nonatomic) BOOL blockBack;
 @property (nonatomic) BOOL blockAmount;
 @property (nonatomic) UIImage *shadowImage;

@@ -70,8 +70,6 @@
         
     }];
     
-    [self addCenterButtonWithImage:[UIImage imageNamed:@"add-flooz-plus"] highlightImage:nil];
-    
     [[homeNavigationController.viewControllers objectAtIndex:0] setTabBarItem:homeItem];
     [[notifNavigationController.viewControllers objectAtIndex:0] setTabBarItem:notifItem];
     [[floozNavigationController.viewControllers objectAtIndex:0] setTabBarItem:floozItem];
@@ -96,6 +94,8 @@
     self.tabBar.clipsToBounds = NO;
     self.tabBar.layer.shadowPath = shadowPath.CGPath;
     
+    [self addCenterButtonWithImage:[UIImage imageNamed:@"add-flooz-plus"] highlightImage:nil];
+    
     [self reloadBadge];
     [self reloadCurrentUser];
     
@@ -113,7 +113,7 @@
     
     FLUser *currentUser = [Flooz sharedInstance].currentUser;
     
-    accountNotifs += [currentUser.metrics[@"pendingFriend"] intValue];
+    accountNotifs += [currentUser.metrics[@"accountMissing"] intValue];
     
     if (accountNotifs > 0)
         [profileItem setBadgeValue:[@(accountNotifs) stringValue]];
