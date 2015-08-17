@@ -74,9 +74,21 @@
     if (IS_IPHONE_4)
         margin = 10;
     
+    UILabel *floozLabel = [[UILabel alloc] initWithText:[Flooz sharedInstance].currentTexts.json[@"friend"] textColor:[UIColor whiteColor] font:[UIFont customContentRegular:15] textAlignment:NSTextAlignmentCenter numberOfLines:0];
+    [floozLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    
+    CGRectSetWidth(floozLabel.frame, CGRectGetWidth(_backgroundView.frame) - 2 * margin);
+    CGRectSetX(floozLabel.frame, margin);
+    
+    [floozLabel setHeightToFit];
+    
     FLActionButton *shareButton = [[FLActionButton alloc] initWithFrame:CGRectMake(30.0f, CGRectGetHeight(_backgroundView.frame) - 40 - FLActionButtonDefaultHeight, PPScreenWidth() - 60.0f, FLActionButtonDefaultHeight) title:NSLocalizedString(@"FRIENDS_BUTTON_INVITE", nil)];
     [shareButton addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
     
+    CGRectSetY(floozLabel.frame, CGRectGetHeight(_backgroundView.frame) / 2 - (CGRectGetHeight(floozLabel.frame) + margin + FLActionButtonDefaultHeight) / 2);
+    CGRectSetY(shareButton.frame, CGRectGetMaxY(floozLabel.frame) + margin);
+    
+    [_backgroundView addSubview:floozLabel];
     [_backgroundView addSubview:shareButton];
     
 	_tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame)) style:UITableViewStylePlain];
@@ -112,6 +124,10 @@
 	[self registerNotification:@selector(scrollViewDidScroll:) name:kNotificationCloseKeyboard object:nil];
 	[self registerNotification:@selector(didReloadData) name:kNotificationRemoveFriend object:nil];
     [self registerNotification:@selector(reloadFriendsList) name:kNotificationReloadCurrentUser object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+
 }
 
 - (void)showShareView {

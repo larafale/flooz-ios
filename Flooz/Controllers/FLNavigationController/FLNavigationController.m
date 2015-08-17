@@ -171,6 +171,8 @@
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [self.view endEditing:YES];
+    
     [self showShadow];
     
     controller = viewController;
