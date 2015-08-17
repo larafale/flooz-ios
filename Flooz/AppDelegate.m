@@ -960,15 +960,29 @@
 
 - (void)showNewTransactionController:(FLUser *)user transactionType:(NSUInteger)transactionType {
     dispatch_async(dispatch_get_main_queue(), ^{
-        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
-        [self.tabBarController presentViewController:controller animated:YES completion:NULL];
+        if (_formSheet.presentedFSViewController) {
+            [[self currentController] mz_dismissFormSheetControllerAnimated:NO completionHandler: ^(MZFormSheetController *formSheetController) {
+                FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
+                [self.tabBarController presentViewController:controller animated:YES completion:NULL];
+            }];
+        } else {
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
+            [self.tabBarController presentViewController:controller animated:YES completion:NULL];
+        }
     });
 }
 
 - (void)showPresetNewTransactionController:(FLPreset *)preset {
     dispatch_async(dispatch_get_main_queue(), ^{
-        FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithPreset:preset]];
-        [self.tabBarController presentViewController:controller animated:YES completion:NULL];
+        if (_formSheet.presentedFSViewController) {
+            [[self currentController] mz_dismissFormSheetControllerAnimated:NO completionHandler: ^(MZFormSheetController *formSheetController) {
+                FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithPreset:preset]];
+                [self.tabBarController presentViewController:controller animated:YES completion:NULL];
+            }];
+        } else {
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithPreset:preset]];
+            [self.tabBarController presentViewController:controller animated:YES completion:NULL];
+        }
     });
 }
 
