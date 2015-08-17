@@ -348,10 +348,16 @@
 }
 
 - (void)passwordForget:(NSString*)login success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    if (login == nil)
+        login = @"";
+    
     [self requestPath:@"/users/password/lost" method:@"POST" params:@{ @"email": login } success:success failure:failure];
 }
 
 - (void)passwordLost:(NSString *)email success:(void (^)(id result))success {
+    if (email == nil)
+        email = @"";
+
     [self requestPath:@"password/lost" method:@"POST" params:@{ @"q": email } success:success failure:NULL];
 }
 
@@ -482,8 +488,8 @@
     [self requestPath:@"/invitations/text" method:@"GET" params:nil success:successBlock failure:failureBlock];
 }
 
-- (void)invitationFacebook:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/invitations/facebook" method:@"GET" params:nil success:success failure:failure];
+- (void)invitationFacebook:(NSString *)text success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/invitations/facebook" method:@"POST" params:@{@"message":text} success:success failure:failure];
 }
 
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -1136,7 +1142,7 @@
 - (void)connectFacebook {
     [[FBSession activeSession] closeAndClearTokenInformation];
     
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile,email,user_friends,publish_actions"]
+    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile",@"email",@"user_friends",@"publish_actions"]
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {

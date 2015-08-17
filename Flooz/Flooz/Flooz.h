@@ -130,7 +130,7 @@ static NSString *kBranchData = @"branchData";
 - (void)createCreditCard:(NSDictionary *)creditCard atSignup:(BOOL)signup success:(void (^)(id result))success;
 - (void)abort3DSecure;
 
-- (void)invitationFacebook:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)invitationFacebook:(NSString *)text success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)invitationText:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)inviteWithPhone:(NSString *)phone;

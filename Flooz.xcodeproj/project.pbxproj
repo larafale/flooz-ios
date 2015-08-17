@@ -302,6 +302,9 @@
 		C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175D1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175E1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
+		C927061E1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
+		C927061F1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
+		C92706201B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
 		C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
 		C93118491A1FBD72008C6EEC /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
 		C935B6E91B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */; };
@@ -867,6 +870,8 @@
 		C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscountCodeViewController.m; sourceTree = "<group>"; };
 		C921175A1B66726900CF2D51 /* FLInvitationTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLInvitationTexts.h; sourceTree = "<group>"; };
 		C921175B1B66726900CF2D51 /* FLInvitationTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLInvitationTexts.m; sourceTree = "<group>"; };
+		C927061C1B81D7EE00FB1A11 /* FLSharePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSharePopup.h; sourceTree = "<group>"; };
+		C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSharePopup.m; sourceTree = "<group>"; };
 		C93118461A1F7E0B008C6EEC /* FLReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReport.h; sourceTree = "<group>"; };
 		C93118471A1F7E0B008C6EEC /* FLReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReport.m; sourceTree = "<group>"; };
 		C935B6E71B611DBD00861DAD /* FLFilterPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilterPopoverViewController.h; sourceTree = "<group>"; };
@@ -1713,6 +1718,8 @@
 				ABAFEE26197FFE5000D39C62 /* FLPopup.m */,
 				2FC8784219C08B0300F034E0 /* FLPopupInformation.h */,
 				2FC8784319C08B0300F034E0 /* FLPopupInformation.m */,
+				C927061C1B81D7EE00FB1A11 /* FLSharePopup.h */,
+				C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */,
 			);
 			name = FLPopup;
 			sourceTree = "<group>";
@@ -2720,6 +2727,7 @@
 				AB2FB53318AD40580079AA1D /* CashOutViewController.m in Sources */,
 				ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */,
 				2F444C8119ED6DAD00ACE12E /* FLNavigationController.m in Sources */,
+				C927061E1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */,
 				ABE914AB1898558E003AC722 /* FLTextView.m in Sources */,
 				2F0F6AFB19DF0686004CA223 /* FLSwitch.m in Sources */,
 				ABF7092A18A2CA3500517389 /* TransactionViewController.m in Sources */,
@@ -2869,6 +2877,7 @@
 				ABAA3FB1197E96BF009F29EF /* FLUser.m in Sources */,
 				ABAA3FB2197E96BF009F29EF /* FLNewTransactionAmount.m in Sources */,
 				ABAA3FB6197E96BF009F29EF /* FLLoadView.m in Sources */,
+				C927061F1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */,
 				2FA3E55C19DDE71900EC65C2 /* SettingsSecurityViewController.m in Sources */,
 				ABAA3FB7197E96BF009F29EF /* SecureCodeField.m in Sources */,
 				ABAA3FBA197E96BF009F29EF /* CashOutViewController.m in Sources */,
@@ -3010,6 +3019,7 @@
 				C98012BA1A76921000019682 /* FLUser.m in Sources */,
 				C98012BC1A76921000019682 /* FLNewTransactionAmount.m in Sources */,
 				C98012BE1A76921000019682 /* FLLoadView.m in Sources */,
+				C92706201B81D7EE00FB1A11 /* FLSharePopup.m in Sources */,
 				C98012C01A76921000019682 /* SettingsSecurityViewController.m in Sources */,
 				C98012C11A76921000019682 /* SecureCodeField.m in Sources */,
 				C98012C31A76921000019682 /* CashOutViewController.m in Sources */,

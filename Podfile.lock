@@ -27,7 +27,7 @@ PODS:
   - Bolts/AppLinks (1.2.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.0)
-  - Branch (0.10.5)
+  - Branch (0.10.9)
   - DACircularProgress (2.3.1)
   - EAIntroView (2.7.4):
     - EARestrictedScrollView (~> 0.2.0)
@@ -39,7 +39,7 @@ PODS:
     - GBJailbreakDetection (~> 1.0)
   - GBJailbreakDetection (1.0.0)
   - HHRouter (0.1.5)
-  - iCarousel (1.8.1)
+  - iCarousel (1.8.2)
   - IDMPhotoBrowser (1.6.2):
     - AFNetworking
     - DACircularProgress
@@ -99,7 +99,7 @@ SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 6516052442fc8ca8f3cc4b3c7aa0436de12373df
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
-  Branch: c12209a965c1f93083fb515084a4f5b8cbfc7c56
+  Branch: 024a0c5848303eb82b8aa139822e07e0724f7fdc
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: 50b85eedf414260e61330070ffe5947e72493a62
   EARestrictedScrollView: f86d61e16c61d3e93c84f8e96e83122a2a3b7631
@@ -108,7 +108,7 @@ SPEC CHECKSUMS:
   GBDeviceInfo: 5c7630b984135a2cdc3e6822b9eee39bc67a3d3e
   GBJailbreakDetection: 3ba798512e1c194f02bcf6ebbafe1986e950d441
   HHRouter: c82ce169fea838ea85a819133df40d19605f5c95
-  iCarousel: dace1cb858e3f4dc2614bee3201041247f82feda
+  iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
   IDMPhotoBrowser: ebbfa6690456b72dd92d93b7bc11d71519f4d06d
   JPSVolumeButtonHandler: 03ecb2d55acbe4499631c8d9fe221f7af48569d4
   JTHelper: d84a961a60a27623c595a7f6965fcafdefb88b9b

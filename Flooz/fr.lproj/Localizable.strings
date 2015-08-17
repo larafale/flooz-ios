@@ -32,6 +32,7 @@
 "GLOBAL_SIGNUP" = "Inscription";
 "GLOBAL_SAVE" = "Enregistrer";
 "GLOBAL_NEXT" = "Suivant";
+"GLOBAL_SHARE" = "Partager";
 
 /************************************/
 /*              FIELDS              */

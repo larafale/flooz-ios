@@ -34,7 +34,7 @@
     NSString *imageNamed = @"back-secure";
 
     logo = [UIImageView imageNamed:imageNamed];
-    [logo setContentMode:UIViewContentModeScaleAspectFit];
+    [logo setContentMode:UIViewContentModeScaleAspectFill];
     [logo setFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [self.view addSubview:logo];
     

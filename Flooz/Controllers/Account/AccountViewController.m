@@ -155,6 +155,11 @@
     
     friendsNotifs = [currentUser.metrics[@"pendingFriend"] intValue];
     
+    NSString *shareTitle = [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"];
+    
+    if (shareTitle == nil)
+        shareTitle = @"";
+    
     _menuDic = @[
                  @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
                    @"items":@[

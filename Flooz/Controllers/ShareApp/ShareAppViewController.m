@@ -14,6 +14,7 @@
 #import "FLUser.h"
 #import "ClipboardPopoverViewController.h"
 #import "FLClearActionTextView.h"
+#import "FLSharePopup.h"
 
 @interface ShareAppViewController () {
     UIView *_footerView;
@@ -33,7 +34,7 @@
     
     NSString *_code;
     NSArray *_appText;
-    NSString *_fbData;
+    NSDictionary *_fbData;
     NSDictionary *_mailData;
     NSString *_twitterText;
     NSString *_smsText;
@@ -69,9 +70,9 @@
     [_titleLabel setUserInteractionEnabled:NO];
     [_titleLabel setLineBreakMode:NSLineBreakByWordWrapping];
     CGRectSetWidth(_titleLabel.frame, CGRectGetWidth(_mainBody.frame) - 20);
-
+    
     [_mainBody addSubview:_titleLabel];
- 
+    
     _subtitleLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15] textAlignment:NSTextAlignmentCenter numberOfLines:0];
     [_subtitleLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [_subtitleLabel setUserInteractionEnabled:NO];
@@ -79,22 +80,22 @@
     [_subtitleLabel setHidden:YES];
     
     [_mainBody addSubview:_subtitleLabel];
-
+    
     _codeLabel = [[UILabel alloc] initWithText:@"" textColor:[UIColor customBlue] font:[UIFont customContentBold:20] textAlignment:NSTextAlignmentCenter numberOfLines:1];
     [_codeLabel setUserInteractionEnabled:YES];
     [_codeLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
     [_codeLabel setHidden:YES];
-
+    
     [_mainBody addSubview:_codeLabel];
-
+    
     _text = [[FLClearActionTextView alloc] initWithFrame:CGRectMake(20, 250, CGRectGetWidth(_mainBody.frame) - 40, 100)];
     [_text setTextColor:[UIColor customWhite]];
     [_text setFont:[UIFont customContentRegular:16]];
     [_text setTextAlignment:NSTextAlignmentCenter];
     [_text addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPopover)]];
-
+    
     CGRectSetWidth(_text.frame, CGRectGetWidth(_mainBody.frame) - 20);
-
+    
     [_text setEditable:NO];
     [_text setBounces:NO];
     [_text setScrollEnabled:NO];
@@ -132,7 +133,7 @@
             _viewTitle = result.shareTitle;
             _h1 = result.shareHeader;
             _h2 = result.shareSubheader;
-
+            
             if (!_code)
                 _code = @"";
             
@@ -151,12 +152,12 @@
         [_footerView removeFromSuperview];
     
     [self createFooterView];
- 
+    
     [_codeLabel setText:[NSString stringWithFormat:@"“%@”", _code]];
     [_codeLabel sizeToFit];
     [_codeLabel setCenter:_backImage.center];
     CGRectSetY(_codeLabel.frame, CGRectGetMinY(_footerView.frame) - CGRectGetHeight(_codeLabel.frame) - 25);
-
+    
     [_subtitleLabel setText:_h2];
     [_subtitleLabel setHeightToFit];
     [_subtitleLabel setCenter:_backImage.center];
@@ -186,7 +187,7 @@
     [_titleLabel setText:_h1];
     [_titleLabel setHeightToFit];
     [_titleLabel setCenter:_backImage.center];
-//    CGRectSetY(_titleLabel.frame, (CGRectGetHeight(_mainBody.frame) - (CGRectGetHeight(_mainBody.frame) - CGRectGetMinY(_text.frame))) / 2 - CGRectGetHeight(_titleLabel.frame) / 2);
+    //    CGRectSetY(_titleLabel.frame, (CGRectGetHeight(_mainBody.frame) - (CGRectGetHeight(_mainBody.frame) - CGRectGetMinY(_text.frame))) / 2 - CGRectGetHeight(_titleLabel.frame) / 2);
     CGRectSetY(_titleLabel.frame, 80);
 }
 
@@ -329,18 +330,55 @@
 }
 
 - (void)sendWithFacebook {
-    if ([[Flooz sharedInstance] facebook_token]) {
-        [self showFbConfirmBox];
+    if ([_fbData[@"method"] isEqualToString:@"widget"]) {
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       _fbData[@"name"] , @"name",
+                                       _fbData[@"caption"], @"caption",
+                                       _fbData[@"description"], @"description",
+                                       _fbData[@"link"], @"link",
+                                       nil];
+        
+        FBSession *session = nil;
+        
+        if ([[Flooz sharedInstance] facebook_token]) {
+            session = [FBSession activeSession];
+        }
+        
+        [FBWebDialogs presentFeedDialogModallyWithSession:session
+                                               parameters:params
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                      if (error) {
+                                                          NSLog(@"Error publishing story: %@", error.description);
+                                                      } else {
+                                                          if (result == FBWebDialogResultDialogNotCompleted) {
+                                                              NSLog(@"User cancelled.");
+                                                          } else {
+                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                                                              
+                                                              if (![urlParams valueForKey:@"post_id"]) {
+                                                                  NSLog(@"User cancelled.");
+                                                                  
+                                                              } else {
+                                                                  [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
+                                                              }
+                                                          }
+                                                      }
+                                                  }];
     }
     else {
-        [[Flooz sharedInstance] connectFacebook];
+        if ([[Flooz sharedInstance] facebook_token]) {
+            [self showFbConfirmBox];
+        }
+        else {
+            [[Flooz sharedInstance] connectFacebook];
+        }
     }
 }
 
 - (void)showFbConfirmBox {
-    FLPopup *fbPopup = [[FLPopup alloc] initWithMessage:_fbData accept:^{
+    FLSharePopup *fbPopup = [[FLSharePopup alloc] initWithTitle:_fbData[@"title"] placeholder:_fbData[@"placeholder"] accept:^(NSString *data) {
         [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] invitationFacebook:nil failure:nil];
+        [[Flooz sharedInstance] invitationFacebook:data success:nil failure:nil];
     } refuse:^{
         
     }];
@@ -369,7 +407,6 @@
         
         [self presentViewController:mySLComposerSheet animated:YES completion:nil];
         [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-            NSString *output;
             switch (result) {
                 case SLComposeViewControllerResultDone:
                     [[Flooz sharedInstance] sendInvitationMetric:@"twitter"];
