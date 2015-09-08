@@ -398,7 +398,6 @@
 }
 
 - (void)sendWithTwitter {
-    
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
     {
         SLComposeViewController *mySLComposerSheet;

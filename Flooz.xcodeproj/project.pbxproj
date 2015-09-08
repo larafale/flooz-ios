@@ -325,6 +325,12 @@
 		C95772771A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */; };
 		C95772781A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */; };
 		C95772791A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */; };
+		C95974F61B9EE2EE00F2F7D1 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C95974F51B9EE2EE00F2F7D1 /* FLCountry.m */; settings = {ASSET_TAGS = (); }; };
+		C95974F71B9EE2EE00F2F7D1 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C95974F51B9EE2EE00F2F7D1 /* FLCountry.m */; settings = {ASSET_TAGS = (); }; };
+		C95974F81B9EE2EE00F2F7D1 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C95974F51B9EE2EE00F2F7D1 /* FLCountry.m */; settings = {ASSET_TAGS = (); }; };
+		C95974FC1B9EFCBC00F2F7D1 /* FLContryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C95974FB1B9EFCBC00F2F7D1 /* FLContryPicker.m */; settings = {ASSET_TAGS = (); }; };
+		C95974FD1B9EFCBC00F2F7D1 /* FLContryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C95974FB1B9EFCBC00F2F7D1 /* FLContryPicker.m */; settings = {ASSET_TAGS = (); }; };
+		C95974FE1B9EFCBC00F2F7D1 /* FLContryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C95974FB1B9EFCBC00F2F7D1 /* FLContryPicker.m */; settings = {ASSET_TAGS = (); }; };
 		C95AED971A49AF4A00000FB3 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
 		C95AED981A49B10700000FB3 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
 		C95AED9E1A49B5E500000FB3 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */; };
@@ -493,6 +499,12 @@
 		C98013391A76921000019682 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB3D08A3186CA11A00CF8380 /* Images.xcassets */; };
 		C980133A1A76921000019682 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A12187575C600E92A77 /* Localizable.strings */; };
 		C980133B1A76921000019682 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6DA188214F000D81AF6 /* HomeViewController.xib */; };
+		C984E5831B9DC3290015D101 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C984E5801B9DC3290015D101 /* CountryPicker.bundle */; settings = {ASSET_TAGS = (); }; };
+		C984E5841B9DC3290015D101 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C984E5801B9DC3290015D101 /* CountryPicker.bundle */; settings = {ASSET_TAGS = (); }; };
+		C984E5851B9DC3290015D101 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C984E5801B9DC3290015D101 /* CountryPicker.bundle */; settings = {ASSET_TAGS = (); }; };
+		C984E5861B9DC3290015D101 /* CountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C984E5811B9DC3290015D101 /* CountryPicker.m */; settings = {ASSET_TAGS = (); }; };
+		C984E5871B9DC3290015D101 /* CountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C984E5811B9DC3290015D101 /* CountryPicker.m */; settings = {ASSET_TAGS = (); }; };
+		C984E5881B9DC3290015D101 /* CountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C984E5811B9DC3290015D101 /* CountryPicker.m */; settings = {ASSET_TAGS = (); }; };
 		C99A51521AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */; };
 		C99A51531AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */; };
 		C99A51541AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */; };
@@ -886,6 +898,10 @@
 		C95772701A9C7BB400CD6BC0 /* FLTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTexts.m; sourceTree = "<group>"; };
 		C95772751A9CBDB400CD6BC0 /* FriendPickerEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendPickerEmptyCell.h; sourceTree = "<group>"; };
 		C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendPickerEmptyCell.m; sourceTree = "<group>"; };
+		C95974F41B9EE2EE00F2F7D1 /* FLCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCountry.h; sourceTree = "<group>"; };
+		C95974F51B9EE2EE00F2F7D1 /* FLCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountry.m; sourceTree = "<group>"; };
+		C95974FA1B9EFCBC00F2F7D1 /* FLContryPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLContryPicker.h; sourceTree = "<group>"; };
+		C95974FB1B9EFCBC00F2F7D1 /* FLContryPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLContryPicker.m; sourceTree = "<group>"; };
 		C95AED951A49AF4A00000FB3 /* ClipboardPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipboardPopoverViewController.h; sourceTree = "<group>"; };
 		C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClipboardPopoverViewController.m; sourceTree = "<group>"; };
 		C95AED9A1A49B5E500000FB3 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
@@ -898,18 +914,14 @@
 		C966473A19FFEA0D000851AF /* TransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionDelegate.m; sourceTree = "<group>"; };
 		C966473F19FFEB4E000851AF /* AnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedTransitioning.h; sourceTree = "<group>"; };
 		C966474019FFEB4E000851AF /* AnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedTransitioning.m; sourceTree = "<group>"; };
-		C975BAF71A92BB8E000E5AEA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BAF81A92BB8E000E5AEA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAF91A92BB8E000E5AEA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BAFA1A92BB8E000E5AEA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFB1A92BB8E000E5AEA /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFC1A92BB8E000E5AEA /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFD1A92BB8E000E5AEA /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFE1A92BB8E000E5AEA /* sq */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sq; path = sq.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFF1A92BB8E000E5AEA /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BB001A92BB8E000E5AEA /* YLMoment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLMoment.h; sourceTree = "<group>"; };
 		C975BB011A92BB8E000E5AEA /* YLMoment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLMoment.m; sourceTree = "<group>"; };
 		C98013431A76921000019682 /* Flooz local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flooz local.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C984E5801B9DC3290015D101 /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CountryPicker.bundle; sourceTree = "<group>"; };
+		C984E5811B9DC3290015D101 /* CountryPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryPicker.m; sourceTree = "<group>"; };
+		C984E5821B9DC3290015D101 /* CountryPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryPicker.h; sourceTree = "<group>"; };
 		C99A514E1AF7D69500342F8C /* IQActionSheetPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetPickerView.h; sourceTree = "<group>"; };
 		C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetPickerView.m; sourceTree = "<group>"; };
 		C99A51501AF7D69500342F8C /* IQActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetViewController.h; sourceTree = "<group>"; };
@@ -1387,6 +1399,7 @@
 		AB3D08D5186CA6F800CF8380 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C95974F91B9EFC9500F2F7D1 /* FLCountryPicker */,
 				C9AF4BE319F7C2A9005C696B /* AvatarMenu */,
 				AB5EB6F91882157300D81AF6 /* Cells */,
 				ABE9144F189165BA003AC722 /* FLAccountUserView */,
@@ -1424,6 +1437,7 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				C984E57F1B9DC2F80015D101 /* CountryPicker */,
 				AB3D08DC1871A5CB00CF8380 /* Flooz */,
 				C99A514D1AF7D67000342F8C /* IQActionSheetPickerView */,
 				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
@@ -1455,6 +1469,8 @@
 				C9C7EE9319F685B9009FE292 /* FLAlert.m */,
 				ABF7095B18A4FD6B00517389 /* FLComment.h */,
 				ABF7095C18A4FD6B00517389 /* FLComment.m */,
+				C95974F41B9EE2EE00F2F7D1 /* FLCountry.h */,
+				C95974F51B9EE2EE00F2F7D1 /* FLCountry.m */,
 				ABBB75CD18B64A0B0070C2A8 /* FLCreditCard.h */,
 				ABBB75CE18B64A0B0070C2A8 /* FLCreditCard.m */,
 				ABBB75DC18BA27E60070C2A8 /* FLFriendRequest.h */,
@@ -2102,6 +2118,15 @@
 			name = FriendPickerEmptyCell;
 			sourceTree = "<group>";
 		};
+		C95974F91B9EFC9500F2F7D1 /* FLCountryPicker */ = {
+			isa = PBXGroup;
+			children = (
+				C95974FA1B9EFCBC00F2F7D1 /* FLContryPicker.h */,
+				C95974FB1B9EFCBC00F2F7D1 /* FLContryPicker.m */,
+			);
+			name = FLCountryPicker;
+			sourceTree = "<group>";
+		};
 		C95AED991A49B5E500000FB3 /* WYPopoverController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2149,6 +2174,16 @@
 				C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		C984E57F1B9DC2F80015D101 /* CountryPicker */ = {
+			isa = PBXGroup;
+			children = (
+				C984E5801B9DC3290015D101 /* CountryPicker.bundle */,
+				C984E5811B9DC3290015D101 /* CountryPicker.m */,
+				C984E5821B9DC3290015D101 /* CountryPicker.h */,
+			);
+			name = CountryPicker;
 			sourceTree = "<group>";
 		};
 		C99A514D1AF7D67000342F8C /* IQActionSheetPickerView */ = {
@@ -2351,13 +2386,6 @@
 			knownRegions = (
 				en,
 				fr,
-				de,
-				es,
-				ja,
-				nl,
-				pt,
-				sq,
-				zh,
 			);
 			mainGroup = AB3D0885186CA11A00CF8380;
 			productRefGroup = AB3D088F186CA11A00CF8380 /* Products */;
@@ -2405,6 +2433,7 @@
 				AB3D08A4186CA11A00CF8380 /* Images.xcassets in Resources */,
 				C9D4E7071B18BD380096725B /* Flooz local-Info.plist in Resources */,
 				ABF46A10187575C600E92A77 /* Localizable.strings in Resources */,
+				C984E5831B9DC3290015D101 /* CountryPicker.bundle in Resources */,
 				AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2439,6 +2468,7 @@
 				ABAA4014197E96BF009F29EF /* Rene Bieder - Gentona Light.otf in Resources */,
 				ABAA4015197E96BF009F29EF /* Rene Bieder - Gentona Thin.otf in Resources */,
 				ABAA4016197E96BF009F29EF /* FriendsViewController.xib in Resources */,
+				C984E5841B9DC3290015D101 /* CountryPicker.bundle in Resources */,
 				ABAA4019197E96BF009F29EF /* Error.strings in Resources */,
 				C975BB031A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */,
 				ABAA401B197E96BF009F29EF /* NewTransactionViewController.xib in Resources */,
@@ -2474,6 +2504,7 @@
 				C980132E1A76921000019682 /* Rene Bieder - Gentona Light.otf in Resources */,
 				C980132F1A76921000019682 /* Rene Bieder - Gentona Thin.otf in Resources */,
 				C98013301A76921000019682 /* FriendsViewController.xib in Resources */,
+				C984E5851B9DC3290015D101 /* CountryPicker.bundle in Resources */,
 				C98013321A76921000019682 /* Error.strings in Resources */,
 				C975BB041A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */,
 				C98013331A76921000019682 /* NewTransactionViewController.xib in Resources */,
@@ -2740,6 +2771,7 @@
 				ABE9143D1890A08A003AC722 /* UIBarButtonItem+custom.m in Sources */,
 				C9CB21F81A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51551AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
+				C984E5861B9DC3290015D101 /* CountryPicker.m in Sources */,
 				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
 				ABE9147918929AC8003AC722 /* NotificationsViewController.m in Sources */,
 				ABBB75CF18B64A0B0070C2A8 /* FLCreditCard.m in Sources */,
@@ -2769,9 +2801,11 @@
 				C9CA67701A518535003863D1 /* SignupNavigationController.m in Sources */,
 				ABF7094118A4D64300517389 /* TransactionCell.m in Sources */,
 				C9ED41241A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
+				C95974F61B9EE2EE00F2F7D1 /* FLCountry.m in Sources */,
 				C9EB885D1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
 				AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */,
 				C90252101B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
+				C95974FC1B9EFCBC00F2F7D1 /* FLContryPicker.m in Sources */,
 				C9A7BE601A27801200195AFC /* FLPreset.m in Sources */,
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
 				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
@@ -2890,6 +2924,7 @@
 				2FD2460419A2983C008DCFB5 /* ContactCell.m in Sources */,
 				ABAA3FBC197E96BF009F29EF /* FLTextView.m in Sources */,
 				C9CB21F91A95E9D30064389A /* THContactPickerView.m in Sources */,
+				C984E5871B9DC3290015D101 /* CountryPicker.m in Sources */,
 				C99A51561AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
 				ABAA3FBD197E96BF009F29EF /* TransactionViewController.m in Sources */,
 				ABAA3FBE197E96BF009F29EF /* FLTransaction.m in Sources */,
@@ -2919,9 +2954,11 @@
 				2F50155419EDC46E00F61380 /* GlobalViewController.m in Sources */,
 				C9CA67711A518535003863D1 /* SignupNavigationController.m in Sources */,
 				ABAA3FD3197E96BF009F29EF /* FLTextFieldTitle2.m in Sources */,
+				C95974F71B9EE2EE00F2F7D1 /* FLCountry.m in Sources */,
 				ABAA3FD6197E96BF009F29EF /* FLUserView.m in Sources */,
 				C9ED41251A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
 				C90252111B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
+				C95974FD1B9EFCBC00F2F7D1 /* FLContryPicker.m in Sources */,
 				C9EB885E1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
 				ABAA3FD8197E96BF009F29EF /* TransactionCell.m in Sources */,
 				ABAA3FDA197E96BF009F29EF /* UIView+FindFirstResponder.m in Sources */,
@@ -3032,6 +3069,7 @@
 				C98012C91A76921000019682 /* ContactCell.m in Sources */,
 				C98012CA1A76921000019682 /* FLTextView.m in Sources */,
 				C9CB21FA1A95E9D30064389A /* THContactPickerView.m in Sources */,
+				C984E5881B9DC3290015D101 /* CountryPicker.m in Sources */,
 				C99A51571AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
 				C98012CD1A76921000019682 /* TransactionViewController.m in Sources */,
 				C98012CE1A76921000019682 /* FLTransaction.m in Sources */,
@@ -3061,9 +3099,11 @@
 				C98012E41A76921000019682 /* GlobalViewController.m in Sources */,
 				C98012E61A76921000019682 /* SignupNavigationController.m in Sources */,
 				C98012E71A76921000019682 /* FLTextFieldTitle2.m in Sources */,
+				C95974F81B9EE2EE00F2F7D1 /* FLCountry.m in Sources */,
 				C98012E81A76921000019682 /* FLUserView.m in Sources */,
 				C9ED41261A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
 				C90252121B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
+				C95974FE1B9EFCBC00F2F7D1 /* FLContryPicker.m in Sources */,
 				C9EB885F1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
 				C98012EB1A76921000019682 /* TransactionCell.m in Sources */,
 				C98012EE1A76921000019682 /* UIView+FindFirstResponder.m in Sources */,
@@ -3146,15 +3186,8 @@
 		C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C975BAF71A92BB8E000E5AEA /* de */,
 				C975BAF81A92BB8E000E5AEA /* en */,
-				C975BAF91A92BB8E000E5AEA /* es */,
 				C975BAFA1A92BB8E000E5AEA /* fr */,
-				C975BAFB1A92BB8E000E5AEA /* ja */,
-				C975BAFC1A92BB8E000E5AEA /* nl */,
-				C975BAFD1A92BB8E000E5AEA /* pt */,
-				C975BAFE1A92BB8E000E5AEA /* sq */,
-				C975BAFF1A92BB8E000E5AEA /* zh */,
 			);
 			name = YLMomentRelativeTimeLocalizable.strings;
 			sourceTree = "<group>";

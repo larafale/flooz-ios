@@ -26,6 +26,17 @@
     self.couponButton = json[@"couponButton"];
     self.card = json[@"card"];
     self.menu = json[@"menu"];
+
+    self.avalaibleCountries = [NSMutableArray new];
+    
+    NSArray *countries = json[@"countries"];
+    
+    for (NSDictionary *country in countries) {
+        [self.avalaibleCountries addObject:[[FLCountry alloc] initWithJSON:country]];
+    }
+    
+    if (!self.avalaibleCountries.count)
+        [self.avalaibleCountries addObject:[[FLCountry alloc] initWithJSON:@{@"name":@"France", @"code":@"FR", @"phoneCode":@"+33"}]];
 }
 
 @end

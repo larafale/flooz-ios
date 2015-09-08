@@ -1,32 +1,32 @@
 PODS:
-  - ActionSheetPicker-3.0 (1.7.0)
-  - AFNetworking (2.5.4):
-    - AFNetworking/NSURLConnection (= 2.5.4)
-    - AFNetworking/NSURLSession (= 2.5.4)
-    - AFNetworking/Reachability (= 2.5.4)
-    - AFNetworking/Security (= 2.5.4)
-    - AFNetworking/Serialization (= 2.5.4)
-    - AFNetworking/UIKit (= 2.5.4)
-  - AFNetworking/NSURLConnection (2.5.4):
+  - ActionSheetPicker-3.0 (1.7.2)
+  - AFNetworking (2.6.0):
+    - AFNetworking/NSURLConnection (= 2.6.0)
+    - AFNetworking/NSURLSession (= 2.6.0)
+    - AFNetworking/Reachability (= 2.6.0)
+    - AFNetworking/Security (= 2.6.0)
+    - AFNetworking/Serialization (= 2.6.0)
+    - AFNetworking/UIKit (= 2.6.0)
+  - AFNetworking/NSURLConnection (2.6.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.4):
+  - AFNetworking/NSURLSession (2.6.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.4)
-  - AFNetworking/Security (2.5.4)
-  - AFNetworking/Serialization (2.5.4)
-  - AFNetworking/UIKit (2.5.4):
+  - AFNetworking/Reachability (2.6.0)
+  - AFNetworking/Security (2.6.0)
+  - AFNetworking/Serialization (2.6.0)
+  - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Bolts (1.2.0):
-    - Bolts/AppLinks (= 1.2.0)
-    - Bolts/Tasks (= 1.2.0)
-  - Bolts/AppLinks (1.2.0):
+  - Bolts (1.2.1):
+    - Bolts/AppLinks (= 1.2.1)
+    - Bolts/Tasks (= 1.2.1)
+  - Bolts/AppLinks (1.2.1):
     - Bolts/Tasks
-  - Bolts/Tasks (1.2.0)
+  - Bolts/Tasks (1.2.1)
   - Branch (0.10.9)
   - DACircularProgress (2.3.1)
   - EAIntroView (2.7.4):
@@ -34,29 +34,30 @@ PODS:
   - EARestrictedScrollView (0.2.0)
   - Facebook-iOS-SDK (3.23.2):
     - Bolts (~> 1.0)
-  - FXBlurView (1.6.3)
+  - FXBlurView (1.6.4)
   - GBDeviceInfo (3.2.0):
     - GBJailbreakDetection (~> 1.0)
   - GBJailbreakDetection (1.0.0)
   - HHRouter (0.1.5)
   - iCarousel (1.8.2)
-  - IDMPhotoBrowser (1.6.2):
+  - IDMPhotoBrowser (1.7):
     - AFNetworking
     - DACircularProgress
     - pop
-  - JPSVolumeButtonHandler (0.0.1)
+  - JPSVolumeButtonHandler (1.0.0)
   - JTHelper (0.1.12)
   - JTSImageViewController (1.4)
-  - Mixpanel (2.8.2):
-    - Mixpanel/Mixpanel (= 2.8.2)
-  - Mixpanel/Mixpanel (2.8.2)
+  - libPhoneNumber-iOS (0.8.7)
+  - Mixpanel (2.8.3):
+    - Mixpanel/Mixpanel (= 2.8.3)
+  - Mixpanel/Mixpanel (2.8.3)
   - MZAppearance (1.1.5)
   - MZFormSheetController (3.1.0):
     - MZAppearance
     - MZFormSheetController/Core (= 3.1.0)
   - MZFormSheetController/Core (3.1.0):
     - MZAppearance
-  - NSDate+Calendar (0.0.7)
+  - NSDate+Calendar (0.0.8)
   - PonyDebugger (0.4.5):
     - SocketRocket
   - pop (1.0.7)
@@ -84,6 +85,7 @@ DEPENDENCIES:
   - JPSVolumeButtonHandler
   - JTHelper (~> 0.1.1)
   - JTSImageViewController
+  - libPhoneNumber-iOS
   - Mixpanel
   - MZFormSheetController
   - NSDate+Calendar
@@ -96,27 +98,28 @@ DEPENDENCIES:
   - UICKeyChainStore
 
 SPEC CHECKSUMS:
-  ActionSheetPicker-3.0: 6516052442fc8ca8f3cc4b3c7aa0436de12373df
-  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
-  Bolts: d176cb1e0012175589e389a9db49b85e27787576
+  ActionSheetPicker-3.0: c5bdca19fd8b3d798f0c79892cbab6f11a8523ae
+  AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
+  Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
   Branch: 024a0c5848303eb82b8aa139822e07e0724f7fdc
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: 50b85eedf414260e61330070ffe5947e72493a62
   EARestrictedScrollView: f86d61e16c61d3e93c84f8e96e83122a2a3b7631
   Facebook-iOS-SDK: cd87f0b2f0c1d9574b44e8fa2baacc275524bac3
-  FXBlurView: c6d23f3d35af2c6282296a2930f61c6e2c788d01
+  FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GBDeviceInfo: 5c7630b984135a2cdc3e6822b9eee39bc67a3d3e
   GBJailbreakDetection: 3ba798512e1c194f02bcf6ebbafe1986e950d441
   HHRouter: c82ce169fea838ea85a819133df40d19605f5c95
   iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
-  IDMPhotoBrowser: ebbfa6690456b72dd92d93b7bc11d71519f4d06d
-  JPSVolumeButtonHandler: 03ecb2d55acbe4499631c8d9fe221f7af48569d4
+  IDMPhotoBrowser: 1155caa03f8705b7943c074c26b55aadd43d71da
+  JPSVolumeButtonHandler: b056ec5c574fbd75a0637c527e25fe0197ec1648
   JTHelper: d84a961a60a27623c595a7f6965fcafdefb88b9b
   JTSImageViewController: 6a367b144e257db02cdfacdba78d684377d3777b
-  Mixpanel: f4d71ac2a306e7cda6ad03d4a2be249a0fd7a967
+  libPhoneNumber-iOS: 1bccd3288375d954b0b904e26061cecaa0fb83d6
+  Mixpanel: fd52e097ae0d27295d0595b2261c60b94d191fda
   MZAppearance: 6e9dc64e42074c0a19812a327f590746c3283bab
   MZFormSheetController: a29e904f8832bcaa08a9751106e10beb4df751df
-  NSDate+Calendar: 30747b15cbeda4d835c39f5d597d8eaa2ddc3942
+  NSDate+Calendar: 4aa9f6eb520bdbe7cfd82fbf6c7d35b9725c8188
   PonyDebugger: 1c60f7c876bdb6a8b6bf0f0269087f8a234fafa7
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
   PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
@@ -127,4 +130,4 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   UICKeyChainStore: c5719c814e8bd69e74e4a0fc09daf8f4d6257a59
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0.beta.4

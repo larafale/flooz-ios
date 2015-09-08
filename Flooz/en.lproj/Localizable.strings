@@ -291,8 +291,6 @@
 /*             FRIENDS              */
 /************************************/
 
-"FRIEND_PICKER_RESULT" = "Résultats";
-
 "FRIEND_REQUEST_ACCEPT" = "Accepter";
 "FRIEND_REQUEST_REFUSE" = "Refuser";
 
@@ -309,6 +307,7 @@
 "FRIEND_PICKER_FRIENDS_RECENT" = "Contacts Récents";
 "FRIEND_PICKER_FRIENDS" = "Mes amis";
 "FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";
+"FRIEND_PICKER_RESULT" = "Résultats";
 
 /************************************/
 /*          SHARE / EMAIL           */

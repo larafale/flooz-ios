@@ -24,5 +24,6 @@ pod 'FXBlurView'
 pod 'Branch'
 pod 'GBDeviceInfo'
 pod 'RDVTabBarController'
+pod 'libPhoneNumber-iOS'
 
 link_with 'Flooz', 'Flooz dev', 'Flooz local', 'FloozTests'
