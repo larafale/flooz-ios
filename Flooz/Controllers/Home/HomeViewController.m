@@ -13,6 +13,7 @@
 #import "FLSlide.h"
 #import "FXBlurView.h"
 #import "WebViewController.h"
+#import "FLPhoneField.h"
 
 @interface HomeViewController () {
     UIView *backgroundView;
@@ -38,6 +39,8 @@
     UIView *signupFormView;
     UIView *signupFbView;
     UIView *signupFbPicView;
+    
+    FLPhoneField *signupPhoneField;
     
     NSMutableArray *signupFormFields;
     
@@ -98,6 +101,7 @@
                 for (FLTextFieldSignup *textfield in signupFormFields) {
                     [textfield reloadTextField];
                 }
+                [signupPhoneField reloadTextField];
             } failure:^(NSError *error) {
                 
             }];
@@ -400,12 +404,12 @@
     
     CGRectSetX(usernameTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(usernameTextfield.frame)) / 2);
     
-    FLTextFieldSignup *phoneTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE", @"") for:signupData key:@"phone" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(usernameTextfield.frame) + signupFormVerticalMargin)];
-    [phoneTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
+    signupPhoneField = [[FLPhoneField alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE", @"") for:signupData frame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(usernameTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(signupScrollView.frame) - 2 * signupHorizontalMargin, CGRectGetHeight(usernameTextfield.frame))];
+    [signupPhoneField addForNextClickTarget:self action:@selector(signupTextFieldNext)];
     
-    CGRectSetX(phoneTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(phoneTextfield.frame)) / 2);
+    CGRectSetX(signupPhoneField.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(signupPhoneField.frame)) / 2);
     
-    FLTextFieldSignup *emailTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_EMAIL", @"") for:signupData key:@"email" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(phoneTextfield.frame) + signupFormVerticalMargin)];
+    FLTextFieldSignup *emailTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_EMAIL", @"") for:signupData key:@"email" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(signupPhoneField.frame) + signupFormVerticalMargin)];
     [emailTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
     
     CGRectSetX(emailTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(emailTextfield.frame)) / 2);
@@ -430,11 +434,6 @@
     [clearSponsorField setHidden:YES];
     
     [sponsorTextfield addSubview:clearSponsorField];
-    
-    FLKeyboardView  *inputView = [FLKeyboardView new];
-    [inputView noneCloseButton];
-    inputView.textField = phoneTextfield.textfield;
-    phoneTextfield.textfield.inputView = inputView;
     
     FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(sponsorTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SIGNUP", nil)];
     [signupButton setTag:89];
@@ -465,14 +464,13 @@
     
     [signupFormFields addObject:fullnameTextfield];
     [signupFormFields addObject:usernameTextfield];
-    [signupFormFields addObject:phoneTextfield];
     [signupFormFields addObject:emailTextfield];
     [signupFormFields addObject:passwordTextfield];
     [signupFormFields addObject:sponsorTextfield];
     
     [signupFormView addSubview:fullnameTextfield];
     [signupFormView addSubview:usernameTextfield];
-    [signupFormView addSubview:phoneTextfield];
+    [signupFormView addSubview:signupPhoneField];
     [signupFormView addSubview:emailTextfield];
     [signupFormView addSubview:passwordTextfield];
     [signupFormView addSubview:sponsorTextfield];
@@ -578,6 +576,8 @@
     for (FLTextFieldSignup *textfield in signupFormFields) {
         [textfield reloadTextField];
     }
+    
+    [signupPhoneField reloadTextField];
 }
 
 #pragma mark - button action
@@ -758,14 +758,19 @@
         }
     }
     
-//    if (sponsorTextfield.textfield.text.length > 0)
-//        clearSponsorField.hidden = NO;
-//    else
-        clearSponsorField.hidden = YES;
+    //    if (sponsorTextfield.textfield.text.length > 0)
+    //        clearSponsorField.hidden = NO;
+    //    else
+    clearSponsorField.hidden = YES;
 }
 
 - (void)signupTextFieldNext {
     BOOL nextFocus = false;
+    
+    if ([signupPhoneField isFirstResponder]) {
+        [signupFormFields[2] becomeFirstResponder];
+        return;
+    }
     
     for (FLTextFieldSignup *field in signupFormFields) {
         if (nextFocus && ![field isHidden]) {
@@ -780,12 +785,18 @@
         }
         
         if ([field isFirstResponder]) {
+            if ([signupFormFields indexOfObject:field] == 1) {
+                [signupPhoneField becomeFirstResponder];
+                nextFocus = false;
+                break;
+            }
             nextFocus = true;
         }
     }
     
-    if (nextFocus)
+    if (nextFocus) {
         [self.view endEditing:YES];
+    }
 }
 
 #pragma mark - iCarousel Data Source
@@ -917,6 +928,9 @@
                     }
                 }
                 
+                if (!activeField && [signupPhoneField isFirstResponder])
+                    activeField = signupPhoneField;
+                
                 CGRect activeRect = activeField.frame;
                 activeRect.origin.x += signupFormView.frame.origin.x;
                 activeRect.origin.y += signupFormView.frame.origin.y;
@@ -942,6 +956,9 @@
                     }
                 }
                 
+                if (!activeField && [signupPhoneField isFirstResponder])
+                    activeField = signupPhoneField;
+                
                 CGRect activeRect = activeField.frame;
                 activeRect.origin.x += signupFormView.frame.origin.x;
                 activeRect.origin.y += signupFormView.frame.origin.y;
@@ -957,6 +974,9 @@
                     break;
                 }
             }
+            
+            if (!activeField && [signupPhoneField isFirstResponder])
+                activeField = signupPhoneField;
             
             CGRect activeRect = activeField.frame;
             activeRect.origin.x += signupFormView.frame.origin.x;

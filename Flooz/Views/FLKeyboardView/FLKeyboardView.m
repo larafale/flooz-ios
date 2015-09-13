@@ -171,6 +171,9 @@
 }
 
 - (void)didButtonCloseTouch:(UIButton *)sender {
+    if ([_textField delegate])
+        [[_textField delegate] textFieldShouldReturn:_textField];
+    
 	[_textField resignFirstResponder];
 }
 

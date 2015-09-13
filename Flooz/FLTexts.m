@@ -36,7 +36,7 @@
     }
     
     if (!self.avalaibleCountries.count)
-        [self.avalaibleCountries addObject:[[FLCountry alloc] initWithJSON:@{@"name":@"France", @"code":@"FR", @"phoneCode":@"+33"}]];
+        [self.avalaibleCountries addObject:[FLCountry defaultCountry]];
 }
 
 @end

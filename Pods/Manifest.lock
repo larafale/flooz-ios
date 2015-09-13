@@ -28,10 +28,14 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.2.1)
   - Branch (0.10.9)
+  - Crashlytics (3.2.0)
   - DACircularProgress (2.3.1)
   - EAIntroView (2.7.4):
     - EARestrictedScrollView (~> 0.2.0)
   - EARestrictedScrollView (0.2.0)
+  - Fabric (1.4.1):
+    - Fabric/Base (= 1.4.1)
+  - Fabric/Base (1.4.1)
   - Facebook-iOS-SDK (3.23.2):
     - Bolts (~> 1.0)
   - FXBlurView (1.6.4)
@@ -73,15 +77,17 @@ PODS:
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
-  - AFNetworking (~> 2.0)
+  - AFNetworking
   - Branch
+  - Crashlytics
   - EAIntroView
+  - Fabric
   - Facebook-iOS-SDK (~> 3.15)
   - FXBlurView
   - GBDeviceInfo
   - HHRouter (~> 0.1)
   - iCarousel
-  - IDMPhotoBrowser (~> 1.3)
+  - IDMPhotoBrowser
   - JPSVolumeButtonHandler
   - JTHelper (~> 0.1.1)
   - JTSImageViewController
@@ -92,7 +98,7 @@ DEPENDENCIES:
   - PonyDebugger
   - PPHelpMe
   - RDVTabBarController
-  - SDWebImage (~> 3.7)
+  - SDWebImage
   - SMPageControl
   - TTTAttributedLabel
   - UICKeyChainStore
@@ -102,9 +108,11 @@ SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
   Branch: 024a0c5848303eb82b8aa139822e07e0724f7fdc
+  Crashlytics: a29e4f820aa401482b26043dc5d78adf08ac7573
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: 50b85eedf414260e61330070ffe5947e72493a62
   EARestrictedScrollView: f86d61e16c61d3e93c84f8e96e83122a2a3b7631
+  Fabric: 4f718eeca4c02c7d6f6f4e5f0e5f87c63aa38458
   Facebook-iOS-SDK: cd87f0b2f0c1d9574b44e8fa2baacc275524bac3
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GBDeviceInfo: 5c7630b984135a2cdc3e6822b9eee39bc67a3d3e

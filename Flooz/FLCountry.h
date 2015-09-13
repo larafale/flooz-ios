@@ -17,4 +17,7 @@
 
 - (id)initWithJSON:(NSDictionary *)json;
 
++ (FLCountry *) defaultCountry;
++ (FLCountry *) countryFromCode:(NSString *)code;
+
 @end

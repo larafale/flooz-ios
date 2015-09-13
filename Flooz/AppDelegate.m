@@ -9,10 +9,10 @@
 #import "Mixpanel.h"
 #import "Branch.h"
 
-#import <Crashlytics/Crashlytics.h>
-#import <Fabric/Fabric.h>
 #import "AppDelegate.h"
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 #import "FLTabBarController.h"
 #import "FLPreset.h"
 #import "IDMPhotoBrowser.h"

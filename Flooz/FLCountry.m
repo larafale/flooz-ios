@@ -25,4 +25,21 @@
     self.imageName = [NSString stringWithFormat:@"CountryPicker.bundle/%@", self.code];
 }
 
++ (FLCountry *) defaultCountry {
+    return [[FLCountry alloc] initWithJSON:@{@"name":@"France", @"code":@"FR", @"phoneCode":@"+33"}];
+}
+
++ (FLCountry *) countryFromCode:(NSString *)code {
+    if ([Flooz sharedInstance].currentTexts) {
+        for (FLCountry *country in [Flooz sharedInstance].currentTexts.avalaibleCountries) {
+            if ([code isEqualToString:country.code])
+                return country;
+        }
+    } else if ([code isEqualToString:[self.class defaultCountry].code]) {
+        return [self.class defaultCountry];
+    }
+    
+    return nil;
+}
+
 @end
