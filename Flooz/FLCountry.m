@@ -21,12 +21,12 @@
 - (void)setJSON:(NSDictionary *)json {
     self.name = json[@"name"];
     self.code = json[@"code"];
-    self.phoneCode = json[@"phoneCode"];
+    self.phoneCode = json[@"indicatif"];
     self.imageName = [NSString stringWithFormat:@"CountryPicker.bundle/%@", self.code];
 }
 
 + (FLCountry *) defaultCountry {
-    return [[FLCountry alloc] initWithJSON:@{@"name":@"France", @"code":@"FR", @"phoneCode":@"+33"}];
+    return [[FLCountry alloc] initWithJSON:@{@"name":@"France", @"code":@"FR", @"indicatif":@"+33"}];
 }
 
 + (FLCountry *) countryFromCode:(NSString *)code {

@@ -21,25 +21,25 @@ PODS:
   - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Bolts (1.2.1):
-    - Bolts/AppLinks (= 1.2.1)
-    - Bolts/Tasks (= 1.2.1)
-  - Bolts/AppLinks (1.2.1):
+  - Bolts (1.2.2):
+    - Bolts/AppLinks (= 1.2.2)
+    - Bolts/Tasks (= 1.2.2)
+  - Bolts/AppLinks (1.2.2):
     - Bolts/Tasks
-  - Bolts/Tasks (1.2.1)
+  - Bolts/Tasks (1.2.2)
   - Branch (0.10.9)
-  - Crashlytics (3.2.0)
+  - Crashlytics (3.3.1)
   - DACircularProgress (2.3.1)
   - EAIntroView (2.7.4):
     - EARestrictedScrollView (~> 0.2.0)
   - EARestrictedScrollView (0.2.0)
-  - Fabric (1.4.1):
-    - Fabric/Base (= 1.4.1)
-  - Fabric/Base (1.4.1)
-  - Facebook-iOS-SDK (3.23.2):
-    - Bolts (~> 1.0)
+  - Fabric (1.5.1):
+    - Fabric/Base (= 1.5.1)
+  - Fabric/Base (1.5.1)
+  - Facebook-iOS-SDK (3.24.0):
+    - Bolts (~> 1.2)
   - FXBlurView (1.6.4)
-  - GBDeviceInfo (3.2.0):
+  - GBDeviceInfo (3.3.0):
     - GBJailbreakDetection (~> 1.0)
   - GBJailbreakDetection (1.0.0)
   - HHRouter (0.1.5)
@@ -71,7 +71,7 @@ PODS:
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SMPageControl (1.2)
-  - SocketRocket (0.4)
+  - SocketRocket (0.4.1)
   - TTTAttributedLabel (1.13.4)
   - UICKeyChainStore (2.0.6)
 
@@ -106,16 +106,16 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: c5bdca19fd8b3d798f0c79892cbab6f11a8523ae
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
-  Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
+  Bolts: 20a2bd788273360cb1e31530dc19b8544eef2544
   Branch: 024a0c5848303eb82b8aa139822e07e0724f7fdc
-  Crashlytics: a29e4f820aa401482b26043dc5d78adf08ac7573
+  Crashlytics: 0e61bdda9def51f1e99720f804eebe94865442b2
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: 50b85eedf414260e61330070ffe5947e72493a62
   EARestrictedScrollView: f86d61e16c61d3e93c84f8e96e83122a2a3b7631
-  Fabric: 4f718eeca4c02c7d6f6f4e5f0e5f87c63aa38458
-  Facebook-iOS-SDK: cd87f0b2f0c1d9574b44e8fa2baacc275524bac3
+  Fabric: 03c3b3fe77e11a2bc31421b989a9c7adaa4779a5
+  Facebook-iOS-SDK: cb209af2e67e3a5d323f966c22e4e482e819405e
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
-  GBDeviceInfo: 5c7630b984135a2cdc3e6822b9eee39bc67a3d3e
+  GBDeviceInfo: ca211d20e8f46207ce0e79d239eb0ab180d694a5
   GBJailbreakDetection: 3ba798512e1c194f02bcf6ebbafe1986e950d441
   HHRouter: c82ce169fea838ea85a819133df40d19605f5c95
   iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
@@ -134,7 +134,7 @@ SPEC CHECKSUMS:
   RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
-  SocketRocket: 01443933b7bc362621325f4607b80b4286a99707
+  SocketRocket: ee0b5c34182d37bb4f1f8d628bbe737718126daa
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   UICKeyChainStore: c5719c814e8bd69e74e4a0fc09daf8f4d6257a59
 

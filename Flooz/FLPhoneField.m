@@ -41,20 +41,34 @@
     if (self) {
         
         _placeholder = placeholder;
-        
-        if (!dictionary[@"country"] ||[dictionary[@"country"] isBlank]) {
+        _dictionary = dictionary;
+
+        if (!_dictionary[@"country"] || [_dictionary[@"country"] isBlank]) {
             NSLocale *currentLocale = [NSLocale currentLocale];
             NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
             
-            self.currentCountry = [FLCountry countryFromCode:countryCode];
-            if (!self.currentCountry)
-                self.currentCountry = [FLCountry defaultCountry];
-            
-            [dictionary setValue:self.currentCountry.code forKey:@"country"];
+            if ([Flooz sharedInstance].currentTexts) {
+                self.currentCountry = [FLCountry countryFromCode:countryCode];
+                if (!self.currentCountry)
+                    self.currentCountry = [FLCountry defaultCountry];
+                
+                [_dictionary setValue:self.currentCountry.code forKey:@"country"];
+            } else {
+                [[Flooz sharedInstance] textObjectFromApi:^(id result) {
+                    self.currentCountry = [FLCountry countryFromCode:countryCode];
+                    if (!self.currentCountry)
+                        self.currentCountry = [FLCountry defaultCountry];
+                    
+                    [_dictionary setValue:self.currentCountry.code forKey:@"country"];
+                    [self reloadTextField];
+                } failure:^(NSError *error) {
+                    self.currentCountry = [FLCountry defaultCountry];
+                    [_dictionary setValue:self.currentCountry.code forKey:@"country"];
+                    
+                    [self reloadTextField];
+                }];
+            }
         }
-        
-        _dictionary = dictionary;
-        
         
         [self createCoutryView];
         [self createTextfield];
@@ -130,7 +144,7 @@
     _textfield.font = [UIFont customContentLight:18];
     _textfield.textColor = [UIColor whiteColor];
     [_textfield addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-
+    
     _textfield.attributedPlaceholder = [self placeHolderWithText:_placeholder];
     
     FLKeyboardView  *inputView = [FLKeyboardView new];
@@ -215,7 +229,6 @@
 - (void)reloadTextField {
     [self countryPicker:_countryPicker didSelectCountry:[FLCountry countryFromCode:_dictionary[@"country"]]];
     
-    
     [_textfield setText:_dictionary[@"phone"]];
 }
 
@@ -236,6 +249,9 @@
     [_countryPicker setSelectedCountry:self.currentCountry];
     [_countryFlag setImage:[UIImage imageNamed:country.imageName]];
     [_countryLabel setText:country.phoneCode];
+    
+    [_dictionary setValue:self.currentCountry.code forKey:@"country"];
+    [_dictionary setValue:self.currentCountry.phoneCode forKey:@"indicatif"];
 }
 
 @end

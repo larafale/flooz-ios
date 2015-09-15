@@ -268,23 +268,13 @@
     [loginHeaderView addSubview:facebookLoginButton];
     [loginHeaderView addSubview:separatorView];
     
-    FLTextFieldSignup *phoneTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE_NUMBER", @"") for:loginData key:@"phone" position:CGPointMake(loginHorizontalMargin, separatorVerticalMargin)];
+    FLPhoneField *loginPhoneField = [[FLPhoneField alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE", @"") for:loginData frame:CGRectMake(loginHorizontalMargin, separatorVerticalMargin, CGRectGetWidth(loginView.frame) - 2 * loginHorizontalMargin, 40)];
     
-    CGRectSetX(phoneTextfield.frame, (SCREEN_WIDTH - phoneTextfield.frame.size.width) / 2);
-    
-    FLTextFieldSignup *passwordTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PASSWORD_LOGIN", @"") for:loginData key:@"password" position:CGPointMake(loginHorizontalMargin, CGRectGetMaxY(phoneTextfield.frame) + 10)];
+    FLTextFieldSignup *passwordTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PASSWORD_LOGIN", @"") for:loginData key:@"password" position:CGPointMake(loginHorizontalMargin, CGRectGetMaxY(loginPhoneField.frame) + 10)];
     [passwordTextfield seTsecureTextEntry:YES];
     
-    [phoneTextfield addForNextClickTarget:self action:@selector(becomeFirstResponder)];
-    
-    CGRectSetX(phoneTextfield.frame, (CGRectGetWidth(loginView.frame) - CGRectGetWidth(phoneTextfield.frame)) / 2);
-    
-    [phoneTextfield addForNextClickTarget:passwordTextfield action:@selector(becomeFirstResponder)];
-    
-    FLKeyboardView  *inputView = [FLKeyboardView new];
-    [inputView noneCloseButton];
-    inputView.textField = phoneTextfield.textfield;
-    phoneTextfield.textfield.inputView = inputView;
+    [loginPhoneField addForNextClickTarget:passwordTextfield action:@selector(becomeFirstResponder)];
+    [passwordTextfield addForNextClickTarget:passwordTextfield action:@selector(resignFirstResponder)];
     
     FLActionButton *loginButton = [[FLActionButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + 30, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_LOGIN", nil)];
     [loginButton addTarget:self action:@selector(didLoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -297,7 +287,7 @@
     [forgotPasswordButton addTarget:self action:@selector(didForgotPasswordButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     loginFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loginHeaderView.frame), CGRectGetWidth(loginView.frame), CGRectGetMaxY(forgotPasswordButton.frame) + separatorVerticalMargin)];
-    [loginFormView addSubview:phoneTextfield];
+    [loginFormView addSubview:loginPhoneField];
     [loginFormView addSubview:passwordTextfield];
     [loginFormView addSubview:loginButton];
     [loginFormView addSubview:forgotPasswordButton];
