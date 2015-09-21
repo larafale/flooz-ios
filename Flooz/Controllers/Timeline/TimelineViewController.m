@@ -33,8 +33,6 @@
     
     NSMutableArray *transactions;
     
-    NSMutableSet *rowsWithPaymentField;
-    
     NSString *_nextPageUrl;
     BOOL nextPageIsLoading;
     
@@ -44,6 +42,7 @@
     
     NSMutableArray *transactionsLoaded;
     
+    NSMutableSet *rowsWithPaymentField;
     NSMutableArray *cells;
     
     BOOL isReloading;

@@ -377,6 +377,14 @@
     [self requestPath:[NSString stringWithFormat:@"/users/cactus/%@", identifier] method:@"GET" params:nil success:success failure:failure];
 }
 
+- (void)getUserProfile:(NSString *)userId success:(void (^)(FLUser *result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:[NSString stringWithFormat:@"/social/profile/%@", userId] method:@"GET" params:nil success:^(id result) {
+        FLUser *user = [[FLUser alloc] initWithJSON:result[@"item"]];
+        if (success)
+            success(user);
+    } failure:failure];
+}
+
 - (void)updateCurrentUserWithSuccess:(void (^)())success {
     if ([appDelegate shouldRefreshWithKey:kKeyLastUpdate]) {
         [self updateCurrentUserWithSuccess:success failure:nil];
@@ -515,6 +523,19 @@
     };
     
     [self requestPath:@"/utils/texts" method:@"GET" params:nil success:successBlock failure:failureBlock];
+}
+
+- (void)userTimeline:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
+        
+        if (success) {
+            success(transactions, result[@"next"]);
+        }
+    };
+    
+    
+    [self requestPath:[NSString stringWithFormat:@"/users/%@/flooz", userId] method:@"GET" params:nil success:successBlock failure:failure];
 }
 
 - (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {

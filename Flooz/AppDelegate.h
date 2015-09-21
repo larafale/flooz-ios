@@ -93,6 +93,7 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)showAvatarView:(UIView *)view withUrl:(NSURL *)urlImage;
 - (void)showPresetNewTransactionController:(FLPreset *)preset;
 - (void)popToMainView;
+- (void)showUser:(FLUser *)user inController:(UIViewController*)vc;
 
 - (void)lockForUpdate:(NSString *)updateUrl;
 

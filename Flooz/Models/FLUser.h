@@ -33,10 +33,12 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) NSString *lastname;
 @property (strong, nonatomic) NSString *fullname;
 @property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString *bio;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *phone;
 @property (strong, nonatomic) NSString *birthdate;
 @property (strong, nonatomic) NSString *avatarURL;
+@property (strong, nonatomic) NSString *avatarLargeURL;
 @property (strong, nonatomic) NSData *avatarData;
 @property (strong, nonatomic) NSString *profileCompletion;
 @property (strong, nonatomic) NSNumber *friendsCount;
@@ -54,6 +56,7 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) FLCreditCard *creditCard;
 @property (strong, nonatomic) NSMutableDictionary *blockObject;
 
+@property (strong, nonatomic) NSArray *followers;
 @property (strong, nonatomic) NSArray *friends;
 @property (strong, nonatomic) NSArray *friendsRecent;
 @property (strong, nonatomic) NSArray *friendsRequest;
@@ -61,6 +64,8 @@ typedef enum e_FLUserKind {
 @property (nonatomic)  BOOL needDocuments;
 
 @property (nonatomic)  BOOL isFriendWaiting;
+@property (nonatomic)  BOOL isStar;
+@property (nonatomic)  BOOL isFriend;
 
 @property (nonatomic)  FLUserKind userKind;
 

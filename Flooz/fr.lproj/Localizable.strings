@@ -291,6 +291,11 @@
 /*             FRIENDS              */
 /************************************/
 
+"FOLLOW" = "Suivre";
+"FRIEND_ADD" = "Ajouter";
+"FOLLOWERS" = "Abonnés";
+"FRIENDS" = "Amis";
+
 "FRIEND_PICKER_RESULT" = "Résultats";
 
 "FRIEND_REQUEST_ACCEPT" = "Accepter";

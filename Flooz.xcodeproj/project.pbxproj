@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -337,6 +337,9 @@
 		C966473E19FFEA28000851AF /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C966473A19FFEA0D000851AF /* TransitionDelegate.m */; };
 		C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = C966474019FFEB4E000851AF /* AnimatedTransitioning.m */; };
 		C966474219FFEB80000851AF /* AnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = C966474019FFEB4E000851AF /* AnimatedTransitioning.m */; };
+		C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C96E5A671BA95EEE00F201E9 /* UserViewController.m */; };
+		C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C96E5A671BA95EEE00F201E9 /* UserViewController.m */; };
+		C96E5A6A1BA95EEE00F201E9 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C96E5A671BA95EEE00F201E9 /* UserViewController.m */; };
 		C975BB021A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */; };
 		C975BB031A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */; };
 		C975BB041A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */; };
@@ -571,6 +574,9 @@
 		C9EB885D1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB885C1B1F32A00042E65B /* SignupCreditCardViewController.m */; };
 		C9EB885E1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB885C1B1F32A00042E65B /* SignupCreditCardViewController.m */; };
 		C9EB885F1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB885C1B1F32A00042E65B /* SignupCreditCardViewController.m */; };
+		C9EBBB9D1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBBB9C1BAAC988009DAF88 /* FLBorderedActionButton.m */; };
+		C9EBBB9E1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBBB9C1BAAC988009DAF88 /* FLBorderedActionButton.m */; };
+		C9EBBB9F1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EBBB9C1BAAC988009DAF88 /* FLBorderedActionButton.m */; };
 		C9ED41241A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9ED41231A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m */; };
 		C9ED41251A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9ED41231A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m */; };
 		C9ED41261A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9ED41231A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m */; };
@@ -898,6 +904,8 @@
 		C966473A19FFEA0D000851AF /* TransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionDelegate.m; sourceTree = "<group>"; };
 		C966473F19FFEB4E000851AF /* AnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedTransitioning.h; sourceTree = "<group>"; };
 		C966474019FFEB4E000851AF /* AnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedTransitioning.m; sourceTree = "<group>"; };
+		C96E5A661BA95EEE00F201E9 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewController.h; sourceTree = "<group>"; };
+		C96E5A671BA95EEE00F201E9 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
 		C975BAF71A92BB8E000E5AEA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BAF81A92BB8E000E5AEA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BAF91A92BB8E000E5AEA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
@@ -965,6 +973,8 @@
 		C9EB88571B1F21C20042E65B /* FriendAddSearchBarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendAddSearchBarDelegate.h; sourceTree = "<group>"; };
 		C9EB885B1B1F32A00042E65B /* SignupCreditCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupCreditCardViewController.h; sourceTree = "<group>"; };
 		C9EB885C1B1F32A00042E65B /* SignupCreditCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupCreditCardViewController.m; sourceTree = "<group>"; };
+		C9EBBB9B1BAAC988009DAF88 /* FLBorderedActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLBorderedActionButton.h; sourceTree = "<group>"; };
+		C9EBBB9C1BAAC988009DAF88 /* FLBorderedActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLBorderedActionButton.m; sourceTree = "<group>"; };
 		C9ED41221A9B7A2F000C4D7A /* NSDictionary+JSONHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+JSONHelper.h"; sourceTree = "<group>"; };
 		C9ED41231A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JSONHelper.m"; sourceTree = "<group>"; };
 		C9ED41271A9B7ABA000C4D7A /* NSArray+JSONHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+JSONHelper.h"; sourceTree = "<group>"; };
@@ -1357,6 +1367,7 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C96E5A651BA95ED100F201E9 /* User */,
 				C90B947D1A00E94F00E2C53B /* 3DSecure */,
 				ABE9145E18929150003AC722 /* Account */,
 				2FEAA9CC19DC638C00EE95C9 /* BaseViewController */,
@@ -1393,6 +1404,7 @@
 				C9CA678E1A5188BB003863D1 /* FLActionButton */,
 				AB8F9FA718E1EF76006039D0 /* FLAlertView */,
 				2FD1EA9919E332D800CA5EDA /* FLBadgeView */,
+				C9EBBB9A1BAAC960009DAF88 /* FLBorderedActionButton */,
 				2FCBCD0D19BF3C2800FB31E0 /* FLCameraKeyboard */,
 				C95AEDA21A49BB5E00000FB3 /* FLClearActionTextView */,
 				C935B6E61B611D7800861DAD /* FLFilterPopoverViewController */,
@@ -2133,6 +2145,15 @@
 			name = "Modal Transitions";
 			sourceTree = "<group>";
 		};
+		C96E5A651BA95ED100F201E9 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				C96E5A661BA95EEE00F201E9 /* UserViewController.h */,
+				C96E5A671BA95EEE00F201E9 /* UserViewController.m */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
 		C975BAF41A92BB8E000E5AEA /* YLMoment */ = {
 			isa = PBXGroup;
 			children = (
@@ -2235,6 +2256,15 @@
 			name = NewTransactionUserList;
 			sourceTree = "<group>";
 		};
+		C9EBBB9A1BAAC960009DAF88 /* FLBorderedActionButton */ = {
+			isa = PBXGroup;
+			children = (
+				C9EBBB9B1BAAC988009DAF88 /* FLBorderedActionButton.h */,
+				C9EBBB9C1BAAC988009DAF88 /* FLBorderedActionButton.m */,
+			);
+			name = FLBorderedActionButton;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2326,8 +2356,9 @@
 		AB3D0886186CA11A00CF8380 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = FL;
 				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = "Jonathan Tribouharet";
+				ORGANIZATIONNAME = Flooz;
 				TargetAttributes = {
 					AB3D088D186CA11A00CF8380 = {
 						DevelopmentTeam = QU87Q423GH;
@@ -2345,7 +2376,7 @@
 				};
 			};
 			buildConfigurationList = AB3D0889186CA11A00CF8380 /* Build configuration list for PBXProject "Flooz" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -2703,6 +2734,7 @@
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
 				C95AED971A49AF4A00000FB3 /* ClipboardPopoverViewController.m in Sources */,
 				AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */,
+				C9EBBB9D1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */,
 				C9A265561ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
 				C9AE77941ACA918B00CFF0AF /* FLSlide.m in Sources */,
@@ -2781,6 +2813,7 @@
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */,
 				AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */,
+				C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,
 				2F49762619E472CA0089947F /* SettingsNotificationsViewController.m in Sources */,
@@ -2853,6 +2886,7 @@
 				2FCBCD1119BF406200FB31E0 /* FLCameraKeyboard.m in Sources */,
 				2F1307EA19D9C1790062D194 /* FLSocialButton.m in Sources */,
 				ABAA3F9C197E96BF009F29EF /* ActivityCell.m in Sources */,
+				C9EBBB9E1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				C95AED9F1A49B5E500000FB3 /* WYPopoverController.m in Sources */,
 				ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */,
 				C9A265571ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
@@ -2931,6 +2965,7 @@
 				ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */,
 				ABAA3FE0197E96BF009F29EF /* FLSelectFriendButton.m in Sources */,
 				ABAA3FE1197E96BF009F29EF /* WebViewController.m in Sources */,
+				C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
 				ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */,
 				2F49762719E472CA0089947F /* SettingsNotificationsViewController.m in Sources */,
@@ -2995,6 +3030,7 @@
 				C98012A11A76921000019682 /* FLCameraKeyboard.m in Sources */,
 				C98012A21A76921000019682 /* FLSocialButton.m in Sources */,
 				C98012A41A76921000019682 /* ActivityCell.m in Sources */,
+				C9EBBB9F1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				C98012A51A76921000019682 /* WYPopoverController.m in Sources */,
 				C98012A61A76921000019682 /* FLKeyboardView.m in Sources */,
 				C9A265581ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
@@ -3073,6 +3109,7 @@
 				C98012F31A76921000019682 /* UIColor+custom.m in Sources */,
 				C98012F41A76921000019682 /* FLSelectFriendButton.m in Sources */,
 				C98012F71A76921000019682 /* WebViewController.m in Sources */,
+				C96E5A6A1BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				C98012F81A76921000019682 /* FriendPickerSelectionCell.m in Sources */,
 				C98012F91A76921000019682 /* HomeViewController.m in Sources */,
 				C98012FA1A76921000019682 /* SettingsNotificationsViewController.m in Sources */,
@@ -3261,7 +3298,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3285,7 +3322,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
+				PROVISIONING_PROFILE = "7dd9f7b5-d7c8-4f01-8920-b5e25cbc3cae";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3493,7 +3530,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3517,7 +3554,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
+				PROVISIONING_PROFILE = "7dd9f7b5-d7c8-4f01-8920-b5e25cbc3cae";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3530,7 +3567,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3554,7 +3591,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
+				PROVISIONING_PROFILE = "7dd9f7b5-d7c8-4f01-8920-b5e25cbc3cae";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3670,7 +3707,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3695,7 +3732,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "fef378cb-3d94-402d-b1cf-7598c1141f84";
+				PROVISIONING_PROFILE = "7dd9f7b5-d7c8-4f01-8920-b5e25cbc3cae";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3732,7 +3769,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "b4ce1bea-6f68-4c17-ba69-f85ab2ff044c";
+				PROVISIONING_PROFILE = "bae94a00-7d79-468b-ab21-7e84656a0c7f";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3757,7 +3794,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FLOOZ_DEV_LOCAL=1",
-					FLOOZ_DEV_API,
+					"FLOOZ_DEV_API=1",
 				);
 				INFOPLIST_FILE = "Flooz local-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -3770,7 +3807,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "b4ce1bea-6f68-4c17-ba69-f85ab2ff044c";
+				PROVISIONING_PROFILE = "bae94a00-7d79-468b-ab21-7e84656a0c7f";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3807,7 +3844,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "b4ce1bea-6f68-4c17-ba69-f85ab2ff044c";
+				PROVISIONING_PROFILE = "bae94a00-7d79-468b-ab21-7e84656a0c7f";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3844,7 +3881,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "b4ce1bea-6f68-4c17-ba69-f85ab2ff044c";
+				PROVISIONING_PROFILE = "bae94a00-7d79-468b-ab21-7e84656a0c7f";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;

@@ -137,21 +137,13 @@
 #pragma mark -
 
 - (void)didUserLeftViewTouch {
-	if ([[[_transaction from] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
-		return;
-	}
-    
     [[_transaction from] setSelectedCanal:TimelineCanal];
-	[appDelegate showMenuForUser:[_transaction from] imageView:[[leftUserView subviews] firstObject]];
+    [appDelegate showUser:[_transaction from] inController:self.parentViewController];
 }
 
 - (void)didUserRightViewTouch {
-	if ([[[_transaction to] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
-		return;
-	}
-
     [[_transaction to] setSelectedCanal:TimelineCanal];
-	[appDelegate showMenuForUser:[_transaction to] imageView:[[rightUserView subviews] firstObject]];
+    [appDelegate showUser:[_transaction to] inController:self.parentViewController];
 }
 
 @end

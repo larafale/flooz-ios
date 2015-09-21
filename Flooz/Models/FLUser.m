@@ -47,11 +47,15 @@
     _username = [json objectForKey:@"nick"];
     _email = [json objectForKey:@"email"];
     _phone = [json objectForKey:@"phone"];
+    _bio = [json objectForKey:@"bio"];
     _avatarURL = [json objectForKey:@"pic"];
+    _avatarLargeURL = [json objectForKey:@"picFull"];
     _profileCompletion = [json objectForKey:@"profileCompletion"];
     _hasSecureCode = [json objectForKey:@"secureCode"];
     _blockObject = [json objectForKey:@"block"];
-    
+    _isStar = [[json objectForKey:@"isStar"] boolValue];
+    _isFriend = [[json objectForKey:@"isFriend"] boolValue];
+
     _metrics = [json objectForKey:@"metrics"];
     
     if ([json objectForKey:@"birthdate"]) {
@@ -65,7 +69,11 @@
     if ([_avatarURL isEqualToString:@"/img/nopic.png"]) {
         _avatarURL = nil;
     }
-    
+ 
+    if ([_avatarLargeURL isEqualToString:@"/img/nopic.png"]) {
+        _avatarURL = nil;
+    }
+
     if (json[@"device"]) {
         _deviceToken = [json objectForKey:@"device"];
     }
@@ -121,7 +129,24 @@
     if ([json objectForKey:@"cards"] && [[json objectForKey:@"cards"] count] > 0) {
         _creditCard = [[FLCreditCard alloc] initWithJSON:[[json objectForKey:@"cards"] objectAtIndex:0]];
     }
-    
+
+    {
+        NSMutableArray *followers = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
+        
+        if ([_json objectForKey:@"followers"]) {
+            for (NSDictionary *followerJSON in[_json objectForKey:@"followers"]) {
+                FLUser *follower = [[FLUser alloc] initWithJSON:followerJSON];
+                if (follower && [follower userId] && ![follower.userId isEqualToString:_userId] && ![unique containsObject:[follower userId]]) {
+                    [unique addObject:[follower userId]];
+                    [followers addObject:follower];
+                }
+            }
+        }
+        
+        _followers = followers;
+    }
+
     {
         NSMutableArray *friends = [NSMutableArray new];
         NSMutableArray *unique = [NSMutableArray array];

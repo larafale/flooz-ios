@@ -9,6 +9,10 @@
 #import "FLNavigationController.h"
 #import "NewTransactionViewController.h"
 #import "FLPopupInformation.h"
+#import "UserViewController.h"
+#import "CEPanAnimationController.h"
+#import "CEHorizontalSwipeInteractionController.h"
+#import "CEReversibleAnimationController.h"
 
 @interface FLNavigationController () {
     UIBarButtonItem *backItem;
@@ -17,6 +21,12 @@
     UIBarButtonItem *cbItem;
     
     UIViewController *controller;
+    
+    CEPanAnimationController *_animationController;
+    CEHorizontalSwipeInteractionController *_interactionController;
+    
+    CEReversibleAnimationController *_defaultAnimationController;
+    CEBaseInteractionController *_defaultInteractionController;
 }
 
 @end
@@ -30,6 +40,12 @@
     self.delegate = self;
     self.blockAmount = NO;
     [self customAppearence];
+    
+    _animationController = [CEPanAnimationController new];
+    _interactionController = [CEHorizontalSwipeInteractionController new];
+    
+    _defaultAnimationController = [CEReversibleAnimationController new];
+    _defaultInteractionController = [CEBaseInteractionController new];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,16 +85,16 @@
     
     cbItem = [[UIBarButtonItem alloc] initWithImage:cbImage style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
     [cbItem setTintColor:[UIColor customBlue]];
-
+    
     
     [self.navigationBar setBackgroundImage:[UIImage new]
-                       forBarPosition:UIBarPositionAny
-                           barMetrics:UIBarMetricsDefault];
-
+                            forBarPosition:UIBarPositionAny
+                                barMetrics:UIBarMetricsDefault];
+    
     shadowImage = self.navigationBar.shadowImage;
-
+    
     [self.navigationBar setShadowImage:[UIImage new]];
-
+    
     [self showShadow];
 }
 
@@ -121,6 +137,15 @@
     [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:^() {
         
     }] show];
+}
+
+- (NSArray<UIViewController *> * _Nullable)popToRootViewControllerAnimated:(BOOL)animated {
+    if ([self.viewControllers[0] isKindOfClass:[UserViewController class]]) {
+        [self setNavigationBarHidden:YES animated:YES];
+    } else
+        [self setNavigationBarHidden:NO animated:YES];
+    
+    return [super popToRootViewControllerAnimated:animated];
 }
 
 - (void)popViewController {
@@ -166,6 +191,14 @@
 #pragma marks - UINavigationControllerDelegate
 
 - (void)navigationController:(nonnull UINavigationController *)navigationController didShowViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated {
+//    if (![viewController isKindOfClass:[UserViewController class]]) {
+//        for (UIGestureRecognizer *gesture in viewController.view.gestureRecognizers) {
+//            if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]) {
+//                [viewController.view removeGestureRecognizer:gesture];
+//            }
+//        }
+//    }
+//    
     if (_navigationDelegate)
         [_navigationDelegate navigationController:navigationController didShowViewController:viewController animated:animated];
 }
@@ -189,11 +222,30 @@
     }
     else
         viewController.navigationItem.leftBarButtonItem = nil;
-
+    
     
     if (_navigationDelegate)
         [_navigationDelegate navigationController:navigationController willShowViewController:viewController animated:animated];
 }
 
+//- (id<UIViewControllerAnimatedTransitioning>) navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
+//    
+//    if ([toVC isKindOfClass:[UserViewController class]] || [fromVC isKindOfClass:[UserViewController class]]) {
+//        [_interactionController wireToViewController:toVC forOperation:CEInteractionOperationPop];
+//        _interactionController.popOnRightToLeft = NO;
+//        
+//        _animationController.reverse = operation == UINavigationControllerOperationPop;
+//        
+//        return _animationController;
+//    }
+//    return nil;
+//}
+//
+//- (id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>)animationController {
+//    if (animationController && [animationController isEqual:_animationController])
+//        return _interactionController.interactionInProgress ? _interactionController : nil;
+//    else
+//        return nil;
+//}
 
 @end

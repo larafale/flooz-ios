@@ -1,20 +1,20 @@
 //
-//  FLActionButton.m
+//  FLBorderedActionButton.m
 //  Flooz
 //
-//  Created by Olivier on 12/29/14.
-//  Copyright (c) 2014 Flooz. All rights reserved.
+//  Created by Epitech on 9/17/15.
+//  Copyright © 2015 Flooz. All rights reserved.
 //
 
-#import "FLActionButton.h"
+#import "FLBorderedActionButton.h"
 
-@interface FLActionButton ()
+@interface FLBorderedActionButton ()
 
 - (void)checkStateChangedAndSendActions;
 
 @end
 
-@implementation FLActionButton {
+@implementation FLBorderedActionButton {
     UIControlState  _priorState;
     
     NSMutableDictionary *backgroundColorDictionary;
@@ -42,46 +42,18 @@
 
 - (void)initViewWithTitle:(NSString *)title {
     self.layer.masksToBounds = YES;
-    self.layer.cornerRadius = 2;
+    self.layer.cornerRadius = 5;
+    self.layer.borderWidth = 1;
     
     [self setTitle:title forState:UIControlStateNormal];
     
-    [self setTitleColor:[UIColor customWhite] forState:UIControlStateNormal];
-    [self setTitleColor:[UIColor customWhite:0.5] forState:UIControlStateDisabled];
-    [self setTitleColor:[UIColor customWhite:0.5] forState:UIControlStateHighlighted];
-    
-    [self setBackgroundColor:[UIColor customBlue] forState:UIControlStateNormal];
-    [self setBackgroundColor:[UIColor customBackground] forState:UIControlStateDisabled];
-    [self setBackgroundColor:[UIColor customBlue:0.5] forState:UIControlStateHighlighted];
+    [self setTitleColor:[UIColor customBlue] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
+    [self setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
     
     [self.titleLabel setFont:[UIFont customContentRegular:20]];
-}
-
-- (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
-    
-    [backgroundColorDictionary setObject:backgroundColor forKey:[NSNumber numberWithInt:state]];
-    
-    if (state == self.state)
-        self.backgroundColor = backgroundColorDictionary[[NSNumber numberWithInt:state]];
-}
-
-- (void)centerImage {
-    [self centerImage:5];
-}
-
-- (void)centerImage:(CGFloat)margin {
-    if ([self.titleLabel.text isBlank] || self.titleLabel.text == nil || self.titleLabel.text.length == 0) {
-        CGRectSetY(self.imageView.frame, (CGRectGetHeight(self.frame) - CGRectGetHeight(self.imageView.frame)) / 2.0f);
-        CGRectSetX(self.imageView.frame, (CGRectGetWidth(self.frame) - CGRectGetWidth(self.imageView.frame)) / 2.0f);
-    } else {
-        [self.titleLabel setWidthToFit];
-        
-        CGFloat totalWidth = CGRectGetWidth(self.imageView.frame) + CGRectGetWidth(self.titleLabel.frame) + margin;
-    
-        CGRectSetY(self.imageView.frame, (CGRectGetHeight(self.frame) - CGRectGetHeight(self.imageView.frame)) / 2.0f);
-        CGRectSetX(self.imageView.frame, (CGRectGetWidth(self.frame) - totalWidth) / 2.0f);
-        CGRectSetX(self.titleLabel.frame, ((CGRectGetWidth(self.frame) - totalWidth) / 2.0f) + CGRectGetWidth(self.imageView.frame) + margin);
-    }
+    self.tintColor = [self titleColorForState:self.state];
+    self.layer.borderColor = self.tintColor.CGColor;
 }
 
 - (void)setImage:(UIImage *)image size:(CGSize)size {
@@ -99,6 +71,7 @@
     [self.imageView setContentScaleFactor:UIViewContentModeScaleAspectFit];
     
     self.tintColor = [self titleColorForState:self.state];
+    self.layer.borderColor = self.tintColor.CGColor;
 }
 
 - (void)setImageWithURL:(NSString *)imageURL size:(CGSize)size {
@@ -123,6 +96,33 @@
     [self.imageView setContentScaleFactor:UIViewContentModeScaleAspectFit];
     
     self.tintColor = [self titleColorForState:self.state];
+    self.layer.borderColor = self.tintColor.CGColor;
+}
+
+- (void)centerImage {
+    [self centerImage:5];
+}
+
+- (void)centerImage:(CGFloat)margin {
+    if ([self.titleLabel.text isBlank] || self.titleLabel.text == nil || self.titleLabel.text.length == 0) {
+        CGRectSetY(self.imageView.frame, (CGRectGetHeight(self.frame) - CGRectGetHeight(self.imageView.frame)) / 2.0f);
+        CGRectSetX(self.imageView.frame, (CGRectGetWidth(self.frame) - CGRectGetWidth(self.imageView.frame)) / 2.0f);
+    } else {
+        [self.titleLabel setWidthToFit];
+        
+        //make the buttons content appear in the top-left
+        [self setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+        
+        CGFloat totalWidth = CGRectGetWidth(self.imageView.frame) + CGRectGetWidth(self.titleLabel.frame) + margin;
+        
+        CGFloat imgX = (CGRectGetWidth(self.frame) - totalWidth) / 2.0f;
+        CGFloat textX = imgX + CGRectGetWidth(self.imageView.frame) + margin;
+
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, textX, 0.0f, 0.0f)];
+
+        CGRectSetY(self.imageView.frame, (CGRectGetHeight(self.frame) - CGRectGetHeight(self.imageView.frame)) / 2.0f);
+        CGRectSetX(self.imageView.frame, imgX);
+    }
 }
 
 - (void)setEnabled:(BOOL)enabled
@@ -134,6 +134,7 @@
     if ([NSNumber numberWithInt:self.state])
         self.backgroundColor = backgroundColorDictionary[[NSNumber numberWithInt:self.state]];
     self.tintColor = [self titleColorForState:self.state];
+    self.layer.borderColor = self.tintColor.CGColor;
 }
 
 - (void)setSelected:(BOOL)selected
@@ -145,6 +146,7 @@
     if ([NSNumber numberWithInt:self.state])
         self.backgroundColor = backgroundColorDictionary[[NSNumber numberWithInt:self.state]];
     self.tintColor = [self titleColorForState:self.state];
+    self.layer.borderColor = self.tintColor.CGColor;
 }
 
 - (void)setHighlighted:(BOOL)highlighted
@@ -156,6 +158,7 @@
     if ([NSNumber numberWithInt:self.state])
         self.backgroundColor = backgroundColorDictionary[[NSNumber numberWithInt:self.state]];
     self.tintColor = [self titleColorForState:self.state];
+    self.layer.borderColor = self.tintColor.CGColor;
 }
 
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event

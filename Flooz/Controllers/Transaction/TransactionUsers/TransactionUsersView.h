@@ -13,6 +13,7 @@
 	UIView *rightUserView;
 }
 
+@property (nonatomic, retain) UIViewController *parentViewController;
 @property (weak, nonatomic) FLTransaction *transaction;
 
 @end

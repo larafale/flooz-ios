@@ -2,8 +2,8 @@
 //  FLInvitationTexts.m
 //  Flooz
 //
-//  Created by Epitech on 7/27/15.
-//  Copyright © 2015 Jonathan Tribouharet. All rights reserved.
+//  Created by Flooz on 7/27/15.
+//  Copyright © 2015 Flooz. All rights reserved.
 //
 
 #import "FLInvitationTexts.h"

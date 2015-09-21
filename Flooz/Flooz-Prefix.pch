@@ -31,6 +31,7 @@
 #import "Mixpanel.h"
 #import "Flooz.h"
 
+#import "FLBorderedActionButton.h"
 #import "FLKeyboardView.h"
 #import "FLActionButton.h"
 #import "FLPopup.h"

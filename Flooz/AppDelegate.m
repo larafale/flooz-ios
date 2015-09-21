@@ -26,6 +26,7 @@
 #import "NewTransactionViewController.h"
 #import "UICKeyChainStore.h"
 #import "SignupNavigationController.h"
+#import "UserViewController.h"
 
 #ifdef TARGET_IPHONE_SIMULATOR
 #import <PonyDebugger/PonyDebugger.h>
@@ -1124,62 +1125,36 @@
 
 #pragma mark -
 
+- (void)showUser:(FLUser *)user inController:(UIViewController*)vc {
+    
+    if (!vc) {
+        vc = [self myTopViewController];
+    }
+        
+    UserViewController *controller;
+    
+    controller = [[UserViewController alloc] initWithUser:user];
+    
+    if ([vc isKindOfClass:UINavigationController.class])
+        [((UINavigationController*)vc) pushViewController:controller animated:YES];
+    else if (vc.navigationController != nil)
+        [vc.navigationController pushViewController:controller animated:YES];
+    else
+        [vc presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+}
+
 - (void)showTransaction:(FLTransaction *)transaction inController:(UIViewController*)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus {
     
     [[Flooz sharedInstance] readTransactionWithId:transaction.transactionId success:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCancelTimer object:nil];
-    if (_formSheet.presentedFSViewController) {
-        if ([_lastTransactionID isEqualToString:transaction.transactionId]) {
-            return;
-        }
-        
-        __block UIViewController *vc2 = vc;
-        
-        [[self currentController] mz_dismissFormSheetControllerAnimated:NO completionHandler: ^(MZFormSheetController *formSheetController) {
-            _formSheet = nil;
-            _lastTransactionID = transaction.transactionId;
-            if (!vc2) {
-                vc2 = [self myTopViewController];
-            }
-            
-            CGSize size = CGSizeMake(PPScreenWidth() - 52.0f, PPScreenHeight() - 45.0f * 2.0f);
-            if (IS_IPHONE_4) {
-                size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
-            }
-            TransactionViewController *controller;
-            
-            controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath withSize:size];
-            if ([vc2 conformsToProtocol:@protocol(TransactionCellDelegate)]) {
-                controller.delegateController = (UIViewController <TransactionCellDelegate> *)vc2;
-            }
-            
-            if (focus) {
-                [controller focusOnComment];
-            }
-            
-            _formSheet = [[MZFormSheetController alloc] initWithViewController:controller];
-            _formSheet.presentedFormSheetSize = size;
-            _formSheet.transitionStyle = MZFormSheetTransitionStyleBounce;// MZFormSheetTransitionStyleSlideFromBottom;
-            _formSheet.shadowRadius = 2.0;
-            _formSheet.shadowOpacity = 0.3;
-            _formSheet.shouldDismissOnBackgroundViewTap = YES;
-            _formSheet.shouldCenterVertically = YES;
-            _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
-            
-            [vc2 mz_presentFormSheetController:_formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
-            }];
-        }];
-    } else {
         _lastTransactionID = transaction.transactionId;
         if (!vc) {
             vc = [self myTopViewController];
         }
         
-        CGSize size = CGSizeMake(PPScreenWidth() - 52.0f, PPScreenHeight() - 45.0f * 2.0f);
-        if (IS_IPHONE_4) {
-            size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
-        }
+        CGSize size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
+    
         TransactionViewController *controller;
         
         controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath withSize:size];
@@ -1191,18 +1166,12 @@
             [controller focusOnComment];
         }
         
-        _formSheet = [[MZFormSheetController alloc] initWithViewController:controller];
-        _formSheet.presentedFormSheetSize = size;
-        _formSheet.transitionStyle = MZFormSheetTransitionStyleBounce;// MZFormSheetTransitionStyleSlideFromBottom;
-        _formSheet.shadowRadius = 2.0;
-        _formSheet.shadowOpacity = 0.3;
-        _formSheet.shouldDismissOnBackgroundViewTap = YES;
-        _formSheet.shouldCenterVertically = YES;
-        _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
-        
-        [vc mz_presentFormSheetController:_formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
-        }];
-    }
+        if ([vc isKindOfClass:UINavigationController.class])
+            [((UINavigationController*)vc) pushViewController:controller animated:YES];
+        else if (vc.navigationController != nil)
+            [vc.navigationController pushViewController:controller animated:YES];
+        else
+            [vc presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
 }
 
 - (UIWindow *)topWindow {

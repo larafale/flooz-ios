@@ -1,19 +1,16 @@
 //
-//  FLActionButton.h
+//  FLBorderedActionButton.h
 //  Flooz
 //
-//  Created by Olivier on 12/29/14.
-//  Copyright (c) 2014 Flooz. All rights reserved.
+//  Created by Epitech on 9/17/15.
+//  Copyright © 2015 Flooz. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 #define UIControlEventStateChanged  (1 << 24)
 
-#define FLActionButtonDefaultHeight 40
-#define FLActionButtonImageTag 12
-
-@interface FLActionButton : UIButton
+@interface FLBorderedActionButton : UIButton
 
 @property (nonatomic, retain) UIImageView *imageView;
 
@@ -21,7 +18,6 @@
 
 - (void)setImage:(UIImage *)image size:(CGSize)size;
 - (void)setImageWithURL:(NSString *)imageURL size:(CGSize)size;
-- (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state;
 - (void)centerImage;
 - (void)centerImage:(CGFloat)margin;
 
