@@ -13,6 +13,7 @@
 @implementation FriendRequestCell {
 	UILabel *_nameLabel;
 	UILabel *_subLabel;
+    UIImageView *_certifImageView;
     
     CGFloat cellWidth;
 }
@@ -43,6 +44,7 @@
 
 	[self createAvatarView];
 	[self createTextView];
+    [self createCertifView];
 	[self createSubTextView];
 	[self createButtons];
 }
@@ -53,7 +55,7 @@
 }
 
 - (void)createTextView {
-	_nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE, 17.0f, cellWidth - (CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE + 50.0f), 11)];
+	_nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE, 17.0f, cellWidth - (CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE + 50.0f), 14)];
 
 	_nameLabel.font = [UIFont customContentBold:13];
 	_nameLabel.textColor = [UIColor whiteColor];
@@ -62,12 +64,20 @@
 }
 
 - (void)createSubTextView {
-	_subLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_nameLabel.frame), 31, CGRectGetWidth(_nameLabel.frame), 9)];
+	_subLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_nameLabel.frame), 31, CGRectGetWidth(_nameLabel.frame), 12)];
 
 	_subLabel.font = [UIFont customContentBold:11];
 	_subLabel.textColor = [UIColor customGreyPseudo];
 
 	[self.contentView addSubview:_subLabel];
+}
+
+- (void)createCertifView {
+    _certifImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 16.5f, 15, 15)];
+    [_certifImageView setImage:[UIImage imageNamed:@"certified"]];
+    [_certifImageView setContentMode:UIViewContentModeScaleAspectFit];
+
+    [self.contentView addSubview:_certifImageView];
 }
 
 - (void)createButtons {
@@ -100,6 +110,14 @@
 
 - (void)prepapreTextView {
 	_nameLabel.text = [[[_friendRequest user] fullname] uppercaseString];
+    [_nameLabel setWidthToFit];
+    
+    if ([[_friendRequest user] isStar] || [[_friendRequest user] isPro]) {
+        [_certifImageView setHidden:NO];
+        CGRectSetX(_certifImageView.frame, CGRectGetMaxX(_nameLabel.frame) + 5);
+    } else {
+        [_certifImageView setHidden:YES];
+    }
 }
 
 - (void)prepapreSubTextView {

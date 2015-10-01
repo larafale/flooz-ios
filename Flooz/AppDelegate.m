@@ -592,89 +592,89 @@
         [self createReportAlertController];
 }
 
-- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView {
-    [self showMenuForUser:user imageView:imageView canRemoveFriend:NO];
-}
-
-- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend {
-    [self showMenuForUser:user imageView:imageView canRemoveFriend:canRemoveFriend inWindow:self.window];
-}
-
-- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend inWindow:(UIWindow *)window {
-    if (!user || [[user userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]] ||
-        ![user username] || ![user fullname] || [user.username isEqualToString:@"flooz"])
-        return;
-    
-    currentUserForMenu = user;
-    currentImageView = imageView;
-    haveMenuFriend = NO;
-    _canRemoveFriend = canRemoveFriend;
-    
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
-        [self createActionSheetInWindow:window];
-    else
-        [self createAlertController];
-}
-
-- (void)createAlertController {
-    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) { [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment]; }]];
-    
-    if (![self isFriend]) {
-        haveMenuFriend = YES;
-        [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_ADD_FRIENDS", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-            [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-            }];
-        }]];
-    }
-    
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_OTHER", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self createUserAlertController];
-    }]];
-    
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
-    
-    [self presentViewC:newAlert animated:YES completion:NULL];
-}
-
-- (void)createUserAlertController {
-    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    if ([currentUserForMenu avatarURL]) {
-        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_AVATAR", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-            NSURL *urlImage = [NSURL URLWithString:[currentUserForMenu avatarURL]];
-            [self showAvatarView:currentImageView withUrl:urlImage];
-        }]];
-    }
-    
-    if ([self isFriend]) {
-        if (_canRemoveFriend) {
-            haveMenuFriend = YES;
-            [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-                [[Flooz sharedInstance] showLoadView];
-                [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success: ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-                }];
-            }]];
-        }
-    }
-    
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_BLOCK_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-        [self showBlockView];
-    }]];
-    
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REPORT_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-        self.currentReport = [[FLReport alloc] initWithType:ReportUser id:currentUserForMenu.userId];
-        [self showReportView];
-    }]];
-    
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
-    
-    [self presentViewC:newAlert animated:YES completion:NULL];
-}
+//- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView {
+//    [self showMenuForUser:user imageView:imageView canRemoveFriend:NO];
+//}
+//
+//- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend {
+//    [self showMenuForUser:user imageView:imageView canRemoveFriend:canRemoveFriend inWindow:self.window];
+//}
+//
+//- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend inWindow:(UIWindow *)window {
+//    if (!user || [[user userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]] ||
+//        ![user username] || ![user fullname] || [user.username isEqualToString:@"flooz"])
+//        return;
+//    
+//    currentUserForMenu = user;
+//    currentImageView = imageView;
+//    haveMenuFriend = NO;
+//    _canRemoveFriend = canRemoveFriend;
+//    
+//    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
+//        [self createActionSheetInWindow:window];
+//    else
+//        [self createAlertController];
+//}
+//
+//- (void)createAlertController {
+//    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+//    
+//    [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) { [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment]; }]];
+//    
+//    if (![self isFriend]) {
+//        haveMenuFriend = YES;
+//        [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_ADD_FRIENDS", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+//            [[Flooz sharedInstance] showLoadView];
+//            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+//            }];
+//        }]];
+//    }
+//    
+//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_OTHER", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//        [self createUserAlertController];
+//    }]];
+//    
+//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+//    
+//    [self presentViewC:newAlert animated:YES completion:NULL];
+//}
+//
+//- (void)createUserAlertController {
+//    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+//    
+//    if ([currentUserForMenu avatarURL]) {
+//        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_AVATAR", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+//            NSURL *urlImage = [NSURL URLWithString:[currentUserForMenu avatarURL]];
+//            [self showAvatarView:currentImageView withUrl:urlImage];
+//        }]];
+//    }
+//    
+//    if ([self isFriend]) {
+//        if (_canRemoveFriend) {
+//            haveMenuFriend = YES;
+//            [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+//                [[Flooz sharedInstance] showLoadView];
+//                [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success: ^{
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+//                } failure:nil];
+//            }]];
+//        }
+//    }
+//    
+//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_BLOCK_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+//        [self showBlockView];
+//    }]];
+//    
+//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REPORT_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+//        self.currentReport = [[FLReport alloc] initWithType:ReportUser id:currentUserForMenu.userId];
+//        [self showReportView];
+//    }]];
+//    
+//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+//    
+//    [self presentViewC:newAlert animated:YES completion:NULL];
+//}
 
 - (void)createReportAlertController {
     UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -764,70 +764,70 @@
     
 }
 
-- (void)managerGlobalActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    void (^friendMenu)(void) = ^(void) {
-        [[Flooz sharedInstance] showLoadView];
-        if ([self isFriend]) {
-            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success: ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-            }];
-        }
-        else {
-            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-            }];
-        }
-    };
-    
-    if (buttonIndex == 0) {
-        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
-    }
-    else if (buttonIndex == 1 && haveMenuFriend) {
-        friendMenu();
-    }
-    else if (buttonIndex == 1 || (buttonIndex == 2 && haveMenuFriend)) {
-        [self createUserActionSheetInWindow:self.tmpActionSheetWindow];
-    }
-    self.tmpActionSheetWindow = nil;
-}
-
-- (void)managerUserActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    void (^friendMenu)(void) = ^(void) {
-        [[Flooz sharedInstance] showLoadView];
-        if ([self isFriend]) {
-            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success: ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-            }];
-        }
-        else {
-            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-            }];
-        }
-    };
-    
-    void (^showAvatar)(void) = ^(void) {
-        NSURL *urlImage = [NSURL URLWithString:[currentUserForMenu avatarURL]];
-        [self showAvatarView:currentImageView withUrl:urlImage];
-    };
-    
-    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_AVATAR", nil)]) {
-        showAvatar();
-    }
-    
-    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil)]) {
-        friendMenu();
-    }
-    
-    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_BLOCK_USER", nil)]) {
-        [self showBlockView];
-    }
-    
-    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REPORT_USER", nil)]) {
-        self.currentReport = [[FLReport alloc] initWithType:ReportUser id:currentUserForMenu.userId];
-        [self showReportView];
-    }
-}
+//- (void)managerGlobalActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    void (^friendMenu)(void) = ^(void) {
+//        [[Flooz sharedInstance] showLoadView];
+//        if ([self isFriend]) {
+//            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success: ^{
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+//            } failure:nil];
+//        }
+//        else {
+//            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+//            }];
+//        }
+//    };
+//    
+//    if (buttonIndex == 0) {
+//        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
+//    }
+//    else if (buttonIndex == 1 && haveMenuFriend) {
+//        friendMenu();
+//    }
+//    else if (buttonIndex == 1 || (buttonIndex == 2 && haveMenuFriend)) {
+//        [self createUserActionSheetInWindow:self.tmpActionSheetWindow];
+//    }
+//    self.tmpActionSheetWindow = nil;
+//}
+//
+//- (void)managerUserActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    void (^friendMenu)(void) = ^(void) {
+//        [[Flooz sharedInstance] showLoadView];
+//        if ([self isFriend]) {
+//            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success: ^{
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+//            } failure:nil];
+//        }
+//        else {
+//            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
+//            }];
+//        }
+//    };
+//    
+//    void (^showAvatar)(void) = ^(void) {
+//        NSURL *urlImage = [NSURL URLWithString:[currentUserForMenu avatarURL]];
+//        [self showAvatarView:currentImageView withUrl:urlImage];
+//    };
+//    
+//    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_AVATAR", nil)]) {
+//        showAvatar();
+//    }
+//    
+//    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil)]) {
+//        friendMenu();
+//    }
+//    
+//    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_BLOCK_USER", nil)]) {
+//        [self showBlockView];
+//    }
+//    
+//    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REPORT_USER", nil)]) {
+//        self.currentReport = [[FLReport alloc] initWithType:ReportUser id:currentUserForMenu.userId];
+//        [self showReportView];
+//    }
+//}
 
 - (void)managerReportActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     //    if (buttonIndex == 0) {
@@ -847,11 +847,7 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (actionSheet.tag == 1)
-        [self managerGlobalActionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
-    else if (actionSheet.tag == 2)
-        [self managerUserActionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
-    else if (actionSheet.tag == 3)
+    if (actionSheet.tag == 3)
         [self managerReportActionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
     else if (actionSheet.tag == 4)
         [self managerImageActionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
@@ -922,6 +918,23 @@
                 imageViewer.interactionsDelegate = self;
                 
                 [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
+            } else {
+                JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+                imageInfo.imageURL = urlImage;
+                imageInfo.referenceRect = view.frame;
+                imageInfo.referenceView = view.superview;
+                imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
+                
+                JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                                       initWithImageInfo:imageInfo
+                                                       mode:JTSImageViewControllerMode_Image
+                                                       backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+                imageViewer.interactionsDelegate = self;
+                [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
+                
+                [[SDWebImageManager sharedManager] downloadImageWithURL:urlImage options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                    
+                }];
             }
         }];
     } else if (urlImage) {
@@ -963,11 +976,11 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if (_formSheet.presentedFSViewController) {
             [[self currentController] mz_dismissFormSheetControllerAnimated:NO completionHandler: ^(MZFormSheetController *formSheetController) {
-                FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
+                FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:user]];
                 [self.tabBarController presentViewController:controller animated:YES completion:NULL];
             }];
         } else {
-            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:currentUserForMenu]];
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:user]];
             [self.tabBarController presentViewController:controller animated:YES completion:NULL];
         }
     });
@@ -1126,11 +1139,17 @@
 #pragma mark -
 
 - (void)showUser:(FLUser *)user inController:(UIViewController*)vc {
+    if (user.json[@"isCactus"] && [user.json[@"isCactus"] boolValue])
+        return;
     
     if (!vc) {
         vc = [self myTopViewController];
     }
-        
+    
+    if ([vc isKindOfClass:[FLTabBarController class]]) {
+        vc = [((FLTabBarController *)vc) selectedViewController];
+    }
+    
     UserViewController *controller;
     
     controller = [[UserViewController alloc] initWithUser:user];
@@ -1148,30 +1167,35 @@
     [[Flooz sharedInstance] readTransactionWithId:transaction.transactionId success:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCancelTimer object:nil];
-        _lastTransactionID = transaction.transactionId;
-        if (!vc) {
-            vc = [self myTopViewController];
-        }
-        
-        CGSize size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
+    _lastTransactionID = transaction.transactionId;
     
-        TransactionViewController *controller;
-        
-        controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath withSize:size];
-        if ([vc conformsToProtocol:@protocol(TransactionCellDelegate)]) {
-            controller.delegateController = (UIViewController <TransactionCellDelegate> *)vc;
-        }
-        
-        if (focus) {
-            [controller focusOnComment];
-        }
-        
-        if ([vc isKindOfClass:UINavigationController.class])
-            [((UINavigationController*)vc) pushViewController:controller animated:YES];
-        else if (vc.navigationController != nil)
-            [vc.navigationController pushViewController:controller animated:YES];
-        else
-            [vc presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+    if (!vc) {
+        vc = [self myTopViewController];
+    }
+    
+    if ([vc isKindOfClass:[FLTabBarController class]]) {
+        vc = [((FLTabBarController *)vc) selectedViewController];
+    }
+    
+    CGSize size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
+    
+    TransactionViewController *controller;
+    
+    controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath withSize:size];
+    if ([vc conformsToProtocol:@protocol(TransactionCellDelegate)]) {
+        controller.delegateController = (UIViewController <TransactionCellDelegate> *)vc;
+    }
+    
+    if (focus) {
+        [controller focusOnComment];
+    }
+    
+    if ([vc isKindOfClass:UINavigationController.class])
+        [((UINavigationController*)vc) pushViewController:controller animated:YES];
+    else if (vc.navigationController != nil)
+        [vc.navigationController pushViewController:controller animated:YES];
+    else
+        [vc presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
 }
 
 - (UIWindow *)topWindow {

@@ -163,10 +163,8 @@
     _menuDic = @[
                  @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
                    @"items":@[
-                           @{@"title":NSLocalizedString(@"NAV_FRIENDS", @""), @"action":@"friends", @"notif":@(friendsNotifs)},
+                           @{@"title":NSLocalizedString(@"PROFILE", @""), @"action":@"profile"},
                            @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
-                           @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
-                           @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
                            @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                            @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                            @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
@@ -174,6 +172,8 @@
                    },
                  @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
                    @"items":@[
+                           @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
+                           @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
                            @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
                            @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
                            ]
@@ -331,6 +331,8 @@
             [popup show];
         } else if ([action isEqualToString:@"sponsor"]) {
             [[self navigationController] pushViewController:[DiscountCodeViewController new] animated:YES];
+        } else if ([action isEqualToString:@"profile"]) {
+            [appDelegate showUser:[Flooz sharedInstance].currentUser inController:self];
         }
     }
 }
@@ -396,12 +398,15 @@
 #pragma mark - avatar
 
 - (void)showMenuAvatar {
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-        [self createActionSheet];
-    }
-    else {
-        [self createAlertController];
-    }
+    if ([[Flooz sharedInstance].currentUser.avatarURL isBlank]) {
+        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+            [self createActionSheet];
+        }
+        else {
+            [self createAlertController];
+        }
+    } else
+        [appDelegate showUser:[Flooz sharedInstance].currentUser inController:self];
 }
 
 - (void)createAlertController {
@@ -416,9 +421,9 @@
             [self presentLibrary];
         }]];
     }
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-        [self getPhotoFromFacebook];
-    }]];
+//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+//        [self getPhotoFromFacebook];
+//    }]];
     
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
     
@@ -435,7 +440,7 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
         [menus addObject:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)];
     }
-    [menus addObject:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)];
+//    [menus addObject:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)];
     
     for (NSString *menu in menus) {
         [actionSheet addButtonWithTitle:menu];
@@ -455,9 +460,9 @@
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)]) {
         [self presentLibrary];
     }
-    else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)]) {
-        [self getPhotoFromFacebook];
-    }
+//    else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)]) {
+//        [self getPhotoFromFacebook];
+//    }
 }
 
 - (void)editAvatarWith:(NSNotification *)notification {
@@ -511,14 +516,14 @@
     }];
 }
 
-- (void)getPhotoFromFacebook {
-    [[Flooz sharedInstance] getFacebookPhoto: ^(id result) {
-        if (result[@"id"]) {
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?&width=134&height=134", result[@"id"]]]];
-            [self sendData:imageData];
-        }
-    }];
-}
+//- (void)getPhotoFromFacebook {
+//    [[Flooz sharedInstance] getFacebookPhoto: ^(id result) {
+//        if (result[@"id"]) {
+//            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?&width=134&height=134", result[@"id"]]]];
+//            [self sendData:imageData];
+//        }
+//    }];
+//}
 
 - (UIImage *)resizeImage:(UIImage *)image {
     CGRect rect = CGRectMake(0.0, 0.0, 640.0, 640.0); // 240.0 rather then 120.0 for retina

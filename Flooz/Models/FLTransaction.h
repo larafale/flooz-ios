@@ -44,6 +44,8 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (nonatomic) TransactionType type;
 @property (nonatomic) TransactionStatus status;
 
+@property (nonatomic, retain) NSDictionary *json;
+
 @property (strong, nonatomic) NSString *transactionId;
 @property (strong, nonatomic) NSNumber *amount;
 @property (strong, nonatomic) NSString *amountText;
@@ -65,6 +67,7 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 
 @property (strong, nonatomic) FLUser *from;
 @property (strong, nonatomic) FLUser *to;
+@property (strong, nonatomic) FLUser *starter;
 
 @property (strong, nonatomic) FLSocial *social;
 

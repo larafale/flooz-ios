@@ -76,11 +76,18 @@
     } else {
         [self.titleLabel setWidthToFit];
         
+        //make the buttons content appear in the top-left
+        [self setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+        
         CGFloat totalWidth = CGRectGetWidth(self.imageView.frame) + CGRectGetWidth(self.titleLabel.frame) + margin;
-    
+        
+        CGFloat imgX = (CGRectGetWidth(self.frame) - totalWidth) / 2.0f;
+        CGFloat textX = imgX + CGRectGetWidth(self.imageView.frame) + margin;
+        
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, textX, 0.0f, 0.0f)];
+        
         CGRectSetY(self.imageView.frame, (CGRectGetHeight(self.frame) - CGRectGetHeight(self.imageView.frame)) / 2.0f);
-        CGRectSetX(self.imageView.frame, (CGRectGetWidth(self.frame) - totalWidth) / 2.0f);
-        CGRectSetX(self.titleLabel.frame, ((CGRectGetWidth(self.frame) - totalWidth) / 2.0f) + CGRectGetWidth(self.imageView.frame) + margin);
+        CGRectSetX(self.imageView.frame, imgX);
     }
 }
 

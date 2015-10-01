@@ -299,12 +299,21 @@
 		C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */; };
 		C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */; };
 		C9160D581B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */; };
+		C919AD981BBAC3CD00B87AAB /* FLReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD971BBAC3CD00B87AAB /* FLReachability.m */; };
+		C919AD991BBAC3CD00B87AAB /* FLReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD971BBAC3CD00B87AAB /* FLReachability.m */; };
+		C919AD9A1BBAC3CD00B87AAB /* FLReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD971BBAC3CD00B87AAB /* FLReachability.m */; };
+		C919AD9D1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */; };
+		C919AD9E1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */; };
+		C919AD9F1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */; };
 		C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175D1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175E1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C927061E1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
 		C927061F1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
 		C92706201B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
+		C92FB3AB1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
+		C92FB3AC1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
+		C92FB3AD1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
 		C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
 		C93118491A1FBD72008C6EEC /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
 		C935B6E91B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */; };
@@ -313,6 +322,12 @@
 		C938EFCE1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
 		C938EFCF1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
 		C938EFD01AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
+		C93F66A11BB5556F0032ED56 /* UIView+LayerShot.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */; };
+		C93F66A21BB5556F0032ED56 /* UIView+LayerShot.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */; };
+		C93F66A31BB5556F0032ED56 /* UIView+LayerShot.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */; };
+		C93F66A61BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
+		C93F66A71BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
+		C93F66A81BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
 		C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
@@ -333,6 +348,9 @@
 		C95AEDA11A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */; };
 		C95AEDA51A49BB9100000FB3 /* FLClearActionTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */; };
 		C95AEDA61A49BB9100000FB3 /* FLClearActionTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */; };
+		C960DC901BB14D020089B074 /* FLSocialHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C960DC8F1BB14D020089B074 /* FLSocialHelper.m */; };
+		C960DC911BB14D020089B074 /* FLSocialHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C960DC8F1BB14D020089B074 /* FLSocialHelper.m */; };
+		C960DC921BB14D020089B074 /* FLSocialHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C960DC8F1BB14D020089B074 /* FLSocialHelper.m */; };
 		C966473C19FFEA0D000851AF /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C966473A19FFEA0D000851AF /* TransitionDelegate.m */; };
 		C966473E19FFEA28000851AF /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C966473A19FFEA0D000851AF /* TransitionDelegate.m */; };
 		C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = C966474019FFEB4E000851AF /* AnimatedTransitioning.m */; };
@@ -346,6 +364,9 @@
 		C975BB051A92BB8E000E5AEA /* YLMoment.m in Sources */ = {isa = PBXBuildFile; fileRef = C975BB011A92BB8E000E5AEA /* YLMoment.m */; };
 		C975BB061A92BB8E000E5AEA /* YLMoment.m in Sources */ = {isa = PBXBuildFile; fileRef = C975BB011A92BB8E000E5AEA /* YLMoment.m */; };
 		C975BB071A92BB8E000E5AEA /* YLMoment.m in Sources */ = {isa = PBXBuildFile; fileRef = C975BB011A92BB8E000E5AEA /* YLMoment.m */; };
+		C97CCFD51BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */; };
+		C97CCFD61BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */; };
+		C97CCFD71BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */; };
 		C98012721A76921000019682 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
 		C98012731A76921000019682 /* FLPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A7BE5F1A27801200195AFC /* FLPreset.m */; };
 		C98012751A76921000019682 /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
@@ -874,16 +895,26 @@
 		C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLLikePopoverViewController.m; sourceTree = "<group>"; };
 		C9160D541B6A6A5400A379DA /* DiscountCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountCodeViewController.h; sourceTree = "<group>"; };
 		C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscountCodeViewController.m; sourceTree = "<group>"; };
+		C919AD961BBAC3CD00B87AAB /* FLReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReachability.h; sourceTree = "<group>"; };
+		C919AD971BBAC3CD00B87AAB /* FLReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReachability.m; sourceTree = "<group>"; };
+		C919AD9B1BBAD5AE00B87AAB /* FLPopupTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPopupTrigger.h; sourceTree = "<group>"; };
+		C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPopupTrigger.m; sourceTree = "<group>"; };
 		C921175A1B66726900CF2D51 /* FLInvitationTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLInvitationTexts.h; sourceTree = "<group>"; };
 		C921175B1B66726900CF2D51 /* FLInvitationTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLInvitationTexts.m; sourceTree = "<group>"; };
 		C927061C1B81D7EE00FB1A11 /* FLSharePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSharePopup.h; sourceTree = "<group>"; };
 		C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSharePopup.m; sourceTree = "<group>"; };
+		C92FB3A91BBBEC1F006FB561 /* FLFilterSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilterSegmentedControl.h; sourceTree = "<group>"; };
+		C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilterSegmentedControl.m; sourceTree = "<group>"; };
 		C93118461A1F7E0B008C6EEC /* FLReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReport.h; sourceTree = "<group>"; };
 		C93118471A1F7E0B008C6EEC /* FLReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReport.m; sourceTree = "<group>"; };
 		C935B6E71B611DBD00861DAD /* FLFilterPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilterPopoverViewController.h; sourceTree = "<group>"; };
 		C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilterPopoverViewController.m; sourceTree = "<group>"; };
 		C938EFCC1AE68C5900A3F740 /* ScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerViewController.h; sourceTree = "<group>"; };
 		C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
+		C93F669F1BB5556F0032ED56 /* UIView+LayerShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LayerShot.h"; sourceTree = "<group>"; };
+		C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayerShot.m"; sourceTree = "<group>"; };
+		C93F66A41BB555AD0032ED56 /* FLMultiLineSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLMultiLineSegmentedControl.h; sourceTree = "<group>"; };
+		C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLMultiLineSegmentedControl.m; sourceTree = "<group>"; };
 		C950540C1B4E7E9A00B9FB2C /* FLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTabBarController.h; sourceTree = "<group>"; };
 		C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTabBarController.m; sourceTree = "<group>"; };
 		C95254D41B5E7BC300D88096 /* AccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountCell.h; sourceTree = "<group>"; };
@@ -900,6 +931,8 @@
 		C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
 		C95AEDA31A49BB9100000FB3 /* FLClearActionTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLClearActionTextView.h; sourceTree = "<group>"; };
 		C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLClearActionTextView.m; sourceTree = "<group>"; };
+		C960DC8E1BB14D020089B074 /* FLSocialHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSocialHelper.h; sourceTree = "<group>"; };
+		C960DC8F1BB14D020089B074 /* FLSocialHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSocialHelper.m; sourceTree = "<group>"; };
 		C966473919FFEA0D000851AF /* TransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionDelegate.h; sourceTree = "<group>"; };
 		C966473A19FFEA0D000851AF /* TransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionDelegate.m; sourceTree = "<group>"; };
 		C966473F19FFEB4E000851AF /* AnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedTransitioning.h; sourceTree = "<group>"; };
@@ -917,6 +950,8 @@
 		C975BAFF1A92BB8E000E5AEA /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BB001A92BB8E000E5AEA /* YLMoment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLMoment.h; sourceTree = "<group>"; };
 		C975BB011A92BB8E000E5AEA /* YLMoment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLMoment.m; sourceTree = "<group>"; };
+		C97CCFD31BBD59AD0084ABF5 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
+		C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		C98013431A76921000019682 /* Flooz local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flooz local.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99A514E1AF7D69500342F8C /* IQActionSheetPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetPickerView.h; sourceTree = "<group>"; };
 		C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetPickerView.m; sourceTree = "<group>"; };
@@ -1105,10 +1140,10 @@
 		2F21172F19D4A9F600CCA109 /* FLTransactionDescriptionView */ = {
 			isa = PBXGroup;
 			children = (
-				C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */,
-				2F21173019D4AA3100CCA109 /* FLTransactionDescriptionView.h */,
 				C910E0EC1A5405A000EB77DE /* FLLikePopoverViewController.h */,
 				C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */,
+				2F21173019D4AA3100CCA109 /* FLTransactionDescriptionView.h */,
+				C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */,
 			);
 			name = FLTransactionDescriptionView;
 			sourceTree = "<group>";
@@ -1367,7 +1402,6 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C96E5A651BA95ED100F201E9 /* User */,
 				C90B947D1A00E94F00E2C53B /* 3DSecure */,
 				ABE9145E18929150003AC722 /* Account */,
 				2FEAA9CC19DC638C00EE95C9 /* BaseViewController */,
@@ -1390,6 +1424,7 @@
 				AB0857FA1923AAF9007C1927 /* Splash */,
 				AB5EB6E9188214F000D81AF6 /* Timeline */,
 				ABF7092618A2CA1300517389 /* Transaction */,
+				C96E5A651BA95ED100F201E9 /* User */,
 				AB6DA50718C4A5BC0073B947 /* Web */,
 			);
 			name = Controllers;
@@ -1408,6 +1443,7 @@
 				2FCBCD0D19BF3C2800FB31E0 /* FLCameraKeyboard */,
 				C95AEDA21A49BB5E00000FB3 /* FLClearActionTextView */,
 				C935B6E61B611D7800861DAD /* FLFilterPopoverViewController */,
+				C92FB3A81BBBEBF4006FB561 /* FLFilterSegmentedControl */,
 				AB6DA50D18C4DDE80073B947 /* FLImageView */,
 				ABE914881892C721003AC722 /* FLKeyboardView */,
 				AB4CB703188829DA00D1C573 /* FLLoadView */,
@@ -1495,11 +1531,17 @@
 		AB3D08E11871BEC300CF8380 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				C919AD961BBAC3CD00B87AAB /* FLReachability.h */,
+				C919AD971BBAC3CD00B87AAB /* FLReachability.m */,
 				ABF7091B18A03B1D00517389 /* FLError.h */,
 				ABE914A21896D2D9003AC722 /* FLHelper.h */,
 				ABE914A31896D2D9003AC722 /* FLHelper.m */,
+				C93F66A41BB555AD0032ED56 /* FLMultiLineSegmentedControl.h */,
+				C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */,
 				C908A3E91A9F211F00A07818 /* FLPopoverTutoTheme.h */,
 				C908A3EA1A9F211F00A07818 /* FLPopoverTutoTheme.m */,
+				C960DC8E1BB14D020089B074 /* FLSocialHelper.h */,
+				C960DC8F1BB14D020089B074 /* FLSocialHelper.m */,
 				C9ED41271A9B7ABA000C4D7A /* NSArray+JSONHelper.h */,
 				C9ED41281A9B7ABA000C4D7A /* NSArray+JSONHelper.m */,
 				C9ED41221A9B7A2F000C4D7A /* NSDictionary+JSONHelper.h */,
@@ -1516,6 +1558,8 @@
 				2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */,
 				ABEC02A618D3165600C03025 /* UIView+FindFirstResponder.h */,
 				ABEC02A718D3165600C03025 /* UIView+FindFirstResponder.m */,
+				C93F669F1BB5556F0032ED56 /* UIView+LayerShot.h */,
+				C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */,
 				AB119B3B198A3FD200F05ECE /* UIViewController+RegisterNotification.h */,
 				AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */,
 			);
@@ -1732,6 +1776,8 @@
 				2FC8784319C08B0300F034E0 /* FLPopupInformation.m */,
 				C927061C1B81D7EE00FB1A11 /* FLSharePopup.h */,
 				C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */,
+				C919AD9B1BBAD5AE00B87AAB /* FLPopupTrigger.h */,
+				C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */,
 			);
 			name = FLPopup;
 			sourceTree = "<group>";
@@ -2069,6 +2115,15 @@
 			name = DiscountCode;
 			sourceTree = "<group>";
 		};
+		C92FB3A81BBBEBF4006FB561 /* FLFilterSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				C92FB3A91BBBEC1F006FB561 /* FLFilterSegmentedControl.h */,
+				C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */,
+			);
+			name = FLFilterSegmentedControl;
+			sourceTree = "<group>";
+		};
 		C935B6E61B611D7800861DAD /* FLFilterPopoverViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2150,6 +2205,8 @@
 			children = (
 				C96E5A661BA95EEE00F201E9 /* UserViewController.h */,
 				C96E5A671BA95EEE00F201E9 /* UserViewController.m */,
+				C97CCFD31BBD59AD0084ABF5 /* EditProfileViewController.h */,
+				C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -2628,14 +2685,14 @@
 		};
 		8B102E08199A627C0040278F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
 		};
@@ -2656,27 +2713,27 @@
 		};
 		C96373361A5BE2E40080C20F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
 		};
 		C980133C1A76921000019682 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
 		};
@@ -2709,6 +2766,7 @@
 				2FEAA9CF19DC63B500EE95C9 /* BaseViewController.m in Sources */,
 				2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */,
 				C9CB22041A95E9D30064389A /* THContactViewStyle.m in Sources */,
+				C960DC901BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
 				C907297E1B59569900BA691C /* NSString+custom.m in Sources */,
 				C9B1866D1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
@@ -2736,7 +2794,9 @@
 				AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */,
 				C9EBBB9D1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */,
+				C92FB3AB1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				C9A265561ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
+				C93F66A11BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C9AE77941ACA918B00CFF0AF /* FLSlide.m in Sources */,
 				C95AED9E1A49B5E500000FB3 /* WYPopoverController.m in Sources */,
 				C9ED41291A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */,
@@ -2755,6 +2815,7 @@
 				ABE914371890A029003AC722 /* FLLoadView.m in Sources */,
 				AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */,
 				C9CA678C1A518871003863D1 /* SignupSecureCodeViewController.m in Sources */,
+				C93F66A61BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */,
 				2FA3E55B19DDE71900EC65C2 /* SettingsSecurityViewController.m in Sources */,
 				AB2FB53318AD40580079AA1D /* CashOutViewController.m in Sources */,
 				ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */,
@@ -2787,6 +2848,7 @@
 				C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABE914691892940A003AC722 /* FLAccountUserView.m in Sources */,
 				C9CB21FE1A95E9D30064389A /* THContactTextField.m in Sources */,
+				C919AD981BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */,
 				C9C7DB2D1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				C9AF4BE619F7C2D7005C696B /* AvatarMenu.m in Sources */,
@@ -2816,11 +2878,13 @@
 				C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,
+				C919AD9D1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
 				2F49762619E472CA0089947F /* SettingsNotificationsViewController.m in Sources */,
 				C9088B6C1A51A22200026FE9 /* SignupBaseViewController.m in Sources */,
 				2FD1EA9C19E3330300CA5EDA /* FLBadgeView.m in Sources */,
 				AB6DA51018C4DDFD0073B947 /* FLImageView.m in Sources */,
 				2FC2546019B6742500EB1EED /* ShareAppViewController.m in Sources */,
+				C97CCFD51BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */,
 				C9CA67911A5188D5003863D1 /* FLActionButton.m in Sources */,
 				AB2FB54318AD9C7A0079AA1D /* PasswordViewController.m in Sources */,
 				2FEAA9CA19DC50A200EE95C9 /* UISearchBar+Subviews.m in Sources */,
@@ -2861,6 +2925,7 @@
 				AB119B44198A740600F05ECE /* UIViewController+RegisterNotification.m in Sources */,
 				C9EB88591B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				2FC8873819C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
+				C960DC911BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2FE983EB19CB82E700E05501 /* NumPadAppleStyle.m in Sources */,
 				C907297F1B59569900BA691C /* NSString+custom.m in Sources */,
 				ABAA3F84197E96BF009F29EF /* FriendPickerContactCell.m in Sources */,
@@ -2888,7 +2953,9 @@
 				ABAA3F9C197E96BF009F29EF /* ActivityCell.m in Sources */,
 				C9EBBB9E1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				C95AED9F1A49B5E500000FB3 /* WYPopoverController.m in Sources */,
+				C92FB3AC1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */,
+				C93F66A21BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C9A265571ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
 				C9AE77951ACA918B00CFF0AF /* FLSlide.m in Sources */,
 				C9ED412A1A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */,
@@ -2907,6 +2974,7 @@
 				2FC8784519C08B0300F034E0 /* FLPopupInformation.m in Sources */,
 				ABAA3FAF197E96BF009F29EF /* FLFriendRequest.m in Sources */,
 				C9CA678D1A518871003863D1 /* SignupSecureCodeViewController.m in Sources */,
+				C93F66A71BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */,
 				2F88A32219F173EF001FC26F /* FLTextViewComment.m in Sources */,
 				ABAA3FB1197E96BF009F29EF /* FLUser.m in Sources */,
 				ABAA3FB2197E96BF009F29EF /* FLNewTransactionAmount.m in Sources */,
@@ -2939,6 +3007,7 @@
 				C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABAA3FC5197E96BF009F29EF /* NewTransactionViewController.m in Sources */,
 				2F0F6B0819DF5432004CA223 /* SettingsCoordsViewController.m in Sources */,
+				C919AD991BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				ABAA3FC6197E96BF009F29EF /* AccountViewController.m in Sources */,
 				C9CB21FF1A95E9D30064389A /* THContactTextField.m in Sources */,
 				ABAA3FC9197E96BF009F29EF /* FriendRequestCell.m in Sources */,
@@ -2968,11 +3037,13 @@
 				C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
 				ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */,
+				C919AD9E1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
 				2F49762719E472CA0089947F /* SettingsNotificationsViewController.m in Sources */,
 				C9088B6D1A51A22200026FE9 /* SignupBaseViewController.m in Sources */,
 				2FD1EA9D19E3330300CA5EDA /* FLBadgeView.m in Sources */,
 				ABAA3FE4197E96BF009F29EF /* FLImageView.m in Sources */,
 				2FC2546219B675B500EB1EED /* ShareAppViewController.m in Sources */,
+				C97CCFD61BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */,
 				C9CA67921A5188D5003863D1 /* FLActionButton.m in Sources */,
 				ABAA3FE6197E96BF009F29EF /* PasswordViewController.m in Sources */,
 				2FEAA9CB19DC50A200EE95C9 /* UISearchBar+Subviews.m in Sources */,
@@ -3005,6 +3076,7 @@
 				C98012851A76921000019682 /* UIViewController+RegisterNotification.m in Sources */,
 				C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				C98012861A76921000019682 /* FLTextFieldSignup.m in Sources */,
+				C960DC921BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				C98012871A76921000019682 /* NumPadAppleStyle.m in Sources */,
 				C90729801B59569900BA691C /* NSString+custom.m in Sources */,
 				C98012891A76921000019682 /* FriendPickerContactCell.m in Sources */,
@@ -3032,7 +3104,9 @@
 				C98012A41A76921000019682 /* ActivityCell.m in Sources */,
 				C9EBBB9F1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				C98012A51A76921000019682 /* WYPopoverController.m in Sources */,
+				C92FB3AD1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				C98012A61A76921000019682 /* FLKeyboardView.m in Sources */,
+				C93F66A31BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C9A265581ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
 				C9AE77961ACA918B00CFF0AF /* FLSlide.m in Sources */,
 				C9ED412B1A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */,
@@ -3051,6 +3125,7 @@
 				C98012B51A76921000019682 /* FLPopupInformation.m in Sources */,
 				C98012B61A76921000019682 /* FLFriendRequest.m in Sources */,
 				C98012B71A76921000019682 /* SignupSecureCodeViewController.m in Sources */,
+				C93F66A81BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */,
 				C98012B81A76921000019682 /* FLTextViewComment.m in Sources */,
 				C98012BA1A76921000019682 /* FLUser.m in Sources */,
 				C98012BC1A76921000019682 /* FLNewTransactionAmount.m in Sources */,
@@ -3083,6 +3158,7 @@
 				C9160D581B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				C98012D71A76921000019682 /* NewTransactionViewController.m in Sources */,
 				C98012D81A76921000019682 /* SettingsCoordsViewController.m in Sources */,
+				C919AD9A1BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C98012D91A76921000019682 /* AccountViewController.m in Sources */,
 				C9CB22001A95E9D30064389A /* THContactTextField.m in Sources */,
 				C98012DA1A76921000019682 /* FriendRequestCell.m in Sources */,
@@ -3112,11 +3188,13 @@
 				C96E5A6A1BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				C98012F81A76921000019682 /* FriendPickerSelectionCell.m in Sources */,
 				C98012F91A76921000019682 /* HomeViewController.m in Sources */,
+				C919AD9F1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
 				C98012FA1A76921000019682 /* SettingsNotificationsViewController.m in Sources */,
 				C98012FB1A76921000019682 /* SignupBaseViewController.m in Sources */,
 				C98012FC1A76921000019682 /* FLBadgeView.m in Sources */,
 				C98012FD1A76921000019682 /* FLImageView.m in Sources */,
 				C98012FE1A76921000019682 /* ShareAppViewController.m in Sources */,
+				C97CCFD71BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */,
 				C98012FF1A76921000019682 /* FLActionButton.m in Sources */,
 				C98013021A76921000019682 /* PasswordViewController.m in Sources */,
 				C98013031A76921000019682 /* UISearchBar+Subviews.m in Sources */,
@@ -3241,7 +3319,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3262,7 +3340,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = Flooz;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8eac655c-e943-4c4f-9251-84763f858835";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3298,7 +3376,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3322,7 +3400,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "7dd9f7b5-d7c8-4f01-8920-b5e25cbc3cae";
+				PROVISIONING_PROFILE = "96d488e5-e843-4366-95c4-4f5a46b9e09c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3413,7 +3491,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3434,7 +3512,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8eac655c-e943-4c4f-9251-84763f858835";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3448,7 +3526,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3530,7 +3608,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3554,7 +3632,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "7dd9f7b5-d7c8-4f01-8920-b5e25cbc3cae";
+				PROVISIONING_PROFILE = "96d488e5-e843-4366-95c4-4f5a46b9e09c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3567,7 +3645,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3591,7 +3669,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "7dd9f7b5-d7c8-4f01-8920-b5e25cbc3cae";
+				PROVISIONING_PROFILE = "96d488e5-e843-4366-95c4-4f5a46b9e09c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3646,7 +3724,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3667,7 +3745,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8eac655c-e943-4c4f-9251-84763f858835";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3707,7 +3785,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3732,7 +3810,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "7dd9f7b5-d7c8-4f01-8920-b5e25cbc3cae";
+				PROVISIONING_PROFILE = "96d488e5-e843-4366-95c4-4f5a46b9e09c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -3745,7 +3823,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3782,7 +3860,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3820,7 +3898,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3857,7 +3935,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",

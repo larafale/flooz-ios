@@ -179,7 +179,7 @@
     
     transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
     [transactionBar setDelegate:self];
-
+    
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - PPStatusBarHeight() - NAVBAR_HEIGHT - CGRectGetHeight(transactionBar.frame))];
     [self.view addSubview:self.contentView];
     
@@ -666,7 +666,7 @@
             
             [contactPickerView addContact:user withName:text];
         } else {
-//            [contactPickerView removeAllContacts];
+            //            [contactPickerView removeAllContacts];
         }
     }
 }
@@ -933,18 +933,27 @@
                     });
                 }
                 
-                if (result[@"sms"] && [MFMessageComposeViewController canSendText]) {
-                    [[Flooz sharedInstance] showLoadView];
-                    MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
-                    message.messageComposeDelegate = self;
-                    
-                    [message setRecipients:[NSArray arrayWithObject:result[@"sms"][@"phone"]]];
-                    [message setBody:result[@"sms"][@"message"]];
-                    
-                    message.modalPresentationStyle = UIModalPresentationPageSheet;
-                    [self presentViewController:message animated:YES completion:^{
-                        [[Flooz sharedInstance] hideLoadView];
-                    }];
+                if (result[@"sms"]) {
+                    if ([MFMessageComposeViewController canSendText]) {
+                        [[Flooz sharedInstance] showLoadView];
+                        MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
+                        message.messageComposeDelegate = self;
+                        
+                        [message setRecipients:[NSArray arrayWithObject:result[@"sms"][@"phone"]]];
+                        [message setBody:result[@"sms"][@"message"]];
+                        
+                        message.modalPresentationStyle = UIModalPresentationPageSheet;
+                        [self presentViewController:message animated:YES completion:^{
+                            [[Flooz sharedInstance] hideLoadView];
+                        }];
+                    } else {
+                        [[Flooz sharedInstance] showLoadView];
+                        [[Flooz sharedInstance] confirmTransactionSMS:transaction[@"id"] validate:NO success:^(id result) {
+                            [self dismissView];
+                        } failure:^(NSError *error) {
+                            [self dismissView];
+                        }];
+                    }
                 } else {
                     [self dismissView];
                 }

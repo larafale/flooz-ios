@@ -10,15 +10,18 @@
 #import "FXBlurView.h"
 #import "UserViewController.h"
 #import "TransactionCell.h"
+#import "FLMultiLineSegmentedControl.h"
+#import "EditProfileViewController.h"
 
 #define actionButtonHeight 30
+#define actionButtonMargin 10
 
-#define headerFullHeight 105
+#define headerFullHeight 130
 #define avatarSize 70
-#define avatarMarginTop 80
+#define avatarMarginTop 100
 
-#define offset_HeaderStop 40.0 // At this offset the Header stops its transformations
-#define offset_B_LabelHeader ((avatarMarginTop + avatarSize) - offset_HeaderStop - 20) // At this offset the Black label reaches the Header
+#define offset_HeaderStop 65.0 // At this offset the Header stops its transformations
+#define offset_B_LabelHeader ((avatarMarginTop + avatarSize) - offset_HeaderStop + 8) // At this offset the Black label reaches the Header
 #define distance_W_LabelHeader (offset_B_LabelHeader - offset_HeaderStop) // The distance between the bottom of the Header and the top of the White Label
 
 @interface UserViewController () {
@@ -32,16 +35,26 @@
     UIImageView *blurredHeaderImageView;
     
     UIButton *settingsButton;
-    FLActionButton *socialRemoveActionButton;
-    FLBorderedActionButton *socialAddActionButton;
-    FLBorderedActionButton *floozActionButton;
-    UISegmentedControl *controlTab;
+    
+    FLActionButton *unfriendPendingActionButton;
+    FLActionButton *unfriendMiniActionButton;
+    
+    FLBorderedActionButton *friendActionButton;
+    FLBorderedActionButton *friendRequestActionButton;
+    
+    FLBorderedActionButton *editProfileActionButton;
+    
+    BOOL transacLoaded;
+    BOOL completeProfileLoaded;
+    
+    FLMultiLineSegmentedControl *controlTab;
     
     UIView *headerCell;
     
     UILabel *fullnameLabel;
     UILabel *usernameLabel;
     UILabel *bioLabel;
+    UIImageView *certfifiedIcon;
     
     NSMutableArray *transactions;
     
@@ -51,6 +64,8 @@
     NSMutableSet *rowsWithPaymentField;
     NSMutableArray *cells;
     NSMutableArray *transactionsLoaded;
+    
+    CGFloat emptyCellHeight;
 }
 
 @end
@@ -64,6 +79,8 @@
         transactions = [NSMutableArray new];
         rowsWithPaymentField = [NSMutableSet new];
         nextPageIsLoading = NO;
+        transacLoaded = NO;
+        completeProfileLoaded = NO;
         
         transactionsLoaded = [NSMutableArray new];
         cells = [NSMutableArray new];
@@ -95,7 +112,13 @@
     [_mainBody addSubview:self.tableView];
     [_mainBody addSubview:headerBack];
     
+    emptyCellHeight = CGRectGetHeight(self.tableView.frame) - CGRectGetHeight(headerCell.frame);
+    
     [self reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
         if (result)
@@ -106,9 +129,11 @@
 
 - (void)createHeader {
     header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), headerFullHeight)];
+    [header setUserInteractionEnabled:YES];
+    [header addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didHeaderClick)]];
     
     // Header - Back
-    headerBack = [[UIButton alloc] initWithFrame:CGRectMake(5, PPStatusBarHeight() + 5, 30, 30)];
+    headerBack = [[UIButton alloc] initWithFrame:CGRectMake(0, PPStatusBarHeight() + 5, 30, 30)];
     [headerBack setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
     [headerBack addTarget:self action:@selector(dismissViewController) forControlEvents:UIControlEventTouchUpInside];
     headerBack.layer.zPosition = 5;
@@ -126,6 +151,9 @@
     headerImageView = [[UIImageView alloc] initWithFrame:header.bounds];
     headerImageView.image = [UIImage imageNamed:@"back-secure"];
     headerImageView.contentMode = UIViewContentModeScaleAspectFill;
+    [headerImageView setUserInteractionEnabled:YES];
+    [headerImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
+    
     [header insertSubview:headerImageView belowSubview:headerLabel];
     
     // Header - Blurred Image
@@ -133,6 +161,7 @@
     headerBlurImageView.image =  [[UIImage imageNamed:@"back-secure"] blurredImageWithRadius:15 iterations:20 tintColor:[UIColor clearColor]];
     headerBlurImageView.contentMode = UIViewContentModeScaleAspectFill;
     headerBlurImageView.alpha = 0.0;
+    
     [header insertSubview:headerBlurImageView belowSubview:headerLabel];
     
     header.clipsToBounds = true;
@@ -143,52 +172,67 @@
     headerCell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
     
     avatarImage = [[FLUserView alloc] initWithFrame:CGRectMake(10, avatarMarginTop, avatarSize, avatarSize)];
+    [avatarImage setUserInteractionEnabled:YES];
+    [avatarImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didAvatarClick)]];
     
-    socialRemoveActionButton = [[FLActionButton alloc] initWithFrame:CGRectMake(0, headerFullHeight + 10, actionButtonHeight, actionButtonHeight)];
-    [socialRemoveActionButton setImage:[UIImage imageNamed:@"unfollow"] size:CGSizeMake(17, 17)];
-    socialRemoveActionButton.layer.cornerRadius = 5;
-    [socialRemoveActionButton centerImage];
+    unfriendMiniActionButton = [FLSocialHelper createMiniUnfriendButton:self action:@selector(didUnFriendButtonClick:) position:CGPointMake(0, headerFullHeight + 10)];
+    unfriendPendingActionButton = [FLSocialHelper createRequestPendingButton:self action:@selector(didFriendPendingButtonClick:) position:CGPointMake(0, headerFullHeight + 10)];
     
-    socialAddActionButton = [[FLBorderedActionButton alloc] initWithFrame:CGRectMake(0, headerFullHeight + 10, PPScreenWidth() / 4, actionButtonHeight)];
-    [socialAddActionButton setImage:[UIImage imageNamed:@"follow"] size:CGSizeMake(15, 15)];
-    [socialAddActionButton.titleLabel setFont:[UIFont customContentBold:15]];
+    friendActionButton = [FLSocialHelper createFullFriendButton:self action:@selector(didFriendButtonClick:) position:CGPointMake(0, headerFullHeight + 10)];
+    friendRequestActionButton = [FLSocialHelper createFriendRequestButton:self action:@selector(didFriendRequestButtonClick:) position:CGPointMake(0, headerFullHeight + 10)];
     
-    floozActionButton = [[FLBorderedActionButton alloc] initWithFrame:CGRectMake(0, headerFullHeight + 10, PPScreenWidth() / 4, actionButtonHeight) title:@"Floozer"];
-    [floozActionButton.titleLabel setFont:[UIFont customContentBold:15]];
+    editProfileActionButton = [[FLBorderedActionButton alloc] initWithFrame:CGRectMake(0, headerFullHeight + 10, 0, actionButtonHeight) title:NSLocalizedString(@"EDIT_PROFILE", nil)];
+    editProfileActionButton.layer.cornerRadius = 5;
+    [editProfileActionButton.titleLabel setFont:[UIFont customContentBold:15]];
+    CGFloat textWidth = [editProfileActionButton.titleLabel.text widthOfString:editProfileActionButton.titleLabel.font];
+    CGRectSetWidth(editProfileActionButton.frame, textWidth + (2 * actionButtonMargin));
+    [editProfileActionButton addTarget:self action:@selector(didEditProfileButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, headerFullHeight + 10, actionButtonHeight, actionButtonHeight)];
     [settingsButton setImage:[[UIImage imageNamed:@"cog"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [settingsButton setTintColor:[UIColor customPlaceholder]];
     [settingsButton setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
+    [settingsButton addTarget:self action:@selector(showMenuForUser) forControlEvents:UIControlEventTouchUpInside];
     
     fullnameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(avatarImage.frame) + 10, PPScreenWidth() / 2, 20)];
     fullnameLabel.font = [UIFont customContentBold:17];
     fullnameLabel.textColor = [UIColor whiteColor];
     
-    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(fullnameLabel.frame) + 5, PPScreenWidth() / 2, 18)];
+    certfifiedIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(avatarImage.frame) + 11, 18, 18)];
+    [certfifiedIcon setImage:[UIImage imageNamed:@"certified"]];
+    [certfifiedIcon setContentMode:UIViewContentModeScaleAspectFit];
+    
+    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(fullnameLabel.frame) + 2, PPScreenWidth() / 2, 15)];
     usernameLabel.font = [UIFont customContentBold:14];
     usernameLabel.textColor = [UIColor customGreyPseudo];
     
-    bioLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(usernameLabel.frame) + 5, PPScreenWidth() - 20, 0)];
-    bioLabel.font = [UIFont customContentRegular:12];
+    bioLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(usernameLabel.frame) + 10, PPScreenWidth() - 20, 0)];
+    bioLabel.font = [UIFont customContentRegular:14];
     bioLabel.textColor = [UIColor whiteColor];
     bioLabel.numberOfLines = 0;
     bioLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
-    controlTab = [[UISegmentedControl alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(bioLabel.frame) + 10, CGRectGetWidth(self.view.frame) - 2 * 10, 30)];
+    controlTab = [[FLMultiLineSegmentedControl alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(bioLabel.frame) + 15, CGRectGetWidth(self.view.frame) - 2 * 10, 35)];
     [controlTab setTintColor:[UIColor customBlue]];
     [controlTab addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
     [controlTab setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateSelected];
-    [controlTab setTitleTextAttributes:@{NSFontAttributeName:[UIFont customContentRegular:16]} forState:UIControlStateNormal];
+    [controlTab setTitleTextAttributes:@{NSFontAttributeName:[UIFont customContentRegular:14]} forState:UIControlStateNormal];
     
-    [controlTab setSelectedSegmentIndex:[FLTransaction transactionParamsToScope:[Flooz sharedInstance].currentUser.settings[@"def"][@"scope"]]];
+    [controlTab setMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:@"Flooz" andStat:0] forSegmentAtIndex:0];
+    [controlTab setMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"FRIEND", nil) andStat:0] forSegmentAtIndex:1];
+    
+    [controlTab setSelectedSegmentIndex:0];
     
     [headerCell addSubview:avatarImage];
     [headerCell addSubview:fullnameLabel];
+    [headerCell addSubview:certfifiedIcon];
     [headerCell addSubview:usernameLabel];
-    [headerCell addSubview:socialRemoveActionButton];
-    [headerCell addSubview:socialAddActionButton];
-    [headerCell addSubview:floozActionButton];
+    [headerCell addSubview:unfriendPendingActionButton];
+    [headerCell addSubview:unfriendMiniActionButton];
+    [headerCell addSubview:friendActionButton];
+    [headerCell addSubview:friendRequestActionButton];
+    [headerCell addSubview:editProfileActionButton];
+    [headerCell addSubview:settingsButton];
     [headerCell addSubview:settingsButton];
     [headerCell addSubview:bioLabel];
     [headerCell addSubview:controlTab];
@@ -196,16 +240,8 @@
     CGRectSetHeight(headerCell.frame, CGRectGetMaxY(controlTab.frame) + 10);
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)reloadData {
@@ -224,88 +260,197 @@
     [fullnameLabel setText:currentUser.fullname];
     [usernameLabel setText:[NSString stringWithFormat:@"@%@", currentUser.username]];
     
-    [floozActionButton setHidden:YES];
-    [socialAddActionButton setHidden:YES];
-    [socialRemoveActionButton setHidden:YES];
+    [fullnameLabel setWidthToFit];
+    [usernameLabel setWidthToFit];
+    
+    [editProfileActionButton setHidden:YES];
+    [unfriendPendingActionButton setHidden:YES];
+    [unfriendMiniActionButton setHidden:YES];
+    [friendActionButton setHidden:YES];
+    [friendRequestActionButton setHidden:YES];
     [settingsButton setHidden:YES];
     
-    [controlTab insertSegmentWithTitle:@"Flooz" atIndex:0 animated:NO];
-    
-    if (currentUser.isStar)
-        [controlTab insertSegmentWithTitle:NSLocalizedString(@"FOLLOWERS", nil) atIndex:1 animated:NO];
-    else
-        [controlTab insertSegmentWithTitle:NSLocalizedString(@"FRIENDS", nil) atIndex:1 animated:NO];
-    
-    [controlTab setSelectedSegmentIndex:0];
+    if (currentUser.isStar || currentUser.isPro) {
+        [certfifiedIcon setHidden:NO];
+        CGRectSetX(certfifiedIcon.frame, CGRectGetMaxX(fullnameLabel.frame) + 5);
+    } else
+        [certfifiedIcon setHidden:YES];
     
     [self.tableView reloadData];
 }
 
 - (void)reloadUser {
-    if ([currentUser.userId isEqualToString:[Flooz sharedInstance].currentUser.userId]) {
-        [floozActionButton setHidden:YES];
-        [socialAddActionButton setHidden:YES];
-        [socialRemoveActionButton setHidden:YES];
-        [settingsButton setHidden:YES];
-    } else {
-        UIView *rightButton;
-        
-        if (currentUser.isFriend) {
-            [socialAddActionButton setHidden:YES];
-            [socialRemoveActionButton setHidden:NO];
-            
-            [socialRemoveActionButton centerImage];
-            
-            CGRectSetX(socialRemoveActionButton.frame, PPScreenWidth() - CGRectGetWidth(socialRemoveActionButton.frame) - 10);
-            
-            rightButton = socialRemoveActionButton;
-        } else {
-            [socialAddActionButton setHidden:NO];
-            [socialRemoveActionButton setHidden:YES];
-            
-            if (currentUser.isStar)
-                [socialAddActionButton setTitle:NSLocalizedString(@"FOLLOW", nil) forState:UIControlStateNormal];
-            else
-                [socialAddActionButton setTitle:NSLocalizedString(@"FRIEND_ADD", nil) forState:UIControlStateNormal];
-            
-            [socialAddActionButton centerImage:5];
-            
-            CGRectSetX(socialAddActionButton.frame, PPScreenWidth() - CGRectGetWidth(socialAddActionButton.frame) - 10);
-            
-            rightButton = socialAddActionButton;
+    completeProfileLoaded = YES;
+    
+    [editProfileActionButton setHidden:YES];
+    [unfriendPendingActionButton setHidden:YES];
+    [unfriendMiniActionButton setHidden:YES];
+    [friendActionButton setHidden:YES];
+    [friendRequestActionButton setHidden:YES];
+    [settingsButton setHidden:YES];
+    
+    UIView *rightButton = nil;
+    
+    if (currentUser.actions) {
+        if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound) {
+            rightButton = friendActionButton;
+        } else if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound) {
+            rightButton = friendRequestActionButton;
+        } else if ([currentUser.actions indexOfObject:@"friend:pending"] != NSNotFound) {
+            rightButton = unfriendPendingActionButton;
+        } else if ([currentUser.actions indexOfObject:@"friend:remove"] != NSNotFound) {
+            rightButton = unfriendMiniActionButton;
+        } else if ([currentUser.actions indexOfObject:@"self"] != NSNotFound) {
+            rightButton = editProfileActionButton;
         }
         
-        [floozActionButton setHidden:NO];
-        [settingsButton setHidden:NO];
+        if (rightButton) {
+            [rightButton setHidden:NO];
+            CGRectSetX(rightButton.frame, PPScreenWidth() - CGRectGetWidth(rightButton.frame) - 10);
+        }
         
-        CGRectSetX(floozActionButton.frame, CGRectGetMinX(rightButton.frame) - CGRectGetWidth(floozActionButton.frame) - 10);
-        CGRectSetX(settingsButton.frame, CGRectGetMinX(floozActionButton.frame) - CGRectGetWidth(settingsButton.frame) - 3);
+        if ([currentUser.actions indexOfObject:@"settings"] != NSNotFound) {
+            [settingsButton setHidden:NO];
+            if (rightButton)
+                CGRectSetX(settingsButton.frame, CGRectGetMinX(rightButton.frame) - CGRectGetWidth(settingsButton.frame) - 3);
+            else
+                CGRectSetX(settingsButton.frame, PPScreenWidth() - CGRectGetWidth(settingsButton.frame) - 10);
+        }
     }
     
     [headerLabel setText:[NSString stringWithFormat:@"%@\n@%@", currentUser.fullname, currentUser.username]];
+    
+    if (currentUser.coverURL) {
+        [headerImageView sd_setImageWithURL:[NSURL URLWithString:currentUser.coverURL] placeholderImage:[UIImage imageNamed:@"back-secure"]];
+        [headerBlurImageView sd_setImageWithURL:[NSURL URLWithString:currentUser.coverURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [headerBlurImageView setImage:[image blurredImageWithRadius:15 iterations:20 tintColor:[UIColor clearColor]]];
+        }];
+    }
+    
     [avatarImage setImageFromUser:currentUser];
     
     [fullnameLabel setText:currentUser.fullname];
     [usernameLabel setText:[NSString stringWithFormat:@"@%@", currentUser.username]];
-    [bioLabel setText:currentUser.bio];
     
+    [fullnameLabel setWidthToFit];
+    [usernameLabel setWidthToFit];
+    
+    if (currentUser.isStar || currentUser.isPro) {
+        [certfifiedIcon setHidden:NO];
+        CGRectSetX(certfifiedIcon.frame, CGRectGetMaxX(fullnameLabel.frame) + 5);
+    } else {
+        [certfifiedIcon setHidden:YES];
+    }
+    
+    [controlTab updateMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:@"Flooz" andStat:currentUser.publicStats.nbFlooz] forSegmentAtIndex:0];
+    
+    if (currentUser.friends.count < 2)
+        [controlTab updateMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"FRIEND", nil) andStat:currentUser.publicStats.nbFriends] forSegmentAtIndex:1];
+    else
+        [controlTab updateMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"FRIENDS", nil) andStat:currentUser.publicStats.nbFriends] forSegmentAtIndex:1];
+    
+    [bioLabel setText:currentUser.bio];
     [bioLabel setHeightToFit];
     
-    CGRectSetY(controlTab.frame, CGRectGetMaxY(bioLabel.frame) + 10);
+    CGRectSetY(controlTab.frame, CGRectGetMaxY(bioLabel.frame) + 15);
     CGRectSetHeight(headerCell.frame, CGRectGetMaxY(controlTab.frame) + 10);
     
     [self.tableView reloadData];
 }
 
+#pragma marks - button handlers
+
+- (void) didEditProfileButtonClick {
+    [self.navigationController pushViewController:[EditProfileViewController new] animated:YES];
+}
+
+- (void) didHeaderClick {
+    [_tableView setContentOffset:CGPointZero animated:YES];
+}
+
+- (void) didAvatarClick {
+    if (currentUser.avatarURL) {
+        if (currentUser.avatarLargeURL)
+            [appDelegate showAvatarView:avatarImage withUrl:[NSURL URLWithString:currentUser.avatarLargeURL]];
+        else
+            [appDelegate showAvatarView:avatarImage withUrl:[NSURL URLWithString:currentUser.avatarURL]];
+    } else if ([currentUser.actions indexOfObject:@"self"] != NSNotFound) {
+        [self showMenuPhoto];
+    }
+}
+
+- (void) didCoverClick:(id)sender {
+    if (currentUser.coverURL) {
+        if (currentUser.coverLargeURL)
+            [appDelegate showAvatarView:avatarImage withUrl:[NSURL URLWithString:currentUser.coverLargeURL]];
+        else
+            [appDelegate showAvatarView:avatarImage withUrl:[NSURL URLWithString:currentUser.coverURL]];
+    } else if ([currentUser.actions indexOfObject:@"self"] != NSNotFound) {
+        
+    }
+}
+
+- (void) didUnFriendButtonClick:(id)sender {
+    [self showUnfriendMenu];
+}
+
+- (void) didFriendButtonClick:(id)sender {
+    [[Flooz sharedInstance] friendAdd:currentUser.userId success:^{
+        [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+            if (result)
+                currentUser = result;
+            [self reloadData];
+        } failure:nil];
+    } failure:^(NSError *error) {
+        if ([currentUser.actions indexOfObject:@"friend:pending"] != NSNotFound)
+            [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:pending"] withObject:@"friend:add"];
+        [self reloadData];
+        [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+            if (result)
+                currentUser = result;
+            [self reloadData];
+        } failure:nil];
+    }];
+    if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
+        [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:pending"];
+    [self reloadData];
+}
+
+- (void) didFriendRequestButtonClick:(id)sender {
+    [self showRequestMenu];
+}
+
+- (void) didFriendPendingButtonClick:(id)sender {
+    [self showPendingMenu];
+}
+
+
+#pragma marks - segmented control handler
+
 - (void)segmentedControlValueChanged:(UISegmentedControl*)sender {
     [self.tableView reloadData];
 }
 
+#pragma marks - tableview delegate / datasource
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (controlTab.selectedSegmentIndex == 0)
-        return transactions.count;
-    else
-        return currentUser.friends.count;
+    if (controlTab.selectedSegmentIndex == 0) {
+        if (transacLoaded) {
+            if (_nextPageUrl && ![_nextPageUrl isBlank]) {
+                return [transactions count] + 1;
+            } else if ([transactions count])
+                return [transactions count];
+            else
+                return 1;
+        } else
+            return 1;
+    } else if (!completeProfileLoaded)
+        return 1;
+    else {
+        if (currentUser.friends.count)
+            return currentUser.friends.count;
+        return 1;
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -314,15 +459,27 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (controlTab.selectedSegmentIndex == 0) {
-        if (indexPath.row >= [transactions count]) {
+        if (transacLoaded) {
+            if ([transactions count]) {
+                if (indexPath.row >= [transactions count]) {
+                    return [LoadingCell getHeight];
+                }
+                
+                FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
+                return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
+            } else {
+                return emptyCellHeight;
+            }
+        } else
             return [LoadingCell getHeight];
-        }
-        
-        FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-        return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
-        
-    } else
-        return [FriendCell getHeight];
+    } else if (!completeProfileLoaded)
+        return [LoadingCell getHeight];
+    else {
+        if (currentUser.friends.count)
+            return [FriendCell getHeight];
+        else
+            return emptyCellHeight;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -339,24 +496,45 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (controlTab.selectedSegmentIndex == 0) {
-        static NSString *cellIdentifier = @"TransactionCell";
-        TransactionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
-        if (!cell) {
-            cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier andDelegate:self];
+        if (transacLoaded) {
+            if (transactions.count) {
+                if (indexPath.row == [transactions count]) {
+                    static LoadingCell *footerView;
+                    if (!footerView) {
+                        footerView = [LoadingCell new];
+                    }
+                    return footerView;
+                }
+                
+                static NSString *cellIdentifier = @"TransactionCell";
+                TransactionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                
+                if (!cell) {
+                    cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier andDelegate:self];
+                }
+                
+                FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
+                
+                [cell setTransaction:transaction];
+                [cell setIndexPath:indexPath];
+                
+                if (_nextPageUrl && ![_nextPageUrl isBlank] && !nextPageIsLoading && indexPath.row == [transactions count] - 1) {
+                    [self loadNextPage];
+                }
+                
+                return cell;
+            } else {
+                return [self generateEmptyTimelineCell];
+            }
+        } else {
+            return [LoadingCell new];
         }
-        
-        FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-        
-        [cell setTransaction:transaction];
-        [cell setIndexPath:indexPath];
-        
-        if (_nextPageUrl && ![_nextPageUrl isBlank] && !nextPageIsLoading && indexPath.row == [transactions count] - 1) {
-            [self loadNextPage];
-        }
-        
-        return cell;
+    } else if (!completeProfileLoaded) {
+        return [LoadingCell new];
     } else {
+        if (controlTab.selectedSegmentIndex == 1 && currentUser.friends.count == 0)
+            return [self generateEmptyFriendsCell];
+        
         static NSString *cellIdentifier = @"FriendCell";
         FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
@@ -365,30 +543,26 @@
         }
         
         FLUser *friend = [currentUser.friends objectAtIndex:indexPath.row];
+        
         [cell setFriend:friend];
         [cell hideAddButton];
         return cell;
-        
-        if (indexPath.row == [transactions count]) {
-            static LoadingCell *footerView;
-            if (!footerView) {
-                footerView = [LoadingCell new];
-            }
-            return footerView;
-        }
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (controlTab.selectedSegmentIndex == 0) {
-        if (transactions.count > indexPath.row) {
-            FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-            [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+        if (transacLoaded) {
+            if (transactions.count > indexPath.row) {
+                FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
+                [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+            }
         }
-    } else {
+    } else if (completeProfileLoaded) {
         FLUser *friend;
         
-        friend = [currentUser.friends objectAtIndex:indexPath.row];
+        if (controlTab.selectedSegmentIndex == 1 && currentUser.friends.count)
+            friend = [currentUser.friends objectAtIndex:indexPath.row];
         
         if (friend) {
             [appDelegate showUser:friend inController:self];
@@ -397,6 +571,13 @@
 }
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+}
+
+- (void)didTransactionUserTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+    if (![transaction.starter.userId isEqualToString:currentUser.userId])
+        [appDelegate showUser:transaction.starter inController:self];
+    else
+        [self shakeView];
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
@@ -444,7 +625,7 @@
         _nextPageUrl = nextPageUrl;
         
         nextPageIsLoading = NO;
-        
+        transacLoaded = YES;
         [self didFilterChange];
     } failure:^(NSError *error) {
         [self.tableView setContentOffset:CGPointZero animated:YES];
@@ -469,6 +650,80 @@
         nextPageIsLoading = NO;
         [self.tableView reloadData];
     }];
+}
+
+//- (UITableViewCell *) generatePrivateCell {
+//    static UITableViewCell *privateCell;
+//
+//    if (!privateCell) {
+//        privateCell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), emptyCellHeight)];
+//        [privateCell setBackgroundColor:[UIColor clearColor]];
+//        [privateCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+//
+//        UIImageView *lockImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
+//        [lockImg setImage:[[UIImage imageNamed:@"lock-close"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+//        [lockImg setContentMode:UIViewContentModeScaleAspectFit];
+//        [lockImg setTintColor:[UIColor customPlaceholder]];
+//
+//        UILabel *text = [[UILabel alloc] initWithText:NSLocalizedString(@"PRIVATE_USER", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:16] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+//
+//        CGFloat globalHeight = CGRectGetHeight(lockImg.frame) + 10 + CGRectGetHeight(text.frame);
+//
+//        CGRectSetY(lockImg.frame, emptyCellHeight / 2 - globalHeight / 2);
+//        CGRectSetY(text.frame, CGRectGetMaxY(lockImg.frame) + 10);
+//
+//        [text setWidthToFit];
+//
+//        CGRectSetX(lockImg.frame, PPScreenWidth() / 2 - CGRectGetWidth(lockImg.frame) / 2);
+//        CGRectSetX(text.frame, PPScreenWidth() / 2 - CGRectGetWidth(text.frame) / 2);
+//
+//        [privateCell addSubview:lockImg];
+//        [privateCell addSubview:text];
+//    }
+//
+//    return privateCell;
+//}
+
+- (UITableViewCell *) generateEmptyTimelineCell {
+    static UITableViewCell *emptyCell;
+    
+    if (!emptyCell) {
+        emptyCell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), emptyCellHeight)];
+        [emptyCell setBackgroundColor:[UIColor clearColor]];
+        [emptyCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
+        UILabel *text = [[UILabel alloc] initWithText:NSLocalizedString(@"EMPTY_TIMELINE", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:17] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        
+        [text setWidthToFit];
+        
+        CGRectSetY(text.frame, emptyCellHeight / 2 - CGRectGetHeight(text.frame) / 2);
+        CGRectSetX(text.frame, PPScreenWidth() / 2 - CGRectGetWidth(text.frame) / 2);
+        
+        [emptyCell addSubview:text];
+    }
+    
+    return emptyCell;
+}
+
+- (UITableViewCell *) generateEmptyFriendsCell {
+    static UITableViewCell *emptyCell;
+    
+    if (!emptyCell) {
+        emptyCell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), emptyCellHeight)];
+        [emptyCell setBackgroundColor:[UIColor clearColor]];
+        [emptyCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
+        UILabel *text = [[UILabel alloc] initWithText:NSLocalizedString(@"EMPTY_FRIENDS", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:17] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        
+        [text setWidthToFit];
+        
+        CGRectSetY(text.frame, emptyCellHeight / 2 - CGRectGetHeight(text.frame) / 2);
+        CGRectSetX(text.frame, PPScreenWidth() / 2 - CGRectGetWidth(text.frame) / 2);
+        
+        [emptyCell addSubview:text];
+    }
+    
+    return emptyCell;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scroll {
@@ -502,7 +757,7 @@
         
         // Avatar -----------
         
-        CGFloat avatarScaleFactor = (MIN(offset_HeaderStop, offset)) / avatarImage.bounds.size.height / 1.4; // Slow down the animation
+        CGFloat avatarScaleFactor = (MIN(offset_HeaderStop, offset)) / avatarImage.bounds.size.height / 1.8; // Slow down the animation
         CGFloat avatarSizeVariation = ((avatarImage.bounds.size.height * (1.0 + avatarScaleFactor)) - avatarImage.bounds.size.height) / 2.0;
         avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0);
         avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0);
@@ -510,16 +765,538 @@
         if (offset <= offset_HeaderStop) {
             if (avatarImage.layer.zPosition < header.layer.zPosition) {
                 header.layer.zPosition = 0;
+                
+                [_mainBody sendSubviewToBack:header];
             }
         } else {
             if (avatarImage.layer.zPosition >= header.layer.zPosition) {
                 header.layer.zPosition = 2;
+                
+                [_mainBody sendSubviewToBack:self.tableView];
             }
         }
     }
     
     header.layer.transform = headerTransform;
     avatarImage.layer.transform = avatarTransform;
+}
+
+#pragma marks - unfollow menu
+
+- (void)showUnfriendMenu {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
+        [self createUnfriendActionSheet];
+    else
+        [self createUnfriendAlertController];
+}
+
+- (void)createUnfriendAlertController {
+    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:currentUser.fullname message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"UNFRIEND", nil) style:UIAlertActionStyleDestructive handler: ^(UIAlertAction *action) {
+        [[Flooz sharedInstance] friendUnfollow:currentUser.userId success:^{
+            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                if (result)
+                    currentUser = result;
+                [self reloadData];
+            } failure:nil];
+        } failure:^(NSError *error) {
+            if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:remove"];
+            [self reloadData];
+            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                if (result)
+                    currentUser = result;
+                [self reloadData];
+            } failure:nil];
+        }];
+        if ([currentUser.actions indexOfObject:@"friend:remove"] != NSNotFound)
+            [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:remove"] withObject:@"friend:add"];
+        [self reloadData];
+    }]];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:newAlert animated:YES completion:nil];
+}
+
+- (void)createUnfriendActionSheet {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"UNFOLLOW", nil)];
+    [actionSheet setDestructiveButtonIndex:index];
+    
+    index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet setTag:2];
+    
+    [actionSheet showInView:appDelegate.window];
+}
+
+#pragma marks - request menu
+
+- (void)showRequestMenu {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
+        [self createRequestActionSheet];
+    else
+        [self createRequestAlertController];
+}
+
+- (void)createRequestAlertController {
+    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:currentUser.fullname message:NSLocalizedString(@"FRIENDS_FRIENDS_REQUEST_MESSAGE", nil) preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"FRIEND_REQUEST_ACCEPT", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"accept" } success:nil failure:^(NSError *error) {
+            if ([currentUser.actions indexOfObject:@"unfriend"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:remove"] withObject:@"friend:request"];
+            [self reloadData];
+            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                if (result)
+                    currentUser = result;
+                [self reloadData];
+            } failure:nil];
+        }];
+        if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound)
+            [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:request"] withObject:@"friend:remove"];
+        [self reloadData];
+    }]];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"FRIEND_REQUEST_REFUSE", nil) style:UIAlertActionStyleDestructive handler: ^(UIAlertAction *action) {
+        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"decline" } success: ^{
+            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                if (result)
+                    currentUser = result;
+                [self reloadData];
+            } failure:nil];
+        } failure:^(NSError *error) {
+            if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:request"];
+            [self reloadData];
+            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                if (result)
+                    currentUser = result;
+                [self reloadData];
+            } failure:nil];
+        }];
+        if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound)
+            [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:request"] withObject:@"friend:add"];
+        [self reloadData];
+    }]];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:newAlert animated:YES completion:nil];
+}
+
+- (void)createRequestActionSheet {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_ACCEPT", nil)];
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_REFUSE", nil)];
+    
+    [actionSheet setDestructiveButtonIndex:index];
+    
+    index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet setTag:3];
+    
+    [actionSheet showInView:appDelegate.window];
+}
+
+#pragma marks - pending menu
+
+- (void)showPendingMenu {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
+        [self createPendingActionSheet];
+    else
+        [self createPendingAlertController];
+}
+
+- (void)createPendingAlertController {
+    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:currentUser.fullname message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"UNREQUEST", nil) style:UIAlertActionStyleDestructive handler: ^(UIAlertAction *action) {
+        [[Flooz sharedInstance] friendRemove:currentUser.userId success:^{
+            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                if (result)
+                    currentUser = result;
+                [self reloadData];
+            } failure:nil];
+        } failure:^(NSError *error) {
+            if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:pending"];
+            [self reloadData];
+            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                if (result)
+                    currentUser = result;
+                [self reloadData];
+            } failure:nil];
+        }];
+        if ([currentUser.actions indexOfObject:@"friend:pending"] != NSNotFound)
+            [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:pending"] withObject:@"friend:add"];
+        [self reloadData];
+    }]];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:newAlert animated:YES completion:nil];
+}
+
+- (void)createPendingActionSheet {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"UNFOLLOW", nil)];
+    [actionSheet setDestructiveButtonIndex:index];
+    
+    index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet setTag:4];
+    
+    [actionSheet showInView:appDelegate.window];
+}
+
+#pragma mark - avatar
+
+- (void)showMenuPhoto {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+        [self createAvatarActionSheet];
+    }
+    else {
+        [self createAvatarAlertController];
+    }
+}
+
+- (void)createAvatarAlertController {
+    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES) {
+        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_CAPTURE_BUTTON", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+            [self presentPhoto];
+        }]];
+    }
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
+        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+            [self presentLibrary];
+        }]];
+    }
+    //    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+    //        [self getPhotoFromFacebook];
+    //    }]];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:newAlert animated:YES completion:nil];
+}
+
+- (void)createAvatarActionSheet {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    NSMutableArray *menus = [NSMutableArray new];
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES) {
+        [menus addObject:NSLocalizedString(@"SIGNUP_CAPTURE_BUTTON", nil)];
+    }
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
+        [menus addObject:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)];
+    }
+    //    [menus addObject:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)];
+    
+    for (NSString *menu in menus) {
+        [actionSheet addButtonWithTitle:menu];
+    }
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet setTag:5];
+    [actionSheet showInView:self.view];
+}
+
+#pragma marks - user menu
+
+- (void)showMenuForUser {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
+        [self createActionSheet];
+    else
+        [self createAlertController];
+}
+
+- (void)createAlertController {
+    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    if ([currentUser.actions indexOfObject:@"flooz"] != NSNotFound) {
+        [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUser.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+            [appDelegate showNewTransactionController:currentUser transactionType:TransactionTypePayment];
+        }]];
+    }
+    
+    if ([currentUser.actions indexOfObject:@"report"] != NSNotFound) {
+        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REPORT_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+            [self showReportView:[[FLReport alloc] initWithType:ReportUser id:currentUser.userId]];
+        }]];
+    }
+    
+    if ([currentUser.actions indexOfObject:@"block"] != NSNotFound) {
+        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_BLOCK_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+            [self showBlockView];
+        }]];
+    }
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:newAlert animated:YES completion:nil];
+}
+
+- (void)createActionSheet {
+    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUser.username], nil];
+    NSMutableArray *menus = [NSMutableArray new];
+    
+    [menus addObject:NSLocalizedString(@"MENU_BLOCK_USER", nil)];
+    
+    [menus addObject:NSLocalizedString(@"MENU_REPORT_USER", nil)];
+    
+    for (NSString *menu in menus) {
+        [actionSheet addButtonWithTitle:menu];
+    }
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet setTag:1];
+    
+    [actionSheet showInView:appDelegate.window];
+}
+
+#pragma marks - action sheet delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (actionSheet.tag == 1) {
+        if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUser.username]]) {
+            [appDelegate showNewTransactionController:currentUser transactionType:TransactionTypePayment];
+        }
+        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_BLOCK_USER", nil)]) {
+            [self showBlockView];
+        }
+        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REPORT_USER", nil)]) {
+            [self showReportView:[[FLReport alloc] initWithType:ReportUser id:currentUser.userId]];
+        }
+    } else if (actionSheet.tag == 2) {
+        if (buttonIndex == 0) {
+            [[Flooz sharedInstance] friendUnfollow:currentUser.userId success:^{
+                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                    if (result)
+                        currentUser = result;
+                    [self reloadData];
+                } failure:nil];
+            } failure:^(NSError *error) {
+                if ([currentUser.actions indexOfObject:@"follow"] != NSNotFound)
+                    [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"follow"] withObject:@"unfollow"];
+                [self reloadData];
+                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                    if (result)
+                        currentUser = result;
+                    [self reloadData];
+                } failure:nil];
+            }];
+            if ([currentUser.actions indexOfObject:@"unfollow"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"unfollow"] withObject:@"follow"];
+            if ([currentUser.actions indexOfObject:@"miniUnfollow"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"miniUnfollow"] withObject:@"follow"];
+            [self reloadData];
+        }
+    } else if (actionSheet.tag == 3) {
+        if (buttonIndex == 0) {
+            [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"accept" } success:nil failure:^(NSError *error) {
+                if ([currentUser.actions indexOfObject:@"unfriend"] != NSNotFound)
+                    [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:remove"] withObject:@"friend:request"];
+                [self reloadData];
+                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                    if (result)
+                        currentUser = result;
+                    [self reloadData];
+                } failure:nil];
+            }];
+            if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:request"] withObject:@"friend:remove"];
+            [self reloadData];
+        } else if (buttonIndex == 1) {
+            [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"decline" } success: ^{
+                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                    if (result)
+                        currentUser = result;
+                    [self reloadData];
+                } failure:nil];
+            } failure:^(NSError *error) {
+                if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
+                    [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:request"];
+                [self reloadData];
+                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                    if (result)
+                        currentUser = result;
+                    [self reloadData];
+                } failure:nil];
+            }];
+            if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:request"] withObject:@"friend:add"];
+            [self reloadData];
+        }
+    } else if (actionSheet.tag == 4) {
+        if (buttonIndex == 0) {
+            [[Flooz sharedInstance] friendRemove:currentUser.userId success:^{
+                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                    if (result)
+                        currentUser = result;
+                    [self reloadData];
+                } failure:nil];
+            } failure:^(NSError *error) {
+                if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
+                    [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:pending"];
+                [self reloadData];
+                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+                    if (result)
+                        currentUser = result;
+                    [self reloadData];
+                } failure:nil];
+            }];
+            if ([currentUser.actions indexOfObject:@"friend:pending"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:pending"] withObject:@"friend:add"];
+            [self reloadData];
+        }
+    } else if (actionSheet.tag == 5) {
+        NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+        
+        if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_CAPTURE_BUTTON", nil)]) {
+            [self presentPhoto];
+        }
+        else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)]) {
+            [self presentLibrary];
+        }
+    }
+}
+
+#pragma marks - alert view delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 10) {
+        if (buttonIndex == 1) {
+            [[Flooz sharedInstance] reportContent:[[FLReport alloc] initWithType:ReportUser id:currentUser.userId]];
+        }
+    }
+    else if (alertView.tag == 11) {
+        if (buttonIndex == 1) {
+            [[Flooz sharedInstance] blockUser:currentUser.userId];
+        }
+    }
+}
+
+- (void)showReportView:(FLReport *)report {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"MENU_REPORT", nil) message:(report.reportType == ReportUser ? NSLocalizedString(@"MENU_REPORT_USER_CONTENT", nil) : NSLocalizedString(@"MENU_REPORT_LINE_CONTENT", nil)) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_NO", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_YES", nil), nil];
+    alertView.tag = 10;
+    [alertView show];
+}
+
+- (void)showBlockView {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"MENU_BLOCK_USER", nil) message:NSLocalizedString(@"MENU_BLOCK_USER_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_NO", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_YES", nil), nil];
+    alertView.tag = 11;
+    [alertView show];
+}
+
+- (void)shakeView {
+    CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    anim.values = @[
+                    [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-4., 0., 0.)],
+                    [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(4., 0., 0.)]
+                    ];
+    anim.autoreverses = YES;
+    anim.repeatCount = 2.;
+    anim.delegate = self;
+    anim.duration = 0.1;
+    [self.view.layer addAnimation:anim forKey:nil];
+}
+
+- (void)presentPhoto {
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    
+    if (authStatus == AVAuthorizationStatusAuthorized) {
+        UIImagePickerController *cameraUI = [UIImagePickerController new];
+        cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+        cameraUI.delegate = self;
+        cameraUI.allowsEditing = YES;
+        [self presentViewController:cameraUI animated:YES completion: ^{
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }];
+    } else if (authStatus == AVAuthorizationStatusNotDetermined){
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if (granted){
+                UIImagePickerController *cameraUI = [UIImagePickerController new];
+                cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+                cameraUI.delegate = self;
+                cameraUI.allowsEditing = YES;
+                [self presentViewController:cameraUI animated:YES completion: ^{
+                    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+                }];
+            } else {
+                
+            }
+        }];
+    } else {
+        UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+        [curr setTag:125];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [curr show];
+        });
+    }
+}
+
+- (void)presentLibrary {
+    UIImagePickerController *cameraUI = [UIImagePickerController new];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    cameraUI.delegate = self;
+    cameraUI.allowsEditing = YES;
+    [self presentViewController:cameraUI animated:YES completion: ^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    }];
+}
+
+- (UIImage *)resizeImage:(UIImage *)image {
+    CGRect rect = CGRectMake(0.0, 0.0, 640.0, 640.0);
+    UIGraphicsBeginImageContext(rect.size);
+    [image drawInRect:rect];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:YES completion: ^{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }];
+    
+    UIImage *editedImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    UIImage *originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *resizedImage;
+    
+    if (editedImage)
+        resizedImage = [editedImage resize:CGSizeMake(640, 0)];
+    else
+        resizedImage = [originalImage resize:CGSizeMake(640, 0)];
+    
+    NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
+    
+    [self sendData:imageData];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)sendData:(NSData *)imageData {
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] uploadDocument:imageData field:@"picId" success:^{
+        [avatarImage setImageFromData:imageData];
+        [[Flooz sharedInstance] updateCurrentUser];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 @end

@@ -92,7 +92,7 @@
 
 - (void)commentUserSelected:(UITapGestureRecognizer*)sender {
     FLUserView *tmp = (FLUserView *)sender.view;
-    [appDelegate showMenuForUser:tmp.user imageView:tmp.avatar];
+    [appDelegate showUser:tmp.user inController:nil];
 }
 
 - (UIView *)createCommentView:(FLComment *)comment {

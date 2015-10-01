@@ -19,16 +19,17 @@
 #import "TransitionDelegate.h"
 #import "UICKeyChainStore.h"
 #import "FLPopupInformation.h"
+#import "FLFilterSegmentedControl.h"
 
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
-    UIBarButtonItem *filterItem;
+    UIBarButtonItem *searchItem;
     
     NSTimer *_timer;
     NSTimer *_backTimer;
     
-    WYPopoverController *popoverController;
-    FLFilterPopoverViewController *filterListController;
+    FLFilterSegmentedControl *filterControl;
+    
     TransactionScope currentScope;
     
     NSMutableArray *transactions;
@@ -76,7 +77,18 @@
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor customBackgroundHeader]];
-
+    
+    CGFloat searchMargin;
+    
+    if (IS_IPHONE_4)
+        searchMargin = 180;
+    else if (IS_IPHONE_5)
+        searchMargin = 160;
+    else if (IS_IPHONE_6)
+        searchMargin = 170;
+    else
+        searchMargin = 170;
+    
     NSDictionary *attributes = @{
                                  NSForegroundColorAttributeName: [UIColor customBlue],
                                  NSFontAttributeName: [UIFont customContentLight:15]
@@ -85,13 +97,13 @@
     amountItem = [[UIBarButtonItem alloc] initWithTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO] style:UIBarButtonItemStylePlain target:self action:@selector(showWalletMessage)];
     [amountItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
-    filterItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"filter"] style:UIBarButtonItemStylePlain target:self action:@selector(changeFilter)];
-
-    CGFloat height = PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight();
+    searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showWalletMessage)];
+    [searchItem setTintColor:[UIColor customBlue]];
     
-    filterListController = [FLFilterPopoverViewController new];
-    filterListController.delegate = self;
-    filterListController.currentScope = currentScope;
+    filterControl = [[FLFilterSegmentedControl alloc] initWithFrame:CGRectMake(0, 10, 120, 25)];
+    [filterControl addTarget:self action:@selector(filterControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    CGFloat height = PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight();
     
     _tableView = [FLTableView newWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), height)];
     [_tableView setDelegate:self];
@@ -163,7 +175,21 @@
     [super viewWillAppear:animated];
     
     [amountItem setTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO]];
-    self.navigationItem.rightBarButtonItem = amountItem;
+    self.navigationItem.titleView = filterControl;
+    
+    switch (currentScope) {
+        case TransactionScopeAll:
+            [filterControl setSelectedSegmentIndex:0];
+            break;
+        case TransactionScopeFriend:
+            [filterControl setSelectedSegmentIndex:1];
+            break;
+        case TransactionScopePrivate:
+            [filterControl setSelectedSegmentIndex:2];
+            break;
+        default:
+            break;
+    }
     
     [self cancelTimer];
 }
@@ -172,7 +198,6 @@
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self cancelTimer];
-    popoverController = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -190,8 +215,8 @@
     
     if (reloadTimeline)
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(reloadCurrentTimeline) userInfo:nil repeats:NO];
-
-    self.navigationItem.leftBarButtonItem = filterItem;
+    
+    self.navigationItem.rightBarButtonItem = searchItem;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -275,6 +300,10 @@
 }
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+}
+
+- (void)didTransactionUserTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+    [appDelegate showUser:transaction.starter inController:self];
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
@@ -438,7 +467,7 @@
             _tableView.backgroundView = nil;
         
         nextPageIsLoading = NO;
-
+        
         [self didFilterChange];
         isReloading = NO;
     } failure:^(NSError *error) {
@@ -472,11 +501,21 @@
     [appDelegate.tabBarController setSelectedIndex:4];
 }
 
-- (void)changeFilter {
-    popoverController = [[WYPopoverController alloc] initWithContentViewController:filterListController];
-    popoverController.delegate = self;
+- (void)filterControlValueChanged:(UISegmentedControl*)sender {
     
-    [popoverController presentPopoverFromBarButtonItem:filterItem permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];    
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            [self scopeChange:TransactionScopeAll];
+            break;
+        case 1:
+            [self scopeChange:TransactionScopeFriend];
+            break;
+        case 2:
+            [self scopeChange:TransactionScopePrivate];
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)scopeChange:(TransactionScope)scope {
@@ -487,8 +526,6 @@
         [_tableView reloadData];
         [self reloadTableView];
     }
-    
-    [popoverController dismissPopoverAnimated:YES];
 }
 
 @end

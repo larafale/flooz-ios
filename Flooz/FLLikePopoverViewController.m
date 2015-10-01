@@ -56,11 +56,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.view setUserInteractionEnabled:YES];
+
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.preferredContentSize.width, self.preferredContentSize.height)];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     [_tableView setBounces:NO];
     [_tableView setSeparatorColor:[UIColor clearColor]];
+    [_tableView setUserInteractionEnabled:YES];
     
     [self.view addSubview:_tableView];
 }
@@ -79,11 +82,13 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"CellIdentifier";
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     NSDictionary *currentLike = transaction.social.likes[indexPath.row];
 
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
     }
     
     [cell setUserInteractionEnabled:NO];
@@ -93,6 +98,13 @@
     CGRectSetX(cell.textLabel.frame, 10);
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *currentLike = transaction.social.likes[indexPath.row];
+    FLUser *user = [[FLUser alloc] initWithJSON:currentLike];
+    
+    [appDelegate showUser:user inController:nil];
 }
 
 @end

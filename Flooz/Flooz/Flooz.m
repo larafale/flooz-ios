@@ -32,6 +32,9 @@
 #import "SettingsBankViewController.h"
 #import "FLTabBarController.h"
 
+#import "FLReachability.h"
+#import <SystemConfiguration/SystemConfiguration.h>
+
 #define APP_VERSION [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 
 @implementation Flooz
@@ -84,6 +87,12 @@
 
 - (void)hideLoadView {
     [loadView hide];
+}
+
+- (BOOL)isConnectionAvailable {
+    FLReachability *reachability = [FLReachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return networkStatus != NotReachable;
 }
 
 #pragma mark - Save Data
@@ -200,6 +209,7 @@
     [UICKeyChainStore removeItemForKey:kFriendTimelineData];
     [UICKeyChainStore removeItemForKey:kTextData];
     [UICKeyChainStore removeItemForKey:kNotificationsData];
+    [UICKeyChainStore removeItemForKey:kFilterData];
 }
 
 #pragma mark -
@@ -472,6 +482,13 @@
 }
 
 - (void)invitationText:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    if (self.invitationTexts == nil) {
+        [self loadInvitationData];
+        if (self.invitationTexts && success)
+            success(self.invitationTexts);
+    } else
+        success(self.invitationTexts);
+    
     id successBlock = ^(id result) {
         self.invitationTexts = [[FLInvitationTexts alloc] initWithJSON:result[@"item"]];
         [self saveInvitationData];
@@ -501,6 +518,13 @@
 }
 
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    if (self.currentTexts == nil) {
+        [self loadTextData];
+        if (self.currentTexts && success)
+            success(self.currentTexts);
+    } else
+        success(self.currentTexts);
+
     id successBlock = ^(id result) {
         self.currentTexts = [[FLTexts alloc] initWithJSON:result[@"item"]];
         [self saveTextData];
@@ -843,7 +867,11 @@
 }
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success {
-    NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/%@", dictionary[@"id"], dictionary[@"action"]];
+    [self updateFriendRequest:dictionary success:success failure:nil];
+}
+
+- (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/%@", dictionary[@"id"], dictionary[@"action"]];
     [self requestPath:path method:@"POST" params:nil success:success failure:nil];
 }
 
@@ -855,18 +883,37 @@
         }
     };
     
-    [self requestPath:@"/friends/suggestion" method:@"GET" params:nil success:successBlock failure:NULL];
+    [self requestPath:@"/suggest" method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
-- (void)friendRemove:(NSString *)friendId success:(void (^)())success {
-    NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/delete", friendId];
-    [self requestPath:path method:@"POST" params:nil success:success failure:nil];
+- (void)friendFollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/follow", friendId];
+    [self requestPath:path method:@"POST" params:nil success:success failure:failure];
 }
 
-- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success {
-    NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/request", friendId];
-    [self requestPath:path method:@"POST" params:(canal != nil ? @{@"metrics":@{@"selectedFrom": canal}} : nil) success:success failure:nil];
+- (void)friendUnfollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/unfollow", friendId];
+    [self requestPath:path method:@"POST" params:nil success:success failure:failure];
 }
+
+- (void)friendRemove:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/delete", friendId];
+    [self requestPath:path method:@"POST" params:nil success:success failure:failure];
+}
+
+- (void)friendAdd:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/request", friendId];
+    [self requestPath:path method:@"POST" params:nil success:success failure:failure];
+}
+
+//- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success {
+//    [self friendAcceptSuggestion:friendId canal:canal success:success failure:nil];
+//}
+//
+//- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success failure:(void (^)(NSError *error))failure  {
+//    NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/request", friendId];
+//    [self requestPath:path method:@"POST" params:(canal != nil ? @{@"metrics":@{@"selectedFrom": canal}} : nil) success:success failure:failure];
+//}
 
 - (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result))success {
     id successBlock = ^(id result) {
@@ -1180,16 +1227,17 @@
     _facebook_token = [[[FBSession activeSession] accessTokenData] accessToken];
     
     if (_currentUser) {
-        [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
+        [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,cover" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
             [self hideLoadView];
             
             if (!error) {
                 NSDictionary * user = @{
                                         @"fb": @{
+                                                @"cover": result[@"cover"][@"id"],
                                                 @"email": result[@"email"],
                                                 @"id": result[@"id"],
                                                 @"name": result[@"name"],
-                                                @"token": (_facebook_token ? _facebook_token : @"")
+                                                @"token": _facebook_token
                                                 }
                                         };
                 
@@ -1417,6 +1465,20 @@
     [[appDelegate myTopViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)handleTriggerUserShow:(NSDictionary *)data {
+    if ([data objectForKey:@"nick"]) {
+        FLUser *user = [[FLUser alloc] initWithJSON:data];
+        [appDelegate showUser:user inController:nil];
+    } else if ([data objectForKey:@"_id"]) {
+        [self showLoadView];
+        [self getUserProfile:[data objectForKey:@"_id"] success:^(FLUser *result) {
+            if (result) {
+                [appDelegate showUser:result inController:nil];
+            }
+        } failure:nil];
+    }
+}
+
 - (void)handleTrigger:(FLTrigger*)trigger {
     NSDictionary *triggerFuncs = @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
                                    [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
@@ -1446,6 +1508,7 @@
                                    [NSNumber numberWithInt:TriggerResetTuto]: NSStringFromSelector(@selector(handleTriggerTutoShow:)),
                                    [NSNumber numberWithInt:TriggerCloseView]: NSStringFromSelector(@selector(handleTriggerViewClose:)),
                                    [NSNumber numberWithInt:TriggerSendContacts]: NSStringFromSelector(@selector(handleTriggerContactsSend:)),
+                                   [NSNumber numberWithInt:TriggerUserShow]: NSStringFromSelector(@selector(handleTriggerUserShow:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {

@@ -19,6 +19,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json {
+    _json = json;
     _transactionId = [json objectForKey:@"_id"];
     
     NSString *method = [json objectForKey:@"method"];
@@ -83,10 +84,7 @@
     
     _social = [[FLSocial alloc] initWithJSON:json];
     
-    _isPrivate = NO;
-    if ([[json objectForKey:@"currentScope"] isEqualToString:@"private"]) {
-        _isPrivate = YES;
-    }
+    _isPrivate = [[json objectForKey:@"isPrivate"] boolValue];
     
     {
         _isCancelable = NO;
@@ -102,6 +100,12 @@
     _from = [[FLUser alloc] initWithJSON:[json objectForKey:@"from"]];
     _to = [[FLUser alloc] initWithJSON:[json objectForKey:@"to"]];
     
+    NSString *starterId = [[json objectForKey:@"starter"] objectForKey:@"_id"];
+    
+    if ([starterId isEqualToString:_from.userId])
+        _starter = _from;
+    else
+        _starter = _to;
     
     {
         static NSDateFormatter *dateFormatter;
@@ -116,7 +120,7 @@
     
     {
         NSMutableArray *comments = [NSMutableArray new];
-        for (NSDictionary *commentJSON in[json objectForKey:@"comments"]) {
+        for (NSDictionary *commentJSON in [json objectForKey:@"comments"]) {
             FLComment *comment = [[FLComment alloc] initWithJSON:commentJSON];
             if (comment) {
                 [comments addObject:comment];
@@ -125,7 +129,11 @@
         _comments = comments;
     }
     
-    _when = [FLHelper formatedDateFromNow:_date];
+    if ([[Flooz sharedInstance] isConnectionAvailable] && [json objectForKey:@"when"]) {
+        _when = [json objectForKey:@"when"];
+    } else {
+        _when = [FLHelper formatedDateFromNow:_date];
+    }
     
     if ([json objectForKey:@"text3d"]) {
         _text3d = [json objectForKey:@"text3d"];

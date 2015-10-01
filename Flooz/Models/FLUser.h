@@ -10,6 +10,13 @@
 
 #import "FLCreditCard.h"
 
+typedef struct s_FLUserPublicStats {
+    NSInteger nbFlooz;
+    NSInteger nbFriends;
+    NSInteger nbFollowers;
+    NSInteger nbFollowings;
+} FLUserPublicStats;
+
 typedef enum e_FLUserSelectedCanal {
     RecentCanal,
     SuggestionCanal,
@@ -39,6 +46,8 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) NSString *birthdate;
 @property (strong, nonatomic) NSString *avatarURL;
 @property (strong, nonatomic) NSString *avatarLargeURL;
+@property (strong, nonatomic) NSString *coverURL;
+@property (strong, nonatomic) NSString *coverLargeURL;
 @property (strong, nonatomic) NSData *avatarData;
 @property (strong, nonatomic) NSString *profileCompletion;
 @property (strong, nonatomic) NSNumber *friendsCount;
@@ -56,6 +65,9 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) FLCreditCard *creditCard;
 @property (strong, nonatomic) NSMutableDictionary *blockObject;
 
+@property (strong, nonatomic) NSMutableArray *actions;
+
+@property (strong, nonatomic) NSArray *followings;
 @property (strong, nonatomic) NSArray *followers;
 @property (strong, nonatomic) NSArray *friends;
 @property (strong, nonatomic) NSArray *friendsRecent;
@@ -65,7 +77,10 @@ typedef enum e_FLUserKind {
 
 @property (nonatomic)  BOOL isFriendWaiting;
 @property (nonatomic)  BOOL isStar;
-@property (nonatomic)  BOOL isFriend;
+@property (nonatomic)  BOOL isPro;
+@property (nonatomic)  BOOL isCactus;
+
+@property (nonatomic) FLUserPublicStats publicStats;
 
 @property (nonatomic)  FLUserKind userKind;
 

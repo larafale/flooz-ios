@@ -306,8 +306,7 @@
     }
 
 	if (friend) {
-        FriendCell *cell = (FriendCell *)[tableView cellForRowAtIndexPath:indexPath];
-		[appDelegate showMenuForUser:friend imageView:cell.avatarView canRemoveFriend:YES inWindow:self.view.window];
+		[appDelegate showUser:friend inController:nil];
 	}
 }
 
@@ -465,16 +464,16 @@
     }
 
 	[[Flooz sharedInstance] showLoadView];
-	[[Flooz sharedInstance] friendAcceptSuggestion:friendSuggestionId  canal:tmp.selectedFrom success: ^{
+	[[Flooz sharedInstance] friendFollow:friendSuggestionId success:^{
 	    [self didReloadData];
-	}];
+	} failure:nil];
 }
 
 - (void)removeFriend:(NSString *)friendId {
 	[[Flooz sharedInstance] showLoadView];
 	[[Flooz sharedInstance] friendRemove:friendId success: ^{
 	    [self didReloadData];
-	}];
+	} failure:nil];
 }
 
 #pragma mark - Keyboard Management

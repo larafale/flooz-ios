@@ -26,6 +26,7 @@
 + (NSString *)momentWithDate:(NSDate *)date;
 
 + (void)addMotionEffect:(UIView *)view;
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 + (UIImage *)createNonInterpolatedUIImageFromCIImage:(CIImage *)image withScale:(CGFloat)scale;
 + (CIImage *)createQRForString:(NSString *)qrString;

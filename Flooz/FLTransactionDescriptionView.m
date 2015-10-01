@@ -166,6 +166,8 @@
 
 - (void)createAvatarView {
     avatarView = [[FLUserView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 42, 42)];
+    [avatarView setUserInteractionEnabled:YES];
+    [avatarView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didAvatarTouch)]];
 }
 
 - (void)createRightViews {
@@ -461,14 +463,18 @@
 
 - (void)didLikeTextTouch {
     FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithTransaction:_transaction];
-    
+    popoverViewController.modalInPopover = NO;
+
     popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
     popoverController.delegate = self;
     
-    [popoverController presentPopoverFromRect:likeText.bounds inView:likeText permittedArrowDirections:WYPopoverArrowDirectionDown|WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-        
-    }];
-    
+    [popoverController presentPopoverFromRect:likeText.bounds inView:likeText permittedArrowDirections:WYPopoverArrowDirectionDown|WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
+}
+
+- (void)didAvatarTouch {
+    if (_indexPath) {
+        [_delegate didTransactionUserTouchAtIndex:_indexPath transaction:_transaction];
+    }
 }
 
 - (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller

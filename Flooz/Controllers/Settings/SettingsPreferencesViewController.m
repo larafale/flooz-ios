@@ -111,8 +111,6 @@
 }
 
 - (void)didFacebookTouch {
-    [[Flooz sharedInstance] showLoadView];
-    
     if ([[Flooz sharedInstance] facebook_token]) {
         facebookSwitch.on = NO;
         [[Flooz sharedInstance] disconnectFacebook];

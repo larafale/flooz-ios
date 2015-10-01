@@ -163,7 +163,7 @@
     {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
         
-        UIImageView *scopeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+        UIImageView *scopeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
         [scopeImage setTintColor:[UIColor whiteColor]];
         
         NSString *imageNamed = @"";

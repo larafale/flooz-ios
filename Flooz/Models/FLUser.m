@@ -48,14 +48,18 @@
     _email = [json objectForKey:@"email"];
     _phone = [json objectForKey:@"phone"];
     _bio = [json objectForKey:@"bio"];
+    _coverURL = [json objectForKey:@"cover"];
+    _coverLargeURL = [json objectForKey:@"coverFull"];
     _avatarURL = [json objectForKey:@"pic"];
     _avatarLargeURL = [json objectForKey:@"picFull"];
     _profileCompletion = [json objectForKey:@"profileCompletion"];
     _hasSecureCode = [json objectForKey:@"secureCode"];
     _blockObject = [json objectForKey:@"block"];
     _isStar = [[json objectForKey:@"isStar"] boolValue];
-    _isFriend = [[json objectForKey:@"isFriend"] boolValue];
-
+    _isPro = [[json objectForKey:@"isPro"] boolValue];
+    _isCactus = [[json objectForKey:@"isCactus"] boolValue];
+    
+    _actions = [[json objectForKey:@"actions"] mutableCopy];
     _metrics = [json objectForKey:@"metrics"];
     
     if ([json objectForKey:@"birthdate"]) {
@@ -66,14 +70,22 @@
         }
     }
     
-    if ([_avatarURL isEqualToString:@"/img/nopic.png"]) {
+    if ([_coverURL isEqualToString:@"/img/nocover.png"] || [_coverURL isBlank] || [_coverURL isEqualToString:@"/img/nopic.png"]) {
+        _coverURL = nil;
+    }
+    
+    if ([_coverLargeURL isEqualToString:@"/img/nocover.png"] || [_coverLargeURL isBlank] || [_coverLargeURL isEqualToString:@"/img/nopic.png"]) {
+        _coverLargeURL = nil;
+    }
+    
+    if ([_avatarURL isEqualToString:@"/img/nopic.png"] || [_avatarURL isBlank]) {
         _avatarURL = nil;
     }
- 
-    if ([_avatarLargeURL isEqualToString:@"/img/nopic.png"]) {
-        _avatarURL = nil;
+    
+    if ([_avatarLargeURL isEqualToString:@"/img/nopic.png"] || [_avatarLargeURL isBlank]) {
+        _avatarLargeURL = nil;
     }
-
+    
     if (json[@"device"]) {
         _deviceToken = [json objectForKey:@"device"];
     }
@@ -129,7 +141,24 @@
     if ([json objectForKey:@"cards"] && [[json objectForKey:@"cards"] count] > 0) {
         _creditCard = [[FLCreditCard alloc] initWithJSON:[[json objectForKey:@"cards"] objectAtIndex:0]];
     }
-
+    
+    {
+        NSMutableArray *followings = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
+        
+        if ([_json objectForKey:@"followings"]) {
+            for (NSDictionary *followingJSON in[_json objectForKey:@"followings"]) {
+                FLUser *following = [[FLUser alloc] initWithJSON:followingJSON];
+                if (following && [following userId] && ![following.userId isEqualToString:_userId] && ![unique containsObject:[following userId]]) {
+                    [unique addObject:[following userId]];
+                    [followings addObject:following];
+                }
+            }
+        }
+        
+        _followings = followings;
+    }
+    
     {
         NSMutableArray *followers = [NSMutableArray new];
         NSMutableArray *unique = [NSMutableArray array];
@@ -146,7 +175,7 @@
         
         _followers = followers;
     }
-
+    
     {
         NSMutableArray *friends = [NSMutableArray new];
         NSMutableArray *unique = [NSMutableArray array];
@@ -196,6 +225,18 @@
         }
         
         _friendsRequest = friendsRequest;
+    }
+    
+    if ([json objectForKey:@"publicMetrics"]) {
+        _publicStats.nbFlooz = [[[json objectForKey:@"publicMetrics"] objectForKey:@"flooz"] integerValue];
+        _publicStats.nbFriends = [[[json objectForKey:@"publicMetrics"] objectForKey:@"friends"] integerValue];
+        _publicStats.nbFollowers = [[[json objectForKey:@"publicMetrics"] objectForKey:@"followers"] integerValue];
+        _publicStats.nbFollowings = [[[json objectForKey:@"publicMetrics"] objectForKey:@"followings"] integerValue];
+    } else {
+        _publicStats.nbFlooz = [[[[json objectForKey:@"metrics"] objectForKey:@"emitted"] objectForKey:@"count"] integerValue];
+        _publicStats.nbFriends = [_friends count];
+        _publicStats.nbFollowers = [_followers count];
+        _publicStats.nbFollowings = [_followings count];
     }
     
     _checkDocuments = @{};

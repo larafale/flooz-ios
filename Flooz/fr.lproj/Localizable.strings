@@ -114,6 +114,13 @@
 /*            SETTINGS              */
 /************************************/
 
+"PROFILE" = "Mon profil";
+"EDIT_PROFILE" = "Éditer le profil";
+
+"EDIT_AVATAR" = "Photo";
+"EDIT_COVER" = "Bannière";
+"EDIT_BIO" = "Bio";
+
 "SETTINGS_CARD" = "Carte bancaire";
 "SETTINGS_BANK" = "Compte bancaire";
 "SETTINGS_DOCUMENTS" = "Mes documents";
@@ -291,10 +298,26 @@
 /*             FRIENDS              */
 /************************************/
 
+"PRIVATE_USER" = "Cet utilisateur est privé";
+
+"EMPTY_TIMELINE" = "Aucun Flooz";
+"EMPTY_FRIENDS" = "Aucun Ami";
+"EMPTY_FOLLOWERS" = "Aucun Abonné";
+"EMPTY_FOLLOWINGS" = "Aucun Abonnement";
+
+"FOLLOWED" = "Abonné";
+"FOLLOWING" = "Abonnement";
+"FOLLOWINGS" = "Abonnements";
 "FOLLOW" = "Suivre";
 "FRIEND_ADD" = "Ajouter";
+"FOLLOWER" = "Abonné";
 "FOLLOWERS" = "Abonnés";
 "FRIENDS" = "Amis";
+"FRIEND" = "Ami";
+
+"UNFOLLOW" = "Se désabonner";
+"UNFRIEND" = "Supprimer des amis";
+"UNREQUEST" = "Annuler la demande d'ami";
 
 "FRIEND_PICKER_RESULT" = "Résultats";
 
@@ -302,8 +325,12 @@
 "FRIEND_REQUEST_REFUSE" = "Refuser";
 
 "SEARCH_FRIENDS" = "Rechercher des amis";
+"FRIENDS_REQUEST" = "Demande en attente";
+"FRIENDS_PENDING" = "Demande envoyée";
+
 "FRIENDS_FRIENDS" = "Mes amis";
 "FRIENDS_FRIENDS_SEARCH" = "Recherche";
+"FRIENDS_FRIENDS_REQUEST_MESSAGE" = "Que voulez-vous faire ?";
 "FRIENDS_FRIENDS_REQUEST" = "Demandes en attente";
 "FRIENDS_FRIENDS_SUGGESTION" = "Vous connaissez peut-être...";
 "FRIENDS_BUTTON_INVITE" = "Inviter mes amis";

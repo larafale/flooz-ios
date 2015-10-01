@@ -91,6 +91,8 @@
         return TriggerCloseView;
     else if ([param isEqualToString:@"contacts:send"])
         return TriggerSendContacts;
+    else if ([param isEqualToString:@"user:show"])
+        return TriggerUserShow;
     else
         return TriggerNone;
 }

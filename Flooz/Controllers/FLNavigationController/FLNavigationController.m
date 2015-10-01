@@ -134,9 +134,7 @@
     [string appendAttributedString:attachmentString];
     [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_2", nil)]];
     
-    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:^() {
-        
-    }] show];
+    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:nil] show];
 }
 
 - (NSArray<UIViewController *> * _Nullable)popToRootViewControllerAnimated:(BOOL)animated {
@@ -226,6 +224,11 @@
     
     if (_navigationDelegate)
         [_navigationDelegate navigationController:navigationController willShowViewController:viewController animated:animated];
+    
+    if ([viewController isKindOfClass:[UserViewController class]] && [self isNavigationBarHidden] == NO)
+        [self  setNavigationBarHidden:YES animated:YES];
+    else if (![viewController isKindOfClass:[UserViewController class]] && [self isNavigationBarHidden] == YES)
+        [self setNavigationBarHidden:NO animated:YES];
 }
 
 //- (id<UIViewControllerAnimatedTransitioning>) navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {

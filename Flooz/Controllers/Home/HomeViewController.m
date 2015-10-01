@@ -678,12 +678,10 @@
 }
 
 - (void)didFacebookLoginButtonClick {
-    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] connectFacebook];
 }
 
 - (void)didFacebookSignupButtonClick {
-    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] connectFacebook];
 }
 

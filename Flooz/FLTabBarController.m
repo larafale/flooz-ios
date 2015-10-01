@@ -132,6 +132,8 @@
     [centerButton addTarget:self action:@selector(openNewFlooz) forControlEvents:UIControlEventTouchUpInside];
     centerButton.center = self.tabBar.center;
     
+    CGRectSetY(centerButton.frame, CGRectGetMaxY(self.tabBar.frame) - CGRectGetHeight(centerButton.frame));
+    
     [self.view addSubview:centerButton];
 }
 

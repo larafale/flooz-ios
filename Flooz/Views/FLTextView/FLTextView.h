@@ -30,5 +30,6 @@
 - (void)setWidth:(CGFloat)width;
 - (void)addTextChangeTarget:(id)instance action:(SEL)action;
 - (void)addTextFocusTarget:(id)instance action:(SEL)action;
+- (void)setText:(NSString *)text;
 
 @end
