@@ -321,6 +321,8 @@
 
 "FRIEND_PICKER_RESULT" = "Résultats";
 
+"FRIEND_REQUEST_TITLE" = "Demandes d'ami";
+
 "FRIEND_REQUEST_ACCEPT" = "Accepter";
 "FRIEND_REQUEST_REFUSE" = "Refuser";
 

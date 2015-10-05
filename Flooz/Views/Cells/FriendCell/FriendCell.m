@@ -97,18 +97,11 @@
 }
 
 - (void)createButtonView {
-	_addButton = [[FriendButton alloc] initWithFrame:CGRectMake(cellWidth - 45, 13, 28, 28)];
-
-	[_addButton setImage:[UIImage imageNamed:@"friends-field-add"] forState:UIControlStateNormal];
-	[_addButton setImage:[UIImage imageNamed:@"friends-field-in"] forState:UIControlStateSelected];
-
-	[_addButton addTarget:self action:@selector(accept) forControlEvents:UIControlEventTouchUpInside];
-    
-//    [_addButton.layer setBorderWidth:1.0f];
-//    [_addButton.layer setBorderColor:[UIColor customBlue].CGColor];
-//    [_addButton.layer setCornerRadius:5.0f];
+    _addButton = [FLSocialHelper createMiniFriendButton:self action:@selector(accept) frame:CGRectMake(cellWidth - 45, 13, 28, 28)];
+    _removeButton = [FLSocialHelper createMiniUnfriendButton:self action:@selector(accept) frame:CGRectMake(cellWidth - 45, 13, 28, 28)];
 
 	[self.contentView addSubview:_addButton];
+    [self.contentView addSubview:_removeButton];
 }
 
 #pragma mark - Prepare Views
@@ -146,44 +139,46 @@
 }
 
 - (void)prepareCheckView {
-	BOOL isFriend = NO;
-	if ([[[[Flooz sharedInstance] currentUser] userId] isEqualToString:[_friend userId]]) {
-		isFriend = YES;
-	}
-	else {
-		for (FLUser *friend in[[[Flooz sharedInstance] currentUser] friends]) {
-			if ([[friend userId] isEqualToString:[_friend userId]]) {
-				isFriend = YES;
-				break;
-			}
-		}
-	}
+	BOOL isFriend = _friend.isFriend;
 
-	_addButton.userInteractionEnabled = !isFriend;
-	_addButton.selected = isFriend;
-//	[_addButton setHidden:isFriend];
+    if (isFriend) {
+        [_removeButton setHidden:NO];
+        [_addButton setHidden:YES];
+    } else {
+        [_removeButton setHidden:YES];
+        [_addButton setHidden:NO];
+    }
 }
 
 #pragma mark -
 
 - (void)accept {
-	if (_addButton.selected) {
-		return;
-	}
-	_addButton.selected = YES;
 	[_delegate acceptFriendSuggestion:[_friend userId] cell:self];
+}
+
+- (void)decline {
+    [_delegate removeFriend:[_friend userId]];
 }
 
 #pragma mark -
 
 - (void)hideAddButton {
-	[_addButton setHidden:YES];
+    [_removeButton setHidden:YES];
+    [_addButton setHidden:YES];
     CGRectSetWidth(_nameLabel.frame, widthLabel - 20.0f);
 }
 
 - (void)showAddButton {
     CGRectSetWidth(_nameLabel.frame, widthLabel - 50.0f);
-	[_addButton setHidden:NO];
+    BOOL isFriend = _friend.isFriend;
+    
+    if (isFriend) {
+        [_removeButton setHidden:NO];
+        [_addButton setHidden:YES];
+    } else {
+        [_removeButton setHidden:YES];
+        [_addButton setHidden:NO];
+    }
 }
 
 @end

@@ -86,8 +86,6 @@
 
 	[_addButton setImage:[UIImage imageNamed:@"cell_friend_add"] forState:UIControlStateNormal];
 	[_addButton setImage:[UIImage imageNamed:@"Signup_Friends_Selected"] forState:UIControlStateSelected];
-
-    [_addButton addTarget:self action:@selector(showMenu) forControlEvents:UIControlEventTouchUpInside];
     
     [_addButton.layer setBorderWidth:1.0f];
     [_addButton.layer setBorderColor:[UIColor customBlue].CGColor];
@@ -126,10 +124,6 @@
 	CGSize expectedLabelS = [s sizeWithAttributes:
 	                         @{ NSFontAttributeName: _subLabel.font }];
 	CGRectSetHeight(_subLabel.frame, expectedLabelS.height);
-}
-
-- (void)showMenu {
-    [_delegate showMenuForFriendRequest:_friendRequest];
 }
 
 - (void)accept {

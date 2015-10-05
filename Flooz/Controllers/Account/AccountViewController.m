@@ -22,6 +22,7 @@
 #import "WebViewController.h"
 #import "FriendsViewController.h"
 #import "DiscountCodeViewController.h"
+#import "FriendRequestViewController.h"
 
 #import "AccountCell.h"
 
@@ -119,6 +120,10 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{
+        [self reloadData];
+    }];
+    
     if (_tableView.contentOffset.y < userView.frame.size.height)
         [(FLNavigationController*)self.navigationController hideShadow];
 }
@@ -160,36 +165,68 @@
     if (shareTitle == nil)
         shareTitle = @"";
     
-    _menuDic = @[
-                 @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
-                   @"items":@[
-                           @{@"title":NSLocalizedString(@"PROFILE", @""), @"action":@"profile"},
-                           @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
-                           @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
-                           @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
-                           @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
-                           ]
-                   },
-                 @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
-                   @"items":@[
-                           @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
-                           @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
-                           @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
-                           @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
-                           ]
-                   },
-                 @{@"title":NSLocalizedString(@"MENU_OTHER", @""),
-                   @"items":@[
-                           @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
-                           @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
-                           @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @""), @"action":@"terms", @"page":@"cgu"},
-                           @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @""), @"action":@"contact", @"page":@"contact"},
-                           @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @""), @"action":@"critics"},
-                           @{@"title":NSLocalizedString(@"SETTINGS_LOGOUT", @""), @"action":@"logout"}
-                           ]
-                   }
-                 ];
-    
+    if (friendsNotifs) {
+        _menuDic = @[
+                     @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"PROFILE", @""), @"action":@"profile"},
+                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                               @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
+                               @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
+                               ]
+                       },
+                     @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
+                               ]
+                       },
+                     @{@"title":NSLocalizedString(@"MENU_OTHER", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @""), @"action":@"terms", @"page":@"cgu"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @""), @"action":@"contact", @"page":@"contact"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @""), @"action":@"critics"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_LOGOUT", @""), @"action":@"logout"}
+                               ]
+                       }
+                     ];
+    } else {
+        _menuDic = @[
+                     @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"PROFILE", @""), @"action":@"profile"},
+                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
+                               @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
+                               ]
+                       },
+                     @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
+                               ]
+                       },
+                     @{@"title":NSLocalizedString(@"MENU_OTHER", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @""), @"action":@"terms", @"page":@"cgu"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @""), @"action":@"contact", @"page":@"contact"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @""), @"action":@"critics"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_LOGOUT", @""), @"action":@"logout"}
+                               ]
+                       }
+                     ];
+    }
     
     [_tableView reloadData];
 }
@@ -333,6 +370,8 @@
             [[self navigationController] pushViewController:[DiscountCodeViewController new] animated:YES];
         } else if ([action isEqualToString:@"profile"]) {
             [appDelegate showUser:[Flooz sharedInstance].currentUser inController:self];
+        } else if ([action isEqualToString:@"friendsRequest"]) {
+            [[self navigationController] pushViewController:[FriendRequestViewController new] animated:YES];
         }
     }
 }
@@ -421,9 +460,9 @@
             [self presentLibrary];
         }]];
     }
-//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-//        [self getPhotoFromFacebook];
-//    }]];
+    //    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+    //        [self getPhotoFromFacebook];
+    //    }]];
     
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
     
@@ -440,7 +479,7 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
         [menus addObject:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)];
     }
-//    [menus addObject:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)];
+    //    [menus addObject:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)];
     
     for (NSString *menu in menus) {
         [actionSheet addButtonWithTitle:menu];
@@ -460,9 +499,9 @@
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)]) {
         [self presentLibrary];
     }
-//    else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)]) {
-//        [self getPhotoFromFacebook];
-//    }
+    //    else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)]) {
+    //        [self getPhotoFromFacebook];
+    //    }
 }
 
 - (void)editAvatarWith:(NSNotification *)notification {

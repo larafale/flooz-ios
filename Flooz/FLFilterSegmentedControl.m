@@ -29,7 +29,7 @@
         [self setTintColor:[UIColor customBlue]];
         [self addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
         
-        CGFloat filterItemImgSize = 20;
+        CGFloat filterItemImgSize = CGRectGetHeight(frame) - 8;
         
         allIcon = [FLHelper imageWithImage:[UIImage imageNamed:@"transaction-scope-public"] scaledToSize:CGSizeMake(filterItemImgSize, filterItemImgSize)];
         friendIcon = [FLHelper imageWithImage:[UIImage imageNamed:@"transaction-scope-friend"] scaledToSize:CGSizeMake(filterItemImgSize, filterItemImgSize)];

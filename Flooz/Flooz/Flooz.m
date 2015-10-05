@@ -486,7 +486,7 @@
         [self loadInvitationData];
         if (self.invitationTexts && success)
             success(self.invitationTexts);
-    } else
+    } else if (success)
         success(self.invitationTexts);
     
     id successBlock = ^(id result) {
@@ -522,7 +522,7 @@
         [self loadTextData];
         if (self.currentTexts && success)
             success(self.currentTexts);
-    } else
+    } else if (success)
         success(self.currentTexts);
 
     id successBlock = ^(id result) {
@@ -883,7 +883,18 @@
         }
     };
     
-    [self requestPath:@"/suggest" method:@"GET" params:nil success:successBlock failure:NULL];
+    [self requestPath:@"/social/suggests" method:@"GET" params:nil success:successBlock failure:NULL];
+}
+
+- (void)friendsRequest:(void (^)(id result))success {
+    id successBlock = ^(id result) {
+        NSMutableArray *friends = [self createFriendsArrayFromResult:result];
+        if (success) {
+            success(friends);
+        }
+    };
+    
+    [self requestPath:@"/social/pendings" method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
 - (void)friendFollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure {
@@ -923,7 +934,7 @@
         }
     };
     
-    NSString *path = @"/friends/search";
+    NSString *path = @"/social/search";
     if (newFlooz) {
         path = [path stringByAppendingString:@"?context=newFlooz"];
     }

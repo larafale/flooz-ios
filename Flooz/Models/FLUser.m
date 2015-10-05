@@ -58,6 +58,7 @@
     _isStar = [[json objectForKey:@"isStar"] boolValue];
     _isPro = [[json objectForKey:@"isPro"] boolValue];
     _isCactus = [[json objectForKey:@"isCactus"] boolValue];
+    _isFriend = [[json objectForKey:@"isFriend"] boolValue];
     
     _actions = [[json objectForKey:@"actions"] mutableCopy];
     _metrics = [json objectForKey:@"metrics"];

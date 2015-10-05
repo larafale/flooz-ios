@@ -148,6 +148,7 @@ static NSString *kBranchData = @"branchData";
 - (void)friendFollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)friendUnfollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)friendAdd:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
+- (void)friendsRequest:(void (^)(id result))success;
 //- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success;
 //- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success failure:(void (^)(NSError *error))failure;
 

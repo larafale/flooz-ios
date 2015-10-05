@@ -11,7 +11,6 @@
 @interface FLLikePopoverViewController () {
     FLTransaction *transaction;
     
-    UITableView *_tableView;
     CGFloat viewHeight;
     CGFloat viewWidth;
 }
@@ -22,6 +21,8 @@
 #define LIKE_TEXT_HEIGHT 14.0f
 
 @implementation FLLikePopoverViewController
+
+@synthesize tableView;
 
 - (id)initWithTransaction:(FLTransaction*)transac {
     self = [super init];
@@ -56,16 +57,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view setUserInteractionEnabled:YES];
-
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.preferredContentSize.width, self.preferredContentSize.height)];
-    [_tableView setDelegate:self];
-    [_tableView setDataSource:self];
-    [_tableView setBounces:NO];
-    [_tableView setSeparatorColor:[UIColor clearColor]];
-    [_tableView setUserInteractionEnabled:YES];
+    tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.preferredContentSize.width, self.preferredContentSize.height)];
+    [tableView setDelegate:self];
+    [tableView setDataSource:self];
+    [tableView setBounces:NO];
+    [tableView setSeparatorColor:[UIColor clearColor]];
     
-    [self.view addSubview:_tableView];
+    [self.view addSubview:tableView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -83,16 +81,14 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"CellIdentifier";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     NSDictionary *currentLike = transaction.social.likes[indexPath.row];
 
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
     }
-    
-    [cell setUserInteractionEnabled:NO];
-    
+        
     [cell.textLabel setText:[NSString stringWithFormat:@"@%@", currentLike[@"nick"]]];
     [cell.textLabel setFont:[UIFont customContentRegular:LIKE_TEXT_HEIGHT]];
     CGRectSetX(cell.textLabel.frame, 10);
@@ -101,10 +97,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *currentLike = transaction.social.likes[indexPath.row];
-    FLUser *user = [[FLUser alloc] initWithJSON:currentLike];
-    
-    [appDelegate showUser:user inController:nil];
+    if (self.delegate) {
+        NSDictionary *currentLike = transaction.social.likes[indexPath.row];
+        FLUser *user = [[FLUser alloc] initWithJSON:currentLike];
+        user.userId = currentLike[@"userId"];
+        
+        [self.delegate didUserClick:user];
+    }
 }
 
 @end

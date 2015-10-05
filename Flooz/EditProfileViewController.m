@@ -321,15 +321,15 @@
 //    }];
 //}
 
-- (UIImage *)resizeImage:(UIImage *)image {
-    CGRect rect = CGRectMake(0.0, 0.0, 640.0, 640.0);
-    UIGraphicsBeginImageContext(rect.size);
-    [image drawInRect:rect];
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return img;
-}
+//- (UIImage *)resizeImage:(UIImage *)image {
+//    CGRect rect = CGRectMake(0.0, 0.0, 640.0, 640.0);
+//    UIGraphicsBeginImageContext(rect.size);
+//    [image drawInRect:rect];
+//    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    
+//    return img;
+//}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [picker dismissViewControllerAnimated:YES completion: ^{
@@ -341,11 +341,16 @@
     UIImage *resizedImage;
     
     if (editedImage)
-        resizedImage = [editedImage resize:CGSizeMake(640, 0)];
+        resizedImage = editedImage;
+        //        resizedImage = [editedImage resize:CGSizeMake(640, 0)];
     else
-        resizedImage = [originalImage resize:CGSizeMake(640, 0)];
+        resizedImage = originalImage;
+//        resizedImage = [originalImage resize:CGSizeMake(640, 0)];
     
-    NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7);
+//    NSData *imageData = UIImagePNGRepresentation(resizedImage);
+    NSData *imageData = UIImageJPEGRepresentation(resizedImage, 1);
+    
+//    NSLog(@"UIImagePNGRepresentation: image size is---->: %lu kb",[imageData length]/1024);
     
     [self sendData:imageData];
 }

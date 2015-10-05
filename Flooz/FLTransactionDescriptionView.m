@@ -8,7 +8,6 @@
 
 #import "FLTransactionDescriptionView.h"
 #import "FLSocialButton.h"
-#import "FLLikePopoverViewController.h"
 
 #define MARGE_TOP_BOTTOM 10.0f
 #define MARGE_LEFT_RIGHT 10.0f
@@ -232,7 +231,7 @@
     
     [commentText setImage:[UIImage imageNamed:@"social-comment"] size:CGSizeMake(13.0, 12.0)];
     CGRectSetX(commentText.imageView.frame, 0);
-
+    
     
     likeText = [[FLActionButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(commentText.frame), CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
     [likeText addTarget:self action:@selector(didLikeTextTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -461,14 +460,31 @@
     CGRectSetX(amountLabel.frame, CGRectGetWidth(footerDescView.frame) - CGRectGetWidth(amountLabel.frame));
 }
 
-- (void)didLikeTextTouch {
-    FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithTransaction:_transaction];
-    popoverViewController.modalInPopover = NO;
+- (void)didUserClick:(FLUser *)user {
+    if (popoverController && popoverController.popoverVisible) {
+        [popoverController dismissPopoverAnimated:NO completion:^{
+            [appDelegate showUser:user inController:nil];
+        }];
+    }
+}
 
-    popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
-    popoverController.delegate = self;
-    
-    [popoverController presentPopoverFromRect:likeText.bounds inView:likeText permittedArrowDirections:WYPopoverArrowDirectionDown|WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
+- (void)didLikeTextTouch {
+    if (_transaction.social.likesCount > 1) {
+        FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithTransaction:_transaction];
+        popoverViewController.delegate = self;
+        popoverViewController.modalInPopover = NO;
+        
+        popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
+        popoverController.delegate = self;
+        
+        [popoverController presentPopoverFromRect:likeText.bounds inView:likeText permittedArrowDirections:WYPopoverArrowDirectionDown|WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
+    } else {
+        NSDictionary *currentLike = _transaction.social.likes[0];
+        FLUser *user = [[FLUser alloc] initWithJSON:currentLike];
+        user.userId = currentLike[@"userId"];
+
+        [appDelegate showUser:user inController:nil];
+    }
 }
 
 - (void)didAvatarTouch {

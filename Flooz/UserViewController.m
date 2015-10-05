@@ -115,11 +115,16 @@
     emptyCellHeight = CGRectGetHeight(self.tableView.frame) - CGRectGetHeight(headerCell.frame);
     
     [self reloadData];
+    [self registerNotification:@selector(refreshData) name:kNotificationReloadCurrentUser object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self refreshData];
+}
+
+- (void) refreshData {
     [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
         if (result)
             currentUser = result;
@@ -242,6 +247,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)reloadData {
@@ -396,20 +406,10 @@
 
 - (void) didFriendButtonClick:(id)sender {
     [[Flooz sharedInstance] friendAdd:currentUser.userId success:^{
-        [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-            if (result)
-                currentUser = result;
-            [self reloadData];
-        } failure:nil];
     } failure:^(NSError *error) {
         if ([currentUser.actions indexOfObject:@"friend:pending"] != NSNotFound)
             [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:pending"] withObject:@"friend:add"];
         [self reloadData];
-        [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-            if (result)
-                currentUser = result;
-            [self reloadData];
-        } failure:nil];
     }];
     if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
         [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:pending"];
@@ -620,16 +620,18 @@
 }
 
 - (void)reloadTableView {
-    [[Flooz sharedInstance] userTimeline:currentUser.userId success: ^(id result, NSString *nextPageUrl) {
-        transactions = [result mutableCopy];
-        _nextPageUrl = nextPageUrl;
-        
-        nextPageIsLoading = NO;
-        transacLoaded = YES;
-        [self didFilterChange];
-    } failure:^(NSError *error) {
-        [self.tableView setContentOffset:CGPointZero animated:YES];
-    }];
+    if (currentUser) {
+        [[Flooz sharedInstance] userTimeline:currentUser.userId success: ^(id result, NSString *nextPageUrl) {
+            transactions = [result mutableCopy];
+            _nextPageUrl = nextPageUrl;
+            
+            nextPageIsLoading = NO;
+            transacLoaded = YES;
+            [self didFilterChange];
+        } failure:^(NSError *error) {
+            [self.tableView setContentOffset:CGPointZero animated:YES];
+        }];
+    }
 }
 
 - (void)didFilterChange {
@@ -794,21 +796,12 @@
     UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:currentUser.fullname message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"UNFRIEND", nil) style:UIAlertActionStyleDestructive handler: ^(UIAlertAction *action) {
-        [[Flooz sharedInstance] friendUnfollow:currentUser.userId success:^{
-            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                if (result)
-                    currentUser = result;
-                [self reloadData];
-            } failure:nil];
+        [[Flooz sharedInstance] friendRemove:currentUser.userId success:^{
+            
         } failure:^(NSError *error) {
             if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
                 [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:remove"];
             [self reloadData];
-            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                if (result)
-                    currentUser = result;
-                [self reloadData];
-            } failure:nil];
         }];
         if ([currentUser.actions indexOfObject:@"friend:remove"] != NSNotFound)
             [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:remove"] withObject:@"friend:add"];
@@ -850,11 +843,6 @@
             if ([currentUser.actions indexOfObject:@"unfriend"] != NSNotFound)
                 [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:remove"] withObject:@"friend:request"];
             [self reloadData];
-            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                if (result)
-                    currentUser = result;
-                [self reloadData];
-            } failure:nil];
         }];
         if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound)
             [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:request"] withObject:@"friend:remove"];
@@ -863,20 +851,11 @@
     
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"FRIEND_REQUEST_REFUSE", nil) style:UIAlertActionStyleDestructive handler: ^(UIAlertAction *action) {
         [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"decline" } success: ^{
-            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                if (result)
-                    currentUser = result;
-                [self reloadData];
-            } failure:nil];
+            
         } failure:^(NSError *error) {
             if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
                 [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:request"];
             [self reloadData];
-            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                if (result)
-                    currentUser = result;
-                [self reloadData];
-            } failure:nil];
         }];
         if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound)
             [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:request"] withObject:@"friend:add"];
@@ -918,20 +897,11 @@
     
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"UNREQUEST", nil) style:UIAlertActionStyleDestructive handler: ^(UIAlertAction *action) {
         [[Flooz sharedInstance] friendRemove:currentUser.userId success:^{
-            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                if (result)
-                    currentUser = result;
-                [self reloadData];
-            } failure:nil];
         } failure:^(NSError *error) {
             if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
                 [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:pending"];
             [self reloadData];
-            [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                if (result)
-                    currentUser = result;
-                [self reloadData];
-            } failure:nil];
+            
         }];
         if ([currentUser.actions indexOfObject:@"friend:pending"] != NSNotFound)
             [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:pending"] withObject:@"friend:add"];
@@ -1079,59 +1049,33 @@
         }
     } else if (actionSheet.tag == 2) {
         if (buttonIndex == 0) {
-            [[Flooz sharedInstance] friendUnfollow:currentUser.userId success:^{
-                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                    if (result)
-                        currentUser = result;
-                    [self reloadData];
-                } failure:nil];
+            [[Flooz sharedInstance] friendRemove:currentUser.userId success:^{
             } failure:^(NSError *error) {
-                if ([currentUser.actions indexOfObject:@"follow"] != NSNotFound)
-                    [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"follow"] withObject:@"unfollow"];
+                if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
+                    [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:remove"];
                 [self reloadData];
-                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                    if (result)
-                        currentUser = result;
-                    [self reloadData];
-                } failure:nil];
             }];
-            if ([currentUser.actions indexOfObject:@"unfollow"] != NSNotFound)
-                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"unfollow"] withObject:@"follow"];
-            if ([currentUser.actions indexOfObject:@"miniUnfollow"] != NSNotFound)
-                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"miniUnfollow"] withObject:@"follow"];
+            if ([currentUser.actions indexOfObject:@"friend:remove"] != NSNotFound)
+                [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:remove"] withObject:@"friend:add"];
             [self reloadData];
         }
     } else if (actionSheet.tag == 3) {
         if (buttonIndex == 0) {
             [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"accept" } success:nil failure:^(NSError *error) {
-                if ([currentUser.actions indexOfObject:@"unfriend"] != NSNotFound)
+                if ([currentUser.actions indexOfObject:@"friend:remove"] != NSNotFound)
                     [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:remove"] withObject:@"friend:request"];
                 [self reloadData];
-                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                    if (result)
-                        currentUser = result;
-                    [self reloadData];
-                } failure:nil];
             }];
             if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound)
                 [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:request"] withObject:@"friend:remove"];
             [self reloadData];
         } else if (buttonIndex == 1) {
             [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"decline" } success: ^{
-                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                    if (result)
-                        currentUser = result;
-                    [self reloadData];
-                } failure:nil];
             } failure:^(NSError *error) {
                 if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
                     [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:request"];
                 [self reloadData];
-                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                    if (result)
-                        currentUser = result;
-                    [self reloadData];
-                } failure:nil];
+                
             }];
             if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound)
                 [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:request"] withObject:@"friend:add"];
@@ -1140,20 +1084,11 @@
     } else if (actionSheet.tag == 4) {
         if (buttonIndex == 0) {
             [[Flooz sharedInstance] friendRemove:currentUser.userId success:^{
-                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                    if (result)
-                        currentUser = result;
-                    [self reloadData];
-                } failure:nil];
             } failure:^(NSError *error) {
                 if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound)
                     [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:add"] withObject:@"friend:pending"];
                 [self reloadData];
-                [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-                    if (result)
-                        currentUser = result;
-                    [self reloadData];
-                } failure:nil];
+                
             }];
             if ([currentUser.actions indexOfObject:@"friend:pending"] != NSNotFound)
                 [currentUser.actions replaceObjectAtIndex:[currentUser.actions indexOfObject:@"friend:pending"] withObject:@"friend:add"];

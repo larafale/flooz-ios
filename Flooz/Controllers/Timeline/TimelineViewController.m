@@ -20,6 +20,7 @@
 #import "UICKeyChainStore.h"
 #import "FLPopupInformation.h"
 #import "FLFilterSegmentedControl.h"
+#import "SearchViewController.h"
 
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
@@ -97,10 +98,10 @@
     amountItem = [[UIBarButtonItem alloc] initWithTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO] style:UIBarButtonItemStylePlain target:self action:@selector(showWalletMessage)];
     [amountItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
-    searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showWalletMessage)];
+    searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
     [searchItem setTintColor:[UIColor customBlue]];
     
-    filterControl = [[FLFilterSegmentedControl alloc] initWithFrame:CGRectMake(0, 10, 120, 25)];
+    filterControl = [[FLFilterSegmentedControl alloc] initWithFrame:CGRectMake(0, 10, 160, 32)];
     [filterControl addTarget:self action:@selector(filterControlValueChanged:) forControlEvents:UIControlEventValueChanged];
     
     CGFloat height = PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight();
@@ -130,6 +131,10 @@
     [self registerNotification:@selector(reloadBalanceItem) name:kNotificationReloadCurrentUser object:nil];
     [self registerNotification:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
     [self registerNotification:@selector(statusBarHit) name:kNotificationTouchStatusBarClick object:nil];
+}
+
+- (void)showSearch {
+    [self.navigationController pushViewController:[SearchViewController new] animated:YES];
 }
 
 - (void)showWalletMessage {
