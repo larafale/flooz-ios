@@ -13,6 +13,7 @@
 @property (strong, nonatomic) MZFormSheetController *formSheet;
 
 - (id)initWithData:(NSDictionary*)data;
+- (id)initWithData:(NSDictionary*)data dismiss:(void (^)())block;
 
 - (void)show;
 

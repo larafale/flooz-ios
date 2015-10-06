@@ -10,9 +10,6 @@
 #import "NewTransactionViewController.h"
 #import "FLPopupInformation.h"
 #import "UserViewController.h"
-#import "CEPanAnimationController.h"
-#import "CEHorizontalSwipeInteractionController.h"
-#import "CEReversibleAnimationController.h"
 
 @interface FLNavigationController () {
     UIBarButtonItem *backItem;
@@ -21,12 +18,6 @@
     UIBarButtonItem *cbItem;
     
     UIViewController *controller;
-    
-    CEPanAnimationController *_animationController;
-    CEHorizontalSwipeInteractionController *_interactionController;
-    
-    CEReversibleAnimationController *_defaultAnimationController;
-    CEBaseInteractionController *_defaultInteractionController;
 }
 
 @end
@@ -40,12 +31,6 @@
     self.delegate = self;
     self.blockAmount = NO;
     [self customAppearence];
-    
-    _animationController = [CEPanAnimationController new];
-    _interactionController = [CEHorizontalSwipeInteractionController new];
-    
-    _defaultAnimationController = [CEReversibleAnimationController new];
-    _defaultInteractionController = [CEBaseInteractionController new];
 }
 
 - (void)didReceiveMemoryWarning {

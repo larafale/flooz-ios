@@ -436,29 +436,6 @@
 
 #pragma mark - Contacts
 
-- (void)requestFacebookFriends {
-	[[Flooz sharedInstance] showLoadView];
-	[[Flooz sharedInstance] facebokSearchFriends: ^(id result) {
-	    _contactsFromFacebook = [NSMutableArray new];
-
-	    for (NSDictionary * friend in result) {
-	        NSMutableDictionary *contact = [NSMutableDictionary new];
-
-	        [contact setValue:[friend objectForKey:@"first_name"] forKey:@"firstname"];
-	        [contact setValue:[friend objectForKey:@"last_name"] forKey:@"lastname"];
-
-	        [contact setValue:[friend objectForKey:@"name"] forKey:@"name"];
-	        [contact setValue:[friend objectForKey:@"id"] forKey:@"facebook_id"];
-	        [contact setValue:[[[friend objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"] forKey:@"image_url"];
-
-	        [_contactsFromFacebook addObject:contact];
-		}
-
-	    _contactsFromFacebook = [self processContacts:_contactsFromFacebook];
-	    [self loadFacebookContacts];
-	}];
-}
-
 - (void)requestAddressBookPermission {
 	[[Flooz sharedInstance] grantedAccessToContacts: ^(BOOL granted) {
 	    if (granted) {
@@ -556,20 +533,6 @@
 	}] mutableCopy];
 
 	return newContacts;
-}
-
-- (void)didSourceFacebook:(BOOL)isFacebook {
-	if (isFacebook && [_contactsFromFacebook count] == 0) {
-		[self requestFacebookFriends];
-		return;
-	}
-
-	if (isFacebook) {
-		[self loadFacebookContacts];
-	}
-	else {
-		[self loadAddressBookContacts];
-	}
 }
 
 - (void)loadFacebookContacts {

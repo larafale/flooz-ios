@@ -83,7 +83,7 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)displayAlert:(NSString *)title content:(NSString *)content;
 - (void)noAccessToSettings;
 
-- (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error;
+//- (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error;
 
 - (BOOL)showPreviewImage:(NSString *)imageNamed;
 - (void)showPreviewImages:(NSArray *)imagesNamed;

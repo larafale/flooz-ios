@@ -115,7 +115,7 @@
         pendingData = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
 #endif
     
-    return YES;
+    return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];;
 }
 
 - (void)saveBranchParams {
@@ -423,35 +423,35 @@
 
 #pragma mark - Facebook
 
-- (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error {
-    // WARNING erreur code 2 http://stackoverflow.com/questions/20657780/ios-facebook-sdk-error-domain-com-facebook-sdk-code-2-and-code-7
-    if (error) {
-        [[Flooz sharedInstance] hideLoadView];
-        [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError time:nil delay:nil];
-    }
-    
-    if (!error && state == FBSessionStateOpen) {
-        [[Flooz sharedInstance] didConnectFacebook];
-        return;
-    }
-    if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed) {
-        // If the session is closed
-        // Show the user the logged-out UI
-        //        [self userLoggedOut];
-    }
-    
-    [[Flooz sharedInstance] hideLoadView];
-    if (error) {
-        [FBSession.activeSession closeAndClearTokenInformation];
-    }
-}
+//- (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error {
+//    // WARNING erreur code 2 http://stackoverflow.com/questions/20657780/ios-facebook-sdk-error-domain-com-facebook-sdk-code-2-and-code-7
+//    if (error) {
+//        [[Flooz sharedInstance] hideLoadView];
+//        [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError time:nil delay:nil];
+//    }
+//    
+//    if (!error && state == FBSessionStateOpen) {
+//        [[Flooz sharedInstance] didConnectFacebook];
+//        return;
+//    }
+//    if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed) {
+//        // If the session is closed
+//        // Show the user the logged-out UI
+//        //        [self userLoggedOut];
+//    }
+//    
+//    [[Flooz sharedInstance] hideLoadView];
+//    if (error) {
+//        [FBSession.activeSession closeAndClearTokenInformation];
+//    }
+//}
 
 // During the Facebook login flow, your app passes control to the Facebook iOS app or Facebook in a mobile browser.
 // After authentication, your app will be called back with the session information.
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     if ([[Branch getInstance] handleDeepLink:url]) {
         return YES;
-    } else if ([FBAppCall handleOpenURL:url sourceApplication:sourceApplication])
+    } else if ([[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation])
         return YES;
     else {
         if ([url.scheme isEqualToString:@"flooz"]) {
@@ -475,7 +475,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [FBAppCall handleDidBecomeActive];
+    [FBSDKAppEvents activateApp];
     
 #ifndef FLOOZ_DEV_LOCAL
     if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {

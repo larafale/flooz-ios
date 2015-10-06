@@ -31,6 +31,7 @@
 #import "FLPopupInformation.h"
 #import "SettingsBankViewController.h"
 #import "FLTabBarController.h"
+#import "FLPopupTrigger.h"
 
 #import "FLReachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -51,7 +52,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-
+        
 #ifdef FLOOZ_DEV_LOCAL
         manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", [appDelegate localIp]]]];
 #elif FLOOZ_DEV_API
@@ -73,6 +74,8 @@
         
         self.socketConnected = NO;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveUserData) name:kNotificationReloadCurrentUser object:nil];
+        
+        self.fbLoginManager = [[FBSDKLoginManager alloc] init];
     }
     return self;
 }
@@ -103,8 +106,8 @@
         NSDictionary *userJson = [NSDictionary newWithJSONString:userData];
         if (userJson) {
             _currentUser = [[FLUser alloc] initWithJSON:userJson];
-            _facebook_token = userJson[@"fb"][@"token"];
-            
+            [self updateFbToken:userJson[@"fb"][@"token"] andUser:userJson[@"fb"][@"id"]];
+
             [self checkDeviceToken];
         }
     }
@@ -367,7 +370,7 @@
 - (void)passwordLost:(NSString *)email success:(void (^)(id result))success {
     if (email == nil)
         email = @"";
-
+    
     [self requestPath:@"password/lost" method:@"POST" params:@{ @"q": email } success:success failure:NULL];
 }
 
@@ -410,8 +413,8 @@
     if ([appDelegate shouldRefreshWithKey:kKeyLastUpdate]) {
         __block id successBlock = ^(id result) {
             _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
-            _facebook_token = result[@"item"][@"fb"][@"token"];
-            
+            [self updateFbToken:result[@"item"][@"fb"][@"token"] andUser:result[@"item"][@"fb"][@"id"]];
+
             [self checkDeviceToken];
             [self saveSettingsObject:[NSDate date] withKey:kKeyLastUpdate];
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationReloadCurrentUser object:nil]];
@@ -524,7 +527,7 @@
             success(self.currentTexts);
     } else if (success)
         success(self.currentTexts);
-
+    
     id successBlock = ^(id result) {
         self.currentTexts = [[FLTexts alloc] initWithJSON:result[@"item"]];
         [self saveTextData];
@@ -1101,7 +1104,7 @@
     [UICKeyChainStore setString:_access_token forKey:@"login-token"];
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
-    _facebook_token = result[@"items"][1][@"fb"][@"token"];
+    [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
     
@@ -1113,7 +1116,7 @@
     [UICKeyChainStore setString:_access_token forKey:@"login-token"];
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
-    _facebook_token = result[@"items"][1][@"fb"][@"token"];
+    [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
     [appDelegate goToAccountViewController];
@@ -1126,7 +1129,7 @@
     [UICKeyChainStore setString:_access_token forKey:@"login-token"];
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
-    _facebook_token = result[@"items"][1][@"fb"][@"token"];
+    [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
     
@@ -1164,81 +1167,58 @@
 
 #pragma mark - Facebook
 
-- (void)getInfoFromFacebook {
-    [[FBSession activeSession] closeAndClearTokenInformation];
+- (void)updateFbToken:(NSString *)token andUser:(NSString *)userId {
+    _facebook_token = token;
     
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_birthday", @"user_friends"]
-                                       allowLoginUI:YES
-                                  completionHandler:
-     ^(FBSession *session, FBSessionState state, NSError *error) {
-         _facebook_token = [[[FBSession activeSession] accessTokenData] accessToken];
-         
-         [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices,birthday" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
-             [self hideLoadView];
-             if (!error) {
-                 NSString *birthday = @"";
-                 if (result[@"birthday"]) {
-                     birthday = [self formatBirthDateFromFacebook:result[@"birthday"]];
-                 }
-                 NSDictionary *user = @{
-                                        @"picId": [NSData new],
-                                        @"email": result[@"email"],
-                                        @"idFacebook": result[@"id"],
-                                        @"birthdate" : birthday,
-                                        @"fullName": result[@"name"],
-                                        @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", result[@"id"]],
-                                        @"fb": @{
-                                                @"email": result[@"email"],
-                                                @"id": result[@"id"],
-                                                @"name": result[@"name"],
-                                                @"lastName": result[@"last_name"],
-                                                @"firstName": result[@"first_name"],
-                                                @"token": _facebook_token
-                                                }
-                                        };
-                 
-                 [appDelegate showSignupAfterFacebookWithUser:user];
-             }
-         }];
-     }];
-}
-
-- (void)getFacebookPhoto:(void (^)(id result))success {
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
-                                       allowLoginUI:YES
-                                  completionHandler:
-     ^(FBSession *session, FBSessionState state, NSError *error) {
-         [FBRequestConnection startWithGraphPath:@"/me?fields=id" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
-             if (!error) {
-                 if (success) {
-                     success(result);
-                 }
-             }
-         }];
-     }];
+    if (_facebook_token && (![FBSDKAccessToken currentAccessToken] || ![[[FBSDKAccessToken currentAccessToken] tokenString] isEqualToString:_facebook_token])) {
+        [FBSDKAccessToken setCurrentAccessToken:[[FBSDKAccessToken alloc] initWithTokenString:_facebook_token permissions:@[@"public_profile",@"email",@"user_friends"] declinedPermissions:nil appID:@"152779318256915" userID:userId expirationDate:nil refreshDate:nil]];
+    }
 }
 
 - (void)connectFacebook {
-    [[FBSession activeSession] closeAndClearTokenInformation];
+    [FBSDKAccessToken setCurrentAccessToken:nil];
+    [FBSDKProfile setCurrentProfile:nil];
     
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile",@"email",@"user_friends",@"publish_actions"]
-                                       allowLoginUI:YES
-                                  completionHandler:
-     ^(FBSession *session, FBSessionState state, NSError *error) {
-         [appDelegate facebookSessionStateChanged:session state:state error:error];
-     }];
+    //    [[FBSDKAccessToken  activeSession] closeAndClearTokenInformation];
+    
+    [self.fbLoginManager logInWithReadPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:[appDelegate myTopViewController] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        if (error) {
+            [[Flooz sharedInstance] hideLoadView];
+            [FBSDKAccessToken setCurrentAccessToken:nil];
+            [FBSDKProfile setCurrentProfile:nil];
+            [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError time:nil delay:nil];
+        } else if (result.isCancelled) {
+            [[Flooz sharedInstance] hideLoadView];
+            [FBSDKAccessToken setCurrentAccessToken:nil];
+            [FBSDKProfile setCurrentProfile:nil];
+        } else {
+            [[Flooz sharedInstance] didConnectFacebook];
+        }
+    }];
+    
+    //    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile",@"email",@"user_friends",@"publish_actions"]
+    //                                       allowLoginUI:YES
+    //                                  completionHandler:
+    //     ^(FBSession *session, FBSessionState state, NSError *error) {
+    //         [appDelegate facebookSessionStateChanged:session state:state error:error];
+    //     }];
 }
 
 - (void)disconnectFacebook {
+    [FBSDKAccessToken setCurrentAccessToken:nil];
+    [FBSDKProfile setCurrentProfile:nil];
     _facebook_token = nil;
     [self updateUser:@{ @"fb": @{} } success:nil failure:nil];
 }
 
 - (void)didConnectFacebook {
-    _facebook_token = [[[FBSession activeSession] accessTokenData] accessToken];
+    _facebook_token = [[FBSDKAccessToken currentAccessToken] tokenString];
     
     if (_currentUser) {
-        [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,cover" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
+        
+        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me?fields=id,email,first_name,last_name,name,cover"
+                                                                       parameters:nil];
+        [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             [self hideLoadView];
             
             if (!error) {
@@ -1260,6 +1240,29 @@
                 // See: https://developers.facebook.com/docs/ios/errors
             }
         }];
+        
+//        [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,cover" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
+//            [self hideLoadView];
+//            
+//            if (!error) {
+//                NSDictionary * user = @{
+//                                        @"fb": @{
+//                                                @"cover": result[@"cover"][@"id"],
+//                                                @"email": result[@"email"],
+//                                                @"id": result[@"id"],
+//                                                @"name": result[@"name"],
+//                                                @"token": _facebook_token
+//                                                }
+//                                        };
+//                
+//                [self updateUser:user success:nil failure:nil];
+//                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationFbConnect object:nil]];
+//            }
+//            else {
+//                // An error occurred, we need to handle the error
+//                // See: https://developers.facebook.com/docs/ios/errors
+//            }
+//        }];
     }
     else {
         [self requestPath:@"/users/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
@@ -1268,19 +1271,6 @@
             
         }];
     }
-}
-
-- (void)facebokSearchFriends:(void (^)(id result))success {
-    [FBRequestConnection startWithGraphPath:@"/me/friends?fields=first_name,last_name,name,id,picture" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
-        [self hideLoadView];
-        
-        if (!error) {
-            success(result[@"data"]);
-        }
-        else {
-            //	        NSLog(@"facebokSearchFriends: %@", [error description]);
-        }
-    }];
 }
 
 - (void)checkDeviceToken {
@@ -1439,15 +1429,17 @@
 }
 
 - (void)handleTriggerPopupShow:(NSDictionary *)data {
-    [[[FLPopupInformation alloc] initWithTitle:data[@"title"] message:[[NSAttributedString alloc] initWithString:data[@"content"]] button:data[@"button"] ok:^() {
-        if (data[@"triggers"]) {
-            NSArray *triggers = data[@"triggers"];
-            for (NSDictionary *triggerData in triggers) {
-                FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-                [self handleTrigger:trigger];
-            }
-        }
-    }] show];
+    [[[FLPopupTrigger alloc] initWithData:data] show];
+    
+    //    [[[FLPopupInformation alloc] initWithTitle:data[@"title"] message:[[NSAttributedString alloc] initWithString:data[@"content"]] button:data[@"button"] ok:^() {
+    //        if (data[@"triggers"]) {
+    //            NSArray *triggers = data[@"triggers"];
+    //            for (NSDictionary *triggerData in triggers) {
+    //                FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
+    //                [self handleTrigger:trigger];
+    //            }
+    //        }
+    //    }] show];
 }
 
 - (void)handleTriggerContactsSend:(NSDictionary *)data {

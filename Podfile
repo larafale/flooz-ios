@@ -5,7 +5,10 @@ pod 'AFNetworking', '~> 2.0'
 pod 'SDWebImage', '~> 3.7'
 pod 'IDMPhotoBrowser', '~> 1.3'
 pod 'UICKeyChainStore'
-pod 'Facebook-iOS-SDK', '~> 3.15'
+pod "FBSDKCoreKit"
+pod "FBSDKLoginKit"
+pod "FBSDKShareKit"
+pod "FBSDKMessengerShareKit"
 pod 'Mixpanel'
 pod 'JTHelper', '~> 0.1.1'
 pod 'PonyDebugger'

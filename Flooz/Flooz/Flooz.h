@@ -23,6 +23,9 @@
 #import "FLReport.h"
 #import "FLTexts.h"
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
 static NSString *kNotificationFbConnect = @"kNotificationFbConnect";
 static NSString *kNotificationConnectionError = @"kNotificationConnectionError";
 static NSString *kNotificationRemoveWindowSubviews = @"kNotificationRemoveWindowSubviews";
@@ -52,6 +55,7 @@ static NSString *kBranchData = @"branchData";
 	NSArray *_activitiesCached;
 }
 
+@property (nonatomic, retain) FBSDKLoginManager *fbLoginManager;
 @property (strong, nonatomic) FLInvitationTexts *invitationTexts;
 @property (strong, nonatomic) FLTexts *currentTexts;
 @property (strong, readonly) FLUser *currentUser;
@@ -158,11 +162,8 @@ static NSString *kBranchData = @"branchData";
 - (void)sendEmailValidation;
 
 - (void)connectFacebook;
-- (void)getInfoFromFacebook;
-- (void)getFacebookPhoto:(void (^)(id result))success;
 - (void)disconnectFacebook;
 - (void)didConnectFacebook;
-- (void)facebokSearchFriends:(void (^)(id result))success;
 
 - (void)handleTrigger:(FLTrigger*)trigger;
 - (void)handleRequestTriggers:(NSDictionary*)responseObject;

@@ -331,39 +331,12 @@
 
 - (void)sendWithFacebook {
     if ([_fbData[@"method"] isEqualToString:@"widget"]) {
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       _fbData[@"name"] , @"name",
-                                       _fbData[@"caption"], @"caption",
-                                       _fbData[@"description"], @"description",
-                                       _fbData[@"link"], @"link",
-                                       nil];
+        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+        content.contentURL = [NSURL URLWithString:_fbData[@"link"]];
+        content.contentTitle = _fbData[@"name"];
+        content.contentDescription = _fbData[@"description"];
         
-        FBSession *session = nil;
-        
-        if ([[Flooz sharedInstance] facebook_token]) {
-            session = [FBSession activeSession];
-        }
-        
-        [FBWebDialogs presentFeedDialogModallyWithSession:session
-                                               parameters:params
-                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                                                      if (error) {
-                                                          NSLog(@"Error publishing story: %@", error.description);
-                                                      } else {
-                                                          if (result == FBWebDialogResultDialogNotCompleted) {
-                                                              NSLog(@"User cancelled.");
-                                                          } else {
-                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
-                                                              
-                                                              if (![urlParams valueForKey:@"post_id"]) {
-                                                                  NSLog(@"User cancelled.");
-                                                                  
-                                                              } else {
-                                                                  [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
-                                                              }
-                                                          }
-                                                      }
-                                                  }];
+        [FBSDKShareDialog showFromViewController:self withContent:content delegate:self];
     }
     else {
         if ([[Flooz sharedInstance] facebook_token]) {
@@ -373,6 +346,18 @@
             [[Flooz sharedInstance] connectFacebook];
         }
     }
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results {
+    [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error {
+    
+}
+
+- (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
+    
 }
 
 - (void)showFbConfirmBox {

@@ -163,7 +163,7 @@
     
     // Header - Blurred Image
     headerBlurImageView = [[UIImageView alloc] initWithFrame:header.bounds];
-    headerBlurImageView.image =  [[UIImage imageNamed:@"back-secure"] blurredImageWithRadius:15 iterations:20 tintColor:[UIColor clearColor]];
+    headerBlurImageView.image =  [[UIImage imageNamed:@"back-secure"] blurredImageWithRadius:20 iterations:20 tintColor:[UIColor clearColor]];
     headerBlurImageView.contentMode = UIViewContentModeScaleAspectFill;
     headerBlurImageView.alpha = 0.0;
     
