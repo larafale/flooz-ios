@@ -11,7 +11,7 @@
 #import "FriendCell.h"
 #import "FriendRequestCellDelegate.h"
 
-@interface SearchViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, FriendAddSearchBarDelegate, UIActionSheetDelegate, FriendRequestCellDelegate> {
+@interface SearchViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, FriendAddSearchBarDelegate, UIActionSheetDelegate, FriendRequestCellDelegate, UIAlertViewDelegate> {
     UIRefreshControl *refreshControl;
 }
 

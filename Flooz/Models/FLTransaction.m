@@ -84,16 +84,12 @@
     
     _social = [[FLSocial alloc] initWithJSON:json];
     
-    _isPrivate = [[json objectForKey:@"isPrivate"] boolValue];
+    _isCancelable = NO;
+    _isAcceptable = NO;
     
-    {
-        _isCancelable = NO;
-        _isAcceptable = NO;
-        
-        if (_status == TransactionStatusPending) {
-            if ([[json objectForKey:@"actions"] count] == 2) {
-                _isAcceptable = YES;
-            }
+    if (_status == TransactionStatusPending) {
+        if ([[json objectForKey:@"actions"] count] == 2) {
+            _isAcceptable = YES;
         }
     }
     
@@ -140,7 +136,7 @@
     }
     
     _haveAction = NO;
-    if (_isPrivate && _isAcceptable) {
+    if (_isAcceptable) {
         _haveAction = YES;
     }
 }

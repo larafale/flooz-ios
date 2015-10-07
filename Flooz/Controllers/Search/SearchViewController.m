@@ -19,6 +19,8 @@
     BOOL isReloading;
     
     NSString *searchString;
+    
+    FLUser *currentUser;
 }
 
 @end
@@ -265,8 +267,9 @@
     }];
 }
 
-- (void)acceptFriendSuggestion:(NSString *)friendSuggestionId cell:(UITableViewCell *)cell {
-    
+- (void)acceptFriendSuggestion:(FLUser *)friend cell:(UITableViewCell *)cell {
+    currentUser = friend;
+
     NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
     
     FLUser *tmp = [FLUser new];
@@ -278,40 +281,63 @@
     }
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] friendAdd:friendSuggestionId success:^{
-        isReloading = YES;
-        [[Flooz sharedInstance] friendsSuggestion: ^(id result) {
-            [refreshControl endRefreshing];
-            friendsSuggestion = result;
-            [self reloadFriendsList];
-        }];
-        
-        if (![searchString isBlank]) {
-            [[Flooz sharedInstance] friendSearch:searchString forNewFlooz:NO withPhones:@[] success: ^(id result) {
-                friendsSearch = result;
-                [self reloadFriendsList];
-            }];
-        }
+    [[Flooz sharedInstance] friendAdd:friend.userId success:^{
+        currentUser.isFriend = YES;
+        [_tableView reloadData];
     } failure:nil];
 }
 
-- (void)removeFriend:(NSString *)friendId {
-    [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] friendRemove:friendId success: ^{
-        isReloading = YES;
-        [[Flooz sharedInstance] friendsSuggestion: ^(id result) {
-            [refreshControl endRefreshing];
-            friendsSuggestion = result;
-            [self reloadFriendsList];
+- (void)removeFriend:(FLUser *)friend {
+    currentUser = friend;
+    [self showUnfriendMenu];
+}
+
+- (void)showUnfriendMenu {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
+        [self createUnfriendActionSheet];
+    else
+        [self createUnfriendAlertController];
+}
+
+- (void)createUnfriendAlertController {
+    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:currentUser.fullname message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"UNFRIEND", nil) style:UIAlertActionStyleDestructive handler: ^(UIAlertAction *action) {
+        [[Flooz sharedInstance] friendRemove:currentUser.userId success:^{
+            currentUser.isFriend = NO;
+            [_tableView reloadData];
+        } failure:^(NSError *error) {
+
         }];
-        
-        if (![searchString isBlank]) {
-            [[Flooz sharedInstance] friendSearch:searchString forNewFlooz:NO withPhones:@[] success: ^(id result) {
-                friendsSearch = result;
-                [self reloadFriendsList];
-            }];
-        }
-        } failure:nil];
+    }]];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:newAlert animated:YES completion:nil];
+}
+
+- (void)createUnfriendActionSheet {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"UNFOLLOW", nil)];
+    [actionSheet setDestructiveButtonIndex:index];
+    
+    index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet setTag:2];
+    
+    [actionSheet showInView:appDelegate.window];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (actionSheet.tag == 2 && buttonIndex == 0) {
+        [[Flooz sharedInstance] friendRemove:currentUser.userId success:^{
+            currentUser.isFriend = NO;
+            [_tableView reloadData];
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 
 #pragma mark - Keyboard Management

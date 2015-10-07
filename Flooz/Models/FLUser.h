@@ -80,6 +80,7 @@ typedef enum e_FLUserKind {
 @property (nonatomic)  BOOL isPro;
 @property (nonatomic)  BOOL isCactus;
 @property (nonatomic)  BOOL isFriend;
+@property (nonatomic)  BOOL isComplete;
 
 @property (nonatomic) FLUserPublicStats publicStats;
 

@@ -300,7 +300,7 @@
 
 "PRIVATE_USER" = "Cet utilisateur est privé";
 
-"EMPTY_TIMELINE" = "Aucun Flooz";
+"EMPTY_TIMELINE" = "Aucun Flooz Visible";
 "EMPTY_FRIENDS" = "Aucun Ami";
 "EMPTY_FOLLOWERS" = "Aucun Abonné";
 "EMPTY_FOLLOWINGS" = "Aucun Abonnement";
@@ -332,7 +332,7 @@
 
 "FRIENDS_FRIENDS" = "Mes amis";
 "FRIENDS_FRIENDS_SEARCH" = "Recherche";
-"FRIENDS_FRIENDS_REQUEST_MESSAGE" = "Que voulez-vous faire ?";
+"FRIENDS_FRIENDS_REQUEST_MESSAGE" = "vous demande en ami.";
 "FRIENDS_FRIENDS_REQUEST" = "Demandes en attente";
 "FRIENDS_FRIENDS_SUGGESTION" = "Vous connaissez peut-être...";
 "FRIENDS_BUTTON_INVITE" = "Inviter mes amis";

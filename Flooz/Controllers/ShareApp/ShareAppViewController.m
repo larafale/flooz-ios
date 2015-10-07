@@ -349,7 +349,15 @@
 }
 
 - (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results {
-    [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
+    NSURL *fbURL = [NSURL URLWithString:@"fb://root"];
+    
+    if (![[UIApplication sharedApplication] canOpenURL:fbURL]) {
+        if (results[@"postId"] != nil) {
+            [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
+        }
+    } else {
+        [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
+    }
 }
 
 - (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error {

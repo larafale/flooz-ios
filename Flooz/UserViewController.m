@@ -115,19 +115,27 @@
     emptyCellHeight = CGRectGetHeight(self.tableView.frame) - CGRectGetHeight(headerCell.frame);
     
     [self reloadData];
-    [self registerNotification:@selector(refreshData) name:kNotificationReloadCurrentUser object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self refreshData];
+    [self registerNotification:@selector(refreshData) name:kNotificationReloadCurrentUser object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void) refreshData {
     [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-        if (result)
+        if (result) {
             currentUser = result;
+            currentUser.isComplete = YES;
+        }
         [self reloadData];
     } failure:nil];
 }
@@ -166,6 +174,8 @@
     headerBlurImageView.image =  [[UIImage imageNamed:@"back-secure"] blurredImageWithRadius:20 iterations:20 tintColor:[UIColor clearColor]];
     headerBlurImageView.contentMode = UIViewContentModeScaleAspectFill;
     headerBlurImageView.alpha = 0.0;
+    [headerBlurImageView setUserInteractionEnabled:YES];
+    [headerBlurImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
     
     [header insertSubview:headerBlurImageView belowSubview:headerLabel];
     
@@ -175,6 +185,7 @@
 - (void)createHeaderCell {
     
     headerCell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
+    [headerCell setUserInteractionEnabled:YES];
     
     avatarImage = [[FLUserView alloc] initWithFrame:CGRectMake(10, avatarMarginTop, avatarSize, avatarSize)];
     [avatarImage setUserInteractionEnabled:YES];
@@ -257,7 +268,7 @@
 - (void)reloadData {
     [self reloadTableView];
     
-    if (currentUser.email == nil)
+    if (!currentUser.isComplete)
         [self reloadMiniUser];
     else
         [self reloadUser];
@@ -654,38 +665,6 @@
     }];
 }
 
-//- (UITableViewCell *) generatePrivateCell {
-//    static UITableViewCell *privateCell;
-//
-//    if (!privateCell) {
-//        privateCell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), emptyCellHeight)];
-//        [privateCell setBackgroundColor:[UIColor clearColor]];
-//        [privateCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-//
-//        UIImageView *lockImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
-//        [lockImg setImage:[[UIImage imageNamed:@"lock-close"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-//        [lockImg setContentMode:UIViewContentModeScaleAspectFit];
-//        [lockImg setTintColor:[UIColor customPlaceholder]];
-//
-//        UILabel *text = [[UILabel alloc] initWithText:NSLocalizedString(@"PRIVATE_USER", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:16] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-//
-//        CGFloat globalHeight = CGRectGetHeight(lockImg.frame) + 10 + CGRectGetHeight(text.frame);
-//
-//        CGRectSetY(lockImg.frame, emptyCellHeight / 2 - globalHeight / 2);
-//        CGRectSetY(text.frame, CGRectGetMaxY(lockImg.frame) + 10);
-//
-//        [text setWidthToFit];
-//
-//        CGRectSetX(lockImg.frame, PPScreenWidth() / 2 - CGRectGetWidth(lockImg.frame) / 2);
-//        CGRectSetX(text.frame, PPScreenWidth() / 2 - CGRectGetWidth(text.frame) / 2);
-//
-//        [privateCell addSubview:lockImg];
-//        [privateCell addSubview:text];
-//    }
-//
-//    return privateCell;
-//}
-
 - (UITableViewCell *) generateEmptyTimelineCell {
     static UITableViewCell *emptyCell;
     
@@ -759,10 +738,10 @@
         
         // Avatar -----------
         
-        CGFloat avatarScaleFactor = (MIN(offset_HeaderStop, offset)) / avatarImage.bounds.size.height / 1.8; // Slow down the animation
-        CGFloat avatarSizeVariation = ((avatarImage.bounds.size.height * (1.0 + avatarScaleFactor)) - avatarImage.bounds.size.height) / 2.0;
-        avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0);
-        avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0);
+//        CGFloat avatarScaleFactor = (MIN(offset_HeaderStop, offset)) / avatarImage.bounds.size.height / 1.8; // Slow down the animation
+//        CGFloat avatarSizeVariation = ((avatarImage.bounds.size.height * (1.0 + avatarScaleFactor)) - avatarImage.bounds.size.height) / 2.0;
+//        avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0);
+//        avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0);
         
         if (offset <= offset_HeaderStop) {
             if (avatarImage.layer.zPosition < header.layer.zPosition) {

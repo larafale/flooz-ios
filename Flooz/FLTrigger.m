@@ -32,7 +32,7 @@
 }
 
 +(FLTriggerType)triggerTypeParamToEnum:(NSString*)param {
-    
+
     if ([param isEqualToString:@"timeline:reload"])
         return TriggerReloadTimeline;
     else if ([param isEqualToString:@"line:show"])

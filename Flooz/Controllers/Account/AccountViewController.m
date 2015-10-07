@@ -369,6 +369,7 @@
         } else if ([action isEqualToString:@"sponsor"]) {
             [[self navigationController] pushViewController:[DiscountCodeViewController new] animated:YES];
         } else if ([action isEqualToString:@"profile"]) {
+            [Flooz sharedInstance].currentUser.isComplete = YES;
             [appDelegate showUser:[Flooz sharedInstance].currentUser inController:self];
         } else if ([action isEqualToString:@"friendsRequest"]) {
             [[self navigationController] pushViewController:[FriendRequestViewController new] animated:YES];

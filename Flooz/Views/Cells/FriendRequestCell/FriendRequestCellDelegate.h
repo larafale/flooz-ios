@@ -11,7 +11,7 @@
 @protocol FriendRequestCellDelegate <NSObject>
 
 - (void)didReloadData;
-- (void)acceptFriendSuggestion:(NSString *)friendSuggestionId cell:(UITableViewCell*)cell;
-- (void)removeFriend:(NSString *)friendId;
+- (void)acceptFriendSuggestion:(FLUser *)user cell:(UITableViewCell*)cell;
+- (void)removeFriend:(FLUser *)user;
 
 @end

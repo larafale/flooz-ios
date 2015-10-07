@@ -1425,21 +1425,14 @@
 }
 
 - (void)handleTriggerHttpCall:(NSDictionary *)data {
-    [self requestPath:data[@"url"] method:data[@"method"] params:data[@"body"] success:nil failure:nil];
+    if (data[@"src"] && [data[@"src"] isEqualToString:@"ext"]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:data[@"url"]]];
+    } else if (!data[@"src"] || [data[@"src"] isEqualToString:@"int"])
+        [self requestPath:data[@"url"] method:data[@"method"] params:data[@"body"] success:nil failure:nil];
 }
 
 - (void)handleTriggerPopupShow:(NSDictionary *)data {
     [[[FLPopupTrigger alloc] initWithData:data] show];
-    
-    //    [[[FLPopupInformation alloc] initWithTitle:data[@"title"] message:[[NSAttributedString alloc] initWithString:data[@"content"]] button:data[@"button"] ok:^() {
-    //        if (data[@"triggers"]) {
-    //            NSArray *triggers = data[@"triggers"];
-    //            for (NSDictionary *triggerData in triggers) {
-    //                FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-    //                [self handleTrigger:trigger];
-    //            }
-    //        }
-    //    }] show];
 }
 
 - (void)handleTriggerContactsSend:(NSDictionary *)data {
@@ -1448,7 +1441,6 @@
             [[Flooz sharedInstance] createContactList:nil atSignup:YES];
         }
     }];
-    
 }
 
 - (void)handleTriggerHomeShow:(NSDictionary *)data {

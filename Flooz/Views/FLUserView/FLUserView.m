@@ -129,14 +129,16 @@
 //    CGRectSetWidthHeight(avatar.frame, CGRectGetWidth(self.frame) * RATIO, CGRectGetHeight(self.frame) * RATIO);
 //    avatar.center = CGRectGetFrameCenter(self.frame);
 
-    avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;
+//    avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 5.5;
+    avatar.layer.cornerRadius = 5;
 //    avatar.layer.borderWidth = 0;
 }
 
 - (void)hidePlaceholder {
 //    avatar.frame = CGRectMakeWithSize(self.frame.size);
 
-	avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;
+//	avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 5.5;
+    avatar.layer.cornerRadius = 5;
 //    avatar.layer.borderWidth = 2.;
 }
 

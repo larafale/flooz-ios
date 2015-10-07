@@ -52,16 +52,22 @@
     
     facebookSwitch = [FLSwitch new];
     [facebookSwitch addTarget:self action:@selector(didSwitchChange) forControlEvents:UIControlEventValueChanged];
+    [self refreshFBStatus];
+    
+    [self registerNotification:@selector(refreshFBStatus) name:kNotificationFbConnect object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)refreshFBStatus {
     if ([[Flooz sharedInstance] facebook_token]) {
         facebookSwitch.on = YES;
     }
     else {
         facebookSwitch.on = NO;
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 }
 
 #pragma mark - TableView
@@ -116,7 +122,6 @@
         [[Flooz sharedInstance] disconnectFacebook];
     }
     else {
-        facebookSwitch.on = YES;
         [[Flooz sharedInstance] connectFacebook];
     }
 }

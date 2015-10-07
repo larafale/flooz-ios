@@ -55,17 +55,19 @@
     [refreshControl setTintColor:[UIColor customBlueLight]];
     [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
+    
+    [self loadCachedActivities];
+    [self handleRefresh];
+    
+    [self registerNotification:@selector(handleRefresh) name:@"newNotifications" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self loadCachedActivities];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [self handleRefresh];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

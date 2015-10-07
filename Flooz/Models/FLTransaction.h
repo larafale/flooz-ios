@@ -59,7 +59,6 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (strong, nonatomic) NSString *when;
 @property (strong, nonatomic) NSArray *text3d;
 
-@property (nonatomic) BOOL isPrivate;
 @property (nonatomic) BOOL isCancelable; // Si peut annuler la demande
 @property (nonatomic) BOOL isAcceptable; // Si peut accepter ou refuser de payer
 

@@ -60,6 +60,8 @@
     _isCactus = [[json objectForKey:@"isCactus"] boolValue];
     _isFriend = [[json objectForKey:@"isFriend"] boolValue];
     
+    _isComplete = [[json objectForKey:@"isComplete"] boolValue];
+    
     _actions = [[json objectForKey:@"actions"] mutableCopy];
     _metrics = [json objectForKey:@"metrics"];
     

@@ -194,7 +194,7 @@
 }
 
 - (void)createFloozerLabel {
-    floozerLabel = [UILabel newWithFrame:CGRectMake(0.0f, 3.0f, CGRectGetWidth(rightView.frame), 20.0f)];
+    floozerLabel = [UILabel newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(rightView.frame), 20.0f)];
     floozerLabel.textColor = [UIColor whiteColor];
     floozerLabel.font = [UIFont customContentRegular:14];
     floozerLabel.numberOfLines = 0;

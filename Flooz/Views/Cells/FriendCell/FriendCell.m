@@ -153,11 +153,11 @@
 #pragma mark -
 
 - (void)accept {
-	[_delegate acceptFriendSuggestion:[_friend userId] cell:self];
+	[_delegate acceptFriendSuggestion:_friend cell:self];
 }
 
 - (void)decline {
-    [_delegate removeFriend:[_friend userId]];
+    [_delegate removeFriend:_friend];
 }
 
 #pragma mark -

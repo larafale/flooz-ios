@@ -72,8 +72,11 @@
         
         if (![buttonsString count]) {
             [buttonsString addObject:NSLocalizedString(@"GLOBAL_OK", nil)];
-            [buttonsAction addObject:@[]];
-        }
+            
+            if (data[@"triggers"])
+                [buttonsAction addObject:data[@"triggers"]];
+            else
+                [buttonsAction addObject:@[]];        }
         
         [self commmonInit];
     }

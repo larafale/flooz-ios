@@ -50,7 +50,6 @@
         actionButtonHeight = actionButtonWidth = paymentButtonHeight = heightBar - (marginV * 2.0f);
         actionButtonMargin = ((widthBar / 2.0f) - (2.0f * actionButtonWidth)) / 3.0f;
         
-        
         _dictionary = dictionary;
         currentController = controller;
         actionValidSend = actionSend;
