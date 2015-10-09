@@ -30,6 +30,7 @@
     self.shareSms = json[@"sms"];
     self.shareTitle = json[@"title"];
     self.shareHeader = json[@"h1"];
+    self.shareMultiSms = json[@"sms-multi"];
 }
 
 @end

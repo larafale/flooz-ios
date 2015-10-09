@@ -13,7 +13,9 @@
 @interface UserViewController : BaseViewController<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate, TimelineDelegate, TransactionCellDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic) FLTableView *tableView;
+@property (nonatomic, retain) FLUser *currentUser;
 
 - (id)initWithUser:(FLUser*)user;
+- (void)shakeView;
 
 @end

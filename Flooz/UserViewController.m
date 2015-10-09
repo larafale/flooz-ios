@@ -25,7 +25,6 @@
 #define distance_W_LabelHeader (offset_B_LabelHeader - offset_HeaderStop) // The distance between the bottom of the Header and the top of the White Label
 
 @interface UserViewController () {
-    FLUser *currentUser;
     FLUserView *avatarImage;
     UIView *header;
     UILabel *headerLabel;
@@ -71,6 +70,8 @@
 @end
 
 @implementation UserViewController
+
+@synthesize currentUser;
 
 - (id)initWithUser:(FLUser*)user {
     self = [super init];
@@ -162,20 +163,20 @@
     
     // Header - Image
     headerImageView = [[UIImageView alloc] initWithFrame:header.bounds];
-    headerImageView.image = [UIImage imageNamed:@"back-secure"];
+    headerImageView.image = [UIImage imageNamed:@"default-cover"];
     headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     [headerImageView setUserInteractionEnabled:YES];
-    [headerImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
+//    [headerImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
     
     [header insertSubview:headerImageView belowSubview:headerLabel];
     
     // Header - Blurred Image
     headerBlurImageView = [[UIImageView alloc] initWithFrame:header.bounds];
-    headerBlurImageView.image =  [[UIImage imageNamed:@"back-secure"] blurredImageWithRadius:20 iterations:20 tintColor:[UIColor clearColor]];
+    headerBlurImageView.image =  [[UIImage imageNamed:@"default-cover"] blurredImageWithRadius:20 iterations:20 tintColor:[UIColor clearColor]];
     headerBlurImageView.contentMode = UIViewContentModeScaleAspectFill;
     headerBlurImageView.alpha = 0.0;
     [headerBlurImageView setUserInteractionEnabled:YES];
-    [headerBlurImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
+//    [headerBlurImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
     
     [header insertSubview:headerBlurImageView belowSubview:headerLabel];
     
@@ -342,7 +343,7 @@
     [headerLabel setText:[NSString stringWithFormat:@"%@\n@%@", currentUser.fullname, currentUser.username]];
     
     if (currentUser.coverURL) {
-        [headerImageView sd_setImageWithURL:[NSURL URLWithString:currentUser.coverURL] placeholderImage:[UIImage imageNamed:@"back-secure"]];
+        [headerImageView sd_setImageWithURL:[NSURL URLWithString:currentUser.coverURL] placeholderImage:[UIImage imageNamed:@"default-cover"]];
         [headerBlurImageView sd_setImageWithURL:[NSURL URLWithString:currentUser.coverURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [headerBlurImageView setImage:[image blurredImageWithRadius:15 iterations:20 tintColor:[UIColor clearColor]]];
         }];
@@ -657,7 +658,7 @@
     
     nextPageIsLoading = YES;
     
-    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl) {
+    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl, TransactionScope scope) {
         [transactions addObjectsFromArray:result];
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
@@ -710,7 +711,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scroll {
     
     CGFloat offset = scroll.contentOffset.y;
-    CATransform3D avatarTransform = CATransform3DIdentity;
     CATransform3D headerTransform = CATransform3DIdentity;
     
     if (offset < 0) {
@@ -759,7 +759,6 @@
     }
     
     header.layer.transform = headerTransform;
-    avatarImage.layer.transform = avatarTransform;
 }
 
 #pragma marks - unfollow menu

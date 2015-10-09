@@ -46,8 +46,6 @@
     
     NSMutableSet *rowsWithPaymentField;
     NSMutableArray *cells;
-    
-    BOOL isReloading;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -357,11 +355,13 @@
     
     nextPageIsLoading = YES;
     
-    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl) {
-        [transactions addObjectsFromArray:result];
-        _nextPageUrl = nextPageUrl;
-        nextPageIsLoading = NO;
-        [_tableView reloadData];
+    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl, TransactionScope scope) {
+        if (scope == currentScope) {
+            [transactions addObjectsFromArray:result];
+            _nextPageUrl = nextPageUrl;
+            nextPageIsLoading = NO;
+            [_tableView reloadData];
+        }
     }];
 }
 
@@ -448,42 +448,37 @@
 
 - (void)reloadTableView {
     
-    if (isReloading) {
-        return;
-    }
-    
     if (![transactions count]) {
-        isReloading = YES;
         self.tableView.contentOffset = CGPointMake(0, -refreshControl.frame.size.height);
         [refreshControl beginRefreshing];
     }
     
-    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:currentScope] success: ^(id result, NSString *nextPageUrl) {
-        transactions = [result mutableCopy];
-        _nextPageUrl = nextPageUrl;
-        
-        if (transactions.count == 0) {
-            if (_backTimer) {
-                [_backTimer invalidate];
-                _backTimer = nil;
-            }
-            _backTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showEmptyBack) userInfo:nil repeats:NO];
-        } else
-            _tableView.backgroundView = nil;
-        
-        nextPageIsLoading = NO;
-        
-        [self didFilterChange];
-        isReloading = NO;
+    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:currentScope] success: ^(id result, NSString *nextPageUrl, TransactionScope scope) {
+        if (scope == currentScope) {
+            transactions = [result mutableCopy];
+            _nextPageUrl = nextPageUrl;
+            
+            if (transactions.count == 0) {
+                if (_backTimer) {
+                    [_backTimer invalidate];
+                    _backTimer = nil;
+                }
+                _backTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showEmptyBack) userInfo:nil repeats:NO];
+            } else
+                _tableView.backgroundView = nil;
+            
+            nextPageIsLoading = NO;
+            
+            [self didFilterChange];
+        }
     } failure:^(NSError *error) {
-        isReloading = NO;
         [_tableView setContentOffset:CGPointZero animated:YES];
         [refreshControl endRefreshing];
     }];
 }
 
 - (void)didFilterChange {
-    if ([refreshControl isRefreshing] || isReloading) {
+    if ([refreshControl isRefreshing]) {
         [_tableView setContentOffset:CGPointZero animated:YES];
         [refreshControl endRefreshing];
     }

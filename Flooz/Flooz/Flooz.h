@@ -102,10 +102,10 @@ static NSString *kBranchData = @"branchData";
 - (void)uploadDocument:(NSData *)data field:(NSString *)field success:(void (^)())success failure:(void (^)(NSError *error))failure;
 
 - (void)userTimeline:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
-- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
-- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
-- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
-- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
+- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
+- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
+- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
+- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success;
 - (void)transactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 - (void)readTransactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 - (void)readTransactionsSuccess:(void (^)(id result))success;
@@ -143,6 +143,7 @@ static NSString *kBranchData = @"branchData";
 - (void)inviteWithPhone:(NSString *)phone;
 - (void)invitationStrings:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)sendInvitationMetric:(NSString *)canal;
+- (void)sendInvitationMetric:(NSString *)canal withTotal:(NSInteger)total;
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success;
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success failure:(void (^)(NSError *error))failure;
@@ -155,6 +156,7 @@ static NSString *kBranchData = @"branchData";
 - (void)friendsRequest:(void (^)(id result))success;
 //- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success;
 //- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success failure:(void (^)(NSError *error))failure;
+- (void)checkContactList:(NSArray *)phones success:(void (^)(NSArray *result))success;
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 

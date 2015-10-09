@@ -82,6 +82,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        [self reloadTransaction];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -152,8 +157,10 @@
 - (void)createHeader {
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"report-menu-accessory"] forState:UIControlStateNormal];
+    [btn setImage:[[UIImage imageNamed:@"cog"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     btn.frame = CGRectMake(0, 0, 25, 25);
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(3, 3, 3, 3)];
+    [btn setTintColor:[UIColor customBlue]];
     [btn addTarget:self action:@selector(showReportMenu) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *reportBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];

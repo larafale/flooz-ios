@@ -197,14 +197,16 @@
 }
 
 + (TransactionScope)transactionParamsToScope:(NSString *)param {
-    if ([param isEqualToString:@"public"])
-        return TransactionScopePublic;
-    if ([param isEqualToString:@"friend"])
-        return TransactionScopeFriend;
-    if ([param isEqualToString:@"private"])
-        return TransactionScopePrivate;
-    if ([param isEqualToString:@"all"])
-        return TransactionScopeAll;
+    if (param) {
+        if ([param isEqualToString:@"public"])
+            return TransactionScopePublic;
+        if ([param isEqualToString:@"friend"])
+            return TransactionScopeFriend;
+        if ([param isEqualToString:@"private"])
+            return TransactionScopePrivate;
+        if ([param isEqualToString:@"all"])
+            return TransactionScopeAll;
+    }
     return TransactionScopePublic;
 }
 

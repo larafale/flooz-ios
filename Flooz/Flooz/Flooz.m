@@ -32,6 +32,7 @@
 #import "SettingsBankViewController.h"
 #import "FLTabBarController.h"
 #import "FLPopupTrigger.h"
+#import "ShareSMSViewController.h"
 
 #import "FLReachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -409,6 +410,13 @@
     }
 }
 
+- (void)checkContactList:(NSArray *)phones success:(void (^)(NSArray *result))success {
+    [self requestPath:@"/utils/exists/" method:@"POST" params:@{@"field":@"phones", @"value":phones} success:^(id result) {
+        if (success)
+            success(result[@"items"]);
+    } failure:nil];
+}
+
 - (void)updateCurrentUserWithSuccess:(void (^)())success failure:(void (^)(NSError *error))failure {
     if ([appDelegate shouldRefreshWithKey:kKeyLastUpdate]) {
         __block id successBlock = ^(id result) {
@@ -565,11 +573,11 @@
     [self requestPath:[NSString stringWithFormat:@"/users/%@/flooz", userId] method:@"GET" params:nil success:successBlock failure:failure];
 }
 
-- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
     [self timeline:scope state:nil success:success failure:failure];
 }
 
-- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
@@ -578,7 +586,7 @@
         [self saveTimeline:result[@"items"] forScope:[FLTransaction transactionParamsToScope:scope]];
         if (success) {
             [self saveSettingsObject:[NSDate date] withKey:[NSString stringWithFormat:@"kLastUpdate%@", scope]];
-            success(transactions, result[@"next"]);
+            success(transactions, result[@"next"], [FLTransaction transactionParamsToScope:result[@"scope"]]);
         }
     };
     
@@ -587,7 +595,7 @@
             NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
             if (transactions && success) {
                 self.timelinePageSize = [transactions count];
-                success(transactions, nil);
+                success(transactions, nil, [FLTransaction transactionParamsToScope:scope]);
             } else if (failure)
                 failure(error);
         } else if (failure) {
@@ -606,11 +614,11 @@
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failureBlock];
 }
 
-- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         if (success) {
-            success(transactions, result[@"next"]);
+            success(transactions, result[@"next"], [FLTransaction transactionParamsToScope:result[@"scope"]]);
         }
     };
     
@@ -618,12 +626,12 @@
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failure];
 }
 
-- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success {
+- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
         if (success) {
-            success(transactions, result[@"next"]);
+            success(transactions, result[@"next"], [FLTransaction transactionParamsToScope:result[@"scope"]]);
         }
     };
     
@@ -920,15 +928,6 @@
     [self requestPath:path method:@"POST" params:nil success:success failure:failure];
 }
 
-//- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success {
-//    [self friendAcceptSuggestion:friendId canal:canal success:success failure:nil];
-//}
-//
-//- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success failure:(void (^)(NSError *error))failure  {
-//    NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/request", friendId];
-//    [self requestPath:path method:@"POST" params:(canal != nil ? @{@"metrics":@{@"selectedFrom": canal}} : nil) success:success failure:failure];
-//}
-
 - (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result))success {
     id successBlock = ^(id result) {
         NSMutableArray *friends = [self createFriendsArrayFromSearchResult:result];
@@ -962,6 +961,10 @@
 
 - (void)sendInvitationMetric:(NSString *)canal {
     [self requestPath:@"/invitations/callback" method:@"GET" params:@{@"canal" : canal} success:nil failure:nil];
+}
+
+- (void)sendInvitationMetric:(NSString *)canal withTotal:(NSInteger)total {
+    [self requestPath:@"/invitations/callback" method:@"GET" params:@{@"canal": canal, @"total":[NSNumber numberWithInteger:total]} success:nil failure:nil];
 }
 
 #pragma mark -
@@ -1195,13 +1198,6 @@
             [[Flooz sharedInstance] didConnectFacebook];
         }
     }];
-    
-    //    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile",@"email",@"user_friends",@"publish_actions"]
-    //                                       allowLoginUI:YES
-    //                                  completionHandler:
-    //     ^(FBSession *session, FBSessionState state, NSError *error) {
-    //         [appDelegate facebookSessionStateChanged:session state:state error:error];
-    //     }];
 }
 
 - (void)disconnectFacebook {
@@ -1240,29 +1236,6 @@
                 // See: https://developers.facebook.com/docs/ios/errors
             }
         }];
-        
-//        [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,cover" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
-//            [self hideLoadView];
-//            
-//            if (!error) {
-//                NSDictionary * user = @{
-//                                        @"fb": @{
-//                                                @"cover": result[@"cover"][@"id"],
-//                                                @"email": result[@"email"],
-//                                                @"id": result[@"id"],
-//                                                @"name": result[@"name"],
-//                                                @"token": _facebook_token
-//                                                }
-//                                        };
-//                
-//                [self updateUser:user success:nil failure:nil];
-//                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationFbConnect object:nil]];
-//            }
-//            else {
-//                // An error occurred, we need to handle the error
-//                // See: https://developers.facebook.com/docs/ios/errors
-//            }
-//        }];
     }
     else {
         [self requestPath:@"/users/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
@@ -1449,7 +1422,7 @@
 
 - (void)handleTriggerIbanShow:(NSDictionary *)data {
     SettingsBankViewController *controller = [SettingsBankViewController new];
-    [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:NULL];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)handleTriggerTutoShow:(NSDictionary *)data {
@@ -1472,6 +1445,11 @@
             }
         } failure:nil];
     }
+}
+
+- (void)handleTriggerInvitationSMSShow:(NSDictionary *)data {
+    ShareSMSViewController *controller = [ShareSMSViewController new];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)handleTrigger:(FLTrigger*)trigger {
@@ -1504,6 +1482,7 @@
                                    [NSNumber numberWithInt:TriggerCloseView]: NSStringFromSelector(@selector(handleTriggerViewClose:)),
                                    [NSNumber numberWithInt:TriggerSendContacts]: NSStringFromSelector(@selector(handleTriggerContactsSend:)),
                                    [NSNumber numberWithInt:TriggerUserShow]: NSStringFromSelector(@selector(handleTriggerUserShow:)),
+                                   [NSNumber numberWithInt:TriggerInvitationSMSShow]: NSStringFromSelector(@selector(handleTriggerInvitationSMSShow:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {

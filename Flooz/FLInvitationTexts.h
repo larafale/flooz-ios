@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSString *shareHeader;
 @property (nonatomic, retain) NSString *shareSubheader;
 @property (nonatomic, retain) NSString *shareSms;
+@property (nonatomic, retain) NSString *shareMultiSms;
 @property (nonatomic, retain) NSString *shareTwitter;
 @property (nonatomic, retain) NSDictionary *shareMail;
 @property (nonatomic, retain) NSDictionary *shareFb;

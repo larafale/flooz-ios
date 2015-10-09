@@ -27,6 +27,7 @@
 #import "UICKeyChainStore.h"
 #import "SignupNavigationController.h"
 #import "UserViewController.h"
+#import "FLNavigationController.h"
 
 #ifdef TARGET_IPHONE_SIMULATOR
 #import <PonyDebugger/PonyDebugger.h>
@@ -423,29 +424,6 @@
 
 #pragma mark - Facebook
 
-//- (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error {
-//    // WARNING erreur code 2 http://stackoverflow.com/questions/20657780/ios-facebook-sdk-error-domain-com-facebook-sdk-code-2-and-code-7
-//    if (error) {
-//        [[Flooz sharedInstance] hideLoadView];
-//        [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError time:nil delay:nil];
-//    }
-//    
-//    if (!error && state == FBSessionStateOpen) {
-//        [[Flooz sharedInstance] didConnectFacebook];
-//        return;
-//    }
-//    if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed) {
-//        // If the session is closed
-//        // Show the user the logged-out UI
-//        //        [self userLoggedOut];
-//    }
-//    
-//    [[Flooz sharedInstance] hideLoadView];
-//    if (error) {
-//        [FBSession.activeSession closeAndClearTokenInformation];
-//    }
-//}
-
 // During the Facebook login flow, your app passes control to the Facebook iOS app or Facebook in a mobile browser.
 // After authentication, your app will be called back with the session information.
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -604,12 +582,12 @@
 //    if (!user || [[user userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]] ||
 //        ![user username] || ![user fullname] || [user.username isEqualToString:@"flooz"])
 //        return;
-//    
+//
 //    currentUserForMenu = user;
 //    currentImageView = imageView;
 //    haveMenuFriend = NO;
 //    _canRemoveFriend = canRemoveFriend;
-//    
+//
 //    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
 //        [self createActionSheetInWindow:window];
 //    else
@@ -618,9 +596,9 @@
 //
 //- (void)createAlertController {
 //    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-//    
+//
 //    [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) { [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment]; }]];
-//    
+//
 //    if (![self isFriend]) {
 //        haveMenuFriend = YES;
 //        [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_ADD_FRIENDS", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
@@ -630,26 +608,26 @@
 //            }];
 //        }]];
 //    }
-//    
+//
 //    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_OTHER", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 //        [self createUserAlertController];
 //    }]];
-//    
+//
 //    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
-//    
+//
 //    [self presentViewC:newAlert animated:YES completion:NULL];
 //}
 //
 //- (void)createUserAlertController {
 //    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-//    
+//
 //    if ([currentUserForMenu avatarURL]) {
 //        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_AVATAR", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
 //            NSURL *urlImage = [NSURL URLWithString:[currentUserForMenu avatarURL]];
 //            [self showAvatarView:currentImageView withUrl:urlImage];
 //        }]];
 //    }
-//    
+//
 //    if ([self isFriend]) {
 //        if (_canRemoveFriend) {
 //            haveMenuFriend = YES;
@@ -661,18 +639,18 @@
 //            }]];
 //        }
 //    }
-//    
+//
 //    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_BLOCK_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
 //        [self showBlockView];
 //    }]];
-//    
+//
 //    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REPORT_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
 //        self.currentReport = [[FLReport alloc] initWithType:ReportUser id:currentUserForMenu.userId];
 //        [self showReportView];
 //    }]];
-//    
+//
 //    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
-//    
+//
 //    [self presentViewC:newAlert animated:YES completion:NULL];
 //}
 
@@ -778,7 +756,7 @@
 //            }];
 //        }
 //    };
-//    
+//
 //    if (buttonIndex == 0) {
 //        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
 //    }
@@ -805,24 +783,24 @@
 //            }];
 //        }
 //    };
-//    
+//
 //    void (^showAvatar)(void) = ^(void) {
 //        NSURL *urlImage = [NSURL URLWithString:[currentUserForMenu avatarURL]];
 //        [self showAvatarView:currentImageView withUrl:urlImage];
 //    };
-//    
+//
 //    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_AVATAR", nil)]) {
 //        showAvatar();
 //    }
-//    
+//
 //    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil)]) {
 //        friendMenu();
 //    }
-//    
+//
 //    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_BLOCK_USER", nil)]) {
 //        [self showBlockView];
 //    }
-//    
+//
 //    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REPORT_USER", nil)]) {
 //        self.currentReport = [[FLReport alloc] initWithType:ReportUser id:currentUserForMenu.userId];
 //        [self showReportView];
@@ -1148,6 +1126,27 @@
     
     if ([vc isKindOfClass:[FLTabBarController class]]) {
         vc = [((FLTabBarController *)vc) selectedViewController];
+    }
+    
+    if ([vc isKindOfClass:[FLNavigationController class]]) {
+        UIViewController *v = [((FLNavigationController *)vc) visibleViewController];
+        if ([v isKindOfClass:[UserViewController class]]) {
+            UserViewController *u = (UserViewController *)v;
+            
+            if ([u.currentUser.userId isEqualToString:user.userId]) {
+                [u shakeView];
+                return;
+            }
+        }
+    }
+    
+    if ([vc isKindOfClass:[UserViewController class]]) {
+        UserViewController *u = (UserViewController *)vc;
+        
+        if ([u.currentUser.userId isEqualToString:user.userId]) {
+            [u shakeView];
+            return;
+        }
     }
     
     UserViewController *controller;

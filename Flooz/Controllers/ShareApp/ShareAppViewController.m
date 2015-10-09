@@ -15,6 +15,7 @@
 #import "ClipboardPopoverViewController.h"
 #import "FLClearActionTextView.h"
 #import "FLSharePopup.h"
+#import "ShareSMSViewController.h"
 
 @interface ShareAppViewController () {
     UIView *_footerView;
@@ -428,18 +429,24 @@
 }
 
 - (void)sendWithSMS {
-    if ([MFMessageComposeViewController canSendText]) {
-        MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
-        message.messageComposeDelegate = self;
-        
-        [message setBody:_smsText];
-        
-        [[Flooz sharedInstance] showLoadView];
-        message.modalPresentationStyle = UIModalPresentationPageSheet;
-        [self presentViewController:message animated:YES completion:^{
-            [[Flooz sharedInstance] hideLoadView];
-        }];
-    }
+    [[Flooz sharedInstance] grantedAccessToContacts:^(BOOL granted) {
+        if (granted) {
+            [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:[ShareSMSViewController new]] animated:YES completion:nil];
+        } else {
+            if ([MFMessageComposeViewController canSendText]) {
+                MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
+                message.messageComposeDelegate = self;
+                
+                [message setBody:_smsText];
+                
+                [[Flooz sharedInstance] showLoadView];
+                message.modalPresentationStyle = UIModalPresentationPageSheet;
+                [self presentViewController:message animated:YES completion:^{
+                    [[Flooz sharedInstance] hideLoadView];
+                }];
+            }
+        }
+    }];
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {

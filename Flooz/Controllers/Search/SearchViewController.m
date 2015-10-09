@@ -101,8 +101,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [_searchBar becomeFirstResponder];
 }
 
 #pragma mark - TableView
@@ -293,6 +291,8 @@
 }
 
 - (void)showUnfriendMenu {
+    [_searchBar close];
+    
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
         [self createUnfriendActionSheet];
     else

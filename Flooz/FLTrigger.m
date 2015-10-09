@@ -93,6 +93,8 @@
         return TriggerSendContacts;
     else if ([param isEqualToString:@"user:show"])
         return TriggerUserShow;
+    else if ([param isEqualToString:@"invitation:sms:show"])
+        return TriggerInvitationSMSShow;
     else
         return TriggerNone;
 }

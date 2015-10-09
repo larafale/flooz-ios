@@ -98,7 +98,7 @@
 
 - (void)createButtonView {
     _addButton = [FLSocialHelper createMiniFriendButton:self action:@selector(accept) frame:CGRectMake(cellWidth - 45, 13, 28, 28)];
-    _removeButton = [FLSocialHelper createMiniUnfriendButton:self action:@selector(accept) frame:CGRectMake(cellWidth - 45, 13, 28, 28)];
+    _removeButton = [FLSocialHelper createMiniUnfriendButton:self action:@selector(decline) frame:CGRectMake(cellWidth - 45, 13, 28, 28)];
 
 	[self.contentView addSubview:_addButton];
     [self.contentView addSubview:_removeButton];

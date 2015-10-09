@@ -305,6 +305,11 @@
 		C919AD9D1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */; };
 		C919AD9E1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */; };
 		C919AD9F1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */; };
+		C91C5D3F1BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */; };
+		C91C5D401BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */; };
+		C91C5D441BC68FF500B88D81 /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D431BC68FF500B88D81 /* ShareCell.m */; };
+		C91C5D451BC68FF500B88D81 /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D431BC68FF500B88D81 /* ShareCell.m */; };
+		C91C5D461BC68FF500B88D81 /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D431BC68FF500B88D81 /* ShareCell.m */; };
 		C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175D1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175E1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
@@ -905,6 +910,10 @@
 		C919AD971BBAC3CD00B87AAB /* FLReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReachability.m; sourceTree = "<group>"; };
 		C919AD9B1BBAD5AE00B87AAB /* FLPopupTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPopupTrigger.h; sourceTree = "<group>"; };
 		C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPopupTrigger.m; sourceTree = "<group>"; };
+		C91C5D3D1BC65E4F00B88D81 /* ShareSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareSMSViewController.h; path = Controllers/ShareApp/ShareSMSViewController.h; sourceTree = "<group>"; };
+		C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareSMSViewController.m; path = Controllers/ShareApp/ShareSMSViewController.m; sourceTree = "<group>"; };
+		C91C5D421BC68FF500B88D81 /* ShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareCell.h; path = ShareCell/ShareCell.h; sourceTree = "<group>"; };
+		C91C5D431BC68FF500B88D81 /* ShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareCell.m; path = ShareCell/ShareCell.m; sourceTree = "<group>"; };
 		C921175A1B66726900CF2D51 /* FLInvitationTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLInvitationTexts.h; sourceTree = "<group>"; };
 		C921175B1B66726900CF2D51 /* FLInvitationTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLInvitationTexts.m; sourceTree = "<group>"; };
 		C927061C1B81D7EE00FB1A11 /* FLSharePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSharePopup.h; sourceTree = "<group>"; };
@@ -1175,6 +1184,8 @@
 				2FC2545F19B6742500EB1EED /* ShareAppViewController.xib */,
 				C95AED951A49AF4A00000FB3 /* ClipboardPopoverViewController.h */,
 				C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */,
+				C91C5D3D1BC65E4F00B88D81 /* ShareSMSViewController.h */,
+				C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */,
 			);
 			name = ShareApp;
 			sourceTree = "<group>";
@@ -1654,6 +1665,7 @@
 		AB5EB6F91882157300D81AF6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C91C5D411BC68F8700B88D81 /* ShareCell */,
 				C95254D31B5E7B9200D88096 /* AccountCell */,
 				2FD2460019A24DC4008DCFB5 /* ContactCell */,
 				AB2FB54918B2319E0079AA1D /* ActivityCell */,
@@ -2125,6 +2137,15 @@
 				C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */,
 			);
 			name = DiscountCode;
+			sourceTree = "<group>";
+		};
+		C91C5D411BC68F8700B88D81 /* ShareCell */ = {
+			isa = PBXGroup;
+			children = (
+				C91C5D421BC68FF500B88D81 /* ShareCell.h */,
+				C91C5D431BC68FF500B88D81 /* ShareCell.m */,
+			);
+			name = ShareCell;
 			sourceTree = "<group>";
 		};
 		C92FB3A81BBBEBF4006FB561 /* FLFilterSegmentedControl */ = {
@@ -2875,6 +2896,7 @@
 				C95772771A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */,
 				ABBB75E218BBADFA0070C2A8 /* FriendRequestCell.m in Sources */,
 				AB7C9B1218D7049B002775BA /* NewTransactionSelectTypeView.m in Sources */,
+				C91C5D441BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9AE778F1ACA917B00CFF0AF /* FLSlider.m in Sources */,
 				C908A3EB1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
@@ -2906,6 +2928,7 @@
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */,
+				C91C5D3F1BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */,
 				AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */,
 				C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */,
@@ -3036,6 +3059,7 @@
 				C95772781A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */,
 				ABAA3FC3197E96BF009F29EF /* NotificationsViewController.m in Sources */,
 				ABAA3FC4197E96BF009F29EF /* FLCreditCard.m in Sources */,
+				C91C5D451BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9AE77901ACA917B00CFF0AF /* FLSlider.m in Sources */,
 				C908A3EC1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
@@ -3067,6 +3091,7 @@
 				ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */,
 				ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */,
 				ABAA3FE0197E96BF009F29EF /* FLSelectFriendButton.m in Sources */,
+				C91C5D401BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */,
 				ABAA3FE1197E96BF009F29EF /* WebViewController.m in Sources */,
 				C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
@@ -3149,6 +3174,7 @@
 				C98012AA1A76921000019682 /* TransactionCommentsView.m in Sources */,
 				C98012AB1A76921000019682 /* main.m in Sources */,
 				C98012AC1A76921000019682 /* SplashViewController.m in Sources */,
+				C91C5D461BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C98012AD1A76921000019682 /* NewTransactionDatePicker.m in Sources */,
 				C9AD95B81BBEB9480073BA32 /* SearchViewController.m in Sources */,
 				C98012AF1A76921000019682 /* SecureCodeViewController.m in Sources */,

@@ -463,29 +463,12 @@
                     [[Flooz sharedInstance] handleTrigger:trigger];
                 }
             }
-            
+
             if (currentPreset.steps) {
                 [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
             }
-            
             currentPreset.popup = nil;
         }] show];
-        
-//        [[[FLPopupInformation alloc] initWithTitle:currentPreset.popup[@"title"] message:[[NSAttributedString alloc] initWithString:currentPreset.popup[@"content"]] button:currentPreset.popup[@"button"] ok:^() {
-//            if (currentPreset.popup[@"triggers"]) {
-//                NSArray *triggers = currentPreset.popup[@"triggers"];
-//                for (NSDictionary *triggerData in triggers) {
-//                    FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-//                    [[Flooz sharedInstance] handleTrigger:trigger];
-//                }
-//            }
-//            
-//            if (currentPreset.steps) {
-//                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-//            }
-//            
-//            currentPreset.popup = nil;
-//        }] show];
     } else if (currentPreset.steps) {
         [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
     }

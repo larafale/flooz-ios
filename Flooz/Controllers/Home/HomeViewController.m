@@ -325,8 +325,10 @@
     
     signupScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetHeight(signupView.frame))];
+
     if (!IS_IPHONE_4)
         [signupScrollView setScrollEnabled:NO];
+
     [signupScrollView setBounces:NO];
     
     UIButton *signupBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 40, 40)];
@@ -995,6 +997,7 @@
                 CGRectSetY(signupFormView.frame, CGRectGetMaxY(signupFbView.frame));
             } completion:^(BOOL finished) {
                 [signupFbView setHidden:NO];
+                [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetMaxY(signupFormView.frame) + 10)];
                 [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
                     [signupFbView setAlpha:1.0f];
                 } completion:nil];
@@ -1004,6 +1007,7 @@
                 CGRectSetY(signupFormView.frame, CGRectGetMaxY(signupFbPicView.frame));
             } completion:^(BOOL finished) {
                 [signupFbPicView setHidden:NO];
+                [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetMaxY(signupFormView.frame) + 10)];
                 [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
                     [signupFbPicView setAlpha:1.0f];
                 } completion:nil];

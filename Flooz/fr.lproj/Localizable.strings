@@ -33,6 +33,7 @@
 "GLOBAL_SAVE" = "Enregistrer";
 "GLOBAL_NEXT" = "Suivant";
 "GLOBAL_SHARE" = "Partager";
+"GLOBAL_INVITE" = "Inviter";
 
 /************************************/
 /*              FIELDS              */
@@ -220,6 +221,7 @@
 "NAV_FRIENDS" = "Mes amis";
 "NAV_NEW_FLOOZ_FRIENDS" = "Choisir un destinataire";
 "NAV_3DSECURE" = "3D Secure";
+"NAV_SHARESMS" = "Partager l'app";
 
 /************************************/
 /*         ALERTS / ERROR           */
@@ -298,12 +300,14 @@
 /*             FRIENDS              */
 /************************************/
 
+"USER_ALREADY_FLOOZER" = "Déjà sur Flooz";
+
 "PRIVATE_USER" = "Cet utilisateur est privé";
 
-"EMPTY_TIMELINE" = "Aucun Flooz Visible";
-"EMPTY_FRIENDS" = "Aucun Ami";
-"EMPTY_FOLLOWERS" = "Aucun Abonné";
-"EMPTY_FOLLOWINGS" = "Aucun Abonnement";
+"EMPTY_TIMELINE" = "Aucun flooz visible";
+"EMPTY_FRIENDS" = "Aucun ami";
+"EMPTY_FOLLOWERS" = "Aucun abonné";
+"EMPTY_FOLLOWINGS" = "Aucun abonnement";
 
 "FOLLOWED" = "Abonné";
 "FOLLOWING" = "Abonnement";
@@ -340,9 +344,9 @@
 "FRIEND_PICKER_EMPTY_CELL_1" = "Sélectionnez un contact";
 "FRIEND_PICKER_EMPTY_CELL_2" = "ou entrez un n° de mobile";
 "FRIEND_PCIKER_PLACEHOLDER" = "Chercher un contact / Entrer un 06";
-"FRIEND_PICKER_FRIENDS_RECENT" = "Contacts Récents";
+"FRIEND_PICKER_FRIENDS_RECENT" = "Contacts récents";
 "FRIEND_PICKER_FRIENDS" = "Mes amis";
-"FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";
+"FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresses";
 
 /************************************/
 /*          SHARE / EMAIL           */

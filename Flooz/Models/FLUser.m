@@ -15,6 +15,9 @@
     if (self) {
         self.userKind = PhoneUser;
         self.selectedFrom = nil;
+        
+        self.isIdentified = NO;
+        self.isFloozer = NO;
     }
     return self;
 }
@@ -25,6 +28,9 @@
         self.userKind = FloozUser;
         [self setJSON:json];
         self.selectedFrom = nil;
+        
+        self.isIdentified = YES;
+        self.isFloozer = YES;
     }
     return self;
 }
