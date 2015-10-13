@@ -95,6 +95,14 @@
         return TriggerUserShow;
     else if ([param isEqualToString:@"invitation:sms:show"])
         return TriggerInvitationSMSShow;
+    else if ([param isEqualToString:@"profile:edit"])
+        return TriggerEditProfile;
+    else if ([param isEqualToString:@"phone:validate"])
+        return TriggerSMSValidate;
+    else if ([param isEqualToString:@"secureCode:set"])
+        return TriggerSecureCodeValidate;
+    else if ([param isEqualToString:@"notification:ask"])
+        return TriggerAskNotification;
     else
         return TriggerNone;
 }

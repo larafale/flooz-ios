@@ -136,7 +136,7 @@
     CGRectSetY(fullname.frame, CGRectGetMaxY(avatar.frame) + 8.0f);
     CGRectSetX(fullname.frame, CGRectGetWidth(view.frame) / 2 - CGRectGetWidth(fullname.frame) / 2);
     
-    if (user.isStar || user.isPro) {
+    if (user.isCertified) {
         [star setHidden:NO];
         star.center = fullname.center;
         CGRectSetX(star.frame, CGRectGetMaxX(fullname.frame) + 5);

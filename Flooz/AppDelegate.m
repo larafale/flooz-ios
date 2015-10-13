@@ -75,6 +75,11 @@
                 NSDictionary *dataParam = [NSDictionary newWithJSONString:branchParam[@"data"]];
                 
                 if (dataParam) {
+                    if (dataParam[@"login"]) {
+                        NSString *token = dataParam[@"login"];
+                        [[Flooz sharedInstance] loginWithToken:token];
+                    }
+                    
                     NSMutableDictionary *tmp = [pendingData mutableCopy];
                     if (tmp == nil)
                         tmp = [NSMutableDictionary new];
@@ -111,6 +116,30 @@
     
     [[Mixpanel sharedInstance] identify:[FLHelper generateRandomString]];
     
+    if (launchOptions[UIApplicationLaunchOptionsURLKey]) {
+        NSURL *url = launchOptions[UIApplicationLaunchOptionsURLKey];
+        
+        if ([url.scheme isEqualToString:@"flooz"]) {
+            if (url.host && ![url.host isBlank]) {
+                NSString *host = url.host;
+                NSDictionary *dic = [NSDictionary newWithJSONString:host];
+                
+                if (dic && dic[@"data"]) {
+                    if (dic[@"data"][@"login"]) {
+                        NSString *token = dic[@"data"][@"login"];
+                        [[Flooz sharedInstance] loginWithToken:token];
+                    }
+                    
+                    NSMutableDictionary *tmp = [pendingData mutableCopy];
+                    if (tmp == nil)
+                        tmp = [NSMutableDictionary new];
+                    [tmp addEntriesFromDictionary:dic[@"data"]];
+                    pendingData = tmp;
+                }
+            }
+        }
+    }
+    
 #ifndef FLOOZ_DEV_LOCAL
     if (!pendingData)
         pendingData = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -145,9 +174,11 @@
 - (void)launchRootController {
     self.window.rootViewController = [SplashViewController new];
     
-    if (![[Flooz sharedInstance] autologin]) {
-        HomeViewController *home = [HomeViewController new];
-        self.window.rootViewController = home;
+    if (!pendingData || !pendingData[@"login"]) {
+        if (![[Flooz sharedInstance] autologin]) {
+            HomeViewController *home = [HomeViewController new];
+            self.window.rootViewController = home;
+        }
     }
 }
 
@@ -186,12 +217,8 @@
 }
 
 - (void)goToAccountViewController {
-    if (!savedViewController) {
-        savedViewController = [self prepareMainViewController];
-    }
-    
     [self askNotification];
-    [self flipToViewController:savedViewController];
+    [self flipToViewController:[self prepareMainViewController]];
 }
 
 - (void)askNotification {
@@ -398,6 +425,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     [[Flooz sharedInstance] closeSocket];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationEnterBackground object:nil];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -416,16 +444,45 @@
         [self clearBranchParams];
     }
 #endif
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationEnterForeground object:nil];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
 }
 
 #pragma mark - Facebook
 
-// During the Facebook login flow, your app passes control to the Facebook iOS app or Facebook in a mobile browser.
-// After authentication, your app will be called back with the session information.
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+    if ([[Branch getInstance] handleDeepLink:url]) {
+        return YES;
+    } else if ([[FBSDKApplicationDelegate sharedInstance] application:app openURL:url sourceApplication:nil annotation:nil])
+        return YES;
+    else {
+        if ([url.scheme isEqualToString:@"flooz"]) {
+            if (url.host && ![url.host isBlank]) {
+                NSString *host = url.host;
+                NSDictionary *dic = [NSDictionary newWithJSONString:host];
+                
+                if (dic && dic[@"data"]) {
+                    if (dic[@"data"][@"login"]) {
+                        NSString *token = dic[@"data"][@"login"];
+                        [[Flooz sharedInstance] loginWithToken:token];
+                    }
+                    
+                    NSMutableDictionary *tmp = [pendingData mutableCopy];
+                    if (tmp == nil)
+                        tmp = [NSMutableDictionary new];
+                    [tmp addEntriesFromDictionary:dic[@"data"]];
+                    pendingData = tmp;
+                }
+            }
+        }
+    }
+    
+    return YES;
+}
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     if ([[Branch getInstance] handleDeepLink:url]) {
         return YES;
@@ -440,10 +497,14 @@
                 if (dic && dic[@"data"]) {
                     if (dic[@"data"][@"login"]) {
                         NSString *token = dic[@"data"][@"login"];
-                        [UICKeyChainStore setString:token forKey:@"login-token"];
-                        [[Flooz sharedInstance] autologin];
+                        [[Flooz sharedInstance] loginWithToken:token];
                     }
-                    pendingData = dic[@"data"];
+                    
+                    NSMutableDictionary *tmp = [pendingData mutableCopy];
+                    if (tmp == nil)
+                        tmp = [NSMutableDictionary new];
+                    [tmp addEntriesFromDictionary:dic[@"data"]];
+                    pendingData = tmp;
                 }
             }
         }
@@ -491,7 +552,12 @@
     if (state == UIApplicationStateActive)
         return;
     
-    pendingData = userInfo;
+    NSMutableDictionary *tmp = [pendingData mutableCopy];
+    if (tmp == nil)
+        tmp = [NSMutableDictionary new];
+    [tmp addEntriesFromDictionary:userInfo];
+    pendingData = tmp;
+    
     [self handlePendingData];
 }
 
@@ -501,6 +567,7 @@
         [self handlePushMessage:pendingData withApplication:nil];
         pendingData = nil;
     }
+    [self clearBranchParams];
 #endif
 }
 
@@ -569,90 +636,6 @@
     else
         [self createReportAlertController];
 }
-
-//- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView {
-//    [self showMenuForUser:user imageView:imageView canRemoveFriend:NO];
-//}
-//
-//- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend {
-//    [self showMenuForUser:user imageView:imageView canRemoveFriend:canRemoveFriend inWindow:self.window];
-//}
-//
-//- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend inWindow:(UIWindow *)window {
-//    if (!user || [[user userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]] ||
-//        ![user username] || ![user fullname] || [user.username isEqualToString:@"flooz"])
-//        return;
-//
-//    currentUserForMenu = user;
-//    currentImageView = imageView;
-//    haveMenuFriend = NO;
-//    _canRemoveFriend = canRemoveFriend;
-//
-//    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
-//        [self createActionSheetInWindow:window];
-//    else
-//        [self createAlertController];
-//}
-//
-//- (void)createAlertController {
-//    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-//
-//    [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) { [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment]; }]];
-//
-//    if (![self isFriend]) {
-//        haveMenuFriend = YES;
-//        [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_ADD_FRIENDS", nil), currentUserForMenu.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-//            [[Flooz sharedInstance] showLoadView];
-//            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
-//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-//            }];
-//        }]];
-//    }
-//
-//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_OTHER", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-//        [self createUserAlertController];
-//    }]];
-//
-//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
-//
-//    [self presentViewC:newAlert animated:YES completion:NULL];
-//}
-//
-//- (void)createUserAlertController {
-//    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-//
-//    if ([currentUserForMenu avatarURL]) {
-//        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_AVATAR", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-//            NSURL *urlImage = [NSURL URLWithString:[currentUserForMenu avatarURL]];
-//            [self showAvatarView:currentImageView withUrl:urlImage];
-//        }]];
-//    }
-//
-//    if ([self isFriend]) {
-//        if (_canRemoveFriend) {
-//            haveMenuFriend = YES;
-//            [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-//                [[Flooz sharedInstance] showLoadView];
-//                [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success: ^{
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-//                } failure:nil];
-//            }]];
-//        }
-//    }
-//
-//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_BLOCK_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-//        [self showBlockView];
-//    }]];
-//
-//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REPORT_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-//        self.currentReport = [[FLReport alloc] initWithType:ReportUser id:currentUserForMenu.userId];
-//        [self showReportView];
-//    }]];
-//
-//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
-//
-//    [self presentViewC:newAlert animated:YES completion:NULL];
-//}
 
 - (void)createReportAlertController {
     UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -741,71 +724,6 @@
     self.tmpActionSheetWindow = wind;
     
 }
-
-//- (void)managerGlobalActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-//    void (^friendMenu)(void) = ^(void) {
-//        [[Flooz sharedInstance] showLoadView];
-//        if ([self isFriend]) {
-//            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success: ^{
-//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-//            } failure:nil];
-//        }
-//        else {
-//            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
-//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-//            }];
-//        }
-//    };
-//
-//    if (buttonIndex == 0) {
-//        [self showNewTransactionController:currentUserForMenu transactionType:TransactionTypePayment];
-//    }
-//    else if (buttonIndex == 1 && haveMenuFriend) {
-//        friendMenu();
-//    }
-//    else if (buttonIndex == 1 || (buttonIndex == 2 && haveMenuFriend)) {
-//        [self createUserActionSheetInWindow:self.tmpActionSheetWindow];
-//    }
-//    self.tmpActionSheetWindow = nil;
-//}
-//
-//- (void)managerUserActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-//    void (^friendMenu)(void) = ^(void) {
-//        [[Flooz sharedInstance] showLoadView];
-//        if ([self isFriend]) {
-//            [[Flooz sharedInstance] friendRemove:[currentUserForMenu userId] success: ^{
-//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-//            } failure:nil];
-//        }
-//        else {
-//            [[Flooz sharedInstance] friendAcceptSuggestion:[currentUserForMenu userId] canal:[currentUserForMenu selectedFrom] success: ^{
-//                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRemoveFriend object:nil];
-//            }];
-//        }
-//    };
-//
-//    void (^showAvatar)(void) = ^(void) {
-//        NSURL *urlImage = [NSURL URLWithString:[currentUserForMenu avatarURL]];
-//        [self showAvatarView:currentImageView withUrl:urlImage];
-//    };
-//
-//    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_AVATAR", nil)]) {
-//        showAvatar();
-//    }
-//
-//    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REMOVE_FRIENDS", nil)]) {
-//        friendMenu();
-//    }
-//
-//    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_BLOCK_USER", nil)]) {
-//        [self showBlockView];
-//    }
-//
-//    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REPORT_USER", nil)]) {
-//        self.currentReport = [[FLReport alloc] initWithType:ReportUser id:currentUserForMenu.userId];
-//        [self showReportView];
-//    }
-//}
 
 - (void)managerReportActionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     //    if (buttonIndex == 0) {

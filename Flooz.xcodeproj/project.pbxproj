@@ -333,6 +333,9 @@
 		C93F66A61BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
 		C93F66A71BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
 		C93F66A81BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
+		C9436EBD1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
+		C9436EBE1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
+		C9436EBF1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
 		C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
@@ -525,6 +528,7 @@
 		C98254711BC2B78B00678A53 /* FriendRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C98254701BC2B78B00678A53 /* FriendRequestViewController.m */; };
 		C98254721BC2B78B00678A53 /* FriendRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C98254701BC2B78B00678A53 /* FriendRequestViewController.m */; };
 		C98254731BC2B78B00678A53 /* FriendRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C98254701BC2B78B00678A53 /* FriendRequestViewController.m */; };
+		C994C23F1BC805FD00B528AA /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */; };
 		C99A51521AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */; };
 		C99A51531AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */; };
 		C99A51541AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */; };
@@ -556,6 +560,9 @@
 		C9BAB50E1AF26C2A00215CDC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */; };
 		C9BAB50F1AF26C3100215CDC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */; };
 		C9BAB5101AF26C3900215CDC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */; };
+		C9C660B21BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
+		C9C660B31BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
+		C9C660B41BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
 		C9C7DB2D1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7DB2C1A2351E300AEDC67 /* SettingsPrivacyController.m */; };
 		C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7DB2C1A2351E300AEDC67 /* SettingsPrivacyController.m */; };
 		C9C7EE9119F685AC009FE292 /* FLTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7EE9019F685AC009FE292 /* FLTrigger.m */; };
@@ -930,6 +937,8 @@
 		C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayerShot.m"; sourceTree = "<group>"; };
 		C93F66A41BB555AD0032ED56 /* FLMultiLineSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLMultiLineSegmentedControl.h; sourceTree = "<group>"; };
 		C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLMultiLineSegmentedControl.m; sourceTree = "<group>"; };
+		C9436EBB1BCBA34E000F382C /* ValidateSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSMSViewController.h; path = Controllers/ValidateSMS/ValidateSMSViewController.h; sourceTree = "<group>"; };
+		C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSMSViewController.m; path = Controllers/ValidateSMS/ValidateSMSViewController.m; sourceTree = "<group>"; };
 		C950540C1B4E7E9A00B9FB2C /* FLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTabBarController.h; sourceTree = "<group>"; };
 		C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTabBarController.m; sourceTree = "<group>"; };
 		C95254D41B5E7BC300D88096 /* AccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountCell.h; sourceTree = "<group>"; };
@@ -954,15 +963,8 @@
 		C966474019FFEB4E000851AF /* AnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedTransitioning.m; sourceTree = "<group>"; };
 		C96E5A661BA95EEE00F201E9 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewController.h; sourceTree = "<group>"; };
 		C96E5A671BA95EEE00F201E9 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
-		C975BAF71A92BB8E000E5AEA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BAF81A92BB8E000E5AEA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAF91A92BB8E000E5AEA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BAFA1A92BB8E000E5AEA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFB1A92BB8E000E5AEA /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFC1A92BB8E000E5AEA /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFD1A92BB8E000E5AEA /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFE1A92BB8E000E5AEA /* sq */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sq; path = sq.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BAFF1A92BB8E000E5AEA /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BB001A92BB8E000E5AEA /* YLMoment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLMoment.h; sourceTree = "<group>"; };
 		C975BB011A92BB8E000E5AEA /* YLMoment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLMoment.m; sourceTree = "<group>"; };
 		C97CCFD31BBD59AD0084ABF5 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
@@ -991,6 +993,8 @@
 		C9B4AA681AE7C606002E0723 /* FLScannerOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLScannerOverlay.h; sourceTree = "<group>"; };
 		C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLScannerOverlay.m; sourceTree = "<group>"; };
 		C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		C9C660B01BCBB70E0029A79A /* ValidateSecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSecureCodeViewController.h; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.h; sourceTree = "<group>"; };
+		C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSecureCodeViewController.m; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.m; sourceTree = "<group>"; };
 		C9C7DB2B1A2351E300AEDC67 /* SettingsPrivacyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPrivacyController.h; sourceTree = "<group>"; };
 		C9C7DB2C1A2351E300AEDC67 /* SettingsPrivacyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsPrivacyController.m; sourceTree = "<group>"; };
 		C9C7EE8F19F685AC009FE292 /* FLTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTrigger.h; sourceTree = "<group>"; };
@@ -1448,6 +1452,7 @@
 				AB5EB6E9188214F000D81AF6 /* Timeline */,
 				ABF7092618A2CA1300517389 /* Transaction */,
 				C96E5A651BA95ED100F201E9 /* User */,
+				C9436EBA1BCBA316000F382C /* Validate */,
 				AB6DA50718C4A5BC0073B947 /* Web */,
 			);
 			name = Controllers;
@@ -2175,6 +2180,17 @@
 			name = Scanner;
 			sourceTree = "<group>";
 		};
+		C9436EBA1BCBA316000F382C /* Validate */ = {
+			isa = PBXGroup;
+			children = (
+				C9436EBB1BCBA34E000F382C /* ValidateSMSViewController.h */,
+				C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */,
+				C9C660B01BCBB70E0029A79A /* ValidateSecureCodeViewController.h */,
+				C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */,
+			);
+			name = Validate;
+			sourceTree = "<group>";
+		};
 		C950540B1B4E7E6600B9FB2C /* FLTabBarController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2386,6 +2402,7 @@
 				AB3D088C186CA11A00CF8380 /* Resources */,
 				C96373361A5BE2E40080C20F /* ShellScript */,
 				6E634A2949F5469076E819D3 /* Copy Pods Resources */,
+				CC066EF4A38CC238F8613A30 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2405,6 +2422,7 @@
 				AB3D08A6186CA11A00CF8380 /* Frameworks */,
 				AB3D08A7186CA11A00CF8380 /* Resources */,
 				C4395DA043E3AF023BF21082 /* Copy Pods Resources */,
+				E9D1AC26224341894161F76E /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2428,6 +2446,7 @@
 				ABAA3FFC197E96BF009F29EF /* Resources */,
 				8B102E08199A627C0040278F /* ShellScript */,
 				28E085B265D94FB37A72EA1D /* Copy Pods Resources */,
+				2E3E835E9F07A31F6959935B /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2448,6 +2467,7 @@
 				C980131C1A76921000019682 /* Resources */,
 				C980133C1A76921000019682 /* ShellScript */,
 				0316D686744A4C8C799C31D6 /* Copy Pods Resources */,
+				E5B055E308E5F1B7EC0CFF2F /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2490,13 +2510,6 @@
 			knownRegions = (
 				en,
 				fr,
-				de,
-				es,
-				ja,
-				nl,
-				pt,
-				sq,
-				zh,
 			);
 			mainGroup = AB3D0885186CA11A00CF8380;
 			productRefGroup = AB3D088F186CA11A00CF8380 /* Products */;
@@ -2674,6 +2687,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		2E3E835E9F07A31F6959935B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		36D69480EB8CF264DF447602 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -2736,14 +2764,14 @@
 		};
 		8B102E08199A627C0040278F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
 		};
@@ -2764,29 +2792,74 @@
 		};
 		C96373361A5BE2E40080C20F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
 		};
 		C980133C1A76921000019682 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
+		};
+		CC066EF4A38CC238F8613A30 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5B055E308E5F1B7EC0CFF2F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9D1AC26224341894161F76E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2815,6 +2888,7 @@
 				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
 				ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */,
 				2FEAA9CF19DC63B500EE95C9 /* BaseViewController.m in Sources */,
+				C9C660B21BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
 				2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */,
 				C9CB22041A95E9D30064389A /* THContactViewStyle.m in Sources */,
 				C960DC901BB14D020089B074 /* FLSocialHelper.m in Sources */,
@@ -2925,6 +2999,7 @@
 				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
 				C90B94801A00E96900E2C53B /* 3DSecureViewController.m in Sources */,
 				AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */,
+				C9436EBD1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
 				ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */,
@@ -2978,6 +3053,7 @@
 				C9CB220F1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				ABAA3F82197E96BF009F29EF /* FriendPickerFriendCell.m in Sources */,
 				AB119B44198A740600F05ECE /* UIViewController+RegisterNotification.m in Sources */,
+				C9C660B31BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
 				C9EB88591B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				2FC8873819C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
 				C960DC911BB14D020089B074 /* FLSocialHelper.m in Sources */,
@@ -3088,6 +3164,7 @@
 				ABAA3FDA197E96BF009F29EF /* UIView+FindFirstResponder.m in Sources */,
 				ABAA3FDB197E96BF009F29EF /* FLScrollViewIndicator.m in Sources */,
 				ABAA3FDD197E96BF009F29EF /* LoadingCell.m in Sources */,
+				C9436EBE1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */,
 				ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */,
 				ABAA3FE0197E96BF009F29EF /* FLSelectFriendButton.m in Sources */,
@@ -3113,6 +3190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C994C23F1BC805FD00B528AA /* ShareSMSViewController.m in Sources */,
 				C935B6EB1B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */,
 				C9CB220B1A961AD90064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C98012721A76921000019682 /* ClipboardPopoverViewController.m in Sources */,
@@ -3132,6 +3210,7 @@
 				C9CB22161A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C9CB22101A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				C98012841A76921000019682 /* FriendPickerFriendCell.m in Sources */,
+				C9C660B41BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
 				C98012851A76921000019682 /* UIViewController+RegisterNotification.m in Sources */,
 				C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				C98012861A76921000019682 /* FLTextFieldSignup.m in Sources */,
@@ -3242,6 +3321,7 @@
 				C98012EB1A76921000019682 /* TransactionCell.m in Sources */,
 				C98012EE1A76921000019682 /* UIView+FindFirstResponder.m in Sources */,
 				C98012EF1A76921000019682 /* FLScrollViewIndicator.m in Sources */,
+				C9436EBF1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				C98012F11A76921000019682 /* LoadingCell.m in Sources */,
 				C98012F21A76921000019682 /* FLAlertView.m in Sources */,
 				C98012F31A76921000019682 /* UIColor+custom.m in Sources */,
@@ -3323,15 +3403,8 @@
 		C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C975BAF71A92BB8E000E5AEA /* de */,
 				C975BAF81A92BB8E000E5AEA /* en */,
-				C975BAF91A92BB8E000E5AEA /* es */,
 				C975BAFA1A92BB8E000E5AEA /* fr */,
-				C975BAFB1A92BB8E000E5AEA /* ja */,
-				C975BAFC1A92BB8E000E5AEA /* nl */,
-				C975BAFD1A92BB8E000E5AEA /* pt */,
-				C975BAFE1A92BB8E000E5AEA /* sq */,
-				C975BAFF1A92BB8E000E5AEA /* zh */,
 			);
 			name = YLMomentRelativeTimeLocalizable.strings;
 			sourceTree = "<group>";
@@ -3365,7 +3438,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PROVISIONING_PROFILE = "4ca2d4fc-7661-4223-9dcb-c079c16b27f6";
@@ -3501,7 +3574,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -3537,7 +3610,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PROVISIONING_PROFILE = "4ca2d4fc-7661-4223-9dcb-c079c16b27f6";
@@ -3588,7 +3661,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3770,7 +3843,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "";

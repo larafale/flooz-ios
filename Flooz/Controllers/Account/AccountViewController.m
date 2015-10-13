@@ -35,6 +35,10 @@
     NSArray *_menuDic;
     FLBadgeView *_badge;
     UIImageView *navBarHairlineImageView;
+    
+    UIView *titleView;
+    UILabel *fullnameLabel;
+    UILabel *usernameLabel;
 }
 
 @end
@@ -77,38 +81,40 @@
     }];
     
     [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
-    [self registerNotification:@selector(editAvatarWith:) name:@"editAvatar" object:nil];
 }
 
 - (void)prepareTitleViews {
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(-5.0f, 0.0f, PPScreenWidth(), NAVBAR_HEIGHT)];
+    titleView = [[UIView alloc] initWithFrame:CGRectMake(-5.0f, 0.0f, PPScreenWidth(), NAVBAR_HEIGHT)];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), 22)];
+    fullnameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), 22)];
     
-    label.font = [UIFont customTitleNav];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor customBlue];
-    label.text = [Flooz sharedInstance].currentUser.fullname;
+    fullnameLabel.font = [UIFont customTitleNav];
+    fullnameLabel.textAlignment = NSTextAlignmentCenter;
+    fullnameLabel.textColor = [UIColor customBlue];
+    fullnameLabel.text = [Flooz sharedInstance].currentUser.fullname;
     
-    [titleView addSubview:label];
+    [titleView addSubview:fullnameLabel];
     
-    UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(label.frame) , PPScreenWidth(), 20)];
+    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(fullnameLabel.frame) , PPScreenWidth(), 20)];
     
-    username.font = [UIFont customTitleExtraLight:15];
-    username.textAlignment = NSTextAlignmentCenter;
-    username.textColor = [UIColor whiteColor];
-    username.text = [NSString stringWithFormat:@"@%@", [Flooz sharedInstance].currentUser.username];
+    usernameLabel.font = [UIFont customTitleExtraLight:15];
+    usernameLabel.textAlignment = NSTextAlignmentCenter;
+    usernameLabel.textColor = [UIColor whiteColor];
+    usernameLabel.text = [NSString stringWithFormat:@"@%@", [Flooz sharedInstance].currentUser.username];
     
-    CGFloat fullnameSize = [label.text widthOfString:label.font];
-    CGFloat usernameSize = [username.text widthOfString:username.font];
+    CGFloat fullnameSize = [fullnameLabel.text widthOfString:fullnameLabel.font];
+    CGFloat usernameSize = [usernameLabel.text widthOfString:usernameLabel.font];
     
     CGFloat viewSize = MAX(fullnameSize, usernameSize);
     
     CGRectSetWidth(titleView.frame, viewSize);
-    CGRectSetWidth(label.frame, viewSize);
-    CGRectSetWidth(username.frame, viewSize);
+    CGRectSetWidth(fullnameLabel.frame, viewSize);
+    CGRectSetWidth(usernameLabel.frame, viewSize);
     
-    [titleView addSubview:username];
+    [titleView addSubview:usernameLabel];
+    
+    [titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMenuAvatar)]];
+    
     self.navigationItem.titleView = titleView;
 }
 
@@ -137,10 +143,34 @@
     int docNotifs = 0;
     
     FLUser *currentUser = [Flooz sharedInstance].currentUser;
+
+    [titleView removeFromSuperview];
+    [fullnameLabel removeFromSuperview];
+    [usernameLabel removeFromSuperview];
+
+    titleView = [[UIView alloc] initWithFrame:CGRectMake(-5.0f, 0.0f, PPScreenWidth(), NAVBAR_HEIGHT)];
+    [titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMenuAvatar)]];
+
+    [titleView addSubview:fullnameLabel];
+    [titleView addSubview:usernameLabel];
+
+    fullnameLabel.text = currentUser.fullname;
+    usernameLabel.text = [NSString stringWithFormat:@"@%@", currentUser.username];
     
+    CGFloat fullnameSize = [fullnameLabel.text widthOfString:fullnameLabel.font];
+    CGFloat usernameSize = [usernameLabel.text widthOfString:usernameLabel.font];
+    
+    CGFloat viewSize = MAX(fullnameSize, usernameSize);
+    
+    CGRectSetWidth(titleView.frame, viewSize);
+    CGRectSetWidth(fullnameLabel.frame, viewSize);
+    CGRectSetWidth(usernameLabel.frame, viewSize);
+
+    self.navigationItem.titleView = titleView;
+
     NSArray *missingFields = currentUser.json[@"missingFields"];
     
-    if (!currentUser.creditCard)
+    if ([missingFields containsObject:@"card"])
         cardNotifs = 1;
     
     if ([missingFields containsObject:@"sepa"])

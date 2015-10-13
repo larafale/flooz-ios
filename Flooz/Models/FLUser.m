@@ -61,10 +61,14 @@
     _profileCompletion = [json objectForKey:@"profileCompletion"];
     _hasSecureCode = [json objectForKey:@"secureCode"];
     _blockObject = [json objectForKey:@"block"];
-    _isStar = [[json objectForKey:@"isStar"] boolValue];
-    _isPro = [[json objectForKey:@"isPro"] boolValue];
+    _isCertified = [[json objectForKey:@"isCertified"] boolValue];
     _isCactus = [[json objectForKey:@"isCactus"] boolValue];
     _isFriend = [[json objectForKey:@"isFriend"] boolValue];
+    
+    if ([json objectForKey:@"isFriendable"])
+        _isFriendable = [[json objectForKey:@"isFriendable"] boolValue];
+    else
+        _isFriendable = YES;
     
     _isComplete = [[json objectForKey:@"isComplete"] boolValue];
     

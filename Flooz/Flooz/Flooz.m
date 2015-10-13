@@ -33,6 +33,9 @@
 #import "FLTabBarController.h"
 #import "FLPopupTrigger.h"
 #import "ShareSMSViewController.h"
+#import "ValidateSMSViewController.h"
+#import "EditProfileViewController.h"
+#import "ValidateSecureCodeViewController.h"
 
 #import "FLReachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -108,7 +111,7 @@
         if (userJson) {
             _currentUser = [[FLUser alloc] initWithJSON:userJson];
             [self updateFbToken:userJson[@"fb"][@"token"] andUser:userJson[@"fb"][@"id"]];
-
+            
             [self checkDeviceToken];
         }
     }
@@ -342,6 +345,10 @@
     [self requestPath:@"/utils/asserts" method:@"POST" params:@{@"field": @"secureCode", @"value": secureCode} success:success failure:failure];
 }
 
+- (void)checkPhoneForUser:(NSString*)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/utils/asserts" method:@"POST" params:@{@"field": @"phone", @"value": code} success:success failure:failure];
+}
+
 - (NSString *)clearPhoneNumber:(NSString*)phone {
     NSString *formatedPhone = [[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""]
                                 stringByReplacingOccurrencesOfString:@"." withString:@""]
@@ -422,7 +429,7 @@
         __block id successBlock = ^(id result) {
             _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
             [self updateFbToken:result[@"item"][@"fb"][@"token"] andUser:result[@"item"][@"fb"][@"id"]];
-
+            
             [self checkDeviceToken];
             [self saveSettingsObject:[NSDate date] withKey:kKeyLastUpdate];
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationReloadCurrentUser object:nil]];
@@ -964,7 +971,7 @@
 }
 
 - (void)sendInvitationMetric:(NSString *)canal withTotal:(NSInteger)total {
-    [self requestPath:@"/invitations/callback" method:@"GET" params:@{@"canal": canal, @"total":[NSNumber numberWithInteger:total]} success:nil failure:nil];
+    [self requestPath:@"/invitations/callback" method:@"GET" params:@{@"canal": canal, @"count":[NSNumber numberWithInteger:total]} success:nil failure:nil];
 }
 
 #pragma mark -
@@ -1168,6 +1175,33 @@
     return YES;
 }
 
+- (void)loginWithToken:(NSString *)token {
+    
+    if (!token || [token isBlank]) {
+        return;
+    }
+    
+    [UICKeyChainStore setString:token forKey:@"login-token"];
+    _access_token = token;
+
+    [self requestPath:@"/users/login" method:@"POST" params:nil success:^(id result) {
+        [self updateCurrentUserAfterConnect:result];
+    } failure: ^(NSError *error) {
+        if ([self connectionStatusFromError:error] && error.code != 426)
+            [self logout];
+        else if (error.code != 426) {
+            [self loadUserData];
+            if (!self.currentUser)
+                [self logout];
+            else {
+                [appDelegate didConnected];
+                [appDelegate goToAccountViewController];
+            }
+        }
+    }];
+  
+}
+
 #pragma mark - Facebook
 
 - (void)updateFbToken:(NSString *)token andUser:(NSString *)userId {
@@ -1212,21 +1246,16 @@
     
     if (_currentUser) {
         
-        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me?fields=id,email,first_name,last_name,name,cover"
+        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me?fields=id,email,first_name,last_name,name,cover,about,location,website,birthday,gender"
                                                                        parameters:nil];
         [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             [self hideLoadView];
             
             if (!error) {
-                NSDictionary * user = @{
-                                        @"fb": @{
-                                                @"cover": result[@"cover"][@"id"],
-                                                @"email": result[@"email"],
-                                                @"id": result[@"id"],
-                                                @"name": result[@"name"],
-                                                @"token": _facebook_token
-                                                }
-                                        };
+                NSMutableDictionary *fbData = [result mutableCopy];
+                [fbData setObject:_facebook_token forKey:@"token"];
+                
+                NSDictionary * user = @{ @"fb": fbData };
                 
                 [self updateUser:user success:nil failure:nil];
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationFbConnect object:nil]];
@@ -1452,6 +1481,25 @@
     [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
+- (void)handleTriggerProfileEdit:(NSDictionary *)data {
+    EditProfileViewController *controller = [EditProfileViewController new];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+}
+
+- (void)handleTriggerValidateSMS:(NSDictionary *)data {
+    ValidateSMSViewController *controller = [ValidateSMSViewController new];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+}
+
+- (void)handleTriggerValidateSecureCode:(NSDictionary *)data {
+    ValidateSecureCodeViewController *controller = [ValidateSecureCodeViewController new];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+}
+
+- (void)handleTriggerAskNotification:(NSDictionary *)data {
+    [appDelegate askNotification];
+}
+
 - (void)handleTrigger:(FLTrigger*)trigger {
     NSDictionary *triggerFuncs = @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
                                    [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
@@ -1483,6 +1531,10 @@
                                    [NSNumber numberWithInt:TriggerSendContacts]: NSStringFromSelector(@selector(handleTriggerContactsSend:)),
                                    [NSNumber numberWithInt:TriggerUserShow]: NSStringFromSelector(@selector(handleTriggerUserShow:)),
                                    [NSNumber numberWithInt:TriggerInvitationSMSShow]: NSStringFromSelector(@selector(handleTriggerInvitationSMSShow:)),
+                                   [NSNumber numberWithInt:TriggerEditProfile]: NSStringFromSelector(@selector(handleTriggerProfileEdit:)),
+                                   [NSNumber numberWithInt:TriggerSMSValidate]: NSStringFromSelector(@selector(handleTriggerValidateSMS:)),
+                                   [NSNumber numberWithInt:TriggerSecureCodeValidate]: NSStringFromSelector(@selector(handleTriggerValidateSecureCode:)),
+                                   [NSNumber numberWithInt:TriggerAskNotification]: NSStringFromSelector(@selector(handleTriggerAskNotification:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
@@ -1880,7 +1932,8 @@
     if (activities) {
         for (NSDictionary *json in activities) {
             FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
-            [arrayActivities addObject:activity];
+            if (activity)
+                [arrayActivities addObject:activity];
         }
     }
     return arrayActivities;
@@ -1892,7 +1945,8 @@
     if (activities) {
         for (NSDictionary *json in activities) {
             FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
-            [arrayActivities addObject:activity];
+            if (activity)
+                [arrayActivities addObject:activity];
         }
     }
     return arrayActivities;

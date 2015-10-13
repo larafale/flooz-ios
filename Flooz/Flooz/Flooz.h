@@ -76,6 +76,7 @@ static NSString *kBranchData = @"branchData";
 
 - (BOOL)autologin;
 - (void)logout;
+- (void)loginWithToken:(NSString *)token;
 
 - (void)signupPassStep:(NSString *)step user:(NSMutableDictionary*)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
@@ -87,6 +88,7 @@ static NSString *kBranchData = @"branchData";
 - (void)reportContent:(FLReport *)report;
 - (void)blockUser:(NSString *)userId;
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)checkPhoneForUser:(NSString*)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (NSString *)formatBirthDate:(NSString *)birthdate;
 - (void)cashoutValidate:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)sendDiscountCode:(NSDictionary *)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;

@@ -507,7 +507,6 @@ static BOOL canTouchID = YES;
             if ([tempNewSecureCode isEqual:pin]) {
                 [[Flooz sharedInstance] showLoadView];
                 [[Flooz sharedInstance] updateUser:@{ @"secureCode": pin } success: ^(id result) {
-                    [[Flooz sharedInstance] hideLoadView];
                     [[self class] setSecureCodeForCurrentUser:pin];
                     
                     if (isSignup) {

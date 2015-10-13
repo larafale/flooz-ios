@@ -76,11 +76,11 @@ typedef enum e_FLUserKind {
 @property (nonatomic)  BOOL needDocuments;
 
 @property (nonatomic)  BOOL isFriendWaiting;
-@property (nonatomic)  BOOL isStar;
-@property (nonatomic)  BOOL isPro;
+@property (nonatomic)  BOOL isCertified;
 @property (nonatomic)  BOOL isCactus;
 @property (nonatomic)  BOOL isFriend;
 @property (nonatomic)  BOOL isComplete;
+@property (nonatomic)  BOOL isFriendable;
 
 @property (nonatomic)  BOOL isIdentified;
 @property (nonatomic)  BOOL isFloozer;

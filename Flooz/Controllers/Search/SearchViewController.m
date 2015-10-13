@@ -44,9 +44,9 @@
     CGFloat searchMargin;
     
     if (IS_IPHONE_4)
-        searchMargin = 150;
+        searchMargin = 110;
     else if (IS_IPHONE_5)
-        searchMargin = 120;
+        searchMargin = 110;
     else if (IS_IPHONE_6)
         searchMargin = 100;
     else

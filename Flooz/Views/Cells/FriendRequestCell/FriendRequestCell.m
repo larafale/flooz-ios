@@ -110,7 +110,7 @@
 	_nameLabel.text = [[[_friendRequest user] fullname] uppercaseString];
     [_nameLabel setWidthToFit];
     
-    if ([[_friendRequest user] isStar] || [[_friendRequest user] isPro]) {
+    if ([[_friendRequest user] isCertified]) {
         [_certifImageView setHidden:NO];
         CGRectSetX(_certifImageView.frame, CGRectGetMaxX(_nameLabel.frame) + 5);
     } else {

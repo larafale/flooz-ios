@@ -72,7 +72,9 @@
     }
     
     [_codeField becomeFirstResponder];
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(reloadTimerView:) userInfo:nil repeats:YES];
+    
+    if (!_timer)
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(reloadTimerView:) userInfo:nil repeats:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

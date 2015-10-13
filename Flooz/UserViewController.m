@@ -292,7 +292,7 @@
     [friendRequestActionButton setHidden:YES];
     [settingsButton setHidden:YES];
     
-    if (currentUser.isStar || currentUser.isPro) {
+    if (currentUser.isCertified) {
         [certfifiedIcon setHidden:NO];
         CGRectSetX(certfifiedIcon.frame, CGRectGetMaxX(fullnameLabel.frame) + 5);
     } else
@@ -357,7 +357,7 @@
     [fullnameLabel setWidthToFit];
     [usernameLabel setWidthToFit];
     
-    if (currentUser.isStar || currentUser.isPro) {
+    if (currentUser.isCertified) {
         [certfifiedIcon setHidden:NO];
         CGRectSetX(certfifiedIcon.frame, CGRectGetMaxX(fullnameLabel.frame) + 5);
     } else {

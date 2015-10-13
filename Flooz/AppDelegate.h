@@ -31,6 +31,8 @@ static NSString *kKeyTutoTimelinePrivate = @"kKeyTutoTimelinePrivate";
 static NSString *kKeyAccessContacts = @"kKeyAccessContacts";
 static NSString *kNotificationCancelTimer = @"kNotificationCancelTimer";
 static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBarClick";
+static NSString *kNotificationEnterBackground = @"kNotificationEnterBackground";
+static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, MFMailComposeViewControllerDelegate, UIActionSheetDelegate, JTSImageViewControllerInteractionsDelegate> {
 	NSDate *lastErrorDate;

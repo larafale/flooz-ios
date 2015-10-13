@@ -222,6 +222,7 @@
 "NAV_NEW_FLOOZ_FRIENDS" = "Choisir un destinataire";
 "NAV_3DSECURE" = "3D Secure";
 "NAV_SHARESMS" = "Partager l'app";
+"NAV_SECURECODE" = "Code Secret";
 
 /************************************/
 /*         ALERTS / ERROR           */

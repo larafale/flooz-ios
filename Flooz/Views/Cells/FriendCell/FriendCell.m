@@ -24,44 +24,44 @@
 
 @end
 @implementation FriendCell {
-	UILabel *_nameLabel;
-	UILabel *_subLabel;
+    UILabel *_nameLabel;
+    UILabel *_subLabel;
     
     UIImageView *_certifImageView;
-
+    
     CGFloat widthLabel;
     CGFloat cellWidth;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-	if (self) {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
         cellWidth = PPScreenWidth();
-		[self createViews];
-	}
-	return self;
+        [self createViews];
+    }
+    return self;
 }
 
 + (CGFloat)getHeight {
-	return 54;
+    return 54;
 }
 
 - (void)setFriend:(FLUser *)friend {
-	self->_friend = friend;
-	[self prepareViews];
+    self->_friend = friend;
+    [self prepareViews];
 }
 
 #pragma mark - Create Views
 
 - (void)createViews {
-	self.selectionStyle = UITableViewCellSelectionStyleNone;
-	self.backgroundColor = [UIColor clearColor];
-
-	[self createAvatarView];
-	[self createTextView];
-	[self createSubTextView];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.backgroundColor = [UIColor clearColor];
+    
+    [self createAvatarView];
+    [self createTextView];
+    [self createSubTextView];
     [self createCertifView];
-	[self createButtonView];
+    [self createButtonView];
 }
 
 - (void)createAvatarView {
@@ -71,21 +71,21 @@
 
 - (void)createTextView {
     widthLabel = cellWidth - (CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE);
-	_nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE, 17.0f, widthLabel, 14)];
-
-	_nameLabel.font = [UIFont customContentBold:13];
-	_nameLabel.textColor = [UIColor whiteColor];
-
-	[self.contentView addSubview:_nameLabel];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE, 17.0f, widthLabel, 14)];
+    
+    _nameLabel.font = [UIFont customContentBold:13];
+    _nameLabel.textColor = [UIColor whiteColor];
+    
+    [self.contentView addSubview:_nameLabel];
 }
 
 - (void)createSubTextView {
-	_subLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_nameLabel.frame), 31, CGRectGetWidth(_nameLabel.frame), 12)];
-
-	_subLabel.font = [UIFont customContentBold:11];
-	_subLabel.textColor = [UIColor customGreyPseudo];
-
-	[self.contentView addSubview:_subLabel];
+    _subLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_nameLabel.frame), 31, CGRectGetWidth(_nameLabel.frame), 12)];
+    
+    _subLabel.font = [UIFont customContentBold:11];
+    _subLabel.textColor = [UIColor customGreyPseudo];
+    
+    [self.contentView addSubview:_subLabel];
 }
 
 - (void)createCertifView {
@@ -99,30 +99,30 @@
 - (void)createButtonView {
     _addButton = [FLSocialHelper createMiniFriendButton:self action:@selector(accept) frame:CGRectMake(cellWidth - 45, 13, 28, 28)];
     _removeButton = [FLSocialHelper createMiniUnfriendButton:self action:@selector(decline) frame:CGRectMake(cellWidth - 45, 13, 28, 28)];
-
-	[self.contentView addSubview:_addButton];
+    
+    [self.contentView addSubview:_addButton];
     [self.contentView addSubview:_removeButton];
 }
 
 #pragma mark - Prepare Views
 
 - (void)prepareViews {
-	[self prepareAvatarView];
-	[self prepareNameView];
-	[self preparePhoneView];
-
-	[self prepareCheckView];
+    [self prepareAvatarView];
+    [self prepareNameView];
+    [self preparePhoneView];
+    
+    [self prepareCheckView];
 }
 
 - (void)prepareAvatarView {
-	[_avatarView setImageFromUser:_friend];
+    [_avatarView setImageFromUser:_friend];
 }
 
 - (void)prepareNameView {
     _nameLabel.text = [[_friend fullname] uppercaseString];
     [_nameLabel setWidthToFit];
     
-    if ([_friend isStar] || [_friend isPro]) {
+    if ([_friend isCertified]) {
         [_certifImageView setHidden:NO];
         CGRectSetX(_certifImageView.frame, CGRectGetMaxX(_nameLabel.frame) + 5);
     } else {
@@ -131,29 +131,34 @@
 }
 
 - (void)preparePhoneView {
-	NSString *s = [@"@" stringByAppendingString : _friend.username];
-	_subLabel.text = s;
-	CGSize expectedLabelS = [s sizeWithAttributes:
-	                         @{ NSFontAttributeName: _subLabel.font }];
-	CGRectSetHeight(_subLabel.frame, expectedLabelS.height);
+    NSString *s = [@"@" stringByAppendingString : _friend.username];
+    _subLabel.text = s;
+    CGSize expectedLabelS = [s sizeWithAttributes:
+                             @{ NSFontAttributeName: _subLabel.font }];
+    CGRectSetHeight(_subLabel.frame, expectedLabelS.height);
 }
 
 - (void)prepareCheckView {
-	BOOL isFriend = _friend.isFriend;
-
-    if (isFriend) {
-        [_removeButton setHidden:NO];
-        [_addButton setHidden:YES];
+    BOOL isFriend = _friend.isFriend;
+    
+    if (_friend.isFriendable) {
+        if (isFriend) {
+            [_removeButton setHidden:NO];
+            [_addButton setHidden:YES];
+        } else {
+            [_removeButton setHidden:YES];
+            [_addButton setHidden:NO];
+        }
     } else {
+        [_addButton setHidden:YES];
         [_removeButton setHidden:YES];
-        [_addButton setHidden:NO];
     }
 }
 
 #pragma mark -
 
 - (void)accept {
-	[_delegate acceptFriendSuggestion:_friend cell:self];
+    [_delegate acceptFriendSuggestion:_friend cell:self];
 }
 
 - (void)decline {
@@ -172,12 +177,17 @@
     CGRectSetWidth(_nameLabel.frame, widthLabel - 50.0f);
     BOOL isFriend = _friend.isFriend;
     
-    if (isFriend) {
-        [_removeButton setHidden:NO];
-        [_addButton setHidden:YES];
+    if (_friend.isFriendable) {
+        if (isFriend) {
+            [_removeButton setHidden:NO];
+            [_addButton setHidden:YES];
+        } else {
+            [_removeButton setHidden:YES];
+            [_addButton setHidden:NO];
+        }
     } else {
+        [_addButton setHidden:YES];
         [_removeButton setHidden:YES];
-        [_addButton setHidden:NO];
     }
 }
 

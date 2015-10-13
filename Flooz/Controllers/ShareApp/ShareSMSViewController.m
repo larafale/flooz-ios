@@ -32,6 +32,8 @@
     BOOL isSearching;
     
     NSString *searchString;
+    
+    NSString *buttonTitle;
 }
 
 @end
@@ -49,8 +51,6 @@
         for (int i = 0; i < dicKeys.length; i++) {
             [keysOrdered addObject:[dicKeys substringWithRange:NSMakeRange(i, 1)]];
         }
-        
-        self.title = NSLocalizedString(@"NAV_SHARESMS", nil);
     }
     return self;
 }
@@ -58,6 +58,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    buttonTitle = NSLocalizedString(@"GLOBAL_INVITE", nil);
+    
+    if ([[Flooz sharedInstance] currentTexts]) {
+        self.title = [[Flooz sharedInstance] currentTexts].menu[@"sms"][@"title"];
+        buttonTitle = [[Flooz sharedInstance] currentTexts].menu[@"sms"][@"button"];
+    } else {
+        [[Flooz sharedInstance] textObjectFromApi:^(FLTexts *result) {
+            self.title = result.menu[@"sms"][@"title"];
+            buttonTitle = result.menu[@"sms"][@"button"];
+            if (selectedContacts.count)
+                [_sendButton setTitle:[NSString stringWithFormat:@"%@ (%lu)", buttonTitle, (unsigned long)[selectedContacts count]] forState:UIControlStateNormal];
+            else
+                [_sendButton setTitle:buttonTitle forState:UIControlStateNormal];
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+
     searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
     [searchItem setTintColor:[UIColor customBlue]];
     
@@ -66,7 +84,7 @@
     [_searchBar setHidden:YES];
     [_searchBar sizeToFit];
     
-    _sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(_mainBody.frame) - FLActionButtonDefaultHeight - 5, PPScreenWidth() - 20, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_INVITE", nil)];
+    _sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(_mainBody.frame) - FLActionButtonDefaultHeight - 5, PPScreenWidth() - 20, FLActionButtonDefaultHeight) title:buttonTitle];
     [_sendButton setEnabled:NO];
     [_sendButton addTarget:self action:@selector(sendButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
@@ -150,7 +168,7 @@
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     [self dismissViewControllerAnimated:YES completion: ^{
         if (result == MessageComposeResultSent) {
-            [[Flooz sharedInstance] sendInvitationMetric:@"invite" withTotal:selectedContacts.count];
+            [[Flooz sharedInstance] sendInvitationMetric:@"sms" withTotal:selectedContacts.count];
             [selectedContacts removeAllObjects];
             [self reloadTableView];
         }
@@ -289,7 +307,7 @@
         [_sendButton setEnabled:YES];
     }
     
-    [_sendButton setTitle:[NSString stringWithFormat:@"%@ (%lu)", NSLocalizedString(@"GLOBAL_INVITE", nil), (unsigned long)[selectedContacts count]] forState:UIControlStateNormal];
+    [_sendButton setTitle:[NSString stringWithFormat:@"%@ (%lu)", buttonTitle, (unsigned long)[selectedContacts count]] forState:UIControlStateNormal];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -304,11 +322,11 @@
     if ([selectedContacts containsObject:contact])
         [selectedContacts removeObject:contact];
     
-    [_sendButton setTitle:[NSString stringWithFormat:@"%@ (%lu)", NSLocalizedString(@"GLOBAL_INVITE", nil), (unsigned long)[selectedContacts count]] forState:UIControlStateNormal];
+    [_sendButton setTitle:[NSString stringWithFormat:@"%@ (%lu)", buttonTitle, (unsigned long)[selectedContacts count]] forState:UIControlStateNormal];
     
     if (![selectedContacts count] && [_sendButton isEnabled]) {
         [_sendButton setEnabled:NO];
-        [_sendButton setTitle:NSLocalizedString(@"GLOBAL_INVITE", nil) forState:UIControlStateNormal];
+        [_sendButton setTitle:buttonTitle forState:UIControlStateNormal];
     }
 }
 
@@ -339,8 +357,13 @@
     }];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self loadVisibleUsers];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate)
+        [self loadVisibleUsers];
 }
 
 - (void)didFilterChange:(NSString *)text {
