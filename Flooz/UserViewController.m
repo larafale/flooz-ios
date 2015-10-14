@@ -632,7 +632,7 @@
 }
 
 - (void)reloadTableView {
-    if (currentUser) {
+    if (currentUser && (!transactions || !transactions.count)) {
         [[Flooz sharedInstance] userTimeline:currentUser.userId success: ^(id result, NSString *nextPageUrl) {
             transactions = [result mutableCopy];
             _nextPageUrl = nextPageUrl;

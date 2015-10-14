@@ -30,6 +30,9 @@
 @interface NewTransactionViewController () {
     FLUser *presetUser;
     
+    UIBarButtonItem *amountItem;
+    UIBarButtonItem *cbItem;
+    
     FLNewTransactionBar *transactionBar;
     FLNewTransactionBar *transactionBarKeyboard;
     FLNewTransactionBar *cameraBarKeyboard;
@@ -150,10 +153,6 @@
         else
             self.title = NSLocalizedString(@"NEW_TRANSACTION", nil);
         
-        if (preset.blockBack) {
-            self.navigationItem.leftBarButtonItem = nil;
-        }
-        
         if (preset.amount) {
             transaction[@"amount"] = [FLHelper formatedAmount:preset.amount withCurrency:NO withSymbol:NO];
         }
@@ -178,6 +177,25 @@
     [super viewDidLoad];
     
     [self registerForKeyboardNotifications];
+    
+    NSDictionary *attributes = @{
+                                 NSForegroundColorAttributeName: [UIColor customBlue],
+                                 NSFontAttributeName: [UIFont customTitleExtraLight:15]
+                                 };
+    
+    amountItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%.2f €", [[[Flooz sharedInstance] currentUser].amount floatValue]] style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
+    [amountItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    
+    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
+    CGSize newImgSize = CGSizeMake(30, 20);
+    
+    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
+    [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
+    cbImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    cbItem = [[UIBarButtonItem alloc] initWithImage:cbImage style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
+    [cbItem setTintColor:[UIColor customBlue]];
     
     transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
     [transactionBar setDelegate:self];
@@ -310,6 +328,10 @@
     [super viewWillAppear:animated];
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
+    
+    NSNumber *number = transaction[@"amount"];
+    [self updateBalanceIndicator:number];
+    
     [friend reloadData];
     [self reloadTransactionBarData];
     [self validateView];
@@ -327,10 +349,6 @@
             
             currentPreset.triggers = nil;
         }
-        if (currentPreset.blockBalance)
-            [((FLNavigationController*)self.parentViewController) setAmountHidden:YES];
-        else
-            [((FLNavigationController*)self.parentViewController) setAmountHidden:NO];
         
         if (currentPreset.image) {
             [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:currentPreset.image] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
@@ -341,8 +359,7 @@
                  }
              }];
         }
-    } else
-        [((FLNavigationController*)self.parentViewController) setAmountHidden:NO];
+    }
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
     
@@ -363,15 +380,6 @@
 
 - (void)validateView {
     BOOL valid = YES;
-    
-    //    if (!presetUser)
-    //        valid = NO;
-    //
-    //    if (!transaction[@"amount"] || [transaction[@"amount"] isBlank] || [transaction[@"amount"] floatValue] < 0.5f)
-    //        valid = NO;
-    //
-    //    if (!transaction[@"why"] || [transaction[@"why"] isBlank])
-    //        valid = NO;
     
     if (presetUser) {
         if (presetUser.blockObject != nil) {
@@ -438,11 +446,53 @@
 }
 
 -(void)amountChange {
-    FLNavigationController *nav = (FLNavigationController*)self.parentViewController;
     NSNumber *number = [NSNumber numberWithFloat:[amountInput.textfield.text floatValue]];
     transaction[@"amount"] = amountInput.textfield.text;
-    [nav setAmount:number];
+    [self updateBalanceIndicator:number];
     [self validateView];
+}
+
+- (void)updateBalanceIndicator:(NSNumber *)amount {
+    if (!currentPreset || !currentPreset.blockBalance) {
+        NSNumber *balance = [Flooz sharedInstance].currentUser.amount;
+        
+        float tmp = [balance floatValue] - [amount floatValue];
+        
+        if (tmp < 0) {
+            self.navigationItem.rightBarButtonItem = cbItem;
+        }
+        else {
+            [amountItem setTitle:[FLHelper formatedAmount:@(tmp) withSymbol:NO]];
+            
+            if (self.navigationItem.rightBarButtonItem != amountItem)
+                self.navigationItem.rightBarButtonItem = amountItem;
+        }
+    } else
+        self.navigationItem.rightBarButtonItem = nil;
+}
+
+- (void)amountInfos {
+    [self.view endEditing:YES];
+    [self.view endEditing:NO];
+    
+    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
+    CGSize newImgSize = CGSizeMake(20, 14);
+    
+    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
+    [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
+    cbImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+    attachment.image = cbImage;
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_1", nil)];
+    [string appendAttributedString:attachmentString];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_2", nil)]];
+    
+    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:nil] show];
 }
 
 - (void)dismissKeyboard:(id)sender {
@@ -463,7 +513,7 @@
                     [[Flooz sharedInstance] handleTrigger:trigger];
                 }
             }
-
+            
             if (currentPreset.steps) {
                 [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
             }
