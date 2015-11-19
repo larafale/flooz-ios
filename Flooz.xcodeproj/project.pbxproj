@@ -271,6 +271,9 @@
 		C90252101B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
 		C90252111B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
 		C90252121B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
+		C9037F4A1BFE0481004256BF /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C9037F491BFE0481004256BF /* FLCountry.m */; };
+		C9037F4B1BFE0481004256BF /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C9037F491BFE0481004256BF /* FLCountry.m */; };
+		C9037F4C1BFE0481004256BF /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C9037F491BFE0481004256BF /* FLCountry.m */; };
 		C905A8DB1A56D5BE00473963 /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C905A8DA1A56D5BE00473963 /* SIOSocket.m */; };
 		C905A8DC1A56D5BE00473963 /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C905A8DA1A56D5BE00473963 /* SIOSocket.m */; };
 		C907297E1B59569900BA691C /* NSString+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = C907297D1B59569900BA691C /* NSString+custom.m */; };
@@ -346,9 +349,6 @@
 		C95772771A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */; };
 		C95772781A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */; };
 		C95772791A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */; };
-		C95974F61B9EE2EE00F2F7D1 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C95974F51B9EE2EE00F2F7D1 /* FLCountry.m */; };
-		C95974F71B9EE2EE00F2F7D1 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C95974F51B9EE2EE00F2F7D1 /* FLCountry.m */; };
-		C95974F81B9EE2EE00F2F7D1 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C95974F51B9EE2EE00F2F7D1 /* FLCountry.m */; };
 		C95AED971A49AF4A00000FB3 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
 		C95AED981A49B10700000FB3 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
 		C95AED9E1A49B5E500000FB3 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */; };
@@ -607,9 +607,6 @@
 		C9CD766B1BF227EF00362962 /* FLCountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD76671BF227EF00362962 /* FLCountryPicker.m */; };
 		C9CD766C1BF227EF00362962 /* FLCountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD76671BF227EF00362962 /* FLCountryPicker.m */; };
 		C9CD766D1BF227EF00362962 /* FLCountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD76671BF227EF00362962 /* FLCountryPicker.m */; };
-		C9CD76701BF227FB00362962 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD766E1BF227FB00362962 /* FLCountry.m */; };
-		C9CD76711BF227FB00362962 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD766E1BF227FB00362962 /* FLCountry.m */; };
-		C9CD76721BF227FB00362962 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD766E1BF227FB00362962 /* FLCountry.m */; };
 		C9D4E7041B18BD380096725B /* Flooz dev-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */; };
 		C9D4E7061B18BD380096725B /* Flooz dev-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */; };
 		C9D4E7071B18BD380096725B /* Flooz local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7031B18BD380096725B /* Flooz local-Info.plist */; };
@@ -898,6 +895,7 @@
 		ABF7095C18A4FD6B00517389 /* FLComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLComment.m; path = Models/FLComment.m; sourceTree = "<group>"; };
 		B48C8D51E38315E83190602F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTransactionDescriptionView.m; sourceTree = "<group>"; };
+		C9037F491BFE0481004256BF /* FLCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountry.m; sourceTree = "<group>"; };
 		C905A8D81A56D5BE00473963 /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
 		C905A8D91A56D5BE00473963 /* SIOSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOSocket.h; sourceTree = "<group>"; };
 		C905A8DA1A56D5BE00473963 /* SIOSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOSocket.m; sourceTree = "<group>"; };
@@ -953,8 +951,6 @@
 		C95772701A9C7BB400CD6BC0 /* FLTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTexts.m; sourceTree = "<group>"; };
 		C95772751A9CBDB400CD6BC0 /* FriendPickerEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendPickerEmptyCell.h; sourceTree = "<group>"; };
 		C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendPickerEmptyCell.m; sourceTree = "<group>"; };
-		C95974F41B9EE2EE00F2F7D1 /* FLCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCountry.h; sourceTree = "<group>"; };
-		C95974F51B9EE2EE00F2F7D1 /* FLCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountry.m; sourceTree = "<group>"; };
 		C95AED951A49AF4A00000FB3 /* ClipboardPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipboardPopoverViewController.h; sourceTree = "<group>"; };
 		C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClipboardPopoverViewController.m; sourceTree = "<group>"; };
 		C95AED9A1A49B5E500000FB3 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
@@ -1037,7 +1033,6 @@
 		C9CD76651BF227EF00362962 /* FLPhoneField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPhoneField.m; sourceTree = "<group>"; };
 		C9CD76661BF227EF00362962 /* FLCountryPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCountryPicker.h; sourceTree = "<group>"; };
 		C9CD76671BF227EF00362962 /* FLCountryPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountryPicker.m; sourceTree = "<group>"; };
-		C9CD766E1BF227FB00362962 /* FLCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountry.m; sourceTree = "<group>"; };
 		C9CD766F1BF227FB00362962 /* FLCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCountry.h; sourceTree = "<group>"; };
 		C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz dev-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C9D4E7031B18BD380096725B /* Flooz local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz local-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -1509,7 +1504,6 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				C984E57F1B9DC2F80015D101 /* CountryPicker */,
 				AB3D08DC1871A5CB00CF8380 /* Flooz */,
 				C99A514D1AF7D67000342F8C /* IQActionSheetPickerView */,
 				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
@@ -1535,6 +1529,7 @@
 		AB3D08DD1871A5D100CF8380 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C9037F491BFE0481004256BF /* FLCountry.m */,
 				AB2FB54618AE798D0079AA1D /* FLActivity.h */,
 				AB2FB54718AE798D0079AA1D /* FLActivity.m */,
 				C9C7EE9219F685B9009FE292 /* FLAlert.h */,
@@ -1542,7 +1537,6 @@
 				ABF7095B18A4FD6B00517389 /* FLComment.h */,
 				ABF7095C18A4FD6B00517389 /* FLComment.m */,
 				C9CD766F1BF227FB00362962 /* FLCountry.h */,
-				C9CD766E1BF227FB00362962 /* FLCountry.m */,
 				ABBB75CD18B64A0B0070C2A8 /* FLCreditCard.h */,
 				ABBB75CE18B64A0B0070C2A8 /* FLCreditCard.m */,
 				ABBB75DC18BA27E60070C2A8 /* FLFriendRequest.h */,
@@ -2243,8 +2237,6 @@
 		C95974F91B9EFC9500F2F7D1 /* FLCountryPicker */ = {
 			isa = PBXGroup;
 			children = (
-				C93AFAD01BA5EA6000AD1111 /* FLCountryPicker.h */,
-				C93AFAD11BA5EA6000AD1111 /* FLCountryPicker.m */,
 			);
 			name = FLCountryPicker;
 			sourceTree = "<group>";
@@ -2814,45 +2806,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C97AE3C41BA02B94007475E9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
-		};
-		C97AE3C51BA02BA5007475E9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
-		};
-		C97AE3C61BA02BAD007475E9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
-		};
 		CC066EF4A38CC238F8613A30 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2943,9 +2896,7 @@
 				C9C7EE9419F685B9009FE292 /* FLAlert.m in Sources */,
 				2FCBCD1019BF3C6700FB31E0 /* FLCameraKeyboard.m in Sources */,
 				2F1307E919D9C1790062D194 /* FLSocialButton.m in Sources */,
-				C93AFAD21BA5EA6000AD1111 /* FLCountryPicker.m in Sources */,
 				AB2FB54C18B231B90079AA1D /* ActivityCell.m in Sources */,
-				C9CD76701BF227FB00362962 /* FLCountry.m in Sources */,
 				C966473C19FFEA0D000851AF /* TransitionDelegate.m in Sources */,
 				ABE9148B1892C734003AC722 /* FLKeyboardView.m in Sources */,
 				2FA3E55F19DDE97700EC65C2 /* SettingsPreferencesViewController.m in Sources */,
@@ -3014,7 +2965,6 @@
 				AB7C9B1218D7049B002775BA /* NewTransactionSelectTypeView.m in Sources */,
 				C91C5D441BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9AE778F1ACA917B00CFF0AF /* FLSlider.m in Sources */,
-				C97AE3CA1BA03196007475E9 /* FLPhoneField.m in Sources */,
 				C908A3EB1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABE914691892940A003AC722 /* FLAccountUserView.m in Sources */,
@@ -3034,7 +2984,6 @@
 				C9CA67701A518535003863D1 /* SignupNavigationController.m in Sources */,
 				ABF7094118A4D64300517389 /* TransactionCell.m in Sources */,
 				C9ED41241A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
-				C95974F61B9EE2EE00F2F7D1 /* FLCountry.m in Sources */,
 				C9EB885D1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
 				AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */,
 				C90252101B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
@@ -3051,6 +3000,7 @@
 				C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,
+				C9037F4A1BFE0481004256BF /* FLCountry.m in Sources */,
 				C919AD9D1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
 				2F49762619E472CA0089947F /* SettingsNotificationsViewController.m in Sources */,
 				C9088B6C1A51A22200026FE9 /* SignupBaseViewController.m in Sources */,
@@ -3116,9 +3066,7 @@
 				C905A8DC1A56D5BE00473963 /* SIOSocket.m in Sources */,
 				ABAA3F8C197E96BF009F29EF /* TransactionActionsView.m in Sources */,
 				ABAA3F8D197E96BF009F29EF /* FLComment.m in Sources */,
-				C93AFAD31BA5EA6000AD1111 /* FLCountryPicker.m in Sources */,
 				2F0F6B0019DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
-				C9CD76711BF227FB00362962 /* FLCountry.m in Sources */,
 				ABAA3F93197E96BF009F29EF /* TransactionUsersView.m in Sources */,
 				ABAA3F95197E96BF009F29EF /* FLPaymentField.m in Sources */,
 				ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */,
@@ -3186,7 +3134,6 @@
 				ABAA3FC4197E96BF009F29EF /* FLCreditCard.m in Sources */,
 				C91C5D451BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9AE77901ACA917B00CFF0AF /* FLSlider.m in Sources */,
-				C97AE3CB1BA03196007475E9 /* FLPhoneField.m in Sources */,
 				C908A3EC1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABAA3FC5197E96BF009F29EF /* NewTransactionViewController.m in Sources */,
@@ -3206,7 +3153,6 @@
 				2F50155419EDC46E00F61380 /* GlobalViewController.m in Sources */,
 				C9CA67711A518535003863D1 /* SignupNavigationController.m in Sources */,
 				ABAA3FD3197E96BF009F29EF /* FLTextFieldTitle2.m in Sources */,
-				C95974F71B9EE2EE00F2F7D1 /* FLCountry.m in Sources */,
 				ABAA3FD6197E96BF009F29EF /* FLUserView.m in Sources */,
 				C9ED41251A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
 				C90252111B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
@@ -3223,6 +3169,7 @@
 				C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
 				ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */,
+				C9037F4B1BFE0481004256BF /* FLCountry.m in Sources */,
 				C919AD9E1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
 				2F49762719E472CA0089947F /* SettingsNotificationsViewController.m in Sources */,
 				C9088B6D1A51A22200026FE9 /* SignupBaseViewController.m in Sources */,
@@ -3281,7 +3228,6 @@
 				C98012941A76921000019682 /* SIOSocket.m in Sources */,
 				C98012951A76921000019682 /* TransactionActionsView.m in Sources */,
 				C98012961A76921000019682 /* FLComment.m in Sources */,
-				C9CD76721BF227FB00362962 /* FLCountry.m in Sources */,
 				C98012981A76921000019682 /* SettingsBankViewController.m in Sources */,
 				C980129A1A76921000019682 /* TransactionUsersView.m in Sources */,
 				C980129C1A76921000019682 /* FLPaymentField.m in Sources */,
@@ -3350,7 +3296,6 @@
 				C98012D51A76921000019682 /* NotificationsViewController.m in Sources */,
 				C98012D61A76921000019682 /* FLCreditCard.m in Sources */,
 				C9AE77911ACA917B00CFF0AF /* FLSlider.m in Sources */,
-				C97AE3CC1BA03196007475E9 /* FLPhoneField.m in Sources */,
 				C908A3ED1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D581B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				C98012D71A76921000019682 /* NewTransactionViewController.m in Sources */,
@@ -3370,7 +3315,6 @@
 				C98012E41A76921000019682 /* GlobalViewController.m in Sources */,
 				C98012E61A76921000019682 /* SignupNavigationController.m in Sources */,
 				C98012E71A76921000019682 /* FLTextFieldTitle2.m in Sources */,
-				C95974F81B9EE2EE00F2F7D1 /* FLCountry.m in Sources */,
 				C98012E81A76921000019682 /* FLUserView.m in Sources */,
 				C9ED41261A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
 				C90252121B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
@@ -3386,6 +3330,7 @@
 				C96E5A6A1BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				C98012F81A76921000019682 /* FriendPickerSelectionCell.m in Sources */,
 				C98012F91A76921000019682 /* HomeViewController.m in Sources */,
+				C9037F4C1BFE0481004256BF /* FLCountry.m in Sources */,
 				C919AD9F1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
 				C98012FA1A76921000019682 /* SettingsNotificationsViewController.m in Sources */,
 				C98012FB1A76921000019682 /* SignupBaseViewController.m in Sources */,

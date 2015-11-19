@@ -18,10 +18,7 @@
 @property (nonatomic, retain) FLSlider *slider;
 @property (nonatomic, retain) NSDictionary *couponButton;
 @property (nonatomic, retain) NSDictionary *menu;
-<<<<<<< HEAD
-=======
 @property (nonatomic, retain) NSString *signupSponsor;
->>>>>>> 6365ab2
 @property (nonatomic, retain) NSMutableArray *avalaibleCountries;
 
 - (id)initWithJSON:(NSDictionary *)json;

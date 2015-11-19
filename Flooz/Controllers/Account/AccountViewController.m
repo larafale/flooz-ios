@@ -192,38 +192,6 @@
     
     friendsNotifs = [currentUser.metrics[@"pendingFriend"] intValue];
     
-<<<<<<< HEAD
-    _menuDic = @[
-                 @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
-                   @"items":@[
-                           @{@"title":NSLocalizedString(@"NAV_FRIENDS", @""), @"action":@"friends", @"notif":@(friendsNotifs)},
-                           @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
-                           @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
-                           @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
-                           @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
-                           @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
-                           @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
-                           ]
-                   },
-                 @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
-                   @"items":@[
-                           @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
-                           @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
-                           ]
-                   },
-                 @{@"title":NSLocalizedString(@"MENU_OTHER", @""),
-                   @"items":@[
-                           @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
-                           @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
-                           @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @""), @"action":@"terms", @"page":@"cgu"},
-                           @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @""), @"action":@"contact", @"page":@"contact"},
-                           @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @""), @"action":@"critics"},
-                           @{@"title":NSLocalizedString(@"SETTINGS_LOGOUT", @""), @"action":@"logout"}
-                           ]
-                   }
-                 ];
-    
-=======
     NSString *shareTitle = [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"];
     
     if (shareTitle == nil)
@@ -291,7 +259,6 @@
                        }
                      ];
     }
->>>>>>> 6365ab2
     
     [_tableView reloadData];
 }

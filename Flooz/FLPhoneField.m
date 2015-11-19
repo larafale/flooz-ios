@@ -33,11 +33,7 @@
 @synthesize bottomBar;
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary position:(CGPoint)position {
-<<<<<<< HEAD
-    return [self initWithPlaceholder:placeholder for:dictionary frame:CGRectMakeWithPosition(position)];
-=======
     return [self initWithPlaceholder:placeholder for:dictionary frame:CGRectMake(position.x, position.y, PPScreenWidth() - 2 * position.x, 40)];
->>>>>>> 6365ab2
 }
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary frame:(CGRect)frame {
@@ -46,11 +42,7 @@
         
         _placeholder = placeholder;
         _dictionary = dictionary;
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 6365ab2
         if (!_dictionary[@"country"] || [_dictionary[@"country"] isBlank]) {
             NSLocale *currentLocale = [NSLocale currentLocale];
             NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
@@ -192,23 +184,6 @@
     [self countryPicker:_countryPicker didSelectCountry:[_countryPicker getSelectedCountry]];
 }
 
-<<<<<<< HEAD
-- (void)textFieldDidChange:(UITextField *)textField {
-    if ([_textfield.text isBlank])
-        [_dictionary setValue:nil forKey:@"phone"];
-    else
-        [_dictionary setValue:textField.text forKey:@"phone"];
-    
-    [_targetTextChange performSelector:_actionTextChange withObject:self];
-    
-    NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
-    NSError *anError = nil;
-    NBPhoneNumber *myNumber = [phoneUtil parse:_textfield.text defaultRegion:self.currentCountry.code error:&anError];
-    
-    if (anError == nil) {
-        if ([phoneUtil isValidNumber:myNumber])
-            [self callAction];
-=======
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if ([string isEqualToString:@"\r"]) {
         return YES;
@@ -240,7 +215,6 @@
             if ([phoneUtil isValidNumber:myNumber])
                 [self callAction];
         }
->>>>>>> 6365ab2
     }
 }
 

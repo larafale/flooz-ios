@@ -42,8 +42,6 @@
     return nil;
 }
 
-<<<<<<< HEAD
-=======
 + (FLCountry *) countryFromIndicatif:(NSString *)indicatif {
     if ([Flooz sharedInstance].currentTexts) {
         for (FLCountry *country in [Flooz sharedInstance].currentTexts.avalaibleCountries) {
@@ -57,5 +55,4 @@
     return nil;
 }
 
->>>>>>> 6365ab2
 @end

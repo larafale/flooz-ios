@@ -27,15 +27,10 @@
     self.couponButton = json[@"couponButton"];
     self.card = json[@"card"];
     self.menu = json[@"menu"];
-<<<<<<< HEAD
-
-=======
-    
     if (json[@"signup"]) {
         self.signupSponsor = json[@"signup"][@"promo"];
     }
     
->>>>>>> 6365ab2
     self.avalaibleCountries = [NSMutableArray new];
     
     NSArray *countries = json[@"countries"];

@@ -41,11 +41,7 @@
     UIView *signupFbPicView;
     
     FLPhoneField *signupPhoneField;
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 6365ab2
     NSMutableArray *signupFormFields;
     
     UILabel *secretQuestion;
@@ -458,16 +454,12 @@
 
     CGFloat offsetY;
     
-<<<<<<< HEAD
-    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(sponsorTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SIGNUP", nil)];
-=======
     if (sponsorVisible)
         offsetY = CGRectGetMaxY(sponsorTextfield.frame);
     else
         offsetY = CGRectGetMaxY(passwordTextfield.frame);
     
     FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, offsetY + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SIGNUP", nil)];
->>>>>>> 6365ab2
     [signupButton setTag:89];
     [signupButton addTarget:self action:@selector(didSignupButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
@@ -957,17 +949,9 @@
                         break;
                     }
                 }
-<<<<<<< HEAD
-                
-                if (!activeField && [signupPhoneField isFirstResponder])
-                    activeField = signupPhoneField;
-                
-=======
-
                 if (!activeField && [signupPhoneField isFirstResponder])
                     activeField = signupPhoneField;
 
->>>>>>> 6365ab2
                 CGRect activeRect = activeField.frame;
                 activeRect.origin.x += signupFormView.frame.origin.x;
                 activeRect.origin.y += signupFormView.frame.origin.y;
@@ -995,11 +979,7 @@
                 
                 if (!activeField && [signupPhoneField isFirstResponder])
                     activeField = signupPhoneField;
-<<<<<<< HEAD
-                
-=======
 
->>>>>>> 6365ab2
                 CGRect activeRect = activeField.frame;
                 activeRect.origin.x += signupFormView.frame.origin.x;
                 activeRect.origin.y += signupFormView.frame.origin.y;
@@ -1018,11 +998,7 @@
             
             if (!activeField && [signupPhoneField isFirstResponder])
                 activeField = signupPhoneField;
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> 6365ab2
             CGRect activeRect = activeField.frame;
             activeRect.origin.x += signupFormView.frame.origin.x;
             activeRect.origin.y += signupFormView.frame.origin.y;

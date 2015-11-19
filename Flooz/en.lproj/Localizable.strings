@@ -317,8 +317,6 @@
 /*             FRIENDS              */
 /************************************/
 
-<<<<<<< HEAD
-=======
 "USER_ALREADY_FLOOZER" = "Déjà sur Flooz";
 
 "PRIVATE_USER" = "Cet utilisateur est privé";
@@ -346,7 +344,6 @@
 
 "FRIEND_REQUEST_TITLE" = "Demandes d'ami";
 
->>>>>>> 6365ab2
 "FRIEND_REQUEST_ACCEPT" = "Accepter";
 "FRIEND_REQUEST_REFUSE" = "Refuser";
 
@@ -366,12 +363,8 @@
 "FRIEND_PCIKER_PLACEHOLDER" = "Chercher un contact / Entrer un 06";
 "FRIEND_PICKER_FRIENDS_RECENT" = "Contacts récents";
 "FRIEND_PICKER_FRIENDS" = "Mes amis";
-<<<<<<< HEAD
-"FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";
-"FRIEND_PICKER_RESULT" = "Résultats";
-=======
+
 "FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresses";
->>>>>>> 6365ab2
 
 /************************************/
 /*          SHARE / EMAIL           */
