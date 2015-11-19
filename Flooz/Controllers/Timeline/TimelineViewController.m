@@ -13,7 +13,6 @@
 #import "NewTransactionViewController.h"
 #import "TransactionViewController.h"
 #import "NotificationsViewController.h"
-#import "FriendPickerViewController.h"
 #import "AppDelegate.h"
 #import "FLBadgeView.h"
 #import "TransitionDelegate.h"
@@ -310,12 +309,14 @@
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
-    [rowsWithPaymentField removeObject:indexPath];
-    [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
-    
-    [_tableView beginUpdates];
-    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [_tableView endUpdates];
+    if (transactions.count - 1 >= indexPath.row) {
+        [rowsWithPaymentField removeObject:indexPath];
+        [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
+        
+        [_tableView beginUpdates];
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [_tableView endUpdates];
+    }
 }
 
 - (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
@@ -472,14 +473,12 @@
             [self didFilterChange];
         }
     } failure:^(NSError *error) {
-        [_tableView setContentOffset:CGPointZero animated:YES];
         [refreshControl endRefreshing];
     }];
 }
 
 - (void)didFilterChange {
     if ([refreshControl isRefreshing]) {
-        [_tableView setContentOffset:CGPointZero animated:YES];
         [refreshControl endRefreshing];
     }
     rowsWithPaymentField = [NSMutableSet new];

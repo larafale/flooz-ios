@@ -73,6 +73,11 @@
     _title = [json objectForKey:@"text"];
     _content = [json objectForKey:@"why"];
     
+    _location = [json objectForKey:@"location"];
+    
+    if (_location && [_location isBlank])
+        _location = nil;
+    
     _attachmentURL = [json objectForKey:@"pic"];
     _attachmentThumbURL = [json objectForKey:@"picMini"];
     

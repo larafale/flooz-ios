@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "FLCreditCard.h"
+#import "FLCountry.h"
 
 typedef struct s_FLUserPublicStats {
     NSInteger nbFlooz;
@@ -41,6 +42,8 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) NSString *fullname;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *bio;
+@property (strong, nonatomic) NSString *location;
+@property (strong, nonatomic) NSString *website;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *phone;
 @property (strong, nonatomic) NSString *birthdate;
@@ -53,6 +56,7 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) NSNumber *friendsCount;
 @property (strong, nonatomic) NSNumber *transactionsCount;
 @property (strong, nonatomic) NSString *selectedFrom;
+@property (nonatomic, strong) FLCountry *country;
 
 @property (strong, nonatomic) NSString *deviceToken;
 

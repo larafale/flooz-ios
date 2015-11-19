@@ -11,7 +11,6 @@
 #import "FLNewTransactionAmount.h"
 #import "FLPaymentField.h"
 #import "FLNewTransactionBar.h"
-#import "FLSelectFriendButton.h"
 #import "FLPopupInformation.h"
 
 #import "CreditCardViewController.h"
@@ -26,6 +25,8 @@
 #import "FLPopoverTutoTheme.h"
 
 #import "FLPopupTrigger.h"
+#import "GeolocViewController.h"
+
 
 @interface NewTransactionViewController () {
     FLUser *presetUser;
@@ -44,7 +45,6 @@
     FLNewTransactionAmountInput *amountInput;
     FLTextView *content;
     
-    FLSelectFriendButton *friend;
     THContactPickerView *contactPickerView;
     
     FLUserPickerTableView *pickerTableView;
@@ -122,6 +122,7 @@
             }
         }
         
+        [[Flooz sharedInstance] clearLocationData];
     }
     return self;
 }
@@ -160,6 +161,9 @@
         if (preset.why)
             transaction[@"why"] = preset.why;
         
+        if (preset.geo)
+            transaction[@"geo"] = preset.geo;
+        
         if (preset.payload)
             transaction[@"payload"] = preset.payload;
         
@@ -169,6 +173,8 @@
         currentDemoStep = 0;
         firstViewAmount = preset.focusAmount;
         firstViewWhy = preset.focusWhy;
+        
+        [[Flooz sharedInstance] clearLocationData];
     }
     return self;
 }
@@ -255,7 +261,6 @@
         {
             [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
-            CGRectSetY(amountInput.frame, CGRectGetMinY(friend.frame));
             _offset = CGRectGetMaxY(amountInput.frame);
         }
         
@@ -304,6 +309,7 @@
 - (void)viewDidUnload {
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[Flooz sharedInstance] clearLocationData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -332,7 +338,6 @@
     NSNumber *number = transaction[@"amount"];
     [self updateBalanceIndicator:number];
     
-    [friend reloadData];
     [self reloadTransactionBarData];
     [self validateView];
     [self registerForKeyboardNotifications];
@@ -383,12 +388,12 @@
     
     if (presetUser) {
         if (presetUser.blockObject != nil) {
-            if ([presetUser.blockObject objectForKey:@"pay"] != nil && [[presetUser.blockObject objectForKey:@"pay"] boolValue]) {
-                [self hideChargeButton:false];
-                [self hidePayButton:true];
-            } else if ([presetUser.blockObject objectForKey:@"charge"] != nil && [[presetUser.blockObject objectForKey:@"charge"] boolValue]) {
+            if ([presetUser.blockObject objectForKey:@"charge"] != nil && [[presetUser.blockObject objectForKey:@"charge"] boolValue]) {
                 [self hideChargeButton:true];
                 [self hidePayButton:false];
+            } else if ([presetUser.blockObject objectForKey:@"pay"] != nil && [[presetUser.blockObject objectForKey:@"pay"] boolValue]) {
+                [self hideChargeButton:false];
+                [self hidePayButton:true];
             } else {
                 [self resetPaymentButtons];
             }
@@ -708,7 +713,7 @@
     if (presetUser == nil && ![contactPickerView.textField.text isBlank]) {
         NSString *text = contactPickerView.textField.text;
         text = [FLHelper formatedPhone:text];
-        if (text) {
+        if (text && [FLHelper isValidPhoneNumber:text]) {
             FLUser *user = [FLUser new];
             user.username = text;
             user.phone = text;
@@ -717,7 +722,7 @@
             
             [contactPickerView addContact:user withName:text];
         } else {
-            //            [contactPickerView removeAllContacts];
+            [contactPickerView removeAllContacts];
         }
     }
 }
@@ -1079,6 +1084,17 @@
     return YES;
 }
 
+- (void)presentLocation {
+    GeolocViewController *controller = [GeolocViewController new];
+    [controller setDelegate:self];
+    
+    if (transaction[@"geo"]) {
+        controller.selectedPlace = transaction[@"geo"];
+    }
+    
+    [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+}
+
 - (void)presentCamera {
     if (cameraDisplayed) {
         [self dismissCamera];
@@ -1160,6 +1176,18 @@
             });
         }
     }
+}
+
+#pragma mark - Geoloc Delegate
+
+- (void) locationPlaceSelected:(NSDictionary *)place {
+    [transaction setObject:place forKey:@"geo"];
+    [self reloadTransactionBarData];
+}
+
+- (void) removeLocation {
+    [transaction removeObjectForKey:@"geo"];
+    [self reloadTransactionBarData];
 }
 
 #pragma mark - CameraKeyboard Delegate

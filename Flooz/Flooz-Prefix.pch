@@ -39,6 +39,7 @@
 #import "FLReport.h"
 #import "FLHelper.h"
 #import "FLError.h"
+#import "FLCountry.h"
 #import "FLTexts.h"
 #import "UIColor+custom.h"
 #import "UIFont+custom.h"
@@ -51,6 +52,7 @@
 #import "FLTextView.h"
 #import "FLTextFieldSignup.h"
 #import "FLValidNavBar.h"
+#import "FLPhoneField.h"
 
 #import "UIViewController+RegisterNotification.h"
 #import <PPHelpMe/PPHelpMe.h>

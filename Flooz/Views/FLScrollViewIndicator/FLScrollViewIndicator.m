@@ -36,13 +36,13 @@
 	}
 
     {
-        scopeImage = [[UIImageView alloc] initWithFrame:CGRectMake(LABEL_MARGIN, CGRectGetHeight(self.frame) / 2 - 7.5, 15, 15)];
+        scopeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) / 2 - 7.5, 15, 15)];
         [containerView addSubview:scopeImage];
     }
     
     
 	{
-		label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(scopeImage.frame) + 5, 0, 0, CGRectGetHeight(self.frame))];
+		label = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_MARGIN + 3, 0, 0, CGRectGetHeight(self.frame))];
 		label.font = [UIFont customContentRegular:12];
 		label.textColor = [UIColor whiteColor];
 
@@ -73,16 +73,17 @@
 		return;
 	}
 
-	label.text = [transaction when];
-	CGFloat newLabelWidth = [label widthToFit] + LABEL_MARGIN + 5;
+	label.text = [NSString stringWithFormat:@"%@ ⋅", [transaction when]];
+	CGFloat newLabelWidth = [label widthToFit] + 4 + LABEL_MARGIN;
 
-	[UIView animateWithDuration:.5
+	[UIView animateWithDuration:.2
 	                      delay:0
 	                    options:UIViewAnimationOptionBeginFromCurrentState
 	                 animations: ^{
 	    CGRectSetWidth(label.frame, newLabelWidth);
 	    CGRectSetWidth(containerView.frame, newLabelWidth + 30);
 	    CGRectSetX(containerView.frame,  CGRectGetWidth(self.frame) - CGRectGetWidth(containerView.frame));
+        CGRectSetX(scopeImage.frame,  newLabelWidth);
 	} completion:NULL];
 }
 

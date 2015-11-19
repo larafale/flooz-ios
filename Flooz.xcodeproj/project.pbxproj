@@ -131,7 +131,6 @@
 		ABAA3F93197E96BF009F29EF /* TransactionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */; };
 		ABAA3F95197E96BF009F29EF /* FLPaymentField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149F18968E52003AC722 /* FLPaymentField.m */; };
 		ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
-		ABAA3F99197E96BF009F29EF /* FriendPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093518A3C52200517389 /* FriendPickerViewController.m */; };
 		ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
 		ABAA3F9C197E96BF009F29EF /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54B18B231B90079AA1D /* ActivityCell.m */; };
 		ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9148A1892C734003AC722 /* FLKeyboardView.m */; };
@@ -174,7 +173,6 @@
 		ABAA3FDD197E96BF009F29EF /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB94FAC71906B720007F8373 /* LoadingCell.m */; };
 		ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
 		ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */; };
-		ABAA3FE0197E96BF009F29EF /* FLSelectFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093118A3BF5400517389 /* FLSelectFriendButton.m */; };
 		ABAA3FE1197E96BF009F29EF /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50918C4A5D80073B947 /* WebViewController.m */; };
 		ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115E18ACE4FE00C3C52D /* FriendPickerSelectionCell.m */; };
 		ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6D9188214F000D81AF6 /* HomeViewController.m */; };
@@ -205,7 +203,6 @@
 		ABAA4001197E96BF009F29EF /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA50A18C4A5D80073B947 /* WebViewController.xib */; };
 		ABAA4002197E96BF009F29EF /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2A1875C0B100E92A77 /* ProximaNova-Regular.otf */; };
 		ABAA4004197E96BF009F29EF /* SecureCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C9B2118D73AE9002775BA /* SecureCodeViewController.xib */; };
-		ABAA4005197E96BF009F29EF /* FriendPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7093618A3C52200517389 /* FriendPickerViewController.xib */; };
 		ABAA4007197E96BF009F29EF /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2B1875C0B100E92A77 /* ProximaNova-Semibold.otf */; };
 		ABAA4008197E96BF009F29EF /* Rene Bieder - Gentona Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2C1875C0B100E92A77 /* Rene Bieder - Gentona Book.otf */; };
 		ABAA400A197E96BF009F29EF /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
@@ -270,9 +267,6 @@
 		ABF7091E18A03D4600517389 /* Error.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092018A03D4600517389 /* Error.strings */; };
 		ABF7092A18A2CA3500517389 /* TransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7092818A2CA3500517389 /* TransactionViewController.m */; };
 		ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
-		ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093118A3BF5400517389 /* FLSelectFriendButton.m */; };
-		ABF7093718A3C52200517389 /* FriendPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093518A3C52200517389 /* FriendPickerViewController.m */; };
-		ABF7093818A3C52200517389 /* FriendPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7093618A3C52200517389 /* FriendPickerViewController.xib */; };
 		ABF7094118A4D64300517389 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7094018A4D64300517389 /* TransactionCell.m */; };
 		ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
 		B4C18FA24272215246146A1A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3EE7A13AE62DD40952627A /* libPods.a */; };
@@ -299,6 +293,15 @@
 		C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */; };
 		C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */; };
 		C9160D581B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */; };
+		C917C8081BE773B70018043C /* GeolocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C917C8071BE773B70018043C /* GeolocViewController.m */; };
+		C917C8091BE773B70018043C /* GeolocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C917C8071BE773B70018043C /* GeolocViewController.m */; };
+		C917C80A1BE773B70018043C /* GeolocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C917C8071BE773B70018043C /* GeolocViewController.m */; };
+		C917C80D1BE79D950018043C /* LocationSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C917C80C1BE79D950018043C /* LocationSearchBar.m */; };
+		C917C80E1BE79D950018043C /* LocationSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C917C80C1BE79D950018043C /* LocationSearchBar.m */; };
+		C917C80F1BE79D950018043C /* LocationSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C917C80C1BE79D950018043C /* LocationSearchBar.m */; };
+		C917C8131BE7A6CE0018043C /* PlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C917C8121BE7A6CE0018043C /* PlaceCell.m */; };
+		C917C8141BE7A6CE0018043C /* PlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C917C8121BE7A6CE0018043C /* PlaceCell.m */; };
+		C917C8151BE7A6CE0018043C /* PlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C917C8121BE7A6CE0018043C /* PlaceCell.m */; };
 		C919AD981BBAC3CD00B87AAB /* FLReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD971BBAC3CD00B87AAB /* FLReachability.m */; };
 		C919AD991BBAC3CD00B87AAB /* FLReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD971BBAC3CD00B87AAB /* FLReachability.m */; };
 		C919AD9A1BBAC3CD00B87AAB /* FLReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD971BBAC3CD00B87AAB /* FLReachability.m */; };
@@ -404,7 +407,6 @@
 		C980129A1A76921000019682 /* TransactionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */; };
 		C980129C1A76921000019682 /* FLPaymentField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149F18968E52003AC722 /* FLPaymentField.m */; };
 		C980129D1A76921000019682 /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
-		C980129E1A76921000019682 /* FriendPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093518A3C52200517389 /* FriendPickerViewController.m */; };
 		C980129F1A76921000019682 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */; };
 		C98012A01A76921000019682 /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
 		C98012A11A76921000019682 /* FLCameraKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCBCD0F19BF3C6700FB31E0 /* FLCameraKeyboard.m */; };
@@ -467,7 +469,6 @@
 		C98012F11A76921000019682 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB94FAC71906B720007F8373 /* LoadingCell.m */; };
 		C98012F21A76921000019682 /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
 		C98012F31A76921000019682 /* UIColor+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */; };
-		C98012F41A76921000019682 /* FLSelectFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7093118A3BF5400517389 /* FLSelectFriendButton.m */; };
 		C98012F71A76921000019682 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6DA50918C4A5D80073B947 /* WebViewController.m */; };
 		C98012F81A76921000019682 /* FriendPickerSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115E18ACE4FE00C3C52D /* FriendPickerSelectionCell.m */; };
 		C98012F91A76921000019682 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB6D9188214F000D81AF6 /* HomeViewController.m */; };
@@ -507,7 +508,6 @@
 		C98013211A76921000019682 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6DA50A18C4A5D80073B947 /* WebViewController.xib */; };
 		C98013221A76921000019682 /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2A1875C0B100E92A77 /* ProximaNova-Regular.otf */; };
 		C98013231A76921000019682 /* SecureCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C9B2118D73AE9002775BA /* SecureCodeViewController.xib */; };
-		C98013241A76921000019682 /* FriendPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7093618A3C52200517389 /* FriendPickerViewController.xib */; };
 		C98013261A76921000019682 /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2B1875C0B100E92A77 /* ProximaNova-Semibold.otf */; };
 		C98013271A76921000019682 /* Rene Bieder - Gentona Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A2C1875C0B100E92A77 /* Rene Bieder - Gentona Book.otf */; };
 		C98013291A76921000019682 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
@@ -601,6 +601,18 @@
 		C9CB22141A963C840064389A /* FLUserPickerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CB22131A963C840064389A /* FLUserPickerTableView.m */; };
 		C9CB22151A963C840064389A /* FLUserPickerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CB22131A963C840064389A /* FLUserPickerTableView.m */; };
 		C9CB22161A963C840064389A /* FLUserPickerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CB22131A963C840064389A /* FLUserPickerTableView.m */; };
+		C9CD76611BF227DC00362962 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9CD76601BF227DC00362962 /* CountryPicker.bundle */; };
+		C9CD76621BF227DC00362962 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9CD76601BF227DC00362962 /* CountryPicker.bundle */; };
+		C9CD76631BF227DC00362962 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9CD76601BF227DC00362962 /* CountryPicker.bundle */; };
+		C9CD76681BF227EF00362962 /* FLPhoneField.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD76651BF227EF00362962 /* FLPhoneField.m */; };
+		C9CD76691BF227EF00362962 /* FLPhoneField.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD76651BF227EF00362962 /* FLPhoneField.m */; };
+		C9CD766A1BF227EF00362962 /* FLPhoneField.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD76651BF227EF00362962 /* FLPhoneField.m */; };
+		C9CD766B1BF227EF00362962 /* FLCountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD76671BF227EF00362962 /* FLCountryPicker.m */; };
+		C9CD766C1BF227EF00362962 /* FLCountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD76671BF227EF00362962 /* FLCountryPicker.m */; };
+		C9CD766D1BF227EF00362962 /* FLCountryPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD76671BF227EF00362962 /* FLCountryPicker.m */; };
+		C9CD76701BF227FB00362962 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD766E1BF227FB00362962 /* FLCountry.m */; };
+		C9CD76711BF227FB00362962 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD766E1BF227FB00362962 /* FLCountry.m */; };
+		C9CD76721BF227FB00362962 /* FLCountry.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CD766E1BF227FB00362962 /* FLCountry.m */; };
 		C9D4E7041B18BD380096725B /* Flooz dev-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */; };
 		C9D4E7051B18BD380096725B /* Flooz dev-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */; };
 		C9D4E7061B18BD380096725B /* Flooz dev-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */; };
@@ -885,11 +897,6 @@
 		ABF7092718A2CA3500517389 /* TransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = TransactionViewController.h; path = Controllers/Transaction/TransactionViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		ABF7092818A2CA3500517389 /* TransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionViewController.m; path = Controllers/Transaction/TransactionViewController.m; sourceTree = "<group>"; };
 		ABF7092918A2CA3500517389 /* TransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionViewController.xib; path = Controllers/Transaction/TransactionViewController.xib; sourceTree = "<group>"; };
-		ABF7093018A3BF5400517389 /* FLSelectFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSelectFriendButton.h; path = Views/FLSelectFriendButton/FLSelectFriendButton.h; sourceTree = "<group>"; };
-		ABF7093118A3BF5400517389 /* FLSelectFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSelectFriendButton.m; path = Views/FLSelectFriendButton/FLSelectFriendButton.m; sourceTree = "<group>"; };
-		ABF7093418A3C52200517389 /* FriendPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FriendPickerViewController.h; path = Controllers/FriendPicker/FriendPickerViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		ABF7093518A3C52200517389 /* FriendPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendPickerViewController.m; path = Controllers/FriendPicker/FriendPickerViewController.m; sourceTree = "<group>"; };
-		ABF7093618A3C52200517389 /* FriendPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FriendPickerViewController.xib; path = Controllers/FriendPicker/FriendPickerViewController.xib; sourceTree = "<group>"; };
 		ABF7093A18A4CF0900517389 /* TransactionCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TransactionCellDelegate.h; path = TransactionCell/TransactionCellDelegate.h; sourceTree = "<group>"; };
 		ABF7093F18A4D64300517389 /* TransactionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionCell.h; path = TransactionCell/TransactionCell.h; sourceTree = "<group>"; };
 		ABF7094018A4D64300517389 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionCell.m; path = TransactionCell/TransactionCell.m; sourceTree = "<group>"; };
@@ -913,6 +920,12 @@
 		C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLLikePopoverViewController.m; sourceTree = "<group>"; };
 		C9160D541B6A6A5400A379DA /* DiscountCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountCodeViewController.h; sourceTree = "<group>"; };
 		C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscountCodeViewController.m; sourceTree = "<group>"; };
+		C917C8061BE773B70018043C /* GeolocViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeolocViewController.h; path = Controllers/Geoloc/GeolocViewController.h; sourceTree = "<group>"; };
+		C917C8071BE773B70018043C /* GeolocViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeolocViewController.m; path = Controllers/Geoloc/GeolocViewController.m; sourceTree = "<group>"; };
+		C917C80B1BE79D950018043C /* LocationSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationSearchBar.h; path = Controllers/Geoloc/LocationSearchBar.h; sourceTree = "<group>"; };
+		C917C80C1BE79D950018043C /* LocationSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationSearchBar.m; path = Controllers/Geoloc/LocationSearchBar.m; sourceTree = "<group>"; };
+		C917C8111BE7A6CE0018043C /* PlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceCell.h; path = PlaceCell/PlaceCell.h; sourceTree = "<group>"; };
+		C917C8121BE7A6CE0018043C /* PlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceCell.m; path = PlaceCell/PlaceCell.m; sourceTree = "<group>"; };
 		C919AD961BBAC3CD00B87AAB /* FLReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReachability.h; sourceTree = "<group>"; };
 		C919AD971BBAC3CD00B87AAB /* FLReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReachability.m; sourceTree = "<group>"; };
 		C919AD9B1BBAD5AE00B87AAB /* FLPopupTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPopupTrigger.h; sourceTree = "<group>"; };
@@ -1024,6 +1037,13 @@
 		C9CB220D1A961F0D0064389A /* FLPrivacyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPrivacyCell.m; sourceTree = "<group>"; };
 		C9CB22121A963C840064389A /* FLUserPickerTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLUserPickerTableView.h; sourceTree = "<group>"; };
 		C9CB22131A963C840064389A /* FLUserPickerTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLUserPickerTableView.m; sourceTree = "<group>"; };
+		C9CD76601BF227DC00362962 /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CountryPicker.bundle; sourceTree = "<group>"; };
+		C9CD76641BF227EF00362962 /* FLPhoneField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPhoneField.h; sourceTree = "<group>"; };
+		C9CD76651BF227EF00362962 /* FLPhoneField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPhoneField.m; sourceTree = "<group>"; };
+		C9CD76661BF227EF00362962 /* FLCountryPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCountryPicker.h; sourceTree = "<group>"; };
+		C9CD76671BF227EF00362962 /* FLCountryPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountryPicker.m; sourceTree = "<group>"; };
+		C9CD766E1BF227FB00362962 /* FLCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountry.m; sourceTree = "<group>"; };
+		C9CD766F1BF227FB00362962 /* FLCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCountry.h; sourceTree = "<group>"; };
 		C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz dev-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C9D4E7031B18BD380096725B /* Flooz local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz local-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendAddSearchBar.m; sourceTree = "<group>"; };
@@ -1303,8 +1323,8 @@
 		AB2FB55918B2B4600079AA1D /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */,
 				C9EB88561B1F21C20042E65B /* FriendAddSearchBar.h */,
+				C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */,
 				C9EB88571B1F21C20042E65B /* FriendAddSearchBarDelegate.h */,
 				AB2FB55A18B2B4710079AA1D /* FriendsViewController.h */,
 				AB2FB55B18B2B4710079AA1D /* FriendsViewController.m */,
@@ -1438,6 +1458,7 @@
 				ABF7093318A3C4FE00517389 /* FriendPicker */,
 				C982546E1BC2B75400678A53 /* FriendRequest */,
 				AB2FB55918B2B4600079AA1D /* Friends */,
+				C917C8051BE7738C0018043C /* Geoloc */,
 				AB5EB6D7188214F000D81AF6 /* Home */,
 				ABE9141C1889436B003AC722 /* NewTransaction */,
 				ABE9147518929A61003AC722 /* Notifications */,
@@ -1478,10 +1499,10 @@
 				ABE914841892AE3B003AC722 /* FLNewTransactionAmount */,
 				ABE914A11896D166003AC722 /* FLNewTransactionBar */,
 				ABE9149D18968E1A003AC722 /* FLPaymentField */,
+				C9CD765F1BF227C700362962 /* FLPhoneField */,
 				ABAFEE24197FFE3200D39C62 /* FLPopup */,
 				C9B4AA671AE7C5E3002E0723 /* FLScannerOverlay */,
 				ABD0164B18ECCCD800940F2D /* FLScrollViewIndicator */,
-				ABF7092F18A3BEA400517389 /* FLSelectFriendButton */,
 				2F1307E619D9C1510062D194 /* FLSocialButton */,
 				ABD0164618EC694100940F2D /* FLSwitch */,
 				ABAFEE2919810B6900D39C62 /* FLTableView */,
@@ -1531,6 +1552,8 @@
 				C9C7EE9319F685B9009FE292 /* FLAlert.m */,
 				ABF7095B18A4FD6B00517389 /* FLComment.h */,
 				ABF7095C18A4FD6B00517389 /* FLComment.m */,
+				C9CD766F1BF227FB00362962 /* FLCountry.h */,
+				C9CD766E1BF227FB00362962 /* FLCountry.m */,
 				ABBB75CD18B64A0B0070C2A8 /* FLCreditCard.h */,
 				ABBB75CE18B64A0B0070C2A8 /* FLCreditCard.m */,
 				ABBB75DC18BA27E60070C2A8 /* FLFriendRequest.h */,
@@ -1670,13 +1693,14 @@
 		AB5EB6F91882157300D81AF6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C91C5D411BC68F8700B88D81 /* ShareCell */,
 				C95254D31B5E7B9200D88096 /* AccountCell */,
-				2FD2460019A24DC4008DCFB5 /* ContactCell */,
 				AB2FB54918B2319E0079AA1D /* ActivityCell */,
+				2FD2460019A24DC4008DCFB5 /* ContactCell */,
 				AB2FB56018B63B300079AA1D /* FriendCell */,
 				ABBB75DF18BBADB40070C2A8 /* FriendRequestCell */,
 				AB94FAC51906B6EB007F8373 /* LoadingCell */,
+				C917C8101BE7A6A50018043C /* PlaceCell */,
+				C91C5D411BC68F8700B88D81 /* ShareCell */,
 				ABF7093918A4CEEC00517389 /* TransactionCell */,
 			);
 			name = Cells;
@@ -2012,6 +2036,7 @@
 		ABF46A201875BE9100E92A77 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C9CD76601BF227DC00362962 /* CountryPicker.bundle */,
 				ABF46A211875BE9E00E92A77 /* Fonts */,
 			);
 			name = Resources;
@@ -2044,15 +2069,6 @@
 			name = Transaction;
 			sourceTree = "<group>";
 		};
-		ABF7092F18A3BEA400517389 /* FLSelectFriendButton */ = {
-			isa = PBXGroup;
-			children = (
-				ABF7093018A3BF5400517389 /* FLSelectFriendButton.h */,
-				ABF7093118A3BF5400517389 /* FLSelectFriendButton.m */,
-			);
-			name = FLSelectFriendButton;
-			sourceTree = "<group>";
-		};
 		ABF7093318A3C4FE00517389 /* FriendPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -2061,9 +2077,6 @@
 				ABC1115C18ACE4D900C3C52D /* FriendPickerSelectionCell */,
 				ABC1113F18AA922B00C3C52D /* FriendPickerContactCell */,
 				ABF7095F18A512BB00517389 /* FriendPickerSearchBar */,
-				ABF7093418A3C52200517389 /* FriendPickerViewController.h */,
-				ABF7093518A3C52200517389 /* FriendPickerViewController.m */,
-				ABF7093618A3C52200517389 /* FriendPickerViewController.xib */,
 			);
 			name = FriendPicker;
 			sourceTree = "<group>";
@@ -2142,6 +2155,26 @@
 				C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */,
 			);
 			name = DiscountCode;
+			sourceTree = "<group>";
+		};
+		C917C8051BE7738C0018043C /* Geoloc */ = {
+			isa = PBXGroup;
+			children = (
+				C917C8061BE773B70018043C /* GeolocViewController.h */,
+				C917C8071BE773B70018043C /* GeolocViewController.m */,
+				C917C80B1BE79D950018043C /* LocationSearchBar.h */,
+				C917C80C1BE79D950018043C /* LocationSearchBar.m */,
+			);
+			name = Geoloc;
+			sourceTree = "<group>";
+		};
+		C917C8101BE7A6A50018043C /* PlaceCell */ = {
+			isa = PBXGroup;
+			children = (
+				C917C8111BE7A6CE0018043C /* PlaceCell.h */,
+				C917C8121BE7A6CE0018043C /* PlaceCell.m */,
+			);
+			name = PlaceCell;
 			sourceTree = "<group>";
 		};
 		C91C5D411BC68F8700B88D81 /* ShareCell */ = {
@@ -2380,6 +2413,17 @@
 			name = NewTransactionUserList;
 			sourceTree = "<group>";
 		};
+		C9CD765F1BF227C700362962 /* FLPhoneField */ = {
+			isa = PBXGroup;
+			children = (
+				C9CD76661BF227EF00362962 /* FLCountryPicker.h */,
+				C9CD76671BF227EF00362962 /* FLCountryPicker.m */,
+				C9CD76641BF227EF00362962 /* FLPhoneField.h */,
+				C9CD76651BF227EF00362962 /* FLPhoneField.m */,
+			);
+			name = FLPhoneField;
+			sourceTree = "<group>";
+		};
 		C9EBBB9A1BAAC960009DAF88 /* FLBorderedActionButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -2536,7 +2580,6 @@
 				AB6DA50C18C4A5D80073B947 /* WebViewController.xib in Resources */,
 				ABF46A311875C1B400E92A77 /* ProximaNova-Regular.otf in Resources */,
 				AB7C9B2318D73AE9002775BA /* SecureCodeViewController.xib in Resources */,
-				ABF7093818A3C52200517389 /* FriendPickerViewController.xib in Resources */,
 				ABF46A321875C1B400E92A77 /* ProximaNova-Semibold.otf in Resources */,
 				ABF46A331875C1B400E92A77 /* Rene Bieder - Gentona Book.otf in Resources */,
 				ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */,
@@ -2557,6 +2600,7 @@
 				AB3D08A4186CA11A00CF8380 /* Images.xcassets in Resources */,
 				C9D4E7071B18BD380096725B /* Flooz local-Info.plist in Resources */,
 				ABF46A10187575C600E92A77 /* Localizable.strings in Resources */,
+				C9CD76611BF227DC00362962 /* CountryPicker.bundle in Resources */,
 				AB5EB6EC188214F000D81AF6 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2579,7 +2623,6 @@
 				ABAA4001197E96BF009F29EF /* WebViewController.xib in Resources */,
 				ABAA4002197E96BF009F29EF /* ProximaNova-Regular.otf in Resources */,
 				ABAA4004197E96BF009F29EF /* SecureCodeViewController.xib in Resources */,
-				ABAA4005197E96BF009F29EF /* FriendPickerViewController.xib in Resources */,
 				ABAA4007197E96BF009F29EF /* ProximaNova-Semibold.otf in Resources */,
 				ABAA4008197E96BF009F29EF /* Rene Bieder - Gentona Book.otf in Resources */,
 				ABAA400A197E96BF009F29EF /* TransactionViewController.xib in Resources */,
@@ -2591,6 +2634,7 @@
 				ABAA4014197E96BF009F29EF /* Rene Bieder - Gentona Light.otf in Resources */,
 				ABAA4015197E96BF009F29EF /* Rene Bieder - Gentona Thin.otf in Resources */,
 				ABAA4016197E96BF009F29EF /* FriendsViewController.xib in Resources */,
+				C9CD76621BF227DC00362962 /* CountryPicker.bundle in Resources */,
 				ABAA4019197E96BF009F29EF /* Error.strings in Resources */,
 				C975BB031A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */,
 				ABAA401B197E96BF009F29EF /* NewTransactionViewController.xib in Resources */,
@@ -2614,7 +2658,6 @@
 				C98013211A76921000019682 /* WebViewController.xib in Resources */,
 				C98013221A76921000019682 /* ProximaNova-Regular.otf in Resources */,
 				C98013231A76921000019682 /* SecureCodeViewController.xib in Resources */,
-				C98013241A76921000019682 /* FriendPickerViewController.xib in Resources */,
 				C98013261A76921000019682 /* ProximaNova-Semibold.otf in Resources */,
 				C98013271A76921000019682 /* Rene Bieder - Gentona Book.otf in Resources */,
 				C98013291A76921000019682 /* TransactionViewController.xib in Resources */,
@@ -2626,6 +2669,7 @@
 				C980132E1A76921000019682 /* Rene Bieder - Gentona Light.otf in Resources */,
 				C980132F1A76921000019682 /* Rene Bieder - Gentona Thin.otf in Resources */,
 				C98013301A76921000019682 /* FriendsViewController.xib in Resources */,
+				C9CD76631BF227DC00362962 /* CountryPicker.bundle in Resources */,
 				C98013321A76921000019682 /* Error.strings in Resources */,
 				C975BB041A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */,
 				C98013331A76921000019682 /* NewTransactionViewController.xib in Resources */,
@@ -2901,13 +2945,13 @@
 				C9CB22011A95E9D30064389A /* THContactView.m in Sources */,
 				C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */,
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
-				ABF7093718A3C52200517389 /* FriendPickerViewController.m in Sources */,
 				C905A8DB1A56D5BE00473963 /* SIOSocket.m in Sources */,
 				AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */,
 				C9C7EE9419F685B9009FE292 /* FLAlert.m in Sources */,
 				2FCBCD1019BF3C6700FB31E0 /* FLCameraKeyboard.m in Sources */,
 				2F1307E919D9C1790062D194 /* FLSocialButton.m in Sources */,
 				AB2FB54C18B231B90079AA1D /* ActivityCell.m in Sources */,
+				C9CD76701BF227FB00362962 /* FLCountry.m in Sources */,
 				C966473C19FFEA0D000851AF /* TransitionDelegate.m in Sources */,
 				ABE9148B1892C734003AC722 /* FLKeyboardView.m in Sources */,
 				2FA3E55F19DDE97700EC65C2 /* SettingsPreferencesViewController.m in Sources */,
@@ -2933,6 +2977,7 @@
 				2FC8784419C08B0300F034E0 /* FLPopupInformation.m in Sources */,
 				C9AD95B61BBEB9480073BA32 /* SearchViewController.m in Sources */,
 				ABBB75DE18BA27E60070C2A8 /* FLFriendRequest.m in Sources */,
+				C9CD76681BF227EF00362962 /* FLPhoneField.m in Sources */,
 				2F88A32119F173EF001FC26F /* FLTextViewComment.m in Sources */,
 				C99A51521AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */,
 				ABE914461890A12C003AC722 /* FLUser.m in Sources */,
@@ -2944,6 +2989,7 @@
 				C93F66A61BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */,
 				2FA3E55B19DDE71900EC65C2 /* SettingsSecurityViewController.m in Sources */,
 				AB2FB53318AD40580079AA1D /* CashOutViewController.m in Sources */,
+				C9CD766B1BF227EF00362962 /* FLCountryPicker.m in Sources */,
 				ABE914A71896D4C3003AC722 /* FLNewTransactionBar.m in Sources */,
 				2F444C8119ED6DAD00ACE12E /* FLNavigationController.m in Sources */,
 				C927061E1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */,
@@ -2961,11 +3007,13 @@
 				C9CB21F81A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51551AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
 				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
+				C917C8131BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				ABE9147918929AC8003AC722 /* NotificationsViewController.m in Sources */,
 				ABBB75CF18B64A0B0070C2A8 /* FLCreditCard.m in Sources */,
 				ABE9142018894385003AC722 /* NewTransactionViewController.m in Sources */,
 				ABE9146218929168003AC722 /* AccountViewController.m in Sources */,
 				ABAFEE27197FFE5000D39C62 /* FLPopup.m in Sources */,
+				C917C80D1BE79D950018043C /* LocationSearchBar.m in Sources */,
 				2F0F6B0719DF5432004CA223 /* SettingsCoordsViewController.m in Sources */,
 				C95772771A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */,
 				ABBB75E218BBADFA0070C2A8 /* FriendRequestCell.m in Sources */,
@@ -3002,7 +3050,6 @@
 				C9436EBD1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
-				ABF7093218A3BF5400517389 /* FLSelectFriendButton.m in Sources */,
 				C91C5D3F1BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */,
 				AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */,
 				C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */,
@@ -3012,6 +3059,7 @@
 				2F49762619E472CA0089947F /* SettingsNotificationsViewController.m in Sources */,
 				C9088B6C1A51A22200026FE9 /* SignupBaseViewController.m in Sources */,
 				2FD1EA9C19E3330300CA5EDA /* FLBadgeView.m in Sources */,
+				C917C8081BE773B70018043C /* GeolocViewController.m in Sources */,
 				AB6DA51018C4DDFD0073B947 /* FLImageView.m in Sources */,
 				2FC2546019B6742500EB1EED /* ShareAppViewController.m in Sources */,
 				C97CCFD51BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */,
@@ -3073,10 +3121,10 @@
 				ABAA3F8C197E96BF009F29EF /* TransactionActionsView.m in Sources */,
 				ABAA3F8D197E96BF009F29EF /* FLComment.m in Sources */,
 				2F0F6B0019DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
+				C9CD76711BF227FB00362962 /* FLCountry.m in Sources */,
 				ABAA3F93197E96BF009F29EF /* TransactionUsersView.m in Sources */,
 				ABAA3F95197E96BF009F29EF /* FLPaymentField.m in Sources */,
 				ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */,
-				ABAA3F99197E96BF009F29EF /* FriendPickerViewController.m in Sources */,
 				C95AEDA11A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */,
 				ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */,
 				2FCBCD1119BF406200FB31E0 /* FLCameraKeyboard.m in Sources */,
@@ -3098,6 +3146,7 @@
 				ABAA3FA4197E96BF009F29EF /* NewTransactionDatePicker.m in Sources */,
 				C9AD95B71BBEB9480073BA32 /* SearchViewController.m in Sources */,
 				ABAA3FA9197E96BF009F29EF /* SecureCodeViewController.m in Sources */,
+				C9CD76691BF227EF00362962 /* FLPhoneField.m in Sources */,
 				ABAA3FAA197E96BF009F29EF /* JTImageLabel.m in Sources */,
 				2FC6F6B519A776210051CB61 /* FLNewTransactionAmountInput.m in Sources */,
 				C99A51531AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */,
@@ -3109,6 +3158,7 @@
 				C93F66A71BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */,
 				2F88A32219F173EF001FC26F /* FLTextViewComment.m in Sources */,
 				ABAA3FB1197E96BF009F29EF /* FLUser.m in Sources */,
+				C9CD766C1BF227EF00362962 /* FLCountryPicker.m in Sources */,
 				ABAA3FB2197E96BF009F29EF /* FLNewTransactionAmount.m in Sources */,
 				ABAA3FB6197E96BF009F29EF /* FLLoadView.m in Sources */,
 				C927061F1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */,
@@ -3126,11 +3176,13 @@
 				ABAA3FBC197E96BF009F29EF /* FLTextView.m in Sources */,
 				C9CB21F91A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51561AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
+				C917C8141BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				ABAA3FBD197E96BF009F29EF /* TransactionViewController.m in Sources */,
 				ABAA3FBE197E96BF009F29EF /* FLTransaction.m in Sources */,
 				2FE983E719CB73A200E05501 /* CodePinView.m in Sources */,
 				ABAA3FBF197E96BF009F29EF /* FLActivity.m in Sources */,
 				ABAA3FC1197E96BF009F29EF /* UIBarButtonItem+custom.m in Sources */,
+				C917C80E1BE79D950018043C /* LocationSearchBar.m in Sources */,
 				ABAA3FC2197E96BF009F29EF /* Flooz.m in Sources */,
 				C95772781A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */,
 				ABAA3FC3197E96BF009F29EF /* NotificationsViewController.m in Sources */,
@@ -3167,7 +3219,6 @@
 				C9436EBE1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */,
 				ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */,
-				ABAA3FE0197E96BF009F29EF /* FLSelectFriendButton.m in Sources */,
 				C91C5D401BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */,
 				ABAA3FE1197E96BF009F29EF /* WebViewController.m in Sources */,
 				C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */,
@@ -3177,6 +3228,7 @@
 				2F49762719E472CA0089947F /* SettingsNotificationsViewController.m in Sources */,
 				C9088B6D1A51A22200026FE9 /* SignupBaseViewController.m in Sources */,
 				2FD1EA9D19E3330300CA5EDA /* FLBadgeView.m in Sources */,
+				C917C8091BE773B70018043C /* GeolocViewController.m in Sources */,
 				ABAA3FE4197E96BF009F29EF /* FLImageView.m in Sources */,
 				2FC2546219B675B500EB1EED /* ShareAppViewController.m in Sources */,
 				C97CCFD61BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */,
@@ -3230,11 +3282,11 @@
 				C98012941A76921000019682 /* SIOSocket.m in Sources */,
 				C98012951A76921000019682 /* TransactionActionsView.m in Sources */,
 				C98012961A76921000019682 /* FLComment.m in Sources */,
+				C9CD76721BF227FB00362962 /* FLCountry.m in Sources */,
 				C98012981A76921000019682 /* SettingsBankViewController.m in Sources */,
 				C980129A1A76921000019682 /* TransactionUsersView.m in Sources */,
 				C980129C1A76921000019682 /* FLPaymentField.m in Sources */,
 				C980129D1A76921000019682 /* UIFont+custom.m in Sources */,
-				C980129E1A76921000019682 /* FriendPickerViewController.m in Sources */,
 				C980129F1A76921000019682 /* WYStoryboardPopoverSegue.m in Sources */,
 				C98012A01A76921000019682 /* FLTableView.m in Sources */,
 				C98012A11A76921000019682 /* FLCameraKeyboard.m in Sources */,
@@ -3255,6 +3307,7 @@
 				C98012AC1A76921000019682 /* SplashViewController.m in Sources */,
 				C91C5D461BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C98012AD1A76921000019682 /* NewTransactionDatePicker.m in Sources */,
+				C9CD766A1BF227EF00362962 /* FLPhoneField.m in Sources */,
 				C9AD95B81BBEB9480073BA32 /* SearchViewController.m in Sources */,
 				C98012AF1A76921000019682 /* SecureCodeViewController.m in Sources */,
 				C98012B01A76921000019682 /* JTImageLabel.m in Sources */,
@@ -3266,6 +3319,7 @@
 				C98012B61A76921000019682 /* FLFriendRequest.m in Sources */,
 				C98012B71A76921000019682 /* SignupSecureCodeViewController.m in Sources */,
 				C93F66A81BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */,
+				C9CD766D1BF227EF00362962 /* FLCountryPicker.m in Sources */,
 				C98012B81A76921000019682 /* FLTextViewComment.m in Sources */,
 				C98012BA1A76921000019682 /* FLUser.m in Sources */,
 				C98012BC1A76921000019682 /* FLNewTransactionAmount.m in Sources */,
@@ -3283,11 +3337,13 @@
 				C98012C81A76921000019682 /* FLLikePopoverViewController.m in Sources */,
 				C98012C91A76921000019682 /* ContactCell.m in Sources */,
 				C98012CA1A76921000019682 /* FLTextView.m in Sources */,
+				C917C8151BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				C9CB21FA1A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51571AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
 				C98012CD1A76921000019682 /* TransactionViewController.m in Sources */,
 				C98012CE1A76921000019682 /* FLTransaction.m in Sources */,
 				C98012CF1A76921000019682 /* CodePinView.m in Sources */,
+				C917C80F1BE79D950018043C /* LocationSearchBar.m in Sources */,
 				C98012D21A76921000019682 /* FLActivity.m in Sources */,
 				C98012D31A76921000019682 /* UIBarButtonItem+custom.m in Sources */,
 				C98012D41A76921000019682 /* Flooz.m in Sources */,
@@ -3325,7 +3381,6 @@
 				C98012F11A76921000019682 /* LoadingCell.m in Sources */,
 				C98012F21A76921000019682 /* FLAlertView.m in Sources */,
 				C98012F31A76921000019682 /* UIColor+custom.m in Sources */,
-				C98012F41A76921000019682 /* FLSelectFriendButton.m in Sources */,
 				C98012F71A76921000019682 /* WebViewController.m in Sources */,
 				C96E5A6A1BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				C98012F81A76921000019682 /* FriendPickerSelectionCell.m in Sources */,
@@ -3334,6 +3389,7 @@
 				C98012FA1A76921000019682 /* SettingsNotificationsViewController.m in Sources */,
 				C98012FB1A76921000019682 /* SignupBaseViewController.m in Sources */,
 				C98012FC1A76921000019682 /* FLBadgeView.m in Sources */,
+				C917C80A1BE773B70018043C /* GeolocViewController.m in Sources */,
 				C98012FD1A76921000019682 /* FLImageView.m in Sources */,
 				C98012FE1A76921000019682 /* ShareAppViewController.m in Sources */,
 				C97CCFD71BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */,
@@ -3535,7 +3591,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "34a274c1-344c-422b-b2aa-f084d9deeed5";
+				PROVISIONING_PROFILE = "8f2d6cdd-cbf3-4fde-9516-34eaabb204e4";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;

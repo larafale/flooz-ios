@@ -46,7 +46,9 @@ typedef enum e_FLTriggerType {
     TriggerSMSValidate,
     TriggerSecureCodeValidate,
     TriggerEditProfile,
-    TriggerAskNotification
+    TriggerAskNotification,
+    TriggerFbConnect,
+    TriggerPayClick,
 } FLTriggerType;
 
 @property (nonatomic) FLTriggerType type;

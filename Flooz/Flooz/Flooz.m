@@ -36,6 +36,7 @@
 #import "ValidateSMSViewController.h"
 #import "EditProfileViewController.h"
 #import "ValidateSecureCodeViewController.h"
+#import "NewTransactionViewController.h"
 
 #import "FLReachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -173,6 +174,17 @@
     return nil;
 }
 
+- (NSArray *) loadLocationData {
+    NSString *locationData = [UICKeyChainStore stringForKey:kLocationData];
+    if (locationData) {
+        NSArray *places = [NSArray newWithJSONString:locationData];
+        if (places) {
+            return places;
+        }
+    }
+    return nil;
+}
+
 - (void) saveUserData {
     [UICKeyChainStore setString:[self.currentUser.json jsonStringWithPrettyPrint:NO] forKey:kUserData];
 }
@@ -209,6 +221,10 @@
     }
 }
 
+- (void) saveLocationData:(NSArray*)places {
+    [UICKeyChainStore setString:[places jsonStringWithPrettyPrint:NO] forKey:kLocationData];
+}
+
 - (void) clearSaveData {
     [UICKeyChainStore removeItemForKey:kUserData];
     [UICKeyChainStore removeItemForKey:kAllTimelineData];
@@ -217,6 +233,11 @@
     [UICKeyChainStore removeItemForKey:kTextData];
     [UICKeyChainStore removeItemForKey:kNotificationsData];
     [UICKeyChainStore removeItemForKey:kFilterData];
+    [UICKeyChainStore removeItemForKey:kLocationData];
+}
+
+- (void) clearLocationData {
+    [UICKeyChainStore removeItemForKey:kLocationData];
 }
 
 #pragma mark -
@@ -350,15 +371,7 @@
 }
 
 - (NSString *)clearPhoneNumber:(NSString*)phone {
-    NSString *formatedPhone = [[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                stringByReplacingOccurrencesOfString:@"." withString:@""]
-                               stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    
-    if (![formatedPhone hasPrefix:@"+33"]) {
-        formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@"+33"];
-    }
-    
-    return formatedPhone;
+    return [FLHelper formatedPhone:phone];
 }
 
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -713,6 +726,33 @@
     return _activitiesCached;
 }
 
+- (void)placesFrom:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    NSArray *cachedPlaces = [self loadLocationData];
+    
+    if (cachedPlaces) {
+        if (success)
+            success(cachedPlaces);
+    } else {
+        [self requestPath:@"/geo/search" method:@"GET" params:@{@"ll": ll} success:^(id result) {
+            NSArray *items = result[@"items"];
+            
+            [self saveLocationData:items];
+            
+            if (success)
+                success(items);
+        } failure:failure];
+    }
+}
+
+- (void)placesSearch:(NSString *)search from:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/geo/suggest" method:@"GET" params:@{@"ll": ll, @"q": search} success:^(id result) {
+        NSArray *items = result[@"items"];
+        
+        if (success)
+            success(items);
+    } failure:failure];
+}
+
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
 {
     NSMutableDictionary *tempTransaction = [transaction mutableCopy];
@@ -895,7 +935,7 @@
 
 - (void)friendsSuggestion:(void (^)(id result))success {
     id successBlock = ^(id result) {
-        NSMutableArray *friends = [self createFriendsArrayFromResult:result];
+        NSMutableArray *friends = [self createFriendsArrayFromResult:result sorted:NO];
         if (success) {
             success(friends);
         }
@@ -906,7 +946,7 @@
 
 - (void)friendsRequest:(void (^)(id result))success {
     id successBlock = ^(id result) {
-        NSMutableArray *friends = [self createFriendsArrayFromResult:result];
+        NSMutableArray *friends = [self createFriendsArrayFromResult:result sorted:YES];
         if (success) {
             success(friends);
         }
@@ -1183,7 +1223,7 @@
     
     [UICKeyChainStore setString:token forKey:@"login-token"];
     _access_token = token;
-
+    
     [self requestPath:@"/users/login" method:@"POST" params:nil success:^(id result) {
         [self updateCurrentUserAfterConnect:result];
     } failure: ^(NSError *error) {
@@ -1199,7 +1239,7 @@
             }
         }
     }];
-  
+    
 }
 
 #pragma mark - Facebook
@@ -1215,8 +1255,6 @@
 - (void)connectFacebook {
     [FBSDKAccessToken setCurrentAccessToken:nil];
     [FBSDKProfile setCurrentProfile:nil];
-    
-    //    [[FBSDKAccessToken  activeSession] closeAndClearTokenInformation];
     
     [self.fbLoginManager logInWithReadPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:[appDelegate myTopViewController] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
         if (error) {
@@ -1238,40 +1276,30 @@
     [FBSDKAccessToken setCurrentAccessToken:nil];
     [FBSDKProfile setCurrentProfile:nil];
     _facebook_token = nil;
-    [self updateUser:@{ @"fb": @{} } success:nil failure:nil];
+    [self updateUser:@{ @"fb": @NO } success:nil failure:nil];
 }
 
 - (void)didConnectFacebook {
     _facebook_token = [[FBSDKAccessToken currentAccessToken] tokenString];
     
     if (_currentUser) {
+        NSMutableDictionary *fbData = [NSMutableDictionary new];
+        [fbData setObject:_facebook_token forKey:@"token"];
         
-        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me?fields=id,email,first_name,last_name,name,cover,about,location,website,birthday,gender"
-                                                                       parameters:nil];
-        [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-            [self hideLoadView];
-            
-            if (!error) {
-                NSMutableDictionary *fbData = [result mutableCopy];
-                [fbData setObject:_facebook_token forKey:@"token"];
-                
-                NSDictionary * user = @{ @"fb": fbData };
-                
-                [self updateUser:user success:nil failure:nil];
-                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationFbConnect object:nil]];
-            }
-            else {
-                // An error occurred, we need to handle the error
-                // See: https://developers.facebook.com/docs/ios/errors
-            }
-        }];
+        NSDictionary * user = @{ @"fb": fbData };
+        
+        [self updateUser:user success:nil failure:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationFbConnect object:nil]];
     }
     else {
-        [self requestPath:@"/users/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
-            [self updateCurrentUserAfterConnect:result];
-        } failure: ^(NSError *error) {
-            
-        }];
+        [self showLoadView];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self requestPath:@"/users/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
+                [self updateCurrentUserAfterConnect:result];
+            } failure: ^(NSError *error) {
+                
+            }];
+        });
     }
 }
 
@@ -1379,6 +1407,8 @@
 }
 
 - (void)handleTrigger3DSecureComplete:(NSDictionary *)data {
+    [self updateCurrentUser];
+
     Secure3DViewController *controller = [Secure3DViewController getInstance];
     [controller dismissViewControllerAnimated:YES completion:^{
         [Secure3DViewController clearInstance];
@@ -1386,6 +1416,8 @@
 }
 
 - (void)handleTrigger3DSecureFail:(NSDictionary *)data {
+    [self updateCurrentUser];
+    
     Secure3DViewController *controller = [Secure3DViewController getInstance];
     [controller dismissViewControllerAnimated:YES completion:^{
         [Secure3DViewController clearInstance];
@@ -1500,6 +1532,22 @@
     [appDelegate askNotification];
 }
 
+- (void)handleTriggerFBConnect:(NSDictionary *)data {
+    [self connectFacebook];
+}
+
+- (void)handleTriggerPayClick:(NSDictionary *)data {
+    if ([[appDelegate myTopViewController] isKindOfClass:[FLNavigationController class]]) {
+        FLNavigationController *navController = (FLNavigationController *)[appDelegate myTopViewController];
+        
+        if ([[navController topViewController] isKindOfClass:[NewTransactionViewController class]]) {
+            NewTransactionViewController *controller = (NewTransactionViewController *)[navController topViewController];
+            
+            [controller valid];
+        }
+    }
+}
+
 - (void)handleTrigger:(FLTrigger*)trigger {
     NSDictionary *triggerFuncs = @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
                                    [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
@@ -1535,6 +1583,8 @@
                                    [NSNumber numberWithInt:TriggerSMSValidate]: NSStringFromSelector(@selector(handleTriggerValidateSMS:)),
                                    [NSNumber numberWithInt:TriggerSecureCodeValidate]: NSStringFromSelector(@selector(handleTriggerValidateSecureCode:)),
                                    [NSNumber numberWithInt:TriggerAskNotification]: NSStringFromSelector(@selector(handleTriggerAskNotification:)),
+                                   [NSNumber numberWithInt:TriggerFbConnect]: NSStringFromSelector(@selector(handleTriggerFBConnect:)),
+                                   [NSNumber numberWithInt:TriggerPayClick]: NSStringFromSelector(@selector(handleTriggerPayClick:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
@@ -1754,7 +1804,7 @@
     [self getContactList: ^(NSMutableArray *arrayContacts, NSMutableArray *arrayServer) {
         arrayContacts = [[self sortedArray:arrayContacts withKey:@"name" ascending:YES] mutableCopy];
         [self sendContactsAtSignup:signup WithParams:@{ @"phones": arrayServer } success: ^(id result) {
-            NSMutableArray *arrayFlooz = [self createFriendsArrayFromResult:result];
+            NSMutableArray *arrayFlooz = [self createFriendsArrayFromResult:result sorted:YES];
             NSMutableArray *arrayAB = [self removeFloozerFromArray:arrayFlooz inArray:arrayContacts];
             if (lists) {
                 lists(arrayAB, arrayFlooz);
@@ -1888,14 +1938,17 @@
     return arrayFriends;
 }
 
-- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result {
+- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result sorted:(BOOL)sorted {
     NSMutableArray *arrayFriends = [NSMutableArray new];
     NSArray *friends = result[@"items"];
     if (friends) {
         for (NSDictionary *json in friends) {
             FLUser *friend = [[FLUser alloc] initWithJSON:json];
-            NSUInteger newIndex = [self findIndexForUser:friend inArray:arrayFriends];
-            [arrayFriends insertObject:friend atIndex:newIndex];
+            if (sorted) {
+                NSUInteger newIndex = [self findIndexForUser:friend inArray:arrayFriends];
+                [arrayFriends insertObject:friend atIndex:newIndex];
+            } else
+                [arrayFriends addObject:friend];
         }
     }
     return arrayFriends;

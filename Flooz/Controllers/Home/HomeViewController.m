@@ -13,6 +13,7 @@
 #import "FLSlide.h"
 #import "FXBlurView.h"
 #import "WebViewController.h"
+#import "FLPhoneField.h"
 
 @interface HomeViewController () {
     UIView *backgroundView;
@@ -39,6 +40,8 @@
     UIView *signupFbView;
     UIView *signupFbPicView;
     
+    FLPhoneField *signupPhoneField;
+
     NSMutableArray *signupFormFields;
     
     UILabel *secretQuestion;
@@ -51,6 +54,8 @@
     BOOL homeVisible;
     BOOL facebookVisible;
     BOOL facebookPicVisible;
+    
+    BOOL sponsorVisible;
     
     NSTimer *carouselTimer;
 }
@@ -70,6 +75,7 @@
         homeVisible = YES;
         facebookVisible = YES;
         facebookPicVisible = NO;
+        sponsorVisible = NO;
     }
     return self;
 }
@@ -81,6 +87,23 @@
         [carouselControl setNumberOfPages:[Flooz sharedInstance].currentTexts.slider.slides.count];
         [carouselView reloadData];
         carouselTimer = [NSTimer scheduledTimerWithTimeInterval:CAROUSEL_AUTOSLIDE_TIMER target:self selector:@selector(changeCurrentCarouselPage) userInfo:nil repeats:NO];
+        
+        if ([Flooz sharedInstance].currentTexts.signupSponsor && ![[Flooz sharedInstance].currentTexts.signupSponsor isBlank]) {
+            sponsorVisible = YES;
+            
+            [signupView removeFromSuperview];
+            [self createSignupView];
+
+            for (FLTextFieldSignup *textfield in signupFormFields) {
+                if ([textfield.dictionaryKey isEqualToString:@"sponsor"]) {
+                    [textfield setPlaceholder:[Flooz sharedInstance].currentTexts.signupSponsor forTextField:1];
+                    break;
+                }
+            }
+            [signupPhoneField reloadTextField];
+        } else {
+            sponsorVisible = NO;
+        }
     } failure:nil];
     
     [self createBackgroundView];
@@ -183,6 +206,9 @@
     [carouselControl setNumberOfPages:0];
     [carouselControl setCurrentPage:0];
     
+    if ([Flooz sharedInstance].currentTexts)
+        [carouselControl setNumberOfPages:[Flooz sharedInstance].currentTexts.slider.slides.count];
+
     FLActionButton *loginHomeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(actionHorizontalMargin, CGRectGetMaxY(carouselControl.frame) + actionVerticalMargin, CGRectGetWidth(homeView.frame) / 2 - 1.5 * actionHorizontalMargin, actionButtonHeight) title:[NSLocalizedString(@"GLOBAL_LOGIN", nil) uppercaseString]];
     [loginHomeButton.titleLabel setFont:[UIFont customContentRegular:15]];
     [loginHomeButton addTarget:self action:@selector(didLoginHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -264,23 +290,13 @@
     [loginHeaderView addSubview:facebookLoginButton];
     [loginHeaderView addSubview:separatorView];
     
-    FLTextFieldSignup *phoneTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE_NUMBER", @"") for:loginData key:@"phone" position:CGPointMake(loginHorizontalMargin, separatorVerticalMargin)];
+    FLPhoneField *loginPhoneField = [[FLPhoneField alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE", @"") for:loginData frame:CGRectMake(loginHorizontalMargin, separatorVerticalMargin, CGRectGetWidth(loginView.frame) - 2 * loginHorizontalMargin, 40)];
     
-    CGRectSetX(phoneTextfield.frame, (SCREEN_WIDTH - phoneTextfield.frame.size.width) / 2);
-    
-    FLTextFieldSignup *passwordTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PASSWORD_LOGIN", @"") for:loginData key:@"password" position:CGPointMake(loginHorizontalMargin, CGRectGetMaxY(phoneTextfield.frame) + 10)];
+    FLTextFieldSignup *passwordTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PASSWORD_LOGIN", @"") for:loginData key:@"password" position:CGPointMake(loginHorizontalMargin, CGRectGetMaxY(loginPhoneField.frame) + 10)];
     [passwordTextfield seTsecureTextEntry:YES];
     
-    [phoneTextfield addForNextClickTarget:self action:@selector(becomeFirstResponder)];
-    
-    CGRectSetX(phoneTextfield.frame, (CGRectGetWidth(loginView.frame) - CGRectGetWidth(phoneTextfield.frame)) / 2);
-    
-    [phoneTextfield addForNextClickTarget:passwordTextfield action:@selector(becomeFirstResponder)];
-    
-    FLKeyboardView  *inputView = [FLKeyboardView new];
-    [inputView noneCloseButton];
-    inputView.textField = phoneTextfield.textfield;
-    phoneTextfield.textfield.inputView = inputView;
+    [loginPhoneField addForNextClickTarget:passwordTextfield action:@selector(becomeFirstResponder)];
+    [passwordTextfield addForNextClickTarget:passwordTextfield action:@selector(resignFirstResponder)];
     
     FLActionButton *loginButton = [[FLActionButton alloc] initWithFrame:CGRectMake(loginHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + 30, CGRectGetWidth(loginView.frame) - loginHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_LOGIN", nil)];
     [loginButton addTarget:self action:@selector(didLoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -293,7 +309,7 @@
     [forgotPasswordButton addTarget:self action:@selector(didForgotPasswordButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     loginFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loginHeaderView.frame), CGRectGetWidth(loginView.frame), CGRectGetMaxY(forgotPasswordButton.frame) + separatorVerticalMargin)];
-    [loginFormView addSubview:phoneTextfield];
+    [loginFormView addSubview:loginPhoneField];
     [loginFormView addSubview:passwordTextfield];
     [loginFormView addSubview:loginButton];
     [loginFormView addSubview:forgotPasswordButton];
@@ -321,7 +337,8 @@
     [signupView setBlurRadius:10];
     [signupView setTintColor:[UIColor clearColor]];
     [signupView setUnderlyingView:backgroundView];
-    [signupView setHidden:YES];
+    
+    [signupView setHidden:!signupVisible];
     
     signupScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetHeight(signupView.frame))];
@@ -402,12 +419,12 @@
     
     CGRectSetX(usernameTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(usernameTextfield.frame)) / 2);
     
-    FLTextFieldSignup *phoneTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE", @"") for:signupData key:@"phone" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(usernameTextfield.frame) + signupFormVerticalMargin)];
-    [phoneTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
+    signupPhoneField = [[FLPhoneField alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE", @"") for:signupData frame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(usernameTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(signupScrollView.frame) - 2 * signupHorizontalMargin, CGRectGetHeight(usernameTextfield.frame))];
+    [signupPhoneField addForNextClickTarget:self action:@selector(signupTextFieldNext)];
     
-    CGRectSetX(phoneTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(phoneTextfield.frame)) / 2);
+    CGRectSetX(signupPhoneField.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(signupPhoneField.frame)) / 2);
     
-    FLTextFieldSignup *emailTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_EMAIL", @"") for:signupData key:@"email" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(phoneTextfield.frame) + signupFormVerticalMargin)];
+    FLTextFieldSignup *emailTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_EMAIL", @"") for:signupData key:@"email" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(signupPhoneField.frame) + signupFormVerticalMargin)];
     [emailTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
     
     CGRectSetX(emailTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(emailTextfield.frame)) / 2);
@@ -421,6 +438,7 @@
     FLTextFieldSignup *sponsorTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_SPONSOR", @"") for:signupData key:@"sponsor" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + signupFormVerticalMargin)];
     [sponsorTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
     [sponsorTextfield addForTextChangeTarget:self action:@selector(signupSponsorChange)];
+    [sponsorTextfield setHidden:!sponsorVisible];
     
     CGRectSetX(sponsorTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(sponsorTextfield.frame)) / 2);
     
@@ -432,13 +450,15 @@
     [clearSponsorField setHidden:YES];
     
     [sponsorTextfield addSubview:clearSponsorField];
+
+    CGFloat offsetY;
     
-    FLKeyboardView  *inputView = [FLKeyboardView new];
-    [inputView noneCloseButton];
-    inputView.textField = phoneTextfield.textfield;
-    phoneTextfield.textfield.inputView = inputView;
+    if (sponsorVisible)
+        offsetY = CGRectGetMaxY(sponsorTextfield.frame);
+    else
+        offsetY = CGRectGetMaxY(passwordTextfield.frame);
     
-    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(sponsorTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SIGNUP", nil)];
+    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, offsetY + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SIGNUP", nil)];
     [signupButton setTag:89];
     [signupButton addTarget:self action:@selector(didSignupButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
@@ -467,14 +487,13 @@
     
     [signupFormFields addObject:fullnameTextfield];
     [signupFormFields addObject:usernameTextfield];
-    [signupFormFields addObject:phoneTextfield];
     [signupFormFields addObject:emailTextfield];
     [signupFormFields addObject:passwordTextfield];
     [signupFormFields addObject:sponsorTextfield];
     
     [signupFormView addSubview:fullnameTextfield];
     [signupFormView addSubview:usernameTextfield];
-    [signupFormView addSubview:phoneTextfield];
+    [signupFormView addSubview:signupPhoneField];
     [signupFormView addSubview:emailTextfield];
     [signupFormView addSubview:passwordTextfield];
     [signupFormView addSubview:sponsorTextfield];
@@ -580,6 +599,8 @@
     for (FLTextFieldSignup *textfield in signupFormFields) {
         [textfield reloadTextField];
     }
+    
+    [signupPhoneField reloadTextField];
 }
 
 #pragma mark - button action
@@ -697,7 +718,7 @@
     if (!loginData[@"password"])
         [loginData setObject:@"" forKey:@"password"];
     
-    [[Flooz sharedInstance] loginWithPseudoAndPassword:@{@"login": loginData[@"phone"], @"password": loginData[@"password"]} success: ^(id result) {
+    [[Flooz sharedInstance] loginWithPseudoAndPassword:@{@"login": [FLHelper fullPhone:loginData[@"phone"] withCountry:loginData[@"country"]], @"password": loginData[@"password"]} success: ^(id result) {
         [appDelegate resetTuto:YES];
         [appDelegate goToAccountViewController];
     }];
@@ -767,6 +788,11 @@
 - (void)signupTextFieldNext {
     BOOL nextFocus = false;
     
+    if ([signupPhoneField isFirstResponder]) {
+        [signupFormFields[2] becomeFirstResponder];
+        return;
+    }
+    
     for (FLTextFieldSignup *field in signupFormFields) {
         if (nextFocus && ![field isHidden]) {
             [field becomeFirstResponder];
@@ -780,6 +806,11 @@
         }
         
         if ([field isFirstResponder]) {
+            if ([signupFormFields indexOfObject:field] == 1) {
+                [signupPhoneField becomeFirstResponder];
+                nextFocus = false;
+                break;
+            }
             nextFocus = true;
         }
     }
@@ -916,7 +947,10 @@
                         break;
                     }
                 }
-                
+
+                if (!activeField && [signupPhoneField isFirstResponder])
+                    activeField = signupPhoneField;
+
                 CGRect activeRect = activeField.frame;
                 activeRect.origin.x += signupFormView.frame.origin.x;
                 activeRect.origin.y += signupFormView.frame.origin.y;
@@ -942,6 +976,9 @@
                     }
                 }
                 
+                if (!activeField && [signupPhoneField isFirstResponder])
+                    activeField = signupPhoneField;
+
                 CGRect activeRect = activeField.frame;
                 activeRect.origin.x += signupFormView.frame.origin.x;
                 activeRect.origin.y += signupFormView.frame.origin.y;
@@ -958,6 +995,9 @@
                 }
             }
             
+            if (!activeField && [signupPhoneField isFirstResponder])
+                activeField = signupPhoneField;
+
             CGRect activeRect = activeField.frame;
             activeRect.origin.x += signupFormView.frame.origin.x;
             activeRect.origin.y += signupFormView.frame.origin.y;

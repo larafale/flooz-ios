@@ -154,6 +154,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Stripe.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>TTTAttributedLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -174,6 +179,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>libPhoneNumber-iOS.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>pop.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -182,12 +192,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>00804740ABFA2B6AC82E28F3E8D70E4C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>01B0A99C98F2070416E9035EB5062D52</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>0B219743E0FEBD7667AC23F1D3191108</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0F37732D151F64F8BDE3F4276207FF80</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -202,17 +222,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>248949502616C75B640D98118A6192DB</key>
+		<key>24CF5DCC9B6F88E96E474602118C789C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>294115B3AECC9787BEF77AEA409ED850</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>2AA81E5C63EFF9583FDD91D0AF34A7FD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>319C58FB561CD76C41F472580248E3F4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -242,11 +262,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5CCD5FBF3D2BAE42A05521C7501FC71B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>65F91CD0C461C3A208DBDFB1BD809733</key>
 		<dict>
 			<key>primary</key>
@@ -257,22 +272,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6A1B4C54DB0CD4C6E2499D2F0E15A872</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7881B7F808DC1EBB07A2962BAE49F711</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7917F47CD93929FFBF9B1F86DB1C6294</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>87B318B4FC3DC394253ACCEF956B7DE3</key>
+		<key>7D1362177401D0D642A68E7AAD35629B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -287,12 +287,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>8D93C284C1EC58CD8D1D6E15ED1BA9A2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8F40F160ECA8A9FD96CBA5E33C5C8F03</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>9B22B37FB9877A522537EEFE5C4371C9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9B5C90E28B3713ADE34D1A753144A125</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -307,12 +317,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A1CAD556898A98B452EA14C47211A6D7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A871B27707575912D1F9BADA2CE09CA7</key>
+		<key>A5046C6BB10F665BA55D55CD35C94207</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -327,7 +332,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>B0F50D157F43916BD52F41BF83B0F025</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B6FC219F1263F5A4F9259B3D9E653591</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B7860E389E4BC83A005090064119B01E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -337,17 +352,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>C9D79DCA30FF7A42D9A5BF42855C7CAD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D81F8F5DC99644CA67E8E04C9A544A7C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E2B6C25FAE7F68FAF0804BD58F53DCB9</key>
+		<key>E4A391B51C266E9BF345E2C90AFEA9FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F3B7ADDE3FBDE66B5391627891BD9ACA</key>
+		<key>F467B8244D0289DAB42087AB65F2643C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

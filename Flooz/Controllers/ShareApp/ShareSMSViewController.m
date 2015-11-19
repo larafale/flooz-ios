@@ -390,20 +390,8 @@
         else if (contact.lastname && [[contact.lastname lowercaseString] rangeOfString:[searchString lowercaseString]].location == 0) {
             [contactsFiltered addObject:contact];
         }
-        else if (contact.phone && [[contact.phone lowercaseString] rangeOfString:[searchString lowercaseString]].location != NSNotFound) {
+        else if ([FLHelper phoneMatch:contact.phone withPhone:searchString]) {
             [contactsFiltered addObject:contact];
-        }
-        else if (contact.phone) {
-            NSString *clearPhone = contact.phone;
-            if ([clearPhone hasPrefix:@"+33"]) {
-                clearPhone = [clearPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
-            }
-            if ([[clearPhone lowercaseString] rangeOfString:[searchString lowercaseString]].location != NSNotFound) {
-                [contactsFiltered addObject:contact];
-            }
-            else if ([[contact.phone lowercaseString] rangeOfString:[searchString lowercaseString]].location != NSNotFound) {
-                [contactsFiltered addObject:contact];
-            }
         }
     }
     

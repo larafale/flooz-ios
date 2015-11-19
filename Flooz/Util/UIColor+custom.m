@@ -153,7 +153,7 @@
 }
 
 + (UIColor *)customBackgroundSocial:(CGFloat)alpha {
-	return [UIColor colorWithIntegerRed:45 green:54 blue:64 alpha:alpha];
+    return [UIColor colorWithIntegerRed:31 green:41 blue:54 alpha:alpha];
 }
 
 + (UIColor *)customMiddleBlue {

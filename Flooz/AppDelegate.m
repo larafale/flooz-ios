@@ -145,7 +145,9 @@
         pendingData = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
 #endif
     
-    return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];;
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    
+    return YES;
 }
 
 - (void)saveBranchParams {
@@ -290,28 +292,17 @@
 }
 
 - (void)showSignupWithUser:(NSDictionary *)user {
-    
-    NSMutableDictionary *fbData = [user mutableCopy];
     NSMutableDictionary *userData = [NSMutableDictionary new];
     
-    [userData setObject:fbData forKey:@"fb"];
     [userData setObject:[Mixpanel sharedInstance].distinctId forKey:@"distinctId"];
     
-    if (fbData[@"email"])
-        [userData setObject:fbData[@"email"] forKey:@"email"];
+    [userData addEntriesFromDictionary:user];
     
-    if (fbData[@"lastName"])
-        [userData setObject:fbData[@"lastName"] forKey:@"lastName"];
-    
-    if (fbData[@"firstName"])
-        [userData setObject:fbData[@"firstName"] forKey:@"firstName"];
-    
-    if (fbData[@"id"])
-        [userData setObject:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", fbData[@"id"]] forKey:@"avatarURL"];
+    if (userData[@"fb"] && userData[@"fb"][@"id"])
+        [userData setObject:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", userData[@"fb"][@"id"]] forKey:@"avatarURL"];
     
     if ([[self myTopViewController] isKindOfClass:[HomeViewController class]]) {
         HomeViewController *home = (HomeViewController*)[self myTopViewController];
-        
         [home setUserDataForSignup:userData];
     }
 }
@@ -453,42 +444,12 @@
 
 #pragma mark - Facebook
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-    if ([[Branch getInstance] handleDeepLink:url]) {
-        return YES;
-    } else if ([[FBSDKApplicationDelegate sharedInstance] application:app openURL:url sourceApplication:nil annotation:nil])
-        return YES;
-    else {
-        if ([url.scheme isEqualToString:@"flooz"]) {
-            if (url.host && ![url.host isBlank]) {
-                NSString *host = url.host;
-                NSDictionary *dic = [NSDictionary newWithJSONString:host];
-                
-                if (dic && dic[@"data"]) {
-                    if (dic[@"data"][@"login"]) {
-                        NSString *token = dic[@"data"][@"login"];
-                        [[Flooz sharedInstance] loginWithToken:token];
-                    }
-                    
-                    NSMutableDictionary *tmp = [pendingData mutableCopy];
-                    if (tmp == nil)
-                        tmp = [NSMutableDictionary new];
-                    [tmp addEntriesFromDictionary:dic[@"data"]];
-                    pendingData = tmp;
-                }
-            }
-        }
-    }
-    
-    return YES;
-}
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    if ([[Branch getInstance] handleDeepLink:url]) {
+    if ([[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation])
         return YES;
-    } else if ([[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation])
+    else if ([[Branch getInstance] handleDeepLink:url]) {
         return YES;
-    else {
+    } else {
         if ([url.scheme isEqualToString:@"flooz"]) {
             if (url.host && ![url.host isBlank]) {
                 NSString *host = url.host;
@@ -1080,8 +1041,6 @@
 }
 
 - (void)showTransaction:(FLTransaction *)transaction inController:(UIViewController*)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus {
-    
-    [[Flooz sharedInstance] readTransactionWithId:transaction.transactionId success:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCancelTimer object:nil];
     _lastTransactionID = transaction.transactionId;

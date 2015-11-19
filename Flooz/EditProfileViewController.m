@@ -8,11 +8,14 @@
 
 #import "EditProfileViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "FLTextFieldSignup.h"
 
 @interface EditProfileViewController () {
     UITableView *tableView;
     
-    FLTextView *textView;
+    FLTextFieldSignup *locationView;
+    FLTextView *bioView;
+    FLTextFieldSignup *websiteView;
     UIImageView *coverPreview;
     UIImageView *avatarPreview;
     
@@ -52,12 +55,27 @@
     coverPreview.contentMode = UIViewContentModeScaleAspectFill;
     coverPreview.tag = 1;
     
-    textView = [[FLTextView alloc] initWithPlaceholder:NSLocalizedString(@"EDIT_BIO", nil) for:data key:@"bio" frame:CGRectMake(10, 10, PPScreenWidth() - 20, 85)];
-    textView.layer.masksToBounds = YES;
-    textView.layer.cornerRadius = 3;
-    [textView addTextChangeTarget:self action:@selector(textChange)];
-    [textView setText:[Flooz sharedInstance].currentUser.bio];
-    
+    bioView = [[FLTextView alloc] initWithPlaceholder:NSLocalizedString(@"EDIT_BIO", nil) for:data key:@"bio" frame:CGRectMake(10, 10, PPScreenWidth() - 20, 90)];
+    bioView.layer.masksToBounds = YES;
+    bioView.layer.cornerRadius = 3;
+    [bioView addTextChangeTarget:self action:@selector(textChange)];
+    [bioView setText:[Flooz sharedInstance].currentUser.bio];
+
+    locationView = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"HINT_LOCATION", nil) for:data key:@"location" frame:CGRectMake(10, 4, PPScreenWidth() - 20, 30)];
+    locationView.layer.masksToBounds = YES;
+    locationView.layer.cornerRadius = 1;
+    locationView.bottomBar.hidden = YES;
+    [locationView addForTextChangeTarget:self action:@selector(textChange)];
+    [locationView setTextOfTextField:[Flooz sharedInstance].currentUser.location];
+
+    websiteView = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"HINT_WEBSITE", nil) for:data key:@"website" frame:CGRectMake(10, 4, PPScreenWidth() - 20, 30)];
+    websiteView.layer.masksToBounds = YES;
+    websiteView.layer.cornerRadius = 1;
+    websiteView.bottomBar.hidden = YES;
+    websiteView.textfield.keyboardType = UIKeyboardTypeURL;
+    [websiteView addForTextChangeTarget:self action:@selector(textChange)];
+    [websiteView setTextOfTextField:[Flooz sharedInstance].currentUser.website];
+
     tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     [tableView setDataSource:self];
     [tableView setDelegate:self];
@@ -68,8 +86,16 @@
     [_mainBody addSubview:tableView];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self registerForKeyboardNotifications];
+}
+
 - (void)textChange {
-    if ([data[@"bio"] isEqualToString:[Flooz sharedInstance].currentUser.bio])
+    if ([data[@"bio"] isEqualToString:[Flooz sharedInstance].currentUser.bio]
+        && [data[@"location"] isEqualToString:[Flooz sharedInstance].currentUser.location]
+        && [data[@"website"] isEqualToString:[Flooz sharedInstance].currentUser.website])
         [saveItem setEnabled:NO];
     else
         [saveItem setEnabled:YES];
@@ -91,7 +117,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -101,10 +127,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section < 2)
         return 60;
-    else if (indexPath.row == 0)
+    else if (indexPath.section == 2)
         return 110;
-    else
-        return CGFLOAT_MIN;
+    else if (indexPath.section > 2 && indexPath.section <= 4)
+        return 50;
+    return CGFLOAT_MIN;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -119,8 +146,12 @@
         return [self generateAvatarCell];
     else if (indexPath.section == 1)
         return [self generateCoverCell];
-    else
+    else if (indexPath.section == 2)
         return [self generateBioCell];
+    else if (indexPath.section == 3)
+        return [self generateLocationCell];
+    else
+        return [self generateWebsiteCell];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -133,7 +164,7 @@
         [self showMenuPhoto];
     }
     if (indexPath.section == 2) {
-        [textView becomeFirstResponder];
+        [bioView becomeFirstResponder];
     }
 }
 
@@ -193,10 +224,55 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell setBackgroundColor:[UIColor clearColor]];
         
-        [cell addSubview:textView];
+        [cell addSubview:bioView];
     }
     
-    [textView setText:[Flooz sharedInstance].currentUser.bio];
+    return cell;
+}
+
+- (UITableViewCell *)generateLocationCell {
+    static NSString *cellIdentifier = @"LocationCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [cell setBackgroundColor:[UIColor clearColor]];
+        
+        UILabel *title = [UILabel newWithText:NSLocalizedString(@"EDIT_LOCATION", nil) textColor:[UIColor whiteColor] font:[UIFont customContentRegular:16] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+        [title setWidthToFit];
+        
+        CGRectSetPosition(title.frame, 10, 25 - CGRectGetHeight(title.frame) / 2);
+        CGRectSetX(locationView.frame, CGRectGetMaxX(title.frame) + 10);
+        CGRectSetWidth(locationView.frame, PPScreenWidth() - CGRectGetMinX(locationView.frame) - 20);
+        
+        [cell addSubview:title];
+        [cell addSubview:locationView];
+    }
+    
+    return cell;
+}
+
+- (UITableViewCell *)generateWebsiteCell {
+    static NSString *cellIdentifier = @"WebsiteCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [cell setBackgroundColor:[UIColor clearColor]];
+        
+        UILabel *title = [UILabel newWithText:NSLocalizedString(@"EDIT_WEBSITE", nil) textColor:[UIColor whiteColor] font:[UIFont customContentRegular:16] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+        [title setWidthToFit];
+        
+        CGRectSetPosition(title.frame, 10, 25 - CGRectGetHeight(title.frame) / 2);
+        CGRectSetX(websiteView.frame, CGRectGetMaxX(title.frame) + 10);
+        CGRectSetWidth(websiteView.frame, PPScreenWidth() - CGRectGetMinX(websiteView.frame) - 20);
+        
+        [cell addSubview:title];
+
+        [cell addSubview:websiteView];
+    }
     
     return cell;
 }
@@ -374,6 +450,24 @@
     } failure:^(NSError *error) {
         
     }];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications {
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    tableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0);
+}
+
+- (void)keyboardWillDisappear {
+    tableView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

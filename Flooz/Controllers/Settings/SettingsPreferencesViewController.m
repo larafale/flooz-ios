@@ -117,10 +117,8 @@
 }
 
 - (void)didFacebookTouch {
-    if ([[Flooz sharedInstance] facebook_token]) {
-        facebookSwitch.on = NO;
+    if (!facebookSwitch.on)
         [[Flooz sharedInstance] disconnectFacebook];
-    }
     else {
         [[Flooz sharedInstance] connectFacebook];
     }

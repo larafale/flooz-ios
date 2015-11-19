@@ -31,5 +31,7 @@ pod 'Crashlytics'
 pod 'Fabric'
 pod 'HMSegmentedControl'
 pod 'VCTransitionsLibrary'
+pod 'Stripe'
+pod 'libPhoneNumber-iOS'
 
 link_with 'Flooz', 'Flooz dev', 'Flooz local', 'FloozTests'

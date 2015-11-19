@@ -47,6 +47,7 @@ static NSString *kTextData = @"textData";
 static NSString *kInvitationData = @"invitationData";
 static NSString *kNotificationsData = @"notifData";
 static NSString *kBranchData = @"branchData";
+static NSString *kLocationData = @"locationData";
 
 @interface Flooz : NSObject<UIAlertViewDelegate> {
 	AFHTTPRequestOperationManager *manager;
@@ -73,6 +74,7 @@ static NSString *kBranchData = @"branchData";
 - (BOOL)isConnectionAvailable;
 - (void)showLoadView;
 - (void)hideLoadView;
+- (void) clearLocationData;
 
 - (BOOL)autologin;
 - (void)logout;
@@ -117,6 +119,9 @@ static NSString *kBranchData = @"branchData";
 - (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
 - (NSArray *)activitiesCached;
+
+- (void)placesFrom:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)placesSearch:(NSString *)search from:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
@@ -187,7 +192,7 @@ static NSString *kBranchData = @"branchData";
 - (void)createContactList:(void (^)(NSMutableArray *arrayContactAdressBook, NSMutableArray *arrayContactFlooz))lists atSignup:(BOOL)signup;
 
 - (NSUInteger)findIndexForUser:(FLUser *)newUser inArray:(NSArray *)array;
-- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result;
+- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result sorted:(BOOL)sorted;
 - (NSMutableArray *)createActivityArrayFromResult:(NSDictionary *)result;
 - (NSMutableArray *)createTransactionArrayFromResult:(NSDictionary *)result;
 

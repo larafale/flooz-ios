@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreditCardViewController : BaseViewController
+#import <Stripe.h>
+
+@interface CreditCardViewController : BaseViewController<STPPaymentCardTextFieldDelegate>
 
 @property (nonatomic, retain) NSString *customLabel;
 

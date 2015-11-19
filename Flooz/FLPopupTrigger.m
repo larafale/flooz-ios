@@ -76,7 +76,8 @@
             if (data[@"triggers"])
                 [buttonsAction addObject:data[@"triggers"]];
             else
-                [buttonsAction addObject:@[]];        }
+                [buttonsAction addObject:@[]];
+        }
         
         [self commmonInit];
     }

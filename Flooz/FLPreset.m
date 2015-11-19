@@ -37,6 +37,7 @@
     self.whyPlaceholder = [json objectForKey:@"whyPlaceholder"];
     self.payload = [json objectForKey:@"payload"];
     self.image = [json objectForKey:@"image"];
+    self.geo = [json objectForKey:@"geo"];
     
     self.popup = [json objectForKey:@"popup"];
     self.steps = [json objectForKey:@"steps"];

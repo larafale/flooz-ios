@@ -143,31 +143,33 @@
     int docNotifs = 0;
     
     FLUser *currentUser = [Flooz sharedInstance].currentUser;
-
-    [titleView removeFromSuperview];
-    [fullnameLabel removeFromSuperview];
-    [usernameLabel removeFromSuperview];
-
-    titleView = [[UIView alloc] initWithFrame:CGRectMake(-5.0f, 0.0f, PPScreenWidth(), NAVBAR_HEIGHT)];
-    [titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMenuAvatar)]];
-
-    [titleView addSubview:fullnameLabel];
-    [titleView addSubview:usernameLabel];
-
-    fullnameLabel.text = currentUser.fullname;
-    usernameLabel.text = [NSString stringWithFormat:@"@%@", currentUser.username];
     
-    CGFloat fullnameSize = [fullnameLabel.text widthOfString:fullnameLabel.font];
-    CGFloat usernameSize = [usernameLabel.text widthOfString:usernameLabel.font];
+    if (![fullnameLabel.text isEqualToString:currentUser.fullname]) {
+        [titleView removeFromSuperview];
+        [fullnameLabel removeFromSuperview];
+        [usernameLabel removeFromSuperview];
+        
+        titleView = [[UIView alloc] initWithFrame:CGRectMake(-5.0f, 0.0f, PPScreenWidth(), NAVBAR_HEIGHT)];
+        [titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMenuAvatar)]];
+        
+        [titleView addSubview:fullnameLabel];
+        [titleView addSubview:usernameLabel];
+        
+        fullnameLabel.text = currentUser.fullname;
+        usernameLabel.text = [NSString stringWithFormat:@"@%@", currentUser.username];
+        
+        CGFloat fullnameSize = [fullnameLabel.text widthOfString:fullnameLabel.font];
+        CGFloat usernameSize = [usernameLabel.text widthOfString:usernameLabel.font];
+        
+        CGFloat viewSize = MAX(fullnameSize, usernameSize);
+        
+        CGRectSetWidth(titleView.frame, viewSize);
+        CGRectSetWidth(fullnameLabel.frame, viewSize);
+        CGRectSetWidth(usernameLabel.frame, viewSize);
+        
+        self.navigationItem.titleView = titleView;
+    }
     
-    CGFloat viewSize = MAX(fullnameSize, usernameSize);
-    
-    CGRectSetWidth(titleView.frame, viewSize);
-    CGRectSetWidth(fullnameLabel.frame, viewSize);
-    CGRectSetWidth(usernameLabel.frame, viewSize);
-
-    self.navigationItem.titleView = titleView;
-
     NSArray *missingFields = currentUser.json[@"missingFields"];
     
     if ([missingFields containsObject:@"card"])

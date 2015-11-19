@@ -70,6 +70,8 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 
 @property (strong, nonatomic) FLSocial *social;
 
+@property (strong, nonatomic) NSString *location;
+
 @property (strong, nonatomic) NSArray *comments;
 
 @property (nonatomic) BOOL isCollect;
@@ -80,6 +82,7 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (nonatomic) BOOL haveAction;
 
 - (id)initWithJSON:(NSDictionary *)json;
+- (void)setJSON:(NSDictionary *)json;
 
 - (NSString *)statusText;
 

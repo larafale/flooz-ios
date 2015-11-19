@@ -53,6 +53,8 @@
     UILabel *fullnameLabel;
     UILabel *usernameLabel;
     UILabel *bioLabel;
+    UILabel *locationLabel;
+    UILabel *websiteLabel;
     UIImageView *certfifiedIcon;
     
     NSMutableArray *transactions;
@@ -166,7 +168,7 @@
     headerImageView.image = [UIImage imageNamed:@"default-cover"];
     headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     [headerImageView setUserInteractionEnabled:YES];
-//    [headerImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
+    //    [headerImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
     
     [header insertSubview:headerImageView belowSubview:headerLabel];
     
@@ -176,7 +178,7 @@
     headerBlurImageView.contentMode = UIViewContentModeScaleAspectFill;
     headerBlurImageView.alpha = 0.0;
     [headerBlurImageView setUserInteractionEnabled:YES];
-//    [headerBlurImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
+    //    [headerBlurImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCoverClick:)]];
     
     [header insertSubview:headerBlurImageView belowSubview:headerLabel];
     
@@ -223,13 +225,21 @@
     usernameLabel.font = [UIFont customContentBold:14];
     usernameLabel.textColor = [UIColor customGreyPseudo];
     
-    bioLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(usernameLabel.frame) + 10, PPScreenWidth() - 20, 0)];
+    bioLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(usernameLabel.frame) + 5, PPScreenWidth() - 20, 0)];
     bioLabel.font = [UIFont customContentRegular:14];
     bioLabel.textColor = [UIColor whiteColor];
     bioLabel.numberOfLines = 0;
     bioLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
-    controlTab = [[FLMultiLineSegmentedControl alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(bioLabel.frame) + 15, CGRectGetWidth(self.view.frame) - 2 * 10, 35)];
+    locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(bioLabel.frame) + 5, PPScreenWidth() - 20, 0)];
+    locationLabel.numberOfLines = 1;
+    
+    websiteLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(locationLabel.frame), PPScreenWidth() - 20, 0)];
+    websiteLabel.numberOfLines = 1;
+    websiteLabel.userInteractionEnabled = YES;
+    [websiteLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didWebsiteCLick)]];
+    
+    controlTab = [[FLMultiLineSegmentedControl alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(websiteLabel.frame) + 15, CGRectGetWidth(self.view.frame) - 2 * 10, 35)];
     [controlTab setTintColor:[UIColor customBlue]];
     [controlTab addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
     [controlTab setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateSelected];
@@ -252,6 +262,9 @@
     [headerCell addSubview:settingsButton];
     [headerCell addSubview:settingsButton];
     [headerCell addSubview:bioLabel];
+    [headerCell addSubview:locationLabel];
+    [headerCell addSubview:bioLabel];
+    [headerCell addSubview:websiteLabel];
     [headerCell addSubview:controlTab];
     
     CGRectSetHeight(headerCell.frame, CGRectGetMaxY(controlTab.frame) + 10);
@@ -374,13 +387,87 @@
     [bioLabel setText:currentUser.bio];
     [bioLabel setHeightToFit];
     
-    CGRectSetY(controlTab.frame, CGRectGetMaxY(bioLabel.frame) + 15);
-    CGRectSetHeight(headerCell.frame, CGRectGetMaxY(controlTab.frame) + 10);
+    CGRectSetY(locationLabel.frame, CGRectGetMaxY(bioLabel.frame) + 5);
     
+    if (currentUser.location && ![currentUser.location isBlank]) {
+        locationLabel.hidden = NO;
+        CGRectSetHeight(locationLabel.frame, 20);
+        CGRectSetY(websiteLabel.frame, CGRectGetMaxY(locationLabel.frame));
+        
+        UIImage *image = [UIImage imageNamed:@"map"];
+        CGSize newImgSize = CGSizeMake(14, 14);
+        
+        image = [FLHelper imageWithImage:image scaledToSize:newImgSize];
+        image = [FLHelper colorImage:image color:[UIColor whiteColor]];
+        
+        NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+        attachment.image = image;
+        attachment.bounds = CGRectMake(0, -3, attachment.image.size.width, attachment.image.size.height);
+        
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+        
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
+        [string appendAttributedString:attachmentString];
+        [string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", currentUser.location] attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont customContentRegular:14]}]];
+        
+        locationLabel.attributedText = string;
+    } else {
+        locationLabel.hidden = YES;
+        CGRectSetHeight(locationLabel.frame, 0);
+        CGRectSetY(websiteLabel.frame, CGRectGetMaxY(bioLabel.frame) + 5);
+    }
+
+    if (currentUser.website && ![currentUser.website isBlank]) {
+        websiteLabel.hidden = NO;
+        CGRectSetHeight(websiteLabel.frame, 20);
+        CGRectSetY(controlTab.frame, CGRectGetMaxY(websiteLabel.frame) + 10);
+        
+        UIImage *image = [UIImage imageNamed:@"map"];
+        CGSize newImgSize = CGSizeMake(14, 14);
+        
+        image = [FLHelper imageWithImage:image scaledToSize:newImgSize];
+        image = [FLHelper colorImage:image color:[UIColor whiteColor]];
+        
+        NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+        attachment.image = image;
+        attachment.bounds = CGRectMake(0, -3, attachment.image.size.width, attachment.image.size.height);
+        
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+        
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+        [string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", currentUser.website] attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont customContentRegular:14]}]];
+        
+        websiteLabel.attributedText = string;
+    } else {
+        websiteLabel.hidden = YES;
+        CGRectSetHeight(websiteLabel.frame, 0);
+        if (currentUser.location && ![currentUser.location isBlank]) {
+            CGRectSetY(controlTab.frame, CGRectGetMaxY(locationLabel.frame) + 10);
+        } else {
+            CGRectSetY(controlTab.frame, CGRectGetMaxY(bioLabel.frame) + 10);
+        }
+    }
+
+    CGRectSetHeight(headerCell.frame, CGRectGetMaxY(controlTab.frame) + 10);
+
     [self.tableView reloadData];
 }
 
 #pragma marks - button handlers
+
+- (void) didWebsiteCLick {
+    if (currentUser.website && ![currentUser.website isBlank]) {
+        NSString *urlString = [currentUser.website copy];
+        
+        if ([urlString rangeOfString:@"http://"].location == NSNotFound && [urlString rangeOfString:@"https://"].location == NSNotFound)
+            urlString = [NSString stringWithFormat:@"http://%@", urlString];
+        
+        NSURL *url = [NSURL URLWithString:urlString];
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+}
 
 - (void) didEditProfileButtonClick {
     [self.navigationController pushViewController:[EditProfileViewController new] animated:YES];
@@ -738,10 +825,10 @@
         
         // Avatar -----------
         
-//        CGFloat avatarScaleFactor = (MIN(offset_HeaderStop, offset)) / avatarImage.bounds.size.height / 1.8; // Slow down the animation
-//        CGFloat avatarSizeVariation = ((avatarImage.bounds.size.height * (1.0 + avatarScaleFactor)) - avatarImage.bounds.size.height) / 2.0;
-//        avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0);
-//        avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0);
+        //        CGFloat avatarScaleFactor = (MIN(offset_HeaderStop, offset)) / avatarImage.bounds.size.height / 1.8; // Slow down the animation
+        //        CGFloat avatarSizeVariation = ((avatarImage.bounds.size.height * (1.0 + avatarScaleFactor)) - avatarImage.bounds.size.height) / 2.0;
+        //        avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0);
+        //        avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0);
         
         if (offset <= offset_HeaderStop) {
             if (avatarImage.layer.zPosition < header.layer.zPosition) {

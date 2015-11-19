@@ -7,6 +7,7 @@
 //
 
 #import "FLTexts.h"
+#import "FLCountry.h"
 
 @implementation FLTexts
 
@@ -26,6 +27,21 @@
     self.couponButton = json[@"couponButton"];
     self.card = json[@"card"];
     self.menu = json[@"menu"];
+    
+    if (json[@"signup"]) {
+        self.signupSponsor = json[@"signup"][@"promo"];
+    }
+    
+    self.avalaibleCountries = [NSMutableArray new];
+    
+    NSArray *countries = json[@"countries"];
+    
+    for (NSDictionary *country in countries) {
+        [self.avalaibleCountries addObject:[[FLCountry alloc] initWithJSON:country]];
+    }
+    
+    if (!self.avalaibleCountries.count)
+        [self.avalaibleCountries addObject:[FLCountry defaultCountry]];
 }
 
 @end

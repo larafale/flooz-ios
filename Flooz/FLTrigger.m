@@ -103,6 +103,10 @@
         return TriggerSecureCodeValidate;
     else if ([param isEqualToString:@"notification:ask"])
         return TriggerAskNotification;
+    else if ([param isEqualToString:@"fb:connect"])
+        return TriggerFbConnect;
+    else if ([param isEqualToString:@"pay:click"])
+        return TriggerPayClick;
     else
         return TriggerNone;
 }

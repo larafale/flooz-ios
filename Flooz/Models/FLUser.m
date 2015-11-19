@@ -54,6 +54,8 @@
     _email = [json objectForKey:@"email"];
     _phone = [json objectForKey:@"phone"];
     _bio = [json objectForKey:@"bio"];
+    _location = [json objectForKey:@"location"];
+    _website = [json objectForKey:@"website"];
     _coverURL = [json objectForKey:@"cover"];
     _coverLargeURL = [json objectForKey:@"coverFull"];
     _avatarURL = [json objectForKey:@"pic"];
@@ -151,8 +153,8 @@
         }
     }
     
-    if ([json objectForKey:@"cards"] && [[json objectForKey:@"cards"] count] > 0) {
-        _creditCard = [[FLCreditCard alloc] initWithJSON:[[json objectForKey:@"cards"] objectAtIndex:0]];
+    if ([json objectForKey:@"card"]) {
+        _creditCard = [[FLCreditCard alloc] initWithJSON:[json objectForKey:@"card"]];
     }
     
     {
@@ -266,9 +268,10 @@
     
     if (json[@"settings"]) {
         _device = json[@"settings"][@"device"];
+        _country = [FLCountry countryFromIndicatif:json[@"settings"][@"indicatif"]];
     }
     
-    if (json[@"cactus"] || (json[@"isCactus"] && [json[@"isCactus"] boolValue])) {
+    if (json[@"isCactus"] && [json[@"isCactus"] boolValue]) {
         _userKind = CactusUser;
         _username = nil;
     }
