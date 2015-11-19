@@ -31,6 +31,15 @@
 #import "FLPopupInformation.h"
 #import "SettingsBankViewController.h"
 #import "FLTabBarController.h"
+#import "FLPopupTrigger.h"
+#import "ShareSMSViewController.h"
+#import "ValidateSMSViewController.h"
+#import "EditProfileViewController.h"
+#import "ValidateSecureCodeViewController.h"
+#import "NewTransactionViewController.h"
+
+#import "FLReachability.h"
+#import <SystemConfiguration/SystemConfiguration.h>
 
 #define APP_VERSION [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 
@@ -48,7 +57,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-
+        
 #ifdef FLOOZ_DEV_LOCAL
         manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", [appDelegate localIp]]]];
 #elif FLOOZ_DEV_API
@@ -70,6 +79,8 @@
         
         self.socketConnected = NO;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveUserData) name:kNotificationReloadCurrentUser object:nil];
+        
+        self.fbLoginManager = [[FBSDKLoginManager alloc] init];
     }
     return self;
 }
@@ -86,6 +97,12 @@
     [loadView hide];
 }
 
+- (BOOL)isConnectionAvailable {
+    FLReachability *reachability = [FLReachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return networkStatus != NotReachable;
+}
+
 #pragma mark - Save Data
 
 - (void) loadUserData {
@@ -94,7 +111,7 @@
         NSDictionary *userJson = [NSDictionary newWithJSONString:userData];
         if (userJson) {
             _currentUser = [[FLUser alloc] initWithJSON:userJson];
-            _facebook_token = userJson[@"fb"][@"token"];
+            [self updateFbToken:userJson[@"fb"][@"token"] andUser:userJson[@"fb"][@"id"]];
             
             [self checkDeviceToken];
         }
@@ -157,6 +174,17 @@
     return nil;
 }
 
+- (NSArray *) loadLocationData {
+    NSString *locationData = [UICKeyChainStore stringForKey:kLocationData];
+    if (locationData) {
+        NSArray *places = [NSArray newWithJSONString:locationData];
+        if (places) {
+            return places;
+        }
+    }
+    return nil;
+}
+
 - (void) saveUserData {
     [UICKeyChainStore setString:[self.currentUser.json jsonStringWithPrettyPrint:NO] forKey:kUserData];
 }
@@ -193,6 +221,10 @@
     }
 }
 
+- (void) saveLocationData:(NSArray*)places {
+    [UICKeyChainStore setString:[places jsonStringWithPrettyPrint:NO] forKey:kLocationData];
+}
+
 - (void) clearSaveData {
     [UICKeyChainStore removeItemForKey:kUserData];
     [UICKeyChainStore removeItemForKey:kAllTimelineData];
@@ -200,6 +232,12 @@
     [UICKeyChainStore removeItemForKey:kFriendTimelineData];
     [UICKeyChainStore removeItemForKey:kTextData];
     [UICKeyChainStore removeItemForKey:kNotificationsData];
+    [UICKeyChainStore removeItemForKey:kFilterData];
+    [UICKeyChainStore removeItemForKey:kLocationData];
+}
+
+- (void) clearLocationData {
+    [UICKeyChainStore removeItemForKey:kLocationData];
 }
 
 #pragma mark -
@@ -328,16 +366,12 @@
     [self requestPath:@"/utils/asserts" method:@"POST" params:@{@"field": @"secureCode", @"value": secureCode} success:success failure:failure];
 }
 
+- (void)checkPhoneForUser:(NSString*)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/utils/asserts" method:@"POST" params:@{@"field": @"phone", @"value": code} success:success failure:failure];
+}
+
 - (NSString *)clearPhoneNumber:(NSString*)phone {
-    NSString *formatedPhone = [[[[phone stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                stringByReplacingOccurrencesOfString:@"." withString:@""]
-                               stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    
-    if (![formatedPhone hasPrefix:@"+33"]) {
-        formatedPhone = [formatedPhone stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@"+33"];
-    }
-    
-    return formatedPhone;
+    return [FLHelper formatedPhone:phone];
 }
 
 - (void)loginForSecureCode:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -357,7 +391,7 @@
 - (void)passwordLost:(NSString *)email success:(void (^)(id result))success {
     if (email == nil)
         email = @"";
-
+    
     [self requestPath:@"password/lost" method:@"POST" params:@{ @"q": email } success:success failure:NULL];
 }
 
@@ -377,6 +411,14 @@
     [self requestPath:[NSString stringWithFormat:@"/users/cactus/%@", identifier] method:@"GET" params:nil success:success failure:failure];
 }
 
+- (void)getUserProfile:(NSString *)userId success:(void (^)(FLUser *result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:[NSString stringWithFormat:@"/social/profile/%@", userId] method:@"GET" params:nil success:^(id result) {
+        FLUser *user = [[FLUser alloc] initWithJSON:result[@"item"]];
+        if (success)
+            success(user);
+    } failure:failure];
+}
+
 - (void)updateCurrentUserWithSuccess:(void (^)())success {
     if ([appDelegate shouldRefreshWithKey:kKeyLastUpdate]) {
         [self updateCurrentUserWithSuccess:success failure:nil];
@@ -388,11 +430,18 @@
     }
 }
 
+- (void)checkContactList:(NSArray *)phones success:(void (^)(NSArray *result))success {
+    [self requestPath:@"/utils/exists/" method:@"POST" params:@{@"field":@"phones", @"value":phones} success:^(id result) {
+        if (success)
+            success(result[@"items"]);
+    } failure:nil];
+}
+
 - (void)updateCurrentUserWithSuccess:(void (^)())success failure:(void (^)(NSError *error))failure {
     if ([appDelegate shouldRefreshWithKey:kKeyLastUpdate]) {
         __block id successBlock = ^(id result) {
             _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
-            _facebook_token = result[@"item"][@"fb"][@"token"];
+            [self updateFbToken:result[@"item"][@"fb"][@"token"] andUser:result[@"item"][@"fb"][@"id"]];
             
             [self checkDeviceToken];
             [self saveSettingsObject:[NSDate date] withKey:kKeyLastUpdate];
@@ -464,6 +513,13 @@
 }
 
 - (void)invitationText:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    if (self.invitationTexts == nil) {
+        [self loadInvitationData];
+        if (self.invitationTexts && success)
+            success(self.invitationTexts);
+    } else if (success)
+        success(self.invitationTexts);
+    
     id successBlock = ^(id result) {
         self.invitationTexts = [[FLInvitationTexts alloc] initWithJSON:result[@"item"]];
         [self saveInvitationData];
@@ -493,6 +549,13 @@
 }
 
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    if (self.currentTexts == nil) {
+        [self loadTextData];
+        if (self.currentTexts && success)
+            success(self.currentTexts);
+    } else if (success)
+        success(self.currentTexts);
+    
     id successBlock = ^(id result) {
         self.currentTexts = [[FLTexts alloc] initWithJSON:result[@"item"]];
         [self saveTextData];
@@ -517,11 +580,24 @@
     [self requestPath:@"/utils/texts" method:@"GET" params:nil success:successBlock failure:failureBlock];
 }
 
-- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+- (void)userTimeline:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
+        
+        if (success) {
+            success(transactions, result[@"next"]);
+        }
+    };
+    
+    
+    [self requestPath:[NSString stringWithFormat:@"/users/%@/flooz", userId] method:@"GET" params:nil success:successBlock failure:failure];
+}
+
+- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
     [self timeline:scope state:nil success:success failure:failure];
 }
 
-- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
@@ -530,7 +606,7 @@
         [self saveTimeline:result[@"items"] forScope:[FLTransaction transactionParamsToScope:scope]];
         if (success) {
             [self saveSettingsObject:[NSDate date] withKey:[NSString stringWithFormat:@"kLastUpdate%@", scope]];
-            success(transactions, result[@"next"]);
+            success(transactions, result[@"next"], [FLTransaction transactionParamsToScope:result[@"scope"]]);
         }
     };
     
@@ -539,7 +615,7 @@
             NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
             if (transactions && success) {
                 self.timelinePageSize = [transactions count];
-                success(transactions, nil);
+                success(transactions, nil, [FLTransaction transactionParamsToScope:scope]);
             } else if (failure)
                 failure(error);
         } else if (failure) {
@@ -558,11 +634,11 @@
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failureBlock];
 }
 
-- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         if (success) {
-            success(transactions, result[@"next"]);
+            success(transactions, result[@"next"], [FLTransaction transactionParamsToScope:result[@"scope"]]);
         }
     };
     
@@ -570,12 +646,12 @@
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failure];
 }
 
-- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success {
+- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
         if (success) {
-            success(transactions, result[@"next"]);
+            success(transactions, result[@"next"], [FLTransaction transactionParamsToScope:result[@"scope"]]);
         }
     };
     
@@ -648,6 +724,33 @@
         return @[];
     
     return _activitiesCached;
+}
+
+- (void)placesFrom:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    NSArray *cachedPlaces = [self loadLocationData];
+    
+    if (cachedPlaces) {
+        if (success)
+            success(cachedPlaces);
+    } else {
+        [self requestPath:@"/geo/search" method:@"GET" params:@{@"ll": ll} success:^(id result) {
+            NSArray *items = result[@"items"];
+            
+            [self saveLocationData:items];
+            
+            if (success)
+                success(items);
+        } failure:failure];
+    }
+}
+
+- (void)placesSearch:(NSString *)search from:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/geo/suggest" method:@"GET" params:@{@"ll": ll, @"q": search} success:^(id result) {
+        NSArray *items = result[@"items"];
+        
+        if (success)
+            success(items);
+    } failure:failure];
 }
 
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
@@ -822,29 +925,54 @@
 }
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success {
-    NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/%@", dictionary[@"id"], dictionary[@"action"]];
+    [self updateFriendRequest:dictionary success:success failure:nil];
+}
+
+- (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/%@", dictionary[@"id"], dictionary[@"action"]];
     [self requestPath:path method:@"POST" params:nil success:success failure:nil];
 }
 
 - (void)friendsSuggestion:(void (^)(id result))success {
     id successBlock = ^(id result) {
-        NSMutableArray *friends = [self createFriendsArrayFromResult:result];
+        NSMutableArray *friends = [self createFriendsArrayFromResult:result sorted:NO];
         if (success) {
             success(friends);
         }
     };
     
-    [self requestPath:@"/friends/suggestion" method:@"GET" params:nil success:successBlock failure:NULL];
+    [self requestPath:@"/social/suggests" method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
-- (void)friendRemove:(NSString *)friendId success:(void (^)())success {
-    NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/delete", friendId];
-    [self requestPath:path method:@"POST" params:nil success:success failure:nil];
+- (void)friendsRequest:(void (^)(id result))success {
+    id successBlock = ^(id result) {
+        NSMutableArray *friends = [self createFriendsArrayFromResult:result sorted:YES];
+        if (success) {
+            success(friends);
+        }
+    };
+    
+    [self requestPath:@"/social/pendings" method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
-- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success {
-    NSString *path = [@"/friends/" stringByAppendingFormat : @"%@/request", friendId];
-    [self requestPath:path method:@"POST" params:(canal != nil ? @{@"metrics":@{@"selectedFrom": canal}} : nil) success:success failure:nil];
+- (void)friendFollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/follow", friendId];
+    [self requestPath:path method:@"POST" params:nil success:success failure:failure];
+}
+
+- (void)friendUnfollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/unfollow", friendId];
+    [self requestPath:path method:@"POST" params:nil success:success failure:failure];
+}
+
+- (void)friendRemove:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/delete", friendId];
+    [self requestPath:path method:@"POST" params:nil success:success failure:failure];
+}
+
+- (void)friendAdd:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure {
+    NSString *path = [@"/social/" stringByAppendingFormat : @"%@/request", friendId];
+    [self requestPath:path method:@"POST" params:nil success:success failure:failure];
 }
 
 - (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result))success {
@@ -855,7 +983,7 @@
         }
     };
     
-    NSString *path = @"/friends/search";
+    NSString *path = @"/social/search";
     if (newFlooz) {
         path = [path stringByAppendingString:@"?context=newFlooz"];
     }
@@ -880,6 +1008,10 @@
 
 - (void)sendInvitationMetric:(NSString *)canal {
     [self requestPath:@"/invitations/callback" method:@"GET" params:@{@"canal" : canal} success:nil failure:nil];
+}
+
+- (void)sendInvitationMetric:(NSString *)canal withTotal:(NSInteger)total {
+    [self requestPath:@"/invitations/callback" method:@"GET" params:@{@"canal": canal, @"count":[NSNumber numberWithInteger:total]} success:nil failure:nil];
 }
 
 #pragma mark -
@@ -1022,7 +1154,7 @@
     [UICKeyChainStore setString:_access_token forKey:@"login-token"];
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
-    _facebook_token = result[@"items"][1][@"fb"][@"token"];
+    [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
     
@@ -1034,7 +1166,7 @@
     [UICKeyChainStore setString:_access_token forKey:@"login-token"];
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
-    _facebook_token = result[@"items"][1][@"fb"][@"token"];
+    [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
     [appDelegate goToAccountViewController];
@@ -1047,7 +1179,7 @@
     [UICKeyChainStore setString:_access_token forKey:@"login-token"];
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
-    _facebook_token = result[@"items"][1][@"fb"][@"token"];
+    [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
     
@@ -1083,124 +1215,92 @@
     return YES;
 }
 
-#pragma mark - Facebook
-
-- (void)getInfoFromFacebook {
-    [[FBSession activeSession] closeAndClearTokenInformation];
+- (void)loginWithToken:(NSString *)token {
     
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_birthday", @"user_friends"]
-                                       allowLoginUI:YES
-                                  completionHandler:
-     ^(FBSession *session, FBSessionState state, NSError *error) {
-         _facebook_token = [[[FBSession activeSession] accessTokenData] accessToken];
-         
-         [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices,birthday" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
-             [self hideLoadView];
-             if (!error) {
-                 NSString *birthday = @"";
-                 if (result[@"birthday"]) {
-                     birthday = [self formatBirthDateFromFacebook:result[@"birthday"]];
-                 }
-                 NSDictionary *user = @{
-                                        @"picId": [NSData new],
-                                        @"email": result[@"email"],
-                                        @"idFacebook": result[@"id"],
-                                        @"birthdate" : birthday,
-                                        @"fullName": result[@"name"],
-                                        @"avatarURL": [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=360&height=360", result[@"id"]],
-                                        @"fb": @{
-                                                @"email": result[@"email"],
-                                                @"id": result[@"id"],
-                                                @"name": result[@"name"],
-                                                @"lastName": result[@"last_name"],
-                                                @"firstName": result[@"first_name"],
-                                                @"token": _facebook_token
-                                                }
-                                        };
-                 
-                 [appDelegate showSignupAfterFacebookWithUser:user];
-             }
-         }];
-     }];
+    if (!token || [token isBlank]) {
+        return;
+    }
+    
+    [UICKeyChainStore setString:token forKey:@"login-token"];
+    _access_token = token;
+    
+    [self requestPath:@"/users/login" method:@"POST" params:nil success:^(id result) {
+        [self updateCurrentUserAfterConnect:result];
+    } failure: ^(NSError *error) {
+        if ([self connectionStatusFromError:error] && error.code != 426)
+            [self logout];
+        else if (error.code != 426) {
+            [self loadUserData];
+            if (!self.currentUser)
+                [self logout];
+            else {
+                [appDelegate didConnected];
+                [appDelegate goToAccountViewController];
+            }
+        }
+    }];
+    
 }
 
-- (void)getFacebookPhoto:(void (^)(id result))success {
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
-                                       allowLoginUI:YES
-                                  completionHandler:
-     ^(FBSession *session, FBSessionState state, NSError *error) {
-         [FBRequestConnection startWithGraphPath:@"/me?fields=id" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
-             if (!error) {
-                 if (success) {
-                     success(result);
-                 }
-             }
-         }];
-     }];
+#pragma mark - Facebook
+
+- (void)updateFbToken:(NSString *)token andUser:(NSString *)userId {
+    _facebook_token = token;
+    
+    if (_facebook_token && (![FBSDKAccessToken currentAccessToken] || ![[[FBSDKAccessToken currentAccessToken] tokenString] isEqualToString:_facebook_token])) {
+        [FBSDKAccessToken setCurrentAccessToken:[[FBSDKAccessToken alloc] initWithTokenString:_facebook_token permissions:@[@"public_profile",@"email",@"user_friends"] declinedPermissions:nil appID:@"152779318256915" userID:userId expirationDate:nil refreshDate:nil]];
+    }
 }
 
 - (void)connectFacebook {
-    [[FBSession activeSession] closeAndClearTokenInformation];
+    [FBSDKAccessToken setCurrentAccessToken:nil];
+    [FBSDKProfile setCurrentProfile:nil];
     
-    [FBSession openActiveSessionWithReadPermissions:@[@"public_profile",@"email",@"user_friends",@"publish_actions"]
-                                       allowLoginUI:YES
-                                  completionHandler:
-     ^(FBSession *session, FBSessionState state, NSError *error) {
-         [appDelegate facebookSessionStateChanged:session state:state error:error];
-     }];
+    [self.fbLoginManager logInWithReadPermissions:@[@"public_profile",@"email",@"user_friends"] fromViewController:[appDelegate myTopViewController] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        if (error) {
+            [[Flooz sharedInstance] hideLoadView];
+            [FBSDKAccessToken setCurrentAccessToken:nil];
+            [FBSDKProfile setCurrentProfile:nil];
+            [appDelegate displayMessage:nil content:[error description] style:FLAlertViewStyleError time:nil delay:nil];
+        } else if (result.isCancelled) {
+            [[Flooz sharedInstance] hideLoadView];
+            [FBSDKAccessToken setCurrentAccessToken:nil];
+            [FBSDKProfile setCurrentProfile:nil];
+        } else {
+            [[Flooz sharedInstance] didConnectFacebook];
+        }
+    }];
 }
 
 - (void)disconnectFacebook {
+    [FBSDKAccessToken setCurrentAccessToken:nil];
+    [FBSDKProfile setCurrentProfile:nil];
     _facebook_token = nil;
-    [self updateUser:@{ @"fb": @{} } success:nil failure:nil];
+    [self updateUser:@{ @"fb": @NO } success:nil failure:nil];
 }
 
 - (void)didConnectFacebook {
-    _facebook_token = [[[FBSession activeSession] accessTokenData] accessToken];
+    _facebook_token = [[FBSDKAccessToken currentAccessToken] tokenString];
     
     if (_currentUser) {
-        [FBRequestConnection startWithGraphPath:@"/me?fields=id,email,first_name,last_name,name,devices" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
-            [self hideLoadView];
-            
-            if (!error) {
-                NSDictionary * user = @{
-                                        @"fb": @{
-                                                @"email": result[@"email"],
-                                                @"id": result[@"id"],
-                                                @"name": result[@"name"],
-                                                @"token": (_facebook_token ? _facebook_token : @"")
-                                                }
-                                        };
-                
-                [self updateUser:user success:nil failure:nil];
-                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationFbConnect object:nil]];
-            }
-            else {
-                // An error occurred, we need to handle the error
-                // See: https://developers.facebook.com/docs/ios/errors
-            }
-        }];
+        NSMutableDictionary *fbData = [NSMutableDictionary new];
+        [fbData setObject:_facebook_token forKey:@"token"];
+        
+        NSDictionary * user = @{ @"fb": fbData };
+        
+        [self updateUser:user success:nil failure:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationFbConnect object:nil]];
     }
     else {
-        [self requestPath:@"/users/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
-            [self updateCurrentUserAfterConnect:result];
-        } failure: ^(NSError *error) {
-            
-        }];
+        [self showLoadView];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self requestPath:@"/users/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
+                [self updateCurrentUserAfterConnect:result];
+            } failure: ^(NSError *error) {
+                
+            }];
+        });
     }
-}
-
-- (void)facebokSearchFriends:(void (^)(id result))success {
-    [FBRequestConnection startWithGraphPath:@"/me/friends?fields=first_name,last_name,name,id,picture" completionHandler: ^(FBRequestConnection *connection, id result, NSError *error) {
-        [self hideLoadView];
-        
-        if (!error) {
-            success(result[@"data"]);
-        }
-        else {
-            //	        NSLog(@"facebokSearchFriends: %@", [error description]);
-        }
-    }];
 }
 
 - (void)checkDeviceToken {
@@ -1307,6 +1407,8 @@
 }
 
 - (void)handleTrigger3DSecureComplete:(NSDictionary *)data {
+    [self updateCurrentUser];
+
     Secure3DViewController *controller = [Secure3DViewController getInstance];
     [controller dismissViewControllerAnimated:YES completion:^{
         [Secure3DViewController clearInstance];
@@ -1314,6 +1416,8 @@
 }
 
 - (void)handleTrigger3DSecureFail:(NSDictionary *)data {
+    [self updateCurrentUser];
+    
     Secure3DViewController *controller = [Secure3DViewController getInstance];
     [controller dismissViewControllerAnimated:YES completion:^{
         [Secure3DViewController clearInstance];
@@ -1355,19 +1459,14 @@
 }
 
 - (void)handleTriggerHttpCall:(NSDictionary *)data {
-    [self requestPath:data[@"url"] method:data[@"method"] params:data[@"body"] success:nil failure:nil];
+    if (data[@"src"] && [data[@"src"] isEqualToString:@"ext"]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:data[@"url"]]];
+    } else if (!data[@"src"] || [data[@"src"] isEqualToString:@"int"])
+        [self requestPath:data[@"url"] method:data[@"method"] params:data[@"body"] success:nil failure:nil];
 }
 
 - (void)handleTriggerPopupShow:(NSDictionary *)data {
-    [[[FLPopupInformation alloc] initWithTitle:data[@"title"] message:[[NSAttributedString alloc] initWithString:data[@"content"]] button:data[@"button"] ok:^() {
-        if (data[@"triggers"]) {
-            NSArray *triggers = data[@"triggers"];
-            for (NSDictionary *triggerData in triggers) {
-                FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-                [self handleTrigger:trigger];
-            }
-        }
-    }] show];
+    [[[FLPopupTrigger alloc] initWithData:data] show];
 }
 
 - (void)handleTriggerContactsSend:(NSDictionary *)data {
@@ -1376,7 +1475,6 @@
             [[Flooz sharedInstance] createContactList:nil atSignup:YES];
         }
     }];
-    
 }
 
 - (void)handleTriggerHomeShow:(NSDictionary *)data {
@@ -1385,7 +1483,7 @@
 
 - (void)handleTriggerIbanShow:(NSDictionary *)data {
     SettingsBankViewController *controller = [SettingsBankViewController new];
-    [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:NULL];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 - (void)handleTriggerTutoShow:(NSDictionary *)data {
@@ -1394,6 +1492,60 @@
 
 - (void)handleTriggerViewClose:(NSDictionary *)data {
     [[appDelegate myTopViewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)handleTriggerUserShow:(NSDictionary *)data {
+    if ([data objectForKey:@"nick"]) {
+        FLUser *user = [[FLUser alloc] initWithJSON:data];
+        [appDelegate showUser:user inController:nil];
+    } else if ([data objectForKey:@"_id"]) {
+        [self showLoadView];
+        [self getUserProfile:[data objectForKey:@"_id"] success:^(FLUser *result) {
+            if (result) {
+                [appDelegate showUser:result inController:nil];
+            }
+        } failure:nil];
+    }
+}
+
+- (void)handleTriggerInvitationSMSShow:(NSDictionary *)data {
+    ShareSMSViewController *controller = [ShareSMSViewController new];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+}
+
+- (void)handleTriggerProfileEdit:(NSDictionary *)data {
+    EditProfileViewController *controller = [EditProfileViewController new];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+}
+
+- (void)handleTriggerValidateSMS:(NSDictionary *)data {
+    ValidateSMSViewController *controller = [ValidateSMSViewController new];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+}
+
+- (void)handleTriggerValidateSecureCode:(NSDictionary *)data {
+    ValidateSecureCodeViewController *controller = [ValidateSecureCodeViewController new];
+    [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+}
+
+- (void)handleTriggerAskNotification:(NSDictionary *)data {
+    [appDelegate askNotification];
+}
+
+- (void)handleTriggerFBConnect:(NSDictionary *)data {
+    [self connectFacebook];
+}
+
+- (void)handleTriggerPayClick:(NSDictionary *)data {
+    if ([[appDelegate myTopViewController] isKindOfClass:[FLNavigationController class]]) {
+        FLNavigationController *navController = (FLNavigationController *)[appDelegate myTopViewController];
+        
+        if ([[navController topViewController] isKindOfClass:[NewTransactionViewController class]]) {
+            NewTransactionViewController *controller = (NewTransactionViewController *)[navController topViewController];
+            
+            [controller valid];
+        }
+    }
 }
 
 - (void)handleTrigger:(FLTrigger*)trigger {
@@ -1425,6 +1577,14 @@
                                    [NSNumber numberWithInt:TriggerResetTuto]: NSStringFromSelector(@selector(handleTriggerTutoShow:)),
                                    [NSNumber numberWithInt:TriggerCloseView]: NSStringFromSelector(@selector(handleTriggerViewClose:)),
                                    [NSNumber numberWithInt:TriggerSendContacts]: NSStringFromSelector(@selector(handleTriggerContactsSend:)),
+                                   [NSNumber numberWithInt:TriggerUserShow]: NSStringFromSelector(@selector(handleTriggerUserShow:)),
+                                   [NSNumber numberWithInt:TriggerInvitationSMSShow]: NSStringFromSelector(@selector(handleTriggerInvitationSMSShow:)),
+                                   [NSNumber numberWithInt:TriggerEditProfile]: NSStringFromSelector(@selector(handleTriggerProfileEdit:)),
+                                   [NSNumber numberWithInt:TriggerSMSValidate]: NSStringFromSelector(@selector(handleTriggerValidateSMS:)),
+                                   [NSNumber numberWithInt:TriggerSecureCodeValidate]: NSStringFromSelector(@selector(handleTriggerValidateSecureCode:)),
+                                   [NSNumber numberWithInt:TriggerAskNotification]: NSStringFromSelector(@selector(handleTriggerAskNotification:)),
+                                   [NSNumber numberWithInt:TriggerFbConnect]: NSStringFromSelector(@selector(handleTriggerFBConnect:)),
+                                   [NSNumber numberWithInt:TriggerPayClick]: NSStringFromSelector(@selector(handleTriggerPayClick:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
@@ -1644,7 +1804,7 @@
     [self getContactList: ^(NSMutableArray *arrayContacts, NSMutableArray *arrayServer) {
         arrayContacts = [[self sortedArray:arrayContacts withKey:@"name" ascending:YES] mutableCopy];
         [self sendContactsAtSignup:signup WithParams:@{ @"phones": arrayServer } success: ^(id result) {
-            NSMutableArray *arrayFlooz = [self createFriendsArrayFromResult:result];
+            NSMutableArray *arrayFlooz = [self createFriendsArrayFromResult:result sorted:YES];
             NSMutableArray *arrayAB = [self removeFloozerFromArray:arrayFlooz inArray:arrayContacts];
             if (lists) {
                 lists(arrayAB, arrayFlooz);
@@ -1778,14 +1938,17 @@
     return arrayFriends;
 }
 
-- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result {
+- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result sorted:(BOOL)sorted {
     NSMutableArray *arrayFriends = [NSMutableArray new];
     NSArray *friends = result[@"items"];
     if (friends) {
         for (NSDictionary *json in friends) {
             FLUser *friend = [[FLUser alloc] initWithJSON:json];
-            NSUInteger newIndex = [self findIndexForUser:friend inArray:arrayFriends];
-            [arrayFriends insertObject:friend atIndex:newIndex];
+            if (sorted) {
+                NSUInteger newIndex = [self findIndexForUser:friend inArray:arrayFriends];
+                [arrayFriends insertObject:friend atIndex:newIndex];
+            } else
+                [arrayFriends addObject:friend];
         }
     }
     return arrayFriends;
@@ -1822,7 +1985,8 @@
     if (activities) {
         for (NSDictionary *json in activities) {
             FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
-            [arrayActivities addObject:activity];
+            if (activity)
+                [arrayActivities addObject:activity];
         }
     }
     return arrayActivities;
@@ -1834,7 +1998,8 @@
     if (activities) {
         for (NSDictionary *json in activities) {
             FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
-            [arrayActivities addObject:activity];
+            if (activity)
+                [arrayActivities addObject:activity];
         }
     }
     return arrayActivities;

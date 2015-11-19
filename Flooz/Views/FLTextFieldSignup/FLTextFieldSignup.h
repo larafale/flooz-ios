@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FLTextFieldIBAN : UITextField
-@end
-
 @interface FLTextFieldSignup : UIView <UITextFieldDelegate> {
 	__weak NSMutableDictionary *_dictionary;
 	NSString *_dictionaryKey;
@@ -47,6 +44,7 @@
 - (void)addForTextChangeTarget:(id)target action:(SEL)action;
 
 - (void)reloadTextField;
+- (void)setPlaceholder:(NSString *)placeholder forTextField:(NSInteger)textfieldID;
 
 - (BOOL)isFirstResponder;
 - (BOOL)resignFirstResponder;

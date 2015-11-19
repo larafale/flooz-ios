@@ -19,5 +19,9 @@
 
 + (FLCountry *) defaultCountry;
 + (FLCountry *) countryFromCode:(NSString *)code;
+<<<<<<< HEAD
+=======
++ (FLCountry *) countryFromIndicatif:(NSString *)indicatif;
+>>>>>>> 6365ab2
 
 @end

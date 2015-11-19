@@ -31,6 +31,8 @@ static NSString *kKeyTutoTimelinePrivate = @"kKeyTutoTimelinePrivate";
 static NSString *kKeyAccessContacts = @"kKeyAccessContacts";
 static NSString *kNotificationCancelTimer = @"kNotificationCancelTimer";
 static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBarClick";
+static NSString *kNotificationEnterBackground = @"kNotificationEnterBackground";
+static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, MFMailComposeViewControllerDelegate, UIActionSheetDelegate, JTSImageViewControllerInteractionsDelegate> {
 	NSDate *lastErrorDate;
@@ -75,6 +77,7 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)resetTuto:(Boolean)value;
 - (void)clearBranchParams;
 - (void)clearPendingData;
+- (void)showNewTransactionController:(FLUser *)user transactionType:(NSUInteger)transactionType;
 
 - (void)displayError:(NSError *)error;
 - (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;
@@ -82,17 +85,15 @@ static NSString *kNotificationTouchStatusBarClick = @"kNotificationTouchStatusBa
 - (void)displayAlert:(NSString *)title content:(NSString *)content;
 - (void)noAccessToSettings;
 
-- (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error;
+//- (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error;
 
 - (BOOL)showPreviewImage:(NSString *)imageNamed;
 - (void)showPreviewImages:(NSArray *)imagesNamed;
 - (void)showReportMenu:(FLReport *)report;
-- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView;
-- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend;
-- (void)showMenuForUser:(FLUser *)user imageView:(UIView *)imageView canRemoveFriend:(BOOL)canRemoveFriend inWindow:(UIWindow *)window;
 - (void)showAvatarView:(UIView *)view withUrl:(NSURL *)urlImage;
 - (void)showPresetNewTransactionController:(FLPreset *)preset;
 - (void)popToMainView;
+- (void)showUser:(FLUser *)user inController:(UIViewController*)vc;
 
 - (void)lockForUpdate:(NSString *)updateUrl;
 

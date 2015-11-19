@@ -114,20 +114,8 @@
             else if (contact.lastname && [[contact.lastname lowercaseString] rangeOfString:[_selectionText lowercaseString]].location == 0) {
                 [contactsFiltered addObject:contact];
             }
-            else if (contact.phone && [[contact.phone lowercaseString] rangeOfString:[_selectionText lowercaseString]].location != NSNotFound) {
+            else if ([FLHelper phoneMatch:contact.phone withPhone:_selectionText]) {
                 [contactsFiltered addObject:contact];
-            }
-            else if (contact.phone) {
-                NSString *clearPhone = contact.phone;
-                if ([clearPhone hasPrefix:@"+33"]) {
-                    clearPhone = [clearPhone stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@"0"];
-                }
-                if ([[clearPhone lowercaseString] rangeOfString:[_selectionText lowercaseString]].location != NSNotFound) {
-                    [contactsFiltered addObject:contact];
-                }
-                else if ([[contact.phone lowercaseString] rangeOfString:[_selectionText lowercaseString]].location != NSNotFound) {
-                    [contactsFiltered addObject:contact];
-                }
             }
         }
         
@@ -293,7 +281,9 @@
     } else {
         if (![_filteredContacts count])
             return [self createEmptyCell:tableView];
-        currentUser = _filteredContacts[indexPath.row];
+        
+        if (_filteredContacts.count >= indexPath.row + 1)
+            currentUser = _filteredContacts[indexPath.row];
     }
     
     static NSString *cellIdentifierSelection = @"FriendPickerFriendCell";
@@ -303,8 +293,10 @@
         cell = [[FriendPickerFriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
     }
     
-    [cell setUser:currentUser];
-    [cell setSelectedCheckView:NO];
+    if (currentUser) {
+        [cell setUser:currentUser];
+        [cell setSelectedCheckView:NO];
+    }
     
     return cell;
 }
@@ -329,10 +321,12 @@
             if (indexPath.section == 0 && [_friendsRecent count]) {
                 currentUser = _friendsRecent[indexPath.row];
             } else if (indexPath.section == 0) {
-                if (![_contactsFromAdressBook count] && ![_friends count])
+                if (![_friends count])
                     return;
                 currentUser = _friends[indexPath.row];
             } else {
+                if (![_contactsFromAdressBook count])
+                    return;
                 currentUser = _contactsFromAdressBook[indexPath.row];
             }
         } else {

@@ -221,4 +221,31 @@
     [_textView setWidth:width - 10];
 }
 
+- (void)setText:(NSString *)text {
+    self.textView.text = text;
+    
+    if ([self.textView.text isBlank]) {
+        _placeholder.hidden = NO;
+        [_dictionary setValue:nil forKey:_dictionaryKey];
+    }
+    else {
+        _placeholder.hidden = YES;
+        [_dictionary setValue:self.textView.text forKey:_dictionaryKey];
+    }
+    
+    CGRect line = [self.textView caretRectForPosition:
+                   self.textView.selectedTextRange.start];
+    CGFloat overflow = line.origin.y + line.size.height - (self.textView.contentOffset.y + self.textView.bounds.size.height - self.textView.contentInset.bottom - self.textView.contentInset.top);
+    if (overflow > 0) {
+        // We are at the bottom of the visible text and introduced a line feed, scroll down (iOS 7 does not do it)
+        // Scroll caret to visible area
+        CGPoint offset = self.textView.contentOffset;
+        offset.y += overflow + 7; // leave 7 pixels margin
+        // Cannot animate with setContentOffset:animated: or caret will not appear
+        [UIView animateWithDuration:.2 animations: ^{
+            [self.textView setContentOffset:offset];
+        }];
+    }
+}
+
 @end

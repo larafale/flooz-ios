@@ -11,7 +11,7 @@
 
 #import "WebViewController.h"
 
-@interface Secure3DViewController : WebViewController
+@interface Secure3DViewController : WebViewController<UIWebViewDelegate>
 
 + (Secure3DViewController *)createInstance;
 + (Secure3DViewController *)getInstance;

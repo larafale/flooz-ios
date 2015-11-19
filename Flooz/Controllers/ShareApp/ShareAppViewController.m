@@ -15,6 +15,7 @@
 #import "ClipboardPopoverViewController.h"
 #import "FLClearActionTextView.h"
 #import "FLSharePopup.h"
+#import "ShareSMSViewController.h"
 
 @interface ShareAppViewController () {
     UIView *_footerView;
@@ -331,39 +332,12 @@
 
 - (void)sendWithFacebook {
     if ([_fbData[@"method"] isEqualToString:@"widget"]) {
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       _fbData[@"name"] , @"name",
-                                       _fbData[@"caption"], @"caption",
-                                       _fbData[@"description"], @"description",
-                                       _fbData[@"link"], @"link",
-                                       nil];
+        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+        content.contentURL = [NSURL URLWithString:_fbData[@"link"]];
+        content.contentTitle = _fbData[@"name"];
+        content.contentDescription = _fbData[@"description"];
         
-        FBSession *session = nil;
-        
-        if ([[Flooz sharedInstance] facebook_token]) {
-            session = [FBSession activeSession];
-        }
-        
-        [FBWebDialogs presentFeedDialogModallyWithSession:session
-                                               parameters:params
-                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                                                      if (error) {
-                                                          NSLog(@"Error publishing story: %@", error.description);
-                                                      } else {
-                                                          if (result == FBWebDialogResultDialogNotCompleted) {
-                                                              NSLog(@"User cancelled.");
-                                                          } else {
-                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
-                                                              
-                                                              if (![urlParams valueForKey:@"post_id"]) {
-                                                                  NSLog(@"User cancelled.");
-                                                                  
-                                                              } else {
-                                                                  [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
-                                                              }
-                                                          }
-                                                      }
-                                                  }];
+        [FBSDKShareDialog showFromViewController:self withContent:content delegate:self];
     }
     else {
         if ([[Flooz sharedInstance] facebook_token]) {
@@ -373,6 +347,26 @@
             [[Flooz sharedInstance] connectFacebook];
         }
     }
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results {
+    NSURL *fbURL = [NSURL URLWithString:@"fb://root"];
+    
+    if (![[UIApplication sharedApplication] canOpenURL:fbURL]) {
+        if (results[@"postId"] != nil) {
+            [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
+        }
+    } else {
+        [[Flooz sharedInstance] sendInvitationMetric:@"facebook"];
+    }
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error {
+    
+}
+
+- (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
+    
 }
 
 - (void)showFbConfirmBox {
@@ -434,18 +428,24 @@
 }
 
 - (void)sendWithSMS {
-    if ([MFMessageComposeViewController canSendText]) {
-        MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
-        message.messageComposeDelegate = self;
-        
-        [message setBody:_smsText];
-        
-        [[Flooz sharedInstance] showLoadView];
-        message.modalPresentationStyle = UIModalPresentationPageSheet;
-        [self presentViewController:message animated:YES completion:^{
-            [[Flooz sharedInstance] hideLoadView];
-        }];
-    }
+    [[Flooz sharedInstance] grantedAccessToContacts:^(BOOL granted) {
+        if (granted) {
+            [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:[ShareSMSViewController new]] animated:YES completion:nil];
+        } else {
+            if ([MFMessageComposeViewController canSendText]) {
+                MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
+                message.messageComposeDelegate = self;
+                
+                [message setBody:_smsText];
+                
+                [[Flooz sharedInstance] showLoadView];
+                message.modalPresentationStyle = UIModalPresentationPageSheet;
+                [self presentViewController:message animated:YES completion:^{
+                    [[Flooz sharedInstance] hideLoadView];
+                }];
+            }
+        }
+    }];
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {

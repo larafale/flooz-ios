@@ -64,12 +64,14 @@
 	[super setSelected:selected];
 	if (!selected) {
 		[self setBackgroundColor:[UIColor customBackgroundSocial]];
-		[_image setImage:[UIImage imageNamed:_imageNamedNormal]];
+		[_image setImage:[[UIImage imageNamed:_imageNamedNormal] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        [_image setTintColor:[UIColor customSocialColor]];
 		[_titleButton setTextColor:[UIColor customSocialColor]];
 	}
 	else {
-		[self setBackgroundColor:[UIColor customBackgroundHeader]];
-		[_image setImage:[UIImage imageNamed:_imageNamedSelected]];
+		[self setBackgroundColor:[UIColor customBlue]];
+		[_image setImage:[[UIImage imageNamed:_imageNamedSelected] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        [_image setTintColor:[UIColor whiteColor]];
 		[_titleButton setTextColor:[UIColor whiteColor]];
 	}
 }

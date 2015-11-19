@@ -41,7 +41,11 @@
     UIView *signupFbPicView;
     
     FLPhoneField *signupPhoneField;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 6365ab2
     NSMutableArray *signupFormFields;
     
     UILabel *secretQuestion;
@@ -54,6 +58,8 @@
     BOOL homeVisible;
     BOOL facebookVisible;
     BOOL facebookPicVisible;
+    
+    BOOL sponsorVisible;
     
     NSTimer *carouselTimer;
 }
@@ -73,6 +79,7 @@
         homeVisible = YES;
         facebookVisible = YES;
         facebookPicVisible = NO;
+        sponsorVisible = NO;
     }
     return self;
 }
@@ -84,6 +91,23 @@
         [carouselControl setNumberOfPages:[Flooz sharedInstance].currentTexts.slider.slides.count];
         [carouselView reloadData];
         carouselTimer = [NSTimer scheduledTimerWithTimeInterval:CAROUSEL_AUTOSLIDE_TIMER target:self selector:@selector(changeCurrentCarouselPage) userInfo:nil repeats:NO];
+        
+        if ([Flooz sharedInstance].currentTexts.signupSponsor && ![[Flooz sharedInstance].currentTexts.signupSponsor isBlank]) {
+            sponsorVisible = YES;
+            
+            [signupView removeFromSuperview];
+            [self createSignupView];
+
+            for (FLTextFieldSignup *textfield in signupFormFields) {
+                if ([textfield.dictionaryKey isEqualToString:@"sponsor"]) {
+                    [textfield setPlaceholder:[Flooz sharedInstance].currentTexts.signupSponsor forTextField:1];
+                    break;
+                }
+            }
+            [signupPhoneField reloadTextField];
+        } else {
+            sponsorVisible = NO;
+        }
     } failure:nil];
     
     [self createBackgroundView];
@@ -187,6 +211,9 @@
     [carouselControl setNumberOfPages:0];
     [carouselControl setCurrentPage:0];
     
+    if ([Flooz sharedInstance].currentTexts)
+        [carouselControl setNumberOfPages:[Flooz sharedInstance].currentTexts.slider.slides.count];
+
     FLActionButton *loginHomeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(actionHorizontalMargin, CGRectGetMaxY(carouselControl.frame) + actionVerticalMargin, CGRectGetWidth(homeView.frame) / 2 - 1.5 * actionHorizontalMargin, actionButtonHeight) title:[NSLocalizedString(@"GLOBAL_LOGIN", nil) uppercaseString]];
     [loginHomeButton.titleLabel setFont:[UIFont customContentRegular:15]];
     [loginHomeButton addTarget:self action:@selector(didLoginHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -315,12 +342,15 @@
     [signupView setBlurRadius:10];
     [signupView setTintColor:[UIColor clearColor]];
     [signupView setUnderlyingView:backgroundView];
-    [signupView setHidden:YES];
+    
+    [signupView setHidden:!signupVisible];
     
     signupScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetHeight(signupView.frame))];
+
     if (!IS_IPHONE_4)
         [signupScrollView setScrollEnabled:NO];
+
     [signupScrollView setBounces:NO];
     
     UIButton *signupBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 40, 40)];
@@ -413,6 +443,7 @@
     FLTextFieldSignup *sponsorTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_SPONSOR", @"") for:signupData key:@"sponsor" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(passwordTextfield.frame) + signupFormVerticalMargin)];
     [sponsorTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
     [sponsorTextfield addForTextChangeTarget:self action:@selector(signupSponsorChange)];
+    [sponsorTextfield setHidden:!sponsorVisible];
     
     CGRectSetX(sponsorTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(sponsorTextfield.frame)) / 2);
     
@@ -424,8 +455,19 @@
     [clearSponsorField setHidden:YES];
     
     [sponsorTextfield addSubview:clearSponsorField];
+
+    CGFloat offsetY;
     
+<<<<<<< HEAD
     FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, CGRectGetMaxY(sponsorTextfield.frame) + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SIGNUP", nil)];
+=======
+    if (sponsorVisible)
+        offsetY = CGRectGetMaxY(sponsorTextfield.frame);
+    else
+        offsetY = CGRectGetMaxY(passwordTextfield.frame);
+    
+    FLActionButton *signupButton = [[FLActionButton alloc] initWithFrame:CGRectMake(signupHorizontalMargin, offsetY + signupFormVerticalMargin, CGRectGetWidth(loginView.frame) - signupHorizontalMargin * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SIGNUP", nil)];
+>>>>>>> 6365ab2
     [signupButton setTag:89];
     [signupButton addTarget:self action:@selector(didSignupButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
@@ -668,12 +710,10 @@
 }
 
 - (void)didFacebookLoginButtonClick {
-    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] connectFacebook];
 }
 
 - (void)didFacebookSignupButtonClick {
-    [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] connectFacebook];
 }
 
@@ -687,7 +727,7 @@
     if (!loginData[@"password"])
         [loginData setObject:@"" forKey:@"password"];
     
-    [[Flooz sharedInstance] loginWithPseudoAndPassword:@{@"login": loginData[@"phone"], @"password": loginData[@"password"]} success: ^(id result) {
+    [[Flooz sharedInstance] loginWithPseudoAndPassword:@{@"login": [FLHelper fullPhone:loginData[@"phone"] withCountry:loginData[@"country"]], @"password": loginData[@"password"]} success: ^(id result) {
         [appDelegate resetTuto:YES];
         [appDelegate goToAccountViewController];
     }];
@@ -917,10 +957,17 @@
                         break;
                     }
                 }
+<<<<<<< HEAD
                 
                 if (!activeField && [signupPhoneField isFirstResponder])
                     activeField = signupPhoneField;
                 
+=======
+
+                if (!activeField && [signupPhoneField isFirstResponder])
+                    activeField = signupPhoneField;
+
+>>>>>>> 6365ab2
                 CGRect activeRect = activeField.frame;
                 activeRect.origin.x += signupFormView.frame.origin.x;
                 activeRect.origin.y += signupFormView.frame.origin.y;
@@ -948,7 +995,11 @@
                 
                 if (!activeField && [signupPhoneField isFirstResponder])
                     activeField = signupPhoneField;
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> 6365ab2
                 CGRect activeRect = activeField.frame;
                 activeRect.origin.x += signupFormView.frame.origin.x;
                 activeRect.origin.y += signupFormView.frame.origin.y;
@@ -967,7 +1018,11 @@
             
             if (!activeField && [signupPhoneField isFirstResponder])
                 activeField = signupPhoneField;
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> 6365ab2
             CGRect activeRect = activeField.frame;
             activeRect.origin.x += signupFormView.frame.origin.x;
             activeRect.origin.y += signupFormView.frame.origin.y;
@@ -1007,6 +1062,7 @@
                 CGRectSetY(signupFormView.frame, CGRectGetMaxY(signupFbView.frame));
             } completion:^(BOOL finished) {
                 [signupFbView setHidden:NO];
+                [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetMaxY(signupFormView.frame) + 10)];
                 [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
                     [signupFbView setAlpha:1.0f];
                 } completion:nil];
@@ -1016,6 +1072,7 @@
                 CGRectSetY(signupFormView.frame, CGRectGetMaxY(signupFbPicView.frame));
             } completion:^(BOOL finished) {
                 [signupFbPicView setHidden:NO];
+                [signupScrollView setContentSize:CGSizeMake(CGRectGetWidth(signupView.frame), CGRectGetMaxY(signupFormView.frame) + 10)];
                 [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
                     [signupFbPicView setAlpha:1.0f];
                 } completion:nil];

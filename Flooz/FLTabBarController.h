@@ -2,8 +2,8 @@
 //  FLTabBarController.h
 //  Flooz
 //
-//  Created by Epitech on 7/9/15.
-//  Copyright (c) 2015 Jonathan Tribouharet. All rights reserved.
+//  Created by Flooz on 7/9/15.
+//  Copyright (c) 2015 Flooz. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

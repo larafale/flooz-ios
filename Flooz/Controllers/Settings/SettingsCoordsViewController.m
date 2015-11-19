@@ -9,6 +9,7 @@
 #import "SettingsCoordsViewController.h"
 
 #import "FLKeyboardView.h"
+#import "FLPhoneField.h"
 
 #define PADDING_SIDE 20.0f
 
@@ -20,7 +21,7 @@
 
 	FLUserView *userView;
     FLTextFieldSignup *_name;
-    FLTextFieldSignup *_phone;
+    FLPhoneField *_phone;
 	FLTextFieldSignup *_email;
 	FLTextFieldSignup *_address;
 	FLTextFieldSignup *_postalCode;
@@ -60,15 +61,11 @@
     }
 
 	{
-		_phone = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_PHONE" for:_userDic key:@"phone" position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(_name.frame))];
+        _phone = [[FLPhoneField alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PHONE", @"") for:_userDic position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(_name.frame))];
 		[_phone addForNextClickTarget:self action:@selector(focusOnNextInfo)];
         [_phone addForTextChangeTarget:self action:@selector(canValidate:)];
 		[_contentView addSubview:_phone];
-		[fieldsView addObject:_phone];
-        
-        inputView = [FLKeyboardView new];
-        inputView.textField = _phone.textfield;
-        _phone.textfield.inputView = inputView;
+		[fieldsView addObject:_phone.textfield];
 	}
 
 	{
@@ -85,9 +82,10 @@
     
     if ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:@"phone"] intValue] != 3) {
         sendValidationSMS.hidden = YES;
+        [_phone.textfield setEnabled:YES];
     }
     else {
-        [_phone setEnable:NO];
+        [_phone.textfield setEnabled:NO];
     }
     
 	{
@@ -174,8 +172,12 @@
     }
 
 	if ([currentUser phone]) {
-		[_userDic setObject:[currentUser phone] forKey:@"phone"];
+        NSString *phone = [[currentUser phone] stringByReplacingOccurrencesOfString:[currentUser country].phoneCode withString:@"0"];
+        
+		[_userDic setObject:phone forKey:@"phone"];
+        [_userDic setObject:[currentUser country].code forKey:@"country"];
 	}
+    
 	if ([currentUser email]) {
 		[_userDic setObject:[currentUser email] forKey:@"email"];
 	}

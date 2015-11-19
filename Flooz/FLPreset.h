@@ -29,6 +29,7 @@
 @property (nonatomic, retain) NSArray *steps;
 @property (nonatomic, retain) NSDictionary *popup;
 @property (nonatomic, retain) NSArray *triggers;
+@property (nonatomic, retain) NSDictionary *geo;
 
 - (id)initWithJson:(NSDictionary *)json;
 

@@ -16,10 +16,6 @@
 @property (nonatomic) BOOL blockAmount;
 @property (nonatomic) UIImage *shadowImage;
 
-
-- (void)setAmount:(NSNumber *)amount;
-- (void)setAmountHidden:(BOOL)hidden;
-
 - (void)showShadow;
 - (void)hideShadow;
 

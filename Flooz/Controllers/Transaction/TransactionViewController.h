@@ -13,7 +13,7 @@
 #import "FLNewTransactionAmountDelegate.h"
 #import "FLViewDelegate.h"
 
-@interface TransactionViewController : GlobalViewController <TransactionActionsViewDelegate, FLNewTransactionAmountDelegate, UIViewControllerTransitioningDelegate, FLViewDelegate>
+@interface TransactionViewController : BaseViewController <TransactionActionsViewDelegate, FLNewTransactionAmountDelegate, UIViewControllerTransitioningDelegate, FLViewDelegate>
 
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath withSize:(CGSize)size;
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;

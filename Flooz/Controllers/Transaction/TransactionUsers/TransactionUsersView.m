@@ -72,7 +72,7 @@
 		fullname.numberOfLines = 0;
 		fullname.textAlignment = NSTextAlignmentCenter;
 		fullname.textColor = [UIColor whiteColor];
-		fullname.font = [UIFont customTitleExtraLight:12];
+		fullname.font = [UIFont customTitleExtraLight:13];
 
         [view addSubview:fullname];
 	}
@@ -80,13 +80,21 @@
 	{
 		UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0, 118, CGRectGetWidth(view.frame), 20)];
 
-		username.font = [UIFont customContentBold:11];
+		username.font = [UIFont customContentBold:12];
 		username.textAlignment = NSTextAlignmentCenter;
 		username.textColor = [UIColor customBlue];
 
 		[view addSubview:username];
 	}
 
+    {
+        UIImageView *star = [[UIImageView alloc] initWithFrame:CGRectMake(0, 95, 12, 12)];
+        [star setImage:[UIImage imageNamed:@"certified"]];
+        [star setContentMode:UIViewContentModeScaleAspectFit];
+
+        [view addSubview:star];
+    }
+    
 	return view;
 }
 
@@ -117,12 +125,24 @@
     FLUserView *avatar = [[view subviews] objectAtIndex:0];
     UILabel *fullname = [[view subviews] objectAtIndex:1];
     UILabel *username = [[view subviews] objectAtIndex:2];
+    UIImageView *star = [[view subviews] objectAtIndex:3];
     
     [avatar setImageFromUser:user];
     
-    CGRectSetY(fullname.frame, CGRectGetMaxY(avatar.frame) + 8.0f);
     fullname.text = [[user fullname] uppercaseString];
     [fullname setHeightToFit];
+    [fullname setWidthToFit];
+
+    CGRectSetY(fullname.frame, CGRectGetMaxY(avatar.frame) + 8.0f);
+    CGRectSetX(fullname.frame, CGRectGetWidth(view.frame) / 2 - CGRectGetWidth(fullname.frame) / 2);
+    
+    if (user.isCertified) {
+        [star setHidden:NO];
+        star.center = fullname.center;
+        CGRectSetX(star.frame, CGRectGetMaxX(fullname.frame) + 5);
+    } else {
+        [star setHidden:YES];
+    }
     
     if ([user username]) {
         username.text = [@"@" stringByAppendingString :[user username]];
@@ -130,28 +150,20 @@
     else {
         username.text = @"";
     }
-    CGRectSetY(username.frame, CGRectGetMaxY(fullname.frame));
+    CGRectSetY(username.frame, CGRectGetMaxY(fullname.frame) + 2);
     [username setHeightToFit];
 }
 
 #pragma mark -
 
 - (void)didUserLeftViewTouch {
-	if ([[[_transaction from] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
-		return;
-	}
-    
     [[_transaction from] setSelectedCanal:TimelineCanal];
-	[appDelegate showMenuForUser:[_transaction from] imageView:[[leftUserView subviews] firstObject]];
+    [appDelegate showUser:[_transaction from] inController:self.parentViewController];
 }
 
 - (void)didUserRightViewTouch {
-	if ([[[_transaction to] userId] isEqualToString:[[[Flooz sharedInstance] currentUser] userId]]) {
-		return;
-	}
-
     [[_transaction to] setSelectedCanal:TimelineCanal];
-	[appDelegate showMenuForUser:[_transaction to] imageView:[[rightUserView subviews] firstObject]];
+    [appDelegate showUser:[_transaction to] inController:self.parentViewController];
 }
 
 @end

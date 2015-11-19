@@ -8,6 +8,9 @@
 
 #import "BaseViewController.h"
 
+#import "UserViewController.h"
+#import "TransactionViewController.h"
+
 @interface BaseViewController ()
 
 @end
@@ -19,7 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-
+        
     }
     return self;
 }
@@ -34,8 +37,16 @@
     if (![UIApplication sharedApplication].isStatusBarHidden)
         mainBodyHeight -= PPStatusBarHeight();
     
-    if (self.navigationController && self.navigationController.navigationBarHidden == NO)
-        mainBodyHeight -= NAVBAR_HEIGHT;
+    if (self.navigationController) {
+        if (self.navigationController.viewControllers.count > 1) {
+            UIViewController *currentVisibleController = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 2];
+            if (self.navigationController.navigationBarHidden == NO)
+                mainBodyHeight -= NAVBAR_HEIGHT;
+            else if (currentVisibleController && [currentVisibleController isKindOfClass:[UserViewController class]] && ![self isKindOfClass:[UserViewController class]])
+                mainBodyHeight -= NAVBAR_HEIGHT;
+        } else if (self.navigationController.navigationBarHidden == NO)
+            mainBodyHeight -= NAVBAR_HEIGHT;
+    }
     
     if (self.tabBarController)
         mainBodyHeight -= PPTabBarHeight();

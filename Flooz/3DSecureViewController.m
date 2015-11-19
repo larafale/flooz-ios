@@ -42,11 +42,35 @@ static Secure3DViewController *instance = nil;
     
     [_webView setScalesPageToFit:YES];
     [_webView setBackgroundColor:[UIColor whiteColor]];
+    [_webView setDelegate:self];
     [_webView loadHTMLString:self.htmlContent baseURL:nil];
 }
 
 - (void)dismissViewController {
     [[Flooz sharedInstance] abort3DSecure];
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    [super webViewDidStartLoad:webView];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [super webViewDidFinishLoad:webView];
+    
+    CGSize contentSize = webView.scrollView.contentSize;
+    CGSize viewSize = webView.bounds.size;
+    
+    float rw = viewSize.width / contentSize.width;
+    
+    webView.scrollView.zoomScale = rw;
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [super webView:webView didFailLoadWithError:error];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    return [super webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
 }
 
 @end

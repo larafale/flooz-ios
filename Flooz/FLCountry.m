@@ -42,4 +42,20 @@
     return nil;
 }
 
+<<<<<<< HEAD
+=======
++ (FLCountry *) countryFromIndicatif:(NSString *)indicatif {
+    if ([Flooz sharedInstance].currentTexts) {
+        for (FLCountry *country in [Flooz sharedInstance].currentTexts.avalaibleCountries) {
+            if ([indicatif isEqualToString:country.phoneCode])
+                return country;
+        }
+    } else if ([indicatif isEqualToString:[self.class defaultCountry].phoneCode]) {
+        return [self.class defaultCountry];
+    }
+    
+    return nil;
+}
+
+>>>>>>> 6365ab2
 @end

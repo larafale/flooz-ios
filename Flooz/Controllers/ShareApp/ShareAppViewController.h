@@ -15,7 +15,8 @@
 #import "WYPopoverController.h"
 
 #import "FriendPickerSearchBarDelegate.h"
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
-@interface ShareAppViewController : BaseViewController <UIAlertViewDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, WYPopoverControllerDelegate>
+@interface ShareAppViewController : BaseViewController <UIAlertViewDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, WYPopoverControllerDelegate, FBSDKSharingDelegate>
 
 @end

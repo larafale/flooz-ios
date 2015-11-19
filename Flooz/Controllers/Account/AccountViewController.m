@@ -22,6 +22,7 @@
 #import "WebViewController.h"
 #import "FriendsViewController.h"
 #import "DiscountCodeViewController.h"
+#import "FriendRequestViewController.h"
 
 #import "AccountCell.h"
 
@@ -34,6 +35,10 @@
     NSArray *_menuDic;
     FLBadgeView *_badge;
     UIImageView *navBarHairlineImageView;
+    
+    UIView *titleView;
+    UILabel *fullnameLabel;
+    UILabel *usernameLabel;
 }
 
 @end
@@ -76,38 +81,40 @@
     }];
     
     [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
-    [self registerNotification:@selector(editAvatarWith:) name:@"editAvatar" object:nil];
 }
 
 - (void)prepareTitleViews {
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(-5.0f, 0.0f, PPScreenWidth(), NAVBAR_HEIGHT)];
+    titleView = [[UIView alloc] initWithFrame:CGRectMake(-5.0f, 0.0f, PPScreenWidth(), NAVBAR_HEIGHT)];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), 22)];
+    fullnameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), 22)];
     
-    label.font = [UIFont customTitleNav];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor customBlue];
-    label.text = [Flooz sharedInstance].currentUser.fullname;
+    fullnameLabel.font = [UIFont customTitleNav];
+    fullnameLabel.textAlignment = NSTextAlignmentCenter;
+    fullnameLabel.textColor = [UIColor customBlue];
+    fullnameLabel.text = [Flooz sharedInstance].currentUser.fullname;
     
-    [titleView addSubview:label];
+    [titleView addSubview:fullnameLabel];
     
-    UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(label.frame) , PPScreenWidth(), 20)];
+    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(fullnameLabel.frame) , PPScreenWidth(), 20)];
     
-    username.font = [UIFont customTitleExtraLight:15];
-    username.textAlignment = NSTextAlignmentCenter;
-    username.textColor = [UIColor whiteColor];
-    username.text = [NSString stringWithFormat:@"@%@", [Flooz sharedInstance].currentUser.username];
+    usernameLabel.font = [UIFont customTitleExtraLight:15];
+    usernameLabel.textAlignment = NSTextAlignmentCenter;
+    usernameLabel.textColor = [UIColor whiteColor];
+    usernameLabel.text = [NSString stringWithFormat:@"@%@", [Flooz sharedInstance].currentUser.username];
     
-    CGFloat fullnameSize = [label.text widthOfString:label.font];
-    CGFloat usernameSize = [username.text widthOfString:username.font];
+    CGFloat fullnameSize = [fullnameLabel.text widthOfString:fullnameLabel.font];
+    CGFloat usernameSize = [usernameLabel.text widthOfString:usernameLabel.font];
     
     CGFloat viewSize = MAX(fullnameSize, usernameSize);
     
     CGRectSetWidth(titleView.frame, viewSize);
-    CGRectSetWidth(label.frame, viewSize);
-    CGRectSetWidth(username.frame, viewSize);
+    CGRectSetWidth(fullnameLabel.frame, viewSize);
+    CGRectSetWidth(usernameLabel.frame, viewSize);
     
-    [titleView addSubview:username];
+    [titleView addSubview:usernameLabel];
+    
+    [titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMenuAvatar)]];
+    
     self.navigationItem.titleView = titleView;
 }
 
@@ -118,6 +125,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{
+        [self reloadData];
+    }];
     
     if (_tableView.contentOffset.y < userView.frame.size.height)
         [(FLNavigationController*)self.navigationController hideShadow];
@@ -133,9 +144,35 @@
     
     FLUser *currentUser = [Flooz sharedInstance].currentUser;
     
+    if (![fullnameLabel.text isEqualToString:currentUser.fullname]) {
+        [titleView removeFromSuperview];
+        [fullnameLabel removeFromSuperview];
+        [usernameLabel removeFromSuperview];
+        
+        titleView = [[UIView alloc] initWithFrame:CGRectMake(-5.0f, 0.0f, PPScreenWidth(), NAVBAR_HEIGHT)];
+        [titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMenuAvatar)]];
+        
+        [titleView addSubview:fullnameLabel];
+        [titleView addSubview:usernameLabel];
+        
+        fullnameLabel.text = currentUser.fullname;
+        usernameLabel.text = [NSString stringWithFormat:@"@%@", currentUser.username];
+        
+        CGFloat fullnameSize = [fullnameLabel.text widthOfString:fullnameLabel.font];
+        CGFloat usernameSize = [usernameLabel.text widthOfString:usernameLabel.font];
+        
+        CGFloat viewSize = MAX(fullnameSize, usernameSize);
+        
+        CGRectSetWidth(titleView.frame, viewSize);
+        CGRectSetWidth(fullnameLabel.frame, viewSize);
+        CGRectSetWidth(usernameLabel.frame, viewSize);
+        
+        self.navigationItem.titleView = titleView;
+    }
+    
     NSArray *missingFields = currentUser.json[@"missingFields"];
     
-    if (!currentUser.creditCard)
+    if ([missingFields containsObject:@"card"])
         cardNotifs = 1;
     
     if ([missingFields containsObject:@"sepa"])
@@ -155,6 +192,7 @@
     
     friendsNotifs = [currentUser.metrics[@"pendingFriend"] intValue];
     
+<<<<<<< HEAD
     _menuDic = @[
                  @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
                    @"items":@[
@@ -185,6 +223,75 @@
                    }
                  ];
     
+=======
+    NSString *shareTitle = [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"];
+    
+    if (shareTitle == nil)
+        shareTitle = @"";
+    
+    if (friendsNotifs) {
+        _menuDic = @[
+                     @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"PROFILE", @""), @"action":@"profile"},
+                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                               @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
+                               @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
+                               ]
+                       },
+                     @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
+                               ]
+                       },
+                     @{@"title":NSLocalizedString(@"MENU_OTHER", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @""), @"action":@"terms", @"page":@"cgu"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @""), @"action":@"contact", @"page":@"contact"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @""), @"action":@"critics"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_LOGOUT", @""), @"action":@"logout"}
+                               ]
+                       }
+                     ];
+    } else {
+        _menuDic = @[
+                     @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"PROFILE", @""), @"action":@"profile"},
+                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
+                               @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
+                               ]
+                       },
+                     @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
+                               @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
+                               ]
+                       },
+                     @{@"title":NSLocalizedString(@"MENU_OTHER", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_RATE", @""), @"action":@"rate", @"page":@"rate"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_FAQ", @""), @"action":@"faq", @"page":@"faq"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_TERMS", @""), @"action":@"terms", @"page":@"cgu"},
+                               @{@"title":NSLocalizedString(@"INFORMATIONS_CONTACT", @""), @"action":@"contact", @"page":@"contact"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_IDEAS_CRITICS", @""), @"action":@"critics"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_LOGOUT", @""), @"action":@"logout"}
+                               ]
+                       }
+                     ];
+    }
+>>>>>>> 6365ab2
     
     [_tableView reloadData];
 }
@@ -326,6 +433,11 @@
             [popup show];
         } else if ([action isEqualToString:@"sponsor"]) {
             [[self navigationController] pushViewController:[DiscountCodeViewController new] animated:YES];
+        } else if ([action isEqualToString:@"profile"]) {
+            [Flooz sharedInstance].currentUser.isComplete = YES;
+            [appDelegate showUser:[Flooz sharedInstance].currentUser inController:self];
+        } else if ([action isEqualToString:@"friendsRequest"]) {
+            [[self navigationController] pushViewController:[FriendRequestViewController new] animated:YES];
         }
     }
 }
@@ -391,12 +503,15 @@
 #pragma mark - avatar
 
 - (void)showMenuAvatar {
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
-        [self createActionSheet];
-    }
-    else {
-        [self createAlertController];
-    }
+    if ([[Flooz sharedInstance].currentUser.avatarURL isBlank]) {
+        if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+            [self createActionSheet];
+        }
+        else {
+            [self createAlertController];
+        }
+    } else
+        [appDelegate showUser:[Flooz sharedInstance].currentUser inController:self];
 }
 
 - (void)createAlertController {
@@ -411,9 +526,9 @@
             [self presentLibrary];
         }]];
     }
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-        [self getPhotoFromFacebook];
-    }]];
+    //    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+    //        [self getPhotoFromFacebook];
+    //    }]];
     
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
     
@@ -430,7 +545,7 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
         [menus addObject:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)];
     }
-    [menus addObject:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)];
+    //    [menus addObject:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)];
     
     for (NSString *menu in menus) {
         [actionSheet addButtonWithTitle:menu];
@@ -450,9 +565,9 @@
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)]) {
         [self presentLibrary];
     }
-    else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)]) {
-        [self getPhotoFromFacebook];
-    }
+    //    else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)]) {
+    //        [self getPhotoFromFacebook];
+    //    }
 }
 
 - (void)editAvatarWith:(NSNotification *)notification {
@@ -506,14 +621,14 @@
     }];
 }
 
-- (void)getPhotoFromFacebook {
-    [[Flooz sharedInstance] getFacebookPhoto: ^(id result) {
-        if (result[@"id"]) {
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?&width=134&height=134", result[@"id"]]]];
-            [self sendData:imageData];
-        }
-    }];
-}
+//- (void)getPhotoFromFacebook {
+//    [[Flooz sharedInstance] getFacebookPhoto: ^(id result) {
+//        if (result[@"id"]) {
+//            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?&width=134&height=134", result[@"id"]]]];
+//            [self sendData:imageData];
+//        }
+//    }];
+//}
 
 - (UIImage *)resizeImage:(UIImage *)image {
     CGRect rect = CGRectMake(0.0, 0.0, 640.0, 640.0); // 240.0 rather then 120.0 for retina

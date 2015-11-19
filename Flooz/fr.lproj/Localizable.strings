@@ -33,6 +33,7 @@
 "GLOBAL_SAVE" = "Enregistrer";
 "GLOBAL_NEXT" = "Suivant";
 "GLOBAL_SHARE" = "Partager";
+"GLOBAL_INVITE" = "Inviter";
 
 /************************************/
 /*              FIELDS              */
@@ -113,6 +114,17 @@
 /************************************/
 /*            SETTINGS              */
 /************************************/
+
+"PROFILE" = "Mon profil";
+"EDIT_PROFILE" = "Éditer le profil";
+
+"EDIT_AVATAR" = "Photo";
+"EDIT_COVER" = "Bannière";
+"EDIT_BIO" = "Bio";
+"EDIT_LOCATION" = "Lieu";
+"EDIT_WEBSITE" = "Site web";
+"HINT_LOCATION" = "ex: Aix en Provence, France";
+"HINT_WEBSITE" = "ex: www.flooz.me";
 
 "SETTINGS_CARD" = "Carte bancaire";
 "SETTINGS_BANK" = "Compte bancaire";
@@ -213,6 +225,8 @@
 "NAV_FRIENDS" = "Mes amis";
 "NAV_NEW_FLOOZ_FRIENDS" = "Choisir un destinataire";
 "NAV_3DSECURE" = "3D Secure";
+"NAV_SHARESMS" = "Partager l'app";
+"NAV_SECURECODE" = "Code Secret";
 
 /************************************/
 /*         ALERTS / ERROR           */
@@ -288,17 +302,58 @@
 "CELL_SOCIAL_LIKE" = "J'aime";
 
 /************************************/
+/*             LOCATION             */
+/************************************/
+
+"SEARCH_LOCATION" = "Rechercher un lieu";
+
+"SELECTED_LOCATION" = "Lieu séléctionné";
+"AROUND_YOU" = "Autour de vous";
+"LOCATION_RESULTS" = "Résultats";
+
+"EMPTY_LOCATION" = "Aucun lieu trouvé";
+
+/************************************/
 /*             FRIENDS              */
 /************************************/
 
+"USER_ALREADY_FLOOZER" = "Déjà sur Flooz";
+
+"PRIVATE_USER" = "Cet utilisateur est privé";
+
+"EMPTY_TIMELINE" = "Aucun flooz visible";
+"EMPTY_FRIENDS" = "Aucun ami";
+"EMPTY_FOLLOWERS" = "Aucun abonné";
+"EMPTY_FOLLOWINGS" = "Aucun abonnement";
+
+"FOLLOWED" = "Abonné";
+"FOLLOWING" = "Abonnement";
+"FOLLOWINGS" = "Abonnements";
+"FOLLOW" = "Suivre";
+"FRIEND_ADD" = "Ajouter";
+"FOLLOWER" = "Abonné";
+"FOLLOWERS" = "Abonnés";
+"FRIENDS" = "Amis";
+"FRIEND" = "Ami";
+
+"UNFOLLOW" = "Se désabonner";
+"UNFRIEND" = "Supprimer des amis";
+"UNREQUEST" = "Annuler la demande d'ami";
+
 "FRIEND_PICKER_RESULT" = "Résultats";
+
+"FRIEND_REQUEST_TITLE" = "Demandes d'ami";
 
 "FRIEND_REQUEST_ACCEPT" = "Accepter";
 "FRIEND_REQUEST_REFUSE" = "Refuser";
 
 "SEARCH_FRIENDS" = "Rechercher des amis";
+"FRIENDS_REQUEST" = "Demande en attente";
+"FRIENDS_PENDING" = "Demande envoyée";
+
 "FRIENDS_FRIENDS" = "Mes amis";
 "FRIENDS_FRIENDS_SEARCH" = "Recherche";
+"FRIENDS_FRIENDS_REQUEST_MESSAGE" = "vous demande en ami.";
 "FRIENDS_FRIENDS_REQUEST" = "Demandes en attente";
 "FRIENDS_FRIENDS_SUGGESTION" = "Vous connaissez peut-être...";
 "FRIENDS_BUTTON_INVITE" = "Inviter mes amis";
@@ -306,9 +361,9 @@
 "FRIEND_PICKER_EMPTY_CELL_1" = "Sélectionnez un contact";
 "FRIEND_PICKER_EMPTY_CELL_2" = "ou entrez un n° de mobile";
 "FRIEND_PCIKER_PLACEHOLDER" = "Chercher un contact / Entrer un 06";
-"FRIEND_PICKER_FRIENDS_RECENT" = "Contacts Récents";
+"FRIEND_PICKER_FRIENDS_RECENT" = "Contacts récents";
 "FRIEND_PICKER_FRIENDS" = "Mes amis";
-"FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresse";
+"FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresses";
 
 /************************************/
 /*          SHARE / EMAIL           */

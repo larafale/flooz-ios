@@ -13,7 +13,10 @@
 - (id)initWithJSON:(NSDictionary *)json {
 	self = [super init];
 	if (self) {
-		[self setJSON:json];
+        if ([json objectForKey:@"text"] && ![[json objectForKey:@"text"] isBlank])
+            [self setJSON:json];
+        else
+            return nil;
 	}
 	return self;
 }

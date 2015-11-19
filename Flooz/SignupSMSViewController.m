@@ -67,12 +67,14 @@
     [super viewDidAppear:animated];
     
     if (resetSMS) {
-        [[Flooz sharedInstance] sendSignupSMS:self.userDic[@"phone"]];
+        [[Flooz sharedInstance] sendSignupSMS:[FLHelper fullPhone:self.userDic[@"phone"] withCountry:self.userDic[@"country"]]];
         resetSMS = NO;
     }
     
     [_codeField becomeFirstResponder];
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(reloadTimerView:) userInfo:nil repeats:YES];
+    
+    if (!_timer)
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(reloadTimerView:) userInfo:nil repeats:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -136,7 +138,7 @@
             
         }];
     } else {
-        [[Flooz sharedInstance] sendSignupSMS:self.userDic[@"phone"]];
+        [[Flooz sharedInstance] sendSignupSMS:[FLHelper fullPhone:self.userDic[@"phone"] withCountry:self.userDic[@"country"]]];
         _countDown = FULL_COUNTDOWN;
         NSString *countDownValue = [NSString stringWithFormat:@"%lu", (unsigned long)_countDown];
         [_nextButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"SMS_REFRESH_CODE", nil), countDownValue] forState:UIControlStateNormal];

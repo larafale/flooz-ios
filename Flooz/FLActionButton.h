@@ -22,5 +22,7 @@
 - (void)setImage:(UIImage *)image size:(CGSize)size;
 - (void)setImageWithURL:(NSString *)imageURL size:(CGSize)size;
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state;
+- (void)centerImage;
+- (void)centerImage:(CGFloat)margin;
 
 @end

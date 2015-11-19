@@ -28,7 +28,6 @@
     BOOL animationFirstView;
     BOOL paymentFieldIsVisible;
     
-    UIView *_headerView;
     UIScrollView *_contentView;
     UIView *floozerView;
     UIView *_descriptionView;
@@ -38,7 +37,6 @@
     TransactionCommentsView *commentsView;
     
     CGFloat height;
-    CGSize sizeWindow;
     CGFloat _heightKeyboard;
 }
 
@@ -53,7 +51,6 @@
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath withSize:(CGSize)size {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        sizeWindow = size;
         _transaction = transaction;
         _indexPath = indexPath;
         animationFirstView = YES;
@@ -68,7 +65,7 @@
     self.view.backgroundColor = [UIColor customBackgroundHeader];
     {
         [self createHeader];
-        _contentView = [UIScrollView newWithFrame:CGRectMake(0.0f, CGRectGetMaxY(_headerView.frame), sizeWindow.width, sizeWindow.height - CGRectGetHeight(_headerView.frame))];
+        _contentView = [UIScrollView newWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
         [self.view addSubview:_contentView];
         
         [self createViews];
@@ -85,6 +82,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        [self reloadTransaction];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -100,7 +102,7 @@
 }
 
 - (void)createViews {
-    height = 0.0f;
+    height = 10.0f;
     [self createFloozerExchangeView];
     [self createDescriptionView];
     CGRectSetY(actionsView.frame, CGRectGetMaxY(floozerView.frame) - CGRectGetHeight(actionsView.frame) / 2.0f);
@@ -153,36 +155,22 @@
 #pragma mark - Views
 
 - (void)createHeader {
-    CGFloat heightHeader = 46.0f;
-    CGFloat yS = 0.0f;
-    if (sizeWindow.height == PPScreenHeight()) {
-        yS = PPStatusBarHeight();
-    }
     
-    _headerView = [UIView newWithFrame:CGRectMake(0.0f, yS, sizeWindow.width, heightHeader)];
-    [_headerView setBackgroundColor:[UIColor customBackgroundHeader]];
-    [self.view addSubview:_headerView];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[[UIImage imageNamed:@"cog"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    btn.frame = CGRectMake(0, 0, 25, 25);
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(3, 3, 3, 3)];
+    [btn setTintColor:[UIColor customBlue]];
+    [btn addTarget:self action:@selector(showReportMenu) forControlEvents:UIControlEventTouchUpInside];
     
-    {
-        UIButton *reportMenuButton = [[UIButton alloc] initWithFrame:CGRectMake(8.0f, 7.0f, 30.0f, 30.0f)];
-        [reportMenuButton setImage:[UIImage imageNamed:@"report-menu-accessory"] forState:UIControlStateNormal];
-        [reportMenuButton addTarget:self action:@selector(showReportMenu) forControlEvents:UIControlEventTouchUpInside];
-        
-        [_headerView addSubview:reportMenuButton];
-    }
+    UIBarButtonItem *reportBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.rightBarButtonItem = reportBarButton;
     
     {
-        UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_headerView.frame) - heightHeader, 0.0f, heightHeader, heightHeader)];
-        [closeButton setImage:[UIImage imageNamed:@"navbar-cross"] forState:UIControlStateNormal];
-        [closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
         
-        [_headerView addSubview:closeButton];
-    }
-    
-    {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_headerView.frame), heightHeader)];
-        
-        UIImageView *scopeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+        UIImageView *scopeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
         [scopeImage setTintColor:[UIColor whiteColor]];
         
         NSString *imageNamed = @"";
@@ -205,18 +193,16 @@
         CGFloat headerWidth = momentWidth + CGRectGetWidth(scopeImage.frame) + 5;
         
         CGRectSetWidth(view.frame, headerWidth);
-        CGRectSetX(view.frame, CGRectGetWidth(_headerView.frame) / 2 - headerWidth / 2);
         
         [view addSubview:scopeImage];
         [view addSubview:headerMoment];
         
         CGRectSetX(headerMoment.frame, CGRectGetWidth(scopeImage.frame) + 5);
-        CGRectSetHeight(headerMoment.frame, heightHeader);
-        CGRectSetY(scopeImage.frame, heightHeader / 2 - CGRectGetHeight(scopeImage.frame) / 2);
+        CGRectSetHeight(headerMoment.frame, PPTabBarHeight());
+        CGRectSetY(scopeImage.frame, PPTabBarHeight() / 2 - CGRectGetHeight(scopeImage.frame) / 2);
         
-        [_headerView addSubview:view];
+        self.navigationItem.titleView = view;
     }
-    height += CGRectGetMaxY(_headerView.frame);
 }
 
 - (void)createFloozerExchangeView {
@@ -229,6 +215,7 @@
         
         TransactionUsersView *view = [[TransactionUsersView alloc] initWithFrame:CGRectMake(0.0f, height1, CGRectGetWidth(floozerView.frame), 0)];
         view.transaction = _transaction;
+        view.parentViewController = self;
         [floozerView addSubview:view];
         height1 = CGRectGetMaxY(view.frame);
         height += CGRectGetMaxY(view.frame);

@@ -2,8 +2,8 @@
 //  FLSharePopup.h
 //  Flooz
 //
-//  Created by Epitech on 8/17/15.
-//  Copyright © 2015 Jonathan Tribouharet. All rights reserved.
+//  Created by Flooz on 8/17/15.
+//  Copyright © 2015 Flooz. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

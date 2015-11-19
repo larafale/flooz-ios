@@ -1,4 +1,5 @@
 PODS:
+<<<<<<< HEAD
   - ActionSheetPicker-3.0 (1.7.2)
   - AFNetworking (2.6.0):
     - AFNetworking/NSURLConnection (= 2.6.0)
@@ -29,10 +30,44 @@ PODS:
   - Bolts/Tasks (1.2.2)
   - Branch (0.10.9)
   - Crashlytics (3.3.1)
+=======
+  - ActionSheetPicker-3.0 (2.0.3)
+  - AFNetworking (2.6.2):
+    - AFNetworking/NSURLConnection (= 2.6.2)
+    - AFNetworking/NSURLSession (= 2.6.2)
+    - AFNetworking/Reachability (= 2.6.2)
+    - AFNetworking/Security (= 2.6.2)
+    - AFNetworking/Serialization (= 2.6.2)
+    - AFNetworking/UIKit (= 2.6.2)
+  - AFNetworking/NSURLConnection (2.6.2):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.2):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.2)
+  - AFNetworking/Security (2.6.2)
+  - AFNetworking/Serialization (2.6.2)
+  - AFNetworking/UIKit (2.6.2):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - Bolts (1.4.0):
+    - Bolts/AppLinks (= 1.4.0)
+    - Bolts/Tasks (= 1.4.0)
+  - Bolts/AppLinks (1.4.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.4.0)
+  - Branch (0.11.8)
+  - Crashlytics (3.4.0):
+    - Fabric (~> 1.6.0)
+>>>>>>> 6365ab2
   - DACircularProgress (2.3.1)
   - EAIntroView (2.7.4):
     - EARestrictedScrollView (~> 0.2.0)
   - EARestrictedScrollView (0.2.0)
+<<<<<<< HEAD
   - Fabric (1.5.1):
     - Fabric/Base (= 1.5.1)
   - Fabric/Base (1.5.1)
@@ -42,7 +77,31 @@ PODS:
   - GBDeviceInfo (3.3.0):
     - GBJailbreakDetection (~> 1.0)
   - GBJailbreakDetection (1.0.0)
+=======
+  - Fabric (1.6.0):
+    - Fabric/Base (= 1.6.0)
+  - Fabric/Base (1.6.0)
+  - FBSDKCoreKit (4.7.1):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc (= 4.7.1)
+    - FBSDKCoreKit/no-arc (= 4.7.1)
+  - FBSDKCoreKit/arc (4.7.1):
+    - Bolts (~> 1.1)
+  - FBSDKCoreKit/no-arc (4.7.1):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc
+  - FBSDKLoginKit (4.7.1):
+    - FBSDKCoreKit
+  - FBSDKMessengerShareKit (1.3.2)
+  - FBSDKShareKit (4.7.1):
+    - FBSDKCoreKit
+  - FXBlurView (1.6.4)
+  - GBDeviceInfo (3.6.0):
+    - GBDeviceInfo/Core (= 3.6.0)
+  - GBDeviceInfo/Core (3.6.0)
+>>>>>>> 6365ab2
   - HHRouter (0.1.5)
+  - HMSegmentedControl (1.5.2)
   - iCarousel (1.8.2)
   - IDMPhotoBrowser (1.7):
     - AFNetworking
@@ -50,6 +109,7 @@ PODS:
     - pop
   - JPSVolumeButtonHandler (1.0.0)
   - JTHelper (0.1.12)
+<<<<<<< HEAD
   - JTSImageViewController (1.4)
   - libPhoneNumber-iOS (0.8.7)
   - Mixpanel (2.8.3):
@@ -57,23 +117,40 @@ PODS:
   - Mixpanel/Mixpanel (2.8.3)
   - MZAppearance (1.1.5)
   - MZFormSheetController (3.1.0):
+=======
+  - JTSImageViewController (1.5.1)
+  - libPhoneNumber-iOS (0.8.8)
+  - Mixpanel (2.9.0):
+    - Mixpanel/Mixpanel (= 2.9.0)
+  - Mixpanel/Mixpanel (2.9.0)
+  - MZAppearance (1.1.6)
+  - MZFormSheetController (3.1.2):
+>>>>>>> 6365ab2
     - MZAppearance
-    - MZFormSheetController/Core (= 3.1.0)
-  - MZFormSheetController/Core (3.1.0):
+    - MZFormSheetController/Core (= 3.1.2)
+  - MZFormSheetController/Core (3.1.2):
     - MZAppearance
   - NSDate+Calendar (0.0.8)
   - PonyDebugger (0.4.5):
     - SocketRocket
-  - pop (1.0.7)
+  - pop (1.0.8)
   - PPHelpMe (1.0.2)
   - RDVTabBarController (1.1.9)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SMPageControl (1.2)
+<<<<<<< HEAD
   - SocketRocket (0.4.1)
+=======
+  - SocketRocket (0.4.2)
+  - Stripe (6.0.1):
+    - Stripe/Core (= 6.0.1)
+  - Stripe/Core (6.0.1)
+>>>>>>> 6365ab2
   - TTTAttributedLabel (1.13.4)
-  - UICKeyChainStore (2.0.6)
+  - UICKeyChainStore (2.1.0)
+  - VCTransitionsLibrary (1.5.0)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
@@ -82,10 +159,18 @@ DEPENDENCIES:
   - Crashlytics
   - EAIntroView
   - Fabric
+<<<<<<< HEAD
   - Facebook-iOS-SDK (~> 3.15)
+=======
+  - FBSDKCoreKit
+  - FBSDKLoginKit
+  - FBSDKMessengerShareKit
+  - FBSDKShareKit
+>>>>>>> 6365ab2
   - FXBlurView
   - GBDeviceInfo
   - HHRouter (~> 0.1)
+  - HMSegmentedControl
   - iCarousel
   - IDMPhotoBrowser
   - JPSVolumeButtonHandler
@@ -100,10 +185,13 @@ DEPENDENCIES:
   - RDVTabBarController
   - SDWebImage
   - SMPageControl
+  - Stripe
   - TTTAttributedLabel
   - UICKeyChainStore
+  - VCTransitionsLibrary
 
 SPEC CHECKSUMS:
+<<<<<<< HEAD
   ActionSheetPicker-3.0: c5bdca19fd8b3d798f0c79892cbab6f11a8523ae
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   Bolts: 20a2bd788273360cb1e31530dc19b8544eef2544
@@ -117,25 +205,61 @@ SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GBDeviceInfo: ca211d20e8f46207ce0e79d239eb0ab180d694a5
   GBJailbreakDetection: 3ba798512e1c194f02bcf6ebbafe1986e950d441
+=======
+  ActionSheetPicker-3.0: 11f2053085d3088dc1ef9d38a9f11c18b528dd9e
+  AFNetworking: 7f317038a9710cabfa43ec56396b307b45df72ab
+  Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
+  Branch: 937f58efb96bc758442b02118658868e6d30716a
+  Crashlytics: 1ee87895c37472eb3f01f409ea1654a464d2f8d4
+  DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
+  EAIntroView: 50b85eedf414260e61330070ffe5947e72493a62
+  EARestrictedScrollView: f86d61e16c61d3e93c84f8e96e83122a2a3b7631
+  Fabric: d737eda3a26ac940a5430230eedb35f16b226131
+  FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
+  FBSDKLoginKit: c11ed3c2833472db3bb4a4aecf27af4a6f69b173
+  FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
+  FBSDKShareKit: 213adf63e073f41a346b0e7a689805880dc5150e
+  FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
+  GBDeviceInfo: 9f00de7d81a99204c3eb2a8aed660129fe3a82f7
+>>>>>>> 6365ab2
   HHRouter: c82ce169fea838ea85a819133df40d19605f5c95
+  HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
   IDMPhotoBrowser: 1155caa03f8705b7943c074c26b55aadd43d71da
   JPSVolumeButtonHandler: b056ec5c574fbd75a0637c527e25fe0197ec1648
   JTHelper: d84a961a60a27623c595a7f6965fcafdefb88b9b
+<<<<<<< HEAD
   JTSImageViewController: 6a367b144e257db02cdfacdba78d684377d3777b
   libPhoneNumber-iOS: 1bccd3288375d954b0b904e26061cecaa0fb83d6
   Mixpanel: fd52e097ae0d27295d0595b2261c60b94d191fda
   MZAppearance: 6e9dc64e42074c0a19812a327f590746c3283bab
   MZFormSheetController: a29e904f8832bcaa08a9751106e10beb4df751df
+=======
+  JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
+  libPhoneNumber-iOS: fe877b7c44c270a9da2082d3e2892d5316f6a2f9
+  Mixpanel: 42ae6168effc48481d957f7883dd8514a398738d
+  MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
+  MZFormSheetController: 7909e75056fe18366ce00ef8756ce6181414c36c
+>>>>>>> 6365ab2
   NSDate+Calendar: 4aa9f6eb520bdbe7cfd82fbf6c7d35b9725c8188
   PonyDebugger: 1c60f7c876bdb6a8b6bf0f0269087f8a234fafa7
-  pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
+  pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
   RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
+<<<<<<< HEAD
   SocketRocket: ee0b5c34182d37bb4f1f8d628bbe737718126daa
+=======
+  SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
+  Stripe: 04f215191702c268b89fe0cdf28dc24a9688a71b
+>>>>>>> 6365ab2
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
-  UICKeyChainStore: c5719c814e8bd69e74e4a0fc09daf8f4d6257a59
+  UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
+  VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
 
+<<<<<<< HEAD
 COCOAPODS: 0.39.0.beta.4
+=======
+COCOAPODS: 0.39.0
+>>>>>>> 6365ab2

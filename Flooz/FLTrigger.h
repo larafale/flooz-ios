@@ -40,7 +40,15 @@ typedef enum e_FLTriggerType {
     TriggerShowIban,
     TriggerResetTuto,
     TriggerCloseView,
-    TriggerSendContacts
+    TriggerSendContacts,
+    TriggerUserShow,
+    TriggerInvitationSMSShow,
+    TriggerSMSValidate,
+    TriggerSecureCodeValidate,
+    TriggerEditProfile,
+    TriggerAskNotification,
+    TriggerFbConnect,
+    TriggerPayClick,
 } FLTriggerType;
 
 @property (nonatomic) FLTriggerType type;

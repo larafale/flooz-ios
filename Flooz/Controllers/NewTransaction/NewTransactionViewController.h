@@ -23,16 +23,18 @@
 #import "JTSImageViewController.h"
 #import "JTSImageInfo.h"
 #import "FLTransactionDescriptionView.h"
+#import "GeolocViewController.h"
 
 #define kImageCapturedSuccessfully @"imageCapturedSuccessfully"
 #define degreesToRadians(degrees) ((degrees) / 180.0 * M_PI)
 
-@interface NewTransactionViewController : GlobalViewController <FLPaymentFieldDelegate, UIAlertViewDelegate, FLCameraKeyboardDelegate, MFMessageComposeViewControllerDelegate, THContactPickerDelegate, FLUserPickerTableViewDelegate, WYPopoverControllerDelegate, FLNewTransactionBarDelegate, WYPopoverControllerDelegate, JTSImageViewControllerInteractionsDelegate>
+@interface NewTransactionViewController : GlobalViewController <FLPaymentFieldDelegate, UIAlertViewDelegate, FLCameraKeyboardDelegate, MFMessageComposeViewControllerDelegate, THContactPickerDelegate, FLUserPickerTableViewDelegate, WYPopoverControllerDelegate, FLNewTransactionBarDelegate, WYPopoverControllerDelegate, JTSImageViewControllerInteractionsDelegate, GeolocDelegate>
 
 - (id)initWithTransactionType:(TransactionType)transactionType;
 - (id)initWithTransactionType:(TransactionType)transactionType user:(FLUser *)user;
 - (id)initWithPreset:(FLPreset *)preset;
 - (void)presentCamera;
+- (void)presentLocation;
 
 @property (weak, nonatomic) IBOutlet FLValidNavBar *navBar;
 @property (retain, nonatomic) UIView *contentView;
@@ -41,6 +43,7 @@
 
 @property (nonatomic, retain) NSMutableDictionary *transaction;
 
+- (void)valid;
 - (void)rotateImageWithRadians:(CGFloat)radian imageRotate:(UIImage *)rotateImage andImage:(UIImage *)image;
 
 @end

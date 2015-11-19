@@ -92,7 +92,7 @@
 
 - (void)commentUserSelected:(UITapGestureRecognizer*)sender {
     FLUserView *tmp = (FLUserView *)sender.view;
-    [appDelegate showMenuForUser:tmp.user imageView:tmp.avatar];
+    [appDelegate showUser:tmp.user inController:nil];
 }
 
 - (UIView *)createCommentView:(FLComment *)comment {
@@ -175,12 +175,14 @@
 
 	[[Flooz sharedInstance] showLoadView];
 	[[Flooz sharedInstance] createComment:comment success: ^(id result) {
-	    FLComment *comment = [[FLComment alloc] initWithJSON:[result objectForKey:@"item"]];
-	    NSMutableArray *comments = [[_transaction comments] mutableCopy];
-	    [comments addObject:comment];
-	    _transaction.comments = comments;
-	    _transaction.social.commentsCount = [comments count];
-	    _transaction.social.isCommented = YES;
+        [_transaction setJSON:result[@"item"]];
+
+//	    FLComment *comment = [[FLComment alloc] initWithJSON:[result objectForKey:@"item"]];
+//	    NSMutableArray *comments = [[_transaction comments] mutableCopy];
+//	    [comments addObject:comment];
+//	    _transaction.comments = comments;
+//	    _transaction.social.commentsCount = [comments count];
+//	    _transaction.social.isCommented = YES;
 
 	    sendPressed = NO;
 	    [_delegate reloadTransaction];

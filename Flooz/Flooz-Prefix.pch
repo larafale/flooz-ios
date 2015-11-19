@@ -18,7 +18,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import <SDWebImage/UIImageView+WebCache.h>
-#import <FacebookSDK/FacebookSDK.h>
+#import "FBSDKCoreKit.h"
 #import <JTHelper.h>
 
 #import "NSDictionary+JSONHelper.h"
@@ -31,12 +31,15 @@
 #import "Mixpanel.h"
 #import "Flooz.h"
 
+#import "FLSocialHelper.h"
+#import "FLBorderedActionButton.h"
 #import "FLKeyboardView.h"
 #import "FLActionButton.h"
 #import "FLPopup.h"
 #import "FLReport.h"
 #import "FLHelper.h"
 #import "FLError.h"
+#import "FLCountry.h"
 #import "FLTexts.h"
 #import "FLCountry.h"
 #import "UIColor+custom.h"
@@ -50,6 +53,7 @@
 #import "FLTextView.h"
 #import "FLTextFieldSignup.h"
 #import "FLValidNavBar.h"
+#import "FLPhoneField.h"
 
 #import "UIViewController+RegisterNotification.h"
 #import <PPHelpMe/PPHelpMe.h>

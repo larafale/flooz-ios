@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 
 
-#define MARGE 30.
+#define MARGE 20.
 #define PADDING_TOP_BOTTOM 30.
 #define PADDING_LEFT_RIGHT 30.
 #define BUTTON_HEIGHT 40.

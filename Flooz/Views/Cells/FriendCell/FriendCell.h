@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FriendRequestCellDelegate.h"
+#import "FLSocialHelper.h"
 
 @interface FriendButton : UIButton {
 //    FLUserView *avatarView;
@@ -23,7 +24,9 @@
 
 @property (weak, nonatomic) FLUser *friend;
 @property (weak, nonatomic) id <FriendRequestCellDelegate> delegate;
-@property (strong, nonatomic) FriendButton *addButton;
 @property (strong, nonatomic) FLUserView *avatarView;
+
+@property (strong, nonatomic) FLActionButton *removeButton;
+@property (strong, nonatomic) FLBorderedActionButton *addButton;
 
 @end

@@ -19,6 +19,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json {
+    _json = json;
     _transactionId = [json objectForKey:@"_id"];
     
     NSString *method = [json objectForKey:@"method"];
@@ -72,6 +73,11 @@
     _title = [json objectForKey:@"text"];
     _content = [json objectForKey:@"why"];
     
+    _location = [json objectForKey:@"location"];
+    
+    if (_location && [_location isBlank])
+        _location = nil;
+    
     _attachmentURL = [json objectForKey:@"pic"];
     _attachmentThumbURL = [json objectForKey:@"picMini"];
     
@@ -83,25 +89,24 @@
     
     _social = [[FLSocial alloc] initWithJSON:json];
     
-    _isPrivate = NO;
-    if ([[json objectForKey:@"currentScope"] isEqualToString:@"private"]) {
-        _isPrivate = YES;
-    }
+    _isCancelable = NO;
+    _isAcceptable = NO;
     
-    {
-        _isCancelable = NO;
-        _isAcceptable = NO;
-        
-        if (_status == TransactionStatusPending) {
-            if ([[json objectForKey:@"actions"] count] == 2) {
-                _isAcceptable = YES;
-            }
+    if (_status == TransactionStatusPending) {
+        if ([[json objectForKey:@"actions"] count] == 2) {
+            _isAcceptable = YES;
         }
     }
     
     _from = [[FLUser alloc] initWithJSON:[json objectForKey:@"from"]];
     _to = [[FLUser alloc] initWithJSON:[json objectForKey:@"to"]];
     
+    NSString *starterId = [[json objectForKey:@"starter"] objectForKey:@"_id"];
+    
+    if ([starterId isEqualToString:_from.userId])
+        _starter = _from;
+    else
+        _starter = _to;
     
     {
         static NSDateFormatter *dateFormatter;
@@ -116,7 +121,7 @@
     
     {
         NSMutableArray *comments = [NSMutableArray new];
-        for (NSDictionary *commentJSON in[json objectForKey:@"comments"]) {
+        for (NSDictionary *commentJSON in [json objectForKey:@"comments"]) {
             FLComment *comment = [[FLComment alloc] initWithJSON:commentJSON];
             if (comment) {
                 [comments addObject:comment];
@@ -125,14 +130,18 @@
         _comments = comments;
     }
     
-    _when = [FLHelper formatedDateFromNow:_date];
+    if ([[Flooz sharedInstance] isConnectionAvailable] && [json objectForKey:@"when"]) {
+        _when = [json objectForKey:@"when"];
+    } else {
+        _when = [FLHelper formatedDateFromNow:_date];
+    }
     
     if ([json objectForKey:@"text3d"]) {
         _text3d = [json objectForKey:@"text3d"];
     }
     
     _haveAction = NO;
-    if (_isPrivate && _isAcceptable) {
+    if (_isAcceptable) {
         _haveAction = YES;
     }
 }
@@ -193,14 +202,16 @@
 }
 
 + (TransactionScope)transactionParamsToScope:(NSString *)param {
-    if ([param isEqualToString:@"public"])
-        return TransactionScopePublic;
-    if ([param isEqualToString:@"friend"])
-        return TransactionScopeFriend;
-    if ([param isEqualToString:@"private"])
-        return TransactionScopePrivate;
-    if ([param isEqualToString:@"all"])
-        return TransactionScopeAll;
+    if (param) {
+        if ([param isEqualToString:@"public"])
+            return TransactionScopePublic;
+        if ([param isEqualToString:@"friend"])
+            return TransactionScopeFriend;
+        if ([param isEqualToString:@"private"])
+            return TransactionScopePrivate;
+        if ([param isEqualToString:@"all"])
+            return TransactionScopeAll;
+    }
     return TransactionScopePublic;
 }
 

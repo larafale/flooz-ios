@@ -2,8 +2,8 @@
 //  FLTabBarController.m
 //  Flooz
 //
-//  Created by Epitech on 7/9/15.
-//  Copyright (c) 2015 Jonathan Tribouharet. All rights reserved.
+//  Created by Flooz on 7/9/15.
+//  Copyright (c) 2015 Flooz. All rights reserved.
 //
 
 #import "TimelineViewController.h"
@@ -12,6 +12,7 @@
 #import "FriendsViewController.h"
 #import "AccountViewController.h"
 #import "ShareAppViewController.h"
+#import "SDWebImageDownloader.h"
 
 #import "FLTabBarController.h"
 
@@ -62,10 +63,43 @@
     
     if ([[Flooz sharedInstance] invitationTexts]) {
         [shareItem setTitle:[[Flooz sharedInstance] invitationTexts].shareTitle];
+        
+//        if ([[Flooz sharedInstance] invitationTexts].shareIcon && ![[[Flooz sharedInstance] invitationTexts].shareIcon isBlank]) {
+//            [[SDImageCache sharedImageCache] queryDiskCacheForKey:[[Flooz sharedInstance] invitationTexts].shareIcon done:^(UIImage *image, SDImageCacheType cacheType) {
+//                if (image) {
+//                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//                    [shareItem setImage:image];
+//                } else {
+//                    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[[Flooz sharedInstance] invitationTexts].shareIcon] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+//                        if (image && !error) {
+//                            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//                            [shareItem setImage:image];
+//                        }
+//                    }];
+//                }
+//                
+//            }];
+//        }
     }
     
     [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
         [shareItem setTitle:result.shareTitle];
+        
+//        if (result.shareIcon && ![result.shareIcon isBlank]) {
+//            [[SDImageCache sharedImageCache] queryDiskCacheForKey:result.shareIcon done:^(UIImage *image, SDImageCacheType cacheType) {
+//                if (image) {
+//                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//                    [shareItem setImage:image];
+//                } else {
+//                    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:result.shareIcon] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+//                        if (image && !error) {
+//                            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//                            [shareItem setImage:image];
+//                        }
+//                    }];
+//                }
+//            }];
+//        }
     } failure:^(NSError *error) {
         
     }];
@@ -101,11 +135,19 @@
     
     [self registerNotification:@selector(reloadBadge) name:@"newNotifications" object:nil];
     [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
+    [self registerNotification:@selector(enterBackground) name:kNotificationEnterBackground object:nil];
 }
 
 - (void)viewDidUnload {
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) enterBackground {
+    for (FLNavigationController *controller in self.viewControllers) {
+        if (controller != self.selectedViewController)
+            [controller popToRootViewControllerAnimated:NO];
+    }
 }
 
 - (void)reloadCurrentUser {
@@ -131,6 +173,8 @@
     [centerButton setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
     [centerButton addTarget:self action:@selector(openNewFlooz) forControlEvents:UIControlEventTouchUpInside];
     centerButton.center = self.tabBar.center;
+    
+    CGRectSetY(centerButton.frame, CGRectGetMaxY(self.tabBar.frame) - CGRectGetHeight(centerButton.frame));
     
     [self.view addSubview:centerButton];
 }

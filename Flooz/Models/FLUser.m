@@ -15,6 +15,9 @@
     if (self) {
         self.userKind = PhoneUser;
         self.selectedFrom = nil;
+        
+        self.isIdentified = NO;
+        self.isFloozer = NO;
     }
     return self;
 }
@@ -25,6 +28,9 @@
         self.userKind = FloozUser;
         [self setJSON:json];
         self.selectedFrom = nil;
+        
+        self.isIdentified = YES;
+        self.isFloozer = YES;
     }
     return self;
 }
@@ -47,11 +53,28 @@
     _username = [json objectForKey:@"nick"];
     _email = [json objectForKey:@"email"];
     _phone = [json objectForKey:@"phone"];
+    _bio = [json objectForKey:@"bio"];
+    _location = [json objectForKey:@"location"];
+    _website = [json objectForKey:@"website"];
+    _coverURL = [json objectForKey:@"cover"];
+    _coverLargeURL = [json objectForKey:@"coverFull"];
     _avatarURL = [json objectForKey:@"pic"];
+    _avatarLargeURL = [json objectForKey:@"picFull"];
     _profileCompletion = [json objectForKey:@"profileCompletion"];
     _hasSecureCode = [json objectForKey:@"secureCode"];
     _blockObject = [json objectForKey:@"block"];
+    _isCertified = [[json objectForKey:@"isCertified"] boolValue];
+    _isCactus = [[json objectForKey:@"isCactus"] boolValue];
+    _isFriend = [[json objectForKey:@"isFriend"] boolValue];
     
+    if ([json objectForKey:@"isFriendable"])
+        _isFriendable = [[json objectForKey:@"isFriendable"] boolValue];
+    else
+        _isFriendable = YES;
+    
+    _isComplete = [[json objectForKey:@"isComplete"] boolValue];
+    
+    _actions = [[json objectForKey:@"actions"] mutableCopy];
     _metrics = [json objectForKey:@"metrics"];
     
     if ([json objectForKey:@"birthdate"]) {
@@ -62,8 +85,20 @@
         }
     }
     
-    if ([_avatarURL isEqualToString:@"/img/nopic.png"]) {
+    if ([_coverURL isEqualToString:@"/img/nocover.png"] || [_coverURL isBlank] || [_coverURL isEqualToString:@"/img/nopic.png"]) {
+        _coverURL = nil;
+    }
+    
+    if ([_coverLargeURL isEqualToString:@"/img/nocover.png"] || [_coverLargeURL isBlank] || [_coverLargeURL isEqualToString:@"/img/nopic.png"]) {
+        _coverLargeURL = nil;
+    }
+    
+    if ([_avatarURL isEqualToString:@"/img/nopic.png"] || [_avatarURL isBlank]) {
         _avatarURL = nil;
+    }
+    
+    if ([_avatarLargeURL isEqualToString:@"/img/nopic.png"] || [_avatarLargeURL isBlank]) {
+        _avatarLargeURL = nil;
     }
     
     if (json[@"device"]) {
@@ -118,8 +153,42 @@
         }
     }
     
-    if ([json objectForKey:@"cards"] && [[json objectForKey:@"cards"] count] > 0) {
-        _creditCard = [[FLCreditCard alloc] initWithJSON:[[json objectForKey:@"cards"] objectAtIndex:0]];
+    if ([json objectForKey:@"card"]) {
+        _creditCard = [[FLCreditCard alloc] initWithJSON:[json objectForKey:@"card"]];
+    }
+    
+    {
+        NSMutableArray *followings = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
+        
+        if ([_json objectForKey:@"followings"]) {
+            for (NSDictionary *followingJSON in[_json objectForKey:@"followings"]) {
+                FLUser *following = [[FLUser alloc] initWithJSON:followingJSON];
+                if (following && [following userId] && ![following.userId isEqualToString:_userId] && ![unique containsObject:[following userId]]) {
+                    [unique addObject:[following userId]];
+                    [followings addObject:following];
+                }
+            }
+        }
+        
+        _followings = followings;
+    }
+    
+    {
+        NSMutableArray *followers = [NSMutableArray new];
+        NSMutableArray *unique = [NSMutableArray array];
+        
+        if ([_json objectForKey:@"followers"]) {
+            for (NSDictionary *followerJSON in[_json objectForKey:@"followers"]) {
+                FLUser *follower = [[FLUser alloc] initWithJSON:followerJSON];
+                if (follower && [follower userId] && ![follower.userId isEqualToString:_userId] && ![unique containsObject:[follower userId]]) {
+                    [unique addObject:[follower userId]];
+                    [followers addObject:follower];
+                }
+            }
+        }
+        
+        _followers = followers;
     }
     
     {
@@ -173,6 +242,18 @@
         _friendsRequest = friendsRequest;
     }
     
+    if ([json objectForKey:@"publicMetrics"]) {
+        _publicStats.nbFlooz = [[[json objectForKey:@"publicMetrics"] objectForKey:@"flooz"] integerValue];
+        _publicStats.nbFriends = [[[json objectForKey:@"publicMetrics"] objectForKey:@"friends"] integerValue];
+        _publicStats.nbFollowers = [[[json objectForKey:@"publicMetrics"] objectForKey:@"followers"] integerValue];
+        _publicStats.nbFollowings = [[[json objectForKey:@"publicMetrics"] objectForKey:@"followings"] integerValue];
+    } else {
+        _publicStats.nbFlooz = [[[[json objectForKey:@"metrics"] objectForKey:@"emitted"] objectForKey:@"count"] integerValue];
+        _publicStats.nbFriends = [_friends count];
+        _publicStats.nbFollowers = [_followers count];
+        _publicStats.nbFollowings = [_followings count];
+    }
+    
     _checkDocuments = @{};
     if ([json objectForKey:@"check"]) {
         _checkDocuments = [json objectForKey:@"check"];
@@ -187,9 +268,10 @@
     
     if (json[@"settings"]) {
         _device = json[@"settings"][@"device"];
+        _country = [FLCountry countryFromIndicatif:json[@"settings"][@"indicatif"]];
     }
     
-    if (json[@"cactus"] || (json[@"isCactus"] && [json[@"isCactus"] boolValue])) {
+    if (json[@"isCactus"] && [json[@"isCactus"] boolValue]) {
         _userKind = CactusUser;
         _username = nil;
     }

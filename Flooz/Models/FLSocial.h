@@ -24,6 +24,7 @@
 @property BOOL isCommented;
 @property BOOL isLiked;
 @property (strong, nonatomic) NSString *likeText;
+@property (strong, nonatomic) NSString *commentText;
 @property (nonatomic) SocialScope scope;
 
 - (id)initWithJSON:(NSDictionary *)json;

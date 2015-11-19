@@ -34,6 +34,7 @@
 @property (nonatomic, retain) UIButton *imageButton;;
 @property (nonatomic, retain) UIButton *facebookButton;;
 @property (nonatomic, retain) UIButton *privacyButton;;
+@property (nonatomic, retain) UIButton *locationButton;;
 @property (nonatomic, retain) FLActionButton *askButton;;
 @property (nonatomic, retain) FLActionButton *sendButton;;
 

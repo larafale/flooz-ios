@@ -65,6 +65,32 @@
         self.backgroundColor = backgroundColorDictionary[[NSNumber numberWithInt:state]];
 }
 
+- (void)centerImage {
+    [self centerImage:5];
+}
+
+- (void)centerImage:(CGFloat)margin {
+    if ([self.titleLabel.text isBlank] || self.titleLabel.text == nil || self.titleLabel.text.length == 0) {
+        CGRectSetY(self.imageView.frame, (CGRectGetHeight(self.frame) - CGRectGetHeight(self.imageView.frame)) / 2.0f);
+        CGRectSetX(self.imageView.frame, (CGRectGetWidth(self.frame) - CGRectGetWidth(self.imageView.frame)) / 2.0f);
+    } else {
+        [self.titleLabel setWidthToFit];
+        
+        //make the buttons content appear in the top-left
+        [self setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+        
+        CGFloat totalWidth = CGRectGetWidth(self.imageView.frame) + CGRectGetWidth(self.titleLabel.frame) + margin;
+        
+        CGFloat imgX = (CGRectGetWidth(self.frame) - totalWidth) / 2.0f;
+        CGFloat textX = imgX + CGRectGetWidth(self.imageView.frame) + margin;
+        
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, textX, 0.0f, 0.0f)];
+        
+        CGRectSetY(self.imageView.frame, (CGRectGetHeight(self.frame) - CGRectGetHeight(self.imageView.frame)) / 2.0f);
+        CGRectSetX(self.imageView.frame, imgX);
+    }
+}
+
 - (void)setImage:(UIImage *)image size:(CGSize)size {
     if (imageView) {
         [self.imageView setImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];

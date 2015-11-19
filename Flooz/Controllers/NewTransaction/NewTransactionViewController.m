@@ -11,7 +11,6 @@
 #import "FLNewTransactionAmount.h"
 #import "FLPaymentField.h"
 #import "FLNewTransactionBar.h"
-#import "FLSelectFriendButton.h"
 #import "FLPopupInformation.h"
 
 #import "CreditCardViewController.h"
@@ -25,8 +24,15 @@
 #import "UIView+FindFirstResponder.h"
 #import "FLPopoverTutoTheme.h"
 
+#import "FLPopupTrigger.h"
+#import "GeolocViewController.h"
+
+
 @interface NewTransactionViewController () {
     FLUser *presetUser;
+    
+    UIBarButtonItem *amountItem;
+    UIBarButtonItem *cbItem;
     
     FLNewTransactionBar *transactionBar;
     FLNewTransactionBar *transactionBarKeyboard;
@@ -39,7 +45,6 @@
     FLNewTransactionAmountInput *amountInput;
     FLTextView *content;
     
-    FLSelectFriendButton *friend;
     THContactPickerView *contactPickerView;
     
     FLUserPickerTableView *pickerTableView;
@@ -117,6 +122,7 @@
             }
         }
         
+        [[Flooz sharedInstance] clearLocationData];
     }
     return self;
 }
@@ -148,16 +154,15 @@
         else
             self.title = NSLocalizedString(@"NEW_TRANSACTION", nil);
         
-        if (preset.blockBack) {
-            self.navigationItem.leftBarButtonItem = nil;
-        }
-        
         if (preset.amount) {
             transaction[@"amount"] = [FLHelper formatedAmount:preset.amount withCurrency:NO withSymbol:NO];
         }
         
         if (preset.why)
             transaction[@"why"] = preset.why;
+        
+        if (preset.geo)
+            transaction[@"geo"] = preset.geo;
         
         if (preset.payload)
             transaction[@"payload"] = preset.payload;
@@ -168,6 +173,8 @@
         currentDemoStep = 0;
         firstViewAmount = preset.focusAmount;
         firstViewWhy = preset.focusWhy;
+        
+        [[Flooz sharedInstance] clearLocationData];
     }
     return self;
 }
@@ -177,9 +184,28 @@
     
     [self registerForKeyboardNotifications];
     
+    NSDictionary *attributes = @{
+                                 NSForegroundColorAttributeName: [UIColor customBlue],
+                                 NSFontAttributeName: [UIFont customTitleExtraLight:15]
+                                 };
+    
+    amountItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%.2f €", [[[Flooz sharedInstance] currentUser].amount floatValue]] style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
+    [amountItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    
+    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
+    CGSize newImgSize = CGSizeMake(30, 20);
+    
+    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
+    [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
+    cbImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    cbItem = [[UIBarButtonItem alloc] initWithImage:cbImage style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
+    [cbItem setTintColor:[UIColor customBlue]];
+    
     transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCollect:@selector(validCollectMoney)];
     [transactionBar setDelegate:self];
-
+    
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - PPStatusBarHeight() - NAVBAR_HEIGHT - CGRectGetHeight(transactionBar.frame))];
     [self.view addSubview:self.contentView];
     
@@ -235,7 +261,6 @@
         {
             [amountInput setInputAccessoryView:transactionBarKeyboard];
             [_contentView addSubview:amountInput];
-            CGRectSetY(amountInput.frame, CGRectGetMinY(friend.frame));
             _offset = CGRectGetMaxY(amountInput.frame);
         }
         
@@ -284,6 +309,7 @@
 - (void)viewDidUnload {
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[Flooz sharedInstance] clearLocationData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -308,7 +334,10 @@
     [super viewWillAppear:animated];
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
-    [friend reloadData];
+    
+    NSNumber *number = transaction[@"amount"];
+    [self updateBalanceIndicator:number];
+    
     [self reloadTransactionBarData];
     [self validateView];
     [self registerForKeyboardNotifications];
@@ -325,10 +354,6 @@
             
             currentPreset.triggers = nil;
         }
-        if (currentPreset.blockBalance)
-            [((FLNavigationController*)self.parentViewController) setAmountHidden:YES];
-        else
-            [((FLNavigationController*)self.parentViewController) setAmountHidden:NO];
         
         if (currentPreset.image) {
             [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:currentPreset.image] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
@@ -339,8 +364,7 @@
                  }
              }];
         }
-    } else
-        [((FLNavigationController*)self.parentViewController) setAmountHidden:NO];
+    }
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
     
@@ -362,23 +386,14 @@
 - (void)validateView {
     BOOL valid = YES;
     
-    //    if (!presetUser)
-    //        valid = NO;
-    //
-    //    if (!transaction[@"amount"] || [transaction[@"amount"] isBlank] || [transaction[@"amount"] floatValue] < 0.5f)
-    //        valid = NO;
-    //
-    //    if (!transaction[@"why"] || [transaction[@"why"] isBlank])
-    //        valid = NO;
-    
     if (presetUser) {
         if (presetUser.blockObject != nil) {
-            if ([presetUser.blockObject objectForKey:@"pay"] != nil && [[presetUser.blockObject objectForKey:@"pay"] boolValue]) {
-                [self hideChargeButton:false];
-                [self hidePayButton:true];
-            } else if ([presetUser.blockObject objectForKey:@"charge"] != nil && [[presetUser.blockObject objectForKey:@"charge"] boolValue]) {
+            if ([presetUser.blockObject objectForKey:@"charge"] != nil && [[presetUser.blockObject objectForKey:@"charge"] boolValue]) {
                 [self hideChargeButton:true];
                 [self hidePayButton:false];
+            } else if ([presetUser.blockObject objectForKey:@"pay"] != nil && [[presetUser.blockObject objectForKey:@"pay"] boolValue]) {
+                [self hideChargeButton:false];
+                [self hidePayButton:true];
             } else {
                 [self resetPaymentButtons];
             }
@@ -436,11 +451,53 @@
 }
 
 -(void)amountChange {
-    FLNavigationController *nav = (FLNavigationController*)self.parentViewController;
     NSNumber *number = [NSNumber numberWithFloat:[amountInput.textfield.text floatValue]];
     transaction[@"amount"] = amountInput.textfield.text;
-    [nav setAmount:number];
+    [self updateBalanceIndicator:number];
     [self validateView];
+}
+
+- (void)updateBalanceIndicator:(NSNumber *)amount {
+    if (!currentPreset || !currentPreset.blockBalance) {
+        NSNumber *balance = [Flooz sharedInstance].currentUser.amount;
+        
+        float tmp = [balance floatValue] - [amount floatValue];
+        
+        if (tmp < 0) {
+            self.navigationItem.rightBarButtonItem = cbItem;
+        }
+        else {
+            [amountItem setTitle:[FLHelper formatedAmount:@(tmp) withSymbol:NO]];
+            
+            if (self.navigationItem.rightBarButtonItem != amountItem)
+                self.navigationItem.rightBarButtonItem = amountItem;
+        }
+    } else
+        self.navigationItem.rightBarButtonItem = nil;
+}
+
+- (void)amountInfos {
+    [self.view endEditing:YES];
+    [self.view endEditing:NO];
+    
+    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
+    CGSize newImgSize = CGSizeMake(20, 14);
+    
+    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
+    [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
+    cbImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+    attachment.image = cbImage;
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_1", nil)];
+    [string appendAttributedString:attachmentString];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_2", nil)]];
+    
+    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:nil] show];
 }
 
 - (void)dismissKeyboard:(id)sender {
@@ -453,7 +510,7 @@
     [demoTimer invalidate];
     demoTimer = nil;
     if (currentPreset.popup) {
-        [[[FLPopupInformation alloc] initWithTitle:currentPreset.popup[@"title"] message:[[NSAttributedString alloc] initWithString:currentPreset.popup[@"content"]] button:currentPreset.popup[@"button"] ok:^() {
+        [[[FLPopupTrigger alloc] initWithData:currentPreset.popup dismiss:^{
             if (currentPreset.popup[@"triggers"]) {
                 NSArray *triggers = currentPreset.popup[@"triggers"];
                 for (NSDictionary *triggerData in triggers) {
@@ -465,7 +522,6 @@
             if (currentPreset.steps) {
                 [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
             }
-            
             currentPreset.popup = nil;
         }] show];
     } else if (currentPreset.steps) {
@@ -657,7 +713,7 @@
     if (presetUser == nil && ![contactPickerView.textField.text isBlank]) {
         NSString *text = contactPickerView.textField.text;
         text = [FLHelper formatedPhone:text];
-        if (text) {
+        if (text && [FLHelper isValidPhoneNumber:text]) {
             FLUser *user = [FLUser new];
             user.username = text;
             user.phone = text;
@@ -666,7 +722,7 @@
             
             [contactPickerView addContact:user withName:text];
         } else {
-//            [contactPickerView removeAllContacts];
+            [contactPickerView removeAllContacts];
         }
     }
 }
@@ -933,18 +989,27 @@
                     });
                 }
                 
-                if (result[@"sms"] && [MFMessageComposeViewController canSendText]) {
-                    [[Flooz sharedInstance] showLoadView];
-                    MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
-                    message.messageComposeDelegate = self;
-                    
-                    [message setRecipients:[NSArray arrayWithObject:result[@"sms"][@"phone"]]];
-                    [message setBody:result[@"sms"][@"message"]];
-                    
-                    message.modalPresentationStyle = UIModalPresentationPageSheet;
-                    [self presentViewController:message animated:YES completion:^{
-                        [[Flooz sharedInstance] hideLoadView];
-                    }];
+                if (result[@"sms"]) {
+                    if ([MFMessageComposeViewController canSendText]) {
+                        [[Flooz sharedInstance] showLoadView];
+                        MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
+                        message.messageComposeDelegate = self;
+                        
+                        [message setRecipients:[NSArray arrayWithObject:result[@"sms"][@"phone"]]];
+                        [message setBody:result[@"sms"][@"message"]];
+                        
+                        message.modalPresentationStyle = UIModalPresentationPageSheet;
+                        [self presentViewController:message animated:YES completion:^{
+                            [[Flooz sharedInstance] hideLoadView];
+                        }];
+                    } else {
+                        [[Flooz sharedInstance] showLoadView];
+                        [[Flooz sharedInstance] confirmTransactionSMS:transaction[@"id"] validate:NO success:^(id result) {
+                            [self dismissView];
+                        } failure:^(NSError *error) {
+                            [self dismissView];
+                        }];
+                    }
                 } else {
                     [self dismissView];
                 }
@@ -1017,6 +1082,17 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     return YES;
+}
+
+- (void)presentLocation {
+    GeolocViewController *controller = [GeolocViewController new];
+    [controller setDelegate:self];
+    
+    if (transaction[@"geo"]) {
+        controller.selectedPlace = transaction[@"geo"];
+    }
+    
+    [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
 }
 
 - (void)presentCamera {
@@ -1100,6 +1176,18 @@
             });
         }
     }
+}
+
+#pragma mark - Geoloc Delegate
+
+- (void) locationPlaceSelected:(NSDictionary *)place {
+    [transaction setObject:place forKey:@"geo"];
+    [self reloadTransactionBarData];
+}
+
+- (void) removeLocation {
+    [transaction removeObjectForKey:@"geo"];
+    [self reloadTransactionBarData];
 }
 
 #pragma mark - CameraKeyboard Delegate

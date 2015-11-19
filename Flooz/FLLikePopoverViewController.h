@@ -8,7 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol FLLikePopoverViewControllerDelegate
+
+- (void)didUserClick:(FLUser *)user;
+
+@end
+
 @interface FLLikePopoverViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic) id<FLLikePopoverViewControllerDelegate> delegate;
+@property (nonatomic, retain) UITableView *tableView;
 
 - (id)initWithTransaction:(FLTransaction*)transac;
 

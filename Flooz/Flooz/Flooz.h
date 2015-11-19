@@ -23,6 +23,9 @@
 #import "FLReport.h"
 #import "FLTexts.h"
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
 static NSString *kNotificationFbConnect = @"kNotificationFbConnect";
 static NSString *kNotificationConnectionError = @"kNotificationConnectionError";
 static NSString *kNotificationRemoveWindowSubviews = @"kNotificationRemoveWindowSubviews";
@@ -44,6 +47,7 @@ static NSString *kTextData = @"textData";
 static NSString *kInvitationData = @"invitationData";
 static NSString *kNotificationsData = @"notifData";
 static NSString *kBranchData = @"branchData";
+static NSString *kLocationData = @"locationData";
 
 @interface Flooz : NSObject<UIAlertViewDelegate> {
 	AFHTTPRequestOperationManager *manager;
@@ -52,6 +56,7 @@ static NSString *kBranchData = @"branchData";
 	NSArray *_activitiesCached;
 }
 
+@property (nonatomic, retain) FBSDKLoginManager *fbLoginManager;
 @property (strong, nonatomic) FLInvitationTexts *invitationTexts;
 @property (strong, nonatomic) FLTexts *currentTexts;
 @property (strong, readonly) FLUser *currentUser;
@@ -66,11 +71,14 @@ static NSString *kBranchData = @"branchData";
 
 + (Flooz *)sharedInstance;
 
+- (BOOL)isConnectionAvailable;
 - (void)showLoadView;
 - (void)hideLoadView;
+- (void) clearLocationData;
 
 - (BOOL)autologin;
 - (void)logout;
+- (void)loginWithToken:(NSString *)token;
 
 - (void)signupPassStep:(NSString *)step user:(NSMutableDictionary*)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
@@ -82,6 +90,7 @@ static NSString *kBranchData = @"branchData";
 - (void)reportContent:(FLReport *)report;
 - (void)blockUser:(NSString *)userId;
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)checkPhoneForUser:(NSString*)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (NSString *)formatBirthDate:(NSString *)birthdate;
 - (void)cashoutValidate:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)sendDiscountCode:(NSDictionary *)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
@@ -96,10 +105,11 @@ static NSString *kBranchData = @"branchData";
 
 - (void)uploadDocument:(NSData *)data field:(NSString *)field success:(void (^)())success failure:(void (^)(NSError *error))failure;
 
-- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
-- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
-- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
-- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
+- (void)userTimeline:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
+- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
+- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
+- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success;
 - (void)transactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 - (void)readTransactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 - (void)readTransactionsSuccess:(void (^)(id result))success;
@@ -109,6 +119,9 @@ static NSString *kBranchData = @"branchData";
 - (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
 - (NSArray *)activitiesCached;
+
+- (void)placesFrom:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)placesSearch:(NSString *)search from:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
@@ -129,6 +142,7 @@ static NSString *kBranchData = @"branchData";
 - (void)removeCreditCard:(NSString *)creditCardId success:(void (^)(id result))success;
 - (void)createCreditCard:(NSDictionary *)creditCard atSignup:(BOOL)signup success:(void (^)(id result))success;
 - (void)abort3DSecure;
+- (void)getUserProfile:(NSString *)userId success:(void (^)(FLUser *result))success failure:(void (^)(NSError *error))failure;
 
 - (void)invitationFacebook:(NSString *)text success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)invitationText:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
@@ -136,12 +150,20 @@ static NSString *kBranchData = @"branchData";
 - (void)inviteWithPhone:(NSString *)phone;
 - (void)invitationStrings:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)sendInvitationMetric:(NSString *)canal;
+- (void)sendInvitationMetric:(NSString *)canal withTotal:(NSInteger)total;
 
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success;
+- (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)friendsSuggestion:(void (^)(id result))success;
-- (void)friendRemove:(NSString *)friendId success:(void (^)())success;
-- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success;
+- (void)friendRemove:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result))success;
+- (void)friendFollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
+- (void)friendUnfollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
+- (void)friendAdd:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
+- (void)friendsRequest:(void (^)(id result))success;
+//- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success;
+//- (void)friendAcceptSuggestion:(NSString *)friendId canal:(NSString*)canal success:(void (^)())success failure:(void (^)(NSError *error))failure;
+- (void)checkContactList:(NSArray *)phones success:(void (^)(NSArray *result))success;
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
@@ -149,11 +171,8 @@ static NSString *kBranchData = @"branchData";
 - (void)sendEmailValidation;
 
 - (void)connectFacebook;
-- (void)getInfoFromFacebook;
-- (void)getFacebookPhoto:(void (^)(id result))success;
 - (void)disconnectFacebook;
 - (void)didConnectFacebook;
-- (void)facebokSearchFriends:(void (^)(id result))success;
 
 - (void)handleTrigger:(FLTrigger*)trigger;
 - (void)handleRequestTriggers:(NSDictionary*)responseObject;
@@ -173,7 +192,7 @@ static NSString *kBranchData = @"branchData";
 - (void)createContactList:(void (^)(NSMutableArray *arrayContactAdressBook, NSMutableArray *arrayContactFlooz))lists atSignup:(BOOL)signup;
 
 - (NSUInteger)findIndexForUser:(FLUser *)newUser inArray:(NSArray *)array;
-- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result;
+- (NSMutableArray *)createFriendsArrayFromResult:(NSDictionary *)result sorted:(BOOL)sorted;
 - (NSMutableArray *)createActivityArrayFromResult:(NSDictionary *)result;
 - (NSMutableArray *)createTransactionArrayFromResult:(NSDictionary *)result;
 

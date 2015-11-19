@@ -58,7 +58,7 @@
         [self.avatar setImage:[UIImage imageNamed:@"fake"]];
     } else {
 		[self hidePlaceholder];
-		[avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
+		[avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder options:SDWebImageRefreshCached|SDWebImageContinueInBackground];
 	}
 }
 
@@ -72,7 +72,7 @@
         [self.avatar setImage:[UIImage imageNamed:@"fake"]];
     } else {
 		[self hidePlaceholder];
-		[avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
+		[avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder options:SDWebImageRefreshCached|SDWebImageContinueInBackground];
 
 		return;
 		avatar.layer.opacity = 0;
@@ -82,7 +82,7 @@
 		dispatch_async(queue, ^{
 		    dispatch_suspend(queue);
 
-		    [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder completed: ^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+		    [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder options:SDWebImageRefreshCached|SDWebImageContinueInBackground completed: ^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 		        if (error) {
 		            dispatch_resume(queue);
 		            return;
@@ -96,7 +96,7 @@
 				} completion: ^(BOOL finished) {
 		            dispatch_resume(queue);
 				}];
-			}];
+			} ];
 		});
 	}
 }
@@ -129,14 +129,16 @@
 //    CGRectSetWidthHeight(avatar.frame, CGRectGetWidth(self.frame) * RATIO, CGRectGetHeight(self.frame) * RATIO);
 //    avatar.center = CGRectGetFrameCenter(self.frame);
 
-    avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;
+//    avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 5.5;
+    avatar.layer.cornerRadius = 5;
 //    avatar.layer.borderWidth = 0;
 }
 
 - (void)hidePlaceholder {
 //    avatar.frame = CGRectMakeWithSize(self.frame.size);
 
-	avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 2.;
+//	avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 5.5;
+    avatar.layer.cornerRadius = 5;
 //    avatar.layer.borderWidth = 2.;
 }
 

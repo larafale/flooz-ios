@@ -55,17 +55,19 @@
     [refreshControl setTintColor:[UIColor customBlueLight]];
     [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
+    
+    [self loadCachedActivities];
+    [self handleRefresh];
+    
+    [self registerNotification:@selector(handleRefresh) name:@"newNotifications" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self loadCachedActivities];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [self handleRefresh];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -204,10 +206,7 @@
             [self presentLibrary];
         }]];
     }
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-        [self getPhotoFromFacebook];
-    }]];
-    
+
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
     
     [self presentViewController:newAlert animated:YES completion:nil];
@@ -223,7 +222,6 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
         [menus addObject:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)];
     }
-    [menus addObject:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)];
     
     for (NSString *menu in menus) {
         [actionSheet addButtonWithTitle:menu];
@@ -242,9 +240,6 @@
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_ALBUM_BUTTON", nil)]) {
         [self presentLibrary];
-    }
-    else if ([buttonTitle isEqualToString:NSLocalizedString(@"SIGNUP_PHOTO_FACEBOOK", nil)]) {
-        [self getPhotoFromFacebook];
     }
 }
 
@@ -265,15 +260,6 @@
     cameraUI.allowsEditing = YES;
     [self presentViewController:cameraUI animated:YES completion: ^{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    }];
-}
-
-- (void)getPhotoFromFacebook {
-    [[Flooz sharedInstance] getFacebookPhoto: ^(id result) {
-        if (result[@"id"]) {
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?&width=134&height=134", result[@"id"]]]];
-            [self sendData:imageData];
-        }
     }];
 }
 

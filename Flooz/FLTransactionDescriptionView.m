@@ -8,7 +8,6 @@
 
 #import "FLTransactionDescriptionView.h"
 #import "FLSocialButton.h"
-#import "FLLikePopoverViewController.h"
 
 #define MARGE_TOP_BOTTOM 10.0f
 #define MARGE_LEFT_RIGHT 10.0f
@@ -24,14 +23,15 @@
     UIView *rightView;
     
     UILabel *floozerLabel;
+    UILabel *locationLabel;
     UILabel *descriptionLabel;
     FLImageView *attachmentView;
     UILabel *amountLabel;
     
     FLUserView *avatarView;
     
-    FLActionButton *commentText;
-    FLActionButton *likeText;
+    UILabel *commentText;
+    UILabel *likeText;
     
     BOOL hasAvatar;
     
@@ -93,14 +93,12 @@
     if ([transaction title] && ![[transaction title] isBlank]) {
         attributedText = [[NSAttributedString alloc]
                           initWithString:[transaction title]
-                          attributes:@{ NSFontAttributeName: [UIFont customContentBold:14] }];
+                          attributes:@{ NSFontAttributeName: [UIFont customContentBold:15] }];
         rect = [attributedText boundingRectWithSize:(CGSize) {rightViewWidth, CGFLOAT_MAX }
                                             options:NSLineBreakByClipping | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                             context:nil];
         current_height += rect.size.height + 3.0f;
     }
-    
-    current_height += 4.0f;
     
     // Height for description
     CGFloat heightContent = 10.0f;
@@ -115,9 +113,12 @@
     // Height for attachment
     if ([transaction attachmentURL]) {
         CGFloat heightAttach = 250 / (500 / rightViewWidth);
-        current_height += 6 + heightAttach;
+        current_height += 10 + heightAttach;
     }
     current_height += 10.0f;
+    
+    if (transaction.location)
+        current_height += 20.0f;
     
     //Height for comment and like text
     FLSocial *social = [transaction social];
@@ -166,6 +167,8 @@
 
 - (void)createAvatarView {
     avatarView = [[FLUserView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 42, 42)];
+    [avatarView setUserInteractionEnabled:YES];
+    [avatarView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didAvatarClick)]];
 }
 
 - (void)createRightViews {
@@ -178,27 +181,32 @@
     height = CGRectGetMaxY(descriptionLabel.frame);
     [self createAttachmentView];
     height = CGRectGetMaxY(attachmentView.frame);
-    [self createAmountLabel];
-    height = CGRectGetMaxY(amountLabel.frame);
-    
-    if (hasAvatar) {
-        height = CGRectGetMaxY(amountLabel.frame);
-    }
+    [self createLocationView];
+    height = CGRectGetMaxY(locationLabel.frame);
     [self createSocialView];
     height = CGRectGetMaxY(likeText.frame);
+    [self createAmountLabel];
     [self createFooterView];
     height = CGRectGetMaxY(footerDescView.frame);
     CGRectSetHeight(rightView.frame, height);
-    //    CGRectSetHeight(self.frame, height);
 }
 
 - (void)createFloozerLabel {
-    floozerLabel = [UILabel newWithFrame:CGRectMake(0.0f, 3.0f, CGRectGetWidth(rightView.frame), 20.0f)];
+    floozerLabel = [UILabel newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(rightView.frame), 20.0f)];
     floozerLabel.textColor = [UIColor whiteColor];
     floozerLabel.font = [UIFont customContentRegular:14];
     floozerLabel.numberOfLines = 0;
     
     [rightView addSubview:floozerLabel];
+}
+
+- (void) createLocationView {
+    locationLabel = [UILabel newWithFrame:CGRectMake(0.0f, CGRectGetMaxY(floozerLabel.frame), CGRectGetWidth(rightView.frame), 15.0f)];
+    locationLabel.textColor = [UIColor customPlaceholder];
+    locationLabel.numberOfLines = 1;
+    locationLabel.font = [UIFont customContentRegular:12];
+    
+    [rightView addSubview:locationLabel];
 }
 
 - (void)createDescriptionLabel {
@@ -216,37 +224,19 @@
 }
 
 - (void)createSocialView {
-    commentText = [[FLActionButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(commentText.frame), CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
-    [rightView addSubview:commentText];
-    [commentText.titleLabel setTextAlignment:NSTextAlignmentRight];
-    commentText.titleLabel.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
-    [commentText setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
-    [commentText setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
-    [commentText setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
-    
-    [commentText setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
-    [commentText setBackgroundColor:[UIColor clearColor] forState:UIControlStateHighlighted];
-    [commentText setBackgroundColor:[UIColor clearColor] forState:UIControlStateDisabled];
-    
-    [commentText setImage:[UIImage imageNamed:@"social-comment"] size:CGSizeMake(13.0, 12.0)];
-    CGRectSetX(commentText.imageView.frame, 0);
-
-    
-    likeText = [[FLActionButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(commentText.frame), CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
-    [likeText addTarget:self action:@selector(didLikeTextTouch) forControlEvents:UIControlEventTouchUpInside];
+    likeText = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
+    [likeText addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeTextTouch)]];
+    [likeText setUserInteractionEnabled:YES];
     [rightView addSubview:likeText];
-    [likeText.titleLabel setTextAlignment:NSTextAlignmentRight];
-    likeText.titleLabel.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
-    [likeText setTitleColor:[UIColor customPlaceholder] forState:UIControlStateNormal];
-    [likeText setTitleColor:[UIColor customPlaceholder] forState:UIControlStateHighlighted];
-    [likeText setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
-    
-    [likeText setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
-    [likeText setBackgroundColor:[UIColor clearColor] forState:UIControlStateHighlighted];
-    [likeText setBackgroundColor:[UIColor clearColor] forState:UIControlStateDisabled];
-    
-    [likeText setImage:[UIImage imageNamed:@"like-heart"] size:CGSizeMake(13.0, 12.0)];
-    CGRectSetX(likeText.imageView.frame, 0);
+    [commentText setTextAlignment:NSTextAlignmentLeft];
+    likeText.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
+    likeText.textColor = [UIColor customPlaceholder];
+
+    commentText = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(likeText.frame), CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
+    [rightView addSubview:commentText];
+    [commentText setTextAlignment:NSTextAlignmentLeft];
+    commentText.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
+    commentText.textColor = [UIColor customPlaceholder];
 }
 
 - (void)createFooterView {
@@ -269,7 +259,7 @@
     _commentButton = [[FLSocialButton alloc] initWithImageName:@"comment_bubble" imageSelected:@"comment_bubble" title:@"Commenter" andHeight:CGRectGetHeight(footerDescView.frame)];
     [_commentButton addTarget:self action:@selector(didWantToCommentTransactionData) forControlEvents:UIControlEventTouchUpInside];
     [footerDescView addSubview:_commentButton];
-    CGRectSetX(_commentButton.frame, CGRectGetMaxX(_likeButton.frame) + 3.0f);
+    CGRectSetX(_commentButton.frame, CGRectGetMaxX(_likeButton.frame) + 10.0f);
 }
 
 - (void)createAmountLabel {
@@ -291,6 +281,7 @@
     [self prepareDetailView];
     [self prepareAttachmentView];
     [self prepareAmountLabel];
+    [self prepareLocationView];
     [self prepareLikeView];
     [self prepareSocial];
     
@@ -317,7 +308,7 @@
                                               initWithString:_transaction.text3d[0]
                                               attributes:@{
                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                           NSFontAttributeName: [UIFont customContentBold:14]
+                                                           NSFontAttributeName: [UIFont customContentBold:15]
                                                            }];
         
         [attributedContent appendAttributedString:attributedText];
@@ -328,7 +319,7 @@
                                               initWithString:_transaction.text3d[1]
                                               attributes:@{
                                                            NSForegroundColorAttributeName: [UIColor customPlaceholder],
-                                                           NSFontAttributeName: [UIFont customContentLight:14]
+                                                           NSFontAttributeName: [UIFont customContentLight:15]
                                                            }];
         
         [attributedContent appendAttributedString:attributedText];
@@ -339,7 +330,7 @@
                                               initWithString:_transaction.text3d[2]
                                               attributes:@{
                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                           NSFontAttributeName: [UIFont customContentBold:14]
+                                                           NSFontAttributeName: [UIFont customContentBold:15]
                                                            }];
         
         [attributedContent appendAttributedString:attributedText];
@@ -356,11 +347,11 @@
         offset = 4.;
     }
     
-    
     descriptionLabel.text = [[self transaction] content];
     CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(floozerLabel.frame) + offset);
-    CGRectSetHeight(descriptionLabel.frame, [descriptionLabel heightToFit] + 3); // + 3 car quand emoticone ca passe pas
-    height = CGRectGetMaxY(descriptionLabel.frame) + offset;
+    
+    CGRectSetHeight(descriptionLabel.frame, [descriptionLabel heightToFit] + offset);
+    height = CGRectGetMaxY(descriptionLabel.frame);
 }
 
 - (void)prepareAttachmentView {
@@ -379,55 +370,91 @@
     height = CGRectGetMaxY(attachmentView.frame);
 }
 
+- (void)prepareLocationView {
+    if (_transaction.location) {
+        [locationLabel setHidden:NO];
+        CGRectSetHeight(locationLabel.frame, 15.0f);
+        
+        NSMutableAttributedString *attributedData = [NSMutableAttributedString new];
+        
+        UIImage *cbImage = [UIImage imageNamed:@"map"];
+        CGSize newImgSize = CGSizeMake(13, 13);
+        
+        cbImage = [FLHelper imageWithImage:cbImage scaledToSize:newImgSize];
+        cbImage = [FLHelper colorImage:cbImage color:[UIColor customPlaceholder]];
+        
+        NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+        attachment.image = cbImage;
+        attachment.bounds = CGRectMake(0, -2, attachment.image.size.width, attachment.image.size.height);
+        
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+        
+        [attributedData appendAttributedString:attachmentString];
+        
+        {
+            NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                                  initWithString:[NSString stringWithFormat:@" %@", _transaction.location]
+                                                  attributes:@{
+                                                               NSForegroundColorAttributeName: [UIColor customPlaceholder],
+                                                               NSFontAttributeName: [UIFont customContentRegular:12]
+                                                               }];
+            
+            [attributedData appendAttributedString:attributedText];
+        }
+        
+        locationLabel.attributedText = attributedData;
+        CGRectSetY(locationLabel.frame, CGRectGetMaxY(attachmentView.frame) + 10);
+    } else {
+        CGRectSetY(locationLabel.frame, CGRectGetMaxY(attachmentView.frame) + 5.0f);
+        [locationLabel setHidden:YES];
+        CGRectSetHeight(locationLabel.frame, 0.0f);
+    }
+}
+
 - (void)prepareLikeView {
-    CGRectSetY(commentText.frame, CGRectGetMaxY(attachmentView.frame) + 12.0f);
-    CGRectSetY(likeText.frame, CGRectGetMaxY(attachmentView.frame) + 12.0f);
+    CGRectSetY(commentText.frame, CGRectGetMaxY(locationLabel.frame) + 5.0f);
+    CGRectSetY(likeText.frame, CGRectGetMaxY(locationLabel.frame) + 5.0f);
     
     FLSocial *social = [_transaction social];
     
     {
-        if (social.commentsCount == 0) {
-            commentText.hidden = YES;
-            [commentText setTitle:@"" forState:UIControlStateNormal];
-            CGRectSetX(likeText.frame, 0.0f);
-            CGRectSetWidth(likeText.frame, CGRectGetWidth(rightView.frame));
-        }
-        else {
-            NSString *nbComments = [self castNumber:social.commentsCount];
-            commentText.hidden = NO;
-            [commentText setTitle:nbComments forState:UIControlStateNormal];
-            
-            CGFloat labelSize = [nbComments widthOfString:[UIFont customContentRegular:FONT_SIZE_LIKE]];
-            CGRectSetWidth(commentText.frame, labelSize + 12 * 3);
-            
-            CGRectSetX(likeText.frame, CGRectGetWidth(commentText.frame));
-            CGRectSetWidth(likeText.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(commentText.frame));
-        }
-    }
-    
-    {
         if (!social.likeText || [social.likeText isBlank]) {
             likeText.hidden = YES;
-            [likeText setTitle:@"" forState:UIControlStateNormal];
+            [likeText setText:@""];
+            CGRectSetX(commentText.frame, 0.0f);
         }
         else {
             likeText.hidden = NO;
-            [likeText setTitle:social.likeText forState:UIControlStateNormal];
+            [likeText setText:social.likeText];
             
             CGFloat labelSize = [social.likeText widthOfString:[UIFont customContentRegular:FONT_SIZE_LIKE]];
-            CGRectSetWidth(likeText.frame, labelSize + 12 * 3);
+            CGRectSetWidth(likeText.frame, labelSize);
+            
+            CGRectSetX(commentText.frame, CGRectGetWidth(likeText.frame) + 10);
         }
         
-        CGFloat heightLike = 12.0f;
-        if ([likeText heightToFit] > heightLike) {
-            //			heightLike = [likeText heightToFit];
-        }
-        CGRectSetHeight(likeText.frame, heightLike);
+        CGRectSetHeight(likeText.frame, 15.0f);
         height = CGRectGetMaxY(likeText.frame);
     }
     
-    if (social.commentsCount == 0 && (!social.likeText || [social.likeText isBlank])) {
-        height = CGRectGetMaxY(attachmentView.frame);
+    {
+        if (!social.commentText || [social.commentText isBlank]) {
+            commentText.hidden = YES;
+            [commentText setText:@""];
+        }
+        else {
+            commentText.hidden = NO;
+            [commentText setText:social.commentText];
+            
+            CGFloat labelSize = [social.commentText widthOfString:[UIFont customContentRegular:FONT_SIZE_LIKE]];
+            CGRectSetWidth(commentText.frame, labelSize);
+            
+            CGRectSetHeight(commentText.frame, 15.0f);
+        }
+    }
+    
+    if ((!social.commentText || [social.commentText isBlank]) && (!social.likeText || [social.likeText isBlank])) {
+        height = CGRectGetMaxY(locationLabel.frame);
     }
 }
 
@@ -468,12 +495,16 @@
     [popoverController presentPopoverFromRect:likeText.bounds inView:likeText permittedArrowDirections:WYPopoverArrowDirectionDown|WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
         
     }];
-    
 }
 
 - (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
 {
     return YES;
+}
+
+- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(float *)value
+{
+    *value = 0;
 }
 
 - (void)didLikeButtonTouch {
@@ -484,29 +515,7 @@
     [_likeButton setSelected:[[_transaction social] isLiked]];
     
     [[Flooz sharedInstance] createLikeOnTransaction:_transaction success: ^(id result) {
-        [[_transaction social] setLikeText:[result objectForKey:@"item"]];
-        NSInteger numberOfLike = [[_transaction social] likesCount];
-        NSMutableArray *tmpLikes = [[_transaction social].likes mutableCopy];
-        if ([[_transaction social] isLiked]) {
-            numberOfLike += 1;
-            if (numberOfLike == 1)
-                tmpLikes = [NSMutableArray new];
-            
-            FLUser *currentUser = [Flooz sharedInstance].currentUser;
-            [tmpLikes addObject:@{@"_id": currentUser.userId, @"nick": currentUser.username, @"userId": currentUser.userId}];
-        }
-        else {
-            numberOfLike -= 1;
-            
-            for (NSDictionary *likeUser in tmpLikes) {
-                if ([likeUser[@"nick"] isEqualToString:[Flooz sharedInstance].currentUser.username]) {
-                    [tmpLikes removeObject:likeUser];
-                    break;
-                }
-            }
-        }
-        [[_transaction social] setLikes:tmpLikes];
-        [[_transaction social] setLikesCount:numberOfLike];
+        [_transaction setJSON:result[@"item"]];
         [self prepareViews];
         [self didUpdateTransactionData];
     } failure:NULL];
@@ -533,6 +542,14 @@
             [_delegate commentTransactionAtIndex:_indexPath transaction:_transaction];
         }
     }
+}
+
+- (void)didAvatarClick {
+    [appDelegate showUser:[_transaction starter] inController:nil];
+}
+
+- (void)didUserClick:(FLUser *)user {
+    [appDelegate showUser:user inController:nil];
 }
 
 @end

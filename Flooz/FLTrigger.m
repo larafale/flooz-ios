@@ -32,7 +32,7 @@
 }
 
 +(FLTriggerType)triggerTypeParamToEnum:(NSString*)param {
-    
+
     if ([param isEqualToString:@"timeline:reload"])
         return TriggerReloadTimeline;
     else if ([param isEqualToString:@"line:show"])
@@ -91,6 +91,22 @@
         return TriggerCloseView;
     else if ([param isEqualToString:@"contacts:send"])
         return TriggerSendContacts;
+    else if ([param isEqualToString:@"user:show"])
+        return TriggerUserShow;
+    else if ([param isEqualToString:@"invitation:sms:show"])
+        return TriggerInvitationSMSShow;
+    else if ([param isEqualToString:@"profile:edit"])
+        return TriggerEditProfile;
+    else if ([param isEqualToString:@"phone:validate"])
+        return TriggerSMSValidate;
+    else if ([param isEqualToString:@"secureCode:set"])
+        return TriggerSecureCodeValidate;
+    else if ([param isEqualToString:@"notification:ask"])
+        return TriggerAskNotification;
+    else if ([param isEqualToString:@"fb:connect"])
+        return TriggerFbConnect;
+    else if ([param isEqualToString:@"pay:click"])
+        return TriggerPayClick;
     else
         return TriggerNone;
 }

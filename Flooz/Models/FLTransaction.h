@@ -44,6 +44,8 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (nonatomic) TransactionType type;
 @property (nonatomic) TransactionStatus status;
 
+@property (nonatomic, retain) NSDictionary *json;
+
 @property (strong, nonatomic) NSString *transactionId;
 @property (strong, nonatomic) NSNumber *amount;
 @property (strong, nonatomic) NSString *amountText;
@@ -57,7 +59,6 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (strong, nonatomic) NSString *when;
 @property (strong, nonatomic) NSArray *text3d;
 
-@property (nonatomic) BOOL isPrivate;
 @property (nonatomic) BOOL isCancelable; // Si peut annuler la demande
 @property (nonatomic) BOOL isAcceptable; // Si peut accepter ou refuser de payer
 
@@ -65,8 +66,11 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 
 @property (strong, nonatomic) FLUser *from;
 @property (strong, nonatomic) FLUser *to;
+@property (strong, nonatomic) FLUser *starter;
 
 @property (strong, nonatomic) FLSocial *social;
+
+@property (strong, nonatomic) NSString *location;
 
 @property (strong, nonatomic) NSArray *comments;
 
@@ -78,6 +82,7 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (nonatomic) BOOL haveAction;
 
 - (id)initWithJSON:(NSDictionary *)json;
+- (void)setJSON:(NSDictionary *)json;
 
 - (NSString *)statusText;
 
