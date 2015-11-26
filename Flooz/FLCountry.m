@@ -19,14 +19,20 @@
 }
 
 - (void)setJSON:(NSDictionary *)json {
-    self.name = json[@"name"];
+    self.name = json[@"country"];
     self.code = json[@"code"];
-    self.phoneCode = json[@"indicatif"];
+    self.phoneCode = [NSString stringWithFormat:@"+%@", json[@"indicatif"]];
     self.imageName = [NSString stringWithFormat:@"CountryPicker.bundle/%@", self.code];
+    
+    self.numLength = @0;
+    
+    for (NSNumber *value in json[@"lengths"]) {
+        self.numLength = MAX(self.numLength, value);
+    }
 }
 
 + (FLCountry *) defaultCountry {
-    return [[FLCountry alloc] initWithJSON:@{@"name":@"France", @"code":@"FR", @"indicatif":@"+33"}];
+    return [[FLCountry alloc] initWithJSON:@{@"country":@"France", @"code":@"FR", @"indicatif":@"+33", @"lengths":@[@9]}];
 }
 
 + (FLCountry *) countryFromCode:(NSString *)code {

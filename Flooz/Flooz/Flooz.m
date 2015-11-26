@@ -37,6 +37,7 @@
 #import "EditProfileViewController.h"
 #import "ValidateSecureCodeViewController.h"
 #import "NewTransactionViewController.h"
+#import "NotificationsViewController.h"
 
 #import "FLReachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -111,6 +112,7 @@
         NSDictionary *userJson = [NSDictionary newWithJSONString:userData];
         if (userJson) {
             _currentUser = [[FLUser alloc] initWithJSON:userJson];
+            _currentUser.isComplete = YES;
             [self updateFbToken:userJson[@"fb"][@"token"] andUser:userJson[@"fb"][@"id"]];
             
             [self checkDeviceToken];
@@ -440,7 +442,9 @@
 - (void)updateCurrentUserWithSuccess:(void (^)())success failure:(void (^)(NSError *error))failure {
     if ([appDelegate shouldRefreshWithKey:kKeyLastUpdate]) {
         __block id successBlock = ^(id result) {
-            _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];
+            _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];            _currentUser.isComplete = YES;
+            _currentUser.isComplete = YES;
+
             [self updateFbToken:result[@"item"][@"fb"][@"token"] andUser:result[@"item"][@"fb"][@"id"]];
             
             [self checkDeviceToken];
@@ -468,7 +472,8 @@
     
     [self requestPath:@"/users/profile" method:@"PUT" params:_userDic success: ^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:result[@"item"]];
-        
+        _currentUser.isComplete = YES;
+
         [self checkDeviceToken];
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationReloadCurrentUser object:nil]];
         
@@ -629,6 +634,12 @@
     }
     else {
         params = @{ @"scope": scope };
+    }
+    
+    NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
+    if (transactions && success) {
+        self.timelinePageSize = [transactions count];
+        success(transactions, nil, [FLTransaction transactionParamsToScope:scope]);
     }
     
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failureBlock];
@@ -1154,6 +1165,8 @@
     [UICKeyChainStore setString:_access_token forKey:@"login-token"];
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
+    _currentUser.isComplete = YES;
+
     [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
@@ -1166,6 +1179,8 @@
     [UICKeyChainStore setString:_access_token forKey:@"login-token"];
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
+    _currentUser.isComplete = YES;
+
     [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
@@ -1179,6 +1194,8 @@
     [UICKeyChainStore setString:_access_token forKey:@"login-token"];
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
+    _currentUser.isComplete = YES;
+
     [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
@@ -1548,6 +1565,27 @@
     }
 }
 
+- (void)handleTriggerNotificationShow:(NSDictionary *)data {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *tmp = [appDelegate currentController];
+        
+        if ([tmp isKindOfClass:[FLTabBarController class]]) {
+            [((FLTabBarController*)tmp) setSelectedIndex:1];
+        }
+        else if ([tmp tabBarController]) {
+            [[tmp tabBarController] setSelectedIndex:1];
+        } else {
+            NotificationsViewController *controller = [NotificationsViewController new];
+            [tmp presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
+        }
+    });
+
+}
+
+- (void)handleTriggerNotificationReload:(NSDictionary *)data {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotifications" object:nil];
+}
+
 - (void)handleTrigger:(FLTrigger*)trigger {
     NSDictionary *triggerFuncs = @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
                                    [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
@@ -1585,6 +1623,8 @@
                                    [NSNumber numberWithInt:TriggerAskNotification]: NSStringFromSelector(@selector(handleTriggerAskNotification:)),
                                    [NSNumber numberWithInt:TriggerFbConnect]: NSStringFromSelector(@selector(handleTriggerFBConnect:)),
                                    [NSNumber numberWithInt:TriggerPayClick]: NSStringFromSelector(@selector(handleTriggerPayClick:)),
+                                   [NSNumber numberWithInt:TriggerShowNotification]: NSStringFromSelector(@selector(handleTriggerNotificationShow:)),
+                                   [NSNumber numberWithInt:TriggerReloadNotification]: NSStringFromSelector(@selector(handleTriggerNotificationReload:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
@@ -1809,6 +1849,7 @@
             if (lists) {
                 lists(arrayAB, arrayFlooz);
             }
+            [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kSendContact];
         } failure: ^(NSError *error) {
             if (lists) {
                 lists(arrayContacts, nil);

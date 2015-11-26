@@ -1028,6 +1028,9 @@
         }
     }
     
+    if ([user.userId isEqualToString:[Flooz sharedInstance].currentUser.userId])
+        user = [Flooz sharedInstance].currentUser;
+    
     UserViewController *controller;
     
     controller = [[UserViewController alloc] initWithUser:user];

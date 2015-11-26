@@ -560,6 +560,15 @@
 		C9C660B21BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
 		C9C660B31BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
 		C9C660B41BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
+		C9C776811C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */; };
+		C9C776821C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */; };
+		C9C776831C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */; };
+		C9C776881C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */; };
+		C9C776891C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */; };
+		C9C7768A1C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */; };
+		C9C7768B1C076078006C22CB /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776871C076078006C22CB /* UIButton+Badge.m */; };
+		C9C7768C1C076078006C22CB /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776871C076078006C22CB /* UIButton+Badge.m */; };
+		C9C7768D1C076078006C22CB /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776871C076078006C22CB /* UIButton+Badge.m */; };
 		C9C7DB2D1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7DB2C1A2351E300AEDC67 /* SettingsPrivacyController.m */; };
 		C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7DB2C1A2351E300AEDC67 /* SettingsPrivacyController.m */; };
 		C9C7EE9119F685AC009FE292 /* FLTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7EE9019F685AC009FE292 /* FLTrigger.m */; };
@@ -999,6 +1008,12 @@
 		C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9C660B01BCBB70E0029A79A /* ValidateSecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSecureCodeViewController.h; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.h; sourceTree = "<group>"; };
 		C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSecureCodeViewController.m; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.m; sourceTree = "<group>"; };
+		C9C7767F1C075E57006C22CB /* UITabBarItem+CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+CustomBadge.h"; sourceTree = "<group>"; };
+		C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+CustomBadge.m"; sourceTree = "<group>"; };
+		C9C776841C076078006C22CB /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
+		C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
+		C9C776861C076078006C22CB /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
+		C9C776871C076078006C22CB /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Badge.m"; sourceTree = "<group>"; };
 		C9C7DB2B1A2351E300AEDC67 /* SettingsPrivacyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPrivacyController.h; sourceTree = "<group>"; };
 		C9C7DB2C1A2351E300AEDC67 /* SettingsPrivacyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsPrivacyController.m; sourceTree = "<group>"; };
 		C9C7EE8F19F685AC009FE292 /* FLTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTrigger.h; sourceTree = "<group>"; };
@@ -1529,7 +1544,6 @@
 		AB3D08DD1871A5D100CF8380 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C9037F491BFE0481004256BF /* FLCountry.m */,
 				AB2FB54618AE798D0079AA1D /* FLActivity.h */,
 				AB2FB54718AE798D0079AA1D /* FLActivity.m */,
 				C9C7EE9219F685B9009FE292 /* FLAlert.h */,
@@ -1537,6 +1551,7 @@
 				ABF7095B18A4FD6B00517389 /* FLComment.h */,
 				ABF7095C18A4FD6B00517389 /* FLComment.m */,
 				C9CD766F1BF227FB00362962 /* FLCountry.h */,
+				C9037F491BFE0481004256BF /* FLCountry.m */,
 				ABBB75CD18B64A0B0070C2A8 /* FLCreditCard.h */,
 				ABBB75CE18B64A0B0070C2A8 /* FLCreditCard.m */,
 				ABBB75DC18BA27E60070C2A8 /* FLFriendRequest.h */,
@@ -1565,8 +1580,6 @@
 		AB3D08E11871BEC300CF8380 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				C919AD961BBAC3CD00B87AAB /* FLReachability.h */,
-				C919AD971BBAC3CD00B87AAB /* FLReachability.m */,
 				ABF7091B18A03B1D00517389 /* FLError.h */,
 				ABE914A21896D2D9003AC722 /* FLHelper.h */,
 				ABE914A31896D2D9003AC722 /* FLHelper.m */,
@@ -1574,6 +1587,8 @@
 				C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */,
 				C908A3E91A9F211F00A07818 /* FLPopoverTutoTheme.h */,
 				C908A3EA1A9F211F00A07818 /* FLPopoverTutoTheme.m */,
+				C919AD961BBAC3CD00B87AAB /* FLReachability.h */,
+				C919AD971BBAC3CD00B87AAB /* FLReachability.m */,
 				C960DC8E1BB14D020089B074 /* FLSocialHelper.h */,
 				C960DC8F1BB14D020089B074 /* FLSocialHelper.m */,
 				C9ED41271A9B7ABA000C4D7A /* NSArray+JSONHelper.h */,
@@ -1582,14 +1597,20 @@
 				C9ED41231A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m */,
 				C907297C1B59569900BA691C /* NSString+custom.h */,
 				C907297D1B59569900BA691C /* NSString+custom.m */,
+				C9C776841C076078006C22CB /* UIBarButtonItem+Badge.h */,
+				C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */,
 				ABE9143B1890A08A003AC722 /* UIBarButtonItem+custom.h */,
 				ABE9143C1890A08A003AC722 /* UIBarButtonItem+custom.m */,
+				C9C776861C076078006C22CB /* UIButton+Badge.h */,
+				C9C776871C076078006C22CB /* UIButton+Badge.m */,
 				AB3D08E21871BEEE00CF8380 /* UIColor+custom.h */,
 				AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */,
 				AB3D08E51871C0CC00CF8380 /* UIFont+custom.h */,
 				AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */,
 				2FEAA9C819DC50A200EE95C9 /* UISearchBar+Subviews.h */,
 				2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */,
+				C9C7767F1C075E57006C22CB /* UITabBarItem+CustomBadge.h */,
+				C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */,
 				ABEC02A618D3165600C03025 /* UIView+FindFirstResponder.h */,
 				ABEC02A718D3165600C03025 /* UIView+FindFirstResponder.m */,
 				C93F669F1BB5556F0032ED56 /* UIView+LayerShot.h */,
@@ -2876,6 +2897,7 @@
 				C9CB220E1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				C9EB88581B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
+				C9C776881C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */,
 				ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */,
 				2FEAA9CF19DC63B500EE95C9 /* BaseViewController.m in Sources */,
 				C9C660B21BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
@@ -2968,6 +2990,7 @@
 				C908A3EB1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABE914691892940A003AC722 /* FLAccountUserView.m in Sources */,
+				C9C776811C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
 				C9CB21FE1A95E9D30064389A /* THContactTextField.m in Sources */,
 				C919AD981BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */,
@@ -2977,6 +3000,7 @@
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
 				AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */,
 				C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
+				C9C7768B1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				2F50155319EDC46E00F61380 /* GlobalViewController.m in Sources */,
 				C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,
 				AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */,
@@ -3045,6 +3069,7 @@
 				ABAA3F81197E96BF009F29EF /* AppDelegate.m in Sources */,
 				C9CB22151A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C9CB220F1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
+				C9C776891C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */,
 				ABAA3F82197E96BF009F29EF /* FriendPickerFriendCell.m in Sources */,
 				AB119B44198A740600F05ECE /* UIViewController+RegisterNotification.m in Sources */,
 				C9C660B31BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
@@ -3137,6 +3162,7 @@
 				C908A3EC1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABAA3FC5197E96BF009F29EF /* NewTransactionViewController.m in Sources */,
+				C9C776821C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
 				2F0F6B0819DF5432004CA223 /* SettingsCoordsViewController.m in Sources */,
 				C919AD991BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				ABAA3FC6197E96BF009F29EF /* AccountViewController.m in Sources */,
@@ -3146,6 +3172,7 @@
 				C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				ABAA3FCD197E96BF009F29EF /* FLAccountUserView.m in Sources */,
 				C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
+				C9C7768C1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				ABAA3FCE197E96BF009F29EF /* TimelineViewController.m in Sources */,
 				C921175D1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,
 				ABAA3FCF197E96BF009F29EF /* FLSocial.m in Sources */,
@@ -3206,6 +3233,7 @@
 				C98012801A76921000019682 /* CreditCardViewController.m in Sources */,
 				C98012821A76921000019682 /* AppDelegate.m in Sources */,
 				C9CB22161A963C840064389A /* FLUserPickerTableView.m in Sources */,
+				C9C7768A1C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */,
 				C9CB22101A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				C98012841A76921000019682 /* FriendPickerFriendCell.m in Sources */,
 				C9C660B41BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
@@ -3298,6 +3326,7 @@
 				C9AE77911ACA917B00CFF0AF /* FLSlider.m in Sources */,
 				C908A3ED1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D581B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
+				C9C776831C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
 				C98012D71A76921000019682 /* NewTransactionViewController.m in Sources */,
 				C98012D81A76921000019682 /* SettingsCoordsViewController.m in Sources */,
 				C919AD9A1BBAC3CD00B87AAB /* FLReachability.m in Sources */,
@@ -3307,6 +3336,7 @@
 				C98012DB1A76921000019682 /* NewTransactionSelectTypeView.m in Sources */,
 				C98012DC1A76921000019682 /* SettingsPrivacyController.m in Sources */,
 				C98012DF1A76921000019682 /* FLAccountUserView.m in Sources */,
+				C9C7768D1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C98012E01A76921000019682 /* TimelineViewController.m in Sources */,
 				C921175E1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,

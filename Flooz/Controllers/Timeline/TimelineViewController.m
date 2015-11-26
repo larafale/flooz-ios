@@ -24,6 +24,7 @@
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
     UIBarButtonItem *searchItem;
+    UIBarButtonItem *scopeItem;
     
     NSTimer *_timer;
     NSTimer *_backTimer;
@@ -45,6 +46,9 @@
     
     NSMutableSet *rowsWithPaymentField;
     NSMutableArray *cells;
+    
+    UIView *scopeChangeHelper;
+    UILabel *scopeChangeHelperLabel;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -98,8 +102,9 @@
     searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
     [searchItem setTintColor:[UIColor customBlue]];
     
-    filterControl = [[FLFilterSegmentedControl alloc] initWithFrame:CGRectMake(0, 10, 160, 32)];
-    [filterControl addTarget:self action:@selector(filterControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+    scopeItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:self action:@selector(changeScope)];
+    [scopeItem setTintColor:[UIColor customBlue]];
+    [self updateScopeIndicator];
     
     CGFloat height = PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight();
     
@@ -124,10 +129,36 @@
         [self.view addSubview:scrollViewIndicator];
     }
     
+    scopeChangeHelper = [[UIView alloc] initWithFrame:CGRectMake(0, 15, 0, 20)];
+    scopeChangeHelper.layer.masksToBounds = YES;
+    scopeChangeHelper.layer.cornerRadius = 4;
+    scopeChangeHelper.backgroundColor = [UIColor customBlue:0.8f];
+    scopeChangeHelper.userInteractionEnabled = NO;
+    
+    scopeChangeHelperLabel = [UILabel newWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentLight:15] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    
+    [scopeChangeHelper addSubview:scopeChangeHelperLabel];
+    
+    [self.view addSubview:scopeChangeHelper];
+    
     [self registerNotification:@selector(reloadCurrentTimeline) name:kNotificationReloadTimeline object:nil];
     [self registerNotification:@selector(reloadBalanceItem) name:kNotificationReloadCurrentUser object:nil];
     [self registerNotification:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
     [self registerNotification:@selector(statusBarHit) name:kNotificationTouchStatusBarClick object:nil];
+}
+
+- (void)updateScopeIndicator {
+    switch (currentScope) {
+        case TransactionScopeAll:
+            [scopeItem setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"transaction-scope-public"] scaledToSize:CGSizeMake(25, 25)]];
+            break;
+        case TransactionScopeFriend:
+            [scopeItem setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"transaction-scope-friend"] scaledToSize:CGSizeMake(25, 25)]];
+            break;
+        default:
+            [self changeScope];
+            break;
+    }
 }
 
 - (void)showSearch {
@@ -168,16 +199,24 @@
 }
 
 - (void)hideContentController:(UIViewController *)content {
-    [content willMoveToParentViewController:nil];  // 1
-    [content.view removeFromSuperview];            // 2
-    [content removeFromParentViewController];      // 3
+    [content willMoveToParentViewController:nil];
+    [content.view removeFromSuperview];
+    [content removeFromParentViewController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [amountItem setTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO]];
-    self.navigationItem.titleView = filterControl;
+    
+    UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 30, 30)];
+    [logo setTintColor:[UIColor customBlue]];
+    [logo setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"flooz-mini"] scaledToSize:CGSizeMake(45, 45)]];
+    [logo setContentMode:UIViewContentModeCenter];
+    
+    self.navigationItem.titleView = logo;
+    self.navigationItem.rightBarButtonItem = searchItem;
+    self.navigationItem.leftBarButtonItem = scopeItem;
     
     switch (currentScope) {
         case TransactionScopeAll:
@@ -218,7 +257,6 @@
     if (reloadTimeline)
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(reloadCurrentTimeline) userInfo:nil repeats:NO];
     
-    self.navigationItem.rightBarButtonItem = searchItem;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -448,6 +486,8 @@
 }
 
 - (void)reloadTableView {
+    [_backTimer invalidate];
+    _backTimer = nil;
     
     if (![transactions count]) {
         self.tableView.contentOffset = CGPointMake(0, -refreshControl.frame.size.height);
@@ -500,31 +540,60 @@
     [appDelegate.tabBarController setSelectedIndex:4];
 }
 
-- (void)filterControlValueChanged:(UISegmentedControl*)sender {
+- (void)showScopeHelper {
+    NSString *text;
     
-    switch (sender.selectedSegmentIndex) {
-        case 0:
-            [self scopeChange:TransactionScopeAll];
+    switch (currentScope) {
+        case TransactionScopeAll:
+            text = NSLocalizedString(@"TIMELINE_SCOPE_HELPER_ALL", nil);
             break;
-        case 1:
-            [self scopeChange:TransactionScopeFriend];
-            break;
-        case 2:
-            [self scopeChange:TransactionScopePrivate];
+        case TransactionScopeFriend:
+            text = NSLocalizedString(@"TIMELINE_SCOPE_HELPER_FRIENDS", nil);
             break;
         default:
             break;
     }
+    
+    scopeChangeHelperLabel.text = text;
+    [scopeChangeHelperLabel sizeToFit];
+    
+    [UIView animateWithDuration:0.0 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        scopeChangeHelper.alpha = 0.0f;
+        CGRectSetSize(scopeChangeHelper.frame, CGSizeMake(CGRectGetWidth(scopeChangeHelperLabel.frame) + 10, CGRectGetHeight(scopeChangeHelperLabel.frame) + 10));
+        CGRectSetXY(scopeChangeHelperLabel.frame, 5, 5);
+        CGRectSetXY(scopeChangeHelper.frame, PPScreenWidth() / 2 - CGRectGetWidth(scopeChangeHelper.frame) / 2, 15);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 delay:0.05 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            scopeChangeHelper.alpha = 1.0f;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [UIView animateWithDuration:0.3 delay:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    scopeChangeHelper.alpha = 0.0f;
+                } completion:^(BOOL finished) {
+                }];
+            }
+        }];
+    }];
+    
 }
 
-- (void)scopeChange:(TransactionScope)scope {
-    if (scope != currentScope) {
-        [UICKeyChainStore setString:[FLTransaction transactionScopeToParams:scope] forKey:kFilterData];
-        currentScope = scope;
-        transactions = [NSMutableArray new];
-        [_tableView reloadData];
-        [self reloadTableView];
+- (void)changeScope {
+    switch (currentScope) {
+        case TransactionScopeAll:
+            currentScope = TransactionScopeFriend;
+            [self showScopeHelper];
+            break;
+        case TransactionScopeFriend:
+            currentScope = TransactionScopeAll;
+            [self showScopeHelper];
+        default:
+            currentScope = TransactionScopeAll;
+            break;
     }
+    
+    [self updateScopeIndicator];
+    [UICKeyChainStore setString:[FLTransaction transactionScopeToParams:currentScope] forKey:kFilterData];
+    [self reloadTableView];
 }
 
 @end

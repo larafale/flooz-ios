@@ -48,6 +48,12 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self didReloadData];
+}
+
 #pragma mark - TableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -82,8 +88,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     currentUser = [friendsRequest objectAtIndex:indexPath.row];
+    
     if (currentUser)
-        [self showRequestMenu];
+        [appDelegate showUser:currentUser inController:self];
 }
 
 - (void)didReloadData {
@@ -99,70 +106,70 @@
     }];
 }
 
-- (void)showRequestMenu {
-    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
-        [self createRequestActionSheet];
-    else
-        [self createRequestAlertController];
-}
-
-- (void)createRequestAlertController {
-    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:currentUser.fullname message:NSLocalizedString(@"FRIENDS_FRIENDS_REQUEST_MESSAGE", nil) preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"FRIEND_REQUEST_ACCEPT", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"accept" } success:^{
-            [self didReloadData];
-        } failure:^(NSError *error) {
-            [self didReloadData];
-        }];
-    }]];
-    
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"FRIEND_REQUEST_REFUSE", nil) style:UIAlertActionStyleDestructive handler: ^(UIAlertAction *action) {
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"decline" } success:^{
-            [self didReloadData];
-        } failure:^(NSError *error) {
-            [self didReloadData];
-        }];
-    }]];
-    
-    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
-    
-    [self presentViewController:newAlert animated:YES completion:nil];
-}
-
-- (void)createRequestActionSheet {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-    
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_ACCEPT", nil)];
-    
-    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_REFUSE", nil)];
-    
-    [actionSheet setDestructiveButtonIndex:index];
-    
-    index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
-    [actionSheet setCancelButtonIndex:index];
-    
-    [actionSheet showInView:appDelegate.window];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"accept" } success:^{
-            [self didReloadData];
-        } failure:^(NSError *error) {
-            [self didReloadData];
-        }];
-    } else if (buttonIndex == 1) {
-        [[Flooz sharedInstance] showLoadView];
-        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"decline" } success:^{
-            [self didReloadData];
-        } failure:^(NSError *error) {
-            [self didReloadData];
-        }];
-    }
-}
+//- (void)showRequestMenu {
+//    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending))
+//        [self createRequestActionSheet];
+//    else
+//        [self createRequestAlertController];
+//}
+//
+//- (void)createRequestAlertController {
+//    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:currentUser.fullname message:NSLocalizedString(@"FRIENDS_FRIENDS_REQUEST_MESSAGE", nil) preferredStyle:UIAlertControllerStyleActionSheet];
+//    
+//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"FRIEND_REQUEST_ACCEPT", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+//        [[Flooz sharedInstance] showLoadView];
+//        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"accept" } success:^{
+//            [self didReloadData];
+//        } failure:^(NSError *error) {
+//            [self didReloadData];
+//        }];
+//    }]];
+//    
+//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"FRIEND_REQUEST_REFUSE", nil) style:UIAlertActionStyleDestructive handler: ^(UIAlertAction *action) {
+//        [[Flooz sharedInstance] showLoadView];
+//        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"decline" } success:^{
+//            [self didReloadData];
+//        } failure:^(NSError *error) {
+//            [self didReloadData];
+//        }];
+//    }]];
+//    
+//    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+//    
+//    [self presentViewController:newAlert animated:YES completion:nil];
+//}
+//
+//- (void)createRequestActionSheet {
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+//    
+//    [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_ACCEPT", nil)];
+//    
+//    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"FRIEND_REQUEST_REFUSE", nil)];
+//    
+//    [actionSheet setDestructiveButtonIndex:index];
+//    
+//    index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+//    [actionSheet setCancelButtonIndex:index];
+//    
+//    [actionSheet showInView:appDelegate.window];
+//}
+//
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    if (buttonIndex == 0) {
+//        [[Flooz sharedInstance] showLoadView];
+//        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"accept" } success:^{
+//            [self didReloadData];
+//        } failure:^(NSError *error) {
+//            [self didReloadData];
+//        }];
+//    } else if (buttonIndex == 1) {
+//        [[Flooz sharedInstance] showLoadView];
+//        [[Flooz sharedInstance] updateFriendRequest:@{ @"id": currentUser.userId, @"action": @"decline" } success:^{
+//            [self didReloadData];
+//        } failure:^(NSError *error) {
+//            [self didReloadData];
+//        }];
+//    }
+//}
 
 @end

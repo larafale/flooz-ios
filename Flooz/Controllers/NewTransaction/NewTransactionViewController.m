@@ -565,7 +565,7 @@
     
     if ([focus isEqualToString:@"why"]) {
         retRec = CGRectMake(retRec.origin.x, retRec.origin.y, 150, 35);
-    } else if ([focus isEqualToString:@"scope"] || [focus isEqualToString:@"image"] || [focus isEqualToString:@"fb"] || [focus isEqualToString:@"pay"]) {
+    } else if ([focus isEqualToString:@"scope"] || [focus isEqualToString:@"image"] || [focus isEqualToString:@"fb"] || [focus isEqualToString:@"pay"] || [focus isEqualToString:@"geo"]) {
         retRec = CGRectMake(retRec.origin.x, retRec.origin.y - 5, retRec.size.width, retRec.size.height);
     } else if ([focus isEqualToString:@"amount"]) {
         retRec = CGRectMake(retRec.origin.x + 15, retRec.origin.y - 5, retRec.size.width, retRec.size.height);
@@ -596,6 +596,9 @@
     if ([focus isEqualToString:@"pay"]) {
         return transactionBar.sendButton;
     }
+    if ([focus isEqualToString:@"geo"]) {
+        return transactionBar.locationButton;
+    }
     return nil;
 }
 
@@ -619,6 +622,9 @@
         return WYPopoverArrowDirectionUp;
     }
     if ([focus isEqualToString:@"pay"]) {
+        return WYPopoverArrowDirectionDown;
+    }
+    if ([focus isEqualToString:@"geo"]) {
         return WYPopoverArrowDirectionDown;
     }
     return WYPopoverArrowDirectionAny;

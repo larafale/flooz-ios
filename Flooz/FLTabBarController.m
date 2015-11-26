@@ -13,6 +13,9 @@
 #import "AccountViewController.h"
 #import "ShareAppViewController.h"
 #import "SDWebImageDownloader.h"
+#import "UserViewController.h"
+
+#import "UITabBarItem+CustomBadge.h"
 
 #import "FLTabBarController.h"
 
@@ -44,6 +47,7 @@
     [self.tabBar setBackgroundImage:[UIImage new]];
     [self.tabBar setShadowImage:[UIImage new]];
     
+    
     [[UITabBarItem appearance] setTitleTextAttributes: @{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customBlue]} forState:UIControlStateSelected];
     
@@ -59,7 +63,8 @@
     FLNavigationController *notifNavigationController = [[FLNavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
     FLNavigationController *floozNavigationController = [[FLNavigationController alloc] initWithRootViewController:[UIViewController new]];
     FLNavigationController *shareNavigationController = [[FLNavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
-    FLNavigationController *profileNavigationController = [[FLNavigationController alloc] initWithRootViewController:[AccountViewController new]];
+    
+    FLNavigationController *profileNavigationController = [[FLNavigationController alloc] initWithRootViewController:[[UserViewController alloc] initWithUser:[Flooz sharedInstance].currentUser]];
     
     if ([[Flooz sharedInstance] invitationTexts]) {
         [shareItem setTitle:[[Flooz sharedInstance] invitationTexts].shareTitle];
@@ -158,9 +163,9 @@
     accountNotifs += [currentUser.metrics[@"accountMissing"] intValue];
     
     if (accountNotifs > 0)
-        [profileItem setBadgeValue:[@(accountNotifs) stringValue]];
+        [profileItem setCustomBadgeValue:[@(accountNotifs) stringValue] withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
     else
-        [profileItem setBadgeValue:nil];
+        [profileItem setCustomBadgeValue:nil withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
 }
 
 -(void) addCenterButtonWithImage:(UIImage*)buttonImage highlightImage:(UIImage*)highlightImage
@@ -226,9 +231,11 @@
 
 - (void)reloadBadge {
     NSNumber *numberNotif = [[Flooz sharedInstance] notificationsCount];
-    [notifItem setBadgeValue:[numberNotif stringValue]];
+    
+    [notifItem setCustomBadgeValue:[numberNotif stringValue] withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
+
     if ([numberNotif intValue] == 0)
-        [notifItem setBadgeValue:nil];
+        [notifItem setCustomBadgeValue:nil withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
 }
 
 @end

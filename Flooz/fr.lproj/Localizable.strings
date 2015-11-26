@@ -116,7 +116,8 @@
 /************************************/
 
 "PROFILE" = "Mon profil";
-"EDIT_PROFILE" = "Éditer le profil";
+"EDIT_PROFILE" = "Éditer mon profil";
+"SETTINGS_PROFILE" = "Mon Compte";
 
 "EDIT_AVATAR" = "Photo";
 "EDIT_COVER" = "Bannière";
@@ -179,7 +180,7 @@
 "TAB_BAR_HOME" = "Accueil";
 "TAB_BAR_NOTIFICATIONS" = "Notifs";
 "TAB_BAR_SHARE" = "";
-"TAB_BAR_ACCOUNT" = "Compte";
+"TAB_BAR_ACCOUNT" = "Moi";
 
 /************************************/
 /*              MENU                */
@@ -363,6 +364,7 @@
 "FRIEND_PCIKER_PLACEHOLDER" = "Chercher un contact / Entrer un 06";
 "FRIEND_PICKER_FRIENDS_RECENT" = "Contacts récents";
 "FRIEND_PICKER_FRIENDS" = "Mes amis";
+
 "FRIEND_PICKER_ADDRESS_BOOK" = "Carnet d'adresses";
 
 /************************************/
@@ -393,6 +395,9 @@
 "TIMELINE_FILTER_ALL" = "Tous";
 "TIMELINE_FILTER_FRIENDS" = "Mes amis & moi";
 "TIMELINE_FILTER_PRIVATE" = "Moi uniquement";
+
+"TIMELINE_SCOPE_HELPER_ALL" = "Tous les paiements";
+"TIMELINE_SCOPE_HELPER_FRIENDS" = "Mes paiements et ceux de mes amis";
 
 /************************************/
 /*              OTHER               */

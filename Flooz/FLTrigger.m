@@ -107,6 +107,10 @@
         return TriggerFbConnect;
     else if ([param isEqualToString:@"pay:click"])
         return TriggerPayClick;
+    else if ([param isEqualToString:@"notification:show"])
+        return TriggerShowNotification;
+    else if ([param isEqualToString:@"notification:reload"])
+        return TriggerReloadNotification;
     else
         return TriggerNone;
 }

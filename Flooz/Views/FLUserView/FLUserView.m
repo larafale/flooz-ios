@@ -103,8 +103,8 @@
 
 - (void)setImageFromUser:(FLUser *)user {
     self.user = user;
-	if ([user avatarURL:avatar.frame.size]) {
-		[self setImageFromURL:[user avatarURL:avatar.frame.size]];
+	if (self.user.avatarURL) {
+		[self setImageFromURL:self.user.avatarURL];
 	}
 	else {
 		[self showPlaceholder];

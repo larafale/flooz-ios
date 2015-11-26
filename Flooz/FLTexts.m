@@ -27,6 +27,7 @@
     self.couponButton = json[@"couponButton"];
     self.card = json[@"card"];
     self.menu = json[@"menu"];
+    
     if (json[@"signup"]) {
         self.signupSponsor = json[@"signup"][@"promo"];
     }

@@ -231,7 +231,7 @@
     [commentText setTextAlignment:NSTextAlignmentLeft];
     likeText.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
     likeText.textColor = [UIColor customPlaceholder];
-
+    
     commentText = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(likeText.frame), CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
     [rightView addSubview:commentText];
     [commentText setTextAlignment:NSTextAlignmentLeft];
@@ -488,6 +488,7 @@
 
 - (void)didLikeTextTouch {
     FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithTransaction:_transaction];
+    [popoverViewController setDelegate:self];
     
     popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
     popoverController.delegate = self;
@@ -549,7 +550,12 @@
 }
 
 - (void)didUserClick:(FLUser *)user {
-    [appDelegate showUser:user inController:nil];
+    if ([popoverController isPopoverVisible]) {
+        [popoverController dismissPopoverAnimated:YES completion:^{
+            [appDelegate showUser:user inController:nil];
+        }];
+    } else
+        [appDelegate showUser:user inController:nil];
 }
 
 @end

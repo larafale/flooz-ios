@@ -49,6 +49,8 @@ typedef enum e_FLTriggerType {
     TriggerAskNotification,
     TriggerFbConnect,
     TriggerPayClick,
+    TriggerShowNotification,
+    TriggerReloadNotification
 } FLTriggerType;
 
 @property (nonatomic) FLTriggerType type;

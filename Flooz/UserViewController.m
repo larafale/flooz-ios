@@ -12,6 +12,9 @@
 #import "TransactionCell.h"
 #import "FLMultiLineSegmentedControl.h"
 #import "EditProfileViewController.h"
+#import "AccountViewController.h"
+#import "FLPopupInformation.h"
+#import "UIButton+Badge.h"
 
 #define actionButtonHeight 30
 #define actionButtonMargin 10
@@ -113,16 +116,17 @@
     
     [_mainBody addSubview:header];
     [_mainBody addSubview:self.tableView];
-    [_mainBody addSubview:headerBack];
+    
+    if (self.navigationController.viewControllers.count > 1)
+        [_mainBody addSubview:headerBack];
     
     emptyCellHeight = CGRectGetHeight(self.tableView.frame) - CGRectGetHeight(headerCell.frame);
-    
-    [self reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self reloadData];
     [self refreshData];
     [self registerNotification:@selector(refreshData) name:kNotificationReloadCurrentUser object:nil];
 }
@@ -200,12 +204,17 @@
     friendActionButton = [FLSocialHelper createFullFriendButton:self action:@selector(didFriendButtonClick:) position:CGPointMake(0, headerFullHeight + 10)];
     friendRequestActionButton = [FLSocialHelper createFriendRequestButton:self action:@selector(didFriendRequestButtonClick:) position:CGPointMake(0, headerFullHeight + 10)];
     
-    editProfileActionButton = [[FLBorderedActionButton alloc] initWithFrame:CGRectMake(0, headerFullHeight + 10, 0, actionButtonHeight) title:NSLocalizedString(@"EDIT_PROFILE", nil)];
+    editProfileActionButton = [[FLBorderedActionButton alloc] initWithFrame:CGRectMake(0, headerFullHeight + 10, 0, actionButtonHeight) title:NSLocalizedString(@"SETTINGS_PROFILE", nil)];
     editProfileActionButton.layer.cornerRadius = 5;
     [editProfileActionButton.titleLabel setFont:[UIFont customContentBold:15]];
+    editProfileActionButton.badgeBGColor = [UIColor customBlue];
+    editProfileActionButton.badgeFont = [UIFont customContentRegular:12];
+    editProfileActionButton.badgeTextColor = [UIColor whiteColor];
+    editProfileActionButton.shouldHideBadgeAtZero = YES;
+    editProfileActionButton.shouldAnimateBadge = YES;
     CGFloat textWidth = [editProfileActionButton.titleLabel.text widthOfString:editProfileActionButton.titleLabel.font];
     CGRectSetWidth(editProfileActionButton.frame, textWidth + (2 * actionButtonMargin));
-    [editProfileActionButton addTarget:self action:@selector(didEditProfileButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [editProfileActionButton addTarget:self action:@selector(didSettingsButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, headerFullHeight + 10, actionButtonHeight, actionButtonHeight)];
     [settingsButton setImage:[[UIImage imageNamed:@"cog"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
@@ -214,27 +223,27 @@
     [settingsButton addTarget:self action:@selector(showMenuForUser) forControlEvents:UIControlEventTouchUpInside];
     
     fullnameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(avatarImage.frame) + 10, PPScreenWidth() / 2, 20)];
-    fullnameLabel.font = [UIFont customContentBold:17];
+    fullnameLabel.font = [UIFont customContentBold:18];
     fullnameLabel.textColor = [UIColor whiteColor];
     
     certfifiedIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(avatarImage.frame) + 11, 18, 18)];
     [certfifiedIcon setImage:[UIImage imageNamed:@"certified"]];
     [certfifiedIcon setContentMode:UIViewContentModeScaleAspectFit];
     
-    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(fullnameLabel.frame) + 2, PPScreenWidth() / 2, 15)];
-    usernameLabel.font = [UIFont customContentBold:14];
+    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(fullnameLabel.frame) + 3, PPScreenWidth() / 2, 15)];
+    usernameLabel.font = [UIFont customContentBold:13];
     usernameLabel.textColor = [UIColor customGreyPseudo];
     
-    bioLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(usernameLabel.frame) + 5, PPScreenWidth() - 20, 0)];
-    bioLabel.font = [UIFont customContentRegular:14];
+    bioLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(usernameLabel.frame) + 10, PPScreenWidth() - 20, 0)];
+    bioLabel.font = [UIFont customContentRegular:15];
     bioLabel.textColor = [UIColor whiteColor];
     bioLabel.numberOfLines = 0;
     bioLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
-    locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(bioLabel.frame) + 5, PPScreenWidth() - 20, 0)];
+    locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(bioLabel.frame) + 10, PPScreenWidth() - 20, 0)];
     locationLabel.numberOfLines = 1;
     
-    websiteLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(locationLabel.frame), PPScreenWidth() - 20, 0)];
+    websiteLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(bioLabel.frame) + 10, PPScreenWidth() - 20, 0)];
     websiteLabel.numberOfLines = 1;
     websiteLabel.userInteractionEnabled = YES;
     [websiteLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didWebsiteCLick)]];
@@ -259,7 +268,6 @@
     [headerCell addSubview:friendActionButton];
     [headerCell addSubview:friendRequestActionButton];
     [headerCell addSubview:editProfileActionButton];
-    [headerCell addSubview:settingsButton];
     [headerCell addSubview:settingsButton];
     [headerCell addSubview:bioLabel];
     [headerCell addSubview:locationLabel];
@@ -327,6 +335,8 @@
     UIView *rightButton = nil;
     
     if (currentUser.actions) {
+        CGFloat rightMargin = 10;
+        
         if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound) {
             rightButton = friendActionButton;
         } else if ([currentUser.actions indexOfObject:@"friend:request"] != NSNotFound) {
@@ -336,20 +346,27 @@
         } else if ([currentUser.actions indexOfObject:@"friend:remove"] != NSNotFound) {
             rightButton = unfriendMiniActionButton;
         } else if ([currentUser.actions indexOfObject:@"self"] != NSNotFound) {
+            rightMargin = 15;
+            int accountNotifs = 0;
+            
+            accountNotifs += [currentUser.metrics[@"accountMissing"] intValue];
+
+            editProfileActionButton.badgeValue = [@(accountNotifs) stringValue];
+            
             rightButton = editProfileActionButton;
         }
         
         if (rightButton) {
             [rightButton setHidden:NO];
-            CGRectSetX(rightButton.frame, PPScreenWidth() - CGRectGetWidth(rightButton.frame) - 10);
+            CGRectSetX(rightButton.frame, PPScreenWidth() - CGRectGetWidth(rightButton.frame) - rightMargin);
         }
         
         if ([currentUser.actions indexOfObject:@"settings"] != NSNotFound) {
             [settingsButton setHidden:NO];
             if (rightButton)
-                CGRectSetX(settingsButton.frame, CGRectGetMinX(rightButton.frame) - CGRectGetWidth(settingsButton.frame) - 3);
+                CGRectSetX(settingsButton.frame, CGRectGetMinX(rightButton.frame) - CGRectGetWidth(settingsButton.frame) - 5);
             else
-                CGRectSetX(settingsButton.frame, PPScreenWidth() - CGRectGetWidth(settingsButton.frame) - 10);
+                CGRectSetX(settingsButton.frame, PPScreenWidth() - CGRectGetWidth(settingsButton.frame) - 15);
         }
     }
     
@@ -385,24 +402,26 @@
         [controlTab updateMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"FRIENDS", nil) andStat:currentUser.publicStats.nbFriends] forSegmentAtIndex:1];
     
     [bioLabel setText:currentUser.bio];
-    [bioLabel setHeightToFit];
+    CGRectSetHeight(bioLabel.frame, [bioLabel heightToFit] + 5);
     
-    CGRectSetY(locationLabel.frame, CGRectGetMaxY(bioLabel.frame) + 5);
+    CGRectSetY(locationLabel.frame, CGRectGetMaxY(bioLabel.frame) + 10);
+    CGRectSetY(websiteLabel.frame, CGRectGetMaxY(bioLabel.frame) + 10);
+    
+    CGFloat nextX = 0;
     
     if (currentUser.location && ![currentUser.location isBlank]) {
         locationLabel.hidden = NO;
         CGRectSetHeight(locationLabel.frame, 20);
-        CGRectSetY(websiteLabel.frame, CGRectGetMaxY(locationLabel.frame));
         
         UIImage *image = [UIImage imageNamed:@"map"];
-        CGSize newImgSize = CGSizeMake(14, 14);
+        CGSize newImgSize = CGSizeMake(16, 16);
         
         image = [FLHelper imageWithImage:image scaledToSize:newImgSize];
         image = [FLHelper colorImage:image color:[UIColor whiteColor]];
         
         NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
         attachment.image = image;
-        attachment.bounds = CGRectMake(0, -3, attachment.image.size.width, attachment.image.size.height);
+        attachment.bounds = CGRectMake(0, -4, attachment.image.size.width, attachment.image.size.height);
         
         NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
         
@@ -411,49 +430,78 @@
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", currentUser.location] attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont customContentRegular:14]}]];
         
         locationLabel.attributedText = string;
+        
+        nextX = [[NSString stringWithFormat:@" %@", currentUser.location] widthOfString:[UIFont customContentRegular:14]] + 20;
     } else {
+        CGRectSetHeight(locationLabel.frame, 20);
         locationLabel.hidden = YES;
-        CGRectSetHeight(locationLabel.frame, 0);
-        CGRectSetY(websiteLabel.frame, CGRectGetMaxY(bioLabel.frame) + 5);
     }
-
+    
     if (currentUser.website && ![currentUser.website isBlank]) {
         websiteLabel.hidden = NO;
         CGRectSetHeight(websiteLabel.frame, 20);
         CGRectSetY(controlTab.frame, CGRectGetMaxY(websiteLabel.frame) + 10);
+        CGRectSetX(websiteLabel.frame, CGRectGetMinX(locationLabel.frame) + nextX + 10);
+        CGRectSetWidth(websiteLabel.frame, PPScreenWidth() - CGRectGetMinX(websiteLabel.frame) - 10);
         
-        UIImage *image = [UIImage imageNamed:@"map"];
-        CGSize newImgSize = CGSizeMake(14, 14);
+        UIImage *image = [UIImage imageNamed:@"link"];
+        CGSize newImgSize = CGSizeMake(16, 16);
         
         image = [FLHelper imageWithImage:image scaledToSize:newImgSize];
         image = [FLHelper colorImage:image color:[UIColor whiteColor]];
         
         NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
         attachment.image = image;
-        attachment.bounds = CGRectMake(0, -3, attachment.image.size.width, attachment.image.size.height);
+        attachment.bounds = CGRectMake(0, -4, attachment.image.size.width, attachment.image.size.height);
         
         NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
         
         NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-        [string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", currentUser.website] attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont customContentRegular:14]}]];
+        [string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", currentUser.website] attributes:@{NSForegroundColorAttributeName: [UIColor customBlue], NSFontAttributeName: [UIFont customContentRegular:14]}]];
         
         websiteLabel.attributedText = string;
     } else {
         websiteLabel.hidden = YES;
         CGRectSetHeight(websiteLabel.frame, 0);
+        
         if (currentUser.location && ![currentUser.location isBlank]) {
             CGRectSetY(controlTab.frame, CGRectGetMaxY(locationLabel.frame) + 10);
         } else {
             CGRectSetY(controlTab.frame, CGRectGetMaxY(bioLabel.frame) + 10);
         }
     }
-
+    
     CGRectSetHeight(headerCell.frame, CGRectGetMaxY(controlTab.frame) + 10);
-
+    
     [self.tableView reloadData];
 }
 
 #pragma marks - button handlers
+
+- (void) didBalanceButtonClick {
+    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
+    CGSize newImgSize = CGSizeMake(20, 14);
+    
+    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
+    [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
+    cbImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+    attachment.image = cbImage;
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_1", nil)];
+    [string appendAttributedString:attachmentString];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_2", nil)]];
+    
+    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:nil] show];
+}
+
+- (void) didSettingsButtonClick {
+    [self.navigationController pushViewController:[AccountViewController new] animated:YES];
+}
 
 - (void) didWebsiteCLick {
     if (currentUser.website && ![currentUser.website isBlank]) {

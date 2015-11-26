@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *phoneCode;
 @property (strong, nonatomic) NSString *imageName;
+@property (strong, nonatomic) NSNumber *numLength;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

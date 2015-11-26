@@ -42,7 +42,7 @@
         
         _placeholder = placeholder;
         _dictionary = dictionary;
-
+        
         if (!_dictionary[@"country"] || [_dictionary[@"country"] isBlank]) {
             NSLocale *currentLocale = [NSLocale currentLocale];
             NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
@@ -189,9 +189,9 @@
         return YES;
     }
     
-    int maxLenght = 10;
-    if (![textField.text hasPrefix:@"0"]) {
-        maxLenght = 9;
+    int maxLenght = [_countryPicker getSelectedCountry].numLength.intValue;
+    if ([textField.text hasPrefix:@"0"]) {
+        maxLenght += 1;
     }
     
     NSUInteger newLength = [textField.text length] + [string length] - range.length;

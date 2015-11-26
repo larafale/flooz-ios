@@ -43,9 +43,11 @@
 - (void)createBadge {
     self.badgeIcon = [[UILabel alloc] initWithText:@"" textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:15]];
     self.badgeIcon.layer.masksToBounds = YES;
-    self.badgeIcon.layer.cornerRadius = 5.0f;
+    self.badgeIcon.layer.cornerRadius = 10.0f;
     self.badgeIcon.textAlignment = NSTextAlignmentCenter;
-    self.badgeIcon.backgroundColor = [UIColor customBackground];
+    self.badgeIcon.backgroundColor = [UIColor customBlue];
+    self.badgeIcon.textColor = [UIColor whiteColor];
+    self.badgeIcon.font = [UIFont customContentRegular:12];
     
     CGRectSetHeight(self.badgeIcon.frame, 20);
 
@@ -63,14 +65,14 @@
         self.indicator.tintColor = [UIColor whiteColor];
         self.textLabel.textColor = [UIColor whiteColor];
         self.badgeIcon.textColor = [UIColor whiteColor];
-        self.badgeIcon.backgroundColor = [UIColor customBackgroundHeader];
+        self.badgeIcon.backgroundColor = [UIColor customBlue];
     }
     else {
         [self setBackgroundColor:[UIColor customBackgroundHeader]];
         self.indicator.tintColor = [UIColor customPlaceholder];
         self.textLabel.textColor = [UIColor customPlaceholder];
-        self.badgeIcon.textColor = [UIColor customPlaceholder];
-        self.badgeIcon.backgroundColor = [UIColor customBackground];
+        self.badgeIcon.textColor = [UIColor whiteColor];
+        self.badgeIcon.backgroundColor = [UIColor customBlue];
     }
 }
 
@@ -102,7 +104,7 @@
         float width = [self.badgeIcon.text widthOfString:self.badgeIcon.font];
         width += 10;
         CGRectSetHeight(self.badgeIcon.frame, 20);
-        CGRectSetWidth(self.badgeIcon.frame, width);
+        CGRectSetWidth(self.badgeIcon.frame, MAX(width, 20));
         CGRectSetXY(self.badgeIcon.frame, PPScreenWidth() - width - 50, [AccountCell getHeight] / 2 - CGRectGetHeight(self.badgeIcon.frame) / 2);
     } else {
         [self.badgeIcon setHidden:YES];

@@ -123,11 +123,7 @@
         else if (!navigationController.parentViewController) {
             viewController.navigationItem.leftBarButtonItem = backItem;
         }
-        else
-            viewController.navigationItem.leftBarButtonItem = nil;
     }
-    else
-        viewController.navigationItem.leftBarButtonItem = nil;
     
     
     if (_navigationDelegate)

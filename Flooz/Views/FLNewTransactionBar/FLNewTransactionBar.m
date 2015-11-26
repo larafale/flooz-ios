@@ -106,16 +106,6 @@
         if (!IS_IPHONE_4) {
             [locationView setHidden:NO];
             [locationLabel setText:_dictionary[@"geo"][@"name"]];
-            
-//            if (_dictionary[@"geo"][@"location"] && _dictionary[@"geo"][@"location"][@"distance"]) {
-//                float distance = [_dictionary[@"geo"][@"location"][@"distance"] floatValue];
-//                
-//                if (distance >= 1000) {
-//                    [locationLabel setText:[NSString stringWithFormat:@"%@ - %.1f km", locationLabel.text, distance/1000]];
-//                } else {
-//                    [locationLabel setText:[NSString stringWithFormat:@"%@ - %.0f m", locationLabel.text, distance]];
-//                }
-//            }
         }
         [locationButton setTintColor:[UIColor customBlue]];
     } else {

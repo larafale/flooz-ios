@@ -23,6 +23,7 @@
 #import "FriendsViewController.h"
 #import "DiscountCodeViewController.h"
 #import "FriendRequestViewController.h"
+#import "EditProfileViewController.h"
 
 #import "AccountCell.h"
 
@@ -201,7 +202,7 @@
         _menuDic = @[
                      @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
                        @"items":@[
-                               @{@"title":NSLocalizedString(@"PROFILE", @""), @"action":@"profile"},
+                               @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
@@ -232,7 +233,7 @@
         _menuDic = @[
                      @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
                        @"items":@[
-                               @{@"title":NSLocalizedString(@"PROFILE", @""), @"action":@"profile"},
+                               @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
@@ -400,9 +401,8 @@
             [popup show];
         } else if ([action isEqualToString:@"sponsor"]) {
             [[self navigationController] pushViewController:[DiscountCodeViewController new] animated:YES];
-        } else if ([action isEqualToString:@"profile"]) {
-            [Flooz sharedInstance].currentUser.isComplete = YES;
-            [appDelegate showUser:[Flooz sharedInstance].currentUser inController:self];
+        } else if ([action isEqualToString:@"edit"]) {
+            [self.navigationController pushViewController:[EditProfileViewController new] animated:YES];
         } else if ([action isEqualToString:@"friendsRequest"]) {
             [[self navigationController] pushViewController:[FriendRequestViewController new] animated:YES];
         }
