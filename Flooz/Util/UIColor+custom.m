@@ -164,4 +164,28 @@
     return [UIColor colorWithIntegerRed:53 green:68 blue:82 alpha:alpha];
 }
 
++ (UIColor *)customPink {
+    return [UIColor customPink:1.];
+}
+
++ (UIColor *)customPink:(CGFloat)alpha {
+    return [UIColor colorWithIntegerRed:226 green:98 blue:146 alpha:alpha];
+}
+
++ (UIColor *)customTwitterBlue {
+    return [UIColor customTwitterBlue:1.];
+}
+
++ (UIColor *)customTwitterBlue:(CGFloat)alpha {
+    return [UIColor colorWithIntegerRed:64 green:153 blue:255 alpha:alpha];
+}
+
++ (UIColor *)customFacebookBlue {
+    return [UIColor customFacebookBlue:1.];
+}
+
++ (UIColor *)customFacebookBlue:(CGFloat)alpha {
+    return [UIColor colorWithIntegerRed:59 green:89 blue:152 alpha:alpha];
+}
+
 @end

@@ -207,7 +207,6 @@
                                @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
-                               @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
                                ]
                        },
                      @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
@@ -237,7 +236,6 @@
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
-                               @{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}
                                ]
                        },
                      @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
@@ -261,6 +259,23 @@
                      ];
     }
     
+    NSMutableArray *mutableMenuDic = [_menuDic mutableCopy];
+    NSMutableDictionary *mutableAccountDic = [_menuDic[0] mutableCopy];
+    NSMutableArray *mutableAccountArray = [mutableAccountDic[@"items"] mutableCopy];
+    
+    if ([Flooz sharedInstance].currentTexts.menu[@"promo"]
+        && [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"]
+        && ![[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"] isBlank]) {
+        [mutableAccountArray addObject:@{@"title":[Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"], @"action":@"sponsor"}];
+    
+        [mutableAccountDic setObject:mutableAccountArray forKey:@"items"];
+        
+        [mutableMenuDic replaceObjectAtIndex:0 withObject:mutableAccountDic];
+        
+        _menuDic = mutableMenuDic;
+    }
+    
+        
     [_tableView reloadData];
 }
 

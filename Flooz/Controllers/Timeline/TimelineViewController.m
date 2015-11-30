@@ -20,6 +20,8 @@
 #import "FLPopupInformation.h"
 #import "FLFilterSegmentedControl.h"
 #import "SearchViewController.h"
+#import "UIButton+LongTapShare.h"
+#import "FLSocialPopup.h"
 
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
@@ -132,7 +134,7 @@
     scopeChangeHelper = [[UIView alloc] initWithFrame:CGRectMake(0, 15, 0, 20)];
     scopeChangeHelper.layer.masksToBounds = YES;
     scopeChangeHelper.layer.cornerRadius = 4;
-    scopeChangeHelper.backgroundColor = [UIColor customBlue:0.8f];
+    scopeChangeHelper.backgroundColor = [UIColor customBlue];
     scopeChangeHelper.userInteractionEnabled = NO;
     
     scopeChangeHelperLabel = [UILabel newWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentLight:15] textAlignment:NSTextAlignmentCenter numberOfLines:1];
@@ -140,6 +142,15 @@
     [scopeChangeHelper addSubview:scopeChangeHelperLabel];
     
     [self.view addSubview:scopeChangeHelper];
+
+    UIButton *logo = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 45, 45)];
+    [logo setTintColor:[UIColor customBlue]];
+    [logo setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"flooz-mini"] scaledToSize:CGSizeMake(45, 45)] forState:UIControlStateNormal];
+    [logo setContentMode:UIViewContentModeCenter];
+    [logo addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didShareFloozClick)]];
+    [logo setUserInteractionEnabled:YES];
+    
+    self.navigationItem.titleView = logo;
     
     [self registerNotification:@selector(reloadCurrentTimeline) name:kNotificationReloadTimeline object:nil];
     [self registerNotification:@selector(reloadBalanceItem) name:kNotificationReloadCurrentUser object:nil];
@@ -195,6 +206,30 @@
     [self reloadTableView];
 }
 
+- (UIColor*)colorOfShareView {
+    return [UIColor customBlue];
+}
+
+- (void)didShareFloozClick {
+    [[[FLSocialPopup alloc] initWithTitle:NSLocalizedString(@"SOCIAL_SHARE_TITLE", nil) fb:^{
+        NSURL *facebookURL = [NSURL URLWithString:@"fb://profile/1462571777306570"];
+        if ([[UIApplication sharedApplication] canOpenURL:facebookURL]) {
+            [[UIApplication sharedApplication] openURL:facebookURL];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.facebook.com/floozme"]];
+        }
+    } twitter:^{
+        NSURL *twitterURL = [NSURL URLWithString:@"twitter:///user?screen_name=floozme"];
+        if ([[UIApplication sharedApplication] canOpenURL:twitterURL]) {
+            [[UIApplication sharedApplication] openURL:twitterURL];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/floozme"]];
+        }
+    } app:^{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?pageNumber=0&sortOrdering=1&type=Purple+Software&mt=8&id=940393916"]];
+    }] show];
+}
+
 - (void)displayContentController:(UIViewController *)content {
 }
 
@@ -209,12 +244,6 @@
     
     [amountItem setTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO]];
     
-    UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 30, 30)];
-    [logo setTintColor:[UIColor customBlue]];
-    [logo setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"flooz-mini"] scaledToSize:CGSizeMake(45, 45)]];
-    [logo setContentMode:UIViewContentModeCenter];
-    
-    self.navigationItem.titleView = logo;
     self.navigationItem.rightBarButtonItem = searchItem;
     self.navigationItem.leftBarButtonItem = scopeItem;
     

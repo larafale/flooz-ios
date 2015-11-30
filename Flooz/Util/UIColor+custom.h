@@ -37,6 +37,12 @@
 + (UIColor *)customMiddleBlue;
 + (UIColor *)customMiddleBlue:(CGFloat)alpha;
 + (UIColor *)customGrey;
++ (UIColor *)customPink;
++ (UIColor *)customPink:(CGFloat)alpha;
++ (UIColor *)customTwitterBlue;
++ (UIColor *)customTwitterBlue:(CGFloat)alpha;
++ (UIColor *)customFacebookBlue;
++ (UIColor *)customFacebookBlue:(CGFloat)alpha;
 
 + (UIColor *)customPlaceholder;
 + (UIColor *)customPlaceholder:(CGFloat)alpha;

@@ -36,6 +36,15 @@
 "GLOBAL_INVITE" = "Inviter";
 
 /************************************/
+/*              SHARE               */
+/************************************/
+
+"SOCIAL_SHARE_TITLE" = "Rejoignez-nous !";
+"SOCIAL_SHARE_FACEBOOK" = "Likez notre page !";
+"SOCIAL_SHARE_TWITTER" = "Twittez nous !";
+"SOCIAL_SHARE_APP" = "Donnez votre avis !";
+
+/************************************/
 /*              FIELDS              */
 /************************************/
 
@@ -397,7 +406,7 @@
 "TIMELINE_FILTER_PRIVATE" = "Moi uniquement";
 
 "TIMELINE_SCOPE_HELPER_ALL" = "Tous les paiements";
-"TIMELINE_SCOPE_HELPER_FRIENDS" = "Mes paiements et ceux de mes amis";
+"TIMELINE_SCOPE_HELPER_FRIENDS" = "Les paiements qui me concernent";
 
 /************************************/
 /*              OTHER               */
