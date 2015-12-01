@@ -841,6 +841,7 @@
     
     NSMutableDictionary *tempTransaction = [transaction mutableCopy];
     tempTransaction[@"validate"] = @"true";
+
     if ([SecureCodeViewController hasSecureCodeForCurrentUser])
         [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
     
@@ -863,8 +864,13 @@
         }
     };
     
+    NSMutableDictionary *tempTransaction = [transaction mutableCopy];
+    
+    if ([SecureCodeViewController hasSecureCodeForCurrentUser])
+        [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
+
     NSString *path = [@"/flooz/" stringByAppendingString : transaction[@"id"]];
-    [self requestPath:path method:@"POST" params:transaction success:successBlock failure:failure];
+    [self requestPath:path method:@"POST" params:tempTransaction success:successBlock failure:failure];
 }
 
 - (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -884,7 +890,14 @@
 }
 
 - (void)cashout:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/cashouts" method:@"POST" params:@{ @"amount": amount } success:success failure:failure];
+    NSMutableDictionary *tempDic = [NSMutableDictionary new];
+    
+    [tempDic setObject:amount forKey:@"amount"];
+    
+    if ([SecureCodeViewController hasSecureCodeForCurrentUser])
+        [tempDic setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
+    
+    [self requestPath:@"/cashouts" method:@"POST" params:tempDic success:success failure:failure];
 }
 
 - (void)cashoutValidate:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -986,11 +999,11 @@
     [self requestPath:path method:@"POST" params:nil success:success failure:failure];
 }
 
-- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result))success {
+- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result, NSString *searchString))success {
     id successBlock = ^(id result) {
         NSMutableArray *friends = [self createFriendsArrayFromSearchResult:result];
         if (success) {
-            success(friends);
+            success(friends, result[@"q"]);
         }
     };
     

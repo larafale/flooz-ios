@@ -39,7 +39,7 @@
 /*              SHARE               */
 /************************************/
 
-"SOCIAL_SHARE_TITLE" = "Rejoignez-nous !";
+"SOCIAL_SHARE_TITLE" = "Vous aimez Flooz ?";
 "SOCIAL_SHARE_FACEBOOK" = "Likez notre page !";
 "SOCIAL_SHARE_TWITTER" = "Twittez nous !";
 "SOCIAL_SHARE_APP" = "Donnez votre avis !";
@@ -111,7 +111,7 @@
 "SIGNUP_ALBUM_BUTTON" = "Album photo";
 "SIGNUP_PHOTO_FACEBOOK" = "Photo Facebook";
 
-"SIGNUP_READ_CGU" = "En cliquant sur \"Inscription\" vous déclarez accepter les CGU Flooz.";
+"SIGNUP_READ_CGU" = "En cliquant sur \"Inscription\" vous déclarez accepter les CGU Flooz";
 
 "SIGNUP_FIELD_CARD_OWNER_PLACEHOLDER" = "Titulaire de la carte";
 "SIGNUP_FIELD_CARD_NUMBER_PLACEHOLDER" = "Numéro de carte";
@@ -133,7 +133,7 @@
 "EDIT_BIO" = "Bio";
 "EDIT_LOCATION" = "Lieu";
 "EDIT_WEBSITE" = "Site web";
-"HINT_LOCATION" = "ex: Aix en Provence, France";
+"HINT_LOCATION" = "ex: Paris, France";
 "HINT_WEBSITE" = "ex: www.flooz.me";
 
 "SETTINGS_CARD" = "Carte bancaire";
@@ -160,15 +160,15 @@
 "SECORE_CODE_TEXT_NEW" = "Choisissez un code secret";
 "SECORE_CODE_TEXT_CONFIRM" = "Confirmez votre nouveau code";
 "SECORE_CODE_TEXT_CHANGE_PASS" = "Modifier votre mot de passe";
-"SECORE_CODE_TOUCHID_MSG" = "Valider avec votre empreinte.";
+"SECORE_CODE_TOUCHID_MSG" = "Valider avec votre empreinte";
 "SECORE_CODE_TOUCHID" = "Touch ID";
 "SECORE_CODE_TOUCHID_FALLBACK" = "Entrer mon code";
-"SECORE_CODE_TOUCHID_ERROR" = "Votre empreinte n'est pas enregistrée dans ce téléphone.";
+"SECORE_CODE_TOUCHID_ERROR" = "Votre empreinte n'est pas enregistrée dans ce téléphone";
 
 "SECORE_CODE_TEXT_LOGIN" = "Identifiez vous pour réinitialiser votre code";
 "SECURE_CODE_FORGOT" = "Code oublié ?";
 
-"SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser vos paiements en cas de perte/vol de votre mobile.";
+"SECORE_CODE_TEXT_FIRST_TIME" = "Ce code vous permet de sécuriser vos paiements en cas de perte/vol de votre mobile";
 "SECORE_CODE_TEXT_SIGNUP_NEW" = "Choisissez un code secret";
 "SECORE_CODE_TEXT_SIGNUP_CONFIRM" = "Veuillez retaper votre code";
 

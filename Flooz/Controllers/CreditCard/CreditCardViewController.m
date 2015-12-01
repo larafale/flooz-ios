@@ -176,10 +176,8 @@
             label.textColor = [UIColor whiteColor];
             label.font = [UIFont customTitleExtraLight:22];
             
-            NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:creditCard.number];
-            [attributedString addAttribute:NSKernAttributeName value:@(2.5) range:NSMakeRange(0, attributedString.length)];
+            label.text = [NSString stringWithFormat:@"%@********%@", [creditCard.number substringToIndex:4], [creditCard.number substringFromIndex:creditCard.number.length - 4]];
             
-            label.attributedText = attributedString;
             [view addSubview:label];
         }
         

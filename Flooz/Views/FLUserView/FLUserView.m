@@ -103,11 +103,9 @@
 
 - (void)setImageFromUser:(FLUser *)user {
     self.user = user;
+    [self showPlaceholder];
 	if (self.user.avatarURL) {
 		[self setImageFromURL:self.user.avatarURL];
-	}
-	else {
-		[self showPlaceholder];
 	}
 }
 
@@ -124,22 +122,12 @@
 - (void)showPlaceholder {
 	avatar.layer.opacity = 1;
 	avatar.image = placeholder;
-
-//    CGFloat RATIO = .9;
-//    CGRectSetWidthHeight(avatar.frame, CGRectGetWidth(self.frame) * RATIO, CGRectGetHeight(self.frame) * RATIO);
-//    avatar.center = CGRectGetFrameCenter(self.frame);
-
-//    avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 5.5;
     avatar.layer.cornerRadius = 5;
-//    avatar.layer.borderWidth = 0;
 }
 
 - (void)hidePlaceholder {
-//    avatar.frame = CGRectMakeWithSize(self.frame.size);
-
-//	avatar.layer.cornerRadius = CGRectGetHeight(self.frame) / 5.5;
+    avatar.layer.opacity = 1;
     avatar.layer.cornerRadius = 5;
-//    avatar.layer.borderWidth = 2.;
 }
 
 @end

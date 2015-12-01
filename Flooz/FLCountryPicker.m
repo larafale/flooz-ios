@@ -77,8 +77,7 @@
     [self setSelectedCountryCode:countryCode animated:NO];
 }
 
-- (FLCountry *)getSelectedCountry
-{
+- (FLCountry *)getSelectedCountry {
     return self.selectedCountry;
 }
 

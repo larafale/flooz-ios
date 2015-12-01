@@ -2522,7 +2522,7 @@
 				AB3D088B186CA11A00CF8380 /* Frameworks */,
 				AB3D088C186CA11A00CF8380 /* Resources */,
 				6E634A2949F5469076E819D3 /* Copy Pods Resources */,
-				CC066EF4A38CC238F8613A30 /* Embed Pods Frameworks */,
+				6CCD2EE82315B8BB105868E3 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2542,7 +2542,7 @@
 				AB3D08A6186CA11A00CF8380 /* Frameworks */,
 				AB3D08A7186CA11A00CF8380 /* Resources */,
 				C4395DA043E3AF023BF21082 /* Copy Pods Resources */,
-				E9D1AC26224341894161F76E /* Embed Pods Frameworks */,
+				E1BE35E6042D4E9B05E4EF72 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2565,7 +2565,7 @@
 				ABAA3FE7197E96BF009F29EF /* Frameworks */,
 				ABAA3FFC197E96BF009F29EF /* Resources */,
 				28E085B265D94FB37A72EA1D /* Copy Pods Resources */,
-				2E3E835E9F07A31F6959935B /* Embed Pods Frameworks */,
+				3D85967B49417494E0A2001C /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2585,7 +2585,7 @@
 				C98013041A76921000019682 /* Frameworks */,
 				C980131C1A76921000019682 /* Resources */,
 				0316D686744A4C8C799C31D6 /* Copy Pods Resources */,
-				E5B055E308E5F1B7EC0CFF2F /* Embed Pods Frameworks */,
+				584AC9592658B18B58D825DA /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2608,6 +2608,11 @@
 				TargetAttributes = {
 					AB3D088D186CA11A00CF8380 = {
 						DevelopmentTeam = QU87Q423GH;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					AB3D08A8186CA11A00CF8380 = {
 						DevelopmentTeam = QU87Q423GH;
@@ -2803,21 +2808,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2E3E835E9F07A31F6959935B /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		36D69480EB8CF264DF447602 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -2833,6 +2823,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		3D85967B49417494E0A2001C /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4915A975F6D18A0EB41C5D89 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2846,6 +2851,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		584AC9592658B18B58D825DA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6CCD2EE82315B8BB105868E3 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6E634A2949F5469076E819D3 /* Copy Pods Resources */ = {
@@ -2893,37 +2928,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CC066EF4A38CC238F8613A30 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E5B055E308E5F1B7EC0CFF2F /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E9D1AC26224341894161F76E /* Embed Pods Frameworks */ = {
+		E1BE35E6042D4E9B05E4EF72 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3576,7 +3581,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3598,7 +3603,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Flooz;
-				PROVISIONING_PROFILE = "5a5876d4-a43b-4d8b-a6d8-40751e325ac2";
+				PROVISIONING_PROFILE = "83ea0f82-5537-486f-ae94-9a5075fcf1a6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3752,7 +3757,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3774,7 +3779,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5a5876d4-a43b-4d8b-a6d8-40751e325ac2";
+				PROVISIONING_PROFILE = "83ea0f82-5537-486f-ae94-9a5075fcf1a6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3788,7 +3793,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -3809,7 +3814,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3b8c90ae-a5c2-49ed-981a-6356c9576052";
+				PROVISIONING_PROFILE = "7d00adb8-879f-4e27-83c0-29ef49cdead0";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -3991,7 +3996,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4013,7 +4018,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5a5876d4-a43b-4d8b-a6d8-40751e325ac2";
+				PROVISIONING_PROFILE = "83ea0f82-5537-486f-ae94-9a5075fcf1a6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";

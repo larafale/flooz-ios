@@ -24,6 +24,8 @@
 @property (nonatomic, retain) FLCountry *selectedCountry;
 
 - (void)setSelectedCountryCode:(NSString *)countryCode animated:(BOOL)animated;
+- (void)setSelectedCountryCode:(NSString *)countryCode;
+
 - (FLCountry *)getSelectedCountry;
 
 @end

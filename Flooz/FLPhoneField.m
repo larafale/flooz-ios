@@ -106,6 +106,7 @@
     _countryPicker = [[FLCountryPicker alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     _countryPicker.showsSelectionIndicator = YES;
     _countryPicker.delegate = self;
+    [_countryPicker setSelectedCountryCode:self.currentCountry.code];
     
     _countryPickerViewTextField.inputView = _countryPicker;
     
@@ -212,7 +213,12 @@
         NBPhoneNumber *myNumber = [phoneUtil parse:_textfield.text defaultRegion:self.currentCountry.code error:&anError];
         
         if (anError == nil) {
-            if ([phoneUtil isValidNumber:myNumber])
+            int maxLenght = [_countryPicker getSelectedCountry].numLength.intValue;
+            if ([textField.text hasPrefix:@"0"]) {
+                maxLenght += 1;
+            }
+            
+            if (textField.text.length == maxLenght)
                 [self callAction];
         }
     }
@@ -262,7 +268,7 @@
 
 - (void)countryPicker:(FLCountryPicker *)picker didSelectCountry:(FLCountry *)country {
     self.currentCountry = country;
-    [_countryPicker setSelectedCountry:self.currentCountry];
+    [_countryPicker setSelectedCountryCode:self.currentCountry.code];
     [_countryFlag setImage:[UIImage imageNamed:country.imageName]];
     [_countryLabel setText:country.phoneCode];
     

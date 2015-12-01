@@ -156,7 +156,7 @@ static NSString *kLocationData = @"locationData";
 - (void)updateFriendRequest:(NSDictionary *)dictionary success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)friendsSuggestion:(void (^)(id result))success;
 - (void)friendRemove:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
-- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result))success;
+- (void)friendSearch:(NSString *)text forNewFlooz:(BOOL)newFlooz withPhones:(NSArray*)phones success:(void (^)(id result, NSString *searchString))success;
 - (void)friendFollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)friendUnfollow:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)friendAdd:(NSString *)friendId success:(void (^)())success failure:(void (^)(NSError *error))failure;

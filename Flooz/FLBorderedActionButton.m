@@ -125,10 +125,6 @@
     }
 }
 
-- (void) setCustomBadgeValue:(NSString *) value withFont:(UIFont *) font andFontColor:(UIColor *) color andBackgroundColor:(UIColor *) backColor {
-    
-}
-
 - (void)setEnabled:(BOOL)enabled
 {
     _priorState = self.state;

@@ -257,7 +257,10 @@
     isSearching = YES;
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] friendSearch:searchString forNewFlooz:NO withPhones:@[] success: ^(id result) {
+    [[Flooz sharedInstance] friendSearch:searchString forNewFlooz:NO withPhones:@[] success: ^(id result, NSString *string) {
+        if (string && ![string isEqualToString:searchString])
+            return;
+        
         friendsSearch = result;
         [_tableView reloadData];
         [_tableView setContentOffset:CGPointZero animated:YES];

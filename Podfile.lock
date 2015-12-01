@@ -28,15 +28,13 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.5.0)
   - Branch (0.11.11)
-  - Crashlytics (3.4.0):
+  - Crashlytics (3.4.1):
     - Fabric (~> 1.6.0)
   - DACircularProgress (2.3.1)
   - EAIntroView (2.7.4):
     - EARestrictedScrollView (~> 0.2.0)
   - EARestrictedScrollView (0.2.0)
-  - Fabric (1.6.0):
-    - Fabric/Base (= 1.6.0)
-  - Fabric/Base (1.6.0)
+  - Fabric (1.6.1)
   - FBSDKCoreKit (4.8.0):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc (= 4.8.0)
@@ -65,7 +63,7 @@ PODS:
   - JPSVolumeButtonHandler (1.0.0)
   - JTHelper (0.1.12)
   - JTSImageViewController (1.5.1)
-  - libPhoneNumber-iOS (0.8.8)
+  - libPhoneNumber-iOS (0.8.10)
   - Mixpanel (2.9.0):
     - Mixpanel/Mixpanel (= 2.9.0)
   - Mixpanel/Mixpanel (2.9.0)
@@ -132,11 +130,11 @@ SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   Branch: 71b1180c49d75e0d849e2611ecf3016de7572eac
-  Crashlytics: 1ee87895c37472eb3f01f409ea1654a464d2f8d4
+  Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: 50b85eedf414260e61330070ffe5947e72493a62
   EARestrictedScrollView: f86d61e16c61d3e93c84f8e96e83122a2a3b7631
-  Fabric: d737eda3a26ac940a5430230eedb35f16b226131
+  Fabric: bf0ceb04e7c924090efc5f8c55e4fbcca189e0a0
   FBSDKCoreKit: 66a935d17b6e00b6b64e604f2eb9b72c9ab7deb8
   FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4
   FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
@@ -150,7 +148,7 @@ SPEC CHECKSUMS:
   JPSVolumeButtonHandler: b056ec5c574fbd75a0637c527e25fe0197ec1648
   JTHelper: d84a961a60a27623c595a7f6965fcafdefb88b9b
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
-  libPhoneNumber-iOS: fe877b7c44c270a9da2082d3e2892d5316f6a2f9
+  libPhoneNumber-iOS: 7bfd00f843fdcd82b5182b463e8eb3b27579f41d
   Mixpanel: 42ae6168effc48481d957f7883dd8514a398738d
   MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
   MZFormSheetController: 7909e75056fe18366ce00ef8756ce6181414c36c
@@ -167,4 +165,4 @@ SPEC CHECKSUMS:
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
 
-COCOAPODS: 0.39.0.beta.4
+COCOAPODS: 0.39.0

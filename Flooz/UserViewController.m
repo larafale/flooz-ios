@@ -350,6 +350,11 @@
             int accountNotifs = 0;
             
             accountNotifs += [currentUser.metrics[@"accountMissing"] intValue];
+            
+            [editProfileActionButton setTitle:[NSString stringWithFormat:@"%@ ⋅ %@", NSLocalizedString(@"SETTINGS_PROFILE", nil), [FLHelper formatedAmount:currentUser.amount withSymbol:NO]] forState:UIControlStateNormal];
+            
+            CGFloat textWidth = [editProfileActionButton.titleLabel.text widthOfString:editProfileActionButton.titleLabel.font];
+            CGRectSetWidth(editProfileActionButton.frame, textWidth + (2 * actionButtonMargin));
 
             editProfileActionButton.badgeValue = [@(accountNotifs) stringValue];
             

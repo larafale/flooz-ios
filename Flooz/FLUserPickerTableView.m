@@ -97,7 +97,7 @@
     }
     
     [timer invalidate];
-    timer = [NSTimer scheduledTimerWithTimeInterval:.5 target:self selector:@selector(performSearch) userInfo:nil repeats:NO];
+    timer = [NSTimer scheduledTimerWithTimeInterval:.3 target:self selector:@selector(performSearch) userInfo:nil repeats:NO];
 }
 
 - (void)performSearch {
@@ -129,7 +129,10 @@
             }
         }
         
-        [[Flooz sharedInstance] friendSearch:_selectionText forNewFlooz:YES withPhones:phoneArray success: ^(id result) {
+        [[Flooz sharedInstance] friendSearch:_selectionText forNewFlooz:YES withPhones:phoneArray success: ^(id result, NSString *searchString) {
+            if (searchString && ![searchString isEqualToString:_selectionText])
+                return;
+            
             _friendsSearch = result;
             
             _filteredContacts = [NSMutableArray new];

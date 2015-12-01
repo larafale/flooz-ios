@@ -847,7 +847,7 @@
     if (presetUser) {
         if (presetUser.userKind == FloozUser) {
             transaction[@"to"] = presetUser.username;
-            [transaction setValue:nil forKey:@"contact"];
+            [transaction removeObjectForKey:@"contact"];
         } else if (presetUser.userKind == PhoneUser) {
             transaction[@"to"] = presetUser.phone;
             if (presetUser.firstname || presetUser.lastname) {
@@ -863,10 +863,11 @@
             }
         } else {
             transaction[@"to"] = presetUser.phone;
+            [transaction removeObjectForKey:@"contact"];
         }
     } else {
         transaction[@"to"] = @"";
-        [transaction setValue:nil forKey:@"contact"];
+        [transaction removeObjectForKey:@"contact"];
     }
     
     [[Flooz sharedInstance] showLoadView];

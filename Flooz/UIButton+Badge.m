@@ -161,7 +161,15 @@ NSString const *UIButton_badgeValueKey = @"UIButton_badgeValueKey";
         [self addSubview:self.badge];
         [self updateBadgeValueAnimated:NO];
     } else {
-        [self updateBadgeValueAnimated:YES];
+        [self.badge removeFromSuperview];
+        self.badge                      = [[UILabel alloc] initWithFrame:CGRectMake(self.badgeOriginX, self.badgeOriginY, 20, 20)];
+        self.badge.textColor            = self.badgeTextColor;
+        self.badge.backgroundColor      = self.badgeBGColor;
+        self.badge.font                 = self.badgeFont;
+        self.badge.textAlignment        = NSTextAlignmentCenter;
+        [self badgeInit];
+        [self addSubview:self.badge];
+        [self updateBadgeValueAnimated:NO];
     }
 }
 
