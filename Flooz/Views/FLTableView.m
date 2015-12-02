@@ -35,7 +35,7 @@
 	self.backgroundColor = [UIColor customBackground];
 	self.separatorColor = [UIColor customSeparator];
 	self.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-	self.showsVerticalScrollIndicator = NO;
+	self.showsVerticalScrollIndicator = YES;
 }
 
 - (UIEdgeInsets)layoutMargins {

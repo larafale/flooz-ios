@@ -93,6 +93,7 @@
     [super viewDidAppear:animated];
     if (focusOnCommentTextField) {
         [commentsView focusOnTextField];
+        focusOnCommentTextField = NO;
     }
 }
 

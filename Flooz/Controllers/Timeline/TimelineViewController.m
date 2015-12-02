@@ -42,8 +42,6 @@
     
     UIRefreshControl *refreshControl;
     
-    FLScrollViewIndicator *scrollViewIndicator;
-    
     NSMutableArray *transactionsLoaded;
     
     NSMutableSet *rowsWithPaymentField;
@@ -124,12 +122,6 @@
     [refreshControl setTintColor:[UIColor customBlueLight]];
     [refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [_tableView addSubview:refreshControl];
-    
-    {
-        scrollViewIndicator = [FLScrollViewIndicator new];
-        scrollViewIndicator.hidden = YES;
-        [self.view addSubview:scrollViewIndicator];
-    }
     
     scopeChangeHelper = [[UIView alloc] initWithFrame:CGRectMake(0, 15, 0, 20)];
     scopeChangeHelper.layer.masksToBounds = YES;
@@ -275,15 +267,7 @@
     
     [appDelegate handlePendingData];
     
-    BOOL reloadTimeline = NO;
-    
-    NSArray *visibleIndexes;
-    
-    visibleIndexes = [_tableView indexPathsForVisibleRows];
-    if ([[visibleIndexes lastObject] row] <= [[Flooz sharedInstance] timelinePageSize])
-        reloadTimeline = YES;
-    
-    if (reloadTimeline)
+    if (transactions.count == 0)
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(reloadCurrentTimeline) userInfo:nil repeats:NO];
     
 }
@@ -448,70 +432,6 @@
         [imgBackView setImage:[UIImage imageNamed:imageName]];
         _tableView.backgroundView = imgBackView;
     }
-}
-
-#pragma mark - ScrollViewIndicator
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    // Fin du scroll
-    [self hideScrollViewIndicator];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    // Lache d un coup
-    [self hideScrollViewIndicator];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (_tableView.contentOffset.y > 0) {
-        [self refreshScrollViewIndicator];
-    }
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    [self hideScrollViewIndicator];
-}
-
-- (void)refreshScrollViewIndicator {
-    if ([transactions count] == 0) {
-        scrollViewIndicator.hidden = YES;
-        return;
-    }
-    
-    [scrollViewIndicator.layer removeAllAnimations];
-    scrollViewIndicator.hidden = NO;
-    scrollViewIndicator.layer.opacity = 1;
-    
-    CGFloat y = _tableView.frame.origin.y + (_tableView.contentOffset.y / _tableView.contentSize.height) * CGRectGetHeight(_tableView.frame);
-    
-    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + y - _tableView.frame.origin.y + CGRectGetHeight(scrollViewIndicator.frame) / 2.)];
-    
-    // Loading view
-    if (indexPath.row >= [transactions count]) {
-        return;
-    }
-    
-    if (!indexPath) {
-        [self hideScrollViewIndicator];
-        return;
-    }
-    
-    FLTransaction *transaction = transactions[indexPath.row];
-    
-    [scrollViewIndicator setTransaction:transaction];
-    
-    CGRectSetY(scrollViewIndicator.frame, y);
-}
-
-- (void)hideScrollViewIndicator {
-    [UIView animateWithDuration:.3 animations: ^{
-        scrollViewIndicator.layer.opacity = 0;
-    } completion: ^(BOOL finished) {
-        if (finished) {
-            scrollViewIndicator.hidden = YES;
-        }
-        scrollViewIndicator.layer.opacity = 1;
-    }];
 }
 
 - (void)reloadTableView {

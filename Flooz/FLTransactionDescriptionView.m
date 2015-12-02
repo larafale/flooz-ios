@@ -23,6 +23,7 @@
     UIView *rightView;
     
     UILabel *floozerLabel;
+    UILabel *whenLabel;
     UILabel *locationLabel;
     UILabel *descriptionLabel;
     FLImageView *attachmentView;
@@ -82,8 +83,10 @@
     
     CGFloat paddingSide = MARGE_LEFT_RIGHT;
     CGFloat rightViewWidth = width - (paddingSide * 2);
+    CGFloat floozerLabelWidth = rightViewWidth;
     if (withAvatar) {
         rightViewWidth -= (MARGE_LEFT_RIGHT + 42.0f);
+        floozerLabelWidth = rightViewWidth - [transaction.when widthOfString:[UIFont customContentRegular:13]] - MARGE_LEFT_RIGHT;
     }
     CGFloat current_height = MARGE_TOP_BOTTOM;
     
@@ -93,8 +96,8 @@
     if ([transaction title] && ![[transaction title] isBlank]) {
         attributedText = [[NSAttributedString alloc]
                           initWithString:[transaction title]
-                          attributes:@{ NSFontAttributeName: [UIFont customContentBold:15] }];
-        rect = [attributedText boundingRectWithSize:(CGSize) {rightViewWidth, CGFLOAT_MAX }
+                          attributes:@{ NSFontAttributeName: [UIFont customContentBold:15]}];
+        rect = [attributedText boundingRectWithSize:(CGSize) {floozerLabelWidth, CGFLOAT_MAX }
                                             options:NSLineBreakByClipping | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                             context:nil];
         current_height += rect.size.height + 3.0f;
@@ -198,6 +201,13 @@
     floozerLabel.numberOfLines = 0;
     
     [rightView addSubview:floozerLabel];
+    
+    whenLabel = [UILabel newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(rightView.frame), 15.0f)];
+    whenLabel.textColor = [UIColor customPlaceholder];
+    whenLabel.font = [UIFont customContentRegular:13];
+    whenLabel.numberOfLines = 1;
+    
+    [rightView addSubview:whenLabel];
 }
 
 - (void) createLocationView {
@@ -301,6 +311,16 @@
 }
 
 - (void)prepareDetailView {
+    CGFloat titleWidth = CGRectGetWidth(rightView.frame);
+    
+    if (hasAvatar) {
+        [whenLabel setText:_transaction.when];
+        [whenLabel setWidthToFit];
+        
+        CGRectSetX(whenLabel.frame, CGRectGetWidth(rightView.frame) - CGRectGetWidth(whenLabel.frame));
+        titleWidth = titleWidth - CGRectGetWidth(whenLabel.frame) - MARGE_LEFT_RIGHT;
+    }
+    
     NSMutableAttributedString *attributedContent = [NSMutableAttributedString new];
     
     {
@@ -336,7 +356,9 @@
         [attributedContent appendAttributedString:attributedText];
     }
     
+    CGRectSetWidth(floozerLabel.frame, titleWidth);
     floozerLabel.attributedText = attributedContent;
+    
     [floozerLabel setHeightToFit];
     
     CGFloat offset = 4.;
