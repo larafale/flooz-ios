@@ -77,7 +77,6 @@
     else {
         [_dictionary setValue:textView.text forKey:_dictionaryKey];
     }
-    [textView resignFirstResponder];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -162,7 +161,7 @@
     if (height > maxHeight) {
         height = maxHeight;
     }
-
+    
     if (height < 30) {
         height = 30;
     }
@@ -181,7 +180,7 @@
 
 //- (void)setMaxHeight:(CGFloat)height {
 //    maxHeight = height;
-//    
+//
 //    if (_textView.contentSize.height > CGRectGetHeight(_textView.frame)) {
 //        if (_textView.contentSize.height < maxHeight) {
 //            [self setHeight:_textView.contentSize.height];
@@ -203,6 +202,7 @@
 
 - (BOOL)resignFirstResponder {
     [self textViewDidEndEditing:_textView];
+    [_textView resignFirstResponder];
     return [super resignFirstResponder];
 }
 

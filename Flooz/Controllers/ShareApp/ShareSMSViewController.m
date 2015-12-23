@@ -446,10 +446,15 @@
             contact.firstname = firstName;
             contact.lastname = lastName;
             contact.fullname = name;
-            contact.phone = phone;
             contact.avatarData = image;
-            
-            [contactsFromAdressBook addObject:contact];
+
+            if ([FLHelper isValidPhoneNumber:phone]) {
+                contact.phone = [FLHelper formatedPhone:phone];
+                
+                if (contact.phone) {
+                    [contactsFromAdressBook addObject:contact];
+                }
+            }
         }
     }
     

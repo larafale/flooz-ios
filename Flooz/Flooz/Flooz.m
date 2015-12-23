@@ -10,7 +10,6 @@
 
 #import <AFURLRequestSerialization.h>
 #import <AFURLResponseSerialization.h>
-#import <AFHTTPRequestOperation.h>
 #import <GBDeviceInfo/GBDeviceInfo.h>
 
 #import "AppDelegate.h"
@@ -38,6 +37,7 @@
 #import "ValidateSecureCodeViewController.h"
 #import "NewTransactionViewController.h"
 #import "NotificationsViewController.h"
+#import "DeviceUID.h"
 
 #import "FLReachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -60,13 +60,12 @@
     if (self) {
         
 #ifdef FLOOZ_DEV_LOCAL
-        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", [appDelegate localIp]]]];
+        manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", [appDelegate localIp]]]];
 #elif FLOOZ_DEV_API
-        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://dev.flooz.me"]];
+        manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://dev.flooz.me"]];
 #else
-        manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
+        manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.flooz.me"]];
 #endif
-        
         
         [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
         [manager.requestSerializer setTimeoutInterval:10];
@@ -79,6 +78,7 @@
         _activitiesCached = @[];
         
         self.socketConnected = NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkDeviceToken) name:kNotificationAnswerAccessNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveUserData) name:kNotificationReloadCurrentUser object:nil];
         
         self.fbLoginManager = [[FBSDKLoginManager alloc] init];
@@ -311,6 +311,22 @@
     NSMutableDictionary *_userDic = [user mutableCopy];
     [_userDic setObject:[self formatBirthDate:user[@"birthdate"]] forKey:@"birthdate"];
     
+    NSString *path = @"/signup";
+    
+    if ([GBDeviceInfo deviceInfo]) {
+        if ([path rangeOfString:@"?os="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"?os=%lu.%lu.%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
+        }
+        
+        if ([path rangeOfString:@"&mo="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        }
+    }
+    
+    if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [DeviceUID uid]]];
+    }
+    
     [self requestPath:@"/signup" method:@"POST" params:_userDic success:successBlock failure:failure];
 }
 
@@ -361,7 +377,23 @@
         }
     };
     
-    [self requestPath:@"/users/login" method:@"POST" params:user success:successBlock failure:NULL];
+    NSString *path = @"/users/login";
+    
+    if ([GBDeviceInfo deviceInfo]) {
+        if ([path rangeOfString:@"?os="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"?os=%lu.%lu.%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
+        }
+        
+        if ([path rangeOfString:@"&mo="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        }
+    }
+    
+    if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [DeviceUID uid]]];
+    }
+    
+    [self requestPath:path method:@"POST" params:user success:successBlock failure:NULL];
 }
 
 - (void)checkSecureCodeForUser:(NSString*)secureCode success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -380,7 +412,23 @@
     NSMutableDictionary *params = [user mutableCopy];
     params[@"codeReset"] = @YES;
     
-    [self requestPath:@"/users/login" method:@"POST" params:params success:success failure:failure];
+    NSString *path = @"/users/login";
+    
+    if ([GBDeviceInfo deviceInfo]) {
+        if ([path rangeOfString:@"?os="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"?os=%lu.%lu.%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
+        }
+        
+        if ([path rangeOfString:@"&mo="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        }
+    }
+    
+    if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [DeviceUID uid]]];
+    }
+    
+    [self requestPath:path method:@"POST" params:params success:success failure:failure];
 }
 
 - (void)passwordForget:(NSString*)login success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -444,7 +492,7 @@
         __block id successBlock = ^(id result) {
             _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];            _currentUser.isComplete = YES;
             _currentUser.isComplete = YES;
-
+            
             [self updateFbToken:result[@"item"][@"fb"][@"token"] andUser:result[@"item"][@"fb"][@"id"]];
             
             [self checkDeviceToken];
@@ -456,7 +504,9 @@
             }
         };
         
-        [self requestPath:@"/users/profile" method:@"GET" params:nil success:successBlock failure:failure];
+        NSString *path = @"/users/profile";
+        
+        [self requestPath:path method:@"GET" params:nil success:successBlock failure:failure];
     } else {
         if (success) {
             success();
@@ -473,7 +523,7 @@
     [self requestPath:@"/users/profile" method:@"PUT" params:_userDic success: ^(id result) {
         _currentUser = [[FLUser alloc] initWithJSON:result[@"item"]];
         _currentUser.isComplete = YES;
-
+        
         [self checkDeviceToken];
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationReloadCurrentUser object:nil]];
         
@@ -495,7 +545,7 @@
 }
 
 - (void)uploadDocument:(NSData *)data field:(NSString *)field success:(void (^)())success failure:(void (^)(NSError *error))failure {
-    id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    id failureBlock = ^(NSURLSessionTask *task, NSError *error) {
         if (failure) {
             failure(error);
         }
@@ -764,7 +814,7 @@
     } failure:failure];
 }
 
-- (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
+- (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 {
     NSMutableDictionary *tempTransaction = [transaction mutableCopy];
     
@@ -804,6 +854,9 @@
         [dic setObject:@YES forKey:@"hasImage"];
     }
     
+    if ([SecureCodeViewController hasSecureCodeForCurrentUser])
+        [dic setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
+
     successBlock1 = ^(id result) {
         if (success) {
             success(result);
@@ -818,18 +871,18 @@
 }
 
 - (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    id failureBlock = ^(NSURLSessionTask *task, NSError *error) {
         if (failure) {
             failure(error);
         }
     };
     
-    [self requestPath:[NSString stringWithFormat:@"/flooz/%@/pic", transId] method:@"POST" params:nil success:success failure:failureBlock constructingBodyWithBlock: ^(id < AFMultipartFormData > formData) {
+    [self requestPath:[NSString stringWithFormat:@"/flooz/%@/pic", transId] method:@"POST" params:nil success:success failure:failureBlock constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
         [formData appendPartWithFileData:image name:@"image" fileName:@"image.jpg" mimeType:@"image/jpg"];
     }];
 }
 
-- (void)updateTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
+- (void)updateTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 {
     id successBlock = ^(id result) {
         [self updateCurrentUser];
@@ -841,18 +894,12 @@
     
     NSMutableDictionary *tempTransaction = [transaction mutableCopy];
     tempTransaction[@"validate"] = @"true";
-
+    
     if ([SecureCodeViewController hasSecureCodeForCurrentUser])
         [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
     
-    id failure = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (operation && operation.responseObject && [operation.responseObject[@"item"] intValue] == 107) {
-            noCreditCard();
-        }
-    };
-    
     NSString *path = [NSString stringWithFormat:@"/flooz/%@", transaction[@"id"]];
-    [self requestPath:path method:@"POST" params:tempTransaction success:successBlock fullFailure:failure];
+    [self requestPath:path method:@"POST" params:tempTransaction success:successBlock fullFailure:nil];
 }
 
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -868,7 +915,7 @@
     
     if ([SecureCodeViewController hasSecureCodeForCurrentUser])
         [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
-
+    
     NSString *path = [@"/flooz/" stringByAppendingString : transaction[@"id"]];
     [self requestPath:path method:@"POST" params:tempTransaction success:successBlock failure:failure];
 }
@@ -1047,7 +1094,7 @@
 }
 
 - (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    id failureBlock = ^(NSURLSessionTask *task, NSError *error) {
         if (failure) {
             failure(error);
         }
@@ -1055,11 +1102,11 @@
     [self requestPath:path method:method params:params success:success failure:failureBlock constructingBodyWithBlock:NULL];
 }
 
-- (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success fullFailure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))fullFailure {
+- (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success fullFailure:(void (^)(NSURLSessionTask *task, NSError *error))fullFailure {
     [self requestPath:path method:method params:params success:success failure:fullFailure constructingBodyWithBlock:NULL];
 }
 
-- (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))constructingBodyWithBlock {
+- (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSURLSessionTask *task, NSError *error))failure constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))constructingBodyWithBlock {
     
 #ifdef FLOOZ_DEV_API
     NSLog(@"%@ request: %@ - %@", method, path, params);
@@ -1081,20 +1128,6 @@
         path = [path stringByAppendingString:@"&via=ios"];
     }
     
-    if ([GBDeviceInfo deviceInfo]) {
-        if ([path rangeOfString:@"&os="].location == NSNotFound) {
-            path = [path stringByAppendingString:[NSString stringWithFormat:@"&os=%lu-%lu-%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
-        }
-        
-        if ([path rangeOfString:@"&mo="].location == NSNotFound) {
-            path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
-        }
-    }
-    
-    if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
-        path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [[UIDevice currentDevice] identifierForVendor].UUIDString]];
-    }
-    
     // Pour le nextUrl
     if ([path rangeOfString:@"&version="].location == NSNotFound) {
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&version=%@", APP_VERSION]];
@@ -1102,8 +1135,8 @@
     
     path = [path stringByAppendingString:[NSString stringWithFormat:@"&api=v%d", 2]];
     
-    id successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == 226) {
+    id successBlock = ^(NSURLSessionTask *task, id responseObject) {
+        if (((NSHTTPURLResponse*)task.response).statusCode == 226) {
             [self handleRequestTriggers:responseObject];
         }
         else {
@@ -1118,40 +1151,97 @@
         }
     };
     
-    id failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    id failureBlock = ^(NSURLSessionDataTask *task, NSError *error) {
         [self hideLoadView];
         
-        id statusCode = operation.responseObject[@"statusCode"];
+        NSInteger statusCode = ((NSHTTPURLResponse*)task.response).statusCode;
+        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
         
         if ((error.code == kCFURLErrorTimedOut || error.code == kCFURLErrorCannotConnectToHost || error.code == kCFURLErrorNotConnectedToInternet || error.code == kCFURLErrorNetworkConnectionLost
              ) && ([method isEqualToString:@"POST"] || [method isEqualToString:@"PUT"] || [method isEqualToString:@"DELETE"])) {
             [appDelegate displayMessage:@"Erreur de connexion" content:@"La connexion internet semble interrompue :(" style:FLAlertViewStyleError time:@5 delay:@0];
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationConnectionError object:nil];
         }
-        else if (([statusCode intValue] == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && _access_token && ![path isEqualToString:@"/users/login"]) {
-            [self displayPopupMessage:operation.responseObject];
-            [self handleRequestTriggers:operation.responseObject];
+        else if ((statusCode == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && _access_token && ![path isEqualToString:@"/users/login"] && errorData) {
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            
+            if (serializedData) {
+                [self displayPopupMessage:serializedData];
+                [self handleRequestTriggers:serializedData];
+            }
         }
-        else if (operation.responseObject) {
-            [self displayPopupMessage:operation.responseObject];
-            [self handleRequestTriggers:operation.responseObject];
+        else if (errorData) {
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+
+            if (serializedData) {
+                [self displayPopupMessage:serializedData];
+                [self handleRequestTriggers:serializedData];
+            }
         }
         
         if (failure) {
-            failure(operation, error);
+            failure(task, error);
         }
     };
     
     if ([method isEqualToString:@"GET"]) {
-        [manager GET:path parameters:params success:successBlock failure:failureBlock];
+        [manager GET:path parameters:params progress:nil success:successBlock failure:failureBlock];
     }
     else if ([method isEqualToString:@"POST"] && constructingBodyWithBlock != NULL) {
         NSMutableURLRequest *request = [manager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:[[NSURL URLWithString:path relativeToURL:manager.baseURL] absoluteString] parameters:params constructingBodyWithBlock:constructingBodyWithBlock error:nil];
         
         [request setTimeoutInterval:60];
         
-        AFHTTPRequestOperation *operation = [manager HTTPRequestOperationWithRequest:request success:successBlock failure:failureBlock];
-        [manager.operationQueue addOperation:operation];
+        NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithStreamedRequest:request progress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+            if (error) {
+                [self hideLoadView];
+                
+                NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
+                NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+                
+                if ((error.code == kCFURLErrorTimedOut || error.code == kCFURLErrorCannotConnectToHost || error.code == kCFURLErrorNotConnectedToInternet || error.code == kCFURLErrorNetworkConnectionLost
+                     ) && ([method isEqualToString:@"POST"] || [method isEqualToString:@"PUT"] || [method isEqualToString:@"DELETE"])) {
+                    [appDelegate displayMessage:@"Erreur de connexion" content:@"La connexion internet semble interrompue :(" style:FLAlertViewStyleError time:@5 delay:@0];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationConnectionError object:nil];
+                }
+                else if ((statusCode == 401 || error.code == kCFURLErrorUserCancelledAuthentication) && _access_token && ![path isEqualToString:@"/users/login"] && errorData) {
+                    NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                    
+                    if (serializedData) {
+                        [self displayPopupMessage:serializedData];
+                        [self handleRequestTriggers:serializedData];
+                    }
+                }
+                else if (errorData) {
+                    NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+                    
+                    if (serializedData) {
+                        [self displayPopupMessage:serializedData];
+                        [self handleRequestTriggers:serializedData];
+                    }
+                }
+                
+                if (failure) {
+                    failure(nil, error);
+                }
+            } else {
+                if (((NSHTTPURLResponse*)response).statusCode == 226) {
+                    [self handleRequestTriggers:responseObject];
+                }
+                else {
+                    [self hideLoadView];
+                    
+                    if (success) {
+                        success(responseObject);
+                    }
+                    
+                    [self displayPopupMessage:responseObject];
+                    [self handleRequestTriggers:responseObject];
+                }
+            }
+        }];
+        
+        [uploadTask resume];
     }
     else if ([method isEqualToString:@"POST"]) {
         [manager POST:path parameters:params success:successBlock failure:failureBlock];
@@ -1179,12 +1269,12 @@
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
     _currentUser.isComplete = YES;
-
+    
     [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
     
-    [self checkDeviceToken];
+    [self updateCurrentUser];
 }
 
 - (void)updateCurrentUserAfterConnect:(id)result {
@@ -1193,28 +1283,13 @@
     
     _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
     _currentUser.isComplete = YES;
-
+    
     [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
     
     [appDelegate didConnected];
     [appDelegate goToAccountViewController];
     
-    [self checkDeviceToken];
-}
-
-- (void)updateCurrentUserAfterConnectAndAskCode:(id)result {
-    _access_token = result[@"items"][0][@"token"];
-    [UICKeyChainStore setString:_access_token forKey:@"login-token"];
-    
-    _currentUser = [[FLUser alloc] initWithJSON:result[@"items"][1]];
-    _currentUser.isComplete = YES;
-
-    [self updateFbToken:result[@"items"][1][@"fb"][@"token"] andUser:result[@"items"][1][@"fb"][@"id"]];
-    
-    [appDelegate didConnected];
-    
-    [self checkDeviceToken];
-    [appDelegate askForSecureCodeWithUser:@{ @"login":_currentUser.username, @"hasSecureCode":@NO }];
+    [self updateCurrentUser];
 }
 
 - (BOOL)autologin {
@@ -1226,7 +1301,23 @@
     
     _access_token = token;
     
-    [self requestPath:@"/users/login" method:@"POST" params:nil success:^(id result) {
+    NSString *path = @"/users/login";
+    
+    if ([GBDeviceInfo deviceInfo]) {
+        if ([path rangeOfString:@"?os="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"?os=%lu.%lu.%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
+        }
+        
+        if ([path rangeOfString:@"&mo="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        }
+    }
+    
+    if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [DeviceUID uid]]];
+    }
+    
+    [self requestPath:path method:@"POST" params:nil success:^(id result) {
         [self updateCurrentUserAfterConnect:result];
     } failure: ^(NSError *error) {
         if ([self connectionStatusFromError:error] && error.code != 426)
@@ -1254,7 +1345,23 @@
     [UICKeyChainStore setString:token forKey:@"login-token"];
     _access_token = token;
     
-    [self requestPath:@"/users/login" method:@"POST" params:nil success:^(id result) {
+    NSString *path = @"/users/login";
+    
+    if ([GBDeviceInfo deviceInfo]) {
+        if ([path rangeOfString:@"?os="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"?os=%lu.%lu.%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
+        }
+        
+        if ([path rangeOfString:@"&mo="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        }
+    }
+    
+    if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [DeviceUID uid]]];
+    }
+    
+    [self requestPath:path method:@"POST" params:nil success:^(id result) {
         [self updateCurrentUserAfterConnect:result];
     } failure: ^(NSError *error) {
         if ([self connectionStatusFromError:error] && error.code != 426)
@@ -1324,7 +1431,24 @@
     else {
         [self showLoadView];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [self requestPath:@"/users/facebook" method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
+            
+            NSString *path = @"/users/facebook";
+            
+            if ([GBDeviceInfo deviceInfo]) {
+                if ([path rangeOfString:@"?os="].location == NSNotFound) {
+                    path = [path stringByAppendingString:[NSString stringWithFormat:@"?os=%lu.%lu.%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
+                }
+                
+                if ([path rangeOfString:@"&mo="].location == NSNotFound) {
+                    path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+                }
+            }
+            
+            if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
+                path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [DeviceUID uid]]];
+            }
+            
+            [self requestPath:path method:@"POST" params:@{ @"accessToken": _facebook_token } success: ^(id result) {
                 [self updateCurrentUserAfterConnect:result];
             } failure: ^(NSError *error) {
                 
@@ -1438,7 +1562,7 @@
 
 - (void)handleTrigger3DSecureComplete:(NSDictionary *)data {
     [self updateCurrentUser];
-
+    
     Secure3DViewController *controller = [Secure3DViewController getInstance];
     [controller dismissViewControllerAnimated:YES completion:^{
         [Secure3DViewController clearInstance];
@@ -1592,7 +1716,7 @@
             [tmp presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
         }
     });
-
+    
 }
 
 - (void)handleTriggerNotificationReload:(NSDictionary *)data {
@@ -1818,10 +1942,12 @@
         ABMultiValueRef phoneNumbers = ABRecordCopyValue(ref, kABPersonPhoneProperty);
         for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); ++i) {
             NSString *_phone = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(phoneNumbers, i);
-            NSString *formatedPhone = [FLHelper formatedPhone:_phone];
-            
-            if (formatedPhone) {
-                [contactsPhone addObject:formatedPhone];
+            if ([FLHelper isValidPhoneNumber:_phone]) {
+                NSString *formatedPhone = [FLHelper formatedPhone:_phone];
+                
+                if (formatedPhone) {
+                    [contactsPhone addObject:formatedPhone];
+                }
             }
         }
         

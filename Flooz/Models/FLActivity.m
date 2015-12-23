@@ -80,8 +80,12 @@
 		_dateText = [dateFormatter stringFromDate:destinationDate];
 	}
 
-	_when = [FLHelper formatedDateFromNow:_date];
-
+    if ([[Flooz sharedInstance] isConnectionAvailable] && [json objectForKey:@"when"]) {
+        _when = [json objectForKey:@"when"];
+    } else {
+        _when = [FLHelper formatedDateFromNow:_date];
+    }
+    
     self.triggers = [NSMutableArray new];
     NSArray *t = json[@"triggers"];
     for (NSDictionary *trigger in t) {

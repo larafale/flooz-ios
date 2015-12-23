@@ -887,8 +887,6 @@
                 [self didTransactionValidated];
             }
         }
-    } noCreditCard: ^() {
-        //        [self presentCreditCardController];
     }];
 }
 
@@ -1092,7 +1090,11 @@
 }
 
 - (void)presentLocation {
-    GeolocViewController *controller = [GeolocViewController new];
+//    UIDocumentMenuViewController *documentViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *)kUTTypePDF, (__bridge NSString *)kUTTypeImage] inMode:UIDocumentPickerModeImport];
+//    
+//    [self.navigationController presentViewController:documentViewController animated:YES completion:nil];
+//    
+        GeolocViewController *controller = [GeolocViewController new];
     [controller setDelegate:self];
     
     if (transaction[@"geo"]) {

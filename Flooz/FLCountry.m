@@ -32,7 +32,7 @@
 }
 
 + (FLCountry *) defaultCountry {
-    return [[FLCountry alloc] initWithJSON:@{@"country":@"France", @"code":@"FR", @"indicatif":@"+33", @"lengths":@[@9]}];
+    return [[FLCountry alloc] initWithJSON:@{@"country":@"France", @"code":@"FR", @"indicatif":@"33", @"lengths":@[@9]}];
 }
 
 + (FLCountry *) countryFromCode:(NSString *)code {

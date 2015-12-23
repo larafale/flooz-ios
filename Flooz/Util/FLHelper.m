@@ -261,7 +261,7 @@
     NBPhoneNumber *number = [phoneUtil parse:formatedPhone defaultRegion:[Flooz sharedInstance].currentUser.country.code error:&error];
     
     if (!error) {
-        return [phoneUtil isPossibleNumber:number error:nil];
+        return [phoneUtil isPossibleNumber:number error:nil] && [phoneUtil getNumberType:number] == NBEPhoneNumberTypeMOBILE;
     }
     
     return NO;

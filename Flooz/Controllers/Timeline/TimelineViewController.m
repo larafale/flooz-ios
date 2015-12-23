@@ -22,6 +22,9 @@
 #import "SearchViewController.h"
 #import "UIButton+LongTapShare.h"
 #import "FLSocialPopup.h"
+#import "TUSafariActivity.h"
+#import "ARChromeActivity.h"
+#import "FLCopyLinkActivity.h"
 
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
@@ -350,6 +353,24 @@
 - (void)handleRefresh {
     [refreshControl beginRefreshing];
     [self reloadTableView];
+}
+
+- (void)didTransactionShareTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.flooz.me/flooz/%@", transaction.transactionId]];
+    
+    ARChromeActivity *chromeActivity = [ARChromeActivity new];
+    TUSafariActivity *safariActivity = [TUSafariActivity new];
+    FLCopyLinkActivity *copyActivity = [FLCopyLinkActivity new];
+    
+    UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:@[chromeActivity, safariActivity, copyActivity]];
+    
+    [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
+        
+    }];
+    
+    [shareController setExcludedActivityTypes:@[UIActivityTypeCopyToPasteboard, UIActivityTypePrint, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact]];
+    
+    [self.navigationController presentViewController:shareController animated:YES completion:nil];
 }
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {

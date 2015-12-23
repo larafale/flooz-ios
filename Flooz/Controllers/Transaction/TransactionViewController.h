@@ -19,6 +19,7 @@
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;
 - (void)focusOnComment;
 - (void)reloadTransaction;
+- (void)shareTransaction;
 
 @property (strong, nonatomic) UIViewController <TransactionCellDelegate> *delegateController;
 

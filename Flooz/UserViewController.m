@@ -722,6 +722,10 @@
     }
 }
 
+- (void)didTransactionShareTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+    
+}
+
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
 }
 
@@ -772,7 +776,7 @@
 }
 
 - (void)reloadTableView {
-    if (currentUser && (!transactions || !transactions.count)) {
+    if (currentUser && ((!transactions || !transactions.count) || [currentUser.userId isEqualToString:[Flooz sharedInstance].currentUser.userId])) {
         [[Flooz sharedInstance] userTimeline:currentUser.userId success: ^(id result, NSString *nextPageUrl) {
             transactions = [result mutableCopy];
             _nextPageUrl = nextPageUrl;

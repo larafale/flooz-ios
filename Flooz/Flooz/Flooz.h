@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import <AFHTTPRequestOperationManager.h>
+#import <AFURLSessionManager.h>
+#import <AFHTTPSessionManager.h>
 #import <AddressBookUI/AddressBookUI.h>
 
 #import "SIOSocket.h"
@@ -50,7 +51,7 @@ static NSString *kBranchData = @"branchData";
 static NSString *kLocationData = @"locationData";
 
 @interface Flooz : NSObject<UIAlertViewDelegate> {
-	AFHTTPRequestOperationManager *manager;
+	AFHTTPSessionManager *manager;
 	FLLoadView *loadView;
     
 	NSArray *_activitiesCached;
@@ -124,12 +125,12 @@ static NSString *kLocationData = @"locationData";
 - (void)placesSearch:(NSString *)search from:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
-- (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
+- (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)sendSignupSMS:(NSString *)phone;
 - (void)confirmTransactionSMS:(NSString *)floozId validate:(Boolean)validate success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
-- (void)updateTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success noCreditCard:(void (^)())noCreditCard;
+- (void)updateTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;

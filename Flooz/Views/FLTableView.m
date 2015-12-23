@@ -32,7 +32,7 @@
 - (void)commonInit {
 	self.separatorInset = UIEdgeInsetsZero; // Permet d avoir le separateur qui fait toute la ligne de large
 
-	self.backgroundColor = [UIColor customBackground];
+	self.backgroundColor = [UIColor customBackgroundHeader];
 	self.separatorColor = [UIColor customSeparator];
 	self.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 	self.showsVerticalScrollIndicator = YES;

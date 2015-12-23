@@ -44,6 +44,10 @@
 "SOCIAL_SHARE_TWITTER" = "Twittez nous !";
 "SOCIAL_SHARE_APP" = "Donnez votre avis !";
 
+"OPEN_CHROME" = "Ouvrir dans Chrome";
+"OPEN_SAFARI" = "Ouvrir dans Safari";
+"COPY_LINK" = "Copier le lien";
+
 /************************************/
 /*              FIELDS              */
 /************************************/

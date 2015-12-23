@@ -14,6 +14,9 @@
 #import "TransactionUsersView.h"
 #import "TransactionCommentsView.h"
 #import "FLNewTransactionAmount.h"
+#import "TUSafariActivity.h"
+#import "ARChromeActivity.h"
+#import "FLCopyLinkActivity.h"
 
 #import "CreditCardViewController.h"
 
@@ -91,9 +94,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     if (focusOnCommentTextField) {
-        [commentsView focusOnTextField];
-        focusOnCommentTextField = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [commentsView focusOnTextField];
+        });
     }
 }
 
@@ -329,8 +334,6 @@
                 [self didTransactionValidated];
             }
         }
-    } noCreditCard: ^{
-        //        [self presentCreditCardController];
     }];
 }
 
@@ -438,6 +441,24 @@
 - (void)focusOnComment {
     focusOnCommentTextField = YES;
     [commentsView focusOnTextField];
+}
+
+- (void)shareTransaction {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.flooz.me/flooz/%@", _transaction.transactionId]];
+    
+    ARChromeActivity *chromeActivity = [ARChromeActivity new];
+    TUSafariActivity *safariActivity = [TUSafariActivity new];
+    FLCopyLinkActivity *copyActivity = [FLCopyLinkActivity new];
+    
+    UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:@[chromeActivity, safariActivity, copyActivity]];
+    
+    [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
+        
+    }];
+    
+    [shareController setExcludedActivityTypes:@[UIActivityTypeCopyToPasteboard, UIActivityTypePrint, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact]];
+    
+    [self.navigationController presentViewController:shareController animated:YES completion:nil];
 }
 
 - (void)keyboardWillDisappear {

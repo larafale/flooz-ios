@@ -39,6 +39,7 @@
     UIView *footerDescView;
     FLSocialButton *_likeButton;
     FLSocialButton *_commentButton;
+    FLSocialButton *_shareButton;
     
     CGFloat paddingSide;
     WYPopoverController *popoverController;
@@ -256,6 +257,7 @@
     
     [self createLikeButton];
     [self createCommentButton];
+    [self createShareButton];
     [self createAmountLabel];
 }
 
@@ -270,6 +272,13 @@
     [_commentButton addTarget:self action:@selector(didWantToCommentTransactionData) forControlEvents:UIControlEventTouchUpInside];
     [footerDescView addSubview:_commentButton];
     CGRectSetX(_commentButton.frame, CGRectGetMaxX(_likeButton.frame) + 10.0f);
+}
+
+- (void)createShareButton {
+    _shareButton = [[FLSocialButton alloc] initWithImageName:@"share" imageSelected:@"share" title:@"" andHeight:CGRectGetHeight(footerDescView.frame)];
+    [_shareButton addTarget:self action:@selector(didShareButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [footerDescView addSubview:_shareButton];
+    CGRectSetX(_shareButton.frame, CGRectGetMaxX(_commentButton.frame) + 10.0f);
 }
 
 - (void)createAmountLabel {
@@ -544,8 +553,18 @@
     } failure:NULL];
 }
 
+- (void)didShareButtonClick {
+    if (_parentController) {
+        [_parentController shareTransaction];
+    }
+    else {
+        if (_indexPath) {
+            [_delegate didTransactionShareTouchAtIndex:_indexPath transaction:_transaction];
+        }
+    }
+}
+
 - (void)didUpdateTransactionData {
-    
     if (_parentController) {
         [_parentController reloadTransaction];
     }

@@ -497,11 +497,11 @@
 #pragma mark - Notifications Push
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAnswerAccessNotification object:nil];
     _currentDeviceToken  = [NSString stringWithFormat:@"%@", deviceToken];
     _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@"<" withString:@""];
     _currentDeviceToken = [_currentDeviceToken stringByReplacingOccurrencesOfString:@">" withString:@""];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAnswerAccessNotification object:nil];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {

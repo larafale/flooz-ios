@@ -32,5 +32,6 @@ pod 'HMSegmentedControl'
 pod 'VCTransitionsLibrary'
 pod 'Stripe'
 pod 'libPhoneNumber-iOS'
+pod 'TUSafariActivity'
 
 link_with 'Flooz', 'Flooz dev', 'Flooz local', 'FloozTests'

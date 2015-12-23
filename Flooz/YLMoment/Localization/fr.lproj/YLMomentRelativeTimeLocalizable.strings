@@ -8,14 +8,14 @@
 
 "future" = "dans %@";
 "past"   = "il y a %@";
-"s"      = "quelques secondes";
-"m"      = "1m";
-"mm"     = "%dm";
+"s"      = "30s";
+"m"      = "1mn";
+"mm"     = "%dmns";
 "h"      = "1h";
 "hh"     = "%dh";
 "d"      = "1j";
 "dd"     = "%dj";
 "M"      = "1m";
 "MM"     = "%dm";
-"y"      = "1a";
-"yy"     = "%da";
+"y"      = "1an";
+"yy"     = "%dans";
