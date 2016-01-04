@@ -83,17 +83,6 @@
     
     [self.view setBackgroundColor:[UIColor customBackgroundHeader]];
     
-    CGFloat searchMargin;
-    
-    if (IS_IPHONE_4)
-        searchMargin = 180;
-    else if (IS_IPHONE_5)
-        searchMargin = 160;
-    else if (IS_IPHONE_6)
-        searchMargin = 170;
-    else
-        searchMargin = 170;
-    
     NSDictionary *attributes = @{
                                  NSForegroundColorAttributeName: [UIColor customBlue],
                                  NSFontAttributeName: [UIFont customContentLight:15]
@@ -138,9 +127,9 @@
     
     [self.view addSubview:scopeChangeHelper];
 
-    UIButton *logo = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 45, 45)];
+    UIButton *logo = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 40, 40)];
     [logo setTintColor:[UIColor customBlue]];
-    [logo setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"flooz-mini"] scaledToSize:CGSizeMake(45, 45)] forState:UIControlStateNormal];
+    [logo setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"flooz-mini"] scaledToSize:CGSizeMake(30, 30)] forState:UIControlStateNormal];
     [logo setContentMode:UIViewContentModeCenter];
     [logo addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didShareFloozClick)]];
     [logo setUserInteractionEnabled:YES];

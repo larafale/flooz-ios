@@ -166,17 +166,12 @@
     
     CGFloat carouselHorizontalMargin = 30;
     CGFloat carouselTopMargin = 40;
-    CGFloat logoTopMargin = 40;
+    CGFloat logoTopMargin = 60;
     CGFloat actionButtonHeight = FLActionButtonDefaultHeight;
     CGFloat actionHorizontalMargin = 30;
     CGFloat actionVerticalMargin = 40;
     
     homeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
-    
-    UILabel *logoTextLabel = [[UILabel alloc] initWithText:@"Pay, Like," textColor:[UIColor whiteColor] font:[UIFont customTitleLight:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    
-    CGRectSetX(logoTextLabel.frame, CGRectGetWidth(homeView.frame) / 2 - CGRectGetWidth(logoTextLabel.frame) / 2);
-    CGRectSetY(logoTextLabel.frame, logoTopMargin);
     
     UIImageView *logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home-title"]];
     [logoView setContentMode:UIViewContentModeScaleAspectFit];
@@ -187,7 +182,7 @@
     CGRectSetHeight(logoView.frame, CGRectGetWidth(logoView.frame) / scaleFactor);
     
     CGRectSetX(logoView.frame, CGRectGetWidth(homeView.frame) / 2 - CGRectGetWidth(logoView.frame) / 2);
-    CGRectSetY(logoView.frame, CGRectGetMaxY(logoTextLabel.frame) + 10);
+    CGRectSetY(logoView.frame, logoTopMargin);
     
     CGFloat carouselHeight = CGRectGetHeight(homeView.frame);
     carouselHeight -=  CGRectGetMaxY(logoView.frame);
@@ -218,7 +213,6 @@
     [signupHomeButton.titleLabel setFont:[UIFont customContentRegular:15]];
     [signupHomeButton addTarget:self action:@selector(didSignupHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    [homeView addSubview:logoTextLabel];
     [homeView addSubview:logoView];
     [homeView addSubview:carouselView];
     [homeView addSubview:carouselControl];

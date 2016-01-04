@@ -10,14 +10,7 @@
 
 @interface FLSocialButton : UIButton
 
-
-@property (nonatomic, strong) NSString *imageNamedNormal;
-@property (nonatomic, strong) NSString *imageNamedSelected;
-@property (nonatomic, strong) NSString *title;
-
-@property (nonatomic, strong) UIImageView *image;
-@property (nonatomic, strong) UILabel *titleButton;
-
-- (instancetype)initWithImageName:(NSString *)imageNamed imageSelected:(NSString *)imageNamedSelected title:(NSString *)title andHeight:(CGFloat)height;
+- (id)initWithImageName:(NSString *)imageNamed color:(UIColor *)color selectedColor:(UIColor *)colorSelected title:(NSString *)title height:(CGFloat)height;
+- (void)setText:(nonnull NSString *)text;
 
 @end
