@@ -30,9 +30,6 @@
     UILabel *amountLabel;
     
     FLUserView *avatarView;
-
-//    UILabel *commentText;
-//    UILabel *likeText;
     
     BOOL hasAvatar;
     
@@ -144,7 +141,7 @@
 //        }
 //        current_height += heightLike + 10.0f;
 //    }
-    current_height += 22.5f; // height of buttons and amount text
+    current_height += 20.0f; // height of buttons and amount text
     current_height += MARGE_TOP_BOTTOM; // add small marge at the bottom
     return current_height;
 }
@@ -252,7 +249,7 @@
 
 - (void)createFooterView {
     height += 10.0f;
-    footerDescView = [UIView newWithFrame:CGRectMake(0.0f, height, CGRectGetWidth(rightView.frame), 22.5f)];
+    footerDescView = [UIView newWithFrame:CGRectMake(0.0f, height, CGRectGetWidth(rightView.frame), 20.0f)];
     [rightView addSubview:footerDescView];
     
     [self createLikeButton];
@@ -265,6 +262,7 @@
 - (void)createLikeButton {
     _likeButton = [[FLSocialButton alloc] initWithImageName:@"like-heart" color:[UIColor customSocialColor] selectedColor:[UIColor customPink] title:@"" height:CGRectGetHeight(footerDescView.frame)];
     [_likeButton addTarget:self action:@selector(didLikeButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    [_likeButton addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeButtonLongTouch)]];
     [footerDescView addSubview:_likeButton];
 }
 
@@ -272,21 +270,21 @@
     _commentButton = [[FLSocialButton alloc] initWithImageName:@"comment_bubble" color:[UIColor customSocialColor] selectedColor:[UIColor customBlue] title:@"" height:CGRectGetHeight(footerDescView.frame)];
     [_commentButton addTarget:self action:@selector(didWantToCommentTransactionData) forControlEvents:UIControlEventTouchUpInside];
     [footerDescView addSubview:_commentButton];
-    CGRectSetX(_commentButton.frame, CGRectGetMinX(_likeButton.frame) + 60.0f);
+    CGRectSetX(_commentButton.frame, CGRectGetMinX(_likeButton.frame) + 65.0f);
 }
 
 - (void)createShareButton {
     _shareButton = [[FLSocialButton alloc] initWithImageName:@"share" color:[UIColor customSocialColor] selectedColor:[UIColor customSocialColor] title:@"" height:CGRectGetHeight(footerDescView.frame)];
     [_shareButton addTarget:self action:@selector(didShareButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [footerDescView addSubview:_shareButton];
-    CGRectSetX(_shareButton.frame, CGRectGetMinX(_commentButton.frame) + 60.0f);
+    CGRectSetX(_shareButton.frame, CGRectGetMinX(_commentButton.frame) + 65.0f);
 }
 
 - (void)createMoreButton {
     _moreButton = [[FLSocialButton alloc] initWithImageName:@"more" color:[UIColor customSocialColor] selectedColor:[UIColor customSocialColor] title:@"" height:CGRectGetHeight(footerDescView.frame)];
     [_moreButton addTarget:self action:@selector(didMoreButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [footerDescView addSubview:_moreButton];
-    CGRectSetX(_moreButton.frame, CGRectGetMaxX(_shareButton.frame) + 10.0f);
+    CGRectSetX(_moreButton.frame, CGRectGetMaxX(_shareButton.frame) + 12.0f);
 }
 
 - (void)createAmountLabel {
@@ -577,13 +575,16 @@
     CGRectSetX(amountLabel.frame, CGRectGetWidth(footerDescView.frame) - CGRectGetWidth(amountLabel.frame));
 }
 
-- (void)didLikeTextTouch {
+- (void)didLikeButtonLongTouch {
+    if (popoverController != nil && popoverController.isPopoverVisible)
+        return;
+    
     FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithTransaction:_transaction];
     [popoverViewController setDelegate:self];
     
     popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
     popoverController.delegate = self;
-    
+    popoverController.theme.dimsBackgroundViewsTintColor = NO;
     [popoverController presentPopoverFromRect:_likeButton.bounds inView:_likeButton permittedArrowDirections:WYPopoverArrowDirectionDown|WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
         
     }];

@@ -284,7 +284,8 @@
     
     popoverController = [[WYPopoverController alloc] initWithContentViewController:privacyListController];
     popoverController.delegate = self;
-    
+    popoverController.theme.dimsBackgroundViewsTintColor = NO;
+
     [popoverController presentPopoverFromRect:privacyButton.bounds inView:privacyButton permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
 }
 

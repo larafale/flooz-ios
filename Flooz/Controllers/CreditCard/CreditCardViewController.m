@@ -287,6 +287,10 @@
     _card[@"cvv"] = paymentTextField.cvc;
     _card[@"expires"] = [NSString stringWithFormat:@"%02lu-%02lu", (unsigned long)paymentTextField.expirationMonth, (unsigned long)paymentTextField.expirationYear];
     
+    if (self.floozData && self.floozData.allKeys.count) {
+        _card[@"flooz"] = self.floozData;
+    }
+    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createCreditCard:_card atSignup:NO success: ^(id result) {
         if (![Secure3DViewController getInstance]) {

@@ -10,6 +10,8 @@
 
 @interface NSString (custom)
 
+- (Boolean)isBlank;
+
 - (CGFloat)widthOfString:(UIFont *)font;
 + (CGFloat)widthOfString:(NSString *)string withFont:(UIFont *)font;
 

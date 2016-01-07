@@ -37,6 +37,8 @@
     customTheme.innerShadowOffset = CGSizeMake(0, 0);
     customTheme.innerCornerRadius = 4;
     
+    customTheme.dimsBackgroundViewsTintColor = NO;
+
     return customTheme;
 }
 

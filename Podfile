@@ -9,11 +9,11 @@ pod "FBSDKLoginKit"
 pod "FBSDKShareKit"
 pod "FBSDKMessengerShareKit"
 pod 'Mixpanel'
-pod 'JTHelper', '~> 0.1.1'
+pod 'JTHelper'
 pod 'PonyDebugger'
 pod 'SMPageControl'
 pod 'PPHelpMe'
-pod 'HHRouter', '~> 0.1'
+pod 'HHRouter'
 pod 'TTTAttributedLabel'
 pod 'NSDate+Calendar'
 pod 'MZFormSheetController'
@@ -33,5 +33,6 @@ pod 'VCTransitionsLibrary'
 pod 'Stripe'
 pod 'libPhoneNumber-iOS'
 pod 'TUSafariActivity'
+pod 'UIFloatLabelTextField'
 
 link_with 'Flooz', 'Flooz dev', 'Flooz local', 'FloozTests'

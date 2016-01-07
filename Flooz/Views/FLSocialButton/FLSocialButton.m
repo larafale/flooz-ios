@@ -9,8 +9,6 @@
 #import "FLSocialButton.h"
 
 @implementation FLSocialButton {
-    UIButton *_button;
-    
     NSString *imageName;
     NSString *titleText;
     UIColor *defaultColor;
@@ -20,7 +18,7 @@
     UILabel *titleButton;
 }
 
-- (id)initWithImageName:(NSString *)imageNamed color:(UIColor *)color selectedColor:(UIColor *)colorSelected title:(NSString *)title height:(CGFloat)height {
+- (nullable id)initWithImageName:(NSString *)imageNamed color:(UIColor *)color selectedColor:(UIColor *)colorSelected title:(NSString *)title height:(CGFloat)height {
     self = [super initWithFrame:CGRectMake(0, 0, 0, height)];
     if (self) {
         imageName = imageNamed;
@@ -46,9 +44,6 @@
     [self.layer setCornerRadius:5];
     [self createImage];
     [self createTitle];
-    
-    _button = [UIButton newWithFrame:self.frame];
-    [self addSubview:_button];
 }
 
 - (void)createImage {
@@ -88,7 +83,10 @@
 
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents {
     [super addTarget:target action:action forControlEvents:controlEvents];
-    [_button addTarget:target action:action forControlEvents:controlEvents];
+}
+
+- (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer {
+    [super addGestureRecognizer:gestureRecognizer];
 }
 
 - (void)setSelected:(BOOL)selected {

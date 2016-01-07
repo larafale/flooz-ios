@@ -15,12 +15,12 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
-  - Bolts (1.5.0):
-    - Bolts/AppLinks (= 1.5.0)
-    - Bolts/Tasks (= 1.5.0)
-  - Bolts/AppLinks (1.5.0):
+  - Bolts (1.5.1):
+    - Bolts/AppLinks (= 1.5.1)
+    - Bolts/Tasks (= 1.5.1)
+  - Bolts/AppLinks (1.5.1):
     - Bolts/Tasks
-  - Bolts/Tasks (1.5.0)
+  - Bolts/Tasks (1.5.1)
   - Branch (0.11.13)
   - Crashlytics (3.4.1):
     - Fabric (~> 1.6.0)
@@ -55,7 +55,7 @@ PODS:
     - pop
     - SDWebImage
   - JPSVolumeButtonHandler (1.0.0)
-  - JTHelper (0.1.12)
+  - JTHelper (0.3.0)
   - JTSImageViewController (1.5.1)
   - libPhoneNumber-iOS (0.8.10)
   - Mixpanel (2.9.1):
@@ -84,6 +84,7 @@ PODS:
   - TTTAttributedLabel (1.13.4)
   - TUSafariActivity (1.0.4)
   - UICKeyChainStore (2.1.0)
+  - UIFloatLabelTextField (1.2.3)
   - VCTransitionsLibrary (1.5.0)
 
 DEPENDENCIES:
@@ -99,12 +100,12 @@ DEPENDENCIES:
   - FBSDKShareKit
   - FXBlurView
   - GBDeviceInfo
-  - HHRouter (~> 0.1)
+  - HHRouter
   - HMSegmentedControl
   - iCarousel
   - IDMPhotoBrowser
   - JPSVolumeButtonHandler
-  - JTHelper (~> 0.1.1)
+  - JTHelper
   - JTSImageViewController
   - libPhoneNumber-iOS
   - Mixpanel
@@ -119,12 +120,13 @@ DEPENDENCIES:
   - TTTAttributedLabel
   - TUSafariActivity
   - UICKeyChainStore
+  - UIFloatLabelTextField
   - VCTransitionsLibrary
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 860466cb4a66854e6acb590071ecee404b48f49d
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
-  Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
+  Bolts: a12663244b1d3351c738882e71902fc74db54f64
   Branch: 37553775450de2d844b03a0854c37d6271d967e7
   Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
@@ -142,7 +144,7 @@ SPEC CHECKSUMS:
   iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
   IDMPhotoBrowser: 99eccfe6431e182f64e2fe57ac654316fbf81576
   JPSVolumeButtonHandler: b056ec5c574fbd75a0637c527e25fe0197ec1648
-  JTHelper: d84a961a60a27623c595a7f6965fcafdefb88b9b
+  JTHelper: b9b56980755bf6d9f7ed58a2490205109658087e
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
   libPhoneNumber-iOS: 7bfd00f843fdcd82b5182b463e8eb3b27579f41d
   Mixpanel: 5ca24b2a05f4c77fe9bcfe7671d681d0f3f8d76f
@@ -160,6 +162,7 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
+  UIFloatLabelTextField: 24313cde1488784ed3b5d1c7d4dd329e60935028
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
 
 COCOAPODS: 0.39.0

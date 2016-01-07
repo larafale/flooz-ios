@@ -88,7 +88,7 @@
         [carouselView reloadData];
         carouselTimer = [NSTimer scheduledTimerWithTimeInterval:CAROUSEL_AUTOSLIDE_TIMER target:self selector:@selector(changeCurrentCarouselPage) userInfo:nil repeats:NO];
         
-        if ([Flooz sharedInstance].currentTexts.signupSponsor && ![[Flooz sharedInstance].currentTexts.signupSponsor isBlank]) {
+        if ([Flooz sharedInstance].currentTexts.signupSponsor && [Flooz sharedInstance].currentTexts.signupSponsor.length) {
             sponsorVisible = YES;
             
             [signupView removeFromSuperview];
@@ -115,7 +115,7 @@
     [self registerForKeyboardNotifications];
     
     if ([appDelegate branchParam]) {
-        if ([appDelegate branchParam][@"cactus"] && ![[appDelegate branchParam][@"cactus"] isBlank]) {
+        if ([appDelegate branchParam][@"cactus"] && [[appDelegate branchParam][@"cactus"] length]) {
             [[Flooz sharedInstance] loadCactusData:[appDelegate branchParam][@"cactus"] success:^(NSDictionary *result) {
                 [signupData addEntriesFromDictionary:result[@"item"]];
                 for (FLTextFieldSignup *textfield in signupFormFields) {
@@ -749,7 +749,7 @@
     [signupData setObject:[[Mixpanel sharedInstance] distinctId] forKey:@"distinctId"];
     
     if ([appDelegate branchParam]) {
-        if ([appDelegate branchParam][@"referrer"] && ![[appDelegate branchParam][@"referrer"] isBlank]) {
+        if ([appDelegate branchParam][@"referrer"] && [[appDelegate branchParam][@"referrer"] length]) {
             [signupData setObject:[appDelegate branchParam][@"referrer"] forKey:@"referrer"];
         }
     }

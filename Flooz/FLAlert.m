@@ -41,7 +41,7 @@
         if (!self.delay)
             self.delay = @0;
 
-        if (!self.title || [self.title isBlank])
+        if (!self.title || ![self.title length])
             self.title = NSLocalizedString(@"GLOBAL_ERROR", nil);
     
         [self.content stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];

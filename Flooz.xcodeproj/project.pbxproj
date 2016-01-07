@@ -317,6 +317,15 @@
 		C927061E1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
 		C927061F1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
 		C92706201B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
+		C928E8C21C3D16310032FAE4 /* FLDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8C11C3D16310032FAE4 /* FLDeal.m */; };
+		C928E8C31C3D16310032FAE4 /* FLDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8C11C3D16310032FAE4 /* FLDeal.m */; };
+		C928E8C41C3D16310032FAE4 /* FLDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8C11C3D16310032FAE4 /* FLDeal.m */; };
+		C928E8C81C3D24F20032FAE4 /* DealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8C71C3D24F20032FAE4 /* DealViewController.m */; };
+		C928E8C91C3D24F20032FAE4 /* DealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8C71C3D24F20032FAE4 /* DealViewController.m */; };
+		C928E8CA1C3D24F20032FAE4 /* DealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8C71C3D24F20032FAE4 /* DealViewController.m */; };
+		C928E8CE1C3D2A390032FAE4 /* DealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8CD1C3D2A390032FAE4 /* DealCell.m */; };
+		C928E8CF1C3D2A390032FAE4 /* DealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8CD1C3D2A390032FAE4 /* DealCell.m */; };
+		C928E8D01C3D2A390032FAE4 /* DealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8CD1C3D2A390032FAE4 /* DealCell.m */; };
 		C92FB3AB1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
 		C92FB3AC1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
 		C92FB3AD1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
@@ -561,6 +570,9 @@
 		C989591F1C089C8500D8D37F /* FLSocialPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C989591E1C089C8500D8D37F /* FLSocialPopup.m */; };
 		C98959201C089C8500D8D37F /* FLSocialPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C989591E1C089C8500D8D37F /* FLSocialPopup.m */; };
 		C98959211C089C8500D8D37F /* FLSocialPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C989591E1C089C8500D8D37F /* FLSocialPopup.m */; };
+		C98A5F0F1C3BDB6800C3EFD1 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */; };
+		C98A5F101C3BDB6800C3EFD1 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */; };
+		C98A5F111C3BDB6800C3EFD1 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */; };
 		C994C23F1BC805FD00B528AA /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */; };
 		C99A51521AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */; };
 		C99A51531AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */; };
@@ -974,6 +986,12 @@
 		C921175B1B66726900CF2D51 /* FLInvitationTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLInvitationTexts.m; sourceTree = "<group>"; };
 		C927061C1B81D7EE00FB1A11 /* FLSharePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSharePopup.h; sourceTree = "<group>"; };
 		C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSharePopup.m; sourceTree = "<group>"; };
+		C928E8C01C3D16310032FAE4 /* FLDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLDeal.h; path = Models/FLDeal.h; sourceTree = "<group>"; };
+		C928E8C11C3D16310032FAE4 /* FLDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLDeal.m; path = Models/FLDeal.m; sourceTree = "<group>"; };
+		C928E8C61C3D24F20032FAE4 /* DealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DealViewController.h; path = Controllers/Deal/DealViewController.h; sourceTree = "<group>"; };
+		C928E8C71C3D24F20032FAE4 /* DealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DealViewController.m; path = Controllers/Deal/DealViewController.m; sourceTree = "<group>"; };
+		C928E8CC1C3D2A390032FAE4 /* DealCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DealCell.h; path = DealCell/DealCell.h; sourceTree = "<group>"; };
+		C928E8CD1C3D2A390032FAE4 /* DealCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DealCell.m; path = DealCell/DealCell.m; sourceTree = "<group>"; };
 		C92FB3A91BBBEC1F006FB561 /* FLFilterSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilterSegmentedControl.h; sourceTree = "<group>"; };
 		C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilterSegmentedControl.m; sourceTree = "<group>"; };
 		C93118461A1F7E0B008C6EEC /* FLReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReport.h; sourceTree = "<group>"; };
@@ -1046,6 +1064,8 @@
 		C98959071C08892C00D8D37F /* YLShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLShareView.m; sourceTree = "<group>"; };
 		C989591D1C089C8500D8D37F /* FLSocialPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSocialPopup.h; path = Views/FLPopup/FLSocialPopup.h; sourceTree = "<group>"; };
 		C989591E1C089C8500D8D37F /* FLSocialPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSocialPopup.m; path = Views/FLPopup/FLSocialPopup.m; sourceTree = "<group>"; };
+		C98A5F0D1C3BDB6800C3EFD1 /* FLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextField.h; path = FLTextField/FLTextField.h; sourceTree = "<group>"; };
+		C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextField.m; path = FLTextField/FLTextField.m; sourceTree = "<group>"; };
 		C99A514E1AF7D69500342F8C /* IQActionSheetPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetPickerView.h; sourceTree = "<group>"; };
 		C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetPickerView.m; sourceTree = "<group>"; };
 		C99A51501AF7D69500342F8C /* IQActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetViewController.h; sourceTree = "<group>"; };
@@ -1514,6 +1534,7 @@
 				2FEAA9CC19DC638C00EE95C9 /* BaseViewController */,
 				AB2FB52F18AD40120079AA1D /* CashOut */,
 				ABBB75C718B63D930070C2A8 /* CreditCard */,
+				C928E8C51C3D24B40032FAE4 /* Deals */,
 				C9160D531B6A6A1D00A379DA /* DiscountCode */,
 				2F444C7E19ED6D7A00ACE12E /* FLNavigationController */,
 				C950540B1B4E7E6600B9FB2C /* FLTabBarController */,
@@ -1544,7 +1565,6 @@
 		AB3D08D5186CA6F800CF8380 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C95502D71C2AB409002E9046 /* FLCopyLinkActivity */,
 				C9AF4BE319F7C2A9005C696B /* AvatarMenu */,
 				AB5EB6F91882157300D81AF6 /* Cells */,
 				ABE9144F189165BA003AC722 /* FLAccountUserView */,
@@ -1554,6 +1574,7 @@
 				C9EBBB9A1BAAC960009DAF88 /* FLBorderedActionButton */,
 				2FCBCD0D19BF3C2800FB31E0 /* FLCameraKeyboard */,
 				C95AEDA21A49BB5E00000FB3 /* FLClearActionTextView */,
+				C95502D71C2AB409002E9046 /* FLCopyLinkActivity */,
 				C95974F91B9EFC9500F2F7D1 /* FLCountryPicker */,
 				C935B6E61B611D7800861DAD /* FLFilterPopoverViewController */,
 				C92FB3A81BBBEBF4006FB561 /* FLFilterSegmentedControl */,
@@ -1570,6 +1591,7 @@
 				2F1307E619D9C1510062D194 /* FLSocialButton */,
 				ABD0164618EC694100940F2D /* FLSwitch */,
 				ABAFEE2919810B6900D39C62 /* FLTableView */,
+				C98A5F0C1C3BDAFF00C3EFD1 /* FLTextField */,
 				2FC8873419C879E500A109D8 /* FLTextFieldSignup */,
 				AB2FB53518AD8C670079AA1D /* FLTextFieldTitle2 */,
 				ABE914A81898557A003AC722 /* FLTextView */,
@@ -1623,6 +1645,8 @@
 				C9037F491BFE0481004256BF /* FLCountry.m */,
 				ABBB75CD18B64A0B0070C2A8 /* FLCreditCard.h */,
 				ABBB75CE18B64A0B0070C2A8 /* FLCreditCard.m */,
+				C928E8C01C3D16310032FAE4 /* FLDeal.h */,
+				C928E8C11C3D16310032FAE4 /* FLDeal.m */,
 				ABBB75DC18BA27E60070C2A8 /* FLFriendRequest.h */,
 				ABBB75DD18BA27E60070C2A8 /* FLFriendRequest.m */,
 				C921175A1B66726900CF2D51 /* FLInvitationTexts.h */,
@@ -1766,6 +1790,7 @@
 		AB5EB6F91882157300D81AF6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C928E8CB1C3D2A1A0032FAE4 /* DealCell */,
 				C95254D31B5E7B9200D88096 /* AccountCell */,
 				AB2FB54918B2319E0079AA1D /* ActivityCell */,
 				2FD2460019A24DC4008DCFB5 /* ContactCell */,
@@ -2261,6 +2286,24 @@
 			name = ShareCell;
 			sourceTree = "<group>";
 		};
+		C928E8C51C3D24B40032FAE4 /* Deals */ = {
+			isa = PBXGroup;
+			children = (
+				C928E8C61C3D24F20032FAE4 /* DealViewController.h */,
+				C928E8C71C3D24F20032FAE4 /* DealViewController.m */,
+			);
+			name = Deals;
+			sourceTree = "<group>";
+		};
+		C928E8CB1C3D2A1A0032FAE4 /* DealCell */ = {
+			isa = PBXGroup;
+			children = (
+				C928E8CC1C3D2A390032FAE4 /* DealCell.h */,
+				C928E8CD1C3D2A390032FAE4 /* DealCell.m */,
+			);
+			name = DealCell;
+			sourceTree = "<group>";
+		};
 		C92FB3A81BBBEBF4006FB561 /* FLFilterSegmentedControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -2451,6 +2494,15 @@
 				C98959071C08892C00D8D37F /* YLShareView.m */,
 			);
 			path = YLLongTapShareControl;
+			sourceTree = "<group>";
+		};
+		C98A5F0C1C3BDAFF00C3EFD1 /* FLTextField */ = {
+			isa = PBXGroup;
+			children = (
+				C98A5F0D1C3BDB6800C3EFD1 /* FLTextField.h */,
+				C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */,
+			);
+			name = FLTextField;
 			sourceTree = "<group>";
 		};
 		C99A514D1AF7D67000342F8C /* IQActionSheetPickerView */ = {
@@ -3045,6 +3097,7 @@
 				C9CB22041A95E9D30064389A /* THContactViewStyle.m in Sources */,
 				C960DC901BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
+				C928E8C81C3D24F20032FAE4 /* DealViewController.m in Sources */,
 				C907297E1B59569900BA691C /* NSString+custom.m in Sources */,
 				C9B1866D1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
 				C9B4AA6A1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
@@ -3077,6 +3130,7 @@
 				C92FB3AB1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				C9A265561ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
 				C93F66A11BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
+				C928E8CE1C3D2A390032FAE4 /* DealCell.m in Sources */,
 				C9AE77941ACA918B00CFF0AF /* FLSlide.m in Sources */,
 				C95502D11C2AA8D8002E9046 /* ARChromeActivity.m in Sources */,
 				C95502D41C2AA8D8002E9046 /* OpenInChromeController.m in Sources */,
@@ -3150,6 +3204,7 @@
 				C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C9C7768B1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				2F50155319EDC46E00F61380 /* GlobalViewController.m in Sources */,
+				C98A5F0F1C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
 				C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,
 				AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */,
 				ABE9144E18915E9F003AC722 /* FLUserView.m in Sources */,
@@ -3157,6 +3212,7 @@
 				ABF7094118A4D64300517389 /* TransactionCell.m in Sources */,
 				C9ED41241A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
 				C9EB885D1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
+				C928E8C21C3D16310032FAE4 /* FLDeal.m in Sources */,
 				AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */,
 				C90252101B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
 				C9A7BE601A27801200195AFC /* FLPreset.m in Sources */,
@@ -3229,6 +3285,7 @@
 				2FC8873819C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
 				C960DC911BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2FE983EB19CB82E700E05501 /* NumPadAppleStyle.m in Sources */,
+				C928E8C91C3D24F20032FAE4 /* DealViewController.m in Sources */,
 				C907297F1B59569900BA691C /* NSString+custom.m in Sources */,
 				ABAA3F84197E96BF009F29EF /* FriendPickerContactCell.m in Sources */,
 				C9CB22051A95E9D30064389A /* THContactViewStyle.m in Sources */,
@@ -3261,6 +3318,7 @@
 				C92FB3AC1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */,
 				C93F66A21BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
+				C928E8CF1C3D2A390032FAE4 /* DealCell.m in Sources */,
 				C9A265571ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
 				C95502D21C2AA8D8002E9046 /* ARChromeActivity.m in Sources */,
 				C95502D51C2AA8D8002E9046 /* OpenInChromeController.m in Sources */,
@@ -3334,6 +3392,7 @@
 				C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C9C7768C1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				ABAA3FCE197E96BF009F29EF /* TimelineViewController.m in Sources */,
+				C98A5F101C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
 				C921175D1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,
 				ABAA3FCF197E96BF009F29EF /* FLSocial.m in Sources */,
 				ABAA3FD0197E96BF009F29EF /* FriendCell.m in Sources */,
@@ -3341,6 +3400,7 @@
 				C9CA67711A518535003863D1 /* SignupNavigationController.m in Sources */,
 				ABAA3FD3197E96BF009F29EF /* FLTextFieldTitle2.m in Sources */,
 				ABAA3FD6197E96BF009F29EF /* FLUserView.m in Sources */,
+				C928E8C31C3D16310032FAE4 /* FLDeal.m in Sources */,
 				C9ED41251A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
 				C90252111B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
 				C9EB885E1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
@@ -3405,6 +3465,7 @@
 				C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				C98012861A76921000019682 /* FLTextFieldSignup.m in Sources */,
 				C960DC921BB14D020089B074 /* FLSocialHelper.m in Sources */,
+				C928E8CA1C3D24F20032FAE4 /* DealViewController.m in Sources */,
 				C98012871A76921000019682 /* NumPadAppleStyle.m in Sources */,
 				C90729801B59569900BA691C /* NSString+custom.m in Sources */,
 				C98012891A76921000019682 /* FriendPickerContactCell.m in Sources */,
@@ -3437,6 +3498,7 @@
 				C98012A51A76921000019682 /* WYPopoverController.m in Sources */,
 				C92FB3AD1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				C98012A61A76921000019682 /* FLKeyboardView.m in Sources */,
+				C928E8D01C3D2A390032FAE4 /* DealCell.m in Sources */,
 				C93F66A31BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C95502D31C2AA8D8002E9046 /* ARChromeActivity.m in Sources */,
 				C95502D61C2AA8D8002E9046 /* OpenInChromeController.m in Sources */,
@@ -3510,6 +3572,7 @@
 				C98012DF1A76921000019682 /* FLAccountUserView.m in Sources */,
 				C9C7768D1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
+				C98A5F111C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
 				C98012E01A76921000019682 /* TimelineViewController.m in Sources */,
 				C921175E1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,
 				C98012E11A76921000019682 /* FLSocial.m in Sources */,
@@ -3517,6 +3580,7 @@
 				C98012E41A76921000019682 /* GlobalViewController.m in Sources */,
 				C98012E61A76921000019682 /* SignupNavigationController.m in Sources */,
 				C98012E71A76921000019682 /* FLTextFieldTitle2.m in Sources */,
+				C928E8C41C3D16310032FAE4 /* FLDeal.m in Sources */,
 				C98012E81A76921000019682 /* FLUserView.m in Sources */,
 				C9ED41261A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
 				C90252121B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,

@@ -258,7 +258,7 @@
         currentDictionaryKey = _dictionaryKey2;
     }
     
-    if ([textField.text isBlank]) {
+    if (textField.text.length == 0) {
         [_dictionary setValue:nil forKey:currentDictionaryKey];
     }
     else {
@@ -282,7 +282,7 @@
         currentDictionaryKey = _dictionaryKey2;
     }
     
-    if ([textField.text isBlank]) {
+    if (textField.text.length == 0) {
         [_dictionary setValue:nil forKey:currentDictionaryKey];
     }
     else {
@@ -405,7 +405,7 @@
         }
         
         if (textField.text.length == 1 && [textField.text isEqualToString:@"0"] && [string isEqualToString:@"0"]) {
-            return 0;
+            return NO;
         }
         
         NSRange symbolRange = [textField.text rangeOfString:@"."];

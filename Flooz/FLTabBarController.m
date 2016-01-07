@@ -14,6 +14,7 @@
 #import "ShareAppViewController.h"
 #import "SDWebImageDownloader.h"
 #import "UserViewController.h"
+#import "DealViewController.h"
 
 #import "UITabBarItem+CustomBadge.h"
 
@@ -62,7 +63,7 @@
     FLNavigationController *homeNavigationController = [[FLNavigationController alloc] initWithRootViewController:[TimelineViewController new]];
     FLNavigationController *notifNavigationController = [[FLNavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
     FLNavigationController *floozNavigationController = [[FLNavigationController alloc] initWithRootViewController:[UIViewController new]];
-    FLNavigationController *shareNavigationController = [[FLNavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
+    FLNavigationController *shareNavigationController = [[FLNavigationController alloc] initWithRootViewController:[DealViewController new]];
     
     FLNavigationController *profileNavigationController = [[FLNavigationController alloc] initWithRootViewController:[[UserViewController alloc] initWithUser:[Flooz sharedInstance].currentUser]];
     
@@ -133,7 +134,7 @@
     self.tabBar.clipsToBounds = NO;
     self.tabBar.layer.shadowPath = shadowPath.CGPath;
     
-    [self addCenterButtonWithImage:[UIImage imageNamed:@"add-flooz-plus"] highlightImage:nil];
+    [self addCenterButtonWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"flooz-mini"] scaledToSize:CGSizeMake(35, 35)] highlightImage:nil];
     
     [self reloadBadge];
     [self reloadCurrentUser];
@@ -172,14 +173,16 @@
 {
     centerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     centerButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
-    centerButton.contentMode = UIViewContentModeScaleAspectFit;
-    centerButton.frame = CGRectMake(0.0, 0.0, 70.0f, 70.0f);
-    [centerButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [centerButton setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
+    centerButton.contentMode = UIViewContentModeCenter;
+    centerButton.frame = CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 10.0f, CGRectGetHeight(self.tabBar.frame));
+    [centerButton setImage:buttonImage forState:UIControlStateNormal];
+    [centerButton setImage:highlightImage forState:UIControlStateHighlighted];
+    [centerButton setBackgroundColor:[UIColor customBackground]];
+    centerButton.layer.masksToBounds = YES;
     [centerButton addTarget:self action:@selector(openNewFlooz) forControlEvents:UIControlEventTouchUpInside];
     centerButton.center = self.tabBar.center;
     
-    CGRectSetY(centerButton.frame, CGRectGetMaxY(self.tabBar.frame) - CGRectGetHeight(centerButton.frame));
+//    CGRectSetY(centerButton.frame, CGRectGetMaxY(self.tabBar.frame) - CGRectGetHeight(centerButton.frame));
     
     [self.view addSubview:centerButton];
 }

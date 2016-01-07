@@ -93,7 +93,7 @@
     else
         countDownValue = @"";
     
-    if (!self.userDic[@"smscode"] || [self.userDic[@"smscode"] isBlank]) {
+    if (!self.userDic[@"smscode"] || ![self.userDic[@"smscode"] length]) {
         [_nextButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"SMS_REFRESH_CODE", nil), countDownValue] forState:UIControlStateNormal];
         if (_countDown == 0)
             [_nextButton setEnabled:YES];
@@ -106,7 +106,7 @@
 }
 
 - (void)codeChange {
-    if (self.userDic[@"smscode"] && ![self.userDic[@"smscode"] isBlank]) {
+    if (self.userDic[@"smscode"] && [self.userDic[@"smscode"] length]) {
         [_nextButton setTitle:NSLocalizedString(@"GLOBAL_VALIDATE", nil) forState:UIControlStateNormal];
         [_nextButton setEnabled:YES];
     } else {
@@ -130,7 +130,7 @@
 }
 
 - (void)nextStep {
-    if (self.userDic[@"smscode"] && ![self.userDic[@"smscode"] isBlank]) {
+    if (self.userDic[@"smscode"] && [self.userDic[@"smscode"] length]) {
         [[Flooz sharedInstance] showLoadView];
         [[Flooz sharedInstance] signupPassStep:@"sms" user:self.userDic success:^(NSDictionary *result) {
             [SignupBaseViewController handleSignupRequestResponse:result withUserData:self.userDic andNavigationController:self.navigationController];

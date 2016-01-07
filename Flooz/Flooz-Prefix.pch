@@ -51,6 +51,7 @@
 #import "FLNavigationController.h"
 #import "FLTableView.h"
 #import "FLTextView.h"
+#import "FLTextField.h"
 #import "FLTextFieldSignup.h"
 #import "FLValidNavBar.h"
 #import "FLPhoneField.h"

@@ -13,5 +13,6 @@
 @interface CreditCardViewController : BaseViewController<STPPaymentCardTextFieldDelegate>
 
 @property (nonatomic, retain) NSString *customLabel;
+@property (nonatomic, retain) NSDictionary *floozData;
 
 @end

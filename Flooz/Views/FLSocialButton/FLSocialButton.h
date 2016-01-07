@@ -10,7 +10,7 @@
 
 @interface FLSocialButton : UIButton
 
-- (id)initWithImageName:(NSString *)imageNamed color:(UIColor *)color selectedColor:(UIColor *)colorSelected title:(NSString *)title height:(CGFloat)height;
+- (nullable id)initWithImageName:(NSString *)imageNamed color:(UIColor *)color selectedColor:(UIColor *)colorSelected title:(NSString *)title height:(CGFloat)height;
 - (void)setText:(nonnull NSString *)text;
 
 @end

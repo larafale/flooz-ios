@@ -15,13 +15,13 @@
 
 	UITextField *_textfield2;
 
-	id _target;
-	SEL _action;
-
-	id _targetTextChange;
-	SEL _actionTextChange;
-
-	NSString *_filterDate;
+    id _target;
+    SEL _action;
+    
+    id _targetTextChange;
+    SEL _actionTextChange;
+    
+    NSString *_filterDate;
 }
 
 @property UITextField *textfield;

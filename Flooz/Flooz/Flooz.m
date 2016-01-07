@@ -1505,6 +1505,9 @@
         if (data && data[@"label"] && ![data[@"label"] isBlank])
             controller.customLabel = data[@"label"];
         
+        if (data && data[@"flooz"])
+            controller.floozData = data[@"flooz"];
+        
         [[appDelegate currentController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
     });
 }

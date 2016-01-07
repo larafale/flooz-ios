@@ -28,7 +28,7 @@
 #define kImageCapturedSuccessfully @"imageCapturedSuccessfully"
 #define degreesToRadians(degrees) ((degrees) / 180.0 * M_PI)
 
-@interface NewTransactionViewController : GlobalViewController <FLPaymentFieldDelegate, UIAlertViewDelegate, FLCameraKeyboardDelegate, MFMessageComposeViewControllerDelegate, THContactPickerDelegate, FLUserPickerTableViewDelegate, WYPopoverControllerDelegate, FLNewTransactionBarDelegate, WYPopoverControllerDelegate, JTSImageViewControllerInteractionsDelegate, GeolocDelegate>
+@interface NewTransactionViewController : GlobalViewController <FLPaymentFieldDelegate, UIAlertViewDelegate, FLCameraKeyboardDelegate, MFMessageComposeViewControllerDelegate, THContactPickerDelegate, FLUserPickerTableViewDelegate, WYPopoverControllerDelegate, FLNewTransactionBarDelegate, JTSImageViewControllerInteractionsDelegate, GeolocDelegate>
 
 - (id)initWithTransactionType:(TransactionType)transactionType;
 - (id)initWithTransactionType:(TransactionType)transactionType user:(FLUser *)user;

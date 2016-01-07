@@ -10,6 +10,7 @@
 #import "NewTransactionViewController.h"
 #import "FLPopupInformation.h"
 #import "UserViewController.h"
+#import "3DSecureViewController.h"
 
 @interface FLNavigationController () {
     UIBarButtonItem *backItem;
@@ -91,6 +92,11 @@
 
 - (void)dismiss {
     [self.view endEditing:YES];
+    
+    if ([self.topViewController isKindOfClass:[Secure3DViewController class]]) {
+        [[Flooz sharedInstance] abort3DSecure];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

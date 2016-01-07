@@ -17,7 +17,7 @@
 @interface CashOutViewController () {
     NSMutableDictionary *dictionary;
     
-    FLTextFieldSignup *_amountInput;
+    FLTextField *_amountInput;
     FLKeyboardView *inputView;
     
     FLActionButton *_confirmButton;
@@ -74,14 +74,15 @@
     height += 30;
     
     {
-        _amountInput = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
+        _amountInput = [[FLTextField alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
         [_amountInput addForNextClickTarget:self action:@selector(keyNext)];
         [_amountInput addForTextChangeTarget:self action:@selector(amountChange)];
+        [_amountInput setType:FLTextFieldTypeFloatNumber];
         
         inputView = [FLKeyboardView new];
         [inputView setKeyboardDecimal];
-        inputView.textField = _amountInput.textfield;
-        _amountInput.textfield.inputView = inputView;
+        inputView.textField = _amountInput;
+        _amountInput.inputView = inputView;
         [_mainBody addSubview:_amountInput];
     }
     
@@ -108,7 +109,7 @@
 }
 
 - (void)amountChange {
-    if (dictionary[@"amount"] && ![dictionary[@"amount"] isBlank]) {
+    if (dictionary[@"amount"] && [dictionary[@"amount"] length]) {
         //        [_confirmButton setEnabled:YES];
         
         NSNumber *numberAmount = [NSNumber numberWithFloat:[dictionary[@"amount"] floatValue]];
@@ -141,6 +142,8 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] cashoutValidate:amount success:^(id result) {
+        [_amountInput setValid:YES];
+
         CompleteBlock completeBlock = ^{
             [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] cashout:amount success: ^(id result) {
@@ -176,7 +179,13 @@
 //        controller.completeBlock = completeBlock;
 //        [[self navigationController] pushViewController:controller animated:YES];
     } failure:^(NSError *error) {
-        
+        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
+
+        if (serializedData && serializedData[@"popup"] && serializedData[@"popup"][@"slug"] && [serializedData[@"popup"][@"slug"] isEqualToString:@"amount"]) {
+            [_amountInput setValid:NO];
+            [_amountInput becomeFirstResponder];
+        }
     }];
 }
 

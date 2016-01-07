@@ -100,6 +100,7 @@
     [_text setEditable:NO];
     [_text setBounces:NO];
     [_text setScrollEnabled:NO];
+    [_text setSelectable:NO];
     [_text setBackgroundColor:[UIColor clearColor]];
     
     [_mainBody addSubview:_text];
@@ -288,7 +289,8 @@
     if (_code && ![_code isBlank]) {
         popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
         popoverController.delegate = self;
-        
+        popoverController.theme.dimsBackgroundViewsTintColor = NO;
+
         [popoverController presentPopoverFromRect:_text.bounds inView:_text permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
             [popoverViewController.button addTarget:self action:@selector(copyCode) forControlEvents:UIControlEventTouchUpInside];
         }];
