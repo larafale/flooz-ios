@@ -42,4 +42,8 @@
 	return [UIFont fontWithName:@"ProximaNova-Semibold" size:size];
 }
 
++ (UIFont *)customCreditCard:(NSInteger)size {
+    return [UIFont fontWithName:@"ocra" size:size];
+}
+
 @end

@@ -19,5 +19,6 @@
 + (UIFont *)customContentRegular:(NSInteger)size;
 + (UIFont *)customContentLight:(NSInteger)size;
 + (UIFont *)customContentBold:(NSInteger)size;
++ (UIFont *)customCreditCard:(NSInteger)size;
 
 @end

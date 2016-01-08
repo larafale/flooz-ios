@@ -28,7 +28,7 @@
     UITabBarItem *homeItem;
     UITabBarItem *notifItem;
     UITabBarItem *floozItem;
-    UITabBarItem *shareItem;
+    UITabBarItem *thirdItem;
     UITabBarItem *profileItem;
     UIButton *centerButton;
 }
@@ -54,72 +54,83 @@
     
     NSMutableArray *tabBarItems = [NSMutableArray new];
     
-    homeItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_HOME", nil) image:[UIImage imageNamed:@"menu-home"] tag:0];
-    notifItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_NOTIFICATIONS", nil) image:[UIImage imageNamed:@"menu-notifications"] tag:1];
+    CGSize iconSize = CGSizeMake(30, 30);
+    
+    homeItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_HOME", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-home"] scaledToSize:iconSize] tag:0];
+    notifItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_NOTIFICATIONS", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-notifications"] scaledToSize:iconSize] tag:1];
     floozItem = [[UITabBarItem alloc] initWithTitle:nil image:[UIImage new] tag:2];
-    shareItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_SHARE", nil) image:[UIImage imageNamed:@"menu-share"] tag:3];
-    profileItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_ACCOUNT", nil) image:[UIImage imageNamed:@"menu-account"] tag:4];
+    profileItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_ACCOUNT", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-account"] scaledToSize:iconSize] tag:4];
+    
+    FLNavigationController *thirdNavigationController;
+    
+    NSDictionary *ux = [[[Flooz sharedInstance] currentUser] ux];
+    if (ux && ux[@"deals"] && [ux[@"deals"] boolValue]) {
+        thirdItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_DEALS", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-deals"] scaledToSize:iconSize] tag:3];
+        thirdNavigationController = [[FLNavigationController alloc] initWithRootViewController:[DealViewController new]];
+    } else {
+        thirdItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_SHARE", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-share"] scaledToSize:iconSize] tag:3];
+        thirdNavigationController = [[FLNavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
+        
+        if ([[Flooz sharedInstance] invitationTexts]) {
+            [thirdItem setTitle:[[Flooz sharedInstance] invitationTexts].shareTitle];
+            
+            //        if ([[Flooz sharedInstance] invitationTexts].shareIcon && ![[[Flooz sharedInstance] invitationTexts].shareIcon isBlank]) {
+            //            [[SDImageCache sharedImageCache] queryDiskCacheForKey:[[Flooz sharedInstance] invitationTexts].shareIcon done:^(UIImage *image, SDImageCacheType cacheType) {
+            //                if (image) {
+            //                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            //                    [shareItem setImage:image];
+            //                } else {
+            //                    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[[Flooz sharedInstance] invitationTexts].shareIcon] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+            //                        if (image && !error) {
+            //                            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            //                            [shareItem setImage:image];
+            //                        }
+            //                    }];
+            //                }
+            //
+            //            }];
+            //        }
+        }
+        
+        [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
+            [thirdItem setTitle:result.shareTitle];
+            
+            //        if (result.shareIcon && ![result.shareIcon isBlank]) {
+            //            [[SDImageCache sharedImageCache] queryDiskCacheForKey:result.shareIcon done:^(UIImage *image, SDImageCacheType cacheType) {
+            //                if (image) {
+            //                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            //                    [shareItem setImage:image];
+            //                } else {
+            //                    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:result.shareIcon] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+            //                        if (image && !error) {
+            //                            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            //                            [shareItem setImage:image];
+            //                        }
+            //                    }];
+            //                }
+            //            }];
+            //        }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
     
     FLNavigationController *homeNavigationController = [[FLNavigationController alloc] initWithRootViewController:[TimelineViewController new]];
     FLNavigationController *notifNavigationController = [[FLNavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
     FLNavigationController *floozNavigationController = [[FLNavigationController alloc] initWithRootViewController:[UIViewController new]];
-    FLNavigationController *shareNavigationController = [[FLNavigationController alloc] initWithRootViewController:[DealViewController new]];
     
     FLNavigationController *profileNavigationController = [[FLNavigationController alloc] initWithRootViewController:[[UserViewController alloc] initWithUser:[Flooz sharedInstance].currentUser]];
-    
-    if ([[Flooz sharedInstance] invitationTexts]) {
-        [shareItem setTitle:[[Flooz sharedInstance] invitationTexts].shareTitle];
-        
-//        if ([[Flooz sharedInstance] invitationTexts].shareIcon && ![[[Flooz sharedInstance] invitationTexts].shareIcon isBlank]) {
-//            [[SDImageCache sharedImageCache] queryDiskCacheForKey:[[Flooz sharedInstance] invitationTexts].shareIcon done:^(UIImage *image, SDImageCacheType cacheType) {
-//                if (image) {
-//                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//                    [shareItem setImage:image];
-//                } else {
-//                    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[[Flooz sharedInstance] invitationTexts].shareIcon] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-//                        if (image && !error) {
-//                            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//                            [shareItem setImage:image];
-//                        }
-//                    }];
-//                }
-//                
-//            }];
-//        }
-    }
-    
-    [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
-        [shareItem setTitle:result.shareTitle];
-        
-//        if (result.shareIcon && ![result.shareIcon isBlank]) {
-//            [[SDImageCache sharedImageCache] queryDiskCacheForKey:result.shareIcon done:^(UIImage *image, SDImageCacheType cacheType) {
-//                if (image) {
-//                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//                    [shareItem setImage:image];
-//                } else {
-//                    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:result.shareIcon] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-//                        if (image && !error) {
-//                            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//                            [shareItem setImage:image];
-//                        }
-//                    }];
-//                }
-//            }];
-//        }
-    } failure:^(NSError *error) {
-        
-    }];
     
     [[homeNavigationController.viewControllers objectAtIndex:0] setTabBarItem:homeItem];
     [[notifNavigationController.viewControllers objectAtIndex:0] setTabBarItem:notifItem];
     [[floozNavigationController.viewControllers objectAtIndex:0] setTabBarItem:floozItem];
-    [[shareNavigationController.viewControllers objectAtIndex:0] setTabBarItem:shareItem];
+    [[thirdNavigationController.viewControllers objectAtIndex:0] setTabBarItem:thirdItem];
     [[profileNavigationController.viewControllers objectAtIndex:0] setTabBarItem:profileItem];
     
     [tabBarItems addObject:homeNavigationController];
     [tabBarItems addObject:notifNavigationController];
     [tabBarItems addObject:floozNavigationController];
-    [tabBarItems addObject:shareNavigationController];
+    [tabBarItems addObject:thirdNavigationController];
     [tabBarItems addObject:profileNavigationController];
     
     [self setViewControllers:tabBarItems];
@@ -149,7 +160,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void) enterBackground {
+- (void)enterBackground {
     for (FLNavigationController *controller in self.viewControllers) {
         if (controller != self.selectedViewController)
             [controller popToRootViewControllerAnimated:NO];
@@ -181,8 +192,6 @@
     centerButton.layer.masksToBounds = YES;
     [centerButton addTarget:self action:@selector(openNewFlooz) forControlEvents:UIControlEventTouchUpInside];
     centerButton.center = self.tabBar.center;
-    
-//    CGRectSetY(centerButton.frame, CGRectGetMaxY(self.tabBar.frame) - CGRectGetHeight(centerButton.frame));
     
     [self.view addSubview:centerButton];
 }
@@ -236,7 +245,7 @@
     NSNumber *numberNotif = [[Flooz sharedInstance] notificationsCount];
     
     [notifItem setCustomBadgeValue:[numberNotif stringValue] withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
-
+    
     if ([numberNotif intValue] == 0)
         [notifItem setCustomBadgeValue:nil withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
 }

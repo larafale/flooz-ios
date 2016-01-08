@@ -193,6 +193,7 @@
 "TAB_BAR_HOME" = "Accueil";
 "TAB_BAR_NOTIFICATIONS" = "Notifs";
 "TAB_BAR_SHARE" = "";
+"TAB_BAR_DEALS" = "Deals";
 "TAB_BAR_ACCOUNT" = "Moi";
 
 /************************************/
@@ -233,6 +234,7 @@
 /*           NAVIGATION             */
 /************************************/
 
+"NAV_DEALS" = "Deals";
 "NAV_NOTIFICATIONS" = "Notifications";
 "NAV_CREDIT_CARD" = "Carte bancaire";
 "NAV_CREDIT_CARD_ADD" = "Ajouter une CB";

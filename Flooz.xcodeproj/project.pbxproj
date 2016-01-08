@@ -394,6 +394,12 @@
 		C97CCFD51BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */; };
 		C97CCFD61BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */; };
 		C97CCFD71BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */; };
+		C97EE6D11C3FFCDA003DE35B /* ocra.otf in Resources */ = {isa = PBXBuildFile; fileRef = C97EE6D01C3FFCDA003DE35B /* ocra.otf */; };
+		C97EE6D21C3FFCDA003DE35B /* ocra.otf in Resources */ = {isa = PBXBuildFile; fileRef = C97EE6D01C3FFCDA003DE35B /* ocra.otf */; };
+		C97EE6D31C3FFCDA003DE35B /* ocra.otf in Resources */ = {isa = PBXBuildFile; fileRef = C97EE6D01C3FFCDA003DE35B /* ocra.otf */; };
+		C97EE6D61C4003B5003DE35B /* DealCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = C97EE6D51C4003B5003DE35B /* DealCell2.m */; };
+		C97EE6D71C4003B5003DE35B /* DealCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = C97EE6D51C4003B5003DE35B /* DealCell2.m */; };
+		C97EE6D81C4003B5003DE35B /* DealCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = C97EE6D51C4003B5003DE35B /* DealCell2.m */; };
 		C98012721A76921000019682 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
 		C98012731A76921000019682 /* FLPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A7BE5F1A27801200195AFC /* FLPreset.m */; };
 		C98012751A76921000019682 /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
@@ -1042,6 +1048,9 @@
 		C975BB011A92BB8E000E5AEA /* YLMoment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLMoment.m; sourceTree = "<group>"; };
 		C97CCFD31BBD59AD0084ABF5 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
+		C97EE6D01C3FFCDA003DE35B /* ocra.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ocra.otf; sourceTree = "<group>"; };
+		C97EE6D41C4003B5003DE35B /* DealCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DealCell2.h; path = DealCell/DealCell2.h; sourceTree = "<group>"; };
+		C97EE6D51C4003B5003DE35B /* DealCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DealCell2.m; path = DealCell/DealCell2.m; sourceTree = "<group>"; };
 		C98013431A76921000019682 /* Flooz local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flooz local.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C980E40B1C17139E00E52F86 /* DeviceUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceUID.h; path = Library/DeviceUID/DeviceUID.h; sourceTree = "<group>"; };
 		C980E40C1C17139E00E52F86 /* DeviceUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceUID.m; path = Library/DeviceUID/DeviceUID.m; sourceTree = "<group>"; };
@@ -2145,6 +2154,7 @@
 		ABF46A211875BE9E00E92A77 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				C97EE6D01C3FFCDA003DE35B /* ocra.otf */,
 				ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */,
 				ABF46A2A1875C0B100E92A77 /* ProximaNova-Regular.otf */,
 				ABF46A2B1875C0B100E92A77 /* ProximaNova-Semibold.otf */,
@@ -2300,6 +2310,8 @@
 			children = (
 				C928E8CC1C3D2A390032FAE4 /* DealCell.h */,
 				C928E8CD1C3D2A390032FAE4 /* DealCell.m */,
+				C97EE6D41C4003B5003DE35B /* DealCell2.h */,
+				C97EE6D51C4003B5003DE35B /* DealCell2.m */,
 			);
 			name = DealCell;
 			sourceTree = "<group>";
@@ -2781,6 +2793,7 @@
 				ABF46A321875C1B400E92A77 /* ProximaNova-Semibold.otf in Resources */,
 				ABF46A331875C1B400E92A77 /* Rene Bieder - Gentona Book.otf in Resources */,
 				ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */,
+				C97EE6D11C3FFCDA003DE35B /* ocra.otf in Resources */,
 				2FC2546119B6742500EB1EED /* ShareAppViewController.xib in Resources */,
 				ABF46A341875C1B400E92A77 /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
 				AB2FB54418AD9C7A0079AA1D /* PasswordViewController.xib in Resources */,
@@ -2827,6 +2840,7 @@
 				ABAA400D197E96BF009F29EF /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
 				ABAA400E197E96BF009F29EF /* PasswordViewController.xib in Resources */,
 				C9CB21FC1A95E9D30064389A /* THContactPickerViewController.xib in Resources */,
+				C97EE6D21C3FFCDA003DE35B /* ocra.otf in Resources */,
 				C9D4E7081B18BD380096725B /* Flooz local-Info.plist in Resources */,
 				ABAA4011197E96BF009F29EF /* CashOutViewController.xib in Resources */,
 				ABAA4014197E96BF009F29EF /* Rene Bieder - Gentona Light.otf in Resources */,
@@ -2861,6 +2875,7 @@
 				C980132A1A76921000019682 /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
 				C980132B1A76921000019682 /* PasswordViewController.xib in Resources */,
 				C9CB21FD1A95E9D30064389A /* THContactPickerViewController.xib in Resources */,
+				C97EE6D31C3FFCDA003DE35B /* ocra.otf in Resources */,
 				C980132D1A76921000019682 /* CashOutViewController.xib in Resources */,
 				C980132E1A76921000019682 /* Rene Bieder - Gentona Light.otf in Resources */,
 				C980132F1A76921000019682 /* Rene Bieder - Gentona Thin.otf in Resources */,
@@ -3129,6 +3144,7 @@
 				AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */,
 				C92FB3AB1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				C9A265561ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
+				C97EE6D61C4003B5003DE35B /* DealCell2.m in Sources */,
 				C93F66A11BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C928E8CE1C3D2A390032FAE4 /* DealCell.m in Sources */,
 				C9AE77941ACA918B00CFF0AF /* FLSlide.m in Sources */,
@@ -3317,6 +3333,7 @@
 				C95AED9F1A49B5E500000FB3 /* WYPopoverController.m in Sources */,
 				C92FB3AC1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */,
+				C97EE6D71C4003B5003DE35B /* DealCell2.m in Sources */,
 				C93F66A21BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C928E8CF1C3D2A390032FAE4 /* DealCell.m in Sources */,
 				C9A265571ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
@@ -3497,6 +3514,7 @@
 				C9EBBB9F1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				C98012A51A76921000019682 /* WYPopoverController.m in Sources */,
 				C92FB3AD1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
+				C97EE6D81C4003B5003DE35B /* DealCell2.m in Sources */,
 				C98012A61A76921000019682 /* FLKeyboardView.m in Sources */,
 				C928E8D01C3D2A390032FAE4 /* DealCell.m in Sources */,
 				C93F66A31BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
