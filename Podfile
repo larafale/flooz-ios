@@ -34,5 +34,7 @@ pod 'Stripe'
 pod 'libPhoneNumber-iOS'
 pod 'TUSafariActivity'
 pod 'UIFloatLabelTextField'
+pod 'MGSwipeTableCell'
+
 
 link_with 'Flooz', 'Flooz dev', 'Flooz local', 'FloozTests'

@@ -47,6 +47,12 @@
 - (void)commonInit {
     [self setBackgroundColor:[UIColor clearColor]];
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+    self.contentView.layer.masksToBounds = YES;
+    
+    self.rightSwipeSettings.transition = MGSwipeTransitionClipCenter;
+    self.rightExpansion.fillOnTrigger = YES;
+    self.rightExpansion.threshold = 1.0f;
+    self.rightExpansion.buttonIndex = 0;
     
     self.picView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth() / 100 * 35.0f, PIC_HEIGHT)];
     self.picView.layer.masksToBounds = YES;
@@ -58,9 +64,9 @@
     CGRectSetHeight(self.title.frame, TITLE_HEIGHT);
     
     self.desc = [[UILabel alloc] initWithText:@"" textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:13] textAlignment:NSTextAlignmentRight numberOfLines:0];
-    [self.desc setLineBreakMode:NSLineBreakByWordWrapping];
-    self.desc.minimumScaleFactor = 10./self.amount.font.pointSize;
-    self.desc.adjustsFontSizeToFitWidth = YES;
+    [self.desc setLineBreakMode:NSLineBreakByTruncatingTail];
+    self.desc.minimumScaleFactor = 8./self.amount.font.pointSize;
+    self.desc.adjustsFontSizeToFitWidth = NO;
     CGRectSetXY(self.desc.frame, CGRectGetMaxX(self.picView.frame) + MARGIN + LABEL_WIDTH / 2, CGRectGetMaxY(self.title.frame) + MARGIN / 2);
     CGRectSetWidth(self.desc.frame, PPScreenWidth() - CGRectGetMinX(self.title.frame) - MARGIN - LABEL_WIDTH / 2);
     CGRectSetHeight(self.desc.frame, PIC_HEIGHT - MARGIN * 3 - TITLE_HEIGHT * 2);
@@ -113,15 +119,18 @@
     [super setSelected:selected animated:animated];
     
     if ([self isSelected]) {
-        self.backgroundColor = [UIColor customBlue];
+        self.contentView.backgroundColor = [UIColor customBlue];
         self.amountBack.backgroundColor = [UIColor whiteColor];
         self.amount.textColor = [UIColor customBlue];
         self.desc.textColor = [UIColor customBackgroundHeader];
+        self.contentView.layer.borderWidth = 1.5;
+        self.contentView.layer.borderColor = [UIColor customBlue].CGColor;
     } else {
-        self.backgroundColor = [UIColor clearColor];
+        self.contentView.backgroundColor = [UIColor clearColor];
         self.amountBack.backgroundColor = [UIColor customBlue];
         self.amount.textColor = [UIColor whiteColor];
         self.desc.textColor = [UIColor customPlaceholder];
+        self.contentView.layer.borderColor = [UIColor clearColor].CGColor;
     }
 }
 

@@ -25,13 +25,10 @@
         
         defaultColor = color;
         if (!defaultColor)
-            defaultColor = [UIColor whiteColor];
+            defaultColor = [UIColor customBackgroundSocial];
         
         selectedColor = colorSelected;
         
-        if (!defaultColor)
-            defaultColor = [UIColor customBackgroundSocial];
-
         titleText = title;
         
         [self createViews];

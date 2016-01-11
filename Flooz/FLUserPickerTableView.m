@@ -185,9 +185,9 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (!_selectionText || [_selectionText isBlank]) {
-        if (section == 0 && [_friendsRecent count]) {
+        if (section == 0) {
             return NSLocalizedString(@"FRIEND_PICKER_FRIENDS_RECENT", nil);
-        } else if (section == 0) {
+        } else if (section == 1) {
             return NSLocalizedString(@"FRIEND_PICKER_FRIENDS", nil);
         } else {
             return NSLocalizedString(@"FRIEND_PICKER_ADDRESS_BOOK", nil);
@@ -199,13 +199,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (!_selectionText || [_selectionText isBlank]) {
-        if (section == 0 && [_friendsRecent count]) {
-            return 35;
-        } else if (section == 0) {
-            if ((!_friends.count && !_contactsFromAdressBook.count) || _friends.count)
+        if (section == 0) {
+            if ([_friendsRecent count] || (!_friends.count && !_contactsFromAdressBook.count))
                 return 35;
-            else
-                return 0;
+            return 0;
+        } else if (section == 1) {
+            if (_friends.count)
+                return 35;
+            return 0;
         } else {
             if ([_contactsFromAdressBook count])
                 return 35;
@@ -244,13 +245,12 @@
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (!_selectionText || [_selectionText isBlank]) {
-        if (section == 0 && [_friendsRecent count]) {
-            return [_friendsRecent count];
-        } else if (section == 0) {
-            if ([_contactsFromAdressBook count] || [_friends count])
-                return [_friends count];
-            else
+        if (section == 0) {
+            if (![_friendsRecent count] && ![_friends count] && ![_contactsFromAdressBook count])
                 return 1;
+            return [_friendsRecent count];
+        } else if (section == 1) {
+            return [_friends count];
         } else {
             return [_contactsFromAdressBook count];
         }
@@ -263,20 +263,19 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (!_selectionText || [_selectionText isBlank])
-        return 2;
+        return 3;
     return 1;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     FLUser *currentUser;
     
     if (!_selectionText || [_selectionText isBlank]) {
         if (indexPath.section == 0 && [_friendsRecent count]) {
             currentUser = _friendsRecent[indexPath.row];
-        } else if (indexPath.section == 0) {
-            if (![_contactsFromAdressBook count] && ![_friends count])
-                return [self createEmptyCell:tableView];
+        } else if (indexPath.section == 0 && ![_contactsFromAdressBook count] && ![_friends count]) {
+            return [self createEmptyCell:tableView];
+        } else if (indexPath.section == 1) {
             currentUser = _friends[indexPath.row];
         } else {
             currentUser = _contactsFromAdressBook[indexPath.row];
@@ -310,6 +309,7 @@
     
     if (!cell) {
         cell = [[FriendPickerEmptyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSelection];
+        [cell setUserInteractionEnabled:NO];
     }
     return cell;
 }
@@ -323,23 +323,16 @@
         if (!_selectionText || [_selectionText isBlank]) {
             if (indexPath.section == 0 && [_friendsRecent count] > indexPath.row) {
                 currentUser = _friendsRecent[indexPath.row];
-            } else if (indexPath.section == 0) {
-                if ([_friends count] <= indexPath.row)
-                    return;
-                
+            } else if (indexPath.section == 1 && [_friends count] > indexPath.row) {
                 currentUser = _friends[indexPath.row];
-            } else {
-                if ([_contactsFromAdressBook count] <= indexPath.row)
-                    return;
-                
+            } else if (indexPath.section == 1 && [_contactsFromAdressBook count] > indexPath.row) {
                 currentUser = _contactsFromAdressBook[indexPath.row];
-            }
-        } else {
-            if ([_filteredContacts count] <= indexPath.row)
+            } else
                 return;
-            
+        } else if ([_filteredContacts count] > indexPath.row) {
             currentUser = _filteredContacts[indexPath.row];
-        }
+        } else
+            return;
         
         if (currentUser)
             [self.pickerDelegate userSelected:currentUser];

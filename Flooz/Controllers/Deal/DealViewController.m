@@ -82,9 +82,13 @@
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView setShowsVerticalScrollIndicator:NO];
+    [self.tableView setAllowsSelection:NO];
+    [self.tableView setAllowsMultipleSelection:NO];
     
     [_mainBody addSubview:self.tableView];
 }
+
+#pragma mark - UITableView Delegate & Datasource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     FLDeal *deal = [self.deals objectAtIndex:indexPath.row];
@@ -105,6 +109,7 @@
     
     if (!cell) {
         cell = [[DealCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.delegate = self;
     }
     
     FLDeal *deal = [self.deals objectAtIndex:indexPath.row];
@@ -121,6 +126,30 @@
         currentSelectedRow = indexPath.row;
     }
 }
+
+#pragma mark - MGSwipeTableCellDelegate Delegate
+
+-(BOOL) swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction {
+    return (direction == MGSwipeDirectionRightToLeft);
+}
+
+-(BOOL) swipeTableCell:(MGSwipeTableCell*) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
+    if (fromExpansion) {
+        [cell hideSwipeAnimated:YES];
+    }
+    
+    return NO;
+}
+
+-(NSArray*) swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
+             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
+    
+    MGSwipeButton *button = [MGSwipeButton buttonWithTitle:@"Partager" icon:[FLHelper colorImage:[FLHelper imageWithImage:[UIImage imageNamed:@"share"] scaledToSize:CGSizeMake(30, 30)] color:[UIColor whiteColor]] backgroundColor:[UIColor customPink]];
+    [button centerIconOverText];
+    
+    return @[button];
+}
+
 
 - (void)showPopupInfo {
     UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];

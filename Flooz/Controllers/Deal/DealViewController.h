@@ -6,8 +6,9 @@
 //  Copyright © 2016 Flooz. All rights reserved.
 //
 
+#import <MGSwipeTableCell.h>
 #import "BaseViewController.h"
 
-@interface DealViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate>
+@interface DealViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
 
 @end

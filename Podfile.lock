@@ -58,6 +58,7 @@ PODS:
   - JTHelper (0.3.0)
   - JTSImageViewController (1.5.1)
   - libPhoneNumber-iOS (0.8.10)
+  - MGSwipeTableCell (1.5.3)
   - Mixpanel (2.9.1):
     - Mixpanel/Mixpanel (= 2.9.1)
   - Mixpanel/Mixpanel (2.9.1)
@@ -108,6 +109,7 @@ DEPENDENCIES:
   - JTHelper
   - JTSImageViewController
   - libPhoneNumber-iOS
+  - MGSwipeTableCell
   - Mixpanel
   - MZFormSheetController
   - NSDate+Calendar
@@ -147,6 +149,7 @@ SPEC CHECKSUMS:
   JTHelper: b9b56980755bf6d9f7ed58a2490205109658087e
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
   libPhoneNumber-iOS: 7bfd00f843fdcd82b5182b463e8eb3b27579f41d
+  MGSwipeTableCell: 5ae3b9a15efda26b201adc8676b24040febe6ff6
   Mixpanel: 5ca24b2a05f4c77fe9bcfe7671d681d0f3f8d76f
   MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
   MZFormSheetController: da2df509805d757e04b052915057d8e1a338b050

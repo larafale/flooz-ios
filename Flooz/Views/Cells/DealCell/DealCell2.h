@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "FLDeal.h"
+#import <MGSwipeTableCell.h>
 
-@interface DealCell2 : UITableViewCell
+@interface DealCell2 : MGSwipeTableCell
 
 + (CGFloat)getHeight:(FLDeal *)deal;
 
