@@ -170,22 +170,24 @@
     {
         [_contentView addSubview:view];
         
-        UILabel *cardNumber = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, CGRectGetHeight(view.frame) / 2.0f, CGRectGetWidth(view.frame) - 20.0f*2, 30)];
+        UILabel *cardNumber = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, CGRectGetHeight(view.frame) / 2.0f - 10.0f, CGRectGetWidth(view.frame) - 20.0f*2, 30)];
         {
             UILabel *label = cardNumber;
             label.textColor = [UIColor whiteColor];
-            label.font = [UIFont customTitleExtraLight:22];
-            
-            label.text = [NSString stringWithFormat:@"%@********%@", [creditCard.number substringToIndex:4], [creditCard.number substringFromIndex:creditCard.number.length - 4]];
+            label.font = [UIFont customCreditCard:22];
+            label.adjustsFontSizeToFitWidth = YES;
+            label.minimumScaleFactor = 15. / label.font.pointSize;
+
+            label.text = [NSString stringWithFormat:@"%@ **** **** %@", [creditCard.number substringToIndex:4], [creditCard.number substringFromIndex:creditCard.number.length - 4]];
             
             [view addSubview:label];
         }
         
         {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(cardNumber.frame), CGRectGetMaxY(cardNumber.frame) + 5.0f, CGRectGetWidth(cardNumber.frame), 30)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(cardNumber.frame), CGRectGetMaxY(cardNumber.frame) + 15.0f, CGRectGetWidth(cardNumber.frame), 30)];
             label.textColor = [UIColor whiteColor];
             
-            label.font = [UIFont customContentRegular:14];
+            label.font = [UIFont customCreditCard:14];
             label.text = [creditCard.owner uppercaseString];
             [label setWidthToFit];
             [view addSubview:label];

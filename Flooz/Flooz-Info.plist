@@ -94,6 +94,7 @@
 	<string>NSLocationWhenInUseUsageDescription</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>ocra.otf</string>
 		<string>ProximaNova-Light.otf</string>
 		<string>ProximaNova-Semibold.otf</string>
 		<string>ProximaNova-Regular.otf</string>

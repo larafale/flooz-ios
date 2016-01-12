@@ -359,7 +359,9 @@
     
     [shareController setExcludedActivityTypes:@[UIActivityTypeCopyToPasteboard, UIActivityTypePrint, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact]];
     
-    [self.navigationController presentViewController:shareController animated:YES completion:nil];
+    [self.navigationController presentViewController:shareController animated:YES completion:^{
+
+    }];
 }
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {

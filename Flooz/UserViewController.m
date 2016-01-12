@@ -15,6 +15,9 @@
 #import "AccountViewController.h"
 #import "FLPopupInformation.h"
 #import "UIButton+Badge.h"
+#import "TUSafariActivity.h"
+#import "ARChromeActivity.h"
+#import "FLCopyLinkActivity.h"
 
 #define actionButtonHeight 30
 #define actionButtonMargin 10
@@ -723,7 +726,23 @@
 }
 
 - (void)didTransactionShareTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.flooz.me/flooz/%@", transaction.transactionId]];
     
+    ARChromeActivity *chromeActivity = [ARChromeActivity new];
+    TUSafariActivity *safariActivity = [TUSafariActivity new];
+    FLCopyLinkActivity *copyActivity = [FLCopyLinkActivity new];
+    
+    UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:@[chromeActivity, safariActivity, copyActivity]];
+    
+    [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
+        
+    }];
+    
+    [shareController setExcludedActivityTypes:@[UIActivityTypeCopyToPasteboard, UIActivityTypePrint, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact]];
+    
+    [self.navigationController presentViewController:shareController animated:YES completion:^{
+
+    }];
 }
 
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
