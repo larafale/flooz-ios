@@ -184,12 +184,25 @@
         }
         
         {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(cardNumber.frame), CGRectGetMaxY(cardNumber.frame) + 15.0f, CGRectGetWidth(cardNumber.frame), 30)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(cardNumber.frame), CGRectGetMaxY(cardNumber.frame) + 20.0f, CGRectGetWidth(cardNumber.frame), 30)];
             label.textColor = [UIColor whiteColor];
             
-            label.font = [UIFont customCreditCard:14];
+            label.font = [UIFont customCreditCard:12];
             label.text = [creditCard.owner uppercaseString];
             [label setWidthToFit];
+            [view addSubview:label];
+        }
+        
+        {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(cardNumber.frame), CGRectGetMaxY(cardNumber.frame) + 20.0f, CGRectGetWidth(cardNumber.frame), 30)];
+            label.textColor = [UIColor whiteColor];
+            
+            label.font = [UIFont customCreditCard:12];
+            label.text = [creditCard.expires uppercaseString];
+            [label setWidthToFit];
+            
+            CGRectSetX(label.frame, CGRectGetWidth(view.frame) - CGRectGetWidth(label.frame) - 20.0f);
+            
             [view addSubview:label];
         }
     }

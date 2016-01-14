@@ -35,6 +35,6 @@ pod 'libPhoneNumber-iOS'
 pod 'TUSafariActivity'
 pod 'UIFloatLabelTextField'
 pod 'MGSwipeTableCell'
-
+pod 'Batch'
 
 link_with 'Flooz', 'Flooz dev', 'Flooz local', 'FloozTests'

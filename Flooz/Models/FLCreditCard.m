@@ -22,6 +22,7 @@
 	_cardId = [json objectForKey:@"_id"];
 	_owner = [json objectForKey:@"holder"];
 	_number = [json objectForKey:@"number"];
+    _expires = [json objectForKey:@"expires"];
 }
 
 @end

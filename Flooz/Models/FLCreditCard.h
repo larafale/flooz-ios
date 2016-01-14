@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSString *cardId;
 @property (strong, nonatomic) NSString *owner;
 @property (strong, nonatomic) NSString *number;
+@property (strong, nonatomic) NSString *expires;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

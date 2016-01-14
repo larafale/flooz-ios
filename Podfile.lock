@@ -15,6 +15,7 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
+  - Batch (1.4)
   - Bolts (1.5.1):
     - Bolts/AppLinks (= 1.5.1)
     - Bolts/Tasks (= 1.5.1)
@@ -91,6 +92,7 @@ PODS:
 DEPENDENCIES:
   - ActionSheetPicker-3.0
   - AFNetworking
+  - Batch
   - Branch
   - Crashlytics
   - EAIntroView
@@ -128,6 +130,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 860466cb4a66854e6acb590071ecee404b48f49d
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  Batch: 3bde61efdc056cafadd4ce65106354a3573b6a61
   Bolts: a12663244b1d3351c738882e71902fc74db54f64
   Branch: 37553775450de2d844b03a0854c37d6271d967e7
   Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05

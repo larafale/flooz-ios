@@ -11,6 +11,8 @@
 
 #import "AppDelegate.h"
 
+@import Batch;
+
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "FLTabBarController.h"
@@ -28,7 +30,6 @@
 #import "SignupNavigationController.h"
 #import "UserViewController.h"
 #import "FLNavigationController.h"
-
 #ifdef TARGET_IPHONE_SIMULATOR
 #import <PonyDebugger/PonyDebugger.h>
 #endif
@@ -60,6 +61,12 @@
     [self.window setTintColor:[UIColor customBlue]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+#ifdef FLOOZ_DEV
+    [Batch startWithAPIKey:@"DEV569791AD1CE03D8B5F446DABD1C"];
+#else
+    [Batch startWithAPIKey:@"569791AD1BE94C6F9D1BE137430A71"];
+#endif
     
     [Fabric with:@[CrashlyticsKit]];
     [Crashlytics startWithAPIKey:@"4f18178e0b7894ec76bb6f01a60f34baf68acbf7"];
