@@ -11,8 +11,6 @@
 
 #import "AppDelegate.h"
 
-@import Batch;
-
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "FLTabBarController.h"
@@ -30,9 +28,6 @@
 #import "SignupNavigationController.h"
 #import "UserViewController.h"
 #import "FLNavigationController.h"
-#ifdef TARGET_IPHONE_SIMULATOR
-#import <PonyDebugger/PonyDebugger.h>
-#endif
 
 @interface AppDelegate() {
     NSDictionary *tmpUser;
@@ -62,12 +57,6 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-#ifdef FLOOZ_DEV
-    [Batch startWithAPIKey:@"DEV569791AD1CE03D8B5F446DABD1C"];
-#else
-    [Batch startWithAPIKey:@"569791AD1BE94C6F9D1BE137430A71"];
-#endif
-    
     [Fabric with:@[CrashlyticsKit]];
     [Crashlytics startWithAPIKey:@"4f18178e0b7894ec76bb6f01a60f34baf68acbf7"];
     
@@ -96,6 +85,24 @@
                 }
             }
             [self saveBranchParams];
+        }
+    }];
+    
+    self.oneSignal = [[OneSignal alloc] initWithLaunchOptions:launchOptions appId:@"3a823aad-be96-42aa-8967-6d9875f898cb" handleNotification:^(NSString *message, NSDictionary *additionalData, BOOL isActive) {
+        if (!isActive) {
+            if ([additionalData count] > 0) {
+                if (additionalData[@"triggers"]) {
+                    NSData *objectData = [additionalData[@"triggers"] dataUsingEncoding:NSUTF8StringEncoding];
+                    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
+                    
+                    NSMutableDictionary *tmp = [pendingData mutableCopy];
+                    if (tmp == nil)
+                        tmp = [NSMutableDictionary new];
+                    [tmp setObject:json forKey:@"triggers"];
+                    pendingData = tmp;
+                    [self handlePendingData];
+                }
+            }
         }
     }];
     

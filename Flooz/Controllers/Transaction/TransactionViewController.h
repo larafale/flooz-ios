@@ -20,6 +20,7 @@
 - (void)focusOnComment;
 - (void)reloadTransaction;
 - (void)shareTransaction;
+- (void)acceptTransaction;
 
 @property (strong, nonatomic) UIViewController <TransactionCellDelegate> *delegateController;
 

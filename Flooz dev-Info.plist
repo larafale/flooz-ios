@@ -124,6 +124,10 @@
 		<string>Rene Bieder - Gentona ExtraLight.otf</string>
 		<string>Rene Bieder - Gentona Light.otf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array/>
 	<key>UIStatusBarStyle</key>

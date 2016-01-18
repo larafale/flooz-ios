@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import <OneSignal/OneSignal.h>
 
 #import "FLAlert.h"
 #import "FLAlertView.h"
@@ -61,7 +62,8 @@ static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 @property (strong, nonatomic) NSString *currentDeviceToken;
 @property (strong, nonatomic) MZFormSheetController *formSheet;
 @property (strong, nonatomic) FLTabBarController *tabBarController;
-@property (nonatomic, retain) NSMutableDictionary *branchParam;
+@property (nonatomic, strong) NSMutableDictionary *branchParam;
+@property (strong, nonatomic) OneSignal *oneSignal;
 
 - (void)initTestingWithIP:(NSString *)ip;
 

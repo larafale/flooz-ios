@@ -1701,7 +1701,35 @@
             NewTransactionViewController *controller = (NewTransactionViewController *)[navController topViewController];
             
             [controller valid];
+        } else if ([[navController topViewController] isKindOfClass:[TransactionViewController class]]) {
+            TransactionViewController *controller = (TransactionViewController *)[navController topViewController];
+            
+            [controller acceptTransaction];
         }
+    } else if ([[appDelegate myTopViewController] isKindOfClass:[FLTabBarController class]]) {
+        FLTabBarController *tabBarController = (FLTabBarController *)[appDelegate myTopViewController];
+        
+        if ([tabBarController.selectedViewController isKindOfClass:[FLNavigationController class]]) {
+            FLNavigationController *navController = (FLNavigationController *)tabBarController.selectedViewController;
+
+            if ([[navController topViewController] isKindOfClass:[TransactionViewController class]]) {
+                TransactionViewController *controller = (TransactionViewController *)[navController topViewController];
+                
+                [controller acceptTransaction];
+            }
+        } else if ([tabBarController.selectedViewController isKindOfClass:[TransactionViewController class]]) {
+            TransactionViewController *controller = (TransactionViewController *)tabBarController.selectedViewController;
+            
+            [controller acceptTransaction];
+        }
+    } else if ([[appDelegate myTopViewController] isKindOfClass:[TransactionViewController class]]) {
+        TransactionViewController *controller = (TransactionViewController *)[appDelegate myTopViewController];
+
+        [controller acceptTransaction];
+    } else if ([[appDelegate myTopViewController] isKindOfClass:[NewTransactionViewController class]]) {
+        NewTransactionViewController *controller = (NewTransactionViewController *)[appDelegate myTopViewController];
+        
+        [controller valid];
     }
 }
 
