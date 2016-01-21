@@ -19,6 +19,6 @@
 @property (nonatomic) id<FLLikePopoverViewControllerDelegate> delegate;
 @property (nonatomic, retain) UITableView *tableView;
 
-- (id)initWithTransaction:(FLTransaction*)transac;
+- (id)initWithSocial:(FLSocial*)social;
 
 @end

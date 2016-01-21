@@ -93,14 +93,16 @@
             if ([additionalData count] > 0) {
                 if (additionalData[@"triggers"]) {
                     NSData *objectData = [additionalData[@"triggers"] dataUsingEncoding:NSUTF8StringEncoding];
-                    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
+                    NSArray *json = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
                     
-                    NSMutableDictionary *tmp = [pendingData mutableCopy];
-                    if (tmp == nil)
-                        tmp = [NSMutableDictionary new];
-                    [tmp setObject:json forKey:@"triggers"];
-                    pendingData = tmp;
-                    [self handlePendingData];
+                    if (json && [json count]) {
+                        NSMutableDictionary *tmp = [pendingData mutableCopy];
+                        if (tmp == nil)
+                            tmp = [NSMutableDictionary new];
+                        [tmp setObject:json forKey:@"triggers"];
+                        pendingData = tmp;
+                        [self handlePendingData];
+                    }
                 }
             }
         }

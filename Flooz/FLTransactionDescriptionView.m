@@ -121,26 +121,6 @@
     if (transaction.location)
         current_height += 25.0f;
     
-    //Height for comment and like text
-//    FLSocial *social = [transaction social];
-//    if (social.commentsCount == 0 && (!social.likeText || [social.likeText isBlank])) {
-//        current_height += 0.0f;
-//    }
-//    else {
-//        CGFloat x = 0.0f;
-//        if (social.commentsCount > 0) {
-//            x = 40.0f;
-//        }
-//        JTImageLabel *likeText = [[JTImageLabel alloc] initWithFrame:CGRectMake(x, 0.0f, rightViewWidth - x, 12.0f)];
-//        [likeText setImage:[UIImage imageNamed:@"like-heart"]];
-//        [likeText setImageOffset:CGPointMake(-2.5, -1)];
-//        likeText.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
-//        CGFloat heightLike = 12.0f;
-//        if ([likeText heightToFit] > heightLike) {
-//            //			heightLike = [likeText heightToFit];
-//        }
-//        current_height += heightLike + 10.0f;
-//    }
     current_height += 20.0f; // height of buttons and amount text
     current_height += MARGE_TOP_BOTTOM; // add small marge at the bottom
     return current_height;
@@ -184,8 +164,6 @@
     height = CGRectGetMaxY(attachmentView.frame);
     [self createLocationView];
     height = CGRectGetMaxY(locationLabel.frame);
-//    [self createSocialView];
-//    height = CGRectGetMaxY(likeText.frame);
     [self createAmountLabel];
     [self createFooterView];
     height = CGRectGetMaxY(footerDescView.frame);
@@ -230,22 +208,6 @@
     attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(descriptionLabel.frame), CGRectGetWidth(rightView.frame), 80)];
     [rightView addSubview:attachmentView];
 }
-
-//- (void)createSocialView {
-//    likeText = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
-//    [likeText addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeTextTouch)]];
-//    [likeText setUserInteractionEnabled:YES];
-//    [rightView addSubview:likeText];
-//    [commentText setTextAlignment:NSTextAlignmentLeft];
-//    likeText.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
-//    likeText.textColor = [UIColor customPlaceholder];
-//    
-//    commentText = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(likeText.frame), CGRectGetMaxY(attachmentView.frame), CGRectGetWidth(rightView.frame), 12.0f)];
-//    [rightView addSubview:commentText];
-//    [commentText setTextAlignment:NSTextAlignmentLeft];
-//    commentText.font = [UIFont customContentRegular:FONT_SIZE_LIKE];
-//    commentText.textColor = [UIColor customPlaceholder];
-//}
 
 - (void)createFooterView {
     height += 10.0f;
@@ -307,7 +269,6 @@
     [self prepareAttachmentView];
     [self prepareAmountLabel];
     [self prepareLocationView];
-//    [self prepareLikeView];
     [self prepareSocial];
     
     CGRectSetHeight(rightView.frame, CGRectGetMaxY(footerDescView.frame));
@@ -450,53 +411,6 @@
     }
 }
 
-//- (void)prepareLikeView {
-//    CGRectSetY(commentText.frame, CGRectGetMaxY(locationLabel.frame) + 5.0f);
-//    CGRectSetY(likeText.frame, CGRectGetMaxY(locationLabel.frame) + 5.0f);
-//    
-//    FLSocial *social = [_transaction social];
-//    
-//    {
-//        if (!social.likeText || [social.likeText isBlank]) {
-//            likeText.hidden = YES;
-//            [likeText setText:@""];
-//            CGRectSetX(commentText.frame, 0.0f);
-//        }
-//        else {
-//            likeText.hidden = NO;
-//            [likeText setText:social.likeText];
-//            
-//            CGFloat labelSize = [social.likeText widthOfString:[UIFont customContentRegular:FONT_SIZE_LIKE]];
-//            CGRectSetWidth(likeText.frame, labelSize);
-//            
-//            CGRectSetX(commentText.frame, CGRectGetWidth(likeText.frame) + 10);
-//        }
-//        
-//        CGRectSetHeight(likeText.frame, 15.0f);
-//        height = CGRectGetMaxY(likeText.frame);
-//    }
-//    
-//    {
-//        if (!social.commentText || [social.commentText isBlank]) {
-//            commentText.hidden = YES;
-//            [commentText setText:@""];
-//        }
-//        else {
-//            commentText.hidden = NO;
-//            [commentText setText:social.commentText];
-//            
-//            CGFloat labelSize = [social.commentText widthOfString:[UIFont customContentRegular:FONT_SIZE_LIKE]];
-//            CGRectSetWidth(commentText.frame, labelSize);
-//            
-//            CGRectSetHeight(commentText.frame, 15.0f);
-//        }
-//    }
-//    
-//    if ((!social.commentText || [social.commentText isBlank]) && (!social.likeText || [social.likeText isBlank])) {
-//        height = CGRectGetMaxY(locationLabel.frame);
-//    }
-//}
-
 - (NSString *)castNumber:(NSUInteger)number {
     if (!number) {
         return @"";
@@ -579,7 +493,10 @@
     if (popoverController != nil && popoverController.isPopoverVisible)
         return;
     
-    FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithTransaction:_transaction];
+    if (_transaction.social.likesCount == 0)
+        return;
+    
+    FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithSocial:_transaction.social];
     [popoverViewController setDelegate:self];
     
     popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];

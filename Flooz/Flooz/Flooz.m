@@ -288,7 +288,23 @@
 }
 
 - (void)signupPassStep:(NSString *)step user:(NSMutableDictionary*)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:[NSString stringWithFormat:@"/signup/%@", step] method:@"POST" params:user success:success failure:failure];
+    NSString *path = [NSString stringWithFormat:@"/signup/%@", step];
+    
+    if ([GBDeviceInfo deviceInfo]) {
+        if ([path rangeOfString:@"?os="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"?os=%lu.%lu.%lu", (unsigned long)[GBDeviceInfo deviceInfo].osVersion.major, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.minor, (unsigned long)[GBDeviceInfo deviceInfo].osVersion.patch]];
+        }
+        
+        if ([path rangeOfString:@"&mo="].location == NSNotFound) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"&mo=%@", [[GBDeviceInfo deviceInfo].modelString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+        }
+    }
+    
+    if ([path rangeOfString:@"&uuid="].location == NSNotFound) {
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"&uuid=%@", [DeviceUID uid]]];
+    }
+    
+    [self requestPath:path method:@"POST" params:user success:success failure:failure];
 }
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -2221,8 +2237,13 @@
     NSArray *transactions = result[@"items"];
     if (transactions) {
         for (NSDictionary *json in transactions) {
-            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
-            [arrayTransactions addObject:transaction];
+            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
+                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
+                [arrayTransactions addObject:deal];
+            } else {
+                FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
+                [arrayTransactions addObject:transaction];
+            }
         }
     }
     return arrayTransactions;
@@ -2233,8 +2254,15 @@
     NSArray *transactions = result;
     if (transactions) {
         for (NSDictionary *json in transactions) {
-            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
-            [arrayTransactions addObject:transaction];
+            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
+                continue;
+                
+                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
+                [arrayTransactions addObject:deal];
+            } else {
+                FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
+                [arrayTransactions addObject:transaction];
+            }
         }
     }
     return arrayTransactions;

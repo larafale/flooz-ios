@@ -9,6 +9,7 @@
 #import "TimelineViewController.h"
 
 #import "TransactionCell.h"
+#import "TimelineDealCell.h"
 
 #import "NewTransactionViewController.h"
 #import "TransactionViewController.h"
@@ -126,7 +127,7 @@
     [scopeChangeHelper addSubview:scopeChangeHelperLabel];
     
     [self.view addSubview:scopeChangeHelper];
-
+    
     UIButton *logo = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 40, 40)];
     [logo setTintColor:[UIColor customBlue]];
     [logo setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"home-title"] scaledToSize:CGSizeMake(80, 30)] forState:UIControlStateNormal];
@@ -298,8 +299,17 @@
         }
     }
     
-    FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-    return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
+    id item = [transactions objectAtIndex:indexPath.row];
+    
+    if ([item isKindOfClass:[FLTransaction class]]) {
+        FLTransaction *transaction = item;
+        return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
+    } else if ([item isKindOfClass:[FLTimelineDeal class]]) {
+        FLTimelineDeal *deal = item;
+        return [TimelineDealCell getHeightForDeal:deal];
+        
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -312,30 +322,58 @@
         return footerView;
     }
     
-    static NSString *cellIdentifier = @"TransactionCell";
-    TransactionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (!cell) {
-        cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier andDelegate:self];
-        [cells addObject:cell];
-    }
-    
-    FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-    
-    [cell setTransaction:transaction];
-    [cell setIndexPath:indexPath];
-    
     if (_nextPageUrl && ![_nextPageUrl isBlank] && !nextPageIsLoading && indexPath.row == [transactions count] - 1) {
         [self loadNextPage];
     }
     
-    return cell;
+    
+    
+    id item = [transactions objectAtIndex:indexPath.row];
+    
+    if ([item isKindOfClass:[FLTransaction class]]) {
+        static NSString *cellIdentifier = @"TransactionCell";
+        TransactionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (!cell) {
+            cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier andDelegate:self];
+            [cells addObject:cell];
+        }
+        FLTransaction *transaction = item;
+        
+        [cell setTransaction:transaction];
+        [cell setIndexPath:indexPath];
+        
+        return cell;
+    } else if ([item isKindOfClass:[FLTimelineDeal class]]) {
+        static NSString *cellIdentifier = @"TimelineDealCell";
+        TimelineDealCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (!cell) {
+            cell = [[TimelineDealCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier andDelegate:self];
+            [cells addObject:cell];
+        }
+        
+        FLTimelineDeal *deal = item;
+        
+        [cell setDeal:deal];
+        [cell setIndexPath:indexPath];
+        
+        return cell;
+    }
+    
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (transactions.count > indexPath.row) {
-        FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-        [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+        id item = [transactions objectAtIndex:indexPath.row];
+        
+        if ([item isKindOfClass:[FLTransaction class]]) {
+            FLTransaction *transaction = item;
+            [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+        } else if ([item isKindOfClass:[FLTimelineDeal class]]) {
+            
+        }
     }
 }
 
@@ -360,7 +398,7 @@
     [shareController setExcludedActivityTypes:@[UIActivityTypeCopyToPasteboard, UIActivityTypePrint, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact]];
     
     [self.navigationController presentViewController:shareController animated:YES completion:^{
-
+        
     }];
 }
 
@@ -458,6 +496,22 @@
     [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:currentScope] success: ^(id result, NSString *nextPageUrl, TransactionScope scope) {
         if (scope == currentScope) {
             transactions = [result mutableCopy];
+            
+            /**/
+
+            FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:@{}];
+            
+            deal.from = [Flooz sharedInstance].currentUser;
+            deal.amount = @79.76;
+            deal.title = @"Braveman Slim Fit Suits";
+            deal.content = @"Before looking through the camera lens, the expert photographers at Picture People spend time getting to know their subjects and establishing a strategy for conveying their personalities in print. ";
+            deal.social = [[transactions objectAtIndex:0] social];
+            deal.attachmentURL = @"https://img.grouponcdn.com/deal/7RMA5NrEYiRdNBvuvWSU/95-960x576/v1/c700x420.jpg";
+            
+            [transactions insertObject:deal atIndex:0];
+            
+            /**/
+
             _nextPageUrl = nextPageUrl;
             
             if (transactions.count == 0) {

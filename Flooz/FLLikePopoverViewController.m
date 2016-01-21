@@ -9,7 +9,7 @@
 #import "FLLikePopoverViewController.h"
 
 @interface FLLikePopoverViewController () {
-    FLTransaction *transaction;
+    FLSocial *socialData;
     
     CGFloat viewHeight;
     CGFloat viewWidth;
@@ -24,13 +24,13 @@
 
 @synthesize tableView;
 
-- (id)initWithTransaction:(FLTransaction*)transac {
+- (id)initWithSocial:(FLSocial*)social {
     self = [super init];
     if (self) {
-        transaction = transac;
+        socialData = social;
         
         CGFloat maxHeight = PPScreenHeight() / 3;
-        CGFloat totalHeight = LIKE_CELL_HEIGHT * transaction.social.likesCount;
+        CGFloat totalHeight = LIKE_CELL_HEIGHT * socialData.likesCount;
         
         if (totalHeight <= maxHeight)
             viewHeight = totalHeight;
@@ -42,7 +42,7 @@
         
         NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont customContentRegular:LIKE_TEXT_HEIGHT]};
 
-        for (NSDictionary *like in transaction.social.likes) {
+        for (NSDictionary *like in socialData.likes) {
             CGSize labelSize = [[NSString stringWithFormat:@"@%@", like[@"nick"]] sizeWithAttributes:labelAttributes];
             if (labelSize.width + 30 >= viewWidth)
                 viewWidth = labelSize.width + 30;
@@ -67,7 +67,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return transaction.social.likesCount;
+    return socialData.likesCount;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -82,7 +82,7 @@
     static NSString *CellIdentifier = @"CellIdentifier";
     
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    NSDictionary *currentLike = transaction.social.likes[indexPath.row];
+    NSDictionary *currentLike = socialData.likes[indexPath.row];
 
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -98,7 +98,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.delegate) {
-        NSDictionary *currentLike = transaction.social.likes[indexPath.row];
+        NSDictionary *currentLike = socialData.likes[indexPath.row];
         FLUser *user = [[FLUser alloc] initWithJSON:currentLike];
         user.userId = currentLike[@"userId"];
         

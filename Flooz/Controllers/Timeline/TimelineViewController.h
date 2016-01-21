@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 
 #import "TransactionCellDelegate.h"
+#import "TimelineDealCellDelegate.h"
 #import "FLScrollViewIndicator.h"
 #import "TimelineDelegate.h"
 #import "WYPopoverController.h"
 #import "FLFilterPopoverViewController.h"
 
-@interface TimelineViewController : GlobalViewController <UIScrollViewDelegate, TimelineDelegate, WYPopoverControllerDelegate, UITableViewDelegate, UITableViewDataSource, TransactionCellDelegate> {
+@interface TimelineViewController : GlobalViewController <UIScrollViewDelegate, TimelineDelegate, WYPopoverControllerDelegate, UITableViewDelegate, UITableViewDataSource, TransactionCellDelegate, TimelineDealCellDelegate> {
 
 }
 
