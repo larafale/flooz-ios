@@ -151,17 +151,30 @@
 -(void) addCenterButtonWithImage:(UIImage*)buttonImage highlightImage:(UIImage*)highlightImage
 {
     centerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    centerButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
     centerButton.contentMode = UIViewContentModeCenter;
-    centerButton.frame = CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 10.0f, CGRectGetHeight(self.tabBar.frame));
+    centerButton.frame = CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 10.0f, CGRectGetHeight(self.tabBar.frame) + 10.0f);
     [centerButton setImage:buttonImage forState:UIControlStateNormal];
     [centerButton setImage:highlightImage forState:UIControlStateHighlighted];
     [centerButton setBackgroundColor:[UIColor customBackground]];
+    centerButton.clipsToBounds = YES;
     centerButton.layer.masksToBounds = YES;
+    centerButton.layer.cornerRadius = CGRectGetHeight(centerButton.frame) / 2;
     [centerButton addTarget:self action:@selector(openNewFlooz) forControlEvents:UIControlEventTouchUpInside];
-    centerButton.center = self.tabBar.center;
     
-    [self.view addSubview:centerButton];
+    UIView *container = [[UIView alloc] initWithFrame:centerButton.frame];
+    container.backgroundColor = [UIColor clearColor];
+    [container.layer setShadowColor:[UIColor blackColor].CGColor];
+    [container.layer setShadowOpacity:.3];
+    [container.layer setShadowRadius:1];
+    [container.layer setShadowOffset:CGSizeMake(0.0, -2.0)];
+    [container.layer setShadowPath:[UIBezierPath bezierPathWithRoundedRect:container.bounds cornerRadius:centerButton.layer.cornerRadius].CGPath];
+    container.center = self.tabBar.center;
+
+    CGRectSetY(container.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(container.frame) - 3.0f);
+    
+    [container addSubview:centerButton];
+    
+    [self.view addSubview:container];
 }
 
 - (void)openNewFlooz {
