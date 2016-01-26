@@ -192,8 +192,11 @@
 - (void)createAmountLabel {
     amountLabel = [UILabel newWithFrame:CGRectMake(CGRectGetWidth(footerDescView.frame) - 80.0f, 0.0f, 80.0f, CGRectGetHeight(footerDescView.frame))];
     amountLabel.textColor = [UIColor whiteColor];
-    amountLabel.textAlignment = NSTextAlignmentRight;
+    amountLabel.textAlignment = NSTextAlignmentCenter;
     amountLabel.font = [UIFont customContentRegular:13];
+    amountLabel.backgroundColor = [UIColor customBlue];
+    amountLabel.layer.masksToBounds = YES;
+    amountLabel.layer.cornerRadius = 3;
     
     [footerDescView addSubview:amountLabel];
 }
@@ -325,9 +328,9 @@
 }
 
 - (void)prepareAmountLabel {
-    amountLabel.text = [FLHelper formatedAmount:[_deal amount] withCurrency:YES];
-    [amountLabel setWidthToFit];
-    
+    amountLabel.text = [FLHelper formatedAmount:[_deal amount] withCurrency:YES withSymbol:NO];
+
+    CGRectSetWidth(amountLabel.frame, [amountLabel widthToFit] + 5.0f);
     CGRectSetX(amountLabel.frame, CGRectGetWidth(footerDescView.frame) - CGRectGetWidth(amountLabel.frame));
 }
 

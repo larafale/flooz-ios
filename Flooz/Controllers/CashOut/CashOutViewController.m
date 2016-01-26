@@ -17,7 +17,7 @@
 @interface CashOutViewController () {
     NSMutableDictionary *dictionary;
     
-    FLTextField *_amountInput;
+    FLTextFieldSignup *_amountInput;
     FLKeyboardView *inputView;
     
     FLActionButton *_confirmButton;
@@ -74,15 +74,15 @@
     height += 30;
     
     {
-        _amountInput = [[FLTextField alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
+        _amountInput = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
         [_amountInput addForNextClickTarget:self action:@selector(keyNext)];
         [_amountInput addForTextChangeTarget:self action:@selector(amountChange)];
-        [_amountInput setType:FLTextFieldTypeFloatNumber];
+//        [_amountInput setType:FLTextFieldTypeFloatNumber];
         
         inputView = [FLKeyboardView new];
         [inputView setKeyboardDecimal];
-        inputView.textField = _amountInput;
-        _amountInput.inputView = inputView;
+        inputView.textField = _amountInput.textfield;
+        _amountInput.textfield.inputView = inputView;
         [_mainBody addSubview:_amountInput];
     }
     
@@ -142,7 +142,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] cashoutValidate:amount success:^(id result) {
-        [_amountInput setValid:YES];
+//        [_amountInput setValid:YES];
 
         CompleteBlock completeBlock = ^{
             [[Flooz sharedInstance] showLoadView];
@@ -182,10 +182,10 @@
         NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
         NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
 
-        if (serializedData && serializedData[@"popup"] && serializedData[@"popup"][@"slug"] && [serializedData[@"popup"][@"slug"] isEqualToString:@"amount"]) {
-            [_amountInput setValid:NO];
-            [_amountInput becomeFirstResponder];
-        }
+//        if (serializedData && serializedData[@"popup"] && serializedData[@"popup"][@"slug"] && [serializedData[@"popup"][@"slug"] isEqualToString:@"amount"]) {
+//            [_amountInput setValid:NO];
+//            [_amountInput becomeFirstResponder];
+//        }
     }];
 }
 

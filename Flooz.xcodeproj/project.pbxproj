@@ -317,6 +317,9 @@
 		C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175D1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175E1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
+		C92195E91C57858900318FD3 /* FLTriggerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C92195E71C57858900318FD3 /* FLTriggerManager.m */; };
+		C92195EA1C57858900318FD3 /* FLTriggerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C92195E71C57858900318FD3 /* FLTriggerManager.m */; };
+		C92195EB1C57858900318FD3 /* FLTriggerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C92195E71C57858900318FD3 /* FLTriggerManager.m */; };
 		C927061E1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
 		C927061F1B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
 		C92706201B81D7EE00FB1A11 /* FLSharePopup.m in Sources */ = {isa = PBXBuildFile; fileRef = C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */; };
@@ -680,6 +683,15 @@
 		C9D4E7061B18BD380096725B /* Flooz dev-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */; };
 		C9D4E7071B18BD380096725B /* Flooz local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7031B18BD380096725B /* Flooz local-Info.plist */; };
 		C9D4E7081B18BD380096725B /* Flooz local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7031B18BD380096725B /* Flooz local-Info.plist */; };
+		C9EABF301C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
+		C9EABF311C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
+		C9EABF321C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
+		C9EABF351C523CE900BDDEA1 /* FLAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF341C523CE900BDDEA1 /* FLAddress.m */; };
+		C9EABF361C523CE900BDDEA1 /* FLAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF341C523CE900BDDEA1 /* FLAddress.m */; };
+		C9EABF371C523CE900BDDEA1 /* FLAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF341C523CE900BDDEA1 /* FLAddress.m */; };
+		C9EABF3A1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */; };
+		C9EABF3B1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */; };
+		C9EABF3C1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */; };
 		C9EB88581B1F21C20042E65B /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */; };
 		C9EB88591B1F21C20042E65B /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */; };
 		C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */; };
@@ -999,6 +1011,8 @@
 		C91D4EF91C50FBA700C65382 /* TimelineDealCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDealCellDelegate.h; path = TimelineDealCell/TimelineDealCellDelegate.h; sourceTree = "<group>"; };
 		C921175A1B66726900CF2D51 /* FLInvitationTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLInvitationTexts.h; sourceTree = "<group>"; };
 		C921175B1B66726900CF2D51 /* FLInvitationTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLInvitationTexts.m; sourceTree = "<group>"; };
+		C92195E71C57858900318FD3 /* FLTriggerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTriggerManager.m; sourceTree = "<group>"; };
+		C92195E81C57858900318FD3 /* FLTriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTriggerManager.h; sourceTree = "<group>"; };
 		C927061C1B81D7EE00FB1A11 /* FLSharePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSharePopup.h; sourceTree = "<group>"; };
 		C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSharePopup.m; sourceTree = "<group>"; };
 		C928E8C01C3D16310032FAE4 /* FLDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLDeal.h; path = Models/FLDeal.h; sourceTree = "<group>"; };
@@ -1154,6 +1168,12 @@
 		C9D4E7031B18BD380096725B /* Flooz local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz local-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C9DCC5EB1C282573008BB370 /* Flooz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Flooz.entitlements; sourceTree = "<group>"; };
 		C9DCC5EC1C28257F008BB370 /* Flooz dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flooz dev.entitlements"; sourceTree = SOURCE_ROOT; };
+		C9EABF2E1C523A7700BDDEA1 /* AddressBookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookController.h; path = Controllers/AddressBookController/AddressBookController.h; sourceTree = "<group>"; };
+		C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBookController.m; path = Controllers/AddressBookController/AddressBookController.m; sourceTree = "<group>"; };
+		C9EABF331C523CE900BDDEA1 /* FLAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAddress.h; path = Models/FLAddress.h; sourceTree = "<group>"; };
+		C9EABF341C523CE900BDDEA1 /* FLAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAddress.m; path = Models/FLAddress.m; sourceTree = "<group>"; };
+		C9EABF381C5253E200BDDEA1 /* AddressBookFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookFormController.h; path = Controllers/AddressBookController/AddressBookFormController.h; sourceTree = "<group>"; };
+		C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBookFormController.m; path = Controllers/AddressBookController/AddressBookFormController.m; sourceTree = "<group>"; };
 		C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendAddSearchBar.m; sourceTree = "<group>"; };
 		C9EB88561B1F21C20042E65B /* FriendAddSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendAddSearchBar.h; sourceTree = "<group>"; };
 		C9EB88571B1F21C20042E65B /* FriendAddSearchBarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendAddSearchBarDelegate.h; sourceTree = "<group>"; };
@@ -1549,6 +1569,7 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C9EABF2D1C5237C100BDDEA1 /* AddressBook */,
 				C90B947D1A00E94F00E2C53B /* 3DSecure */,
 				ABE9145E18929150003AC722 /* Account */,
 				2FEAA9CC19DC638C00EE95C9 /* BaseViewController */,
@@ -1627,6 +1648,7 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				C92195E11C57848700318FD3 /* FLTriggerManager */,
 				C95502CC1C2AA8D8002E9046 /* ARChromeActivity */,
 				C980E40A1C17136F00E52F86 /* DeviceUID */,
 				AB3D08DC1871A5CB00CF8380 /* Flooz */,
@@ -1657,6 +1679,8 @@
 			children = (
 				AB2FB54618AE798D0079AA1D /* FLActivity.h */,
 				AB2FB54718AE798D0079AA1D /* FLActivity.m */,
+				C9EABF331C523CE900BDDEA1 /* FLAddress.h */,
+				C9EABF341C523CE900BDDEA1 /* FLAddress.m */,
 				C9C7EE9219F685B9009FE292 /* FLAlert.h */,
 				C9C7EE9319F685B9009FE292 /* FLAlert.m */,
 				ABF7095B18A4FD6B00517389 /* FLComment.h */,
@@ -2320,6 +2344,15 @@
 			name = TimelineDealCell;
 			sourceTree = "<group>";
 		};
+		C92195E11C57848700318FD3 /* FLTriggerManager */ = {
+			isa = PBXGroup;
+			children = (
+				C92195E81C57858900318FD3 /* FLTriggerManager.h */,
+				C92195E71C57858900318FD3 /* FLTriggerManager.m */,
+			);
+			name = FLTriggerManager;
+			sourceTree = "<group>";
+		};
 		C928E8C51C3D24B40032FAE4 /* Deals */ = {
 			isa = PBXGroup;
 			children = (
@@ -2643,6 +2676,17 @@
 				C9CD76651BF227EF00362962 /* FLPhoneField.m */,
 			);
 			name = FLPhoneField;
+			sourceTree = "<group>";
+		};
+		C9EABF2D1C5237C100BDDEA1 /* AddressBook */ = {
+			isa = PBXGroup;
+			children = (
+				C9EABF2E1C523A7700BDDEA1 /* AddressBookController.h */,
+				C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */,
+				C9EABF381C5253E200BDDEA1 /* AddressBookFormController.h */,
+				C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */,
+			);
+			name = AddressBook;
 			sourceTree = "<group>";
 		};
 		C9EBBB9A1BAAC960009DAF88 /* FLBorderedActionButton */ = {
@@ -3159,8 +3203,10 @@
 				C9CB22011A95E9D30064389A /* THContactView.m in Sources */,
 				C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */,
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
+				C9EABF3A1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */,
 				C905A8DB1A56D5BE00473963 /* SIOSocket.m in Sources */,
 				AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */,
+				C9EABF351C523CE900BDDEA1 /* FLAddress.m in Sources */,
 				C9C7EE9419F685B9009FE292 /* FLAlert.m in Sources */,
 				2FCBCD1019BF3C6700FB31E0 /* FLCameraKeyboard.m in Sources */,
 				2F1307E919D9C1790062D194 /* FLSocialButton.m in Sources */,
@@ -3191,6 +3237,7 @@
 				AB7C9B2218D73AE9002775BA /* SecureCodeViewController.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
 				C9C7EE9119F685AC009FE292 /* FLTrigger.m in Sources */,
+				C9EABF301C523A7700BDDEA1 /* AddressBookController.m in Sources */,
 				2FC6F6B419A773CF0051CB61 /* FLNewTransactionAmountInput.m in Sources */,
 				AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */,
 				C91D4EF61C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
@@ -3246,6 +3293,7 @@
 				C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABE914691892940A003AC722 /* FLAccountUserView.m in Sources */,
 				C9C776811C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
+				C92195E91C57858900318FD3 /* FLTriggerManager.m in Sources */,
 				C9CB21FE1A95E9D30064389A /* THContactTextField.m in Sources */,
 				C919AD981BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */,
@@ -3350,8 +3398,10 @@
 				ABAA3F87197E96BF009F29EF /* FLHelper.m in Sources */,
 				2F0F6B0419DF3EC5004CA223 /* SettingsDocumentsViewController.m in Sources */,
 				C9B4AA6B1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
+				C9EABF3B1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */,
 				C9CB22021A95E9D30064389A /* THContactView.m in Sources */,
 				ABAFEE28198001BA00D39C62 /* FLPopup.m in Sources */,
+				C9EABF361C523CE900BDDEA1 /* FLAddress.m in Sources */,
 				2FEAA9D019DC63B500EE95C9 /* BaseViewController.m in Sources */,
 				C905A8DC1A56D5BE00473963 /* SIOSocket.m in Sources */,
 				ABAA3F8C197E96BF009F29EF /* TransactionActionsView.m in Sources */,
@@ -3382,6 +3432,7 @@
 				2FA3E56019DDE97700EC65C2 /* SettingsPreferencesViewController.m in Sources */,
 				ABAA3F9F197E96BF009F29EF /* FLValidNavBar.m in Sources */,
 				ABAA3FA1197E96BF009F29EF /* TransactionCommentsView.m in Sources */,
+				C9EABF311C523A7700BDDEA1 /* AddressBookController.m in Sources */,
 				ABAA3FA2197E96BF009F29EF /* main.m in Sources */,
 				ABAA3FA3197E96BF009F29EF /* SplashViewController.m in Sources */,
 				C91D4EF71C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
@@ -3437,6 +3488,7 @@
 				C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABAA3FC5197E96BF009F29EF /* NewTransactionViewController.m in Sources */,
 				C9C776821C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
+				C92195EA1C57858900318FD3 /* FLTriggerManager.m in Sources */,
 				2F0F6B0819DF5432004CA223 /* SettingsCoordsViewController.m in Sources */,
 				C919AD991BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				ABAA3FC6197E96BF009F29EF /* AccountViewController.m in Sources */,
@@ -3533,8 +3585,10 @@
 				C9B1866F1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
 				C980128B1A76921000019682 /* FLHelper.m in Sources */,
 				C980128D1A76921000019682 /* SettingsDocumentsViewController.m in Sources */,
+				C9EABF3C1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */,
 				C9B4AA6C1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
 				C9CB22031A95E9D30064389A /* THContactView.m in Sources */,
+				C9EABF371C523CE900BDDEA1 /* FLAddress.m in Sources */,
 				C980128F1A76921000019682 /* FLPopup.m in Sources */,
 				C98012921A76921000019682 /* BaseViewController.m in Sources */,
 				C98012941A76921000019682 /* SIOSocket.m in Sources */,
@@ -3565,6 +3619,7 @@
 				C9ED412B1A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */,
 				C98012A71A76921000019682 /* SettingsPreferencesViewController.m in Sources */,
 				C98012A91A76921000019682 /* FLValidNavBar.m in Sources */,
+				C9EABF321C523A7700BDDEA1 /* AddressBookController.m in Sources */,
 				C98012AA1A76921000019682 /* TransactionCommentsView.m in Sources */,
 				C98012AB1A76921000019682 /* main.m in Sources */,
 				C91D4EF81C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
@@ -3620,6 +3675,7 @@
 				C908A3ED1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D581B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				C9C776831C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
+				C92195EB1C57858900318FD3 /* FLTriggerManager.m in Sources */,
 				C98012D71A76921000019682 /* NewTransactionViewController.m in Sources */,
 				C98012D81A76921000019682 /* SettingsCoordsViewController.m in Sources */,
 				C919AD9A1BBAC3CD00B87AAB /* FLReachability.m in Sources */,

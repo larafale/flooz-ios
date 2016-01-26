@@ -33,7 +33,9 @@
     if (frame.size.width == 0) {
         CGRectSetWidth(frame, PPScreenWidth() - (2 * frame.origin.x));
     }
-    CGRectSetHeight(frame, 40);
+    if (frame.size.height == 0) {
+        CGRectSetHeight(frame, 40);
+    }
     
     self = [super initWithFrame:frame];
     if (self) {
@@ -92,7 +94,7 @@
     NSAttributedString *attributedText = [[NSAttributedString alloc]
                                           initWithString:NSLocalizedString(placeholder, placeholder)
                                           attributes:@{
-                                                       NSFontAttributeName: [UIFont customContentLight:18],
+                                                       NSFontAttributeName: self.font,
                                                        NSForegroundColorAttributeName: [UIColor customPlaceholder]
                                                        }];
     
@@ -100,7 +102,7 @@
 }
 
 - (void)createBottomLine {
-    lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1)];
+    lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 0.7, self.frame.size.width, 0.7)];
     [self updateBottomLine];
     [self addSubview:lineView];
 }
@@ -431,6 +433,30 @@
 
 - (void)setValid:(Boolean)isValid {
     self.isValid = isValid;
+    
+    [self updateBottomLine];
+}
+
+- (void)setLineNormalColor:(UIColor *)lineNormalColor {
+    self->_lineNormalColor = lineNormalColor;
+    
+    [self updateBottomLine];
+}
+
+- (void)setLineSelectedColor:(UIColor *)lineSelectedColor {
+    self->_lineSelectedColor = lineSelectedColor;
+    
+    [self updateBottomLine];
+}
+
+- (void)setLineErrorColor:(UIColor *)lineErrorColor {
+    self->_lineErrorColor = lineErrorColor;
+    
+    [self updateBottomLine];
+}
+
+- (void)setLineDisableColor:(UIColor *)lineDisableColor {
+    self->_lineDisableColor = lineDisableColor;
     
     [self updateBottomLine];
 }

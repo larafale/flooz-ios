@@ -10,6 +10,10 @@
 
 @implementation FLTrigger
 
++(id)newWithJson:(NSDictionary *)json {
+    return [[FLTrigger alloc] initWithJson:json];
+}
+
 -(id)initWithJson:(NSDictionary*)json {
     self = [super init];
     if (self) {
@@ -111,6 +115,8 @@
         return TriggerShowNotification;
     else if ([param isEqualToString:@"notification:reload"])
         return TriggerReloadNotification;
+    else if ([param isEqualToString:@"invitation:reload"])
+        return TriggerReloadShareTexts;
     else
         return TriggerNone;
 }

@@ -109,7 +109,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([[Flooz sharedInstance] invitationTexts]) {
+    [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
         _code = [[Flooz sharedInstance] invitationTexts].shareCode;
         _appText = [[Flooz sharedInstance] invitationTexts].shareText;
         _fbData = [[Flooz sharedInstance] invitationTexts].shareFb;
@@ -123,28 +123,34 @@
         if (!_code)
             _code = @"";
         
-        [self prepareViews];
-    } else {
-        [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
-            _code = result.shareCode;
-            _appText = result.shareText;
-            _fbData = result.shareFb;
-            _mailData = result.shareMail;
-            _twitterText = result.shareTwitter;
-            _smsText = result.shareSms;
-            _viewTitle = result.shareTitle;
-            _h1 = result.shareHeader;
-            _h2 = result.shareSubheader;
-            
-            if (!_code)
-                _code = @"";
-            
+        dispatch_async(dispatch_get_main_queue(), ^{
             [self prepareViews];
-        } failure:^(NSError *error) {
-            
-        }];
-    }
+        });
+    } failure:^(NSError *error) {
+        
+    }];
+    
     [self registerNotification:@selector(showFbConfirmBox) name:kNotificationFbConnect object:nil];
+    [self registerNotification:@selector(reloadShareTexts) name:kNotificationReloadShareTexts object:nil];
+}
+
+- (void)reloadShareTexts {
+    _code = [[Flooz sharedInstance] invitationTexts].shareCode;
+    _appText = [[Flooz sharedInstance] invitationTexts].shareText;
+    _fbData = [[Flooz sharedInstance] invitationTexts].shareFb;
+    _mailData = [[Flooz sharedInstance] invitationTexts].shareMail;
+    _twitterText = [[Flooz sharedInstance] invitationTexts].shareTwitter;
+    _smsText = [[Flooz sharedInstance] invitationTexts].shareSms;
+    _viewTitle = [[Flooz sharedInstance] invitationTexts].shareTitle;
+    _h1 = [[Flooz sharedInstance] invitationTexts].shareHeader;
+    _h2 = [[Flooz sharedInstance] invitationTexts].shareSubheader;
+    
+    if (!_code)
+        _code = @"";
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self prepareViews];
+    });
 }
 
 - (void)prepareViews {
@@ -290,7 +296,7 @@
         popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
         popoverController.delegate = self;
         popoverController.theme.dimsBackgroundViewsTintColor = NO;
-
+        
         [popoverController presentPopoverFromRect:_text.bounds inView:_text permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
             [popoverViewController.button addTarget:self action:@selector(copyCode) forControlEvents:UIControlEventTouchUpInside];
         }];

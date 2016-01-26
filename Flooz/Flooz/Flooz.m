@@ -1770,6 +1770,12 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotifications" object:nil];
 }
 
+- (void)handleTriggerShareTextsReload:(NSDictionary *)data {
+    [self invitationText:^(id result) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadShareTexts object:nil];
+    } failure:nil];
+}
+
 - (void)handleTrigger:(FLTrigger*)trigger {
     NSDictionary *triggerFuncs = @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
                                    [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
@@ -1809,6 +1815,7 @@
                                    [NSNumber numberWithInt:TriggerPayClick]: NSStringFromSelector(@selector(handleTriggerPayClick:)),
                                    [NSNumber numberWithInt:TriggerShowNotification]: NSStringFromSelector(@selector(handleTriggerNotificationShow:)),
                                    [NSNumber numberWithInt:TriggerReloadNotification]: NSStringFromSelector(@selector(handleTriggerNotificationReload:)),
+                                   [NSNumber numberWithInt:TriggerReloadShareTexts]: NSStringFromSelector(@selector(handleTriggerShareTextsReload:)),
                                    [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
     
     if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
@@ -2237,13 +2244,13 @@
     NSArray *transactions = result[@"items"];
     if (transactions) {
         for (NSDictionary *json in transactions) {
-            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
-                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
-                [arrayTransactions addObject:deal];
-            } else {
+//            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
+//                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
+//                [arrayTransactions addObject:deal];
+//            } else {
                 FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
                 [arrayTransactions addObject:transaction];
-            }
+//            }
         }
     }
     return arrayTransactions;
@@ -2254,15 +2261,15 @@
     NSArray *transactions = result;
     if (transactions) {
         for (NSDictionary *json in transactions) {
-            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
-                continue;
-                
-                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
-                [arrayTransactions addObject:deal];
-            } else {
+//            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
+//                continue;
+//                
+//                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
+//                [arrayTransactions addObject:deal];
+//            } else {
                 FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
                 [arrayTransactions addObject:transaction];
-            }
+//            }
         }
     }
     return arrayTransactions;

@@ -50,12 +50,15 @@ typedef enum e_FLTriggerType {
     TriggerFbConnect,
     TriggerPayClick,
     TriggerShowNotification,
-    TriggerReloadNotification
+    TriggerReloadNotification,
+    TriggerReloadShareTexts
 } FLTriggerType;
 
 @property (nonatomic) FLTriggerType type;
 @property (nonatomic, strong) NSDictionary *data;
 @property (nonatomic, strong) NSNumber *delay;
+
++(id)newWithJson:(NSDictionary *)json;
 
 -(id)initWithJson:(NSDictionary*)json;
 

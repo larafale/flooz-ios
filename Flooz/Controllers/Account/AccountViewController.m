@@ -24,6 +24,7 @@
 #import "DiscountCodeViewController.h"
 #import "FriendRequestViewController.h"
 #import "EditProfileViewController.h"
+#import "AddressBookController.h"
 
 #import "AccountCell.h"
 
@@ -206,6 +207,7 @@
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
+//                               @{@"title":NSLocalizedString(@"SETTINGS_ADDRESS", @""), @"action":@"address"},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                ]
                        },
@@ -235,6 +237,7 @@
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
+//                               @{@"title":NSLocalizedString(@"SETTINGS_ADDRESS", @""), @"action":@"address"},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                ]
                        },
@@ -393,6 +396,8 @@
             [[self navigationController] pushViewController:[SettingsBankViewController new] animated:YES];
         } else if ([action isEqualToString:@"documents"]) {
             [[self navigationController] pushViewController:[SettingsDocumentsViewController new] animated:YES];
+        } else if ([action isEqualToString:@"address"]) {
+            [[self navigationController] pushViewController:[AddressBookController new] animated:YES];
         } else if ([action isEqualToString:@"coords"]) {
             [[self navigationController] pushViewController:[SettingsCoordsViewController new] animated:YES];
         } else if ([action isEqualToString:@"security"]) {

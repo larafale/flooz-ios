@@ -321,18 +321,22 @@
         FLUser *currentUser = nil;
         
         if (!_selectionText || [_selectionText isBlank]) {
-            if (indexPath.section == 0 && [_friendsRecent count] > indexPath.row) {
+            if (indexPath.section == 0 && [_friendsRecent count]) {
                 currentUser = _friendsRecent[indexPath.row];
-            } else if (indexPath.section == 1 && [_friends count] > indexPath.row) {
-                currentUser = _friends[indexPath.row];
-            } else if (indexPath.section == 1 && [_contactsFromAdressBook count] > indexPath.row) {
-                currentUser = _contactsFromAdressBook[indexPath.row];
-            } else
+            } else if (indexPath.section == 0 && ![_contactsFromAdressBook count] && ![_friends count]) {
                 return;
-        } else if ([_filteredContacts count] > indexPath.row) {
-            currentUser = _filteredContacts[indexPath.row];
-        } else
-            return;
+            } else if (indexPath.section == 1) {
+                currentUser = _friends[indexPath.row];
+            } else {
+                currentUser = _contactsFromAdressBook[indexPath.row];
+            }
+        } else {
+            if (![_filteredContacts count])
+                return;
+            
+            if (_filteredContacts.count >= indexPath.row + 1)
+                currentUser = _filteredContacts[indexPath.row];
+        }
         
         if (currentUser)
             [self.pickerDelegate userSelected:currentUser];

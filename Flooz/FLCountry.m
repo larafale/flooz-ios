@@ -19,6 +19,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json {
+    self.countryId = json[@"_id"];
     self.name = json[@"country"];
     self.code = json[@"code"];
     self.phoneCode = [NSString stringWithFormat:@"+%@", json[@"indicatif"]];

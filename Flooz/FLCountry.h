@@ -10,6 +10,7 @@
 
 @interface FLCountry : NSObject
 
+@property (strong, nonatomic) NSString *countryId;
 @property (strong, nonatomic) NSString *code;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *phoneCode;

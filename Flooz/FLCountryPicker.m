@@ -35,10 +35,19 @@
     super.dataSource = self;
     super.delegate = self;
     
+    self.hidePhoneHint = NO;
     self.backgroundColor = [UIColor customBackground];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self setUp];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
 {
     if ((self = [super initWithFrame:frame]))
     {
@@ -47,7 +56,7 @@
     return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
     if ((self = [super initWithCoder:aDecoder]))
     {
@@ -75,6 +84,22 @@
 - (void)setSelectedCountryCode:(NSString *)countryCode
 {
     [self setSelectedCountryCode:countryCode animated:NO];
+}
+
+- (void)setSelectedCountryName:(NSString *)country animated:(BOOL)animated
+{
+    for (long i = 0; i < self.countries.count; i++) {
+        if ([[((FLCountry *)[self.countries objectAtIndex:i]) name] isEqualToString:country]) {
+            [self selectRow:i inComponent:0 animated:animated];
+            self.selectedCountry = [self.countries objectAtIndex:i];
+            break;
+        }
+    }
+}
+
+- (void)setSelectedCountryName:(NSString *)country
+{
+    [self setSelectedCountryName:country animated:NO];
 }
 
 - (FLCountry *)getSelectedCountry {
@@ -116,7 +141,11 @@
     
     FLCountry *currentCountry = ((FLCountry *)[self.countries objectAtIndex:row]);
     
-    ((UILabel *)[view viewWithTag:1]).text = [NSString stringWithFormat:@"%@ (%@)", currentCountry.name, currentCountry.phoneCode];
+    if (self.hidePhoneHint)
+        ((UILabel *)[view viewWithTag:1]).text = [NSString stringWithFormat:@"%@", currentCountry.name];
+    else
+        ((UILabel *)[view viewWithTag:1]).text = [NSString stringWithFormat:@"%@ (%@)", currentCountry.name, currentCountry.phoneCode];
+    
     ((UIImageView *)[view viewWithTag:2]).image = [UIImage imageNamed:currentCountry.imageName];
     
     return view;
@@ -127,7 +156,7 @@
        inComponent:(__unused NSInteger)component
 {
     self.selectedCountry = [self.countries objectAtIndex:row];
-
+    
     __strong id<FLCountryPickerDelegate> strongDelegate = delegate;
     [strongDelegate countryPicker:self didSelectCountry:self.selectedCountry];
 }

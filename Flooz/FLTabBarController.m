@@ -63,57 +63,20 @@
     
     FLNavigationController *thirdNavigationController;
     
-    NSDictionary *ux = [[[Flooz sharedInstance] currentUser] ux];
-    if (ux && ux[@"deals"] && [ux[@"deals"] boolValue]) {
-        thirdItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_DEALS", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-deals"] scaledToSize:iconSize] tag:3];
-        thirdNavigationController = [[FLNavigationController alloc] initWithRootViewController:[DealViewController new]];
-    } else {
+//    NSDictionary *ux = [[[Flooz sharedInstance] currentUser] ux];
+//    if (ux && ux[@"deals"] && [ux[@"deals"] boolValue]) {
+//        thirdItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_DEALS", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-deals"] scaledToSize:iconSize] tag:3];
+//        thirdNavigationController = [[FLNavigationController alloc] initWithRootViewController:[DealViewController new]];
+//    } else {
         thirdItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_SHARE", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-share"] scaledToSize:iconSize] tag:3];
         thirdNavigationController = [[FLNavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
-        
-        if ([[Flooz sharedInstance] invitationTexts]) {
-            [thirdItem setTitle:[[Flooz sharedInstance] invitationTexts].shareTitle];
-            
-            //        if ([[Flooz sharedInstance] invitationTexts].shareIcon && ![[[Flooz sharedInstance] invitationTexts].shareIcon isBlank]) {
-            //            [[SDImageCache sharedImageCache] queryDiskCacheForKey:[[Flooz sharedInstance] invitationTexts].shareIcon done:^(UIImage *image, SDImageCacheType cacheType) {
-            //                if (image) {
-            //                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            //                    [shareItem setImage:image];
-            //                } else {
-            //                    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[[Flooz sharedInstance] invitationTexts].shareIcon] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-            //                        if (image && !error) {
-            //                            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            //                            [shareItem setImage:image];
-            //                        }
-            //                    }];
-            //                }
-            //
-            //            }];
-            //        }
-        }
-        
+
         [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
             [thirdItem setTitle:result.shareTitle];
-            
-            //        if (result.shareIcon && ![result.shareIcon isBlank]) {
-            //            [[SDImageCache sharedImageCache] queryDiskCacheForKey:result.shareIcon done:^(UIImage *image, SDImageCacheType cacheType) {
-            //                if (image) {
-            //                    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            //                    [shareItem setImage:image];
-            //                } else {
-            //                    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:result.shareIcon] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-            //                        if (image && !error) {
-            //                            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            //                            [shareItem setImage:image];
-            //                        }
-            //                    }];
-            //                }
-            //            }];
-            //        }
         } failure:^(NSError *error) {
             
         }];
-    }
+//    }
     
     FLNavigationController *homeNavigationController = [[FLNavigationController alloc] initWithRootViewController:[TimelineViewController new]];
     FLNavigationController *notifNavigationController = [[FLNavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
@@ -153,6 +116,7 @@
     [self registerNotification:@selector(reloadBadge) name:@"newNotifications" object:nil];
     [self registerNotification:@selector(reloadCurrentUser) name:kNotificationReloadCurrentUser object:nil];
     [self registerNotification:@selector(enterBackground) name:kNotificationEnterBackground object:nil];
+    [self registerNotification:@selector(reloadShareTexts) name:kNotificationReloadShareTexts object:nil];
 }
 
 - (void)viewDidUnload {
@@ -165,6 +129,10 @@
         if (controller != self.selectedViewController)
             [controller popToRootViewControllerAnimated:NO];
     }
+}
+
+- (void)reloadShareTexts {
+    [thirdItem setTitle:[[Flooz sharedInstance] invitationTexts].shareTitle];
 }
 
 - (void)reloadCurrentUser {
