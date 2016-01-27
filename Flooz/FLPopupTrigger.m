@@ -212,14 +212,15 @@
     NSArray *triggers = buttonsAction[sender.tag - 1];
     
     [self dismiss:^{
-        for (NSDictionary *triggerData in triggers) {
-            FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-            [[Flooz sharedInstance] handleTrigger:trigger];
-        }
+        [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:triggers]];
     }];
 }
 
 - (void)show {
+    [self show:nil];
+}
+
+- (void)show:(void (^)())completion {
     dispatch_async(dispatch_get_main_queue(), ^{
         _formSheet = [[MZFormSheetController alloc] initWithViewController:self];
         _formSheet.presentedFormSheetSize = self.preferredContentSize;
@@ -230,7 +231,10 @@
         _formSheet.shouldCenterVertically = YES;
         _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
         
-        [[appDelegate myTopViewController] mz_presentFormSheetController:_formSheet animated:YES completionHandler:nil];
+        [[appDelegate myTopViewController] mz_presentFormSheetController:_formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+            if (completion)
+                completion();
+        }];
     });
 }
 

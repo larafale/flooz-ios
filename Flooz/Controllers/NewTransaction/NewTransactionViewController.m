@@ -347,14 +347,6 @@
     [super viewDidAppear:animated];
     
     if (currentPreset) {
-        if (currentPreset.triggers && currentPreset.triggers.count > 0) {
-            for (NSDictionary *trigger in currentPreset.triggers) {
-                [[Flooz sharedInstance] handleTrigger:[[FLTrigger alloc] initWithJson:trigger]];
-            }
-            
-            currentPreset.triggers = nil;
-        }
-        
         if (currentPreset.image) {
             [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:currentPreset.image] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
              {
@@ -511,12 +503,8 @@
     demoTimer = nil;
     if (currentPreset.popup) {
         [[[FLPopupTrigger alloc] initWithData:currentPreset.popup dismiss:^{
-            if (currentPreset.popup[@"triggers"]) {
-                NSArray *triggers = currentPreset.popup[@"triggers"];
-                for (NSDictionary *triggerData in triggers) {
-                    FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-                    [[Flooz sharedInstance] handleTrigger:trigger];
-                }
+            if (currentPreset.popup[@"triggers"]) {                
+                [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:currentPreset.popup[@"triggers"]]];
             }
             
             if (currentPreset.steps) {

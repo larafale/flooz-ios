@@ -81,6 +81,7 @@ static NSString *kLocationData = @"locationData";
 - (BOOL)autologin;
 - (void)logout;
 - (void)loginWithToken:(NSString *)token;
+- (void)loginWithToken:(NSString *)token success:(void (^)())success failure:(void (^)(NSError *error))failure;
 
 - (void)signupPassStep:(NSString *)step user:(NSMutableDictionary*)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))block failure:(void (^)(NSError *error))failure;
@@ -168,6 +169,7 @@ static NSString *kLocationData = @"locationData";
 - (void)checkContactList:(NSArray *)phones success:(void (^)(NSArray *result))success;
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)sendSMSValidation;
 - (void)sendEmailValidation;
@@ -176,7 +178,6 @@ static NSString *kLocationData = @"locationData";
 - (void)disconnectFacebook;
 - (void)didConnectFacebook;
 
-- (void)handleTrigger:(FLTrigger*)trigger;
 - (void)handleRequestTriggers:(NSDictionary*)responseObject;
 - (void)displayPopupMessage:(id)responseObject;
 

@@ -46,7 +46,7 @@ typedef enum e_FLActivityType {
 @property (strong, nonatomic) NSString *when;
 @property (strong, nonatomic) NSString *dateText;
 
-@property (strong, nonatomic) NSMutableArray *triggers;
+@property (strong, nonatomic) NSArray *triggers;
 
 - (id)initWithJSON:(NSDictionary *)json;
 + (FLActivityType)activityTypeParamToEnum:(NSString *)param;

@@ -7,6 +7,11 @@
 //
 
 #import "FLTrigger.h"
+#import "FLTriggerManager.h"
+
+@interface FLTrigger ()
+
+@end
 
 @implementation FLTrigger
 
@@ -17,108 +22,66 @@
 -(id)initWithJson:(NSDictionary*)json {
     self = [super init];
     if (self) {
-        [self setJson:json];
+        if (![self setJson:json])
+            return nil;
     }
     return self;
 }
 
--(void)setJson:(NSDictionary*)json {
-    self.type = [FLTrigger triggerTypeParamToEnum:json[@"type"]];
-    self.delay = json[@"delay"];
+-(BOOL)setJson:(NSDictionary*)json {
+    if (![self fillTriggerActionFromData:json])
+        return NO;
     
+    self.key = json[@"key"];
+    
+    self.delay = json[@"delay"];
     if (!self.delay)
         self.delay = @0;
     
-    NSMutableDictionary *tmp = [json mutableCopy];
-    [tmp removeObjectForKey:@"type"];
-    [tmp removeObjectForKey:@"delay"];
-    self.data = tmp;
+    self.data = json[@"data"];
+    
+    NSArray *triggersData = json[@"triggers"];
+    
+    if (triggersData && [triggersData count]) {
+        self.triggers = [FLTriggerManager convertDataInList:triggersData];
+    } else
+        self.triggers = [NSArray new];
+    
+    return YES;
 }
 
-+(FLTriggerType)triggerTypeParamToEnum:(NSString*)param {
-
-    if ([param isEqualToString:@"timeline:reload"])
-        return TriggerReloadTimeline;
-    else if ([param isEqualToString:@"line:show"])
-        return TriggerShowLine;
-    else if ([param isEqualToString:@"avatar:show"])
-        return TriggerShowAvatar;
-    else if ([param isEqualToString:@"profile:reload"])
-        return TriggerReloadProfile;
-    else if ([param isEqualToString:@"card:show"])
-        return TriggerShowCard;
-    else if ([param isEqualToString:@"friend:show"])
-        return TriggerShowFriend;
-    else if ([param isEqualToString:@"friend:reload"])
-        return TriggerReloadFriend;
-    else if ([param isEqualToString:@"line:reload"])
-        return TriggerReloadLine;
-    else if ([param isEqualToString:@"profile:show"])
-        return TriggerShowProfile;
-    else if ([param isEqualToString:@"signup:show"])
-        return TriggerShowSignup;
-    else if ([param isEqualToString:@"logout"])
-        return TriggerLogout;
-    else if ([param isEqualToString:@"app:update"])
-        return TriggerAppUpdate;
-    else if ([param isEqualToString:@"informations:show"])
-        return TriggerShowContactInfo;
-    else if ([param isEqualToString:@"documents:show"])
-        return TriggerShowUserDocuments;
-    else if ([param isEqualToString:@"3dSecure:show"])
-        return TriggerShow3DSecure;
-    else if ([param isEqualToString:@"3dSecure:complete"])
-        return TriggerComplete3DSecure;
-    else if ([param isEqualToString:@"3dSecure:fail"])
-        return TriggerFail3DSecure;
-    else if ([param isEqualToString:@"secureCode:clear"])
-        return TriggerSecureCodeClear;
-    else if ([param isEqualToString:@"secureCode:check"])
-        return TriggerSecureCodeCheck;
-    else if ([param isEqualToString:@"line:preset"])
-        return TriggerPresetLine;
-    else if ([param isEqualToString:@"feed:read"])
-        return TriggerFeedRead;
-    else if ([param isEqualToString:@"invitation:show"])
-        return TriggerShowInvitation;
-    else if ([param isEqualToString:@"http:call"])
-        return TriggerHttpCall;
-    else if ([param isEqualToString:@"popup:show"])
-        return TriggerShowPopup;
-    else if ([param isEqualToString:@"home:show"])
-        return TriggerShowHome;
-    else if ([param isEqualToString:@"iban:show"])
-        return TriggerShowIban;
-    else if ([param isEqualToString:@"tuto:reset"])
-        return TriggerResetTuto;
-    else if ([param isEqualToString:@"view:close"])
-        return TriggerCloseView;
-    else if ([param isEqualToString:@"contacts:send"])
-        return TriggerSendContacts;
-    else if ([param isEqualToString:@"user:show"])
-        return TriggerUserShow;
-    else if ([param isEqualToString:@"invitation:sms:show"])
-        return TriggerInvitationSMSShow;
-    else if ([param isEqualToString:@"profile:edit"])
-        return TriggerEditProfile;
-    else if ([param isEqualToString:@"phone:validate"])
-        return TriggerSMSValidate;
-    else if ([param isEqualToString:@"secureCode:set"])
-        return TriggerSecureCodeValidate;
-    else if ([param isEqualToString:@"notification:ask"])
-        return TriggerAskNotification;
-    else if ([param isEqualToString:@"fb:connect"])
-        return TriggerFbConnect;
-    else if ([param isEqualToString:@"pay:click"])
-        return TriggerPayClick;
-    else if ([param isEqualToString:@"notification:show"])
-        return TriggerShowNotification;
-    else if ([param isEqualToString:@"notification:reload"])
-        return TriggerReloadNotification;
-    else if ([param isEqualToString:@"invitation:reload"])
-        return TriggerReloadShareTexts;
-    else
-        return TriggerNone;
-}
+- (BOOL)fillTriggerActionFromData:(NSDictionary *)data {
+    NSString *actionData = data[@"action"];
+    
+    self.action = FLTriggerActionNone;
+    
+    if (actionData) {
+        if ([actionData isEqualToString:@"ask"])
+            self.action = FLTriggerActionAsk;
+        else if ([actionData isEqualToString:@"check"])
+            self.action = FLTriggerActionCheck;
+        else if ([actionData isEqualToString:@"clear"])
+            self.action = FLTriggerActionClear;
+        else if ([actionData isEqualToString:@"hide"])
+            self.action = FLTriggerActionHide;
+        else if ([actionData isEqualToString:@"in"])
+            self.action = FLTriggerActionIn;
+        else if ([actionData isEqualToString:@"load"])
+            self.action = FLTriggerActionLoad;
+        else if ([actionData isEqualToString:@"out"])
+            self.action = FLTriggerActionOut;
+        else if ([actionData isEqualToString:@"send"])
+            self.action = FLTriggerActionSend;
+        else if ([actionData isEqualToString:@"set"])
+            self.action = FLTriggerActionSet;
+        else if ([actionData isEqualToString:@"show"])
+            self.action = FLTriggerActionShow;
+    }
+    
+    if (self.action == FLTriggerActionNone)
+        return NO;
+    
+    return YES;
+};
 
 @end

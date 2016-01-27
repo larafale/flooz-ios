@@ -86,11 +86,7 @@
         _when = [FLHelper formatedDateFromNow:_date];
     }
     
-    self.triggers = [NSMutableArray new];
-    NSArray *t = json[@"triggers"];
-    for (NSDictionary *trigger in t) {
-        [self.triggers addObject:[[FLTrigger alloc] initWithJson:trigger]];
-    }
+    self.triggers = [FLTriggerManager convertDataInList:json[@"triggers"]];
 }
 
 +(FLActivityType)activityTypeParamToEnum:(NSString *)param {

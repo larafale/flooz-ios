@@ -63,7 +63,6 @@ static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 @property (strong, nonatomic) MZFormSheetController *formSheet;
 @property (strong, nonatomic) FLTabBarController *tabBarController;
 @property (nonatomic, strong) NSMutableDictionary *branchParam;
-@property (strong, nonatomic) OneSignal *oneSignal;
 
 - (void)initTestingWithIP:(NSString *)ip;
 

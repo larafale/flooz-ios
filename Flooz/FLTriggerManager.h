@@ -10,4 +10,10 @@
 
 @interface FLTriggerManager : NSObject
 
++ (FLTriggerManager *)sharedInstance;
++ (NSArray<FLTrigger *> *)convertDataInList:(NSArray<NSDictionary *> *)triggers;
+
+- (void)executeTrigger:(FLTrigger *)trigger;
+- (void)executeTriggerList:(NSArray<FLTrigger *> *)triggers;
+
 @end

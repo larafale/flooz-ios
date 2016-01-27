@@ -182,11 +182,7 @@
     
     NSDictionary *ux = [[[Flooz sharedInstance] currentUser] ux];
     if (ux && ux[@"homeButton"] && [ux[@"homeButton"] count] > 0) {
-        NSArray *triggers = ux[@"homeButton"];
-        for (NSDictionary *triggerData in triggers) {
-            FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-            [[Flooz sharedInstance] handleTrigger:trigger];
-        }
+        [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:ux[@"homeButton"]]];
     } else {
         NewTransactionViewController *newTransac = [[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeBase];
         
@@ -203,11 +199,7 @@
         
         NSDictionary *ux = [[[Flooz sharedInstance] currentUser] ux];
         if (ux && ux[@"homeButton"] && [ux[@"homeButton"] count] > 0) {
-            NSArray *triggers = ux[@"homeButton"];
-            for (NSDictionary *triggerData in triggers) {
-                FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-                [[Flooz sharedInstance] handleTrigger:trigger];
-            }
+            [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:ux[@"homeButton"]]];
         } else {
             NewTransactionViewController *newTransac = [[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeBase];
             

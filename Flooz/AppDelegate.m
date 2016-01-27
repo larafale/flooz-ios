@@ -36,6 +36,7 @@
 }
 
 @property (nonatomic, retain) NSString *appUpdateURI;
+@property (strong, nonatomic) OneSignal *oneSignal;
 
 @property (nonatomic, retain) UIWindow *tmpActionSheetWindow;
 @property (nonatomic, retain) FLReport *currentReport;
@@ -106,8 +107,9 @@
                 }
             }
         }
-    }];
-    
+    } autoRegister:NO];
+    [self.oneSignal enableInAppAlertNotification:false];
+
 #ifdef FLOOZ_DEV_LOCAL
     [self initLocalTesting];
 #else
@@ -251,6 +253,7 @@
         [application registerForRemoteNotificationTypes:
          (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     }
+//    [oneSignal registerForPushNotifications];
 }
 
 - (void)flipToViewController:(UIViewController *)viewController {

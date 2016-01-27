@@ -1351,10 +1351,16 @@
     
     return YES;
 }
-
 - (void)loginWithToken:(NSString *)token {
+    [self loginWithToken:token success:nil failure:nil];
+}
+
+- (void)loginWithToken:(NSString *)token success:(void (^)())success failure:(void (^)(NSError *error))failure {
     
     if (!token || [token isBlank]) {
+        if (failure)
+            failure(nil);
+        
         return;
     }
     
@@ -1379,6 +1385,8 @@
     
     [self requestPath:path method:@"POST" params:nil success:^(id result) {
         [self updateCurrentUserAfterConnect:result];
+        if (success)
+            success();
     } failure: ^(NSError *error) {
         if ([self connectionStatusFromError:error] && error.code != 426)
             [self logout];
@@ -1389,8 +1397,15 @@
             else {
                 [appDelegate didConnected];
                 [appDelegate goToAccountViewController];
+                
+                if (success)
+                    success();
+                
+                return;
             }
         }
+        if (failure)
+            failure(error);
     }];
     
 }
@@ -1776,67 +1791,9 @@
     } failure:nil];
 }
 
-- (void)handleTrigger:(FLTrigger*)trigger {
-    NSDictionary *triggerFuncs = @{[NSNumber numberWithInt:TriggerReloadTimeline]: NSStringFromSelector(@selector(handleTriggerTimelineReload:)),
-                                   [NSNumber numberWithInt:TriggerShowLine]: NSStringFromSelector(@selector(handleTriggerLineShow:)),
-                                   [NSNumber numberWithInt:TriggerShowAvatar]: NSStringFromSelector(@selector(handleTriggerAvatarShow:)),
-                                   [NSNumber numberWithInt:TriggerReloadProfile]: NSStringFromSelector(@selector(handleTriggerProfileReload:)),
-                                   [NSNumber numberWithInt:TriggerShowCard]: NSStringFromSelector(@selector(handleTriggerCardShow:)),
-                                   [NSNumber numberWithInt:TriggerShowFriend]: NSStringFromSelector(@selector(handleTriggerFriendShow:)),
-                                   [NSNumber numberWithInt:TriggerShowProfile]: NSStringFromSelector(@selector(handleTriggerProfileShow:)),
-                                   [NSNumber numberWithInt:TriggerReloadLine]: NSStringFromSelector(@selector(handleTriggerTransactionReload:)),
-                                   [NSNumber numberWithInt:TriggerShowSignup]: NSStringFromSelector(@selector(handleTriggerSignupShow:)),
-                                   [NSNumber numberWithInt:TriggerLogout]: NSStringFromSelector(@selector(handleTriggerLogout:)),
-                                   [NSNumber numberWithInt:TriggerAppUpdate]: NSStringFromSelector(@selector(handleTriggerAppUpdate:)),
-                                   [NSNumber numberWithInt:TriggerShowContactInfo]: NSStringFromSelector(@selector(handleTriggerContactInfoShow:)),
-                                   [NSNumber numberWithInt:TriggerShowUserDocuments]: NSStringFromSelector(@selector(handleTriggerUserDocumentsShow:)),
-                                   [NSNumber numberWithInt:TriggerShow3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureShow:)),
-                                   [NSNumber numberWithInt:TriggerComplete3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureComplete:)),
-                                   [NSNumber numberWithInt:TriggerFail3DSecure]: NSStringFromSelector(@selector(handleTrigger3DSecureFail:)),
-                                   [NSNumber numberWithInt:TriggerSecureCodeClear]: NSStringFromSelector(@selector(handleTriggerClearSecureCode:)),
-                                   [NSNumber numberWithInt:TriggerSecureCodeCheck]: NSStringFromSelector(@selector(handleTriggerCheckSecureCode:)),
-                                   [NSNumber numberWithInt:TriggerPresetLine]: NSStringFromSelector(@selector(handleTriggerPresetLine:)),
-                                   [NSNumber numberWithInt:TriggerReloadFriend]: NSStringFromSelector(@selector(handleTriggerFriendReload:)),
-                                   [NSNumber numberWithInt:TriggerFeedRead]: NSStringFromSelector(@selector(handleTriggerReadFeed:)),
-                                   [NSNumber numberWithInt:TriggerShowInvitation]: NSStringFromSelector(@selector(handleTriggerInvitationShow:)),
-                                   [NSNumber numberWithInt:TriggerHttpCall]: NSStringFromSelector(@selector(handleTriggerHttpCall:)),
-                                   [NSNumber numberWithInt:TriggerShowHome]: NSStringFromSelector(@selector(handleTriggerHomeShow:)),
-                                   [NSNumber numberWithInt:TriggerShowIban]: NSStringFromSelector(@selector(handleTriggerIbanShow:)),
-                                   [NSNumber numberWithInt:TriggerResetTuto]: NSStringFromSelector(@selector(handleTriggerTutoShow:)),
-                                   [NSNumber numberWithInt:TriggerCloseView]: NSStringFromSelector(@selector(handleTriggerViewClose:)),
-                                   [NSNumber numberWithInt:TriggerSendContacts]: NSStringFromSelector(@selector(handleTriggerContactsSend:)),
-                                   [NSNumber numberWithInt:TriggerUserShow]: NSStringFromSelector(@selector(handleTriggerUserShow:)),
-                                   [NSNumber numberWithInt:TriggerInvitationSMSShow]: NSStringFromSelector(@selector(handleTriggerInvitationSMSShow:)),
-                                   [NSNumber numberWithInt:TriggerEditProfile]: NSStringFromSelector(@selector(handleTriggerProfileEdit:)),
-                                   [NSNumber numberWithInt:TriggerSMSValidate]: NSStringFromSelector(@selector(handleTriggerValidateSMS:)),
-                                   [NSNumber numberWithInt:TriggerSecureCodeValidate]: NSStringFromSelector(@selector(handleTriggerValidateSecureCode:)),
-                                   [NSNumber numberWithInt:TriggerAskNotification]: NSStringFromSelector(@selector(handleTriggerAskNotification:)),
-                                   [NSNumber numberWithInt:TriggerFbConnect]: NSStringFromSelector(@selector(handleTriggerFBConnect:)),
-                                   [NSNumber numberWithInt:TriggerPayClick]: NSStringFromSelector(@selector(handleTriggerPayClick:)),
-                                   [NSNumber numberWithInt:TriggerShowNotification]: NSStringFromSelector(@selector(handleTriggerNotificationShow:)),
-                                   [NSNumber numberWithInt:TriggerReloadNotification]: NSStringFromSelector(@selector(handleTriggerNotificationReload:)),
-                                   [NSNumber numberWithInt:TriggerReloadShareTexts]: NSStringFromSelector(@selector(handleTriggerShareTextsReload:)),
-                                   [NSNumber numberWithInt:TriggerShowPopup]: NSStringFromSelector(@selector(handleTriggerPopupShow:))};
-    
-    if (trigger && [triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) {
-        if ([trigger.delay isEqualToNumber:@0])
-            [self performSelector:NSSelectorFromString([triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) withObject:trigger.data];
-        else {
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [trigger.delay doubleValue] * NSEC_PER_SEC);
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [self performSelector:NSSelectorFromString([triggerFuncs objectForKey:[NSNumber numberWithInt:trigger.type]]) withObject:trigger.data];
-            });
-        }
-    }
-}
-
 - (void)handleRequestTriggers:(NSDictionary*)responseObject {
     if (responseObject && responseObject[@"triggers"]) {
-        NSArray *t = responseObject[@"triggers"];
-        for (NSDictionary *triggerData in t) {
-            FLTrigger *trigger = [[FLTrigger alloc] initWithJson:triggerData];
-            [self handleTrigger:trigger];
-        }
+        [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:responseObject[@"triggers"]]];
     }
 }
 

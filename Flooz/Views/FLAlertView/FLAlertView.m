@@ -228,9 +228,7 @@
         }
     }
     else if (_alert) {
-        for (FLTrigger *trigger in _alert.triggers) {
-            [[Flooz sharedInstance] handleTrigger:trigger];
-        }
+        [[FLTriggerManager sharedInstance] executeTriggerList:_alert.triggers];
     }
 }
 

@@ -166,12 +166,7 @@
     
     [activity setIsRead:YES];
     
-    for (FLTrigger *trigger in activity.triggers) {
-        if (trigger.type == TriggerShowAvatar)
-            [self showMenuAvatar];
-        else
-            [[Flooz sharedInstance] handleTrigger:trigger];
-    }
+    [[FLTriggerManager sharedInstance] executeTriggerList:activity.triggers];
     
     if (activity.isForCompleteProfil)
         [[Flooz sharedInstance] readTransactionWithId:@"profile" success:nil];
