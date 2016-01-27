@@ -166,7 +166,7 @@
     [container.layer setShadowColor:[UIColor blackColor].CGColor];
     [container.layer setShadowOpacity:.4];
     [container.layer setShadowRadius:1];
-    [container.layer setShadowOffset:CGSizeMake(1.0, -2.0)];
+    [container.layer setShadowOffset:CGSizeMake(0.0, -2.0)];
     [container.layer setShadowPath:[UIBezierPath bezierPathWithRoundedRect:container.bounds cornerRadius:centerButton.layer.cornerRadius].CGPath];
     container.center = self.tabBar.center;
 
