@@ -79,6 +79,7 @@ static NSString *kLocationData = @"locationData";
 - (void) clearLocationData;
 
 - (BOOL)autologin;
+- (void)clearLogin;
 - (void)logout;
 - (void)loginWithToken:(NSString *)token;
 - (void)loginWithToken:(NSString *)token success:(void (^)())success failure:(void (^)(NSError *error))failure;

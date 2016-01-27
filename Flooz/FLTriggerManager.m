@@ -179,7 +179,6 @@
     if ([trigger.key isEqualToString:@"timeline"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
         [self executeTriggerList:trigger.triggers];
-
     } else if ([trigger.key isEqualToString:@"invitation"]) {
         [[Flooz sharedInstance] invitationText:^(id result) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadShareTexts object:nil];
@@ -188,24 +187,50 @@
             [self executeTriggerList:trigger.triggers];
         }];
     } else if ([trigger.key isEqualToString:@"line"]) {
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil];
+        [self executeTriggerList:trigger.triggers];
     } else if ([trigger.key isEqualToString:@"profile"]) {
-        
+        [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{
+            [self executeTriggerList:trigger.triggers];
+        }];
     } else if ([trigger.key isEqualToString:@"notification"]) {
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotifications" object:nil];
+        [self executeTriggerList:trigger.triggers];
     }
 }
 
 - (void)outActionHandler:(FLTrigger *)trigger {
-    
+    if ([trigger.key isEqualToString:@"log"]) {
+        [[Flooz sharedInstance] clearLogin];
+        [[Flooz sharedInstance] logout];
+        [self executeTriggerList:trigger.triggers];
+    } else if ([trigger.key isEqualToString:@"web"]) {
+        if (trigger.data && trigger.data[@"url"]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:trigger.data[@"url"]]];
+            [self executeTriggerList:trigger.triggers];
+        }
+    }
 }
 
 - (void)sendActionHandler:(FLTrigger *)trigger {
-    
+    if ([trigger.key isEqualToString:@"contacts"]) {
+        [[Flooz sharedInstance] grantedAccessToContacts: ^(BOOL granted) {
+            if (granted) {
+                [[Flooz sharedInstance] createContactList:nil atSignup:YES];
+            }
+        }];
+        
+        [self executeTriggerList:trigger.triggers];
+    }
 }
 
 - (void)setActionHandler:(FLTrigger *)trigger {
-    
+    if ([trigger.key isEqualToString:@"secureCode"]) {
+        ValidateSecureCodeViewController *controller = [ValidateSecureCodeViewController new];
+        [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+            [self executeTriggerList:trigger.triggers];
+        }];
+    }
 }
 
 - (void)showActionHandler:(FLTrigger *)trigger {
