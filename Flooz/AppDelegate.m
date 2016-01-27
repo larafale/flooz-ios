@@ -538,6 +538,20 @@
     [self handlePendingData];
 }
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive)
+        return;
+    
+    NSMutableDictionary *tmp = [pendingData mutableCopy];
+    if (tmp == nil)
+        tmp = [NSMutableDictionary new];
+    [tmp addEntriesFromDictionary:userInfo];
+    pendingData = tmp;
+    
+    [self handlePendingData];
+}
+
 - (void)handlePendingData {
 #ifndef FLOOZ_DEV_LOCAL
     if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
