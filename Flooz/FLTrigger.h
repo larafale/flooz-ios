@@ -57,6 +57,7 @@ typedef enum e_FLTriggerType {
 @property (nonatomic) FLTriggerType type;
 @property (nonatomic, strong) NSDictionary *data;
 @property (nonatomic, strong) NSNumber *delay;
+@property (nonatomic, strong) NSArray<FLTrigger *> *triggers;
 
 +(id)newWithJson:(NSDictionary *)json;
 
