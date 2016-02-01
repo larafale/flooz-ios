@@ -16,5 +16,6 @@
 - (id)initWithData:(NSDictionary*)data dismiss:(void (^)())block;
 
 - (void)show;
+- (void)show:(dispatch_block_t)completion;
 
 @end

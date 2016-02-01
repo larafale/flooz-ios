@@ -713,7 +713,11 @@
     if (!loginData[@"password"])
         [loginData setObject:@"" forKey:@"password"];
     
-    [[Flooz sharedInstance] loginWithPseudoAndPassword:@{@"login": [FLHelper fullPhone:loginData[@"phone"] withCountry:loginData[@"country"]], @"password": loginData[@"password"]} success: ^(id result) {
+    NSString *phone = [FLHelper fullPhone:loginData[@"phone"] withCountry:loginData[@"country"]];
+    if (!phone)
+        phone = @"";
+    
+    [[Flooz sharedInstance] loginWithPseudoAndPassword:@{@"login": phone, @"password": loginData[@"password"]} success: ^(id result) {
         [appDelegate resetTuto:YES];
         [appDelegate goToAccountViewController];
     }];

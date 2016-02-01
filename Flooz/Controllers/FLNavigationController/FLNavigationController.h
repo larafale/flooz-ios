@@ -19,4 +19,6 @@
 - (void)showShadow;
 - (void)hideShadow;
 
+- (void)pushViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completion;
+
 @end

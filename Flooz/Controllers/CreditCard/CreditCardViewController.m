@@ -311,7 +311,6 @@
         if (![Secure3DViewController getInstance]) {
             FLUser *currentUser = [[Flooz sharedInstance] currentUser];
             creditCard = [currentUser creditCard];
-            [self dismissViewController];
         }
     }];
 }

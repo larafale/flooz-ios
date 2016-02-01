@@ -8,6 +8,7 @@
 
 #import "FLTrigger.h"
 #import "FLTriggerManager.h"
+#import "GlobalViewController.h"
 #import "SecureCodeViewController.h"
 #import "CreditCardViewController.h"
 #import "SettingsDocumentsViewController.h"
@@ -42,6 +43,7 @@
 
 @property (nonatomic, strong) NSDictionary *binderActionFunction;
 @property (nonatomic, strong) NSDictionary *binderKeyView;
+@property (nonatomic, strong) NSDictionary *binderKeyType;
 
 @end
 
@@ -54,6 +56,7 @@
         instance = self.new;
         [instance loadBinderActionFunction];
         [instance loadBinderKeyView];
+        [instance loadBinderKeyType];
     });
     return instance;
 }
@@ -128,7 +131,10 @@
             UIViewController *tabController = [(FLTabBarController *)topController selectedViewController];
             
             if ([tabController isKindOfClass:[FLNavigationController class]]) {
-                UIViewController *currentController = [(FLNavigationController *)topController topViewController];
+                UIViewController *currentController = [(FLNavigationController *)tabController topViewController];
+                
+                if ([(FLNavigationController *)topController viewControllers].count == 1)
+                    return;
                 
                 if ([currentController isKindOfClass:controllerClass]) {
                     [currentController dismissViewControllerAnimated:YES completion:^{
@@ -141,7 +147,13 @@
                 }];
             }
         } else if ([topController isKindOfClass:[FLNavigationController class]]) {
-            
+            UIViewController *currentController = [(FLNavigationController *)topController topViewController];
+
+            if ([currentController isKindOfClass:controllerClass]) {
+                [currentController dismissViewControllerAnimated:YES completion:^{
+                    [self executeTriggerList:trigger.triggers];
+                }];
+            }
         } else if ([topController isKindOfClass:controllerClass]) {
             [topController dismissViewControllerAnimated:YES completion:^{
                 [self executeTriggerList:trigger.triggers];
@@ -234,7 +246,73 @@
 }
 
 - (void)showActionHandler:(FLTrigger *)trigger {
-    
+    if ([trigger.key isEqualToString:@"appUpdate"]) {
+        if (trigger.data && trigger.data[@"uri"]) {
+            [appDelegate lockForUpdate:trigger.data[@"uri"]];
+            [self executeTriggerList:trigger.triggers];
+        }
+    } else if ([trigger.key isEqualToString:@"signup"]) {
+        [appDelegate showSignupWithUser:trigger.data];
+        [self executeTriggerList:trigger.triggers];
+    } else if ([trigger.key isEqualToString:@"popup"]) {
+        if (trigger.data) {
+            [[[FLPopupTrigger alloc] initWithData:trigger.data] show:^{
+                [self executeTriggerList:trigger.triggers];
+            }];
+        }
+    } else if ([trigger.key isEqualToString:@"secureCode"]) {
+        
+    } else if ([self isTriggerKeyView:trigger]) {
+        Class controllerClass = [self.binderKeyView objectForKey:trigger.key];
+        
+        if ([self isTopViewControllerTabBar] && [self isTriggerKeyViewRoot:trigger]) {
+            NSInteger rootId = [self isViewClassRoot:controllerClass];
+            
+            if (rootId >= 0) {
+                UIViewController *tmp = [appDelegate myTopViewController];
+                FLTabBarController *tabBar;
+                
+                if ([tmp isKindOfClass:[FLTabBarController class]])
+                    tabBar = (FLTabBarController *)tmp;
+                else if ([tmp tabBarController])
+                    tabBar = (FLTabBarController *)[tmp tabBarController];
+                
+                if (tabBar) {
+                    [tabBar setSelectedIndex:rootId];
+                    UINavigationController *navigationController = [[tabBar viewControllers] objectAtIndex:rootId];
+                    [navigationController popToRootViewControllerAnimated:YES];
+                    [self executeTriggerList:trigger.triggers];
+                }
+            }
+        } else if ([self isTriggerKeyViewPush:trigger]) {
+            UIViewController *tmp = [appDelegate myTopViewController];
+            FLNavigationController *navController;
+            
+            if ([tmp isKindOfClass:[FLTabBarController class]]) {
+                navController = [(FLTabBarController *)tmp selectedViewController];
+            } else if ([tmp isKindOfClass:[FLNavigationController class]]) {
+                navController = (FLNavigationController *)tmp;
+            } else if ([tmp navigationController]) {
+                navController = (FLNavigationController *)tmp.navigationController;
+            }
+            
+            if (navController) {
+                [navController pushViewController:[[controllerClass alloc] initWithTriggerData:trigger.data] animated:YES completion:^{
+                    [self executeTriggerList:trigger.triggers];
+                }];
+            }
+        } else if ([self isTriggerKeyViewModal:trigger]) {
+            UIViewController *controller = [[controllerClass alloc] initWithTriggerData:trigger.data];
+            
+            FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:controller];
+            
+            UIViewController *tmp = [appDelegate myTopViewController];
+            
+            [tmp presentViewController:navController animated:YES completion:^{
+                [self executeTriggerList:trigger.triggers];
+            }];
+        }
+    }
 }
 
 - (void)loadBinderActionFunction {
@@ -252,6 +330,45 @@
 
 - (BOOL)isTriggerKeyView:(FLTrigger *)trigger {
     return (trigger && trigger.key && [self.binderKeyView objectForKey:trigger.key]);
+}
+
+- (BOOL)isTriggerKeyViewModal:(FLTrigger *)trigger {
+    return (trigger && trigger.key && [self.binderKeyType objectForKey:trigger.key] && [[self.binderKeyType objectForKey:trigger.key] isEqualToString:@"modal"]);
+}
+
+- (BOOL)isTriggerKeyViewPush:(FLTrigger *)trigger {
+    return (trigger && trigger.key && [self.binderKeyType objectForKey:trigger.key] && [[self.binderKeyType objectForKey:trigger.key] isEqualToString:@"push"]);
+}
+
+- (BOOL)isTriggerKeyViewRoot:(FLTrigger *)trigger {
+    return (trigger && trigger.key && [self.binderKeyType objectForKey:trigger.key] && [[self.binderKeyType objectForKey:trigger.key] isEqualToString:@"root"]);
+}
+
+- (BOOL)isTopViewControllerTabBar {
+    UIViewController *tmp = [appDelegate currentController];
+    
+    return ([tmp isKindOfClass:[FLTabBarController class]] || [tmp tabBarController]);
+}
+
+- (NSInteger)isViewClassRoot:(Class)viewClass {
+    UIViewController *tmp = [appDelegate currentController];
+    FLTabBarController *tabBar;
+    
+    if ([tmp isKindOfClass:[FLTabBarController class]])
+        tabBar = (FLTabBarController *)tmp;
+    else if ([tmp tabBarController])
+        tabBar = (FLTabBarController *)[tmp tabBarController];
+    
+    if (tabBar) {
+        int i = 0;
+        for (FLNavigationController *navController in tabBar.viewControllers) {
+            if ([[[navController viewControllers] objectAtIndex:0] isKindOfClass:viewClass])
+                return i;
+            i++;
+        }
+    }
+    
+    return -1;
 }
 
 - (void)loadBinderKeyView {
@@ -279,6 +396,34 @@
                            @"secureCode": [SecureCodeViewController class],
                            @"line": [TransactionViewController class],
                            @"web": [WebViewController class]
+                           };
+}
+
+- (void)loadBinderKeyType {
+    self.binderKeyType = @{@"3dSecure": @"modal",
+                           @"aBook": @"modal",
+                           @"card": @"modal",
+                           @"cashout": @"modal",
+                           @"documents": @"modal",
+                           @"editProfile": @"modal",
+                           @"flooz": @"modal",
+                           @"friendRequest": @"modal",
+                           @"iban": @"modal",
+                           @"identity": @"modal",
+                           @"invitationSMS": @"modal",
+                           @"notifSettings": @"modal",
+                           @"phoneValidate": @"modal",
+                           @"privacy": @"modal",
+                           @"promo": @"modal",
+                           @"scanner": @"modal",
+                           @"search": @"modal",
+                           @"user": @"modal",
+                           @"invitation": @"push",
+                           @"profile": @"modal",
+                           @"notification": @"root",
+                           @"secureCode": @"modal",
+                           @"line": @"root",
+                           @"web": @"modal"
                            };
 }
 

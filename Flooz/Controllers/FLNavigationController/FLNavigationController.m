@@ -19,6 +19,8 @@
     UIViewController *controller;
 }
 
+@property (nonatomic,copy) dispatch_block_t completionBlock;
+
 @end
 
 @implementation FLNavigationController
@@ -90,6 +92,12 @@
     [self popViewControllerAnimated:YES];
 }
 
+- (void)pushViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completion {
+    self.completionBlock = completion;
+    
+    [self pushViewController:viewController animated:animated];
+}
+
 - (void)dismiss {
     [self.view endEditing:YES];
     
@@ -110,7 +118,12 @@
 //            }
 //        }
 //    }
-//    
+//
+    if (self.completionBlock){
+        self.completionBlock();
+        self.completionBlock = nil;
+    }
+    
     if (_navigationDelegate)
         [_navigationDelegate navigationController:navigationController didShowViewController:viewController animated:animated];
 }

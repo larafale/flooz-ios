@@ -10,6 +10,8 @@
 
 @interface GlobalViewController : UIViewController
 
+- (id)initWithTriggerData:(NSDictionary *)triggerData;
+
 - (void)dismissViewController;
 - (UIImageView *)findHairlineImageViewUnder:(UIView *)view;
 

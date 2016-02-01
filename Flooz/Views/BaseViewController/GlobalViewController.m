@@ -14,6 +14,14 @@
 
 @implementation GlobalViewController
 
+- (id)initWithTriggerData:(NSDictionary *)triggerData {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];

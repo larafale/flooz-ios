@@ -220,7 +220,7 @@
     [self show:nil];
 }
 
-- (void)show:(void (^)())completion {
+- (void)show:(dispatch_block_t)completion {
     dispatch_async(dispatch_get_main_queue(), ^{
         _formSheet = [[MZFormSheetController alloc] initWithViewController:self];
         _formSheet.presentedFormSheetSize = self.preferredContentSize;

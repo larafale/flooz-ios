@@ -28,6 +28,14 @@ static Secure3DViewController *instance = nil;
     instance = nil;
 }
 
+- (id)initWithTriggerData:(NSDictionary *)triggerData {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (id)init {
     self = [super init];
     if (self) {
@@ -39,6 +47,8 @@ static Secure3DViewController *instance = nil;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [[Flooz sharedInstance] hideLoadView];
     
     [_webView setScalesPageToFit:YES];
     [_webView setBackgroundColor:[UIColor whiteColor]];
