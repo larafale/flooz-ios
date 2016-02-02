@@ -29,7 +29,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_QRCODE", nil);
+
     }
     return self;
 }
@@ -37,6 +37,9 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_QRCODE", nil);
+
     _errorLoop = 0;
     _handleError = YES;
     
@@ -90,7 +93,6 @@
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
     
     if (!input) {
-        NSLog(@"%@", [error localizedDescription]);
         return NO;
     }
     

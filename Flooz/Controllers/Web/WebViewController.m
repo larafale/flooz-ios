@@ -23,6 +23,15 @@
 	return self;
 }
 
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [super initWithTriggerData:data];
+    if (self) {
+        if (data && data[@"url"])
+            _url = data[@"url"];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
     

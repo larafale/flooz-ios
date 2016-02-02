@@ -32,8 +32,6 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_NOTIFICATION", @"");
-        
         notificationsArray = [NSMutableArray new];
         isLoaded = NO;
         nextPageIsLoading = NO;
@@ -43,6 +41,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_NOTIFICATION", @"");
+
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight()) style:UITableViewStylePlain];
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];

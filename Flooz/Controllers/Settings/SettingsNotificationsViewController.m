@@ -21,7 +21,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"NAV_NOTIFICATIONS", nil);
         
         FLUser *currentUser = [[Flooz sharedInstance] currentUser];
         _notifications = [[currentUser notifications] mutableCopy];
@@ -40,7 +39,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"NAV_NOTIFICATIONS", nil);
+   
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame)) style:UITableViewStyleGrouped];
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];

@@ -83,6 +83,59 @@
 
 @synthesize transaction;
 
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [super initWithTriggerData:data];
+    if (self) {
+        
+        transaction = [NSMutableDictionary new];
+        
+        currentPreset = [[FLPreset alloc] initWithJson:data];
+        presetUser = nil;
+        
+        transaction[@"preset"] = @YES;
+        transaction[@"random"] = [FLHelper generateRandomString];
+        
+        [transaction setValue:[FLTransaction transactionTypeToParams:currentPreset.type] forKey:@"method"];
+        
+        infoDisplayed = NO;
+        firstView = YES;
+        isDemo = currentPreset.popup != NULL || currentPreset.steps != NULL;
+        
+        if (currentPreset.to) {
+            presetUser = currentPreset.to;
+            transaction[@"to"] = [@"@" stringByAppendingString :[currentPreset.to username]];
+        }
+        
+        if (currentPreset.title)
+            self.title = currentPreset.title;
+        else
+            self.title = NSLocalizedString(@"NEW_TRANSACTION", nil);
+        
+        if (currentPreset.amount) {
+            transaction[@"amount"] = [FLHelper formatedAmount:currentPreset.amount withCurrency:NO withSymbol:NO];
+        }
+        
+        if (currentPreset.why)
+            transaction[@"why"] = currentPreset.why;
+        
+        if (currentPreset.geo)
+            transaction[@"geo"] = currentPreset.geo;
+        
+        if (currentPreset.payload)
+            transaction[@"payload"] = currentPreset.payload;
+        
+        if (currentPreset.blockAmount)
+            firstViewAmount = !currentPreset.blockAmount;
+        
+        currentDemoStep = 0;
+        firstViewAmount = currentPreset.focusAmount;
+        firstViewWhy = currentPreset.focusWhy;
+        
+        [[Flooz sharedInstance] clearLocationData];
+    }
+    return self;
+}
+
 - (id)initWithTransactionType:(TransactionType)transactionType {
     return [self initWithTransactionType:transactionType user:nil];
 }
@@ -501,18 +554,7 @@
 - (void)launchDemo {
     [demoTimer invalidate];
     demoTimer = nil;
-    if (currentPreset.popup) {
-        [[[FLPopupTrigger alloc] initWithData:currentPreset.popup dismiss:^{
-            if (currentPreset.popup[@"triggers"]) {                
-                [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:currentPreset.popup[@"triggers"]]];
-            }
-            
-            if (currentPreset.steps) {
-                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-            }
-            currentPreset.popup = nil;
-        }] show];
-    } else if (currentPreset.steps) {
+    if (currentPreset.steps) {
         [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
     }
 }

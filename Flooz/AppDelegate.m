@@ -1029,6 +1029,10 @@
 #pragma mark -
 
 - (void)showUser:(FLUser *)user inController:(UIViewController*)vc {
+    [self showUser:user inController:vc completion:nil];
+}
+
+- (void)showUser:(FLUser *)user inController:(UIViewController*)vc completion:(dispatch_block_t)completion {
     if (user.json[@"isCactus"] && [user.json[@"isCactus"] boolValue])
         return;
     
@@ -1068,15 +1072,19 @@
     
     controller = [[UserViewController alloc] initWithUser:user];
     
-    if ([vc isKindOfClass:UINavigationController.class])
-        [((UINavigationController*)vc) pushViewController:controller animated:YES];
+    if ([vc isKindOfClass:FLNavigationController.class])
+        [((FLNavigationController*)vc) pushViewController:controller animated:YES completion:completion];
     else if (vc.navigationController != nil)
-        [vc.navigationController pushViewController:controller animated:YES];
+        [((FLNavigationController*)vc.navigationController) pushViewController:controller animated:YES completion:completion];
     else
-        [vc presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+        [vc presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:completion];
 }
 
 - (void)showTransaction:(FLTransaction *)transaction inController:(UIViewController*)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus {
+    [self showTransaction:transaction inController:vc withIndexPath:indexPath focusOnComment:focus completion:nil];
+}
+
+- (void)showTransaction:(FLTransaction *)transaction inController:(UIViewController*)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus completion:(dispatch_block_t)completion {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCancelTimer object:nil];
     _lastTransactionID = transaction.transactionId;
@@ -1102,12 +1110,12 @@
         [controller focusOnComment];
     }
     
-    if ([vc isKindOfClass:UINavigationController.class])
-        [((UINavigationController*)vc) pushViewController:controller animated:YES];
+    if ([vc isKindOfClass:FLNavigationController.class])
+        [((FLNavigationController*)vc) pushViewController:controller animated:YES completion:completion];
     else if (vc.navigationController != nil)
-        [vc.navigationController pushViewController:controller animated:YES];
+        [((FLNavigationController*)vc.navigationController) pushViewController:controller animated:YES completion:completion];
     else
-        [vc presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+        [vc presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:completion];
 }
 
 - (UIWindow *)topWindow {

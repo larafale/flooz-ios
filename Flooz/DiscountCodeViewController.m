@@ -25,15 +25,22 @@
 @implementation DiscountCodeViewController
 
 - (void)viewDidLoad {
-    self.title = [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"];
     [super viewDidLoad];
+    
+    if (!self.title || [self.title isBlank])
+        self.title = [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"];
     
     _data = [NSMutableDictionary new];
     _contentView = [UIScrollView newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     [_mainBody addSubview:_contentView];
     
     {
-        _sponsor = [[FLTextFieldSignup alloc] initWithPlaceholder:[Flooz sharedInstance].currentTexts.menu[@"promo"][@"placeholder"] for:_data key:@"code" position:CGPointMake(PADDING_SIDE, PADDING_SIDE)];
+        NSString *placeholderString = [Flooz sharedInstance].currentTexts.menu[@"promo"][@"placeholder"];
+        
+        if (self.triggerData && self.triggerData[@"placeholder"] && ![self.triggerData[@"placeholder"] isBlank])
+            placeholderString = self.triggerData[@"placeholder"];
+
+        _sponsor = [[FLTextFieldSignup alloc] initWithPlaceholder:placeholderString for:_data key:@"code" position:CGPointMake(PADDING_SIDE, PADDING_SIDE)];
         [_sponsor addForTextChangeTarget:self action:@selector(canValidate:)];
         [_contentView addSubview:_sponsor];
     }
@@ -44,14 +51,19 @@
         [_saveButton addTarget:self action:@selector(saveChanges) forControlEvents:UIControlEventTouchUpInside];
         [_contentView addSubview:_saveButton];
         
-        UILabel *infos = [[UILabel alloc] initWithText:[Flooz sharedInstance].currentTexts.menu[@"promo"][@"info"] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
+        NSString *infosString = [Flooz sharedInstance].currentTexts.menu[@"promo"][@"info"];
+        
+        if (self.triggerData && self.triggerData[@"info"] && ![self.triggerData[@"info"] isBlank])
+            infosString = self.triggerData[@"info"];
+        
+        UILabel *infos = [[UILabel alloc] initWithText:infosString textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
         [infos setLineBreakMode:NSLineBreakByWordWrapping];
         
         CGRectSetWidth(infos.frame, CGRectGetWidth(_contentView.frame) - PADDING_SIDE * 2);
         [infos sizeToFit];
         CGRectSetXY(infos.frame, CGRectGetWidth(_contentView.frame) / 2 - CGRectGetWidth(infos.frame) / 2, CGRectGetMaxY(_saveButton.frame) + PADDING_SIDE);
         [_contentView addSubview:infos];
-
+        
     }
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), CGRectGetMaxY(_saveButton.frame));
     
@@ -59,7 +71,12 @@
 }
 
 - (void)createSaveButton {
-    _saveButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:NSLocalizedString(@"GLOBAL_SAVE", nil)];
+    NSString *buttonString = NSLocalizedString(@"GLOBAL_SAVE", nil);
+    
+    if (self.triggerData && self.triggerData[@"button"] && ![self.triggerData[@"button"] isBlank])
+        buttonString = self.triggerData[@"button"];
+    
+    _saveButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, 0, PPScreenWidth() - PADDING_SIDE * 2, FLActionButtonDefaultHeight) title:buttonString];
     
     [_saveButton setEnabled:YES];
 }

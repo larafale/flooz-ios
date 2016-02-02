@@ -148,7 +148,7 @@
             }
         } else if ([topController isKindOfClass:[FLNavigationController class]]) {
             UIViewController *currentController = [(FLNavigationController *)topController topViewController];
-
+            
             if ([currentController isKindOfClass:controllerClass]) {
                 [currentController dismissViewControllerAnimated:YES completion:^{
                     [self executeTriggerList:trigger.triggers];
@@ -238,7 +238,7 @@
 
 - (void)setActionHandler:(FLTrigger *)trigger {
     if ([trigger.key isEqualToString:@"secureCode"]) {
-        ValidateSecureCodeViewController *controller = [ValidateSecureCodeViewController new];
+        ValidateSecureCodeViewController *controller = [[ValidateSecureCodeViewController alloc] initWithTriggerData:trigger.data];
         [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
             [self executeTriggerList:trigger.triggers];
         }];
@@ -262,6 +262,35 @@
         }
     } else if ([trigger.key isEqualToString:@"secureCode"]) {
         
+    } else if ([trigger.key isEqualToString:@"user"]) {
+        if ([trigger.data objectForKey:@"nick"]) {
+            FLUser *user = [[FLUser alloc] initWithJSON:trigger.data];
+            [appDelegate showUser:user inController:nil completion:^{
+                [self executeTriggerList:trigger.triggers];
+            }];
+        } else if ([trigger.data objectForKey:@"_id"]) {
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] getUserProfile:[trigger.data objectForKey:@"_id"] success:^(FLUser *result) {
+                if (result) {
+                    [appDelegate showUser:result inController:nil completion:^{
+                        [self executeTriggerList:trigger.triggers];
+                    }];
+                }
+            } failure:nil];
+        }
+    } else if ([trigger.key isEqualToString:@"line"]) {
+        NSString *resourceID = trigger.data[@"_id"];
+        
+        if (resourceID) {
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] transactionWithId:resourceID success: ^(id result) {
+                FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                [appDelegate showTransaction:transaction inController:appDelegate.currentController withIndexPath:nil focusOnComment:NO completion:^{
+                    [self executeTriggerList:trigger.triggers];
+                }];
+            }];
+        }
+
     } else if ([self isTriggerKeyView:trigger]) {
         Class controllerClass = [self.binderKeyView objectForKey:trigger.key];
         

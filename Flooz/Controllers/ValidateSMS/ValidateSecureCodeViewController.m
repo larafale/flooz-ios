@@ -26,7 +26,6 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.title = NSLocalizedString(@"NAV_SECURECODE", @"");
     }
     return self;
 }
@@ -38,7 +37,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    ((FLNavigationController*)self.navigationController).blockBack = YES;
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"NAV_SECURECODE", @"");
 
     FLKeyboardView *keyboardView = [FLKeyboardView new];
     [keyboardView noneCloseButton];

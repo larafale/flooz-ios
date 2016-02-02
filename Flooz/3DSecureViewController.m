@@ -28,21 +28,28 @@ static Secure3DViewController *instance = nil;
     instance = nil;
 }
 
-- (id)initWithTriggerData:(NSDictionary *)triggerData {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
 - (id)init {
     self = [super init];
     if (self) {
         self.isAtSignup = NO;
-        self.title = NSLocalizedString(@"NAV_3DSECURE", nil);
     }
     return self;
+}
+
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [super initWithTriggerData:data];
+    if (self) {
+        if (data && data[@"html"])
+            self.htmlContent = data[@"html"];
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"NAV_3DSECURE", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

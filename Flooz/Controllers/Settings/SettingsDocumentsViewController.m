@@ -40,8 +40,10 @@
 @implementation SettingsDocumentsViewController
 
 - (void)viewDidLoad {
-	self.title = NSLocalizedString(@"SETTINGS_DOCUMENTS", @"");
-	[super viewDidLoad];
+    [super viewDidLoad];
+
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"SETTINGS_DOCUMENTS", @"");
 
 	[self initWithInfo];
     

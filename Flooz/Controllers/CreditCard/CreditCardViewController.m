@@ -33,7 +33,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"NAV_CREDIT_CARD", nil);
+
     }
     return self;
 }
@@ -146,6 +146,8 @@
     
     if (customLabel && ![customLabel isBlank])
         [cbInfos setText:customLabel];
+    else if (self.triggerData && self.triggerData[@"infos"] && ![self.triggerData[@"infos"] isBlank])
+        [cbInfos setText:self.triggerData[@"infos"]];
     else if ([Flooz sharedInstance].currentTexts.card && ![[Flooz sharedInstance].currentTexts.card isBlank])
         [cbInfos setText:[Flooz sharedInstance].currentTexts.card];
     
@@ -304,14 +306,13 @@
     
     if (self.floozData && self.floozData.allKeys.count) {
         _card[@"flooz"] = self.floozData;
+    } else if (self.triggerData && self.triggerData[@"flooz"]) {
+        _card[@"flooz"] = self.triggerData[@"flooz"];
     }
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createCreditCard:_card atSignup:NO success: ^(id result) {
-        if (![Secure3DViewController getInstance]) {
-            FLUser *currentUser = [[Flooz sharedInstance] currentUser];
-            creditCard = [currentUser creditCard];
-        }
+        
     }];
 }
 

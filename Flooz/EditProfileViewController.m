@@ -35,7 +35,8 @@
     
     data = [NSMutableDictionary new];
     
-    self.title = NSLocalizedString(@"PROFILE", nil);
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"PROFILE", nil);
     
     saveItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveData)];
     [saveItem setEnabled:NO];

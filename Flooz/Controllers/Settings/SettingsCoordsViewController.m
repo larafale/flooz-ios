@@ -42,8 +42,10 @@
 @implementation SettingsCoordsViewController
 
 - (void)viewDidLoad {
-	self.title = NSLocalizedString(@"SETTINGS_COORDS", @"");
 	[super viewDidLoad];
+
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"SETTINGS_COORDS", @"");
 
 	[self initWithInfo];
     

@@ -95,6 +95,7 @@ static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 - (void)showPresetNewTransactionController:(FLPreset *)preset;
 - (void)popToMainView;
 - (void)showUser:(FLUser *)user inController:(UIViewController*)vc;
+- (void)showUser:(FLUser *)user inController:(UIViewController*)vc completion:(dispatch_block_t)completion;
 
 - (void)lockForUpdate:(NSString *)updateUrl;
 
@@ -102,6 +103,7 @@ static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 - (void)askNotification;
 
 - (void)showTransaction:(FLTransaction *)transaction inController:(UIViewController *)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus;
+- (void)showTransaction:(FLTransaction *)transaction inController:(UIViewController*)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus completion:(dispatch_block_t)completion;
 - (void)showFriendsController;
 - (void)showEditProfil;
 

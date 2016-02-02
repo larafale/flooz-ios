@@ -97,6 +97,22 @@
     return self;
 }
 
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [super initWithTriggerData:data];
+    if (self) {
+        currentUser = [[FLUser alloc] initWithJSON:data];
+        transactions = [NSMutableArray new];
+        rowsWithPaymentField = [NSMutableSet new];
+        nextPageIsLoading = NO;
+        transacLoaded = NO;
+        completeProfileLoaded = NO;
+        
+        transactionsLoaded = [NSMutableArray new];
+        cells = [NSMutableArray new];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

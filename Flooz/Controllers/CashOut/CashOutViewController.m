@@ -30,7 +30,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil);
+        
         dictionary = [NSMutableDictionary new];
     }
     return self;
@@ -38,7 +38,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil);
+
     CGFloat height = 15;
     
     {

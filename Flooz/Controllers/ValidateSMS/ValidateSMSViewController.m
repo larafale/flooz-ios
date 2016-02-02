@@ -34,7 +34,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.title = NSLocalizedString(@"SIGNUP_PAGE_TITLE_SMS", @"");
+        
         resetSMS = YES;
         smsData = [NSMutableDictionary new];
         
@@ -52,7 +52,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    ((FLNavigationController*)self.navigationController).blockBack = YES;
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"SIGNUP_PAGE_TITLE_SMS", @"");
 
     _codeField = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_SMS_CODE", @"") for:smsData key:@"smscode" position:CGPointMake(SIGNUP_PADDING_SIDE, firstItemY + 20.0f)];
     CGRectSetX(_codeField.frame, (SCREEN_WIDTH - _codeField.frame.size.width) / 2.);

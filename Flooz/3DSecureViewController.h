@@ -20,6 +20,4 @@
 @property (nonatomic) Boolean isAtSignup;
 @property (nonatomic) NSString *htmlContent;
 
-- (id)initWithTriggerData:(NSDictionary *)triggerData;
-
 @end

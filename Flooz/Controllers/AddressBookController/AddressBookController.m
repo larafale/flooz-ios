@@ -26,7 +26,6 @@
     self = [super init];
     if (self) {
         pickerMode = NO;
-        self.title = NSLocalizedString(@"SETTINGS_ADDRESS", nil);
     }
     return self;
 }
@@ -34,6 +33,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"SETTINGS_ADDRESS", nil);
+
     self.addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didAddButtonClick)];
     
     self.navigationItem.rightBarButtonItem = self.addItem;

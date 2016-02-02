@@ -60,13 +60,23 @@
     
     buttonTitle = NSLocalizedString(@"GLOBAL_INVITE", nil);
     
+    if (self.triggerData && self.triggerData[@"button"] && ![self.triggerData[@"button"] isBlank])
+        buttonTitle = self.triggerData[@"button"];
+    
     if ([[Flooz sharedInstance] currentTexts]) {
-        self.title = [[Flooz sharedInstance] currentTexts].menu[@"sms"][@"title"];
-        buttonTitle = [[Flooz sharedInstance] currentTexts].menu[@"sms"][@"button"];
+        if (!self.title || [self.title isBlank])
+            self.title = [[Flooz sharedInstance] currentTexts].menu[@"sms"][@"title"];
+        
+        if (!buttonTitle || [buttonTitle isBlank])
+            buttonTitle = [[Flooz sharedInstance] currentTexts].menu[@"sms"][@"button"];
     } else {
         [[Flooz sharedInstance] textObjectFromApi:^(FLTexts *result) {
-            self.title = result.menu[@"sms"][@"title"];
-            buttonTitle = result.menu[@"sms"][@"button"];
+            if (!self.title || [self.title isBlank])
+                self.title = result.menu[@"sms"][@"title"];
+            
+            if (!buttonTitle || [buttonTitle isBlank])
+                buttonTitle = result.menu[@"sms"][@"button"];
+            
             if (selectedContacts.count)
                 [_sendButton setTitle:[NSString stringWithFormat:@"%@ (%lu)", buttonTitle, (unsigned long)[selectedContacts count]] forState:UIControlStateNormal];
             else
@@ -75,7 +85,7 @@
             
         }];
     }
-
+    
     searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
     [searchItem setTintColor:[UIColor customBlue]];
     
@@ -132,7 +142,7 @@
         }];
     } else {
         [_searchBar close];
-
+        
         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             CGRectSetY(_searchBar.frame, -45);
             CGRectSetY(_tableView.frame, CGRectGetMaxY(_searchBar.frame) + 5);
@@ -447,7 +457,7 @@
             contact.lastname = lastName;
             contact.fullname = name;
             contact.avatarData = image;
-
+            
             if ([FLHelper isValidPhoneNumber:phone]) {
                 contact.phone = [FLHelper formatedPhone:phone];
                 

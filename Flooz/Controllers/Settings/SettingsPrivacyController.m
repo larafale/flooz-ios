@@ -16,14 +16,16 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.title = NSLocalizedString(@"SETTINGS_PRIVACY", nil);
-        
+
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"SETTINGS_PRIVACY", nil);
     
     CGFloat height = 20.0f;
     

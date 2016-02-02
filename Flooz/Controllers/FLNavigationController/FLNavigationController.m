@@ -11,6 +11,7 @@
 #import "FLPopupInformation.h"
 #import "UserViewController.h"
 #import "3DSecureViewController.h"
+#import "GlobalViewController.h"
 
 @interface FLNavigationController () {
     UIBarButtonItem *backItem;
@@ -111,14 +112,14 @@
 #pragma marks - UINavigationControllerDelegate
 
 - (void)navigationController:(nonnull UINavigationController *)navigationController didShowViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated {
-//    if (![viewController isKindOfClass:[UserViewController class]]) {
-//        for (UIGestureRecognizer *gesture in viewController.view.gestureRecognizers) {
-//            if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]) {
-//                [viewController.view removeGestureRecognizer:gesture];
-//            }
-//        }
-//    }
-//
+    //    if (![viewController isKindOfClass:[UserViewController class]]) {
+    //        for (UIGestureRecognizer *gesture in viewController.view.gestureRecognizers) {
+    //            if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]) {
+    //                [viewController.view removeGestureRecognizer:gesture];
+    //            }
+    //        }
+    //    }
+    //
     if (self.completionBlock){
         self.completionBlock();
         self.completionBlock = nil;
@@ -135,16 +136,6 @@
     
     controller = viewController;
     
-    if (!self.blockBack) {
-        if (navigationController.viewControllers.count == 1 && !navigationController.parentViewController) {
-            viewController.navigationItem.leftBarButtonItem = closeItem;
-        }
-        else if (!navigationController.parentViewController) {
-            viewController.navigationItem.leftBarButtonItem = backItem;
-        }
-    }
-    
-    
     if (_navigationDelegate)
         [_navigationDelegate navigationController:navigationController willShowViewController:viewController animated:animated];
     
@@ -152,16 +143,30 @@
         [self  setNavigationBarHidden:YES animated:YES];
     else if (![viewController isKindOfClass:[UserViewController class]] && [self isNavigationBarHidden] == YES)
         [self setNavigationBarHidden:NO animated:YES];
+    
+    if ([viewController isKindOfClass:[GlobalViewController class]]) {
+        GlobalViewController *gvc = (GlobalViewController *)controller;
+        
+        if (gvc.triggerData && gvc.triggerData[@"close"] && [gvc.triggerData[@"close"] boolValue] == NO)
+            return;
+    }
+    
+    if (navigationController.viewControllers.count == 1 && !navigationController.parentViewController) {
+        viewController.navigationItem.leftBarButtonItem = closeItem;
+    }
+    else if (!navigationController.parentViewController) {
+        viewController.navigationItem.leftBarButtonItem = backItem;
+    }
 }
 
 //- (id<UIViewControllerAnimatedTransitioning>) navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
-//    
+//
 //    if ([toVC isKindOfClass:[UserViewController class]] || [fromVC isKindOfClass:[UserViewController class]]) {
 //        [_interactionController wireToViewController:toVC forOperation:CEInteractionOperationPop];
 //        _interactionController.popOnRightToLeft = NO;
-//        
+//
 //        _animationController.reverse = operation == UINavigationControllerOperationPop;
-//        
+//
 //        return _animationController;
 //    }
 //    return nil;

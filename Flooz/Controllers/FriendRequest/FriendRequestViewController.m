@@ -24,7 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"FRIEND_REQUEST_TITLE", nil);
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"FRIEND_REQUEST_TITLE", nil);
     
     _tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame)) style:UITableViewStylePlain];
     [_tableView setDelegate:self];

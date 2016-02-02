@@ -10,14 +10,23 @@
 
 @interface GlobalViewController ()
 
+
 @end
 
 @implementation GlobalViewController
 
-- (id)initWithTriggerData:(NSDictionary *)triggerData {
+@synthesize triggerData;
+
+- (id)initWithTriggerData:(NSDictionary *)data {
     self = [super init];
     if (self) {
-        
+        if (data) {
+            triggerData = data;
+            
+            if (triggerData[@"title"] && ![triggerData[@"title"] isBlank]) {
+                self.title = triggerData[@"title"];
+            }
+        }
     }
     return self;
 }

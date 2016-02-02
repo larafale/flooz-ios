@@ -27,7 +27,9 @@
 @implementation SettingsBankViewController
 
 - (void)viewDidLoad {
-	self.title = NSLocalizedString(@"SETTINGS_BANK", @"");
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"SETTINGS_BANK", @"");
+    
 	[super viewDidLoad];
 
 	[self initWithInfo];
