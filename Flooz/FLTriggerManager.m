@@ -37,7 +37,7 @@
 #import "UserViewController.h"
 #import "AccountViewController.h"
 #import "TransactionViewController.h"
-
+#import "TimelineViewController.h"
 
 @interface FLTriggerManager ()
 
@@ -97,26 +97,29 @@
 }
 
 - (void)askActionHandler:(FLTrigger *)trigger {
-    if ([trigger.key isEqualToString:@"notification"]) {
+    if ([trigger.category isEqualToString:@"notifs"]) {
         [appDelegate askNotification];
-        
+        [self executeTriggerList:trigger.triggers];
+    } else if ([trigger.category isEqualToString:@"fb"]) {
+        [[Flooz sharedInstance] connectFacebook];
         [self executeTriggerList:trigger.triggers];
     }
 }
 
-- (void)checkActionHandler:(FLTrigger *)trigger {
-    if ([trigger.key isEqualToString:@"secureCode"]) {
-        [[Flooz sharedInstance] checkSecureCodeForUser:[SecureCodeViewController secureCodeForCurrentUser] success:^(id result) {
-            [self executeTriggerList:trigger.triggers];
-        } failure:^(NSError *error) {
-            [SecureCodeViewController clearSecureCode];
-            [self executeTriggerList:trigger.triggers];
-        }];
+- (void)callActionHandler:(FLTrigger *)trigger {
+    if ([trigger.category isEqualToString:@"http"]) {
+        if (trigger.data && trigger.data[@"url"] && trigger.data[@"method"]) {
+            [[Flooz sharedInstance] requestPath:trigger.data[@"url"] method:trigger.data[@"method"] params:trigger.data[@"body"] success:^(id result) {
+                [self executeTriggerList:trigger.triggers];
+            } failure:^(NSError *error) {
+                [self executeTriggerList:trigger.triggers];
+            }];
+        }
     }
 }
 
 - (void)clearActionHandler:(FLTrigger *)trigger {
-    if ([trigger.key isEqualToString:@"secureCode"]) {
+    if ([trigger.category isEqualToString:@"code"]) {
         [SecureCodeViewController clearSecureCode];
         [self executeTriggerList:trigger.triggers];
     }
@@ -124,7 +127,7 @@
 
 - (void)hideActionHandler:(FLTrigger *)trigger {
     if ([self isTriggerKeyView:trigger]) {
-        Class controllerClass = [self.binderKeyView objectForKey:trigger.key];
+        Class controllerClass = [self.binderKeyView objectForKey:trigger.viewCaregory];
         UIViewController *topController = [appDelegate myTopViewController];
         
         if ([topController isKindOfClass:[FLTabBarController class]]) {
@@ -133,7 +136,7 @@
             if ([tabController isKindOfClass:[FLNavigationController class]]) {
                 UIViewController *currentController = [(FLNavigationController *)tabController topViewController];
                 
-                if ([(FLNavigationController *)topController viewControllers].count == 1)
+                if ([(FLNavigationController *)tabController viewControllers].count == 1)
                     return;
                 
                 if ([currentController isKindOfClass:controllerClass]) {
@@ -162,8 +165,8 @@
     }
 }
 
-- (void)inActionHandler:(FLTrigger *)trigger {
-    if ([trigger.key isEqualToString:@"log"]) {
+- (void)loginActionHandler:(FLTrigger *)trigger {
+    if ([trigger.category isEqualToString:@"auth"]) {
         if (trigger.data && trigger.data[@"token"]) {
             [[Flooz sharedInstance] loginWithToken:trigger.data[@"token"] success:^{
                 [self executeTriggerList:trigger.triggers];
@@ -172,51 +175,21 @@
             }];
         } else {
             [appDelegate goToAccountViewController];
+            [self executeTriggerList:trigger.triggers];
         }
-    } else if ([trigger.key isEqualToString:@"request"]) {
-        if (trigger.data && trigger.data[@"url"] && trigger.data[@"method"]) {
-            [[Flooz sharedInstance] requestPath:trigger.data[@"url"] method:trigger.data[@"method"] params:trigger.data[@"body"] success:^(id result) {
-                [self executeTriggerList:trigger.triggers];
-            } failure:^(NSError *error) {
-                [self executeTriggerList:trigger.triggers];
-            }];
-        }
-    } else if ([trigger.key isEqualToString:@"fb"]) {
-        [[Flooz sharedInstance] connectFacebook];
-        [self executeTriggerList:trigger.triggers];
     }
 }
 
-- (void)loadActionHandler:(FLTrigger *)trigger {
-    if ([trigger.key isEqualToString:@"timeline"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
-        [self executeTriggerList:trigger.triggers];
-    } else if ([trigger.key isEqualToString:@"invitation"]) {
-        [[Flooz sharedInstance] invitationText:^(id result) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadShareTexts object:nil];
-            [self executeTriggerList:trigger.triggers];
-        } failure:^(NSError *error) {
-            [self executeTriggerList:trigger.triggers];
-        }];
-    } else if ([trigger.key isEqualToString:@"line"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil];
-        [self executeTriggerList:trigger.triggers];
-    } else if ([trigger.key isEqualToString:@"profile"]) {
-        [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{
-            [self executeTriggerList:trigger.triggers];
-        }];
-    } else if ([trigger.key isEqualToString:@"notification"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotifications" object:nil];
-        [self executeTriggerList:trigger.triggers];
-    }
-}
-
-- (void)outActionHandler:(FLTrigger *)trigger {
-    if ([trigger.key isEqualToString:@"log"]) {
+- (void)logoutActionHandler:(FLTrigger *)trigger {
+    if ([trigger.category isEqualToString:@"auth"]) {
         [[Flooz sharedInstance] clearLogin];
         [[Flooz sharedInstance] logout];
         [self executeTriggerList:trigger.triggers];
-    } else if ([trigger.key isEqualToString:@"web"]) {
+    }
+}
+
+- (void)openActionHandler:(FLTrigger *)trigger {
+    if ([trigger.category isEqualToString:@"web"]) {
         if (trigger.data && trigger.data[@"url"]) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:trigger.data[@"url"]]];
             [self executeTriggerList:trigger.triggers];
@@ -224,45 +197,96 @@
     }
 }
 
-- (void)sendActionHandler:(FLTrigger *)trigger {
-    if ([trigger.key isEqualToString:@"contacts"]) {
-        [[Flooz sharedInstance] grantedAccessToContacts: ^(BOOL granted) {
-            if (granted) {
-                [[Flooz sharedInstance] createContactList:nil atSignup:YES];
-            }
-        }];
-        
+- (void)syncActionHandler:(FLTrigger *)trigger {
+    if ([trigger.category isEqualToString:@"app"]) {
+        if (trigger.data && trigger.data[@"url"]) {
+            [appDelegate lockForUpdate:trigger.data[@"url"]];
+            [self executeTriggerList:trigger.triggers];
+        }
+    } else if ([trigger.category isEqualToString:@"timeline"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
         [self executeTriggerList:trigger.triggers];
-    }
-}
-
-- (void)setActionHandler:(FLTrigger *)trigger {
-    if ([trigger.key isEqualToString:@"secureCode"]) {
-        ValidateSecureCodeViewController *controller = [[ValidateSecureCodeViewController alloc] initWithTriggerData:trigger.data];
-        [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+    } else if ([trigger.category isEqualToString:@"invitation"]) {
+        [[Flooz sharedInstance] invitationText:^(id result) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadShareTexts object:nil];
+            [self executeTriggerList:trigger.triggers];
+        } failure:^(NSError *error) {
             [self executeTriggerList:trigger.triggers];
         }];
+    } else if ([trigger.category isEqualToString:@"flooz"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil];
+        [self executeTriggerList:trigger.triggers];
+    } else if ([trigger.category isEqualToString:@"profile"]) {
+        [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{
+            [self executeTriggerList:trigger.triggers];
+        }];
+    } else if ([trigger.category isEqualToString:@"notifs"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotifications" object:nil];
+        [self executeTriggerList:trigger.triggers];
     }
 }
 
 - (void)showActionHandler:(FLTrigger *)trigger {
-    if ([trigger.key isEqualToString:@"appUpdate"]) {
-        if (trigger.data && trigger.data[@"uri"]) {
-            [appDelegate lockForUpdate:trigger.data[@"uri"]];
-            [self executeTriggerList:trigger.triggers];
-        }
-    } else if ([trigger.key isEqualToString:@"signup"]) {
+    if ([trigger.viewCaregory isEqualToString:@"app:signup"]) {
         [appDelegate showSignupWithUser:trigger.data];
         [self executeTriggerList:trigger.triggers];
-    } else if ([trigger.key isEqualToString:@"popup"]) {
+    } else if ([trigger.viewCaregory isEqualToString:@"app:popup"]) {
         if (trigger.data) {
             [[[FLPopupTrigger alloc] initWithData:trigger.data] show:^{
                 [self executeTriggerList:trigger.triggers];
             }];
         }
-    } else if ([trigger.key isEqualToString:@"secureCode"]) {
+    } else if ([trigger.viewCaregory isEqualToString:@"auth:code"]) {
+        [[Flooz sharedInstance] showLoadView];
         
-    } else if ([trigger.key isEqualToString:@"user"]) {
+        CompleteBlock completeBlock = ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[Flooz sharedInstance] hideLoadView];
+                
+                [self executeTriggerList:trigger.triggers];
+                
+                if (trigger.data && trigger.data[@"successTriggers"]) {
+                    
+                    if ([trigger.data[@"successTriggers"] isKindOfClass:[NSArray class]]) {
+                        [self executeTriggerList:[self.class convertDataInList:trigger.data[@"successTriggers"]]];
+                    } else if ([trigger.data[@"successTriggers"] isKindOfClass:[NSDictionary class]]) {
+                        FLTrigger *tmp = [[FLTrigger alloc] initWithJson:trigger.data[@"successTriggers"]];
+                        
+                        if (tmp) {
+                            [self executeTrigger:tmp];
+                        }
+                    }
+                }
+            });
+        };
+        
+        if ([SecureCodeViewController canUseTouchID])
+            [SecureCodeViewController useToucheID:completeBlock passcodeCallback:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    SecureCodeViewController *controller = [SecureCodeViewController new];
+                    controller.completeBlock = completeBlock;
+                    [[appDelegate myTopViewController] presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                        [[Flooz sharedInstance] hideLoadView];
+                        [self executeTriggerList:trigger.triggers];
+                    }];
+                });
+            } cancelCallback:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self executeTriggerList:trigger.triggers];
+                    [[Flooz sharedInstance] hideLoadView];
+                });
+            }];
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                SecureCodeViewController *controller = [SecureCodeViewController new];
+                controller.completeBlock = completeBlock;
+                [[appDelegate myTopViewController] presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                    [[Flooz sharedInstance] hideLoadView];
+                    [self executeTriggerList:trigger.triggers];
+                }];
+            });
+        }
+    } else if ([trigger.viewCaregory isEqualToString:@"profile:user"]) {
         if ([trigger.data objectForKey:@"nick"]) {
             FLUser *user = [[FLUser alloc] initWithJSON:trigger.data];
             [appDelegate showUser:user inController:nil completion:^{
@@ -278,7 +302,7 @@
                 }
             } failure:nil];
         }
-    } else if ([trigger.key isEqualToString:@"line"]) {
+    } else if ([trigger.viewCaregory isEqualToString:@"timeline:flooz"]) {
         NSString *resourceID = trigger.data[@"_id"];
         
         if (resourceID) {
@@ -290,28 +314,34 @@
                 }];
             }];
         }
-
-    } else if ([self isTriggerKeyView:trigger]) {
-        Class controllerClass = [self.binderKeyView objectForKey:trigger.key];
         
-        if ([self isTopViewControllerTabBar] && [self isTriggerKeyViewRoot:trigger]) {
+    } else if ([self isTriggerKeyView:trigger]) {
+        Class controllerClass = [self.binderKeyView objectForKey:trigger.viewCaregory];
+        
+        if ([self isTriggerKeyViewRoot:trigger]) {
             NSInteger rootId = [self isViewClassRoot:controllerClass];
             
             if (rootId >= 0) {
-                UIViewController *tmp = [appDelegate myTopViewController];
-                FLTabBarController *tabBar;
-                
-                if ([tmp isKindOfClass:[FLTabBarController class]])
-                    tabBar = (FLTabBarController *)tmp;
-                else if ([tmp tabBarController])
-                    tabBar = (FLTabBarController *)[tmp tabBarController];
+                FLTabBarController *tabBar = [appDelegate tabBarController];
                 
                 if (tabBar) {
-                    [tabBar setSelectedIndex:rootId];
-                    UINavigationController *navigationController = [[tabBar viewControllers] objectAtIndex:rootId];
-                    [navigationController popToRootViewControllerAnimated:YES];
-                    [self executeTriggerList:trigger.triggers];
+                    [appDelegate dismissControllersAnimated:YES completion:^{
+                        [tabBar setSelectedIndex:rootId];
+                        UINavigationController *navigationController = [[tabBar viewControllers] objectAtIndex:rootId];
+                        [navigationController popToRootViewControllerAnimated:YES];
+                        [self executeTriggerList:trigger.triggers];
+                    }];
                 }
+            } else {
+                UIViewController *controller = [[controllerClass alloc] initWithTriggerData:trigger.data];
+                
+                FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:controller];
+                
+                UIViewController *tmp = [appDelegate myTopViewController];
+                
+                [tmp presentViewController:navController animated:YES completion:^{
+                    [self executeTriggerList:trigger.triggers];
+                }];
             }
         } else if ([self isTriggerKeyViewPush:trigger]) {
             UIViewController *tmp = [appDelegate myTopViewController];
@@ -346,47 +376,34 @@
 
 - (void)loadBinderActionFunction {
     self.binderActionFunction = @{[NSNumber numberWithInteger:FLTriggerActionAsk]: NSStringFromSelector(@selector(askActionHandler:)),
-                                  [NSNumber numberWithInteger:FLTriggerActionCheck]: NSStringFromSelector(@selector(checkActionHandler:)),
+                                  [NSNumber numberWithInteger:FLTriggerActionCall]: NSStringFromSelector(@selector(callActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionClear]: NSStringFromSelector(@selector(clearActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionHide]: NSStringFromSelector(@selector(hideActionHandler:)),
-                                  [NSNumber numberWithInteger:FLTriggerActionIn]: NSStringFromSelector(@selector(inActionHandler:)),
-                                  [NSNumber numberWithInteger:FLTriggerActionLoad]: NSStringFromSelector(@selector(loadActionHandler:)),
-                                  [NSNumber numberWithInteger:FLTriggerActionOut]: NSStringFromSelector(@selector(outActionHandler:)),
-                                  [NSNumber numberWithInteger:FLTriggerActionSend]: NSStringFromSelector(@selector(sendActionHandler:)),
-                                  [NSNumber numberWithInteger:FLTriggerActionSet]: NSStringFromSelector(@selector(setActionHandler:)),
-                                  [NSNumber numberWithInteger:FLTriggerActionShow]: NSStringFromSelector(@selector(showActionHandler:))};
+                                  [NSNumber numberWithInteger:FLTriggerActionLogin]: NSStringFromSelector(@selector(loginActionHandler:)),
+                                  [NSNumber numberWithInteger:FLTriggerActionLogout]: NSStringFromSelector(@selector(logoutActionHandler:)),
+                                  [NSNumber numberWithInteger:FLTriggerActionOpen]: NSStringFromSelector(@selector(openActionHandler:)),
+                                  [NSNumber numberWithInteger:FLTriggerActionShow]: NSStringFromSelector(@selector(showActionHandler:)),
+                                  [NSNumber numberWithInteger:FLTriggerActionSync]: NSStringFromSelector(@selector(syncActionHandler:))};
 }
 
 - (BOOL)isTriggerKeyView:(FLTrigger *)trigger {
-    return (trigger && trigger.key && [self.binderKeyView objectForKey:trigger.key]);
+    return (trigger && trigger.viewCaregory && [self.binderKeyView objectForKey:trigger.viewCaregory]);
 }
 
 - (BOOL)isTriggerKeyViewModal:(FLTrigger *)trigger {
-    return (trigger && trigger.key && [self.binderKeyType objectForKey:trigger.key] && [[self.binderKeyType objectForKey:trigger.key] isEqualToString:@"modal"]);
+    return (trigger && trigger.viewCaregory && [self.binderKeyType objectForKey:trigger.viewCaregory] && [[self.binderKeyType objectForKey:trigger.viewCaregory] isEqualToString:@"modal"]);
 }
 
 - (BOOL)isTriggerKeyViewPush:(FLTrigger *)trigger {
-    return (trigger && trigger.key && [self.binderKeyType objectForKey:trigger.key] && [[self.binderKeyType objectForKey:trigger.key] isEqualToString:@"push"]);
+    return (trigger && trigger.viewCaregory && [self.binderKeyType objectForKey:trigger.viewCaregory] && [[self.binderKeyType objectForKey:trigger.viewCaregory] isEqualToString:@"push"]);
 }
 
 - (BOOL)isTriggerKeyViewRoot:(FLTrigger *)trigger {
-    return (trigger && trigger.key && [self.binderKeyType objectForKey:trigger.key] && [[self.binderKeyType objectForKey:trigger.key] isEqualToString:@"root"]);
-}
-
-- (BOOL)isTopViewControllerTabBar {
-    UIViewController *tmp = [appDelegate currentController];
-    
-    return ([tmp isKindOfClass:[FLTabBarController class]] || [tmp tabBarController]);
+    return (trigger && trigger.viewCaregory && [self.binderKeyType objectForKey:trigger.viewCaregory] && [[self.binderKeyType objectForKey:trigger.viewCaregory] isEqualToString:@"root"]);
 }
 
 - (NSInteger)isViewClassRoot:(Class)viewClass {
-    UIViewController *tmp = [appDelegate currentController];
-    FLTabBarController *tabBar;
-    
-    if ([tmp isKindOfClass:[FLTabBarController class]])
-        tabBar = (FLTabBarController *)tmp;
-    else if ([tmp tabBarController])
-        tabBar = (FLTabBarController *)[tmp tabBarController];
+    FLTabBarController *tabBar = [appDelegate tabBarController];
     
     if (tabBar) {
         int i = 0;
@@ -401,58 +418,56 @@
 }
 
 - (void)loadBinderKeyView {
-    self.binderKeyView = @{@"3dSecure": [Secure3DViewController class],
-                           @"aBook": [AddressBookController class],
-                           @"card": [CreditCardViewController class],
-                           @"cashout": [CashOutViewController class],
-                           @"documents": [SettingsDocumentsViewController class],
-                           @"editProfile": [EditProfileViewController class],
-                           @"flooz": [NewTransactionViewController class],
-                           @"friendRequest": [FriendRequestViewController class],
-                           @"iban": [SettingsBankViewController class],
-                           @"identity": [SettingsCoordsViewController class],
-                           @"invitationSMS": [ShareSMSViewController class],
-                           @"notifSettings": [SettingsNotificationsViewController class],
-                           @"phoneValidate": [ValidateSMSViewController class],
-                           @"privacy": [SettingsPrivacyController class],
-                           @"promo": [DiscountCodeViewController class],
-                           @"scanner": [ScannerViewController class],
-                           @"search": [SearchViewController class],
-                           @"user": [UserViewController class],
-                           @"invitation": [ShareAppViewController class],
-                           @"profile": [AccountViewController class],
-                           @"notification": [NotificationsViewController class],
-                           @"secureCode": [SecureCodeViewController class],
-                           @"line": [TransactionViewController class],
-                           @"web": [WebViewController class]
+    self.binderKeyView = @{
+                           @"app:cashout": [CashOutViewController class],
+                           @"app:flooz": [NewTransactionViewController class],
+                           @"app:promo": [DiscountCodeViewController class],
+                           @"app:search": [SearchViewController class],
+                           @"app:notifs": [NotificationsViewController class],
+                           @"app:invitation": [ShareAppViewController class],
+                           @"app:profile": [UserViewController class],
+                           @"app:timeline": [TimelineViewController class],
+                           @"auth:code": [SecureCodeViewController class],
+                           @"card:3ds": [Secure3DViewController class],
+                           @"card:card": [CreditCardViewController class],
+                           @"code:set": [ValidateSecureCodeViewController class],
+                           @"invitation:sms": [ShareSMSViewController class],
+                           @"profile:user": [UserViewController class],
+                           @"profile:edit": [EditProfileViewController class],
+                           @"settings:iban": [SettingsBankViewController class],
+                           @"settings:identity": [SettingsCoordsViewController class],
+                           @"settings:notifs": [SettingsNotificationsViewController class],
+                           @"settings:privacy": [SettingsPrivacyController class],
+                           @"settings:documents": [SettingsDocumentsViewController class],
+                           @"timeline:flooz": [TransactionViewController class],
+                           @"web:web": [WebViewController class]
                            };
 }
 
 - (void)loadBinderKeyType {
-    self.binderKeyType = @{@"3dSecure": @"modal",
-                           @"aBook": @"modal",
-                           @"card": @"modal",
-                           @"cashout": @"modal",
-                           @"documents": @"modal",
-                           @"editProfile": @"modal",
-                           @"flooz": @"modal",
-                           @"friendRequest": @"modal",
-                           @"iban": @"modal",
-                           @"identity": @"modal",
-                           @"invitationSMS": @"modal",
-                           @"notifSettings": @"modal",
-                           @"phoneValidate": @"modal",
-                           @"privacy": @"modal",
-                           @"promo": @"modal",
-                           @"scanner": @"modal",
-                           @"search": @"modal",
-                           @"user": @"modal",
-                           @"invitation": @"push",
-                           @"profile": @"modal",
-                           @"notification": @"root",
-                           @"secureCode": @"modal",
-                           @"line": @"root",
-                           @"web": @"modal"
+    self.binderKeyType = @{
+                           @"app:cashout": @"modal",
+                           @"app:flooz": @"modal",
+                           @"app:promo": @"modal",
+                           @"app:search": @"modal",
+                           @"app:notifs": @"root",
+                           @"app:invitation": @"root",
+                           @"app:profile": @"root",
+                           @"app:timeline": @"root",
+                           @"auth:code": @"modal",
+                           @"card:3ds": @"modal",
+                           @"card:card": @"modal",
+                           @"code:set":@"modal",
+                           @"invitation:sms": @"modal",
+                           @"profile:user": @"push",
+                           @"profile:edit": @"modal",
+                           @"settings:iban": @"modal",
+                           @"settings:identity": @"modal",
+                           @"settings:notifs": @"modal",
+                           @"settings:privacy": @"modal",
+                           @"settings:documents": @"modal",
+                           @"timeline:flooz": @"push",
+                           @"web:web": @"modal"
                            };
 }
 

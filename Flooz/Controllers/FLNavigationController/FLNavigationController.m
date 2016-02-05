@@ -99,6 +99,12 @@
     [self pushViewController:viewController animated:animated];
 }
 
+- (void)popViewControllerAnimated:(BOOL)animated completion:(dispatch_block_t)completion {
+    self.completionBlock = completion;
+    
+    [self popViewControllerAnimated:animated];
+}
+
 - (void)dismiss {
     [self.view endEditing:YES];
     

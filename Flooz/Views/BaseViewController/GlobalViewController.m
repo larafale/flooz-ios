@@ -55,6 +55,21 @@
     }
 }
 
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    [self.view endEditing:YES];
+    if ([self navigationController]) {
+        if ([[[self navigationController] viewControllers] count] == 1) {
+            [[self navigationController] dismissViewControllerAnimated:YES completion:completion];
+        }
+        else {
+            [(FLNavigationController*)[self navigationController] popViewControllerAnimated:YES completion:completion];
+        }
+    }
+    else {
+        [super dismissViewControllerAnimated:YES completion:completion];
+    }
+}
+
 - (void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (viewControllerToPresent) {

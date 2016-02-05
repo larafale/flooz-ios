@@ -48,15 +48,6 @@
         title = data[@"title"];
         content = data[@"content"];
         
-        if (data[@"button"]) {
-            [buttonsString addObject:data[@"button"]];
-            
-            if (data[@"triggers"])
-                [buttonsAction addObject:data[@"triggers"]];
-            else
-                [buttonsAction addObject:@[]];
-        }
-        
         if (data[@"buttons"]) {
             for (NSDictionary *button in data[@"buttons"]) {
                 if (button[@"title"]) {
@@ -72,11 +63,7 @@
         
         if (![buttonsString count]) {
             [buttonsString addObject:NSLocalizedString(@"GLOBAL_OK", nil)];
-            
-            if (data[@"triggers"])
-                [buttonsAction addObject:data[@"triggers"]];
-            else
-                [buttonsAction addObject:@[]];
+            [buttonsAction addObject:@[]];
         }
         
         [self commmonInit];
@@ -209,10 +196,18 @@
 }
 
 - (void)buttonClick:(UIView *)sender {
-    NSArray *triggers = buttonsAction[sender.tag - 1];
+    id data = buttonsAction[sender.tag - 1];
     
     [self dismiss:^{
-        [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:triggers]];
+        if ([data isKindOfClass:[NSArray class]]) {
+            [[FLTriggerManager sharedInstance] executeTriggerList:data];
+        } else if ([data isKindOfClass:[NSDictionary class]]) {
+            FLTrigger *tmp = [[FLTrigger alloc] initWithJson:data];
+            
+            if (tmp) {
+                [[FLTriggerManager sharedInstance] executeTrigger:tmp];
+            }
+        }
     }];
 }
 

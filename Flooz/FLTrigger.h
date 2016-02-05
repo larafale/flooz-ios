@@ -10,66 +10,24 @@
 
 @interface FLTrigger : NSObject
 
-//typedef enum e_FLTriggerType {
-//    TriggerNone,
-//    TriggerReloadTimeline,
-//    TriggerShowLine,
-//    TriggerShowAvatar,
-//    TriggerReloadProfile,
-//    TriggerShowCard,
-//    TriggerReloadFriend,
-//    TriggerShowProfile,
-//    TriggerShowFriend,
-//    TriggerReloadLine,
-//    TriggerShowSignup,
-//    TriggerLogout,
-//    TriggerAppUpdate,
-//    TriggerShowContactInfo,
-//    TriggerShowUserDocuments,
-//    TriggerShow3DSecure,
-//    TriggerComplete3DSecure,
-//    TriggerFail3DSecure,
-//    TriggerSecureCodeClear,
-//    TriggerSecureCodeCheck,
-//    TriggerPresetLine,
-//    TriggerFeedRead,
-//    TriggerShowInvitation,
-//    TriggerHttpCall,
-//    TriggerShowPopup,
-//    TriggerShowHome,
-//    TriggerShowIban,
-//    TriggerResetTuto,
-//    TriggerCloseView,
-//    TriggerSendContacts,
-//    TriggerUserShow,
-//    TriggerInvitationSMSShow,
-//    TriggerSMSValidate,
-//    TriggerSecureCodeValidate,
-//    TriggerEditProfile,
-//    TriggerAskNotification,
-//    TriggerFbConnect,
-//    TriggerPayClick,
-//    TriggerShowNotification,
-//    TriggerReloadNotification,
-//    TriggerReloadShareTexts
-//} FLTriggerType;
-
 typedef NS_ENUM(NSInteger, FLTriggerAction) {
     FLTriggerActionAsk,
-    FLTriggerActionCheck,
+    FLTriggerActionCall,
     FLTriggerActionClear,
     FLTriggerActionHide,
-    FLTriggerActionIn,
-    FLTriggerActionLoad,
+    FLTriggerActionLogin,
+    FLTriggerActionLogout,
+    FLTriggerActionOpen,
     FLTriggerActionNone,
-    FLTriggerActionOut,
-    FLTriggerActionSend,
-    FLTriggerActionSet,
-    FLTriggerActionShow
+    FLTriggerActionShow,
+    FLTriggerActionSync
 };
 
 @property (nonatomic) FLTriggerAction action;
 @property (nonatomic, strong) NSString *key;
+@property (nonatomic, strong) NSString *view;
+@property (nonatomic, strong) NSString *category;
+@property (nonatomic, strong) NSString *viewCaregory;
 @property (nonatomic, strong) NSDictionary *data;
 @property (nonatomic, strong) NSNumber *delay;
 @property (nonatomic, strong) NSArray<FLTrigger *> *triggers;

@@ -106,7 +106,7 @@
             transaction[@"to"] = [@"@" stringByAppendingString :[currentPreset.to username]];
         }
         
-        if (currentPreset.title)
+        if (currentPreset.title && ![currentPreset.title isBlank])
             self.title = currentPreset.title;
         else
             self.title = NSLocalizedString(@"NEW_TRANSACTION", nil);
@@ -554,7 +554,18 @@
 - (void)launchDemo {
     [demoTimer invalidate];
     demoTimer = nil;
-    if (currentPreset.steps) {
+    if (currentPreset.popup) {
+        [[[FLPopupTrigger alloc] initWithData:currentPreset.popup dismiss:^{
+            if (currentPreset.popup[@"triggers"]) {
+                [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:currentPreset.popup[@"triggers"]]];
+            }
+            
+            if (currentPreset.steps) {
+                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+            }
+            currentPreset.popup = nil;
+        }] show];
+    } else if (currentPreset.steps) {
         [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
     }
 }

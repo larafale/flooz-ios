@@ -43,7 +43,6 @@
     self.steps = [json objectForKey:@"steps"];
     
     self.title = [json objectForKey:@"title"];
-    self.triggers = [json objectForKey:@"triggers"];
     
     if ([json objectForKey:@"block"]) {
         if ([[json objectForKey:@"block"] objectForKey:@"amount"])
@@ -54,9 +53,6 @@
         
         if ([[json objectForKey:@"block"] objectForKey:@"to"])
             self.blockTo = [[[json objectForKey:@"block"] objectForKey:@"to"] boolValue];
-        
-        if ([[json objectForKey:@"block"] objectForKey:@"close"])
-            self.blockBack = [[[json objectForKey:@"block"] objectForKey:@"close"] boolValue];
         
         if ([[json objectForKey:@"block"] objectForKey:@"pay"])
             self.type = TransactionTypeCharge;

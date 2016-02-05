@@ -29,10 +29,19 @@
 }
 
 -(BOOL)setJson:(NSDictionary*)json {
-    if (![self fillTriggerActionFromData:json])
+    self.key = json[@"key"];
+    
+    NSArray *splitKey = [self.key componentsSeparatedByString:@":"];
+    
+    if (splitKey == nil || splitKey.count != 3)
         return NO;
     
-    self.key = json[@"key"];
+    self.category = splitKey[0];
+    self.view = splitKey[1];
+    self.viewCaregory = [NSString stringWithFormat:@"%@:%@", splitKey[0], splitKey[1]];
+    
+    if (![self fillTriggerActionFromData:splitKey[2]])
+        return NO;
     
     self.delay = json[@"delay"];
     if (!self.delay)
@@ -40,42 +49,48 @@
     
     self.data = json[@"data"];
     
-    NSArray *triggersData = json[@"triggers"];
-    
-    if (triggersData && [triggersData count]) {
-        self.triggers = [FLTriggerManager convertDataInList:triggersData];
-    } else
-        self.triggers = [NSArray new];
+    self.triggers = @[];
+
+    if ([json[@"triggers"] isKindOfClass:[NSArray class]]) {
+        NSArray *triggersData = json[@"triggers"];
+        
+        if (triggersData && [triggersData count]) {
+            self.triggers = [FLTriggerManager convertDataInList:triggersData];
+        }
+    } else if ([json[@"triggers"] isKindOfClass:[NSDictionary class]]) {
+        FLTrigger *trigger = [[FLTrigger alloc] initWithJson:json[@"triggers"]];
+        
+        if (trigger) {
+            self.triggers = @[trigger];
+        }
+    }
     
     return YES;
 }
 
-- (BOOL)fillTriggerActionFromData:(NSDictionary *)data {
-    NSString *actionData = data[@"action"];
+- (BOOL)fillTriggerActionFromData:(NSString *)actionData {
     
     self.action = FLTriggerActionNone;
     
     if (actionData) {
         if ([actionData isEqualToString:@"ask"])
             self.action = FLTriggerActionAsk;
-        else if ([actionData isEqualToString:@"check"])
-            self.action = FLTriggerActionCheck;
+        else if ([actionData isEqualToString:@"call"])
+            self.action = FLTriggerActionCall;
         else if ([actionData isEqualToString:@"clear"])
             self.action = FLTriggerActionClear;
         else if ([actionData isEqualToString:@"hide"])
             self.action = FLTriggerActionHide;
-        else if ([actionData isEqualToString:@"in"])
-            self.action = FLTriggerActionIn;
-        else if ([actionData isEqualToString:@"load"])
-            self.action = FLTriggerActionLoad;
-        else if ([actionData isEqualToString:@"out"])
-            self.action = FLTriggerActionOut;
-        else if ([actionData isEqualToString:@"send"])
-            self.action = FLTriggerActionSend;
-        else if ([actionData isEqualToString:@"set"])
-            self.action = FLTriggerActionSet;
+        else if ([actionData isEqualToString:@"login"])
+            self.action = FLTriggerActionLogin;
+        else if ([actionData isEqualToString:@"logout"])
+            self.action = FLTriggerActionLogout;
+        else if ([actionData isEqualToString:@"open"])
+            self.action = FLTriggerActionOpen;
         else if ([actionData isEqualToString:@"show"])
             self.action = FLTriggerActionShow;
+        else if ([actionData isEqualToString:@"sync"])
+            self.action = FLTriggerActionSync;
     }
     
     if (self.action == FLTriggerActionNone)

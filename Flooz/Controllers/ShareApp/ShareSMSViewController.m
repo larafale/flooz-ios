@@ -55,6 +55,21 @@
     return self;
 }
 
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [super initWithTriggerData:data];
+    if (self) {
+        NSString *dicKeys = @"ABCDEFGHIJKLMNOPGRSTUVWXYZ#";
+        
+        keysOrdered = [NSMutableArray new];
+        selectedContacts = [NSMutableArray new];
+        
+        for (int i = 0; i < dicKeys.length; i++) {
+            [keysOrdered addObject:[dicKeys substringWithRange:NSMakeRange(i, 1)]];
+        }
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

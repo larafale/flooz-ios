@@ -16,6 +16,7 @@
 	UIButton *shooterButton;
 	UIButton *cameraRollButton;
 	UIButton *switchButton;
+    UIButton *flashButton;
 
 	CGFloat heightCamera;
 
@@ -25,12 +26,15 @@
     CGFloat yStart;
     
     JPSVolumeButtonHandler *volumeButtonHandler;
+    
+    AVCaptureFlashMode flashMode;
 }
 
 - (id)initWithController:(UIViewController *)controller height:(CGFloat)height delegate:(id)delegate {
 	heightCamera = height;
     heightBase = height;
 	heightImageToCapture = heightCamera;
+    flashMode = AVCaptureFlashModeAuto;
 	self = [super initWithFrame:CGRectMake(0, 0, PPScreenWidth(), height)];
 	if (self) {
 		self.backgroundColor = [UIColor customBackground];
@@ -44,6 +48,7 @@
 			[self createShooterButton];
 			[self createCameraRollButton];
 			[self createSwitchButton];
+            [self createFlashButton];
 
 			[self deviceOrientationDidChange:nil];
 
@@ -137,6 +142,7 @@
 	CGRectSetY(shooterButton.frame, heightImageToCapture - 80.0);
 	CGRectSetY(cameraRollButton.frame, heightImageToCapture - 65.0);
 	CGRectSetY(switchButton.frame, heightImageToCapture - 65.0);
+    CGRectSetY(flashButton.frame, heightImageToCapture - 110.0);
 }
 
 - (void)createMainCamera {
@@ -198,6 +204,19 @@
 		newCamera = [self cameraWithPosition:AVCaptureDevicePositionBack];
 	}
 
+    if ([newCamera hasFlash]) {
+        [flashButton setHidden:NO];
+        if (newCamera.flashMode != flashMode) {
+            [newCamera lockForConfiguration:nil];
+            
+            newCamera.flashMode = flashMode;
+            
+            [newCamera unlockForConfiguration];
+        }
+    } else {
+        [flashButton setHidden:YES];
+    }
+    
 	//Add input to session
 	AVCaptureDeviceInput *newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:newCamera error:nil];
     
@@ -214,6 +233,51 @@
 		if ([device position] == position) return device;
 	}
 	return nil;
+}
+
+- (void)switchFlash {
+    switch (flashMode) {
+        case AVCaptureFlashModeOff: {
+            flashMode = AVCaptureFlashModeAuto;
+            [flashButton setImage:[[UIImage imageNamed:@"flash_auto"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+            break;
+        }
+        case AVCaptureFlashModeOn: {
+            flashMode = AVCaptureFlashModeOff;
+            [flashButton setImage:[[UIImage imageNamed:@"flash_off"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+
+            break;
+        }
+        case AVCaptureFlashModeAuto: {
+            flashMode = AVCaptureFlashModeOn;
+            [flashButton setImage:[[UIImage imageNamed:@"flash_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+
+            break;
+        }
+    }
+    
+    [captureSession beginConfiguration];
+    AVCaptureInput *currentCameraInput;
+    if (captureSession.inputs.count) {
+        currentCameraInput = [captureSession.inputs objectAtIndex:0];
+    }
+    
+    AVCaptureDevice *camera = ((AVCaptureDeviceInput *)currentCameraInput).device;
+    
+    if ([camera hasFlash]) {
+        [flashButton setHidden:NO];
+        if (camera.flashMode != flashMode) {
+            [camera lockForConfiguration:nil];
+            
+            camera.flashMode = flashMode;
+            
+            [camera unlockForConfiguration];
+        }
+    } else {
+        [flashButton setHidden:YES];
+    }
+    
+    [captureSession commitConfiguration];
 }
 
 - (void)createShooterButton {
@@ -235,19 +299,28 @@
 }
 
 - (void)createCameraRollButton {
-	cameraRollButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, CGRectGetHeight(self.frame) - 65.0, 60, 60)];
+	cameraRollButton = [[UIButton alloc] initWithFrame:CGRectMake(10.0, CGRectGetHeight(self.frame) - 65.0, 40, 40)];
 	[cameraRollButton setImage:[UIImage imageNamed:@"camera-album"] forState:UIControlStateNormal];
 	[cameraRollButton addTarget:self action:@selector(cameraRoll) forControlEvents:UIControlEventTouchUpInside];
-	[cameraRollButton setImageEdgeInsets:UIEdgeInsetsMake(20, 18, 18, 18)];
+	[cameraRollButton setImageEdgeInsets:UIEdgeInsetsMake(10, 8, 8, 8)];
 	[self addSubview:cameraRollButton];
 }
 
 - (void)createSwitchButton {
-	switchButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 60.0, CGRectGetHeight(self.frame) - 65.0, 60, 60)];
+	switchButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 50.0, CGRectGetHeight(self.frame) - 65.0, 40, 40)];
 	[switchButton setImage:[UIImage imageNamed:@"camera-switch"] forState:UIControlStateNormal];
 	[switchButton addTarget:self action:@selector(switchCamera) forControlEvents:UIControlEventTouchUpInside];
-	[switchButton setImageEdgeInsets:UIEdgeInsetsMake(20, 18, 18, 18)];
+	[switchButton setImageEdgeInsets:UIEdgeInsetsMake(10, 8, 8, 8)];
 	[self addSubview:switchButton];
+}
+
+- (void)createFlashButton {
+    flashButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 50.0, CGRectGetHeight(self.frame) - 110.0, 40, 40)];
+    [flashButton setImage:[[UIImage imageNamed:@"flash_auto"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [flashButton setTintColor:[UIColor whiteColor]];
+    [flashButton addTarget:self action:@selector(switchFlash) forControlEvents:UIControlEventTouchUpInside];
+    [flashButton setImageEdgeInsets:UIEdgeInsetsMake(10, 8, 8, 8)];
+    [self addSubview:flashButton];
 }
 
 - (void)captureStillImage {
