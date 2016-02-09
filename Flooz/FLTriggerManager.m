@@ -182,7 +182,6 @@
 
 - (void)logoutActionHandler:(FLTrigger *)trigger {
     if ([trigger.category isEqualToString:@"auth"]) {
-        [[Flooz sharedInstance] clearLogin];
         [[Flooz sharedInstance] logout];
         [self executeTriggerList:trigger.triggers];
     }

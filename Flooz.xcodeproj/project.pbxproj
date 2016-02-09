@@ -1648,10 +1648,10 @@
 		AB3D08DB1871A5BE00CF8380 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				C92195E11C57848700318FD3 /* FLTriggerManager */,
 				C95502CC1C2AA8D8002E9046 /* ARChromeActivity */,
 				C980E40A1C17136F00E52F86 /* DeviceUID */,
 				AB3D08DC1871A5CB00CF8380 /* Flooz */,
+				C92195E11C57848700318FD3 /* FLTriggerManager */,
 				C99A514D1AF7D67000342F8C /* IQActionSheetPickerView */,
 				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
 				C966473619FFE9EC000851AF /* Modal Transitions */,

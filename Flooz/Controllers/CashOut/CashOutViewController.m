@@ -177,13 +177,9 @@
                 }];
             });
         }
-//
-//        SecureCodeViewController *controller = [SecureCodeViewController new];
-//        controller.completeBlock = completeBlock;
-//        [[self navigationController] pushViewController:controller animated:YES];
     } failure:^(NSError *error) {
-        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
+//        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+//        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
 
 //        if (serializedData && serializedData[@"popup"] && serializedData[@"popup"][@"slug"] && [serializedData[@"popup"][@"slug"] isEqualToString:@"amount"]) {
 //            [_amountInput setValid:NO];

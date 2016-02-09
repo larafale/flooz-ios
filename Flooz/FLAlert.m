@@ -8,6 +8,7 @@
 
 #import "FLAlert.h"
 #import "FLTrigger.h"
+#import "FLTriggerManager.h"
 
 @implementation FLAlert
 
@@ -30,9 +31,15 @@
         self.type = [FLAlert alertTypeParamToEnum:json[@"type"]];
     
         self.triggers = [NSMutableArray new];
-        NSArray *t = json[@"triggers"];
-        for (NSDictionary *trigger in t) {
-            [self.triggers addObject:[[FLTrigger alloc] initWithJson:trigger]];
+        if (json[@"triggers"]) {
+            if ([json[@"triggers"] isKindOfClass:[NSArray class]]) {
+                self.triggers = [[FLTriggerManager convertDataInList:json[@"triggers"]] mutableCopy];
+            } else if ([json[@"triggers"] isKindOfClass:[NSDictionary class]]) {
+                FLTrigger *tmp = [[FLTrigger alloc] initWithJson:json[@"triggers"]];
+                
+                if (tmp)
+                    [self.triggers addObject:tmp];
+            }
         }
 
         if (!self.duration || [self.duration intValue] == 0)
