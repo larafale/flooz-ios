@@ -45,6 +45,8 @@
 @property (nonatomic, strong) NSDictionary *binderKeyView;
 @property (nonatomic, strong) NSDictionary *binderKeyType;
 
+@property (nonatomic, strong) FLTrigger *smsTrigger;
+
 @end
 
 @implementation FLTriggerManager
@@ -109,11 +111,47 @@
 - (void)callActionHandler:(FLTrigger *)trigger {
     if ([trigger.category isEqualToString:@"http"]) {
         if (trigger.data && trigger.data[@"url"] && trigger.data[@"method"]) {
-            [[Flooz sharedInstance] requestPath:trigger.data[@"url"] method:trigger.data[@"method"] params:trigger.data[@"body"] success:^(id result) {
-                [self executeTriggerList:trigger.triggers];
-            } failure:^(NSError *error) {
-                [self executeTriggerList:trigger.triggers];
-            }];
+            if (trigger.data[@"external"] && [trigger.data[@"external"] boolValue]) {
+                NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+                AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+                NSURLRequest *request;
+                
+                if (trigger.data[@"type"] && [trigger.data[@"type"] isEqualToString:@"urlencoded"]) {
+                    NSError *error = nil;
+                    request = [[AFHTTPRequestSerializer serializer] requestWithMethod:[trigger.data[@"method"] uppercaseString] URLString:trigger.data[@"url"] parameters:trigger.data[@"body"] error:&error];
+                } else {
+                    NSError *error = nil;
+                    request = [[AFJSONRequestSerializer serializer] requestWithMethod:[trigger.data[@"method"] uppercaseString] URLString:trigger.data[@"url"] parameters:trigger.data[@"body"] error:&error];
+                }
+                
+                NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                    [self executeTriggerList:trigger.triggers];
+                    
+                    if (error) {
+                        if (trigger.data[@"success"]) {
+                            [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"success"]]];
+                        }
+                    } else {
+                        if (trigger.data[@"failure"]) {
+                            [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"failure"]]];
+                        }
+                    }
+                }];
+                
+                [dataTask resume];
+            } else {
+                [[Flooz sharedInstance] requestPath:trigger.data[@"url"] method:[trigger.data[@"method"] uppercaseString] params:trigger.data[@"body"] success:^(id result) {
+                    [self executeTriggerList:trigger.triggers];
+                    if (trigger.data[@"success"]) {
+                        [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"success"]]];
+                    }
+                } failure:^(NSError *error) {
+                    [self executeTriggerList:trigger.triggers];
+                    if (trigger.data[@"failure"]) {
+                        [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"failure"]]];
+                    }
+                }];
+            }
         }
     }
 }
@@ -196,6 +234,38 @@
     }
 }
 
+- (void)sendActionHandler:(FLTrigger *)trigger {
+    if ([trigger.viewCaregory isEqualToString:@"image:flooz"]) {
+        if (trigger.data && trigger.data[@"_id"]) {
+            UIViewController *topViewController = [appDelegate myTopViewController];
+            NewTransactionViewController *transacViewController;
+            
+            if ([topViewController isKindOfClass:[NewTransactionViewController class]]) {
+                transacViewController = (NewTransactionViewController *) topViewController;
+            } else if ([topViewController isKindOfClass:[FLNavigationController class]] && [[((FLNavigationController *)topViewController) topViewController] isKindOfClass:[NewTransactionViewController class]]) {
+                transacViewController = (NewTransactionViewController *) [((FLNavigationController *)topViewController) topViewController];
+            } else if ([topViewController isKindOfClass:[FLTabBarController class]]) {
+                FLNavigationController *selectedNav = (FLNavigationController *) [((FLTabBarController *)topViewController) selectedViewController];
+                if ([[selectedNav topViewController] isKindOfClass:[NewTransactionViewController class]])
+                    transacViewController = (NewTransactionViewController *) [selectedNav topViewController];
+            }
+            
+            if (transacViewController) {
+                if (transacViewController.transaction[@"image"]) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        [[Flooz sharedInstance] uploadTransactionPic:trigger.data[@"_id"] image:transacViewController.transaction[@"image"] success:^(id result) {
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
+                            [self executeTriggerList:trigger.triggers];
+                        } failure:^(NSError *error) {
+                            [self executeTriggerList:trigger.triggers];
+                        }];
+                    });
+                }
+            }
+        }
+    }
+}
+
 - (void)syncActionHandler:(FLTrigger *)trigger {
     if ([trigger.category isEqualToString:@"app"]) {
         if (trigger.data && trigger.data[@"url"]) {
@@ -207,7 +277,6 @@
         [self executeTriggerList:trigger.triggers];
     } else if ([trigger.category isEqualToString:@"invitation"]) {
         [[Flooz sharedInstance] invitationText:^(id result) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadShareTexts object:nil];
             [self executeTriggerList:trigger.triggers];
         } failure:^(NSError *error) {
             [self executeTriggerList:trigger.triggers];
@@ -235,6 +304,30 @@
                 [self executeTriggerList:trigger.triggers];
             }];
         }
+    } else if ([trigger.viewCaregory isEqualToString:@"app:sms"]) {
+        if (trigger.data && trigger.data[@"recipients"] && trigger.data[@"body"]) {
+            if ([MFMessageComposeViewController canSendText]) {
+                [[Flooz sharedInstance] showLoadView];
+                MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
+                message.messageComposeDelegate = self;
+                
+                [message setRecipients:trigger.data[@"recipients"]];
+                [message setBody:trigger.data[@"body"]];
+                
+                message.modalPresentationStyle = UIModalPresentationPageSheet;
+                UIViewController *tmp = [appDelegate myTopViewController];
+                
+                self.smsTrigger = trigger;
+                
+                [tmp presentViewController:message animated:YES completion:^{
+                    [[Flooz sharedInstance] hideLoadView];
+                }];
+            } else {
+                if (trigger.data[@"failure"]) {
+                    [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"failure"]]];
+                }
+            }
+        }
     } else if ([trigger.viewCaregory isEqualToString:@"auth:code"]) {
         [[Flooz sharedInstance] showLoadView];
         
@@ -244,12 +337,12 @@
                 
                 [self executeTriggerList:trigger.triggers];
                 
-                if (trigger.data && trigger.data[@"successTriggers"]) {
+                if (trigger.data && trigger.data[@"success"]) {
                     
-                    if ([trigger.data[@"successTriggers"] isKindOfClass:[NSArray class]]) {
-                        [self executeTriggerList:[self.class convertDataInList:trigger.data[@"successTriggers"]]];
-                    } else if ([trigger.data[@"successTriggers"] isKindOfClass:[NSDictionary class]]) {
-                        FLTrigger *tmp = [[FLTrigger alloc] initWithJson:trigger.data[@"successTriggers"]];
+                    if ([trigger.data[@"success"] isKindOfClass:[NSArray class]]) {
+                        [self executeTriggerList:[self.class convertDataInList:trigger.data[@"success"]]];
+                    } else if ([trigger.data[@"success"] isKindOfClass:[NSDictionary class]]) {
+                        FLTrigger *tmp = [[FLTrigger alloc] initWithJson:trigger.data[@"success"]];
                         
                         if (tmp) {
                             [self executeTrigger:tmp];
@@ -381,6 +474,7 @@
                                   [NSNumber numberWithInteger:FLTriggerActionLogin]: NSStringFromSelector(@selector(loginActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionLogout]: NSStringFromSelector(@selector(logoutActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionOpen]: NSStringFromSelector(@selector(openActionHandler:)),
+                                  [NSNumber numberWithInteger:FLTriggerActionSend]: NSStringFromSelector(@selector(sendActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionShow]: NSStringFromSelector(@selector(showActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionSync]: NSStringFromSelector(@selector(syncActionHandler:))};
 }
@@ -416,6 +510,28 @@
     return -1;
 }
 
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [controller dismissViewControllerAnimated:YES completion: ^{
+        if (self.smsTrigger) {
+            if (result == MessageComposeResultSent) {
+                if (self.smsTrigger.data[@"success"]) {
+                    [self executeTriggerList:[FLTriggerManager convertDataInList:self.smsTrigger.data[@"successTriggers"]]];
+                }
+            }
+            else if (result == MessageComposeResultCancelled) {
+                if (self.smsTrigger.data[@"failure"]) {
+                    [self executeTriggerList:[FLTriggerManager convertDataInList:self.smsTrigger.data[@"failureTriggers"]]];
+                }
+            }
+            else if (result == MessageComposeResultFailed) {
+                if (self.smsTrigger.data[@"failure"]) {
+                    [self executeTriggerList:[FLTriggerManager convertDataInList:self.smsTrigger.data[@"failureTriggers"]]];
+                }
+            }
+        }
+    }];
+}
+
 - (void)loadBinderKeyView {
     self.binderKeyView = @{
                            @"app:cashout": [CashOutViewController class],
@@ -439,7 +555,9 @@
                            @"settings:privacy": [SettingsPrivacyController class],
                            @"settings:documents": [SettingsDocumentsViewController class],
                            @"timeline:flooz": [TransactionViewController class],
-                           @"web:web": [WebViewController class]
+                           @"web:web": [WebViewController class],
+                           @"phone:validate": [ValidateSMSViewController class],
+                           @"friend:pending": [FriendRequestViewController class]
                            };
 }
 
@@ -466,7 +584,9 @@
                            @"settings:privacy": @"modal",
                            @"settings:documents": @"modal",
                            @"timeline:flooz": @"push",
-                           @"web:web": @"modal"
+                           @"web:web": @"modal",
+                           @"phone:validate": @"modal",
+                           @"friend:pending": @"modal"
                            };
 }
 

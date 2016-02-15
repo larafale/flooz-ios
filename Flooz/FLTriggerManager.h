@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MessageUI/MFMessageComposeViewController.h>
 
-@interface FLTriggerManager : NSObject
+@interface FLTriggerManager : NSObject<MFMessageComposeViewControllerDelegate>
 
 + (FLTriggerManager *)sharedInstance;
 + (NSArray<FLTrigger *> *)convertDataInList:(NSArray<NSDictionary *> *)triggers;

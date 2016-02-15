@@ -59,6 +59,8 @@
     [self resetContentView];
     
     [self addTapGestureForDismissKeyboard];
+    
+    [self registerNotification:@selector(reloadView) name:kNotificationReloadCurrentUser object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

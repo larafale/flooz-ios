@@ -91,6 +91,8 @@
             self.action = FLTriggerActionShow;
         else if ([actionData isEqualToString:@"sync"])
             self.action = FLTriggerActionSync;
+        else if ([actionData isEqualToString:@"send"])
+            self.action = FLTriggerActionSend;
     }
     
     if (self.action == FLTriggerActionNone)

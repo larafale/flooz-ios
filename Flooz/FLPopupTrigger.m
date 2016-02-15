@@ -86,11 +86,15 @@
     
     viewWidth = 250;
     viewHeight = PADDING_TOP_BOTTOM;
+    NSDictionary *attributes;
+    CGRect rect;
     
-    NSDictionary *attributes = @{NSFontAttributeName: titleFont};
-    CGRect rect = [title boundingRectWithSize:CGSizeMake(viewWidth - 2 * PADDING_LEFT_RIGHT - 5, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
-    
-    viewHeight += rect.size.height + MARGE;
+    if (title && ![title isBlank]) {
+        attributes = @{NSFontAttributeName: titleFont};
+        rect = [title boundingRectWithSize:CGSizeMake(viewWidth - 2 * PADDING_LEFT_RIGHT - 5, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
+        
+        viewHeight += rect.size.height + MARGE;
+    }
     
     attributes = @{NSFontAttributeName: contentFont};
     rect = [content boundingRectWithSize:CGSizeMake(viewWidth - 2 * PADDING_LEFT_RIGHT - 5, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
@@ -123,7 +127,11 @@
     
     [contentView addSubview:titleView];
     
-    offsetY += CGRectGetHeight(titleView.frame) + MARGE;
+    if (!title || [title isBlank]) {
+        [titleView setHidden:YES];
+    } else {
+        offsetY += CGRectGetHeight(titleView.frame) + MARGE;
+    }
     
     UILabel *msgView = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_LEFT_RIGHT, offsetY, viewWidth - 2 * PADDING_LEFT_RIGHT - 5, 0)];
     msgView.font = contentFont;

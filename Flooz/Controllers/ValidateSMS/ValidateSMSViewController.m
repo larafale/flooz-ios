@@ -34,7 +34,23 @@
 - (id)init {
     self = [super init];
     if (self) {
+        resetSMS = YES;
+        smsData = [NSMutableDictionary new];
         
+        ratioiPhones = 1.0f;
+        
+        if (PPScreenHeight() < 568) {
+            ratioiPhones = 1.2f;
+        }
+        
+        firstItemY = 25.0f / ratioiPhones;
+    }
+    return self;
+}
+
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [super initWithTriggerData:data];
+    if (self) {
         resetSMS = YES;
         smsData = [NSMutableDictionary new];
         

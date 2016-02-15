@@ -598,6 +598,8 @@
         if (success) {
             success(self.invitationTexts);
         }
+    
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadShareTexts object:nil];
     };
     
     id failureBlock = ^(NSError *error) {
@@ -1200,10 +1202,10 @@
         }
     };
     
-    if ([method isEqualToString:@"GET"]) {
+    if ([[method uppercaseString] isEqualToString:@"GET"]) {
         [manager GET:path parameters:params progress:nil success:successBlock failure:failureBlock];
     }
-    else if ([method isEqualToString:@"POST"] && constructingBodyWithBlock != NULL) {
+    else if ([[method uppercaseString] isEqualToString:@"POST"] && constructingBodyWithBlock != NULL) {
         NSMutableURLRequest *request = [manager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:[[NSURL URLWithString:path relativeToURL:manager.baseURL] absoluteString] parameters:params constructingBodyWithBlock:constructingBodyWithBlock error:nil];
         
         [request setTimeoutInterval:60];
@@ -1259,13 +1261,13 @@
         
         [uploadTask resume];
     }
-    else if ([method isEqualToString:@"POST"]) {
+    else if ([[method uppercaseString] isEqualToString:@"POST"]) {
         [manager POST:path parameters:params success:successBlock failure:failureBlock];
     }
-    else if ([method isEqualToString:@"PUT"]) {
+    else if ([[method uppercaseString] isEqualToString:@"PUT"]) {
         [manager PUT:path parameters:params success:successBlock failure:failureBlock];
     }
-    else if ([method isEqualToString:@"DELETE"]) {
+    else if ([[method uppercaseString] isEqualToString:@"DELETE"]) {
         [manager DELETE:path parameters:params success:successBlock failure:failureBlock];
     }
     else {

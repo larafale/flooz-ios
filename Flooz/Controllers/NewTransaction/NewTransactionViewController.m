@@ -302,7 +302,7 @@
         
         [_contentView addSubview:contactPickerView];
         
-        CGRect frameAmount = CGRectMake(CGRectGetWidth(contactPickerView.frame), CGRectGetMinY(contactPickerView.frame), PPScreenWidth() - CGRectGetWidth(contactPickerView.frame), 50);
+        CGRect frameAmount = CGRectMake(CGRectGetWidth(contactPickerView.frame), 0, PPScreenWidth() - CGRectGetWidth(contactPickerView.frame), CGRectGetMaxY(contactPickerView.frame));
         amountInput = [[FLNewTransactionAmountInput alloc] initWithPlaceholder:@"0" for:transaction key:@"amount" currencySymbol:NSLocalizedString(@"GLOBAL_EURO", nil) andFrame:frameAmount delegate:nil];
         [amountInput hideSeparatorTop];
         [amountInput hideSeparatorBottom];
@@ -913,21 +913,21 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createTransactionValidate:transaction success: ^(id result) {
-        if (showAvalaible) {
-            showAvalaible = NO;
-            if ([result objectForKey:@"confirmationText"]) {
-                FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept: ^{
-                    showAvalaible = YES;
-                    [self didTransactionValidated];
-                } refuse:^{
-                    showAvalaible = YES;
-                }];
-                [popup show];
-            }
-            else {
-                [self didTransactionValidated];
-            }
-        }
+//        if (showAvalaible) {
+//            showAvalaible = NO;
+//            if ([result objectForKey:@"confirmationText"]) {
+//                FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept: ^{
+//                    showAvalaible = YES;
+//                    [self didTransactionValidated];
+//                } refuse:^{
+//                    showAvalaible = YES;
+//                }];
+//                [popup show];
+//            }
+//            else {
+//                [self didTransactionValidated];
+//            }
+//        }
     }];
 }
 
@@ -1026,39 +1026,39 @@
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] createTransaction:transaction success: ^(NSDictionary *result) {
-                transaction[@"id"] = result[@"item"][@"_id"];
-                if (transaction[@"image"]) {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        [[Flooz sharedInstance] uploadTransactionPic:transaction[@"id"] image:transaction[@"image"] success:^(id result) {
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
-                        } failure:nil];
-                    });
-                }
-                
-                if (result[@"sms"]) {
-                    if ([MFMessageComposeViewController canSendText]) {
-                        [[Flooz sharedInstance] showLoadView];
-                        MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
-                        message.messageComposeDelegate = self;
-                        
-                        [message setRecipients:[NSArray arrayWithObject:result[@"sms"][@"phone"]]];
-                        [message setBody:result[@"sms"][@"message"]];
-                        
-                        message.modalPresentationStyle = UIModalPresentationPageSheet;
-                        [self presentViewController:message animated:YES completion:^{
-                            [[Flooz sharedInstance] hideLoadView];
-                        }];
-                    } else {
-                        [[Flooz sharedInstance] showLoadView];
-                        [[Flooz sharedInstance] confirmTransactionSMS:transaction[@"id"] validate:NO success:^(id result) {
-                            [self dismissView];
-                        } failure:^(NSError *error) {
-                            [self dismissView];
-                        }];
-                    }
-                } else {
-                    [self dismissView];
-                }
+//                transaction[@"id"] = result[@"item"][@"_id"];
+//                if (transaction[@"image"]) {
+//                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                        [[Flooz sharedInstance] uploadTransactionPic:transaction[@"id"] image:transaction[@"image"] success:^(id result) {
+//                            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
+//                        } failure:nil];
+//                    });
+//                }
+//                
+//                if (result[@"sms"]) {
+//                    if ([MFMessageComposeViewController canSendText]) {
+//                        [[Flooz sharedInstance] showLoadView];
+//                        MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
+//                        message.messageComposeDelegate = self;
+//                        
+//                        [message setRecipients:[NSArray arrayWithObject:result[@"sms"][@"phone"]]];
+//                        [message setBody:result[@"sms"][@"message"]];
+//                        
+//                        message.modalPresentationStyle = UIModalPresentationPageSheet;
+//                        [self presentViewController:message animated:YES completion:^{
+//                            [[Flooz sharedInstance] hideLoadView];
+//                        }];
+//                    } else {
+//                        [[Flooz sharedInstance] showLoadView];
+//                        [[Flooz sharedInstance] confirmTransactionSMS:transaction[@"id"] validate:NO success:^(id result) {
+//                            [self dismissView];
+//                        } failure:^(NSError *error) {
+//                            [self dismissView];
+//                        }];
+//                    }
+//                } else {
+//                    [self dismissView];
+//                }
             } failure:NULL];
         });
     };
@@ -1089,7 +1089,6 @@
 }
 
 - (void)dismissView {
-    
     [self dismissViewControllerAnimated:YES completion: ^{
         if (currentPreset && currentPreset.isDemo) {
             [appDelegate askNotification];

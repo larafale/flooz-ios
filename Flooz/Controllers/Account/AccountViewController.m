@@ -463,7 +463,7 @@
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [self dismissViewControllerAnimated:YES completion: ^{
+    [controller dismissViewControllerAnimated:YES completion: ^{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         if (result == MFMailComposeResultSent) {
             [appDelegate displayMessage:NSLocalizedString(@"IDEA_THX_TITLE", nil) content:NSLocalizedString(@"IDEA_THX_CONTENT", nil) style:FLAlertViewStyleSuccess time:nil delay:nil];
