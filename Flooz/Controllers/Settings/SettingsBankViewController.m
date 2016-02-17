@@ -85,8 +85,12 @@
 
 	[[Flooz sharedInstance] showLoadView];
 	[[Flooz sharedInstance] updateUser:_userDic success: ^(id result) {
-	    [self dismissViewController];
-	} failure:NULL];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (self.triggerData && self.triggerData[@"success"]) {
+                [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:self.triggerData[@"success"]]];
+            }
+        }];
+    } failure:NULL];
 }
 
 - (void)addTapGestureForDismissKeyboard {

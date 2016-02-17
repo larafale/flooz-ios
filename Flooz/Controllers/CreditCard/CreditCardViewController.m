@@ -302,9 +302,14 @@
     
     //    [_nextButton setEnabled:NO];
     
-    _card[@"number"] = paymentTextField.cardNumber;
-    _card[@"cvv"] = paymentTextField.cvc;
-    _card[@"expires"] = [NSString stringWithFormat:@"%02lu-%02lu", (unsigned long)paymentTextField.expirationMonth, (unsigned long)paymentTextField.expirationYear];
+    if (paymentTextField.cardNumber && ![paymentTextField.cardNumber isBlank])
+        _card[@"number"] = paymentTextField.cardNumber;
+    
+    if (paymentTextField.cvc && ![paymentTextField.cvc isBlank])
+        _card[@"cvv"] = paymentTextField.cvc;
+    
+    if (paymentTextField.expirationMonth != 0 && paymentTextField.expirationYear != 0)
+        _card[@"expires"] = [NSString stringWithFormat:@"%02lu-%02lu", (unsigned long)paymentTextField.expirationMonth, (unsigned long)paymentTextField.expirationYear];
     
     if (self.floozData && self.floozData.allKeys.count) {
         _card[@"flooz"] = self.floozData;

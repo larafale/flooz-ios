@@ -25,6 +25,7 @@
     UILabel *floozerLabel;
     UILabel *whenLabel;
     UILabel *locationLabel;
+    UILabel *likesLabel;
     UILabel *descriptionLabel;
     FLImageView *attachmentView;
     UILabel *amountLabel;
@@ -121,6 +122,9 @@
     if (transaction.location)
         current_height += 25.0f;
     
+    if (!withAvatar && transaction.social.likesCount > 0)
+        current_height += 18.0f;
+    
     current_height += 20.0f; // height of buttons and amount text
     current_height += MARGE_TOP_BOTTOM; // add small marge at the bottom
     return current_height;
@@ -164,6 +168,12 @@
     height = CGRectGetMaxY(attachmentView.frame);
     [self createLocationView];
     height = CGRectGetMaxY(locationLabel.frame);
+    
+    if (!hasAvatar) {
+        [self createLikesView];
+        height = CGRectGetMaxY(locationLabel.frame);
+    }
+    
     [self createAmountLabel];
     [self createFooterView];
     height = CGRectGetMaxY(footerDescView.frame);
@@ -193,6 +203,17 @@
     locationLabel.font = [UIFont customContentRegular:12];
     
     [rightView addSubview:locationLabel];
+}
+
+- (void) createLikesView {
+    likesLabel = [UILabel newWithFrame:CGRectMake(0.0f, CGRectGetMaxY(floozerLabel.frame), CGRectGetWidth(rightView.frame), 15.0f)];
+    likesLabel.textColor = [UIColor customPlaceholder];
+    likesLabel.numberOfLines = 1;
+    likesLabel.font = [UIFont customContentRegular:12];
+    [likesLabel setUserInteractionEnabled:YES];
+    [likesLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeTextTouch)]];
+
+    [rightView addSubview:likesLabel];
 }
 
 - (void)createDescriptionLabel {
@@ -269,6 +290,10 @@
     [self prepareAttachmentView];
     [self prepareAmountLabel];
     [self prepareLocationView];
+
+    if (!hasAvatar)
+        [self prepareLike];
+    
     [self prepareSocial];
     
     CGRectSetHeight(rightView.frame, CGRectGetMaxY(footerDescView.frame));
@@ -411,6 +436,50 @@
     }
 }
 
+- (void)prepareLike {
+    if (_transaction.social.likesCount > 0) {
+        [likesLabel setHidden:NO];
+        CGRectSetHeight(likesLabel.frame, 18.0f);
+        
+        NSMutableAttributedString *attributedData = [NSMutableAttributedString new];
+        
+        UIImage *cbImage = [UIImage imageNamed:@"like-heart"];
+        CGSize newImgSize = CGSizeMake(14, 14);
+        
+        cbImage = [FLHelper imageWithImage:cbImage scaledToSize:newImgSize];
+        cbImage = [FLHelper colorImage:cbImage color:[UIColor customPlaceholder]];
+        
+        NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+        attachment.image = cbImage;
+        attachment.bounds = CGRectMake(0, -2.5, attachment.image.size.width, attachment.image.size.height);
+        
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+        
+        [attributedData appendAttributedString:attachmentString];
+        
+        {
+            NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                                  initWithString:[NSString stringWithFormat:@" %@", _transaction.social.likeText]
+                                                  attributes:@{
+                                                               NSForegroundColorAttributeName: [UIColor customPlaceholder],
+                                                               NSFontAttributeName: [UIFont customContentRegular:12]
+                                                               }];
+            
+            [attributedData appendAttributedString:attributedText];
+        }
+        
+        likesLabel.attributedText = attributedData;
+        CGRectSetWidth(likesLabel.frame, [likesLabel widthToFit] + 15);
+        CGRectSetY(likesLabel.frame, CGRectGetMaxY(locationLabel.frame));
+        
+        height = CGRectGetMaxY(likesLabel.frame);
+    } else {
+        CGRectSetY(likesLabel.frame, CGRectGetMaxY(locationLabel.frame));
+        [likesLabel setHidden:YES];
+        CGRectSetHeight(likesLabel.frame, 0.0f);
+    }
+}
+
 - (NSString *)castNumber:(NSUInteger)number {
     if (!number) {
         return @"";
@@ -487,6 +556,24 @@
     [amountLabel setWidthToFit];
     
     CGRectSetX(amountLabel.frame, CGRectGetWidth(footerDescView.frame) - CGRectGetWidth(amountLabel.frame));
+}
+
+- (void)didLikeTextTouch {
+    if (popoverController != nil && popoverController.isPopoverVisible)
+        return;
+    
+    if (_transaction.social.likesCount == 0)
+        return;
+    
+    FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithSocial:_transaction.social];
+    [popoverViewController setDelegate:self];
+    
+    popoverController = [[WYPopoverController alloc] initWithContentViewController:popoverViewController];
+    popoverController.delegate = self;
+    popoverController.theme.dimsBackgroundViewsTintColor = NO;
+    [popoverController presentPopoverFromRect:likesLabel.bounds inView:likesLabel permittedArrowDirections:WYPopoverArrowDirectionDown|WYPopoverArrowDirectionUp animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+        
+    }];
 }
 
 - (void)didLikeButtonLongTouch {

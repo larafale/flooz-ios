@@ -110,9 +110,9 @@
     
     if ([self.topViewController isKindOfClass:[Secure3DViewController class]]) {
         [[Flooz sharedInstance] abort3DSecure];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma marks - UINavigationControllerDelegate

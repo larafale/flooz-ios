@@ -10,8 +10,8 @@
 
 #define BUTTON_MARGE 15.
 #define MARGE 20.
-#define PADDING_TOP_BOTTOM 30.
-#define PADDING_LEFT_RIGHT 30.
+#define PADDING_TOP_BOTTOM 25.
+#define PADDING_LEFT_RIGHT 20.
 #define BUTTON_HEIGHT 40.
 #define ANIMATION_DELAY 0.4
 
@@ -133,7 +133,7 @@
         offsetY += CGRectGetHeight(titleView.frame) + MARGE;
     }
     
-    UILabel *msgView = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_LEFT_RIGHT, offsetY, viewWidth - 2 * PADDING_LEFT_RIGHT - 5, 0)];
+    UILabel *msgView = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_LEFT_RIGHT / 2, offsetY, viewWidth - PADDING_LEFT_RIGHT - 5, 0)];
     msgView.font = contentFont;
     msgView.textColor = [UIColor customPlaceholder];
     msgView.textAlignment = NSTextAlignmentCenter;
@@ -208,7 +208,7 @@
     
     [self dismiss:^{
         if ([data isKindOfClass:[NSArray class]]) {
-            [[FLTriggerManager sharedInstance] executeTriggerList:data];
+            [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:data]];
         } else if ([data isKindOfClass:[NSDictionary class]]) {
             FLTrigger *tmp = [[FLTrigger alloc] initWithJson:data];
             

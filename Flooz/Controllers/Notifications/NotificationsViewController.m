@@ -66,6 +66,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self handleRefresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

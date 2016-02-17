@@ -262,7 +262,7 @@
     locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(bioLabel.frame) + 10, PPScreenWidth() - 20, 0)];
     locationLabel.numberOfLines = 1;
     
-    websiteLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(bioLabel.frame) + 10, PPScreenWidth() - 20, 0)];
+    websiteLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(locationLabel.frame) + 5, PPScreenWidth() - 20, 0)];
     websiteLabel.numberOfLines = 1;
     websiteLabel.userInteractionEnabled = YES;
     [websiteLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didWebsiteCLick)]];
@@ -428,10 +428,10 @@
     [bioLabel setText:currentUser.bio];
     CGRectSetHeight(bioLabel.frame, [bioLabel heightToFit] + 5);
     
-    CGRectSetY(locationLabel.frame, CGRectGetMaxY(bioLabel.frame) + 10);
-    CGRectSetY(websiteLabel.frame, CGRectGetMaxY(bioLabel.frame) + 10);
-    
-    CGFloat nextX = 0;
+    if ([bioLabel.text isBlank])
+        CGRectSetY(locationLabel.frame, CGRectGetMaxY(bioLabel.frame));
+    else
+        CGRectSetY(locationLabel.frame, CGRectGetMaxY(bioLabel.frame) + 10);
     
     if (currentUser.location && ![currentUser.location isBlank]) {
         locationLabel.hidden = NO;
@@ -454,18 +454,17 @@
         [string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", currentUser.location] attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont customContentRegular:14]}]];
         
         locationLabel.attributedText = string;
-        
-        nextX = [[NSString stringWithFormat:@" %@", currentUser.location] widthOfString:[UIFont customContentRegular:14]] + 20;
     } else {
-        CGRectSetHeight(locationLabel.frame, 20);
+        CGRectSetHeight(locationLabel.frame, 0);
         locationLabel.hidden = YES;
     }
     
+    CGRectSetY(websiteLabel.frame, CGRectGetMaxY(locationLabel.frame) + 5);
+
     if (currentUser.website && ![currentUser.website isBlank]) {
         websiteLabel.hidden = NO;
         CGRectSetHeight(websiteLabel.frame, 20);
         CGRectSetY(controlTab.frame, CGRectGetMaxY(websiteLabel.frame) + 10);
-        CGRectSetX(websiteLabel.frame, CGRectGetMinX(locationLabel.frame) + nextX + 10);
         CGRectSetWidth(websiteLabel.frame, PPScreenWidth() - CGRectGetMinX(websiteLabel.frame) - 10);
         
         UIImage *image = [UIImage imageNamed:@"link"];

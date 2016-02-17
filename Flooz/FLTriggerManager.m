@@ -114,20 +114,28 @@
             if (trigger.data[@"external"] && [trigger.data[@"external"] boolValue]) {
                 NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
                 AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+                
                 NSURLRequest *request;
                 
                 if (trigger.data[@"type"] && [trigger.data[@"type"] isEqualToString:@"urlencoded"]) {
                     NSError *error = nil;
                     request = [[AFHTTPRequestSerializer serializer] requestWithMethod:[trigger.data[@"method"] uppercaseString] URLString:trigger.data[@"url"] parameters:trigger.data[@"body"] error:&error];
+                    [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
                 } else {
                     NSError *error = nil;
                     request = [[AFJSONRequestSerializer serializer] requestWithMethod:[trigger.data[@"method"] uppercaseString] URLString:trigger.data[@"url"] parameters:trigger.data[@"body"] error:&error];
+                    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
                 }
                 
+                if (trigger.data[@"lock"] && [trigger.data[@"lock"] boolValue])
+                    [[Flooz sharedInstance] showLoadView];
+
                 NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                     [self executeTriggerList:trigger.triggers];
                     
-                    if (error) {
+                    [[Flooz sharedInstance] hideLoadView];
+
+                    if (!error) {
                         if (trigger.data[@"success"]) {
                             [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"success"]]];
                         }
@@ -140,6 +148,9 @@
                 
                 [dataTask resume];
             } else {
+                if (trigger.data[@"lock"] && [trigger.data[@"lock"] boolValue])
+                    [[Flooz sharedInstance] showLoadView];
+                
                 [[Flooz sharedInstance] requestPath:trigger.data[@"url"] method:[trigger.data[@"method"] uppercaseString] params:trigger.data[@"body"] success:^(id result) {
                     [self executeTriggerList:trigger.triggers];
                     if (trigger.data[@"success"]) {
@@ -254,7 +265,6 @@
                 if (transacViewController.transaction[@"image"]) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                         [[Flooz sharedInstance] uploadTransactionPic:trigger.data[@"_id"] image:transacViewController.transaction[@"image"] success:^(id result) {
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
                             [self executeTriggerList:trigger.triggers];
                         } failure:^(NSError *error) {
                             [self executeTriggerList:trigger.triggers];
