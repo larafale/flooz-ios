@@ -131,13 +131,13 @@
 }
 
 - (void) loadTextData {
-    NSString *textData = [UICKeyChainStore stringForKey:kTextData];
-    if (textData) {
-        NSDictionary *textJson = [NSDictionary newWithJSONString:textData];
-        if (textJson) {
-            _currentTexts = [[FLTexts alloc] initWithJSON:textJson];
-        }
-    }
+//    NSString *textData = [UICKeyChainStore stringForKey:kTextData];
+//    if (textData) {
+//        NSDictionary *textJson = [NSDictionary newWithJSONString:textData];
+//        if (textJson) {
+//            _currentTexts = [[FLTexts alloc] initWithJSON:textJson];
+//        }
+//    }
 }
 
 - (NSArray *) loadTimelineData:(TransactionScope)scope {
@@ -497,7 +497,7 @@
 }
 
 - (void)checkContactList:(NSArray *)phones success:(void (^)(NSArray *result))success {
-    [self requestPath:@"/utils/exists/" method:@"POST" params:@{@"field":@"phones", @"value":phones} success:^(id result) {
+    [self requestPath:@"/utils/exists" method:@"POST" params:@{@"field":@"phones", @"value":phones} success:^(id result) {
         if (success)
             success(result[@"items"]);
     } failure:nil];
@@ -599,6 +599,33 @@
             success(self.invitationTexts);
         }
     
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadShareTexts object:nil];
+    };
+    
+    id failureBlock = ^(NSError *error) {
+        if (![self connectionStatusFromError:error]) {
+            [self loadInvitationData];
+            if (self.invitationTexts && success)
+                success(self.invitationTexts);
+            else if (failure)
+                failure(error);
+        } else if (failure) {
+            failure(error);
+        }
+    };
+    
+    [self requestPath:@"/invitations/text" method:@"GET" params:nil success:successBlock failure:failureBlock];
+}
+
+- (void)invitationTextForce:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        self.invitationTexts = [[FLInvitationTexts alloc] initWithJSON:result[@"item"]];
+        [self saveInvitationData];
+        
+        if (success) {
+            success(self.invitationTexts);
+        }
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadShareTexts object:nil];
     };
     
@@ -1150,8 +1177,6 @@
     if ([path rangeOfString:@"&version="].location == NSNotFound) {
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&version=%@", APP_VERSION]];
     }
-    
-    path = [path stringByAppendingString:[NSString stringWithFormat:@"&api=v%d", 2]];
     
     id successBlock = ^(NSURLSessionTask *task, id responseObject) {
         if (((NSHTTPURLResponse*)task.response).statusCode == 226) {

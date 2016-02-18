@@ -14,6 +14,13 @@
 
 @interface FLSocialHelper : NSObject
 
+// FLOOZ
+
++ (FLBorderedActionButton *) createMiniFloozButton:(id)target action:(SEL)action;
++ (FLBorderedActionButton *) createMiniFloozButton:(id)target action:(SEL)action size:(CGSize)size;
++ (FLBorderedActionButton *) createMiniFloozButton:(id)target action:(SEL)action frame:(CGRect)frame;
++ (FLBorderedActionButton *) createMiniFloozButton:(id)target action:(SEL)action position:(CGPoint)position;
+
 // UNFRIEND / UNFOLLOW
 
 + (FLActionButton *) createMiniUnfriendButton:(id)target action:(SEL)action;

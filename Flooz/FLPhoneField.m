@@ -190,7 +190,7 @@
         return YES;
     }
     
-    int maxLenght = [_countryPicker getSelectedCountry].numLength.intValue;
+    int maxLenght = self.currentCountry.numLength.intValue;
     if ([textField.text hasPrefix:@"0"]) {
         maxLenght += 1;
     }

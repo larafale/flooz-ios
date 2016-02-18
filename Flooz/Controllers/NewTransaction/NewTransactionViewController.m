@@ -883,8 +883,6 @@
 - (void)valid {
     [[self view] endEditing:YES];
     
-    static Boolean showAvalaible = YES;
-    
     if (presetUser) {
         if (presetUser.userKind == FloozUser) {
             transaction[@"to"] = presetUser.username;
@@ -913,21 +911,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createTransactionValidate:transaction success: ^(id result) {
-//        if (showAvalaible) {
-//            showAvalaible = NO;
-//            if ([result objectForKey:@"confirmationText"]) {
-//                FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept: ^{
-//                    showAvalaible = YES;
-//                    [self didTransactionValidated];
-//                } refuse:^{
-//                    showAvalaible = YES;
-//                }];
-//                [popup show];
-//            }
-//            else {
-//                [self didTransactionValidated];
-//            }
-//        }
+
     }];
 }
 
@@ -943,12 +927,6 @@
 }
 
 - (void)didCreditCardSelected {
-}
-
-- (void)presentCreditCardController {
-    CreditCardViewController *controller = [CreditCardViewController new];
-    
-    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:NULL];
 }
 
 #pragma mark - Keyboard Management
@@ -1014,78 +992,6 @@
     {
         [[UIApplication sharedApplication] openURL:[NSURL  URLWithString:UIApplicationOpenSettingsURLString]];
     }
-    else if (buttonIndex == 1) {
-        [self didTransactionValidated];
-    }
-}
-
-- (void)didTransactionValidated {
-    [[Flooz sharedInstance] showLoadView];
-    CompleteBlock completeBlock = ^{
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] createTransaction:transaction success: ^(NSDictionary *result) {
-//                transaction[@"id"] = result[@"item"][@"_id"];
-//                if (transaction[@"image"]) {
-//                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                        [[Flooz sharedInstance] uploadTransactionPic:transaction[@"id"] image:transaction[@"image"] success:^(id result) {
-//                            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
-//                        } failure:nil];
-//                    });
-//                }
-//                
-//                if (result[@"sms"]) {
-//                    if ([MFMessageComposeViewController canSendText]) {
-//                        [[Flooz sharedInstance] showLoadView];
-//                        MFMessageComposeViewController *message = [[MFMessageComposeViewController alloc] init];
-//                        message.messageComposeDelegate = self;
-//                        
-//                        [message setRecipients:[NSArray arrayWithObject:result[@"sms"][@"phone"]]];
-//                        [message setBody:result[@"sms"][@"message"]];
-//                        
-//                        message.modalPresentationStyle = UIModalPresentationPageSheet;
-//                        [self presentViewController:message animated:YES completion:^{
-//                            [[Flooz sharedInstance] hideLoadView];
-//                        }];
-//                    } else {
-//                        [[Flooz sharedInstance] showLoadView];
-//                        [[Flooz sharedInstance] confirmTransactionSMS:transaction[@"id"] validate:NO success:^(id result) {
-//                            [self dismissView];
-//                        } failure:^(NSError *error) {
-//                            [self dismissView];
-//                        }];
-//                    }
-//                } else {
-//                    [self dismissView];
-//                }
-            } failure:NULL];
-        });
-    };
-    
-    if ([SecureCodeViewController canUseTouchID])
-        [SecureCodeViewController useToucheID:completeBlock passcodeCallback:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                SecureCodeViewController *controller = [SecureCodeViewController new];
-                controller.completeBlock = completeBlock;
-                [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
-                    [[Flooz sharedInstance] hideLoadView];
-                }];
-            });
-        } cancelCallback:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[Flooz sharedInstance] hideLoadView];
-            });
-        }];
-    else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            SecureCodeViewController *controller = [SecureCodeViewController new];
-            controller.completeBlock = completeBlock;
-            [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
-                [[Flooz sharedInstance] hideLoadView];
-            }];
-        });
-    }
 }
 
 - (void)dismissView {
@@ -1130,11 +1036,7 @@
 }
 
 - (void)presentLocation {
-//    UIDocumentMenuViewController *documentViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *)kUTTypePDF, (__bridge NSString *)kUTTypeImage] inMode:UIDocumentPickerModeImport];
-//    
-//    [self.navigationController presentViewController:documentViewController animated:YES completion:nil];
-//    
-        GeolocViewController *controller = [GeolocViewController new];
+    GeolocViewController *controller = [GeolocViewController new];
     [controller setDelegate:self];
     
     if (transaction[@"geo"]) {

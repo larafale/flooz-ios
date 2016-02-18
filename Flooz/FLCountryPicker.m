@@ -72,11 +72,17 @@
 
 - (void)setSelectedCountryCode:(NSString *)countryCode animated:(BOOL)animated
 {
-    for (long i = 0; i < self.countries.count; i++) {
-        if ([[((FLCountry *)[self.countries objectAtIndex:i]) code] isEqualToString:countryCode]) {
-            [self selectRow:i inComponent:0 animated:animated];
-            self.selectedCountry = [self.countries objectAtIndex:i];
-            break;
+    if (!self.countries.count) {
+        NSMutableArray *tmp = [NSMutableArray new];
+        [tmp addObject:[FLCountry defaultCountry]];
+        self.countries = tmp;
+    } else {
+        for (long i = 0; i < self.countries.count; i++) {
+            if ([[((FLCountry *)[self.countries objectAtIndex:i]) code] isEqualToString:countryCode]) {
+                [self selectRow:i inComponent:0 animated:animated];
+                self.selectedCountry = [self.countries objectAtIndex:i];
+                break;
+            }
         }
     }
 }
@@ -88,11 +94,17 @@
 
 - (void)setSelectedCountryName:(NSString *)country animated:(BOOL)animated
 {
-    for (long i = 0; i < self.countries.count; i++) {
-        if ([[((FLCountry *)[self.countries objectAtIndex:i]) name] isEqualToString:country]) {
-            [self selectRow:i inComponent:0 animated:animated];
-            self.selectedCountry = [self.countries objectAtIndex:i];
-            break;
+    if (!self.countries.count) {
+        NSMutableArray *tmp = [NSMutableArray new];
+        [tmp addObject:[FLCountry defaultCountry]];
+        self.countries = tmp;
+    } else {
+        for (long i = 0; i < self.countries.count; i++) {
+            if ([[((FLCountry *)[self.countries objectAtIndex:i]) name] isEqualToString:country]) {
+                [self selectRow:i inComponent:0 animated:animated];
+                self.selectedCountry = [self.countries objectAtIndex:i];
+                break;
+            }
         }
     }
 }

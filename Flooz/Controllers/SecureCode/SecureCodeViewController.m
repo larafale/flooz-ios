@@ -414,7 +414,7 @@ static BOOL canTouchID = YES;
         [_forgotButton setHidden:NO];
         [_cleanButton setHidden:YES];
         if ([[self class] canUseTouchID] && canTouchID && !self.blockTouchID) {
-            [_touchIDButton setHidden:NO];
+//            [_touchIDButton setHidden:NO];
         }
     }
     else if (currentSecureMode == SecureCodeModeForget) {
@@ -490,8 +490,9 @@ static BOOL canTouchID = YES;
 
 - (void)pinChange:(BOOL)pinStarts {
     [_cleanButton setHidden:!pinStarts];
-    if ([[self class] canUseTouchID])
-        [_touchIDButton setHidden:pinStarts];
+    if ([[self class] canUseTouchID]) {
+//        [_touchIDButton setHidden:pinStarts];
+    }
 }
 
 - (void)pinEnd:(NSString *)pin {

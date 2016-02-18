@@ -44,6 +44,8 @@
     FLActionButton *unfriendPendingActionButton;
     FLActionButton *unfriendMiniActionButton;
     
+    FLBorderedActionButton *floozActionButton;
+    
     FLBorderedActionButton *friendActionButton;
     FLBorderedActionButton *friendRequestActionButton;
     
@@ -217,6 +219,8 @@
     [avatarImage setUserInteractionEnabled:YES];
     [avatarImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didAvatarClick)]];
     
+    floozActionButton = [FLSocialHelper createMiniFloozButton:self action:@selector(didFloozButtonClick) position:CGPointMake(0, headerFullHeight + 10)];
+    
     unfriendMiniActionButton = [FLSocialHelper createMiniUnfriendButton:self action:@selector(didUnFriendButtonClick:) position:CGPointMake(0, headerFullHeight + 10)];
     unfriendPendingActionButton = [FLSocialHelper createRequestPendingButton:self action:@selector(didFriendPendingButtonClick:) position:CGPointMake(0, headerFullHeight + 10)];
     
@@ -282,6 +286,7 @@
     [headerCell addSubview:fullnameLabel];
     [headerCell addSubview:certfifiedIcon];
     [headerCell addSubview:usernameLabel];
+    [headerCell addSubview:floozActionButton];
     [headerCell addSubview:unfriendPendingActionButton];
     [headerCell addSubview:unfriendMiniActionButton];
     [headerCell addSubview:friendActionButton];
@@ -325,6 +330,7 @@
     [fullnameLabel setWidthToFit];
     [usernameLabel setWidthToFit];
     
+    [floozActionButton setHidden:YES];
     [editProfileActionButton setHidden:YES];
     [unfriendPendingActionButton setHidden:YES];
     [unfriendMiniActionButton setHidden:YES];
@@ -344,6 +350,7 @@
 - (void)reloadUser {
     completeProfileLoaded = YES;
     
+    [floozActionButton setHidden:YES];
     [editProfileActionButton setHidden:YES];
     [unfriendPendingActionButton setHidden:YES];
     [unfriendMiniActionButton setHidden:YES];
@@ -352,9 +359,14 @@
     [settingsButton setHidden:YES];
     
     UIView *rightButton = nil;
+    UIView *floozButton = nil;
     
     if (currentUser.actions) {
         CGFloat rightMargin = 10;
+        
+        if ([currentUser.actions indexOfObject:@"flooz"] != NSNotFound) {
+            floozButton = floozActionButton;
+        }
         
         if ([currentUser.actions indexOfObject:@"friend:add"] != NSNotFound) {
             rightButton = friendActionButton;
@@ -374,10 +386,16 @@
             
             CGFloat textWidth = [editProfileActionButton.titleLabel.text widthOfString:editProfileActionButton.titleLabel.font];
             CGRectSetWidth(editProfileActionButton.frame, textWidth + (2 * actionButtonMargin));
-
+            
             editProfileActionButton.badgeValue = [@(accountNotifs) stringValue];
             
             rightButton = editProfileActionButton;
+        }
+        
+        if (floozButton) {
+            [floozButton setHidden:NO];
+            CGRectSetX(floozButton.frame, PPScreenWidth() - CGRectGetWidth(floozButton.frame) - rightMargin);
+            rightMargin += CGRectGetWidth(floozButton.frame) + 10;
         }
         
         if (rightButton) {
@@ -460,7 +478,7 @@
     }
     
     CGRectSetY(websiteLabel.frame, CGRectGetMaxY(locationLabel.frame) + 5);
-
+    
     if (currentUser.website && ![currentUser.website isBlank]) {
         websiteLabel.hidden = NO;
         CGRectSetHeight(websiteLabel.frame, 20);
@@ -500,6 +518,10 @@
 }
 
 #pragma marks - button handlers
+
+- (void) didFloozButtonClick {
+    [appDelegate showNewTransactionController:currentUser transactionType:TransactionTypePayment];
+}
 
 - (void) didBalanceButtonClick {
     UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
@@ -756,7 +778,7 @@
     [shareController setExcludedActivityTypes:@[UIActivityTypeCopyToPasteboard, UIActivityTypePrint, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact]];
     
     [self.navigationController presentViewController:shareController animated:YES completion:^{
-
+        
     }];
 }
 
@@ -1148,12 +1170,6 @@
 - (void)createAlertController {
     UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    if ([currentUser.actions indexOfObject:@"flooz"] != NSNotFound) {
-        [newAlert addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUser.username] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-            [appDelegate showNewTransactionController:currentUser transactionType:TransactionTypePayment];
-        }]];
-    }
-    
     if ([currentUser.actions indexOfObject:@"report"] != NSNotFound) {
         [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"MENU_REPORT_USER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
             [self showReportView:[[FLReport alloc] initWithType:ReportUser id:currentUser.userId]];
@@ -1172,12 +1188,16 @@
 }
 
 - (void)createActionSheet {
-    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUser.username], nil];
+    UIActionSheet *actionSheet = actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
     NSMutableArray *menus = [NSMutableArray new];
     
-    [menus addObject:NSLocalizedString(@"MENU_BLOCK_USER", nil)];
+    if ([currentUser.actions indexOfObject:@"report"] != NSNotFound) {
+        [menus addObject:NSLocalizedString(@"MENU_REPORT_USER", nil)];
+    }
     
-    [menus addObject:NSLocalizedString(@"MENU_REPORT_USER", nil)];
+    if ([currentUser.actions indexOfObject:@"block"] != NSNotFound) {
+        [menus addObject:NSLocalizedString(@"MENU_BLOCK_USER", nil)];
+    }
     
     for (NSString *menu in menus) {
         [actionSheet addButtonWithTitle:menu];
@@ -1194,10 +1214,7 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (actionSheet.tag == 1) {
-        if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:[NSString stringWithFormat:NSLocalizedString(@"MENU_NEW_FLOOZ", nil), currentUser.username]]) {
-            [appDelegate showNewTransactionController:currentUser transactionType:TransactionTypePayment];
-        }
-        else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_BLOCK_USER", nil)]) {
+        if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_BLOCK_USER", nil)]) {
             [self showBlockView];
         }
         else if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"MENU_REPORT_USER", nil)]) {

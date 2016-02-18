@@ -20,13 +20,14 @@
     UIViewController *controller;
 }
 
-@property (nonatomic,copy) dispatch_block_t completionBlock;
+@property (nonatomic, strong) dispatch_block_t completionBlock;
 
 @end
 
 @implementation FLNavigationController
 
 @synthesize shadowImage;
+@synthesize completionBlock;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -94,13 +95,15 @@
 }
 
 - (void)pushViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completion {
-    self.completionBlock = completion;
+    if (completion)
+        completionBlock = [completion copy];
     
     [self pushViewController:viewController animated:animated];
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated completion:(dispatch_block_t)completion {
-    self.completionBlock = completion;
+    if (completion)
+        completionBlock = [completion copy];
     
     [self popViewControllerAnimated:animated];
 }
@@ -126,9 +129,10 @@
     //        }
     //    }
     //
-    if (self.completionBlock){
-        self.completionBlock();
-        self.completionBlock = nil;
+    if (completionBlock) {
+        dispatch_block_t tmp = [completionBlock copy];
+        completionBlock = nil;
+        tmp();
     }
     
     if (_navigationDelegate)

@@ -141,8 +141,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (!contactsFromAdressBook)
-        [self requestAddressBookPermission];
+//    if (!contactsFromAdressBook)
+//        [self requestAddressBookPermission];
 }
 
 - (void)showSearch {

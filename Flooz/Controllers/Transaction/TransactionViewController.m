@@ -125,6 +125,11 @@
 - (void)refreshTransaction:(NSNotification *)notification {
     [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success: ^(id result) {
         _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        for (UIView *view in[_contentView subviews]) {
+            [view removeFromSuperview];
+        }
+        
+        [self createViews];
         [self prepareViews];
     }];
 }
@@ -132,10 +137,13 @@
 - (void)prepareViews {
     height = 140.0f;
     CGFloat yStart = 0.0f;
-    if ([_transaction haveAction] || (_transaction.isCollect && _transaction.collectCanParticipate)) {
+    if ([_transaction haveAction]) {
         if (_transaction.isAcceptable || _transaction.isCancelable) {
+            [actionsView setHidden:NO];
             height += CGRectGetHeight(actionsView.frame) / 2.0f;
             yStart = 15.0f;
+        } else {
+            [actionsView setHidden:YES];
         }
     }
     
@@ -310,8 +318,6 @@
 #pragma mark - Transaction Actions
 
 - (void)acceptTransaction {
-    static Boolean showAvalaible = YES;
-    
     NSDictionary *params = @{
                              @"id": [_transaction transactionId],
                              @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
@@ -319,21 +325,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateTransactionValidate:params success: ^(id result) {
-        if (showAvalaible) {
-            showAvalaible = NO;
-            if ([result objectForKey:@"confirmationText"]) {
-                FLPopup *popup = [[FLPopup alloc] initWithMessage:[result objectForKey:@"confirmationText"] accept: ^{
-                    showAvalaible = YES;
-                    [self didTransactionValidated];
-                } refuse:^{
-                    showAvalaible = YES;
-                }];
-                [popup show];
-            }
-            else {
-                [self didTransactionValidated];
-            }
-        }
+        
     }];
 }
 
@@ -346,54 +338,8 @@
                              };
     
     [[Flooz sharedInstance] updateTransaction:params success: ^(id result) {
-        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-        [self reloadTransaction];
-    } failure:NULL];
-}
 
-- (void)didTransactionValidated {
-    [[Flooz sharedInstance] showLoadView];
-    CompleteBlock completeBlock = ^{
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0 * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            NSDictionary *params = @{
-                                     @"id": [_transaction transactionId],
-                                     @"state": [FLTransaction transactionStatusToParams:TransactionStatusAccepted]
-                                     };
-            
-            [[Flooz sharedInstance] showLoadView];
-            [[Flooz sharedInstance] updateTransaction:params success: ^(id result) {
-                _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-                [self reloadTransaction];
-            } failure:NULL];
-        });
-    };
-    
-    if ([SecureCodeViewController canUseTouchID])
-        [SecureCodeViewController useToucheID:completeBlock passcodeCallback:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                SecureCodeViewController *secureVC = [SecureCodeViewController new];
-                secureVC.completeBlock = completeBlock;
-                UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:secureVC];
-                [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:^{
-                    [[Flooz sharedInstance] hideLoadView];
-                }];
-            });
-        } cancelCallback:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[Flooz sharedInstance] hideLoadView];
-            });
-        }];
-    else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            SecureCodeViewController *secureVC = [SecureCodeViewController new];
-            secureVC.completeBlock = completeBlock;
-            UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:secureVC];
-            [[appDelegate myTopViewController] presentViewController:controller animated:YES completion:^{
-                [[Flooz sharedInstance] hideLoadView];
-            }];
-        });
-    }
+    } failure:NULL];
 }
 
 - (void)showPaymentField {
@@ -465,11 +411,6 @@
 }
 
 #pragma mark - Other
-
-- (void)presentCreditCardController {
-    CreditCardViewController *controller = [CreditCardViewController new];
-    [self presentViewController:controller animated:YES completion:NULL];
-}
 
 - (void)didChangeHeight:(CGFloat)height {
     CGFloat maxY = CGRectGetMaxY(commentsView.frame);

@@ -51,18 +51,8 @@
     
     self.triggers = @[];
 
-    if ([json[@"triggers"] isKindOfClass:[NSArray class]]) {
-        NSArray *triggersData = json[@"triggers"];
-        
-        if (triggersData && [triggersData count]) {
-            self.triggers = [FLTriggerManager convertDataInList:triggersData];
-        }
-    } else if ([json[@"triggers"] isKindOfClass:[NSDictionary class]]) {
-        FLTrigger *trigger = [[FLTrigger alloc] initWithJson:json[@"triggers"]];
-        
-        if (trigger) {
-            self.triggers = @[trigger];
-        }
+    if (json[@"triggers"]) {
+        self.triggers = [FLTriggerManager convertDataInList:json[@"triggers"]];
     }
     
     return YES;

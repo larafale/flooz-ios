@@ -150,6 +150,7 @@ static NSString *kLocationData = @"locationData";
 
 - (void)invitationFacebook:(NSString *)text success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)invitationText:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)invitationTextForce:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)textObjectFromApi:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)inviteWithPhone:(NSString *)phone;
 - (void)invitationStrings:(void (^)(id result))success failure:(void (^)(NSError *error))failure;

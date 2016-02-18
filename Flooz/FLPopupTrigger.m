@@ -97,7 +97,7 @@
     }
     
     attributes = @{NSFontAttributeName: contentFont};
-    rect = [content boundingRectWithSize:CGSizeMake(viewWidth - 2 * PADDING_LEFT_RIGHT - 5, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
+    rect = [content boundingRectWithSize:CGSizeMake(viewWidth - PADDING_LEFT_RIGHT - 5, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
     
     viewHeight += rect.size.height + MARGE + BUTTON_HEIGHT + PADDING_TOP_BOTTOM;
     

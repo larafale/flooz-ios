@@ -13,6 +13,30 @@
 
 @implementation FLSocialHelper
 
++ (FLBorderedActionButton *) createMiniFloozButton:(id)target action:(SEL)action {
+    return [[self class] createMiniFloozButton:target action:action frame:CGRectMake(0, 0, actionButtonHeight + actionButtonMargin, actionButtonHeight)];
+}
+
++ (FLBorderedActionButton *) createMiniFloozButton:(id)target action:(SEL)action size:(CGSize)size {
+    return [[self class] createMiniFloozButton:target action:action frame:CGRectMake(0, 0, size.width, size.height)];
+}
+
++ (FLBorderedActionButton *) createMiniFloozButton:(id)target action:(SEL)action position:(CGPoint)position {
+    return [[self class] createMiniFloozButton:target action:action frame:CGRectMake(position.x, position.y, actionButtonHeight + actionButtonMargin, actionButtonHeight)];
+}
+
++ (FLBorderedActionButton *) createMiniFloozButton:(id)target action:(SEL)action frame:(CGRect)frame {
+    FLBorderedActionButton *button;
+    
+    button = [[FLBorderedActionButton alloc] initWithFrame:frame];
+    button.layer.cornerRadius = 5;
+    [button setImage:[UIImage imageNamed:@"flooz-mini"] size:CGSizeMake(CGRectGetHeight(frame) - actionButtonMargin, CGRectGetHeight(frame) - actionButtonMargin)];
+    [button centerImage];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    
+    return button;
+}
+
 + (FLActionButton *) createMiniUnfriendButton:(id)target action:(SEL)action  {
     return [[self class] createMiniUnfriendButton:target action:action frame:CGRectMake(0, 0, actionButtonHeight + actionButtonMargin, actionButtonHeight)];
 }

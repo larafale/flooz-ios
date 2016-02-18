@@ -79,17 +79,18 @@
 - (void)executeTriggerList:(NSArray<FLTrigger *> *)triggers {
     if (triggers) {
         for (FLTrigger *trigger in triggers) {
-            if (trigger)
+            if (trigger) {
                 [self executeTrigger:trigger];
+            }
         }
     }
 }
 
 - (void)executeTrigger:(FLTrigger *)trigger {
     if (trigger && [self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) {
-        if ([trigger.delay isEqualToNumber:@0])
+        if ([trigger.delay isEqualToNumber:@0]) {
             [self performSelector:NSSelectorFromString([self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) withObject:trigger];
-        else {
+        } else {
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [trigger.delay doubleValue] * NSEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [self performSelector:NSSelectorFromString([self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) withObject:trigger];
@@ -286,7 +287,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
         [self executeTriggerList:trigger.triggers];
     } else if ([trigger.category isEqualToString:@"invitation"]) {
-        [[Flooz sharedInstance] invitationText:^(id result) {
+        [[Flooz sharedInstance] invitationTextForce:^(id result) {
             [self executeTriggerList:trigger.triggers];
         } failure:^(NSError *error) {
             [self executeTriggerList:trigger.triggers];
@@ -525,17 +526,17 @@
         if (self.smsTrigger) {
             if (result == MessageComposeResultSent) {
                 if (self.smsTrigger.data[@"success"]) {
-                    [self executeTriggerList:[FLTriggerManager convertDataInList:self.smsTrigger.data[@"successTriggers"]]];
+                    [self executeTriggerList:[FLTriggerManager convertDataInList:self.smsTrigger.data[@"success"]]];
                 }
             }
             else if (result == MessageComposeResultCancelled) {
                 if (self.smsTrigger.data[@"failure"]) {
-                    [self executeTriggerList:[FLTriggerManager convertDataInList:self.smsTrigger.data[@"failureTriggers"]]];
+                    [self executeTriggerList:[FLTriggerManager convertDataInList:self.smsTrigger.data[@"failure"]]];
                 }
             }
             else if (result == MessageComposeResultFailed) {
                 if (self.smsTrigger.data[@"failure"]) {
-                    [self executeTriggerList:[FLTriggerManager convertDataInList:self.smsTrigger.data[@"failureTriggers"]]];
+                    [self executeTriggerList:[FLTriggerManager convertDataInList:self.smsTrigger.data[@"failure"]]];
                 }
             }
         }

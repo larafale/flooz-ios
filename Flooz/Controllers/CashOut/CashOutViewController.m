@@ -133,11 +133,7 @@
 
 - (void)didValidTouch {
     [[self view] endEditing:YES];
-    
-    //    if ([[dictionary objectForKey:@"amount"] floatValue] <= 0) {
-    //        return;
-    //    }
-    
+
     NSNumber *amount = [dictionary objectForKey:@"amount"];
     
     if (!amount)
@@ -145,38 +141,6 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] cashoutValidate:amount success:^(id result) {
-////        [_amountInput setValid:YES];
-//
-//        CompleteBlock completeBlock = ^{
-//            [[Flooz sharedInstance] showLoadView];
-//            [[Flooz sharedInstance] cashout:amount success: ^(id result) {
-//                [self dismissViewController];
-//            } failure:NULL];
-//        };
-//        
-//        if ([SecureCodeViewController canUseTouchID])
-//            [SecureCodeViewController useToucheID:completeBlock passcodeCallback:^{
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    SecureCodeViewController *controller = [SecureCodeViewController new];
-//                    controller.completeBlock = completeBlock;
-//                    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
-//                        [[Flooz sharedInstance] hideLoadView];
-//                    }];
-//                });
-//            } cancelCallback:^{
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [[Flooz sharedInstance] hideLoadView];
-//                });
-//            }];
-//        else {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                SecureCodeViewController *controller = [SecureCodeViewController new];
-//                controller.completeBlock = completeBlock;
-//                [self presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
-//                    [[Flooz sharedInstance] hideLoadView];
-//                }];
-//            });
-//        }
     } failure:^(NSError *error) {
 //        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
 //        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
