@@ -106,10 +106,23 @@
 }
 
 + (FLActionButton *) createRequestPendingButton:(id)target action:(SEL)action frame:(CGRect)frame  {
-    return  [[self class] generateFullUnfriendButton:[[self class] createMiniUnfriendButton:target action:action frame:frame] text:NSLocalizedString(@"FRIENDS_PENDING", nil)];
+    FLActionButton *button;
+    
+    button = [[FLActionButton alloc] initWithFrame:frame];
+    button.layer.cornerRadius = 5;
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [button.titleLabel setFont:[UIFont customContentBold:14]];
+    [button setTitle:NSLocalizedString(@"FRIENDS_PENDING", nil) forState:UIControlStateNormal];
+    
+    CGFloat textWidth = [button.titleLabel.text widthOfString:button.titleLabel.font];
+    CGFloat fullWidth = textWidth + (2 * actionButtonMargin);
+    
+    CGRectSetWidth(button.frame, fullWidth);
+    return button;
 }
 
 + (FLActionButton *) generateFullUnfriendButton:(FLActionButton*)button text:(NSString *)text {
+   
     [button.titleLabel setFont:[UIFont customContentBold:15]];
     [button setTitle:text forState:UIControlStateNormal];
     
@@ -191,7 +204,20 @@
 }
 
 + (FLBorderedActionButton *) createFriendRequestButton:(id)target action:(SEL)action frame:(CGRect)frame {
-    return  [[self class] generateFullFriendButton:[[self class] createMiniFriendButton:target action:action frame:frame] text:NSLocalizedString(@"FRIENDS_REQUEST", nil)];
+    FLBorderedActionButton *button;
+    
+    button = [[FLBorderedActionButton alloc] initWithFrame:frame];
+    button.layer.cornerRadius = 5;
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [button.titleLabel setFont:[UIFont customContentBold:13]];
+    [button setTitle:NSLocalizedString(@"FRIENDS_REQUEST", nil) forState:UIControlStateNormal];
+    
+    CGFloat textWidth = [button.titleLabel.text widthOfString:button.titleLabel.font];
+    CGFloat fullWidth = textWidth + (2 * actionButtonMargin);
+    
+    CGRectSetWidth(button.frame, fullWidth);
+    
+    return button;
 }
 
 + (FLBorderedActionButton *) generateFullFriendButton:(FLBorderedActionButton*)button  text:(NSString *)text {

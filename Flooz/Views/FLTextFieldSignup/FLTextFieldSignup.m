@@ -85,14 +85,8 @@
         topMargin = 0;
         height = maxHeight;
     }
-    
-    
-    if ([_dictionaryKey isEqualToString:@"iban"]) {
-        [_textfield setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
-    }
-    else {
-        [_textfield setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
-    }
+
+    [_textfield setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
 }
 
 - (void)updateTextField2Frame:(CGRect)currentFrame {
@@ -119,12 +113,7 @@
         height = maxHeight;
     }
     
-    if ([_dictionaryKey isEqualToString:@"iban"]) {
-        [_textfield2 setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
-    }
-    else {
-        [_textfield2 setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
-    }
+    [_textfield2 setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
 }
 
 - (void)createTextField:(NSString *)placeholder {
@@ -259,7 +248,7 @@
     }
     
     if (textField.text.length == 0) {
-        [_dictionary setValue:nil forKey:currentDictionaryKey];
+        [_dictionary setValue:@"" forKey:currentDictionaryKey];
     }
     else {
         [_dictionary setValue:textField.text forKey:currentDictionaryKey];
@@ -283,11 +272,12 @@
     }
     
     if (textField.text.length == 0) {
-        [_dictionary setValue:nil forKey:currentDictionaryKey];
+        [_dictionary setValue:@"" forKey:currentDictionaryKey];
     }
     else {
         [_dictionary setValue:textField.text forKey:currentDictionaryKey];
     }
+    
     [_targetTextChange performSelector:_actionTextChange withObject:self];
 }
 

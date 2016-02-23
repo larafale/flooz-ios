@@ -62,9 +62,6 @@
     if (json[@"amountText"]) {
         _amountText = json[@"amountText"];
     }
-    if (json[@"amountTextFull"]) {
-        _amountTextFull = json[@"amountTextFull"];
-    }
     
     if ([json objectForKey:@"avatar"]) {
         _avatarURL = json[@"avatar"];

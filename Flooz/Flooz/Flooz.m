@@ -131,13 +131,13 @@
 }
 
 - (void) loadTextData {
-//    NSString *textData = [UICKeyChainStore stringForKey:kTextData];
-//    if (textData) {
-//        NSDictionary *textJson = [NSDictionary newWithJSONString:textData];
-//        if (textJson) {
-//            _currentTexts = [[FLTexts alloc] initWithJSON:textJson];
-//        }
-//    }
+    NSString *textData = [UICKeyChainStore stringForKey:kTextData];
+    if (textData) {
+        NSDictionary *textJson = [NSDictionary newWithJSONString:textData];
+        if (textJson) {
+            _currentTexts = [[FLTexts alloc] initWithJSON:textJson];
+        }
+    }
 }
 
 - (NSArray *) loadTimelineData:(TransactionScope)scope {

@@ -83,7 +83,6 @@
     notificationsArray = [[[Flooz sharedInstance] activitiesCached] mutableCopy];
     
     [_tableView reloadData];
-    [_tableView setContentOffset:CGPointZero animated:YES];
 }
 
 - (void)handleRefresh {
@@ -98,7 +97,6 @@
         [refreshControl endRefreshing];
         
         [_tableView reloadData];
-        [_tableView setContentOffset:CGPointZero animated:YES];
     } failure:NULL];
 }
 
