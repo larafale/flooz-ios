@@ -1287,7 +1287,7 @@
         [uploadTask resume];
     }
     else if ([[method uppercaseString] isEqualToString:@"POST"]) {
-        [manager POST:path parameters:params success:successBlock failure:failureBlock];
+        [manager POST:path parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {} success:successBlock failure:failureBlock];
     }
     else if ([[method uppercaseString] isEqualToString:@"PUT"]) {
         [manager PUT:path parameters:params success:successBlock failure:failureBlock];

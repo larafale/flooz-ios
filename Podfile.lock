@@ -1,5 +1,5 @@
 PODS:
-  - ActionSheetPicker-3.0 (2.0.4)
+  - ActionSheetPicker-3.0 (2.0.5)
   - AFNetworking (3.0.4):
     - AFNetworking/NSURLSession (= 3.0.4)
     - AFNetworking/Reachability (= 3.0.4)
@@ -15,33 +15,26 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
-  - Bolts (1.5.1):
-    - Bolts/AppLinks (= 1.5.1)
-    - Bolts/Tasks (= 1.5.1)
-  - Bolts/AppLinks (1.5.1):
+  - Bolts (1.6.0):
+    - Bolts/AppLinks (= 1.6.0)
+    - Bolts/Tasks (= 1.6.0)
+  - Bolts/AppLinks (1.6.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.5.1)
-  - Branch (0.11.13)
-  - Crashlytics (3.4.1):
-    - Fabric (~> 1.6.0)
+  - Bolts/Tasks (1.6.0)
+  - Branch (0.11.16)
+  - Crashlytics (3.7.0):
+    - Fabric (~> 1.6.3)
   - DACircularProgress (2.3.1)
   - EAIntroView (2.8.1):
     - EARestrictedScrollView (~> 0.2.0)
   - EARestrictedScrollView (0.2.0)
-  - Fabric (1.6.1)
-  - FBSDKCoreKit (4.8.0):
-    - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc (= 4.8.0)
-    - FBSDKCoreKit/no-arc (= 4.8.0)
-  - FBSDKCoreKit/arc (4.8.0):
-    - Bolts (~> 1.1)
-  - FBSDKCoreKit/no-arc (4.8.0):
-    - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc
-  - FBSDKLoginKit (4.8.0):
+  - Fabric (1.6.6)
+  - FBSDKCoreKit (4.10.0):
+    - Bolts (~> 1.5)
+  - FBSDKLoginKit (4.10.0):
     - FBSDKCoreKit
   - FBSDKMessengerShareKit (1.3.2)
-  - FBSDKShareKit (4.8.0):
+  - FBSDKShareKit (4.10.0):
     - FBSDKCoreKit
   - FXBlurView (1.6.4)
   - GBDeviceInfo (3.6.1):
@@ -57,11 +50,11 @@ PODS:
   - JPSVolumeButtonHandler (1.0.0)
   - JTHelper (0.3.0)
   - JTSImageViewController (1.5.1)
-  - libPhoneNumber-iOS (0.8.10)
+  - libPhoneNumber-iOS (0.8.11)
   - MGSwipeTableCell (1.5.3)
-  - Mixpanel (2.9.1):
-    - Mixpanel/Mixpanel (= 2.9.1)
-  - Mixpanel/Mixpanel (2.9.1)
+  - Mixpanel (2.9.4):
+    - Mixpanel/Mixpanel (= 2.9.4)
+  - Mixpanel/Mixpanel (2.9.4)
   - MZAppearance (1.1.6)
   - MZFormSheetController (3.1.3):
     - MZAppearance
@@ -69,24 +62,24 @@ PODS:
   - MZFormSheetController/Core (3.1.3):
     - MZAppearance
   - NSDate+Calendar (0.0.8)
-  - OneSignal (1.10.6)
+  - OneSignal (1.11.0)
   - PonyDebugger (0.4.5):
     - SocketRocket
-  - pop (1.0.8)
+  - pop (1.0.9)
   - PPHelpMe (1.0.2)
   - RDVTabBarController (1.1.9)
-  - SDWebImage (3.7.3):
-    - SDWebImage/Core (= 3.7.3)
-  - SDWebImage/Core (3.7.3)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
   - SMPageControl (1.2)
   - SocketRocket (0.4.2)
-  - Stripe (6.0.1):
-    - Stripe/Core (= 6.0.1)
-  - Stripe/Core (6.0.1)
+  - Stripe (6.2.0):
+    - Stripe/Core (= 6.2.0)
+  - Stripe/Core (6.2.0)
   - TTTAttributedLabel (1.13.4)
   - TUSafariActivity (1.0.4)
   - UICKeyChainStore (2.1.0)
-  - UIFloatLabelTextField (1.2.3)
+  - UIFloatLabelTextField (1.2.4)
   - VCTransitionsLibrary (1.5.0)
 
 DEPENDENCIES:
@@ -128,19 +121,19 @@ DEPENDENCIES:
   - VCTransitionsLibrary
 
 SPEC CHECKSUMS:
-  ActionSheetPicker-3.0: 860466cb4a66854e6acb590071ecee404b48f49d
+  ActionSheetPicker-3.0: 8312778b6815578e6a86d630fbcf31dc94c534e7
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
-  Bolts: a12663244b1d3351c738882e71902fc74db54f64
-  Branch: 37553775450de2d844b03a0854c37d6271d967e7
-  Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
+  Bolts: f52a250053bb517ca874523c3913776359ab3def
+  Branch: 6cdaad57d256fc823a30f725256e2494e91e8c67
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: 73abfa89caa311f450af876421d950b96679e845
   EARestrictedScrollView: f86d61e16c61d3e93c84f8e96e83122a2a3b7631
-  Fabric: bf0ceb04e7c924090efc5f8c55e4fbcca189e0a0
-  FBSDKCoreKit: 66a935d17b6e00b6b64e604f2eb9b72c9ab7deb8
-  FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4
+  Fabric: 1abc1e59f11fa39ede6f690ef7309d8563e3ec59
+  FBSDKCoreKit: 13bec8373fb3af94d44daf2aa1e0958687897fbd
+  FBSDKLoginKit: d3d4a2e9d31954deb00bfea964167a05ca1ea976
   FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
-  FBSDKShareKit: e7577ee3adf80fc04fb656dd133fbb522250672b
+  FBSDKShareKit: 54587b4624706ace1e810cf83412a918141f807a
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GBDeviceInfo: d9267d7d7d2ee3e53e4ea64df392689a930607a4
   HHRouter: c82ce169fea838ea85a819133df40d19605f5c95
@@ -150,25 +143,25 @@ SPEC CHECKSUMS:
   JPSVolumeButtonHandler: b056ec5c574fbd75a0637c527e25fe0197ec1648
   JTHelper: b9b56980755bf6d9f7ed58a2490205109658087e
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
-  libPhoneNumber-iOS: 7bfd00f843fdcd82b5182b463e8eb3b27579f41d
+  libPhoneNumber-iOS: ded33fab2c51ee847979556aa504c9e70f32d703
   MGSwipeTableCell: 5ae3b9a15efda26b201adc8676b24040febe6ff6
-  Mixpanel: 5ca24b2a05f4c77fe9bcfe7671d681d0f3f8d76f
+  Mixpanel: 80d2ca9bb38ae91c1044d738e80fe448377ac89f
   MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
   MZFormSheetController: da2df509805d757e04b052915057d8e1a338b050
   NSDate+Calendar: 4aa9f6eb520bdbe7cfd82fbf6c7d35b9725c8188
-  OneSignal: fd84b309adc9826826dca53c0048e1a93d37940e
+  OneSignal: 85d4e842b26d1a6492efa9c3ecf3b38151339f8e
   PonyDebugger: 1c60f7c876bdb6a8b6bf0f0269087f8a234fafa7
-  pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
   RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
-  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
   SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
-  Stripe: 04f215191702c268b89fe0cdf28dc24a9688a71b
+  Stripe: 275524137e6c4cc1058f6d32ece248adf30a21f9
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
-  UIFloatLabelTextField: 24313cde1488784ed3b5d1c7d4dd329e60935028
+  UIFloatLabelTextField: bb30a4ae6720a89fc9fb51134f39f0e776ff9551
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
 
 COCOAPODS: 0.39.0
