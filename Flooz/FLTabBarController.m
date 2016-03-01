@@ -15,22 +15,24 @@
 #import "SDWebImageDownloader.h"
 #import "UserViewController.h"
 #import "DealViewController.h"
-
 #import "UITabBarItem+CustomBadge.h"
-
+#import "FXBlurView.h"
 #import "FLTabBarController.h"
 
 @interface UITabBarController (private)
 - (UITabBar *)tabBar;
 @end
 
-@interface FLTabBarController () {
+@interface FLTabBarController()<LiquidFloatingActionButtonDataSource, LiquidFloatingActionButtonDelegate> {
     UITabBarItem *homeItem;
     UITabBarItem *notifItem;
     UITabBarItem *floozItem;
     UITabBarItem *thirdItem;
     UITabBarItem *profileItem;
-    UIButton *centerButton;
+    
+    LiquidFloatingActionButton *homeButton;
+    FXBlurView *homeButtonOverlay;
+    NSArray *homeSubButtons;
 }
 
 @end
@@ -63,25 +65,18 @@
     
     FLNavigationController *thirdNavigationController;
     
-//    NSDictionary *ux = [[[Flooz sharedInstance] currentUser] ux];
-//    if (ux && ux[@"deals"] && [ux[@"deals"] boolValue]) {
-//        thirdItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_DEALS", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-deals"] scaledToSize:iconSize] tag:3];
-//        thirdNavigationController = [[FLNavigationController alloc] initWithRootViewController:[DealViewController new]];
-//    } else {
-        thirdItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_SHARE", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-share"] scaledToSize:iconSize] tag:3];
-        thirdNavigationController = [[FLNavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
-
-        [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
-            [thirdItem setTitle:result.shareTitle];
-        } failure:^(NSError *error) {
-            
-        }];
-//    }
+    thirdItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TAB_BAR_SHARE", nil) image:[FLHelper imageWithImage:[UIImage imageNamed:@"menu-share"] scaledToSize:iconSize] tag:3];
+    thirdNavigationController = [[FLNavigationController alloc] initWithRootViewController:[ShareAppViewController new]];
+    
+    [[Flooz sharedInstance] invitationText:^(FLInvitationTexts *result) {
+        [thirdItem setTitle:result.shareTitle];
+    } failure:^(NSError *error) {
+        
+    }];
     
     FLNavigationController *homeNavigationController = [[FLNavigationController alloc] initWithRootViewController:[TimelineViewController new]];
     FLNavigationController *notifNavigationController = [[FLNavigationController alloc] initWithRootViewController:[NotificationsViewController new]];
     FLNavigationController *floozNavigationController = [[FLNavigationController alloc] initWithRootViewController:[UIViewController new]];
-    
     FLNavigationController *profileNavigationController = [[FLNavigationController alloc] initWithRootViewController:[[UserViewController alloc] initWithUser:[Flooz sharedInstance].currentUser]];
     
     [[homeNavigationController.viewControllers objectAtIndex:0] setTabBarItem:homeItem];
@@ -108,7 +103,7 @@
     self.tabBar.clipsToBounds = NO;
     self.tabBar.layer.shadowPath = shadowPath.CGPath;
     
-    [self addCenterButtonWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"flooz-mini"] scaledToSize:CGSizeMake(35, 35)] highlightImage:nil];
+    [self addHomeButton];
     
     [self reloadBadge];
     [self reloadCurrentUser];
@@ -148,33 +143,58 @@
         [profileItem setCustomBadgeValue:nil withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
 }
 
--(void) addCenterButtonWithImage:(UIImage*)buttonImage highlightImage:(UIImage*)highlightImage
+-(void) addHomeButton
 {
-    centerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    centerButton.contentMode = UIViewContentModeCenter;
-    centerButton.frame = CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 10.0f, CGRectGetHeight(self.tabBar.frame) + 10.0f);
-    [centerButton setImage:buttonImage forState:UIControlStateNormal];
-    [centerButton setImage:highlightImage forState:UIControlStateHighlighted];
-    [centerButton setBackgroundColor:[UIColor customBackground]];
-    centerButton.clipsToBounds = YES;
-    centerButton.layer.masksToBounds = YES;
-    centerButton.layer.cornerRadius = CGRectGetHeight(centerButton.frame) / 2;
-    [centerButton addTarget:self action:@selector(openNewFlooz) forControlEvents:UIControlEventTouchUpInside];
+    homeButtonOverlay = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
+    [homeButtonOverlay setDynamic:NO];
+    [homeButtonOverlay setBlurRadius:10];
+    [homeButtonOverlay setTintColor:[UIColor clearColor]];
+    [homeButtonOverlay setHidden:YES];
+    [homeButtonOverlay setUserInteractionEnabled:false];
+    [homeButtonOverlay addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didHomeButtonOverlayClick)]];
     
-    UIView *container = [[UIView alloc] initWithFrame:centerButton.frame];
+    homeButton = [[LiquidFloatingActionButton alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 15.0f, CGRectGetHeight(self.tabBar.frame) + 15.0f)];
+    homeButton.delegate = self;
+    homeButton.dataSource = self;
+    homeButton.openDuration = 0.5;
+    homeButton.closeDuration = 0.2;
+    homeButton.viscosity = 1;
+    homeButton.color = [UIColor customBlue];
+    homeButton.cellRadiusRatio = 0.6;
+    
+    UIView *container = [[UIView alloc] initWithFrame:homeButton.frame];
     container.backgroundColor = [UIColor clearColor];
     [container.layer setShadowColor:[UIColor blackColor].CGColor];
-    [container.layer setShadowOpacity:.4];
-    [container.layer setShadowRadius:1];
-    [container.layer setShadowOffset:CGSizeMake(0.0, -2.0)];
-    [container.layer setShadowPath:[UIBezierPath bezierPathWithRoundedRect:container.bounds cornerRadius:centerButton.layer.cornerRadius].CGPath];
+    [container.layer setShadowOpacity:.6];
+    [container.layer setShadowRadius:1.0];
+    [container.layer setShadowOffset:CGSizeMake(0.0, -3.5)];
+    [container.layer setShadowPath:[UIBezierPath bezierPathWithRoundedRect:container.bounds cornerRadius:(CGRectGetHeight(self.tabBar.frame) + 10.0f) * 0.5].CGPath];
     container.center = self.tabBar.center;
-
+    
     CGRectSetY(container.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(container.frame) - 3.0f);
     
-    [container addSubview:centerButton];
+    [container addSubview:homeButton];
     
+    [self.view addSubview:homeButtonOverlay];
     [self.view addSubview:container];
+    
+    homeSubButtons = @[[self createHomeSubButton:@"Payer"], [self createHomeSubButton:@"Réclamer"], [self createHomeSubButton:@"Cagnotte"]];
+}
+
+- (LiquidFloatingCell *) createHomeSubButton:(NSString *)content {
+    UILabel *label = [UILabel new];
+    [label setFont:[UIFont customContentRegular:14]];
+    [label setTextColor:[UIColor whiteColor]];
+    [label setText:content];
+    [label setNumberOfLines:1];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setAdjustsFontSizeToFitWidth:YES];
+    [label setMinimumScaleFactor:10. / label.font.pointSize];
+    
+    LiquidFloatingCell *cell = [[LiquidFloatingCell alloc] initWithView:label];
+    cell.internalRatio = 0.5;
+    
+    return cell;
 }
 
 - (void)openNewFlooz {
@@ -194,6 +214,7 @@
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    [homeButtonOverlay updateAsynchronously:YES completion:nil];
     if ([viewController isEqual:[self.viewControllers objectAtIndex:2]]) {
         [[appDelegate myTopViewController] mz_dismissFormSheetControllerAnimated:NO completionHandler:nil];
         
@@ -212,6 +233,47 @@
     }
     
     return YES;
+}
+
+- (void)liquidFloatingActionButtonAnimate:(LiquidFloatingActionButton *)liquidFloatingActionButton {
+    [homeButtonOverlay updateAsynchronously:YES completion:nil];
+    [homeButtonOverlay setHidden:NO];
+    [homeButtonOverlay setAlpha:0.0f];
+    [UIView animateWithDuration:homeButton.openDuration animations:^{
+        [homeButtonOverlay setUserInteractionEnabled:YES];
+        [homeButtonOverlay setAlpha:1.0f];
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (void)liquidFloatingActionButtonClose:(LiquidFloatingActionButton *)liquidFloatingActionButton {
+    [homeButtonOverlay setUserInteractionEnabled:NO];
+    
+    [UIView animateWithDuration:homeButton.openDuration animations:^{
+        [homeButtonOverlay setUserInteractionEnabled:YES];
+        [homeButtonOverlay setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [homeButtonOverlay setHidden:YES];
+    }];
+}
+
+- (LiquidFloatingCell *)cellForIndex:(NSInteger)index {
+    return homeSubButtons[index];
+}
+
+- (NSInteger)numberOfCells:(LiquidFloatingActionButton *)liquidFloatingActionButton {
+    return homeSubButtons.count;
+}
+
+- (void)liquidFloatingActionButton:(LiquidFloatingActionButton *)liquidFloatingActionButton didSelectItemAtIndex:(NSInteger)index {
+    
+}
+
+- (void)didHomeButtonOverlayClick {
+    if (!homeButton.isClosed) {
+        [homeButton close];
+    }
 }
 
 - (void)reloadBadge {

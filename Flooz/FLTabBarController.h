@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class LiquidFloatingActionButton;
+
 @interface FLTabBarController : UITabBarController<UITabBarControllerDelegate, UINavigationControllerDelegate>
 
 @end
