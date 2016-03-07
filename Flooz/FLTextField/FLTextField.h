@@ -42,6 +42,7 @@ typedef NS_ENUM(NSInteger, FLTextFieldType) {
 
 - (void)addForNextClickTarget:(id)target action:(SEL)action;
 - (void)addForTextChangeTarget:(id)target action:(SEL)action;
+- (void)addTextFocusTarget:(id)instance action:(SEL)action;
 
 - (void)setDictionary:(nonnull NSMutableDictionary *)dic key:(nonnull NSString *)k;
 

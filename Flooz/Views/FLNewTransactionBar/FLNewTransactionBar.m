@@ -10,6 +10,7 @@
 
 #import "AppDelegate.h"
 #import "NewTransactionViewController.h"
+#import "NewCollectController.h"
 
 #define LOCATION_BAR_HEIGHT 20
 #define BAR_HEIGHT 50.
@@ -45,8 +46,9 @@
 @synthesize askButton;
 @synthesize sendButton;
 @synthesize locationButton;
+@synthesize collectButton;
 
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCollect:(SEL)actionCollect {
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCharge:(SEL)actionCharge{
     heightBar = BAR_HEIGHT;
     marginH = MARGIN_H;
     marginV = MARGIN_V;
@@ -64,6 +66,35 @@
         _dictionary = dictionary;
         currentController = controller;
         actionValidSend = actionSend;
+        actionValidCharge = actionCharge;
+        
+        if (!IS_IPHONE_4)
+            [self createLocationView];
+        
+        [self createTabBarView];
+        
+        privacyListController = [FLPrivacySelectorViewController new];
+        privacyListController.delegate = self;
+    }
+    return self;
+}
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionCollect:(SEL)actionCollect {
+    heightBar = BAR_HEIGHT;
+    marginH = MARGIN_H;
+    marginV = MARGIN_V;
+    widthBar = SCREEN_WIDTH;
+    
+    if (!IS_IPHONE_4)
+        heightBar += LOCATION_BAR_HEIGHT;
+    
+    self = [super initWithFrame:CGRectMake(0, 0, widthBar, heightBar)];
+    if (self) {
+        paymentButtonWidth = (widthBar / 4.0f) - marginH - (marginH / 2);
+        actionButtonHeight = actionButtonWidth = paymentButtonHeight = BAR_HEIGHT - (marginV * 2.0f);
+        actionButtonMargin = ((widthBar / 2.0f) - (3.0f * actionButtonWidth)) / 4.0f;
+        
+        _dictionary = dictionary;
+        currentController = controller;
         actionValidCollect = actionCollect;
         
         if (!IS_IPHONE_4)
@@ -115,11 +146,10 @@
 }
 
 - (void)createButtonSend {
-    
     askButton = [[FLActionButton alloc] initWithFrame:CGRectMake((widthBar / 2) + marginH, marginV, paymentButtonWidth, paymentButtonHeight)];
-    [askButton setTitle:NSLocalizedString(@"MENU_COLLECT", nil) forState:UIControlStateNormal];
+    [askButton setTitle:NSLocalizedString(@"MENU_CHARGE", nil) forState:UIControlStateNormal];
     askButton.titleLabel.font = [UIFont customTitleLight:14];
-    [askButton addTarget:currentController action:actionValidCollect forControlEvents:UIControlEventTouchUpInside];
+    [askButton addTarget:currentController action:actionValidCharge forControlEvents:UIControlEventTouchUpInside];
     [tabBarView addSubview:askButton];
     
     sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake((widthBar / 2) + (widthBar / 4) + (marginH / 2), marginV, paymentButtonWidth, paymentButtonHeight)];
@@ -128,19 +158,31 @@
     [sendButton addTarget:currentController action:actionValidSend forControlEvents:UIControlEventTouchUpInside];
     [tabBarView addSubview:sendButton];
     
-    if ([_dictionary[@"preset"] boolValue]) {
-        if ([_dictionary[@"method"] isEqualToString:@"pay"]) {
-            [askButton removeFromSuperview];
-            
-            [sendButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-            sendButton.titleLabel.font = [UIFont customTitleLight:16];
+    collectButton = [[FLActionButton alloc] initWithFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
+    [collectButton setTitle:NSLocalizedString(@"MENU_COLLECT", nil) forState:UIControlStateNormal];
+    collectButton.titleLabel.font = [UIFont customTitleLight:16];
+    [collectButton addTarget:currentController action:actionValidCollect forControlEvents:UIControlEventTouchUpInside];
+    [tabBarView addSubview:collectButton];
+    
+    if ([currentController isKindOfClass:[NewTransactionViewController class]]) {
+        [collectButton removeFromSuperview];
+        if ([_dictionary[@"preset"] boolValue]) {
+            if ([_dictionary[@"method"] isEqualToString:@"pay"]) {
+                [askButton removeFromSuperview];
+                
+                [sendButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
+                sendButton.titleLabel.font = [UIFont customTitleLight:16];
+            }
+            else if ([_dictionary[@"method"] isEqualToString:@"charge"]) {
+                [sendButton removeFromSuperview];
+                
+                [askButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
+                askButton.titleLabel.font = [UIFont customTitleLight:16];
+            }
         }
-        else if ([_dictionary[@"method"] isEqualToString:@"charge"]) {
-            [sendButton removeFromSuperview];
-            
-            [askButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-            askButton.titleLabel.font = [UIFont customTitleLight:16];
-        }
+    } else if ([currentController isKindOfClass:[NewCollectController class]]) {
+        [askButton removeFromSuperview];
+        [sendButton removeFromSuperview];
     }
 }
 
@@ -180,7 +222,7 @@
     
     tabBarView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, PPScreenWidth(), BAR_HEIGHT)];
     tabBarView.backgroundColor = [UIColor customMiddleBlue];
-
+    
     [self createPrivacyButton];
     [self createImageButton];
     [self createLocationButton];
@@ -285,7 +327,7 @@
     popoverController = [[WYPopoverController alloc] initWithContentViewController:privacyListController];
     popoverController.delegate = self;
     popoverController.theme.dimsBackgroundViewsTintColor = NO;
-
+    
     [popoverController presentPopoverFromRect:privacyButton.bounds inView:privacyButton permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
 }
 

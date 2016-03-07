@@ -32,7 +32,6 @@
 
 - (id)initWithTransactionType:(TransactionType)transactionType;
 - (id)initWithTransactionType:(TransactionType)transactionType user:(FLUser *)user;
-- (id)initWithPreset:(FLPreset *)preset;
 - (void)presentCamera;
 - (void)presentLocation;
 

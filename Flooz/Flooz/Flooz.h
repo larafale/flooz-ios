@@ -127,6 +127,7 @@ static NSString *kLocationData = @"locationData";
 - (void)placesFrom:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)placesSearch:(NSString *)search from:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
+- (void)createCollectValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;

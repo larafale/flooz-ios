@@ -18,6 +18,9 @@
     id _targetTextChange;
     SEL _actionTextChange;
     
+    id _focusId;
+    SEL _focusAction;
+
     NSString *_filterDate;
     
     UIImage *tintedClearImage;
@@ -122,6 +125,12 @@
     _targetTextChange = target;
     _actionTextChange = action;
 }
+
+- (void)addTextFocusTarget:(id)instance action:(SEL)action {
+    _focusId = instance;
+    _focusAction = action;
+}
+
 - (void)setDictionary:(nonnull NSMutableDictionary *)dic key:(nonnull NSString *)k {
     _dictionary = dic;
     _dictionaryKey = k;
@@ -201,6 +210,10 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     [self setSelected:YES];
     [self updateBottomLine];
+    
+    if (_focusId) {
+        [_focusId performSelector:_focusAction withObject:nil];
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {

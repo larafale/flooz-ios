@@ -88,6 +88,9 @@
 "FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Ex: Pour le resto";
 "FIELD_TRANSACTION_SELECT_FRIEND" = "A qui ?";
 
+"FIELD_COLLECT_NAME_PLACEHOLDER" = "Nom de la cagnotte";
+"FIELD_COLLECT_CONTENT_PLACEHOLDER" = "Description";
+
 "CASHOUT_FIELD" = "Saisir le montant à retirer";
 
 
@@ -216,7 +219,8 @@
 "MENU_NEW_TRANSACTION_COLLECT" = "Réclamer";
 
 "MENU_PAYMENT" = "Payer";
-"MENU_COLLECT" = "Réclamer";
+"MENU_CHARGE" = "Réclamer";
+"MENU_COLLECT" = "Créer";
 "MENU_NEW_FLOOZ" = "Floozer @%@";
 "MENU_ADD_FRIENDS" = "Demander @%@ en ami";
 "MENU_REMOVE_FRIENDS" = "Supprimer des amis";
@@ -302,6 +306,7 @@
 /************************************/
 
 "NEW_TRANSACTION" = "Flooz";
+"NEW_COLLECT" = "Cagnotte";
 
 "TRANSACTION_ACTION_ACCEPT" = "ACCEPTER";
 "TRANSACTION_ACTION_REFUSE" = "REFUSER";

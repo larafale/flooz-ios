@@ -38,11 +38,14 @@
     self.payload = [json objectForKey:@"payload"];
     self.image = [json objectForKey:@"image"];
     self.geo = [json objectForKey:@"geo"];
-    
+    self.name = [json objectForKey:@"name"];
+    self.namePlaceholder = [json objectForKey:@"namePlaceholder"];
     self.popup = [json objectForKey:@"popup"];
     self.steps = [json objectForKey:@"steps"];
     
     self.title = [json objectForKey:@"title"];
+    
+    self.type = TransactionTypeBase;
     
     if ([json objectForKey:@"block"]) {
         if ([[json objectForKey:@"block"] objectForKey:@"amount"])

@@ -12,6 +12,8 @@
 
 @property (nonatomic, retain) FLUser *to;
 @property (nonatomic, retain) NSNumber *amount;
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSString *namePlaceholder;
 @property (nonatomic, retain) NSString *why;
 @property (nonatomic, retain) NSString *whyPlaceholder;
 @property (nonatomic, retain) NSString *image;

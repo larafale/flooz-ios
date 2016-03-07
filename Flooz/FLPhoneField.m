@@ -47,27 +47,19 @@
             NSLocale *currentLocale = [NSLocale currentLocale];
             NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
             
-            if ([Flooz sharedInstance].currentTexts) {
+            [[Flooz sharedInstance] textObjectFromApi:^(id result) {
                 self.currentCountry = [FLCountry countryFromCode:countryCode];
                 if (!self.currentCountry)
                     self.currentCountry = [FLCountry defaultCountry];
                 
                 [_dictionary setValue:self.currentCountry.code forKey:@"country"];
-            } else {
-                [[Flooz sharedInstance] textObjectFromApi:^(id result) {
-                    self.currentCountry = [FLCountry countryFromCode:countryCode];
-                    if (!self.currentCountry)
-                        self.currentCountry = [FLCountry defaultCountry];
-                    
-                    [_dictionary setValue:self.currentCountry.code forKey:@"country"];
-                    [self reloadTextField];
-                } failure:^(NSError *error) {
-                    self.currentCountry = [FLCountry defaultCountry];
-                    [_dictionary setValue:self.currentCountry.code forKey:@"country"];
-                    
-                    [self reloadTextField];
-                }];
-            }
+                [self reloadTextField];
+            } failure:^(NSError *error) {
+                self.currentCountry = [FLCountry defaultCountry];
+                [_dictionary setValue:self.currentCountry.code forKey:@"country"];
+                
+                [self reloadTextField];
+            }];
         }
         
         [self createCoutryView];

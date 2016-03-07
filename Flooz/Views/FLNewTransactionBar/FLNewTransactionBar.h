@@ -23,6 +23,7 @@
 @interface FLNewTransactionBar : UIView <CLLocationManagerDelegate, WYPopoverControllerDelegate, FLPrivacySelectorDelegate> {
 	SEL actionValidSend;
 	SEL actionValidCollect;
+    SEL actionValidCharge;
 
 	__weak NSMutableDictionary *_dictionary;
 	CLLocationManager *locationManager;
@@ -37,8 +38,10 @@
 @property (nonatomic, retain) UIButton *locationButton;;
 @property (nonatomic, retain) FLActionButton *askButton;;
 @property (nonatomic, retain) FLActionButton *sendButton;;
+@property (nonatomic, retain) FLActionButton *collectButton;;
 
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCollect:(SEL)actionCollect;
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCharge:(SEL)actionCharge;
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionCollect:(SEL)actionCollect;
 - (void)reloadData;
 - (void)enablePaymentButtons:(BOOL)enable;
 - (void)hideChargeButton:(BOOL)hidden;

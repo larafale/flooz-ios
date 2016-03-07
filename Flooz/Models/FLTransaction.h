@@ -51,6 +51,7 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (strong, nonatomic) NSString *amountText;
 @property (strong, nonatomic) NSString *avatarURL;
 
+@property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *content;
 @property (strong, nonatomic) NSString *attachmentURL;
@@ -72,11 +73,9 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (strong, nonatomic) NSString *location;
 
 @property (strong, nonatomic) NSArray *comments;
+@property (strong, nonatomic) NSArray *participants;
 
 @property (nonatomic) BOOL isCollect;
-@property (nonatomic) BOOL collectCanParticipate;
-@property (strong, nonatomic) NSArray *collectUsers;
-@property (strong, nonatomic) NSString *collectTitle;
 
 @property (nonatomic) BOOL haveAction;
 

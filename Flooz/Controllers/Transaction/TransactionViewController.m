@@ -234,7 +234,7 @@
         height1 = CGRectGetMaxY(view.frame);
         height += CGRectGetMaxY(view.frame);
         
-        if ([_transaction haveAction] || (_transaction.isCollect && _transaction.collectCanParticipate)) {
+        if ([_transaction haveAction]) {
             if (_transaction.isAcceptable || _transaction.isCancelable) {
                 actionsView = [[TransactionActionsView alloc] initWithFrame:CGRectMake(20.0f, 0.0f, CGRectGetWidth(floozerView.frame) - 2 * 20.0f, 0)];
                 actionsView.transaction = _transaction;
@@ -256,7 +256,7 @@
     [_contentView addSubview:_descriptionView];
     
     CGFloat yStart = 0.0f;
-    if ([_transaction haveAction] || (_transaction.isCollect && _transaction.collectCanParticipate)) {
+    if ([_transaction haveAction]) {
         if (_transaction.isAcceptable || _transaction.isCancelable) {
             yStart = 15.0f;
         }

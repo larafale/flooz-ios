@@ -67,8 +67,11 @@
         _avatarURL = json[@"avatar"];
     }
     
+    _name = [json objectForKey:@"name"];
     _title = [json objectForKey:@"text"];
     _content = [json objectForKey:@"why"];
+    
+    _participants = [json objectForKey:@"participants"];
     
     _location = [json objectForKey:@"location"];
     

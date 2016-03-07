@@ -18,6 +18,7 @@
 #import "UITabBarItem+CustomBadge.h"
 #import "FXBlurView.h"
 #import "FLTabBarController.h"
+#import "NewCollectController.h"
 
 @interface UITabBarController (private)
 - (UITabBar *)tabBar;
@@ -156,43 +157,46 @@
     homeButton = [[LiquidFloatingActionButton alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 15.0f, CGRectGetHeight(self.tabBar.frame) + 15.0f)];
     homeButton.delegate = self;
     homeButton.dataSource = self;
-    homeButton.openDuration = 0.5;
-    homeButton.closeDuration = 0.2;
-    homeButton.viscosity = 1;
+    homeButton.openDuration = 0.4;
+    homeButton.closeDuration = 0.3;
+    homeButton.viscosity = 0.75;
     homeButton.color = [UIColor customBlue];
-    homeButton.cellRadiusRatio = 0.6;
+    homeButton.cellRadiusRatio = 0.52;
+    homeButton.userInteractionEnabled = YES;
+    homeButton.center = self.tabBar.center;
     
-    UIView *container = [[UIView alloc] initWithFrame:homeButton.frame];
-    container.backgroundColor = [UIColor clearColor];
-    [container.layer setShadowColor:[UIColor blackColor].CGColor];
-    [container.layer setShadowOpacity:.6];
-    [container.layer setShadowRadius:1.0];
-    [container.layer setShadowOffset:CGSizeMake(0.0, -3.5)];
-    [container.layer setShadowPath:[UIBezierPath bezierPathWithRoundedRect:container.bounds cornerRadius:(CGRectGetHeight(self.tabBar.frame) + 10.0f) * 0.5].CGPath];
-    container.center = self.tabBar.center;
+    [homeButton.layer setShadowColor:[UIColor blackColor].CGColor];
+    [homeButton.layer setShadowOpacity:.6];
+    [homeButton.layer setShadowRadius:1.0];
+    [homeButton.layer setShadowOffset:CGSizeMake(0.0, -2.0)];
+    [homeButton.layer setShadowPath:[UIBezierPath bezierPathWithRoundedRect:homeButton.bounds cornerRadius:(CGRectGetHeight(self.tabBar.frame) + 10.0f) * 0.5].CGPath];
     
-    CGRectSetY(container.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(container.frame) - 3.0f);
-    
-    [container addSubview:homeButton];
+    CGRectSetY(homeButton.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(homeButton.frame) - 3.0f);
     
     [self.view addSubview:homeButtonOverlay];
-    [self.view addSubview:container];
     
-    homeSubButtons = @[[self createHomeSubButton:@"Payer"], [self createHomeSubButton:@"Réclamer"], [self createHomeSubButton:@"Cagnotte"]];
+    [self.view addSubview:homeButton];
+    
+    homeSubButtons = @[[self createHomeSubButton:@"Floozer" color:[UIColor customRed]],
+                       [self createHomeSubButton:@"Réclamer" color:[UIColor customGreen]],
+                       [self createHomeSubButton:@"Cagnotte" color:[UIColor customPink]]];
 }
 
-- (LiquidFloatingCell *) createHomeSubButton:(NSString *)content {
+- (LiquidFloatingCell *) createHomeSubButton:(NSString *)content color:(UIColor *)color {
     UILabel *label = [UILabel new];
-    [label setFont:[UIFont customContentRegular:14]];
+    [label setFont:[UIFont customContentRegular:16]];
     [label setTextColor:[UIColor whiteColor]];
     [label setText:content];
     [label setNumberOfLines:1];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAdjustsFontSizeToFitWidth:YES];
     [label setMinimumScaleFactor:10. / label.font.pointSize];
+    [label setUserInteractionEnabled:YES];
     
     LiquidFloatingCell *cell = [[LiquidFloatingCell alloc] initWithView:label];
     cell.internalRatio = 0.5;
+    cell.color = color;
+    cell.userInteractionEnabled = YES;
     
     return cell;
 }
@@ -267,7 +271,41 @@
 }
 
 - (void)liquidFloatingActionButton:(LiquidFloatingActionButton *)liquidFloatingActionButton didSelectItemAtIndex:(NSInteger)index {
-    
+    [liquidFloatingActionButton close];
+    switch (index) {
+        case 0:
+        {
+            NewTransactionViewController *newTransac = [[NewTransactionViewController alloc] initWithTransactionType:TransactionTypePayment];
+            
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:newTransac];
+            controller.modalPresentationStyle = UIModalPresentationCustom;
+            
+            [self presentViewController:controller animated:YES completion:NULL];
+        }
+            break;
+        case 1:
+        {
+            NewTransactionViewController *newTransac = [[NewTransactionViewController alloc] initWithTransactionType:TransactionTypeCharge];
+            
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:newTransac];
+            controller.modalPresentationStyle = UIModalPresentationCustom;
+            
+            [self presentViewController:controller animated:YES completion:NULL];
+        }
+            break;
+        case 2:
+        {
+            NewCollectController *newTransac = [NewCollectController new];
+            
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:newTransac];
+            controller.modalPresentationStyle = UIModalPresentationCustom;
+            
+            [self presentViewController:controller animated:YES completion:NULL];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)didHomeButtonOverlayClick {

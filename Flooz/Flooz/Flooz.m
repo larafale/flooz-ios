@@ -859,8 +859,26 @@
     } failure:failure];
 }
 
-- (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
-{
+- (void)createCollectValidate:(NSDictionary *)transaction success:(void (^)(id result))success {
+    NSMutableDictionary *tempTransaction = [transaction mutableCopy];
+    
+    if (tempTransaction[@"image"]) {
+        [tempTransaction removeObjectForKey:@"image"];
+        [tempTransaction setObject:@YES forKey:@"hasImage"];
+    }
+    
+    [tempTransaction removeObjectForKey:@"toImage"];
+    [tempTransaction removeObjectForKey:@"preset"];
+    
+    tempTransaction[@"validate"] = @"true";
+    
+    if ([SecureCodeViewController hasSecureCodeForCurrentUser])
+        [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
+    
+    [self requestPath:@"/pots" method:@"POST" params:tempTransaction success:success fullFailure:nil];
+}
+
+- (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success {
     NSMutableDictionary *tempTransaction = [transaction mutableCopy];
     
     if (tempTransaction[@"image"]) {

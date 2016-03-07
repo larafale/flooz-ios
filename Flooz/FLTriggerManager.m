@@ -38,6 +38,7 @@
 #import "AccountViewController.h"
 #import "TransactionViewController.h"
 #import "TimelineViewController.h"
+#import "NewCollectController.h"
 
 @interface FLTriggerManager ()
 
@@ -568,7 +569,8 @@
                            @"timeline:flooz": [TransactionViewController class],
                            @"web:web": [WebViewController class],
                            @"phone:validate": [ValidateSMSViewController class],
-                           @"friend:pending": [FriendRequestViewController class]
+                           @"friend:pending": [FriendRequestViewController class],
+                           @"app:pot": [NewCollectController class]
                            };
 }
 
@@ -597,7 +599,8 @@
                            @"timeline:flooz": @"push",
                            @"web:web": @"modal",
                            @"phone:validate": @"modal",
-                           @"friend:pending": @"modal"
+                           @"friend:pending": @"modal",
+                           @"app:pot": @"modal"
                            };
 }
 

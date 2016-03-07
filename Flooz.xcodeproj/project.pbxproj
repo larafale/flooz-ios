@@ -340,6 +340,30 @@
 		C935B6E91B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */; };
 		C935B6EA1B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */; };
 		C935B6EB1B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */; };
+		C9377E741C8705C60064CB8B /* ArrayEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6C1C8705C60064CB8B /* ArrayEx.swift */; };
+		C9377E751C8705C60064CB8B /* ArrayEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6C1C8705C60064CB8B /* ArrayEx.swift */; };
+		C9377E761C8705C60064CB8B /* ArrayEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6C1C8705C60064CB8B /* ArrayEx.swift */; };
+		C9377E771C8705C60064CB8B /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6D1C8705C60064CB8B /* CGPointEx.swift */; };
+		C9377E781C8705C60064CB8B /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6D1C8705C60064CB8B /* CGPointEx.swift */; };
+		C9377E791C8705C60064CB8B /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6D1C8705C60064CB8B /* CGPointEx.swift */; };
+		C9377E7A1C8705C60064CB8B /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6E1C8705C60064CB8B /* CGRectEx.swift */; };
+		C9377E7B1C8705C60064CB8B /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6E1C8705C60064CB8B /* CGRectEx.swift */; };
+		C9377E7C1C8705C60064CB8B /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6E1C8705C60064CB8B /* CGRectEx.swift */; };
+		C9377E7D1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */; };
+		C9377E7E1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */; };
+		C9377E7F1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */; };
+		C9377E801C8705C60064CB8B /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E701C8705C60064CB8B /* LiquidUtil.swift */; };
+		C9377E811C8705C60064CB8B /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E701C8705C60064CB8B /* LiquidUtil.swift */; };
+		C9377E821C8705C60064CB8B /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E701C8705C60064CB8B /* LiquidUtil.swift */; };
+		C9377E831C8705C60064CB8B /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E711C8705C60064CB8B /* LiquittableCircle.swift */; };
+		C9377E841C8705C60064CB8B /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E711C8705C60064CB8B /* LiquittableCircle.swift */; };
+		C9377E851C8705C60064CB8B /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E711C8705C60064CB8B /* LiquittableCircle.swift */; };
+		C9377E861C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */; };
+		C9377E871C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */; };
+		C9377E881C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */; };
+		C9377E891C8705C60064CB8B /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E731C8705C60064CB8B /* UIColorEx.swift */; };
+		C9377E8A1C8705C60064CB8B /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E731C8705C60064CB8B /* UIColorEx.swift */; };
+		C9377E8B1C8705C60064CB8B /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E731C8705C60064CB8B /* UIColorEx.swift */; };
 		C938EFCE1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
 		C938EFCF1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
 		C938EFD01AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
@@ -595,6 +619,9 @@
 		C99A51551AF7D69500342F8C /* IQActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */; };
 		C99A51561AF7D69500342F8C /* IQActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */; };
 		C99A51571AF7D69500342F8C /* IQActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */; };
+		C99D11B31C8868090091F48C /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99D11B21C8868090091F48C /* NewCollectController.m */; };
+		C99D11B41C8868090091F48C /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99D11B21C8868090091F48C /* NewCollectController.m */; };
+		C99D11B51C8868090091F48C /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99D11B21C8868090091F48C /* NewCollectController.m */; };
 		C9A265561ACC460700859B32 /* SignupInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A265551ACC460700859B32 /* SignupInvitationViewController.m */; };
 		C9A265571ACC460700859B32 /* SignupInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A265551ACC460700859B32 /* SignupInvitationViewController.m */; };
 		C9A265581ACC460700859B32 /* SignupInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A265551ACC460700859B32 /* SignupInvitationViewController.m */; };
@@ -683,30 +710,6 @@
 		C9D4E7061B18BD380096725B /* Flooz dev-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */; };
 		C9D4E7071B18BD380096725B /* Flooz local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7031B18BD380096725B /* Flooz local-Info.plist */; };
 		C9D4E7081B18BD380096725B /* Flooz local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7031B18BD380096725B /* Flooz local-Info.plist */; };
-		C9E74D3C1C845B280069C1AD /* ArrayEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D341C845B280069C1AD /* ArrayEx.swift */; };
-		C9E74D3D1C845B280069C1AD /* ArrayEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D341C845B280069C1AD /* ArrayEx.swift */; };
-		C9E74D3E1C845B280069C1AD /* ArrayEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D341C845B280069C1AD /* ArrayEx.swift */; };
-		C9E74D3F1C845B280069C1AD /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D351C845B280069C1AD /* CGPointEx.swift */; };
-		C9E74D401C845B280069C1AD /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D351C845B280069C1AD /* CGPointEx.swift */; };
-		C9E74D411C845B280069C1AD /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D351C845B280069C1AD /* CGPointEx.swift */; };
-		C9E74D421C845B280069C1AD /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D361C845B280069C1AD /* CGRectEx.swift */; };
-		C9E74D431C845B280069C1AD /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D361C845B280069C1AD /* CGRectEx.swift */; };
-		C9E74D441C845B280069C1AD /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D361C845B280069C1AD /* CGRectEx.swift */; };
-		C9E74D451C845B280069C1AD /* LiquidFloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D371C845B280069C1AD /* LiquidFloatingActionButton.swift */; };
-		C9E74D461C845B280069C1AD /* LiquidFloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D371C845B280069C1AD /* LiquidFloatingActionButton.swift */; };
-		C9E74D471C845B280069C1AD /* LiquidFloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D371C845B280069C1AD /* LiquidFloatingActionButton.swift */; };
-		C9E74D481C845B280069C1AD /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D381C845B280069C1AD /* LiquidUtil.swift */; };
-		C9E74D491C845B280069C1AD /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D381C845B280069C1AD /* LiquidUtil.swift */; };
-		C9E74D4A1C845B280069C1AD /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D381C845B280069C1AD /* LiquidUtil.swift */; };
-		C9E74D4B1C845B280069C1AD /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D391C845B280069C1AD /* LiquittableCircle.swift */; };
-		C9E74D4C1C845B280069C1AD /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D391C845B280069C1AD /* LiquittableCircle.swift */; };
-		C9E74D4D1C845B280069C1AD /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D391C845B280069C1AD /* LiquittableCircle.swift */; };
-		C9E74D4E1C845B280069C1AD /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D3A1C845B280069C1AD /* SimpleCircleLiquidEngine.swift */; };
-		C9E74D4F1C845B280069C1AD /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D3A1C845B280069C1AD /* SimpleCircleLiquidEngine.swift */; };
-		C9E74D501C845B280069C1AD /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D3A1C845B280069C1AD /* SimpleCircleLiquidEngine.swift */; };
-		C9E74D511C845B280069C1AD /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D3B1C845B280069C1AD /* UIColorEx.swift */; };
-		C9E74D521C845B280069C1AD /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D3B1C845B280069C1AD /* UIColorEx.swift */; };
-		C9E74D531C845B280069C1AD /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E74D3B1C845B280069C1AD /* UIColorEx.swift */; };
 		C9EABF301C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
 		C9EABF311C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
 		C9EABF321C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
@@ -1051,6 +1054,14 @@
 		C93118471A1F7E0B008C6EEC /* FLReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReport.m; sourceTree = "<group>"; };
 		C935B6E71B611DBD00861DAD /* FLFilterPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilterPopoverViewController.h; sourceTree = "<group>"; };
 		C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilterPopoverViewController.m; sourceTree = "<group>"; };
+		C9377E6C1C8705C60064CB8B /* ArrayEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayEx.swift; sourceTree = "<group>"; };
+		C9377E6D1C8705C60064CB8B /* CGPointEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointEx.swift; sourceTree = "<group>"; };
+		C9377E6E1C8705C60064CB8B /* CGRectEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectEx.swift; sourceTree = "<group>"; };
+		C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquidFloatingActionButton.swift; sourceTree = "<group>"; };
+		C9377E701C8705C60064CB8B /* LiquidUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquidUtil.swift; sourceTree = "<group>"; };
+		C9377E711C8705C60064CB8B /* LiquittableCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquittableCircle.swift; sourceTree = "<group>"; };
+		C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleCircleLiquidEngine.swift; sourceTree = "<group>"; };
+		C9377E731C8705C60064CB8B /* UIColorEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorEx.swift; sourceTree = "<group>"; };
 		C938EFCC1AE68C5900A3F740 /* ScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerViewController.h; sourceTree = "<group>"; };
 		C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
 		C93A2D6E1C4FE75400C30821 /* FLTimelineDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTimelineDeal.h; path = Models/FLTimelineDeal.h; sourceTree = "<group>"; };
@@ -1128,6 +1139,8 @@
 		C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetPickerView.m; sourceTree = "<group>"; };
 		C99A51501AF7D69500342F8C /* IQActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetViewController.h; sourceTree = "<group>"; };
 		C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetViewController.m; sourceTree = "<group>"; };
+		C99D11B11C8868090091F48C /* NewCollectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewCollectController.h; path = Controllers/NewTransaction/NewCollectController.h; sourceTree = "<group>"; };
+		C99D11B21C8868090091F48C /* NewCollectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewCollectController.m; path = Controllers/NewTransaction/NewCollectController.m; sourceTree = "<group>"; };
 		C9A265541ACC460700859B32 /* SignupInvitationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupInvitationViewController.h; sourceTree = "<group>"; };
 		C9A265551ACC460700859B32 /* SignupInvitationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupInvitationViewController.m; sourceTree = "<group>"; };
 		C9A7BE5E1A27801200195AFC /* FLPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPreset.h; sourceTree = "<group>"; };
@@ -1193,14 +1206,6 @@
 		C9DCC5EB1C282573008BB370 /* Flooz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Flooz.entitlements; sourceTree = "<group>"; };
 		C9DCC5EC1C28257F008BB370 /* Flooz dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flooz dev.entitlements"; sourceTree = SOURCE_ROOT; };
 		C9E74D111C8453760069C1AD /* Flooz-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flooz-Bridging-Header.h"; sourceTree = "<group>"; };
-		C9E74D341C845B280069C1AD /* ArrayEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayEx.swift; sourceTree = "<group>"; };
-		C9E74D351C845B280069C1AD /* CGPointEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointEx.swift; sourceTree = "<group>"; };
-		C9E74D361C845B280069C1AD /* CGRectEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectEx.swift; sourceTree = "<group>"; };
-		C9E74D371C845B280069C1AD /* LiquidFloatingActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquidFloatingActionButton.swift; sourceTree = "<group>"; };
-		C9E74D381C845B280069C1AD /* LiquidUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquidUtil.swift; sourceTree = "<group>"; };
-		C9E74D391C845B280069C1AD /* LiquittableCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquittableCircle.swift; sourceTree = "<group>"; };
-		C9E74D3A1C845B280069C1AD /* SimpleCircleLiquidEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleCircleLiquidEngine.swift; sourceTree = "<group>"; };
-		C9E74D3B1C845B280069C1AD /* UIColorEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorEx.swift; sourceTree = "<group>"; };
 		C9EABF2E1C523A7700BDDEA1 /* AddressBookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookController.h; path = Controllers/AddressBookController/AddressBookController.h; sourceTree = "<group>"; };
 		C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBookController.m; path = Controllers/AddressBookController/AddressBookController.m; sourceTree = "<group>"; };
 		C9EABF331C523CE900BDDEA1 /* FLAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAddress.h; path = Models/FLAddress.h; sourceTree = "<group>"; };
@@ -2091,6 +2096,8 @@
 				ABE9141D18894385003AC722 /* NewTransactionViewController.h */,
 				ABE9141E18894385003AC722 /* NewTransactionViewController.m */,
 				ABE9141F18894385003AC722 /* NewTransactionViewController.xib */,
+				C99D11B11C8868090091F48C /* NewCollectController.h */,
+				C99D11B21C8868090091F48C /* NewCollectController.m */,
 			);
 			name = NewTransaction;
 			sourceTree = "<group>";
@@ -2716,14 +2723,14 @@
 		C9E74D101C8453580069C1AD /* LiquidFloatingActionButton */ = {
 			isa = PBXGroup;
 			children = (
-				C9E74D341C845B280069C1AD /* ArrayEx.swift */,
-				C9E74D351C845B280069C1AD /* CGPointEx.swift */,
-				C9E74D361C845B280069C1AD /* CGRectEx.swift */,
-				C9E74D371C845B280069C1AD /* LiquidFloatingActionButton.swift */,
-				C9E74D381C845B280069C1AD /* LiquidUtil.swift */,
-				C9E74D391C845B280069C1AD /* LiquittableCircle.swift */,
-				C9E74D3A1C845B280069C1AD /* SimpleCircleLiquidEngine.swift */,
-				C9E74D3B1C845B280069C1AD /* UIColorEx.swift */,
+				C9377E6C1C8705C60064CB8B /* ArrayEx.swift */,
+				C9377E6D1C8705C60064CB8B /* CGPointEx.swift */,
+				C9377E6E1C8705C60064CB8B /* CGRectEx.swift */,
+				C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */,
+				C9377E701C8705C60064CB8B /* LiquidUtil.swift */,
+				C9377E711C8705C60064CB8B /* LiquittableCircle.swift */,
+				C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */,
+				C9377E731C8705C60064CB8B /* UIColorEx.swift */,
 			);
 			name = LiquidFloatingActionButton;
 			sourceTree = "<group>";
@@ -3218,13 +3225,13 @@
 				ABBB75CB18B63DB20070C2A8 /* CreditCardViewController.m in Sources */,
 				AB3D08A2186CA11A00CF8380 /* AppDelegate.m in Sources */,
 				AB7C9B1718D71884002775BA /* FriendPickerFriendCell.m in Sources */,
-				C9E74D421C845B280069C1AD /* CGRectEx.swift in Sources */,
+				C9377E7A1C8705C60064CB8B /* CGRectEx.swift in Sources */,
 				2FC8873719C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
 				C9CA67781A518811003863D1 /* SignupSMSViewController.m in Sources */,
 				C989591F1C089C8500D8D37F /* FLSocialPopup.m in Sources */,
 				2FE983EA19CB82E700E05501 /* NumPadAppleStyle.m in Sources */,
 				ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */,
-				C9E74D451C845B280069C1AD /* LiquidFloatingActionButton.swift in Sources */,
+				C9377E7D1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */,
 				ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */,
 				ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */,
 				C95254D61B5E7BC300D88096 /* AccountCell.m in Sources */,
@@ -3233,7 +3240,7 @@
 				C9CB22091A9615C10064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C9CB22141A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C9CB220E1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
-				C9E74D3F1C845B280069C1AD /* CGPointEx.swift in Sources */,
+				C9377E771C8705C60064CB8B /* CGPointEx.swift in Sources */,
 				C9EB88581B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
 				C98959111C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
@@ -3272,7 +3279,7 @@
 				C98959081C08892C00D8D37F /* CAAnimation+Blocks.m in Sources */,
 				ABC1115218ACE4AA00C3C52D /* TransactionCommentsView.m in Sources */,
 				C95AEDA01A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */,
-				C9E74D3C1C845B280069C1AD /* ArrayEx.swift in Sources */,
+				C9377E741C8705C60064CB8B /* ArrayEx.swift in Sources */,
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
 				C989591A1C08892C00D8D37F /* YLShareView.m in Sources */,
 				C95AED971A49AF4A00000FB3 /* ClipboardPopoverViewController.m in Sources */,
@@ -3331,7 +3338,7 @@
 				C9CB21F81A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51551AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
 				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
-				C9E74D481C845B280069C1AD /* LiquidUtil.swift in Sources */,
+				C9377E801C8705C60064CB8B /* LiquidUtil.swift in Sources */,
 				C917C8131BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				ABE9147918929AC8003AC722 /* NotificationsViewController.m in Sources */,
 				ABBB75CF18B64A0B0070C2A8 /* FLCreditCard.m in Sources */,
@@ -3346,7 +3353,7 @@
 				C91C5D441BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9AE778F1ACA917B00CFF0AF /* FLSlider.m in Sources */,
 				C908A3EB1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
-				C9E74D511C845B280069C1AD /* UIColorEx.swift in Sources */,
+				C9377E891C8705C60064CB8B /* UIColorEx.swift in Sources */,
 				C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABE914691892940A003AC722 /* FLAccountUserView.m in Sources */,
 				C9C776811C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
@@ -3357,10 +3364,11 @@
 				C9C7DB2D1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				C9AF4BE619F7C2D7005C696B /* AvatarMenu.m in Sources */,
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
-				C9E74D4E1C845B280069C1AD /* SimpleCircleLiquidEngine.swift in Sources */,
+				C9377E861C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */,
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
 				AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */,
 				C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
+				C99D11B31C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768B1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				2F50155319EDC46E00F61380 /* GlobalViewController.m in Sources */,
 				C98A5F0F1C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
@@ -3378,7 +3386,7 @@
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
 				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
 				C90B94801A00E96900E2C53B /* 3DSecureViewController.m in Sources */,
-				C9E74D4B1C845B280069C1AD /* LiquittableCircle.swift in Sources */,
+				C9377E831C8705C60064CB8B /* LiquittableCircle.swift in Sources */,
 				AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */,
 				C9436EBD1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
@@ -3421,13 +3429,13 @@
 				C9CB220A1A961AAC0064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C95AED981A49B10700000FB3 /* ClipboardPopoverViewController.m in Sources */,
 				C9A7BE611A2788D800195AFC /* FLPreset.m in Sources */,
-				C9E74D431C845B280069C1AD /* CGRectEx.swift in Sources */,
+				C9377E7B1C8705C60064CB8B /* CGRectEx.swift in Sources */,
 				C93118491A1FBD72008C6EEC /* FLReport.m in Sources */,
 				C90B94811A00EA2400E2C53B /* 3DSecureViewController.m in Sources */,
 				C98959201C089C8500D8D37F /* FLSocialPopup.m in Sources */,
 				C9CA67791A518811003863D1 /* SignupSMSViewController.m in Sources */,
 				C966474219FFEB80000851AF /* AnimatedTransitioning.m in Sources */,
-				C9E74D461C845B280069C1AD /* LiquidFloatingActionButton.swift in Sources */,
+				C9377E7E1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */,
 				C966473E19FFEA28000851AF /* TransitionDelegate.m in Sources */,
 				C9AF4BE719F7C340005C696B /* AvatarMenu.m in Sources */,
 				C95254D71B5E7BC300D88096 /* AccountCell.m in Sources */,
@@ -3436,7 +3444,7 @@
 				C9C7EE9619F695E8009FE292 /* FLAlert.m in Sources */,
 				ABAA3F80197E96BF009F29EF /* CreditCardViewController.m in Sources */,
 				ABAA3F81197E96BF009F29EF /* AppDelegate.m in Sources */,
-				C9E74D401C845B280069C1AD /* CGPointEx.swift in Sources */,
+				C9377E781C8705C60064CB8B /* CGPointEx.swift in Sources */,
 				C9CB22151A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C9CB220F1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				C98959121C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
@@ -3475,7 +3483,7 @@
 				C98959091C08892C00D8D37F /* CAAnimation+Blocks.m in Sources */,
 				C95AEDA11A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */,
 				ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */,
-				C9E74D3D1C845B280069C1AD /* ArrayEx.swift in Sources */,
+				C9377E751C8705C60064CB8B /* ArrayEx.swift in Sources */,
 				2FCBCD1119BF406200FB31E0 /* FLCameraKeyboard.m in Sources */,
 				C989591B1C08892C00D8D37F /* YLShareView.m in Sources */,
 				2F1307EA19D9C1790062D194 /* FLSocialButton.m in Sources */,
@@ -3534,7 +3542,7 @@
 				ABAA3FBC197E96BF009F29EF /* FLTextView.m in Sources */,
 				C9CB21F91A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51561AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
-				C9E74D491C845B280069C1AD /* LiquidUtil.swift in Sources */,
+				C9377E811C8705C60064CB8B /* LiquidUtil.swift in Sources */,
 				C917C8141BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				ABAA3FBD197E96BF009F29EF /* TransactionViewController.m in Sources */,
 				ABAA3FBE197E96BF009F29EF /* FLTransaction.m in Sources */,
@@ -3549,7 +3557,7 @@
 				C91C5D451BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9AE77901ACA917B00CFF0AF /* FLSlider.m in Sources */,
 				C908A3EC1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
-				C9E74D521C845B280069C1AD /* UIColorEx.swift in Sources */,
+				C9377E8A1C8705C60064CB8B /* UIColorEx.swift in Sources */,
 				C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABAA3FC5197E96BF009F29EF /* NewTransactionViewController.m in Sources */,
 				C9C776821C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
@@ -3560,10 +3568,11 @@
 				C9CB21FF1A95E9D30064389A /* THContactTextField.m in Sources */,
 				ABAA3FC9197E96BF009F29EF /* FriendRequestCell.m in Sources */,
 				ABAA3FCA197E96BF009F29EF /* NewTransactionSelectTypeView.m in Sources */,
-				C9E74D4F1C845B280069C1AD /* SimpleCircleLiquidEngine.swift in Sources */,
+				C9377E871C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */,
 				C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				ABAA3FCD197E96BF009F29EF /* FLAccountUserView.m in Sources */,
 				C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
+				C99D11B41C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768C1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				ABAA3FCE197E96BF009F29EF /* TimelineViewController.m in Sources */,
 				C98A5F101C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
@@ -3581,7 +3590,7 @@
 				ABAA3FD8197E96BF009F29EF /* TransactionCell.m in Sources */,
 				ABAA3FDA197E96BF009F29EF /* UIView+FindFirstResponder.m in Sources */,
 				ABAA3FDB197E96BF009F29EF /* FLScrollViewIndicator.m in Sources */,
-				C9E74D4C1C845B280069C1AD /* LiquittableCircle.swift in Sources */,
+				C9377E841C8705C60064CB8B /* LiquittableCircle.swift in Sources */,
 				ABAA3FDD197E96BF009F29EF /* LoadingCell.m in Sources */,
 				C9436EBE1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */,
@@ -3616,13 +3625,13 @@
 				C935B6EB1B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */,
 				C9CB220B1A961AD90064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C98012721A76921000019682 /* ClipboardPopoverViewController.m in Sources */,
-				C9E74D441C845B280069C1AD /* CGRectEx.swift in Sources */,
+				C9377E7C1C8705C60064CB8B /* CGRectEx.swift in Sources */,
 				C98012731A76921000019682 /* FLPreset.m in Sources */,
 				C98012751A76921000019682 /* FLReport.m in Sources */,
 				C98959211C089C8500D8D37F /* FLSocialPopup.m in Sources */,
 				C98012791A76921000019682 /* 3DSecureViewController.m in Sources */,
 				C980127A1A76921000019682 /* SignupSMSViewController.m in Sources */,
-				C9E74D471C845B280069C1AD /* LiquidFloatingActionButton.swift in Sources */,
+				C9377E7F1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */,
 				C980127B1A76921000019682 /* AnimatedTransitioning.m in Sources */,
 				C980127C1A76921000019682 /* TransitionDelegate.m in Sources */,
 				C980127D1A76921000019682 /* AvatarMenu.m in Sources */,
@@ -3631,7 +3640,7 @@
 				C975BB071A92BB8E000E5AEA /* YLMoment.m in Sources */,
 				C980127F1A76921000019682 /* FLAlert.m in Sources */,
 				C98012801A76921000019682 /* CreditCardViewController.m in Sources */,
-				C9E74D411C845B280069C1AD /* CGPointEx.swift in Sources */,
+				C9377E791C8705C60064CB8B /* CGPointEx.swift in Sources */,
 				C98012821A76921000019682 /* AppDelegate.m in Sources */,
 				C9CB22161A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C98959131C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
@@ -3670,7 +3679,7 @@
 				C989590A1C08892C00D8D37F /* CAAnimation+Blocks.m in Sources */,
 				C980129D1A76921000019682 /* UIFont+custom.m in Sources */,
 				C980129F1A76921000019682 /* WYStoryboardPopoverSegue.m in Sources */,
-				C9E74D3E1C845B280069C1AD /* ArrayEx.swift in Sources */,
+				C9377E761C8705C60064CB8B /* ArrayEx.swift in Sources */,
 				C98012A01A76921000019682 /* FLTableView.m in Sources */,
 				C989591C1C08892C00D8D37F /* YLShareView.m in Sources */,
 				C98012A11A76921000019682 /* FLCameraKeyboard.m in Sources */,
@@ -3729,7 +3738,7 @@
 				C98012C81A76921000019682 /* FLLikePopoverViewController.m in Sources */,
 				C98012C91A76921000019682 /* ContactCell.m in Sources */,
 				C98012CA1A76921000019682 /* FLTextView.m in Sources */,
-				C9E74D4A1C845B280069C1AD /* LiquidUtil.swift in Sources */,
+				C9377E821C8705C60064CB8B /* LiquidUtil.swift in Sources */,
 				C917C8151BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				C9CB21FA1A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51571AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
@@ -3744,7 +3753,7 @@
 				C98012D51A76921000019682 /* NotificationsViewController.m in Sources */,
 				C98012D61A76921000019682 /* FLCreditCard.m in Sources */,
 				C9AE77911ACA917B00CFF0AF /* FLSlider.m in Sources */,
-				C9E74D531C845B280069C1AD /* UIColorEx.swift in Sources */,
+				C9377E8B1C8705C60064CB8B /* UIColorEx.swift in Sources */,
 				C908A3ED1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D581B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				C9C776831C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
@@ -3755,10 +3764,11 @@
 				C98012D91A76921000019682 /* AccountViewController.m in Sources */,
 				C9CB22001A95E9D30064389A /* THContactTextField.m in Sources */,
 				C98012DA1A76921000019682 /* FriendRequestCell.m in Sources */,
-				C9E74D501C845B280069C1AD /* SimpleCircleLiquidEngine.swift in Sources */,
+				C9377E881C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */,
 				C98012DB1A76921000019682 /* NewTransactionSelectTypeView.m in Sources */,
 				C98012DC1A76921000019682 /* SettingsPrivacyController.m in Sources */,
 				C98012DF1A76921000019682 /* FLAccountUserView.m in Sources */,
+				C99D11B51C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768D1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C98A5F111C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
@@ -3776,7 +3786,7 @@
 				C9EB885F1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
 				C98012EB1A76921000019682 /* TransactionCell.m in Sources */,
 				C98012EE1A76921000019682 /* UIView+FindFirstResponder.m in Sources */,
-				C9E74D4D1C845B280069C1AD /* LiquittableCircle.swift in Sources */,
+				C9377E851C8705C60064CB8B /* LiquittableCircle.swift in Sources */,
 				C98012EF1A76921000019682 /* FLScrollViewIndicator.m in Sources */,
 				C9436EBF1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				C98012F11A76921000019682 /* LoadingCell.m in Sources */,

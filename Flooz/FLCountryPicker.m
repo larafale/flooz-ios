@@ -18,19 +18,15 @@
 
 - (void)setUp
 {
-    if ([Flooz sharedInstance].currentTexts)
+    [[Flooz sharedInstance] textObjectFromApi:^(id result) {
         self.countries = [Flooz sharedInstance].currentTexts.avalaibleCountries;
-    else {
-        [[Flooz sharedInstance] textObjectFromApi:^(id result) {
-            self.countries = [Flooz sharedInstance].currentTexts.avalaibleCountries;
-        } failure:^(NSError *error) {
-            if (!self.countries.count) {
-                NSMutableArray *tmp = [NSMutableArray new];
-                [tmp addObject:[FLCountry defaultCountry]];
-                self.countries = tmp;
-            }
-        }];
-    }
+    } failure:^(NSError *error) {
+        if (!self.countries.count) {
+            NSMutableArray *tmp = [NSMutableArray new];
+            [tmp addObject:[FLCountry defaultCountry]];
+            self.countries = tmp;
+        }
+    }];
     
     super.dataSource = self;
     super.delegate = self;
