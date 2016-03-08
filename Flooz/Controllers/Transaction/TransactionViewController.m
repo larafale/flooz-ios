@@ -7,7 +7,6 @@
 //
 
 #import "TransactionViewController.h"
-#import "SecureCodeViewController.h"
 
 #import "FLTransactionDescriptionView.h"
 #import "TransactionActionsView.h"
@@ -17,8 +16,6 @@
 #import "TUSafariActivity.h"
 #import "ARChromeActivity.h"
 #import "FLCopyLinkActivity.h"
-
-#import "CreditCardViewController.h"
 
 #import "UIView+FindFirstResponder.h"
 

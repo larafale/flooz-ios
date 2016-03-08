@@ -25,6 +25,8 @@
 - (void)prepareView {
 	self.backgroundColor = self.contentView.backgroundColor = [UIColor clearColor];
 
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
 	UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	[self.contentView addSubview:activityIndicatorView];
 

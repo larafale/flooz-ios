@@ -28,6 +28,7 @@
 #import "SignupNavigationController.h"
 #import "UserViewController.h"
 #import "FLNavigationController.h"
+#import "CollectViewController.h"
 
 @interface AppDelegate() {
     NSDictionary *tmpUser;
@@ -1083,11 +1084,45 @@
         vc = [((FLTabBarController *)vc) selectedViewController];
     }
     
-    CGSize size = CGSizeMake(PPScreenWidth(), PPScreenHeight());
-    
     TransactionViewController *controller;
     
-    controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath withSize:size];
+    controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
+    if ([vc conformsToProtocol:@protocol(TransactionCellDelegate)]) {
+        controller.delegateController = (UIViewController <TransactionCellDelegate> *)vc;
+    }
+    
+    if (focus) {
+        [controller focusOnComment];
+    }
+    
+    if ([vc isKindOfClass:FLNavigationController.class])
+        [((FLNavigationController*)vc) pushViewController:controller animated:YES completion:completion];
+    else if (vc.navigationController != nil)
+        [((FLNavigationController*)vc.navigationController) pushViewController:controller animated:YES completion:completion];
+    else
+        [vc presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:completion];
+}
+
+- (void)showPot:(FLTransaction *)transaction inController:(UIViewController*)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus {
+    [self showPot:transaction inController:vc withIndexPath:indexPath focusOnComment:focus completion:nil];
+}
+
+- (void)showPot:(FLTransaction *)transaction inController:(UIViewController*)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus completion:(dispatch_block_t)completion {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCancelTimer object:nil];
+    _lastTransactionID = transaction.transactionId;
+    
+    if (!vc) {
+        vc = [self myTopViewController];
+    }
+    
+    if ([vc isKindOfClass:[FLTabBarController class]]) {
+        vc = [((FLTabBarController *)vc) selectedViewController];
+    }
+    
+    CollectViewController *controller;
+    
+    controller = [[CollectViewController alloc] initWithTransaction:transaction indexPath:indexPath];
     if ([vc conformsToProtocol:@protocol(TransactionCellDelegate)]) {
         controller.delegateController = (UIViewController <TransactionCellDelegate> *)vc;
     }

@@ -263,12 +263,6 @@
             place = [placesSuggest objectAtIndex:indexPath.row];
         else if (suggestsLoaded)
             return;
-        
-        if (isSearching) {
-            place = [placesSearch objectAtIndex:indexPath.row];
-        } else {
-            place = [placesSuggest objectAtIndex:indexPath.row];
-        }
     }
     
     if (place) {

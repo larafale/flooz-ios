@@ -75,6 +75,11 @@
     
     _location = [json objectForKey:@"location"];
     
+    _isCollect = NO;
+    if ([json objectForKey:@"isPot"]) {
+        _isCollect = [[json objectForKey:@"isPot"] boolValue];
+    }
+    
     if (_location && [_location isBlank])
         _location = nil;
     

@@ -419,6 +419,19 @@
             }];
         }
         
+    } else if ([trigger.viewCaregory isEqualToString:@"timeline:pot"]) {
+        NSString *resourceID = trigger.data[@"_id"];
+        
+        if (resourceID) {
+            [[Flooz sharedInstance] showLoadView];
+            [[Flooz sharedInstance] transactionWithId:resourceID success: ^(id result) {
+                FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+//                [appDelegate showTransaction:transaction inController:appDelegate.currentController withIndexPath:nil focusOnComment:NO completion:^{
+//                    [self executeTriggerList:trigger.triggers];
+//                }];
+            }];
+        }
+        
     } else if ([self isTriggerKeyView:trigger]) {
         Class controllerClass = [self.binderKeyView objectForKey:trigger.viewCaregory];
         
@@ -567,6 +580,7 @@
                            @"settings:privacy": [SettingsPrivacyController class],
                            @"settings:documents": [SettingsDocumentsViewController class],
                            @"timeline:flooz": [TransactionViewController class],
+                           @"timeline:pot": [TransactionViewController class],
                            @"web:web": [WebViewController class],
                            @"phone:validate": [ValidateSMSViewController class],
                            @"friend:pending": [FriendRequestViewController class],
@@ -597,6 +611,7 @@
                            @"settings:privacy": @"modal",
                            @"settings:documents": @"modal",
                            @"timeline:flooz": @"push",
+                           @"timeline:pot": @"push",
                            @"web:web": @"modal",
                            @"phone:validate": @"modal",
                            @"friend:pending": @"modal",

@@ -332,6 +332,12 @@
 		C928E8CE1C3D2A390032FAE4 /* DealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8CD1C3D2A390032FAE4 /* DealCell.m */; };
 		C928E8CF1C3D2A390032FAE4 /* DealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8CD1C3D2A390032FAE4 /* DealCell.m */; };
 		C928E8D01C3D2A390032FAE4 /* DealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C928E8CD1C3D2A390032FAE4 /* DealCell.m */; };
+		C92900D51C8F159E0008D61D /* CollectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C92900D41C8F159E0008D61D /* CollectViewController.m */; };
+		C92900D61C8F159E0008D61D /* CollectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C92900D41C8F159E0008D61D /* CollectViewController.m */; };
+		C92900D71C8F159E0008D61D /* CollectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C92900D41C8F159E0008D61D /* CollectViewController.m */; };
+		C92900DB1C8F1DE70008D61D /* CollectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */; };
+		C92900DC1C8F1DE70008D61D /* CollectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */; };
+		C92900DD1C8F1DE70008D61D /* CollectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */; };
 		C92FB3AB1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
 		C92FB3AC1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
 		C92FB3AD1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
@@ -1048,6 +1054,10 @@
 		C928E8C71C3D24F20032FAE4 /* DealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DealViewController.m; path = Controllers/Deal/DealViewController.m; sourceTree = "<group>"; };
 		C928E8CC1C3D2A390032FAE4 /* DealCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DealCell.h; path = DealCell/DealCell.h; sourceTree = "<group>"; };
 		C928E8CD1C3D2A390032FAE4 /* DealCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DealCell.m; path = DealCell/DealCell.m; sourceTree = "<group>"; };
+		C92900D31C8F159E0008D61D /* CollectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectViewController.h; path = Controllers/Collect/CollectViewController.h; sourceTree = "<group>"; };
+		C92900D41C8F159E0008D61D /* CollectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectViewController.m; path = Controllers/Collect/CollectViewController.m; sourceTree = "<group>"; };
+		C92900D91C8F1DE70008D61D /* CollectHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectHeaderView.h; path = Controllers/Collect/CollectHeaderView/CollectHeaderView.h; sourceTree = "<group>"; };
+		C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectHeaderView.m; path = Controllers/Collect/CollectHeaderView/CollectHeaderView.m; sourceTree = "<group>"; };
 		C92FB3A91BBBEC1F006FB561 /* FLFilterSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilterSegmentedControl.h; sourceTree = "<group>"; };
 		C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilterSegmentedControl.m; sourceTree = "<group>"; };
 		C93118461A1F7E0B008C6EEC /* FLReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReport.h; sourceTree = "<group>"; };
@@ -1608,11 +1618,12 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C9EABF2D1C5237C100BDDEA1 /* AddressBook */,
 				C90B947D1A00E94F00E2C53B /* 3DSecure */,
 				ABE9145E18929150003AC722 /* Account */,
+				C9EABF2D1C5237C100BDDEA1 /* AddressBook */,
 				2FEAA9CC19DC638C00EE95C9 /* BaseViewController */,
 				AB2FB52F18AD40120079AA1D /* CashOut */,
+				C92900D21C8F155E0008D61D /* Collect */,
 				ABBB75C718B63D930070C2A8 /* CreditCard */,
 				C928E8C51C3D24B40032FAE4 /* Deals */,
 				C9160D531B6A6A1D00A379DA /* DiscountCode */,
@@ -2413,6 +2424,25 @@
 				C97EE6D51C4003B5003DE35B /* DealCell2.m */,
 			);
 			name = DealCell;
+			sourceTree = "<group>";
+		};
+		C92900D21C8F155E0008D61D /* Collect */ = {
+			isa = PBXGroup;
+			children = (
+				C92900D81C8F1DB30008D61D /* CollectHeaderView */,
+				C92900D31C8F159E0008D61D /* CollectViewController.h */,
+				C92900D41C8F159E0008D61D /* CollectViewController.m */,
+			);
+			name = Collect;
+			sourceTree = "<group>";
+		};
+		C92900D81C8F1DB30008D61D /* CollectHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				C92900D91C8F1DE70008D61D /* CollectHeaderView.h */,
+				C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */,
+			);
+			name = CollectHeaderView;
 			sourceTree = "<group>";
 		};
 		C92FB3A81BBBEBF4006FB561 /* FLFilterSegmentedControl */ = {
@@ -3368,9 +3398,11 @@
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
 				AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */,
 				C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
+				C92900D51C8F159E0008D61D /* CollectViewController.m in Sources */,
 				C99D11B31C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768B1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				2F50155319EDC46E00F61380 /* GlobalViewController.m in Sources */,
+				C92900DB1C8F1DE70008D61D /* CollectHeaderView.m in Sources */,
 				C98A5F0F1C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
 				C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,
 				AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */,
@@ -3572,9 +3604,11 @@
 				C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				ABAA3FCD197E96BF009F29EF /* FLAccountUserView.m in Sources */,
 				C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
+				C92900D61C8F159E0008D61D /* CollectViewController.m in Sources */,
 				C99D11B41C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768C1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				ABAA3FCE197E96BF009F29EF /* TimelineViewController.m in Sources */,
+				C92900DC1C8F1DE70008D61D /* CollectHeaderView.m in Sources */,
 				C98A5F101C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
 				C921175D1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,
 				ABAA3FCF197E96BF009F29EF /* FLSocial.m in Sources */,
@@ -3768,9 +3802,11 @@
 				C98012DB1A76921000019682 /* NewTransactionSelectTypeView.m in Sources */,
 				C98012DC1A76921000019682 /* SettingsPrivacyController.m in Sources */,
 				C98012DF1A76921000019682 /* FLAccountUserView.m in Sources */,
+				C92900D71C8F159E0008D61D /* CollectViewController.m in Sources */,
 				C99D11B51C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768D1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
+				C92900DD1C8F1DE70008D61D /* CollectHeaderView.m in Sources */,
 				C98A5F111C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
 				C98012E01A76921000019682 /* TimelineViewController.m in Sources */,
 				C921175E1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,

@@ -326,8 +326,6 @@
         [self loadNextPage];
     }
     
-    
-    
     id item = [transactions objectAtIndex:indexPath.row];
     
     if ([item isKindOfClass:[FLTransaction class]]) {
@@ -344,21 +342,6 @@
         [cell setIndexPath:indexPath];
         
         return cell;
-    } else if ([item isKindOfClass:[FLTimelineDeal class]]) {
-        static NSString *cellIdentifier = @"TimelineDealCell";
-        TimelineDealCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
-        if (!cell) {
-            cell = [[TimelineDealCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier andDelegate:self];
-            [cells addObject:cell];
-        }
-        
-        FLTimelineDeal *deal = item;
-        
-        [cell setDeal:deal];
-        [cell setIndexPath:indexPath];
-        
-        return cell;
     }
     
     return nil;
@@ -370,9 +353,11 @@
         
         if ([item isKindOfClass:[FLTransaction class]]) {
             FLTransaction *transaction = item;
-            [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
-        } else if ([item isKindOfClass:[FLTimelineDeal class]]) {
-            
+            if (transaction.isCollect) {
+                
+            } else {
+                [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+            }
         }
     }
 }
@@ -497,21 +482,6 @@
         if (scope == currentScope) {
             transactions = [result mutableCopy];
             
-            /**/
-
-//            FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:@{}];
-//            
-//            deal.from = [Flooz sharedInstance].currentUser;
-//            deal.amount = @79.76;
-//            deal.title = @"Braveman Slim Fit Suits";
-//            deal.content = @"Before looking through the camera lens, the expert photographers at Picture People spend time getting to know their subjects and establishing a strategy for conveying their personalities in print. ";
-//            deal.social = [[transactions objectAtIndex:0] social];
-//            deal.attachmentURL = @"https://img.grouponcdn.com/deal/7RMA5NrEYiRdNBvuvWSU/95-960x576/v1/c700x420.jpg";
-//            
-//            [transactions insertObject:deal atIndex:0];
-            
-            /**/
-
             _nextPageUrl = nextPageUrl;
             
             if (transactions.count == 0) {
@@ -556,6 +526,7 @@
 }
 
 - (void)showScopeHelper {
+    
     NSString *text;
     
     switch (currentScope) {

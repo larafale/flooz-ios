@@ -101,6 +101,9 @@
         _avatarLargeURL = nil;
     }
     
+    if (_avatarURL && !_avatarLargeURL)
+        _avatarLargeURL = [_avatarURL copy];
+        
     if (json[@"device"]) {
         _deviceToken = [json objectForKey:@"device"];
     }
