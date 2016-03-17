@@ -26,12 +26,22 @@
     self.blockWhy = NO;
     self.focusAmount = NO;
     self.focusWhy = NO;
+    self.isParticipation = NO;
     
-    if (json[@"to"])
-        self.to = [[FLUser alloc] initWithJSON:json[@"to"]];
+    if (json[@"isParticipation"]) {
+        self.isParticipation = [json[@"isParticipation"] boolValue];
+    }
+    
+    if (!self.isParticipation) {
+        if (json[@"to"])
+            self.to = [[FLUser alloc] initWithJSON:json[@"to"]];
+    } else {
+        self.collectName = json[@"to"];
+    }
     
     self.type = TransactionTypeBase;
     
+    self.presetId = [json objectForKey:@"id"];
     self.amount = [json objectForKey:@"amount"];
     self.why = [json objectForKey:@"why"];
     self.whyPlaceholder = [json objectForKey:@"whyPlaceholder"];

@@ -12,13 +12,15 @@
 #import "TransactionCellDelegate.h"
 #import "FLNewTransactionAmountDelegate.h"
 #import "FLViewDelegate.h"
+#import "CollectHeaderView.h"
 
-@interface CollectViewController : BaseViewController<TransactionActionsViewDelegate, FLNewTransactionAmountDelegate, UIViewControllerTransitioningDelegate, FLViewDelegate>
+@interface CollectViewController : BaseViewController<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, CollectHeaderViewDelegate>
 
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;
 - (void)focusOnComment;
 - (void)reloadTransaction;
 
 @property (strong, nonatomic) UIViewController <TransactionCellDelegate> *delegateController;
+@property (strong, nonatomic) UITableView *tableView;
 
 @end

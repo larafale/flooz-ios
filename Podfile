@@ -36,5 +36,6 @@ pod 'TUSafariActivity'
 pod 'UIFloatLabelTextField'
 pod 'MGSwipeTableCell'
 pod 'OneSignal'
+pod 'YLProgressBar'
 
 link_with 'Flooz', 'Flooz dev', 'Flooz local', 'FloozTests'

@@ -10,6 +10,8 @@
 
 @interface FLPreset : NSObject
 
+@property (nonatomic, retain) NSString *presetId;
+@property (nonatomic, retain) NSString *collectName;
 @property (nonatomic, retain) FLUser *to;
 @property (nonatomic, retain) NSNumber *amount;
 @property (nonatomic, retain) NSString *name;
@@ -19,6 +21,7 @@
 @property (nonatomic, retain) NSString *image;
 @property (nonatomic) TransactionType type;
 @property (nonatomic, retain) NSDictionary *payload;
+@property (nonatomic) BOOL isParticipation;
 @property (nonatomic) BOOL blockAmount;
 @property (nonatomic) BOOL blockTo;
 @property (nonatomic) BOOL blockBack;

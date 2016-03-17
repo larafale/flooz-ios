@@ -275,6 +275,33 @@
                 }
             }
         }
+    } else if ([trigger.viewCaregory isEqualToString:@"image:pot"]) {
+        if (trigger.data && trigger.data[@"_id"]) {
+            UIViewController *topViewController = [appDelegate myTopViewController];
+            NewCollectController *transacViewController;
+            
+            if ([topViewController isKindOfClass:[NewCollectController class]]) {
+                transacViewController = (NewCollectController *) topViewController;
+            } else if ([topViewController isKindOfClass:[FLNavigationController class]] && [[((FLNavigationController *)topViewController) topViewController] isKindOfClass:[NewCollectController class]]) {
+                transacViewController = (NewCollectController *) [((FLNavigationController *)topViewController) topViewController];
+            } else if ([topViewController isKindOfClass:[FLTabBarController class]]) {
+                FLNavigationController *selectedNav = (FLNavigationController *) [((FLTabBarController *)topViewController) selectedViewController];
+                if ([[selectedNav topViewController] isKindOfClass:[NewCollectController class]])
+                    transacViewController = (NewCollectController *) [selectedNav topViewController];
+            }
+            
+            if (transacViewController) {
+                if (transacViewController.transaction[@"image"]) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        [[Flooz sharedInstance] uploadTransactionPic:trigger.data[@"_id"] image:transacViewController.transaction[@"image"] success:^(id result) {
+                            [self executeTriggerList:trigger.triggers];
+                        } failure:^(NSError *error) {
+                            [self executeTriggerList:trigger.triggers];
+                        }];
+                    });
+                }
+            }
+        }
     }
 }
 
@@ -426,9 +453,9 @@
             [[Flooz sharedInstance] showLoadView];
             [[Flooz sharedInstance] transactionWithId:resourceID success: ^(id result) {
                 FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-//                [appDelegate showTransaction:transaction inController:appDelegate.currentController withIndexPath:nil focusOnComment:NO completion:^{
-//                    [self executeTriggerList:trigger.triggers];
-//                }];
+                [appDelegate showPot:transaction inController:appDelegate.currentController withIndexPath:nil focusOnComment:NO completion:^{
+                    [self executeTriggerList:trigger.triggers];
+                }];
             }];
         }
         

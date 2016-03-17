@@ -52,7 +52,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.backgroundColor = [UIColor customBackground];
+    self.window.backgroundColor = [UIColor customBackgroundHeader];
     [self.window makeKeyAndVisible];
     
     [self.window setTintColor:[UIColor customBlue]];

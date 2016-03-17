@@ -716,6 +716,9 @@
 		C9D4E7061B18BD380096725B /* Flooz dev-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */; };
 		C9D4E7071B18BD380096725B /* Flooz local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7031B18BD380096725B /* Flooz local-Info.plist */; };
 		C9D4E7081B18BD380096725B /* Flooz local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7031B18BD380096725B /* Flooz local-Info.plist */; };
+		C9DD72201C9891AD000D1664 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD721F1C9891AD000D1664 /* CommentCell.m */; };
+		C9DD72211C9891AD000D1664 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD721F1C9891AD000D1664 /* CommentCell.m */; };
+		C9DD72221C9891AD000D1664 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD721F1C9891AD000D1664 /* CommentCell.m */; };
 		C9EABF301C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
 		C9EABF311C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
 		C9EABF321C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
@@ -1215,6 +1218,8 @@
 		C9D4E7031B18BD380096725B /* Flooz local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz local-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C9DCC5EB1C282573008BB370 /* Flooz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Flooz.entitlements; sourceTree = "<group>"; };
 		C9DCC5EC1C28257F008BB370 /* Flooz dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flooz dev.entitlements"; sourceTree = SOURCE_ROOT; };
+		C9DD721E1C9891AD000D1664 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCell.h; path = CommentCell/CommentCell.h; sourceTree = "<group>"; };
+		C9DD721F1C9891AD000D1664 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentCell.m; path = CommentCell/CommentCell.m; sourceTree = "<group>"; };
 		C9E74D111C8453760069C1AD /* Flooz-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flooz-Bridging-Header.h"; sourceTree = "<group>"; };
 		C9EABF2E1C523A7700BDDEA1 /* AddressBookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookController.h; path = Controllers/AddressBookController/AddressBookController.h; sourceTree = "<group>"; };
 		C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBookController.m; path = Controllers/AddressBookController/AddressBookController.m; sourceTree = "<group>"; };
@@ -1887,6 +1892,7 @@
 		AB5EB6F91882157300D81AF6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C9DD721D1C989175000D1664 /* CommentCell */,
 				C95254D31B5E7B9200D88096 /* AccountCell */,
 				AB2FB54918B2319E0079AA1D /* ActivityCell */,
 				2FD2460019A24DC4008DCFB5 /* ContactCell */,
@@ -2750,6 +2756,15 @@
 			name = FLPhoneField;
 			sourceTree = "<group>";
 		};
+		C9DD721D1C989175000D1664 /* CommentCell */ = {
+			isa = PBXGroup;
+			children = (
+				C9DD721E1C9891AD000D1664 /* CommentCell.h */,
+				C9DD721F1C9891AD000D1664 /* CommentCell.m */,
+			);
+			name = CommentCell;
+			sourceTree = "<group>";
+		};
 		C9E74D101C8453580069C1AD /* LiquidFloatingActionButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -3438,6 +3453,7 @@
 				AB6DA51018C4DDFD0073B947 /* FLImageView.m in Sources */,
 				2FC2546019B6742500EB1EED /* ShareAppViewController.m in Sources */,
 				C97CCFD51BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */,
+				C9DD72201C9891AD000D1664 /* CommentCell.m in Sources */,
 				C9CA67911A5188D5003863D1 /* FLActionButton.m in Sources */,
 				AB2FB54318AD9C7A0079AA1D /* PasswordViewController.m in Sources */,
 				2FEAA9CA19DC50A200EE95C9 /* UISearchBar+Subviews.m in Sources */,
@@ -3644,6 +3660,7 @@
 				ABAA3FE4197E96BF009F29EF /* FLImageView.m in Sources */,
 				2FC2546219B675B500EB1EED /* ShareAppViewController.m in Sources */,
 				C97CCFD61BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */,
+				C9DD72211C9891AD000D1664 /* CommentCell.m in Sources */,
 				C9CA67921A5188D5003863D1 /* FLActionButton.m in Sources */,
 				ABAA3FE6197E96BF009F29EF /* PasswordViewController.m in Sources */,
 				2FEAA9CB19DC50A200EE95C9 /* UISearchBar+Subviews.m in Sources */,
@@ -3842,6 +3859,7 @@
 				C98012FD1A76921000019682 /* FLImageView.m in Sources */,
 				C98012FE1A76921000019682 /* ShareAppViewController.m in Sources */,
 				C97CCFD71BBD59AD0084ABF5 /* EditProfileViewController.m in Sources */,
+				C9DD72221C9891AD000D1664 /* CommentCell.m in Sources */,
 				C98012FF1A76921000019682 /* FLActionButton.m in Sources */,
 				C98013021A76921000019682 /* PasswordViewController.m in Sources */,
 				C98013031A76921000019682 /* UISearchBar+Subviews.m in Sources */,

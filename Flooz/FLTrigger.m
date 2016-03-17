@@ -29,7 +29,10 @@
 }
 
 -(BOOL)setJson:(NSDictionary*)json {
-    self.key = json[@"key"];
+    if (json[@"key"])
+        self.key = json[@"key"];
+    else
+        return NO;
     
     NSArray *splitKey = [self.key componentsSeparatedByString:@":"];
     

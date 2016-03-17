@@ -10,7 +10,7 @@
 #import "TransactionCellDelegate.h"
 #import "TimelineDelegate.h"
 
-@interface UserViewController : BaseViewController<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate, TimelineDelegate, TransactionCellDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface UserViewController : BaseViewController<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, TimelineDelegate, TransactionCellDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic) FLTableView *tableView;
 @property (nonatomic, retain) FLUser *currentUser;

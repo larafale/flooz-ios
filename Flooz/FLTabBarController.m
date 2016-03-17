@@ -323,4 +323,48 @@
         [notifItem setCustomBadgeValue:nil withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
 }
 
+// pass a param to describe the state change, an animated flag and a completion block matching UIView animations completion
+- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion {
+    
+    // bail if the current state matches the desired state
+    if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
+    
+    // get a frame calculation ready
+    CGFloat height = self.tabBar.frame.size.height;
+    CGFloat offsetY = (visible)? -height : height;
+    
+    CGFloat heightButton = homeButton.frame.size.height + 6;
+    CGFloat offsetYButton = (visible)? -heightButton : heightButton;
+    
+    // zero duration means no animation
+    CGFloat duration = (animated)? 0.3 : 0.0;
+    
+    if (visible) {
+        self.tabBar.hidden = NO;
+        self.tabBar.userInteractionEnabled = YES;
+        homeButton.hidden = NO;
+        homeButton.userInteractionEnabled = YES;
+    }
+    
+    [UIView animateWithDuration:duration animations:^{
+        self.tabBar.frame = CGRectOffset(self.tabBar.frame, 0, offsetY);
+        homeButton.frame = CGRectOffset(homeButton.frame, 0, offsetYButton);
+    } completion:^(BOOL finished) {
+        if (!visible) {
+            self.tabBar.hidden = YES;
+            self.tabBar.userInteractionEnabled = NO;
+            homeButton.hidden = YES;
+            homeButton.userInteractionEnabled = NO;
+        }
+        
+        if (completion)
+            completion(finished);
+    }];
+}
+
+// know the current state
+- (BOOL)tabBarIsVisible {
+    return self.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
+}
+
 @end

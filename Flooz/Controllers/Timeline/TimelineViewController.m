@@ -354,7 +354,7 @@
         if ([item isKindOfClass:[FLTransaction class]]) {
             FLTransaction *transaction = item;
             if (transaction.isCollect) {
-                
+                [appDelegate showPot:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
             } else {
                 [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
             }
@@ -406,7 +406,11 @@
 }
 
 - (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
-    [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:YES];
+    if (transaction.isCollect) {
+        [appDelegate showPot:transaction inController:self withIndexPath:indexPath focusOnComment:YES];
+    } else {
+        [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:YES];
+    }
 }
 
 - (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath {

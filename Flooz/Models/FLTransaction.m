@@ -103,6 +103,19 @@
         }
     }
     
+    _isAvailable = NO;
+    _isClosable = NO;
+    
+    if ([json objectForKey:@"actions"] && _isCollect) {
+        if ([[json objectForKey:@"actions"] containsObject:@"participate"]) {
+            _isAvailable = YES;
+        }
+        
+        if ([[json objectForKey:@"actions"] containsObject:@"close"]) {
+            _isClosable = YES;
+        }
+    }
+    
     _from = [[FLUser alloc] initWithJSON:[json objectForKey:@"from"]];
     _to = [[FLUser alloc] initWithJSON:[json objectForKey:@"to"]];
     

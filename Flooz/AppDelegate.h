@@ -93,7 +93,6 @@ static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 - (void)showPreviewImages:(NSArray *)imagesNamed;
 - (void)showReportMenu:(FLReport *)report;
 - (void)showAvatarView:(UIView *)view withUrl:(NSURL *)urlImage;
-- (void)showPresetNewTransactionController:(FLPreset *)preset;
 - (void)popToMainView;
 - (void)showUser:(FLUser *)user inController:(UIViewController*)vc;
 - (void)showUser:(FLUser *)user inController:(UIViewController*)vc completion:(dispatch_block_t)completion;
@@ -105,6 +104,8 @@ static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 
 - (void)showTransaction:(FLTransaction *)transaction inController:(UIViewController *)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus;
 - (void)showTransaction:(FLTransaction *)transaction inController:(UIViewController*)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus completion:(dispatch_block_t)completion;
+- (void)showPot:(FLTransaction *)transaction inController:(UIViewController *)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus;
+- (void)showPot:(FLTransaction *)transaction inController:(UIViewController*)vc withIndexPath:(NSIndexPath *)indexPath focusOnComment:(BOOL)focus completion:(dispatch_block_t)completion;
 - (void)showFriendsController;
 - (void)showEditProfil;
 

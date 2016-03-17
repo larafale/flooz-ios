@@ -85,9 +85,6 @@
         else
             self.title = NSLocalizedString(@"NEW_COLLECT", nil);
 
-        if (currentPreset.name)
-            transaction[@"name"] = currentPreset.name;
-
         if (currentPreset.why)
             transaction[@"why"] = currentPreset.why;
         

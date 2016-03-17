@@ -218,6 +218,8 @@
 "MENU_NEW_TRANSACTION_PAYMENT" = "Payer";
 "MENU_NEW_TRANSACTION_COLLECT" = "Réclamer";
 
+"MENU_PARTICIPATE" = "Participer";
+"MENU_CLOSE" = "Clôturer";
 "MENU_PAYMENT" = "Payer";
 "MENU_CHARGE" = "Réclamer";
 "MENU_COLLECT" = "Créer";

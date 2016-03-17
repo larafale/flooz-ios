@@ -81,6 +81,7 @@ PODS:
   - UICKeyChainStore (2.1.0)
   - UIFloatLabelTextField (1.2.4)
   - VCTransitionsLibrary (1.5.0)
+  - YLProgressBar (3.8.0)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
@@ -119,6 +120,7 @@ DEPENDENCIES:
   - UICKeyChainStore
   - UIFloatLabelTextField
   - VCTransitionsLibrary
+  - YLProgressBar
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 8312778b6815578e6a86d630fbcf31dc94c534e7
@@ -163,5 +165,6 @@ SPEC CHECKSUMS:
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
   UIFloatLabelTextField: bb30a4ae6720a89fc9fb51134f39f0e776ff9551
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
+  YLProgressBar: b6ec76bea4a1b8d6bdfd2995d828055a7e5f3e9a
 
 COCOAPODS: 0.39.0

@@ -12,6 +12,7 @@
 #import "UserViewController.h"
 #import "3DSecureViewController.h"
 #import "GlobalViewController.h"
+#import "FLTabBarController.h"
 
 @interface FLNavigationController () {
     UIBarButtonItem *backItem;
@@ -166,6 +167,14 @@
     }
     else if (!navigationController.parentViewController) {
         viewController.navigationItem.leftBarButtonItem = backItem;
+    }
+    
+    if (self.parentViewController && [self.parentViewController isKindOfClass:[FLTabBarController class]]) {
+        if (self.viewControllers.count == 1) {
+            [((FLTabBarController*)self.parentViewController) setTabBarVisible:YES animated:YES completion:nil];
+        } else {
+            [((FLTabBarController*)self.parentViewController) setTabBarVisible:NO animated:YES completion:nil];
+        }
     }
 }
 

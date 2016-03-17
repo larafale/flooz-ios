@@ -68,12 +68,12 @@
     {
         [self reloadData];
         
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight()) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_mainBody.frame)) style:UITableViewStyleGrouped];
         [_tableView setBackgroundColor:[UIColor clearColor]];
         [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
         [_tableView setSeparatorColor:[UIColor customBackground]];
         [_tableView setBounces:NO];
-        [self.view addSubview:_tableView];
+        [_mainBody addSubview:_tableView];
         [_tableView setDelegate:self];
         [_tableView setDataSource:self];
     }
