@@ -303,12 +303,7 @@
 - (void)prepareAvatarView {
     FLUserView *view = [[leftView subviews] objectAtIndex:0];
     
-    if ([_delegate transactionAlreadyLoaded:_transaction]) {
-        [view setImageFromURL:_transaction.avatarURL];
-    }
-    else {
-        [view setImageFromURLAnimate:_transaction.avatarURL];
-    }
+    [view setImageFromURLAnimate:_transaction.avatarURL];
 }
 
 - (void)prepareDetailView {

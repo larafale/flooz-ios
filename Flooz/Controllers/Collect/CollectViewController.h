@@ -14,7 +14,7 @@
 #import "FLViewDelegate.h"
 #import "CollectHeaderView.h"
 
-@interface CollectViewController : BaseViewController<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, CollectHeaderViewDelegate>
+@interface CollectViewController : BaseViewController<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, CollectHeaderViewDelegate, FLViewDelegate>
 
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;
 - (void)focusOnComment;

@@ -10,7 +10,6 @@
 
 @protocol FriendAddSearchBarDelegate <NSObject>
 
-- (void)dismiss;
 - (void)didFilterChange:(NSString *)text;
 
 @end

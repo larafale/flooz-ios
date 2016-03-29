@@ -13,6 +13,7 @@
     UIActivityIndicatorView *loadingIndicator;
     UILabel *floozerLabel;
     UILabel *nameLabel;
+    UILabel *usernameLabel;
 }
 
 @end
@@ -41,7 +42,8 @@
     checkBox = [[UIImageView alloc] initWithFrame:CGRectMake(10, [self.class getHeight] / 2 - checkSize / 2, checkSize, checkSize)];
     [checkBox setContentMode:UIViewContentModeScaleAspectFit];
     [checkBox setHidden:YES];
-    
+    [checkBox setImage:[UIImage imageNamed:@"checkmark-off"]];
+
     loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     loadingIndicator.center = checkBox.center;
     [loadingIndicator setHidden:YES];
@@ -52,14 +54,20 @@
     CGRectSetY(floozerLabel.frame, [self.class getHeight] / 2 - CGRectGetHeight(floozerLabel.frame) / 2);
     [floozerLabel setHidden:YES];
     
-    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(checkBox.frame) + 10, 10, PPScreenWidth() - CGRectGetWidth(checkBox.frame) - 45 - CGRectGetWidth(floozerLabel.frame), 25)];
+    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(checkBox.frame) + 10, 10, PPScreenWidth() - CGRectGetWidth(checkBox.frame) - 45 - CGRectGetWidth(floozerLabel.frame), 15)];
     [nameLabel setTextColor:[UIColor whiteColor]];
     [nameLabel setNumberOfLines:1];
     [nameLabel setFont:[UIFont customContentRegular:14]];
-    
+
+    usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(checkBox.frame) + 10, CGRectGetMaxY(nameLabel.frame), PPScreenWidth() - CGRectGetWidth(checkBox.frame) - 45 - CGRectGetWidth(floozerLabel.frame), 15)];
+    [usernameLabel setTextColor:[UIColor customGreyPseudo]];
+    [usernameLabel setNumberOfLines:1];
+    [usernameLabel setFont:[UIFont customContentRegular:12]];
+
     [self.contentView addSubview:checkBox];
     [self.contentView addSubview:loadingIndicator];
     [self.contentView addSubview:nameLabel];
+    [self.contentView addSubview:usernameLabel];
     [self.contentView addSubview:floozerLabel];
 }
 
@@ -67,6 +75,12 @@
     self->_user = user;
     
     [nameLabel setText:self.user.fullname];
+    
+    if (user.userKind == FloozUser) {
+        [usernameLabel setText:[NSString stringWithFormat:@"@%@", self.user.username]];
+    } else {
+        [usernameLabel setText:self.user.phone];
+    }
     
     [checkBox setHidden:YES];
     [loadingIndicator setHidden:YES];
@@ -81,11 +95,6 @@
             [self setUserInteractionEnabled:NO];
         } else {
             [self setUserInteractionEnabled:YES];
-            if ([self isSelected]) {
-                [checkBox setImage:[UIImage imageNamed:@"checkmark-on"]];
-            } else {
-                [checkBox setImage:[UIImage imageNamed:@"checkmark-off"]];
-            }
         }
     } else {
         [loadingIndicator setHidden:NO];
@@ -94,28 +103,14 @@
     }
 }
 
-- (void)setSelected:(BOOL)selected {
-    [super setSelected:selected];
-    
-    if (!self.user.isFloozer) {
-        if ([self isSelected]) {
-            [checkBox setImage:[UIImage imageNamed:@"checkmark-on"]];
-        } else {
-            [checkBox setImage:[UIImage imageNamed:@"checkmark-off"]];
-        }
-    }
+- (void)setOn {
+    if (self.user.isIdentified && !self.user.isFloozer)
+        [checkBox setImage:[UIImage imageNamed:@"checkmark-on"]];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    if (!self.user.isFloozer) {
-        if ([self isSelected]) {
-            [checkBox setImage:[UIImage imageNamed:@"checkmark-on"]];
-        } else {
-            [checkBox setImage:[UIImage imageNamed:@"checkmark-off"]];
-        }
-    }
+- (void)setOff {
+    if (self.user.isIdentified && !self.user.isFloozer)
+        [checkBox setImage:[UIImage imageNamed:@"checkmark-off"]];
 }
 
 @end

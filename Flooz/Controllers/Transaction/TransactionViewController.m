@@ -72,7 +72,7 @@
     }
     [self registerForKeyboardNotifications];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction:) name:kNotificationRefreshTransaction object:nil];
+    [self registerNotification:@selector(refreshTransaction:) name:kNotificationRefreshTransaction object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

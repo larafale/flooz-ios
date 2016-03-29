@@ -41,7 +41,7 @@
     
     self.type = TransactionTypeBase;
     
-    self.presetId = [json objectForKey:@"id"];
+    self.presetId = [json objectForKey:@"_id"];
     self.amount = [json objectForKey:@"amount"];
     self.why = [json objectForKey:@"why"];
     self.whyPlaceholder = [json objectForKey:@"whyPlaceholder"];

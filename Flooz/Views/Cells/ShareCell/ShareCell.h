@@ -14,4 +14,7 @@
 
 + (CGFloat)getHeight;
 
+- (void)setOn;
+- (void)setOff;
+
 @end

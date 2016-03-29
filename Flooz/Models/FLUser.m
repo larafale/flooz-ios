@@ -66,6 +66,7 @@
     _isCertified = [[json objectForKey:@"isCertified"] boolValue];
     _isCactus = [[json objectForKey:@"isCactus"] boolValue];
     _isFriend = [[json objectForKey:@"isFriend"] boolValue];
+    _totalParticipation = [json objectForKey:@"total"];
     
     if ([json objectForKey:@"isFriendable"])
         _isFriendable = [[json objectForKey:@"isFriendable"] boolValue];

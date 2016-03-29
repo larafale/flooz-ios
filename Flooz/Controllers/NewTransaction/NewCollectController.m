@@ -251,10 +251,7 @@
     if (isDemo) {
         demoTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(launchDemo) userInfo:nil repeats:NO];
     } else {
-        if (firstViewWhy) {
-            [content becomeFirstResponder];
-            firstViewWhy = NO;
-        }
+        [name becomeFirstResponder];
     }
 }
 

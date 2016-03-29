@@ -58,7 +58,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor customBackground]];
+    [self.view setBackgroundColor:[UIColor customBackgroundHeader]];
     
     {
         userView = [[FLAccountUserView alloc] initWithShadow:[(FLNavigationController*)self.navigationController shadowImage]];
@@ -324,7 +324,6 @@
         return headerView;
     } else {
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
-        
         UILabel *headerTitle = [[UILabel alloc] initWithText:[[[_menuDic objectAtIndex:section - 1] objectForKey:@"title"] uppercaseString] textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
         
         [headerView addSubview:headerTitle];

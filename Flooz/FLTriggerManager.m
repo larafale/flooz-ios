@@ -47,6 +47,7 @@
 @property (nonatomic, strong) NSDictionary *binderKeyType;
 
 @property (nonatomic, strong) FLTrigger *smsTrigger;
+@property (nonatomic, strong) FLTrigger *listTrigger;
 
 @end
 
@@ -343,6 +344,48 @@
                 [self executeTriggerList:trigger.triggers];
             }];
         }
+    } else if ([trigger.viewCaregory isEqualToString:@"app:list"]) {
+        if (trigger.data) {
+            if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+                UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:trigger.data[@"title"] delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+                
+                if (trigger.data[@"items"]) {
+                    for (NSDictionary *item in trigger.data[@"items"]) {
+                        [actionSheet addButtonWithTitle:item[@"name"]];
+                    }
+                }
+                
+                if (trigger.data[@"close"] && [trigger.data[@"close"] boolValue]) {
+                    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+                    [actionSheet setCancelButtonIndex:index];
+                }
+
+                self.listTrigger = trigger;
+                
+                [actionSheet showInView:[appDelegate window]];
+                [self executeTriggerList:trigger.triggers];
+            } else {
+                UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:trigger.data[@"title"] message:trigger.data[@"content"] preferredStyle:UIAlertControllerStyleActionSheet];
+                
+                if (trigger.data[@"items"]) {
+                    for (NSDictionary *item in trigger.data[@"items"]) {
+                        [newAlert addAction:[UIAlertAction actionWithTitle:item[@"name"] style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+                            [self executeTriggerList:[FLTriggerManager convertDataInList:item[@"triggers"]]];
+                        }]];
+                    }
+                }
+                
+                if (trigger.data[@"close"] && [trigger.data[@"close"] boolValue]) {
+                    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+                }
+                
+                UIViewController *tmp = [appDelegate myTopViewController];
+                
+                [tmp presentViewController:newAlert animated:YES completion:^{
+                    [self executeTriggerList:trigger.triggers];
+                }];
+            }
+        }
     } else if ([trigger.viewCaregory isEqualToString:@"app:sms"]) {
         if (trigger.data && trigger.data[@"recipients"] && trigger.data[@"body"]) {
             if ([MFMessageComposeViewController canSendText]) {
@@ -582,6 +625,17 @@
             }
         }
     }];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (self.listTrigger) {
+        if (self.listTrigger.data[@"items"] && buttonIndex < [self.listTrigger.data[@"items"] count]) {
+            NSDictionary *item = self.listTrigger.data[@"items"][buttonIndex];
+            [self executeTriggerList:[FLTriggerManager convertDataInList:item[@"triggers"]]];
+        }
+        
+        self.listTrigger = nil;
+    }
 }
 
 - (void)loadBinderKeyView {

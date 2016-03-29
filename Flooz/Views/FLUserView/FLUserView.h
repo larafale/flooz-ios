@@ -13,6 +13,7 @@
 	UIImage *placeholder;
 }
 
+@property (nonatomic) BOOL isRound;
 @property (nonatomic, retain) FLUser *user;
 @property (nonatomic, retain) UIImageView *avatar;
 

@@ -24,6 +24,7 @@
 	SEL actionValidSend;
 	SEL actionValidCollect;
     SEL actionValidCharge;
+    SEL actionValidParticipation;
 
 	__weak NSMutableDictionary *_dictionary;
 	CLLocationManager *locationManager;
@@ -38,8 +39,10 @@
 @property (nonatomic, retain) UIButton *locationButton;;
 @property (nonatomic, retain) FLActionButton *askButton;;
 @property (nonatomic, retain) FLActionButton *sendButton;;
-@property (nonatomic, retain) FLActionButton *collectButton;;
+@property (nonatomic, retain) FLActionButton *collectButton;
+@property (nonatomic, retain) FLActionButton *participateButton;
 
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionParticipate:(SEL)actionParticipate;
 - (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCharge:(SEL)actionCharge;
 - (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionCollect:(SEL)actionCollect;
 - (void)reloadData;

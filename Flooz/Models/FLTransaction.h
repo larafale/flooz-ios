@@ -70,6 +70,7 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (strong, nonatomic) FLUser *from;
 @property (strong, nonatomic) FLUser *to;
 @property (strong, nonatomic) FLUser *starter;
+@property (strong, nonatomic) FLUser *creator;
 
 @property (strong, nonatomic) FLSocial *social;
 
@@ -77,8 +78,11 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 
 @property (strong, nonatomic) NSArray *comments;
 @property (strong, nonatomic) NSArray *participants;
+@property (strong, nonatomic) NSArray *participations;
+@property (strong, nonatomic) NSDictionary *actions;
 
 @property (nonatomic) BOOL isCollect;
+@property (nonatomic) BOOL isParticipation;
 
 @property (nonatomic) BOOL haveAction;
 

@@ -38,6 +38,8 @@
     
     WYPopoverController *popoverController;
     FLPrivacySelectorViewController *privacyListController;
+    
+    BOOL isParticipation;
 }
 
 @synthesize facebookButton;
@@ -47,6 +49,39 @@
 @synthesize sendButton;
 @synthesize locationButton;
 @synthesize collectButton;
+@synthesize participateButton;
+
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionParticipate:(SEL)actionParticipate {
+    heightBar = BAR_HEIGHT;
+    marginH = MARGIN_H;
+    marginV = MARGIN_V;
+    widthBar = SCREEN_WIDTH;
+    
+    isParticipation = YES;
+    
+    if (!IS_IPHONE_4)
+        heightBar += LOCATION_BAR_HEIGHT;
+    
+    self = [super initWithFrame:CGRectMake(0, 0, widthBar, heightBar)];
+    if (self) {
+        paymentButtonWidth = (widthBar / 4.0f) - marginH - (marginH / 2);
+        actionButtonHeight = actionButtonWidth = paymentButtonHeight = BAR_HEIGHT - (marginV * 2.0f);
+        actionButtonMargin = ((widthBar / 2.0f) - (3.0f * actionButtonWidth)) / 4.0f;
+        
+        _dictionary = dictionary;
+        currentController = controller;
+        actionValidParticipation = actionParticipate;
+        
+        if (!IS_IPHONE_4)
+            [self createLocationView];
+        
+        [self createTabBarView];
+        
+        privacyListController = [FLPrivacySelectorViewController new];
+        privacyListController.delegate = self;
+    }
+    return self;
+}
 
 - (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCharge:(SEL)actionCharge{
     heightBar = BAR_HEIGHT;
@@ -54,6 +89,8 @@
     marginV = MARGIN_V;
     widthBar = SCREEN_WIDTH;
     
+    isParticipation = NO;
+
     if (!IS_IPHONE_4)
         heightBar += LOCATION_BAR_HEIGHT;
     
@@ -84,6 +121,8 @@
     marginV = MARGIN_V;
     widthBar = SCREEN_WIDTH;
     
+    isParticipation = NO;
+
     if (!IS_IPHONE_4)
         heightBar += LOCATION_BAR_HEIGHT;
     
@@ -163,8 +202,19 @@
     collectButton.titleLabel.font = [UIFont customTitleLight:16];
     [collectButton addTarget:currentController action:actionValidCollect forControlEvents:UIControlEventTouchUpInside];
     [tabBarView addSubview:collectButton];
-    
-    if ([currentController isKindOfClass:[NewTransactionViewController class]]) {
+
+    participateButton = [[FLActionButton alloc] initWithFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
+    [participateButton setTitle:NSLocalizedString(@"MENU_PARTICIPATE", nil) forState:UIControlStateNormal];
+    participateButton.titleLabel.font = [UIFont customTitleLight:16];
+    [participateButton addTarget:currentController action:actionValidParticipation forControlEvents:UIControlEventTouchUpInside];
+    [tabBarView addSubview:participateButton];
+
+    if (isParticipation) {
+        [collectButton removeFromSuperview];
+        [askButton removeFromSuperview];
+        [sendButton removeFromSuperview];
+    } else if ([currentController isKindOfClass:[NewTransactionViewController class]]) {
+        [participateButton removeFromSuperview];
         [collectButton removeFromSuperview];
         if ([_dictionary[@"preset"] boolValue]) {
             if ([_dictionary[@"method"] isEqualToString:@"pay"]) {
@@ -183,6 +233,7 @@
     } else if ([currentController isKindOfClass:[NewCollectController class]]) {
         [askButton removeFromSuperview];
         [sendButton removeFromSuperview];
+        [participateButton removeFromSuperview];
     }
 }
 

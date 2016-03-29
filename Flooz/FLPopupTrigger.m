@@ -18,6 +18,7 @@
 @interface FLPopupTrigger () {
     NSMutableArray *actionsArray;
     
+    BOOL closable;
     NSString *title;
     NSString *content;
     NSMutableArray *buttonsString;
@@ -48,6 +49,9 @@
         title = data[@"title"];
         content = data[@"content"];
         
+        if (data[@"close"])
+            closable = [data[@"close"] boolValue];
+        
         if (data[@"buttons"]) {
             for (NSDictionary *button in data[@"buttons"]) {
                 if (button[@"title"]) {
@@ -75,6 +79,7 @@
     self = [self initWithData:data];
     if (self) {
         dismissBlock = block;
+        closable = NO;
     }
     return self;
 }
@@ -89,9 +94,14 @@
     NSDictionary *attributes;
     CGRect rect;
     
+    CGFloat titleMaxWidth = viewWidth - 2 * PADDING_LEFT_RIGHT - 5;
+    
+    if (closable)
+        titleMaxWidth -= 2 * PADDING_LEFT_RIGHT;
+    
     if (title && ![title isBlank]) {
         attributes = @{NSFontAttributeName: titleFont};
-        rect = [title boundingRectWithSize:CGSizeMake(viewWidth - 2 * PADDING_LEFT_RIGHT - 5, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
+        rect = [title boundingRectWithSize:CGSizeMake(titleMaxWidth, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
         
         viewHeight += rect.size.height + MARGE;
     }
@@ -116,7 +126,15 @@
     [contentView.layer setMasksToBounds:YES];
     [contentView.layer setCornerRadius:2];
     
-    UILabel *titleView = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_LEFT_RIGHT, offsetY, viewWidth - 2 * PADDING_LEFT_RIGHT, 0)];
+    CGFloat titleMaxWidth = viewWidth - 2 * PADDING_LEFT_RIGHT - 5;
+    CGFloat titleX = PADDING_LEFT_RIGHT;
+    
+    if (closable) {
+        titleMaxWidth -= 2 * PADDING_LEFT_RIGHT;
+        titleX += PADDING_LEFT_RIGHT;
+    }
+    
+    UILabel *titleView = [[UILabel alloc] initWithFrame:CGRectMake(titleX, offsetY, titleMaxWidth, 0)];
     titleView.font = titleFont;
     titleView.textColor = [UIColor customBlue];
     titleView.textAlignment = NSTextAlignmentCenter;
@@ -126,6 +144,15 @@
     [titleView setHeightToFit];
     
     [contentView addSubview:titleView];
+
+    UIButton *closeButton = [UIButton newWithFrame:CGRectMake(viewWidth - 30, 5, 25, 25)];
+    [closeButton setImage:[UIImage imageNamed:@"image-close"] forState:UIControlStateNormal];
+    [closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    
+    [contentView addSubview:closeButton];
+    
+    if (!closable)
+        closeButton.hidden = YES;
     
     if (!title || [title isBlank]) {
         [titleView setHidden:YES];

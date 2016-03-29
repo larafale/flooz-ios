@@ -71,13 +71,33 @@
     _title = [json objectForKey:@"text"];
     _content = [json objectForKey:@"why"];
     
-    _participants = [json objectForKey:@"participants"];
+    _participants = [NSArray new];
+    
+    if ([json objectForKey:@"participants"] && [[json objectForKey:@"participants"] count]) {
+        NSMutableArray *tmp = [NSMutableArray new];
+       NSArray *array = [json objectForKey:@"participants"];
+        for (NSDictionary *userDic in array) {
+            FLUser *user = [[FLUser alloc] initWithJSON:userDic];
+            if (userDic[@"userId"])
+                user.userId = userDic[@"userId"];
+            
+            [tmp addObject:user];
+        }
+        _participants = tmp;
+    }
+
+    _participations = [json objectForKey:@"participations"];
     
     _location = [json objectForKey:@"location"];
     
     _isCollect = NO;
     if ([json objectForKey:@"isPot"]) {
         _isCollect = [[json objectForKey:@"isPot"] boolValue];
+    }
+    
+    _isParticipation = NO;
+    if ([json objectForKey:@"isParticipation"]) {
+        _isParticipation = [[json objectForKey:@"isParticipation"] boolValue];
     }
     
     if (_location && [_location isBlank])
@@ -105,19 +125,26 @@
     
     _isAvailable = NO;
     _isClosable = NO;
+    _actions = nil;
     
-    if ([json objectForKey:@"actions"] && _isCollect) {
-        if ([[json objectForKey:@"actions"] containsObject:@"participate"]) {
+    if ([json objectForKey:@"actions"] && [[json objectForKey:@"actions"] isKindOfClass:[NSDictionary class]])
+        _actions = [json objectForKey:@"actions"];
+    
+    if (_actions && _isCollect) {
+        if ([[_actions allKeys] containsObject:@"participate"]) {
             _isAvailable = YES;
         }
         
-        if ([[json objectForKey:@"actions"] containsObject:@"close"]) {
+        if ([[_actions allKeys] containsObject:@"close"]) {
             _isClosable = YES;
         }
     }
     
     _from = [[FLUser alloc] initWithJSON:[json objectForKey:@"from"]];
     _to = [[FLUser alloc] initWithJSON:[json objectForKey:@"to"]];
+
+    if ([json objectForKey:@"creator"] && [[json objectForKey:@"creator"] isKindOfClass:[NSDictionary class]])
+        _creator = [[FLUser alloc] initWithJSON:[json objectForKey:@"creator"]];
     
     NSString *starterId = [[json objectForKey:@"starter"] objectForKey:@"_id"];
     

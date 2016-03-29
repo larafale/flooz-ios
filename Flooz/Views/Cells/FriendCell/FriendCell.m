@@ -11,18 +11,9 @@
 #define PADDING_SIDE 10.0f
 
 @implementation FriendButton
-//
-//- (void)setSelected:(BOOL)selected {
-//    [super setSelected:selected];
-//    if (selected) {
-//        [self setBackgroundColor:[UIColor customBlue]];
-//    }
-//    else {
-//        [self setBackgroundColor:[UIColor clearColor]];
-//    }
-//}
 
 @end
+
 @implementation FriendCell {
     UILabel *_nameLabel;
     UILabel *_subLabel;
@@ -131,11 +122,16 @@
 }
 
 - (void)preparePhoneView {
-    NSString *s = [@"@" stringByAppendingString : _friend.username];
-    _subLabel.text = s;
-    CGSize expectedLabelS = [s sizeWithAttributes:
-                             @{ NSFontAttributeName: _subLabel.font }];
-    CGRectSetHeight(_subLabel.frame, expectedLabelS.height);
+    if (_friend.isCactus) {
+        _subLabel.text = @"";
+    } else {
+        NSString *s = [@"@" stringByAppendingString : _friend.username];
+        _subLabel.text = s;
+        CGSize expectedLabelS = [s sizeWithAttributes:
+                                 @{ NSFontAttributeName: _subLabel.font }];
+        CGRectSetHeight(_subLabel.frame, expectedLabelS.height);
+    }
+
 }
 
 - (void)prepareCheckView {

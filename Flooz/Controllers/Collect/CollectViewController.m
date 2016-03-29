@@ -9,6 +9,14 @@
 #import "CollectViewController.h"
 #import "YLProgressBar.h"
 #import "CommentCell.h"
+#import "FXBlurView.h"
+#import "TUSafariActivity.h"
+#import "ARChromeActivity.h"
+#import "FLCopyLinkActivity.h"
+#import "CollectParticipantViewController.h"
+#import "CollectParticipationViewController.h"
+#import "ShareLinkViewController.h"
+#import "FLTextViewComment.h"
 
 @interface CollectViewController () {
     FLTransaction *_transaction;
@@ -17,17 +25,25 @@
     CGFloat headerSize;
     
     CollectHeaderView *tableHeaderView;
-    UIView *tableHeaderBackgroundView;
-    UIImageView *attachmentView;
-    YLProgressBar *attachmentProgressBar;
-    FLUserView *avatarView;
-    UILabel *starterName;
     
     UIView *toolbar;
     FLActionButton *participateButton;
     FLActionButton *closeButton;
+    FLTextViewComment *commentTextField;
     UIButton *shareButton;
+    UIButton *closeCommentButton;
+    UIButton *sendCommentButton;
     UIButton *commentButton;
+    NSMutableDictionary *commentData;
+    
+    FXBlurView *shareButtonOverlay;
+    UIView *shareView;
+    
+    BOOL shareViewVisible;
+    CGFloat keyboardHeight;
+    BOOL isCommenting;
+    BOOL sendPressed;
+    
 }
 
 @end
@@ -40,12 +56,15 @@
         _transaction = transaction;
         _indexPath = indexPath;
         focusOnCommentTextField = NO;
+        commentData = [NSMutableDictionary new];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    sendPressed = NO;
     
     [self createHeader];
     [self createViews];
@@ -57,69 +76,95 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction:) name:kNotificationRefreshTransaction object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        [self reloadTransaction];
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    if (_tableView.contentOffset.y < [tableHeaderView headerSize])
+        [(FLNavigationController*)self.navigationController hideShadow];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if (shareViewVisible)
+        [self hideShareView];    
+}
+
 - (void)refreshTransaction:(NSNotification *)notification {
-    [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success: ^(id result) {
-        
+    [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        [self reloadTransaction];
     }];
 }
 
 #pragma mark - Views
 
 - (void)createHeader {
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[[UIImage imageNamed:@"cog"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 0, 25, 25);
-    [btn setImageEdgeInsets:UIEdgeInsetsMake(3, 3, 3, 3)];
-    [btn setTintColor:[UIColor customBlue]];
-    [btn addTarget:self action:@selector(showReportMenu) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *reportBarButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    self.navigationItem.rightBarButtonItem = reportBarButton;
-    
-    {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
-        
-        UIImageView *scopeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
-        [scopeImage setTintColor:[UIColor whiteColor]];
-        
-        NSString *imageNamed = @"";
-        if (_transaction.social.scope == SocialScopeFriend) {
-            imageNamed = @"transaction-scope-friend";
-        }
-        else if (_transaction.social.scope == SocialScopePrivate) {
-            imageNamed = @"transaction-scope-private";
-        }
-        else if (_transaction.social.scope == SocialScopePublic) {
-            imageNamed = @"transaction-scope-public";
-        }
-        
-        [scopeImage setImage:[[UIImage imageNamed:imageNamed] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-        
-        UILabel *headerMoment = [[UILabel alloc] initWithText:[FLHelper momentWithDate:[_transaction date]] textColor:[UIColor whiteColor] font:[UIFont customContentLight:12] textAlignment:NSTextAlignmentLeft numberOfLines:1];
-        
-        CGFloat momentWidth = [headerMoment.text widthOfString:headerMoment.font];
-        
-        CGFloat headerWidth = momentWidth + CGRectGetWidth(scopeImage.frame) + 5;
-        
-        CGRectSetWidth(view.frame, headerWidth);
-        
-        [view addSubview:scopeImage];
-        [view addSubview:headerMoment];
-        
-        CGRectSetX(headerMoment.frame, CGRectGetWidth(scopeImage.frame) + 5);
-        CGRectSetHeight(headerMoment.frame, PPTabBarHeight());
-        CGRectSetY(scopeImage.frame, PPTabBarHeight() / 2 - CGRectGetHeight(scopeImage.frame) / 2);
-        
-        self.navigationItem.titleView = view;
+    NSString *imageNamed = @"";
+    if (_transaction.social.scope == SocialScopeFriend) {
+        imageNamed = @"transaction-scope-friend";
     }
+    else if (_transaction.social.scope == SocialScopePrivate) {
+        imageNamed = @"transaction-scope-private";
+    }
+    else if (_transaction.social.scope == SocialScopePublic) {
+        imageNamed = @"transaction-scope-public";
+    }
+
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[[UIImage imageNamed:imageNamed] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    btn.frame = CGRectMake(0, 0, 17, 17);
+    [btn setTintColor:[UIColor customWhite]];
+    
+    UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.rightBarButtonItem = scopeButton;
+
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
+    
+    UILabel *createdByLabel = [[UILabel alloc] initWithText:@"créée par" textColor:[UIColor whiteColor] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+    [createdByLabel setWidthToFit];
+    [createdByLabel setHeightToFit];
+    
+    FLUserView *creatorAvatar = [[FLUserView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    creatorAvatar.isRound = YES;
+    [creatorAvatar setImageFromUser:_transaction.creator];
+    creatorAvatar.avatar.layer.cornerRadius = 10;
+    creatorAvatar.layer.cornerRadius = 10;
+    
+    UILabel *creatorUsername = [[UILabel alloc] initWithText:[NSString stringWithFormat:@"@%@", _transaction.creator.username] textColor:[UIColor customBlue] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+    [creatorUsername setWidthToFit];
+    [creatorUsername setHeightToFit];
+    creatorUsername.userInteractionEnabled = YES;
+    [creatorUsername addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCreatorClick)]];
+    
+    CGFloat headerWidth = CGRectGetWidth(createdByLabel.frame) + 5 + CGRectGetWidth(creatorAvatar.frame) + 5 + CGRectGetWidth(creatorUsername.frame);
+    
+    CGRectSetWidth(view.frame, headerWidth);
+    
+    CGFloat midHeight = PPTabBarHeight() / 2;
+    
+    CGRectSetXY(createdByLabel.frame, 0, midHeight - CGRectGetHeight(createdByLabel.frame) / 2 - 2);
+    CGRectSetXY(creatorAvatar.frame, CGRectGetMaxX(createdByLabel.frame) + 5, midHeight - CGRectGetHeight(creatorAvatar.frame) / 2);
+    CGRectSetXY(creatorUsername.frame, CGRectGetMaxX(creatorAvatar.frame) + 5, midHeight - CGRectGetHeight(creatorUsername.frame) / 2 - 2);
+    
+    [view addSubview:createdByLabel];
+    [view addSubview:creatorAvatar];
+    [view addSubview:creatorUsername];
+    
+    self.navigationItem.titleView = view;
 }
 
 - (void)createViews {
-    _mainBody.backgroundColor = [UIColor customBackground];
-    
-    self.tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame) - PPToolBarHeight()) style:UITableViewStylePlain];
+    self.tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame) - 50) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -127,47 +172,14 @@
     [self.tableView setSeparatorColor:[UIColor customBackground]];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     
-    headerSize = 150.0f;
-    if (_transaction.attachmentURL == nil || [_transaction.attachmentURL isBlank])
-        headerSize = 50.0f;
-    
     tableHeaderView = [[CollectHeaderView alloc] initWithCollect:_transaction parentController:self];
     
-    tableHeaderBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), headerSize)];
-    tableHeaderBackgroundView.backgroundColor = [UIColor customBackgroundHeader];
-    
-    attachmentView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableHeaderBackgroundView.frame), CGRectGetHeight(tableHeaderBackgroundView.frame))];
-    attachmentView.contentMode = UIViewContentModeScaleAspectFill;
-    
-    attachmentProgressBar = [[YLProgressBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableHeaderBackgroundView.frame), CGRectGetHeight(tableHeaderBackgroundView.frame))];
-    attachmentProgressBar.type = YLProgressBarTypeFlat;
-    attachmentProgressBar.stripesOrientation = YLProgressBarStripesOrientationRight;
-    attachmentProgressBar.stripesDirection   = YLProgressBarStripesDirectionRight;
-    attachmentProgressBar.stripesAnimated = YES;
-    attachmentProgressBar.stripesColor = [UIColor customBlue:0.70];
-    attachmentProgressBar.stripesWidth = 30;
-    attachmentProgressBar.stripesDelta = 15;
-    attachmentProgressBar.stripesAnimationVelocity = 1.5;
-    attachmentProgressBar.progressTintColor  = [UIColor customBackgroundHeader];
-    attachmentProgressBar.behavior = YLProgressBarBehaviorWaiting;
-    attachmentProgressBar.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeNone;
-    
-    avatarView = [[FLUserView alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(tableHeaderBackgroundView.frame) - 40, 30, 30)];
-    
-    starterName = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(avatarView.frame) + 5, CGRectGetMinY(avatarView.frame), PPScreenWidth() - CGRectGetMaxX(avatarView.frame) - 25, CGRectGetHeight(avatarView.frame))];
-    starterName.font = [UIFont customContentRegular:17];
-    starterName.textColor = [UIColor whiteColor];
-    starterName.shadowColor = [UIColor customBackgroundHeader];
-    starterName.shadowOffset = CGSizeMake(-0.1, -0.3);
-    
-    [tableHeaderBackgroundView addSubview:attachmentView];
-    [tableHeaderBackgroundView addSubview:attachmentProgressBar];
-    [tableHeaderBackgroundView addSubview:avatarView];
-    [tableHeaderBackgroundView addSubview:starterName];
-    
-    self.tableView.tableHeaderView = tableHeaderView;
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 1.0)];
+    separator.backgroundColor = [UIColor customBackground];
 
+    self.tableView.tableHeaderView = tableHeaderView;
+    self.tableView.tableFooterView = separator;
+    
     toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame) - 50, PPScreenWidth(), 50)];
     toolbar.backgroundColor = [UIColor customBackgroundHeader];
     toolbar.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -175,85 +187,204 @@
     toolbar.layer.shadowOffset = CGSizeMake(0, -2);
     toolbar.layer.shadowRadius = 1;
     toolbar.clipsToBounds = NO;
-
+    
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:toolbar.bounds];
-
+    
     toolbar.layer.shadowPath = shadowPath.CGPath;
-
+    
     shareButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 50 - 10)];
     [shareButton setImage:[[UIImage imageNamed:@"share-native"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [shareButton addTarget:self action:@selector(shareButtonClick) forControlEvents:UIControlEventTouchUpInside];
     shareButton.tintColor = [UIColor whiteColor];
     shareButton.contentMode = UIViewContentModeScaleAspectFit;
     [toolbar addSubview:shareButton];
-    
+
+    closeCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 50 - 10)];
+    [closeCommentButton setImage:[[UIImage imageNamed:@"navbar-cross"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [closeCommentButton addTarget:self action:@selector(didCloseCommentButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    closeCommentButton.tintColor = [UIColor whiteColor];
+    closeCommentButton.contentMode = UIViewContentModeScaleAspectFit;
+    [toolbar addSubview:closeCommentButton];
+
     participateButton = [[FLActionButton alloc] initWithFrame:CGRectMake(60, 5, PPScreenWidth() - 120, 50 - 10) title:NSLocalizedString(@"MENU_PARTICIPATE", nil)];
     participateButton.titleLabel.font = [UIFont customTitleLight:16];
     [participateButton addTarget:self action:@selector(participateButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [toolbar addSubview:participateButton];
-
+    
     closeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(60, 5, PPScreenWidth() - 120, 50 - 10) title:NSLocalizedString(@"MENU_CLOSE", nil)];
     closeButton.titleLabel.font = [UIFont customTitleLight:16];
     [closeButton addTarget:self action:@selector(closeButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    closeButton.backgroundColor = [UIColor customRed];
+    [closeButton setBackgroundColor:[UIColor customRed] forState:UIControlStateNormal];
+    [closeButton setBackgroundColor:[UIColor customRed:0.5] forState:UIControlStateHighlighted];
     [toolbar addSubview:closeButton];
+    
+    commentTextField = [[FLTextViewComment alloc] initWithPlaceholder:NSLocalizedString(@"SEND_COMMENT", nil) for:commentData key:@"comment" frame:CGRectMake(60, 10, PPScreenWidth() - 120, 30)];
+    [commentTextField setDelegate:self];
+    [commentTextField setInputAccessoryView:toolbar];
+    [toolbar addSubview:commentTextField];
+    
+    commentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(toolbar.frame) - 55, 5, 50, 50 - 10)];
+    [commentButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"speech_bubble"] scaledToSize:CGSizeMake(32, 32)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [commentButton addTarget:self action:@selector(commentButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    commentButton.tintColor = [UIColor whiteColor];
+    commentButton.contentMode = UIViewContentModeScaleAspectFit;
+    [toolbar addSubview:commentButton];
 
-    [_mainBody addSubview:tableHeaderBackgroundView];
+    sendCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(toolbar.frame) - 55, 5, 50, 50 - 10)];
+    [sendCommentButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"send-text"] scaledToSize:CGSizeMake(32, 32)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [sendCommentButton addTarget:self action:@selector(didSendCommentButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    sendCommentButton.tintColor = [UIColor whiteColor];
+    sendCommentButton.contentMode = UIViewContentModeScaleAspectFit;
+    [toolbar addSubview:sendCommentButton];
+
     [_mainBody addSubview:self.tableView];
     [_mainBody addSubview:toolbar];
+    
+    [self createShareView];
+}
+
+- (void)createShareView {
+    CGFloat shareButtonHeight = 51;
+    
+    shareButtonOverlay = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
+    [shareButtonOverlay setDynamic:NO];
+    [shareButtonOverlay setBlurRadius:10];
+    [shareButtonOverlay setTintColor:[UIColor clearColor]];
+    [shareButtonOverlay setUserInteractionEnabled:NO];
+    [shareButtonOverlay setAlpha:0.0f];
+    [shareButtonOverlay addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didShareButtonOverlayClick)]];
+    
+    shareView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(toolbar.frame), PPScreenWidth(), shareButtonHeight * 2)];
+    shareView.layer.shadowColor = [UIColor blackColor].CGColor;
+    shareView.layer.shadowOpacity = .3;
+    shareView.layer.shadowOffset = CGSizeMake(0, -2);
+    shareView.layer.shadowRadius = 1;
+    shareView.clipsToBounds = NO;
+    
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:toolbar.bounds];
+    
+    shareView.layer.shadowPath = shadowPath.CGPath;
+    
+    UIView *shareInsideButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), shareButtonHeight)];
+    shareInsideButton.backgroundColor = [UIColor customBackgroundHeader];
+    shareInsideButton.userInteractionEnabled = YES;
+    [shareInsideButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didShareInsideButtonClick)]];
+    
+    [self fillShareButton:shareInsideButton image:[UIImage imageNamed:@"share_inside"] title:@"Inviter des Amis" subtitle:@"Inviter par nom, tel, ou email"];
+    
+    UIView *shareOutsideButton = [[UIView alloc] initWithFrame:CGRectMake(0, shareButtonHeight, PPScreenWidth(), shareButtonHeight)];
+    shareOutsideButton.backgroundColor = [UIColor customBackgroundHeader];
+    shareOutsideButton.userInteractionEnabled = YES;
+    [shareOutsideButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didShareOutsideButtonClick)]];
+    
+    [self fillShareButton:shareOutsideButton image:[UIImage imageNamed:@"share_outside"] title:@"Partager le Lien" subtitle:@"Partager sur Facebook, Twitter, etc"];
+    
+    [shareView addSubview:shareInsideButton];
+    [shareView addSubview:shareOutsideButton];
+}
+
+- (void)fillShareButton:(UIView *)button image:(UIImage*)image title:(NSString *)title subtitle:(NSString *)subtitle {
+    UIImageView *imageView  = [[UIImageView alloc] initWithFrame:CGRectMake(10, 12.5, CGRectGetHeight(button.frame) - 20,  CGRectGetHeight(button.frame) - 25)];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.image = [FLHelper colorImage:image color:[UIColor customBlue]];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 10, 7, PPScreenWidth() - CGRectGetMaxX(imageView.frame) - 20, 20)];
+    titleLabel.font = [UIFont customContentRegular:15];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.text = title;
+    titleLabel.numberOfLines = 1;
+    titleLabel.adjustsFontSizeToFitWidth = YES;
+    titleLabel.minimumScaleFactor = 10. / titleLabel.font.pointSize;
+    titleLabel.textAlignment = NSTextAlignmentLeft;
+    
+    UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 10, CGRectGetMaxY(titleLabel.frame), PPScreenWidth() - CGRectGetMaxX(imageView.frame) - 20, 15)];
+    subtitleLabel.font = [UIFont customContentRegular:13];
+    subtitleLabel.textColor = [UIColor customPlaceholder];
+    subtitleLabel.text = subtitle;
+    subtitleLabel.numberOfLines = 1;
+    subtitleLabel.adjustsFontSizeToFitWidth = YES;
+    subtitleLabel.minimumScaleFactor = 10. / titleLabel.font.pointSize;
+    subtitleLabel.textAlignment = NSTextAlignmentLeft;
+    
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(button.frame) - 1, PPScreenWidth(), 1)];
+    separator.backgroundColor = [UIColor customBackground];
+    
+    [button addSubview:imageView];
+    [button addSubview:titleLabel];
+    [button addSubview:subtitleLabel];
+    [button addSubview:separator];
 }
 
 - (void)prepareViews {
-    if (_transaction.attachmentURL && ![_transaction.attachmentURL isBlank]) {
-        attachmentProgressBar.hidden = NO;
-        [attachmentProgressBar setProgress:1 animated:YES];
-        attachmentView.hidden = YES;
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:_transaction.attachmentURL] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            attachmentProgressBar.hidden = YES;
-            attachmentView.hidden = NO;
-            attachmentView.image = image;
-        }];
-    } else {
-        attachmentProgressBar.hidden = YES;
-        attachmentView.hidden = YES;
-    }
-    
-    [avatarView setUser:_transaction.starter];
-    [starterName setText:_transaction.starter.fullname];
-    
-    if (_transaction.isAvailable && _transaction.isClosable) {
-        participateButton.hidden = NO;
-        closeButton.hidden = NO;
-        
-        CGRectSetWidth(participateButton.frame, (PPScreenWidth() - 120) / 2 - 5);
-        CGRectSetX(closeButton.frame, PPScreenWidth() / 2 + 5);
-        CGRectSetWidth(closeButton.frame, (PPScreenWidth() - 120) / 2 - 5);
-        
-        participateButton.titleLabel.font = [UIFont customTitleLight:16];
-        closeButton.titleLabel.font = [UIFont customTitleLight:16];
-    } else if (_transaction.isAvailable) {
-        participateButton.hidden = NO;
-        closeButton.hidden = YES;
-        
-        CGRectSetWidth(participateButton.frame, PPScreenWidth() - 120);
-        CGRectSetX(closeButton.frame, 60);
-        CGRectSetWidth(closeButton.frame, PPScreenWidth() - 120);
-        participateButton.titleLabel.font = [UIFont customTitleLight:18];
-    } else if (_transaction.isClosable) {
+    if (isCommenting) {
+        commentTextField.hidden = NO;
         participateButton.hidden = YES;
-        closeButton.hidden = NO;
-        
-        CGRectSetWidth(participateButton.frame, PPScreenWidth() - 120);
-        CGRectSetWidth(closeButton.frame, PPScreenWidth() - 120);
-        closeButton.titleLabel.font = [UIFont customTitleLight:18];
+        closeButton.hidden = YES;
+        closeCommentButton.hidden = NO;
+        sendCommentButton.hidden = NO;
+        commentButton.hidden = YES;
+        shareButton.hidden = YES;
+    } else {
+        if (_transaction.isAvailable && _transaction.isClosable) {
+            participateButton.hidden = NO;
+            closeButton.hidden = NO;
+            commentTextField.hidden = YES;
+            closeCommentButton.hidden = YES;
+            sendCommentButton.hidden = YES;
+            commentButton.hidden = NO;
+            
+            CGRectSetWidth(participateButton.frame, (PPScreenWidth() - 120) / 2 - 5);
+            CGRectSetX(closeButton.frame, PPScreenWidth() / 2 + 5);
+            CGRectSetWidth(closeButton.frame, (PPScreenWidth() - 120) / 2 - 5);
+            
+            participateButton.titleLabel.font = [UIFont customTitleLight:16];
+            closeButton.titleLabel.font = [UIFont customTitleLight:16];
+            shareButton.hidden = NO;
+        } else if (_transaction.isAvailable) {
+            participateButton.hidden = NO;
+            closeButton.hidden = YES;
+            commentTextField.hidden = YES;
+            closeCommentButton.hidden = YES;
+            sendCommentButton.hidden = YES;
+            commentButton.hidden = NO;
+            
+            CGRectSetWidth(participateButton.frame, PPScreenWidth() - 120);
+            CGRectSetX(closeButton.frame, 60);
+            CGRectSetWidth(closeButton.frame, PPScreenWidth() - 120);
+            participateButton.titleLabel.font = [UIFont customTitleLight:20];
+            shareButton.hidden = NO;
+        } else if (_transaction.isClosable) {
+            participateButton.hidden = YES;
+            closeButton.hidden = NO;
+            commentTextField.hidden = YES;
+            
+            CGRectSetWidth(participateButton.frame, PPScreenWidth() - 120);
+            CGRectSetWidth(closeButton.frame, PPScreenWidth() - 120);
+            closeButton.titleLabel.font = [UIFont customTitleLight:20];
+            closeCommentButton.hidden = YES;
+            sendCommentButton.hidden = YES;
+            commentButton.hidden = NO;
+            shareButton.hidden = NO;
+        } else {
+            commentTextField.hidden = NO;
+            participateButton.hidden = YES;
+            closeButton.hidden = YES;
+            closeCommentButton.hidden = YES;
+            sendCommentButton.hidden = NO;
+            commentButton.hidden = YES;
+            shareButton.hidden = NO;
+        }
     }
 }
 
 #pragma marks - tableview delegate / datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0)
-        return 1;
+    if (section == 0) {
+        if (_transaction.participations && _transaction.participants && _transaction.participations.count == _transaction.participants.count)
+            return 1;
+        return 2;
+    }
     
     return _transaction.social.commentsCount;
 }
@@ -272,7 +403,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0)
         return CGFLOAT_MIN;
-    return 20;
+    
+    if (_transaction.social.commentsCount)
+        return 20;
+    
+    return CGFLOAT_MIN;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -284,35 +419,75 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        static NSString *cellIdentifier = @"CollectFromsCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-            cell.backgroundColor = [UIColor customBackgroundHeader];
-            cell.textLabel.font = [UIFont customContentRegular:15];
-            cell.textLabel.textColor = [UIColor whiteColor];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-
-        if (_transaction.participants && _transaction.participants.count) {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (indexPath.row == 0) {
+            static NSString *cellIdentifier = @"CollectFromsCell1";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
-            if (_transaction.participants.count == 1)
-                cell.textLabel.text = @"1 Participant";
-            else
-                cell.textLabel.text = [NSString stringWithFormat:@"%lu Participants", (unsigned long)_transaction.participants.count];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.backgroundColor = [UIColor customBackgroundHeader];
+                cell.textLabel.font = [UIFont customContentRegular:15];
+                cell.textLabel.textColor = [UIColor whiteColor];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            
+            if (_transaction.participants && _transaction.participants.count) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                
+                if (_transaction.participants.count == 1)
+                    cell.textLabel.text = @"1 Participant";
+                else
+                    cell.textLabel.text = [NSString stringWithFormat:@"%lu Participants", (unsigned long)_transaction.participants.count];
+                
+                [cell.textLabel setWidthToFit];
+                
+                [self createParticipantVignetteViewForCell:cell];
+            } else {
+                UIView *tmp = [cell.contentView viewWithTag:42];
+                
+                if (tmp)
+                    [tmp removeFromSuperview];
+                
+                cell.textLabel.text = @"0 Participant";
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                [cell.textLabel setWidthToFit];
+            }
+            
+            CGRectSetY(cell.textLabel.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath] / 2 - CGRectGetHeight(cell.textLabel.frame) / 2);
+            CGRectSetHeight(cell.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath]);
+            
+            return cell;
         } else {
-            cell.textLabel.text = @"0 Participant";
-            cell.accessoryType = UITableViewCellAccessoryNone;
+            static NSString *cellIdentifier = @"CollectFromsCell2";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.backgroundColor = [UIColor customBackgroundHeader];
+                cell.textLabel.font = [UIFont customContentRegular:15];
+                cell.textLabel.textColor = [UIColor whiteColor];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            
+            if (_transaction.participations && _transaction.participations.count) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                
+                if (_transaction.participations.count == 1)
+                    cell.textLabel.text = @"1 Participation";
+                else
+                    cell.textLabel.text = [NSString stringWithFormat:@"%lu Participations", (unsigned long)_transaction.participations.count];
+            } else {
+                cell.textLabel.text = @"0 Participation";
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            
+            CGRectSetY(cell.textLabel.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath] / 2 - CGRectGetHeight(cell.textLabel.frame) / 2);
+            CGRectSetHeight(cell.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath]);
+            
+            return cell;
         }
-        
-        CGRectSetY(cell.textLabel.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath] / 2 - CGRectGetHeight(cell.textLabel.frame) / 2);
-        CGRectSetHeight(cell.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath]);
-
-        return cell;
     } else {
-        static NSString *cellIdentifier = @"CollectFromsCell";
+        static NSString *cellIdentifier = @"CommentCell";
         CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
         if (!cell) {
@@ -325,49 +500,209 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)createParticipantVignetteViewForCell:(UITableViewCell *)cell {
+    UIView *tmp = [cell.contentView viewWithTag:42];
     
+    if (tmp)
+        [tmp removeFromSuperview];
+    
+    UIView *view  = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(cell.textLabel.frame), 10, PPScreenWidth() - CGRectGetMaxX(cell.textLabel.frame) - 40, 30)];
+    
+    int nbSubView = (int)CGRectGetWidth(view.frame) % 27;
+    
+    if (nbSubView > _transaction.participants.count)
+        nbSubView = (int)_transaction.participants.count;
+    
+    CGFloat xOffSet = CGRectGetWidth(view.frame) - 30;
+    
+    for (int i = nbSubView - 1; i >= 0; i--) {
+        FLUser *participant = _transaction.participants[i];
+        FLUserView *userView = [[FLUserView alloc] initWithFrame:CGRectMake(xOffSet, 0, 30, 30)];
+        userView.isRound = YES;
+        [userView setImageFromUser:participant];
+        userView.avatar.layer.cornerRadius = 15;
+        userView.layer.cornerRadius = 15;
+        userView.layer.shadowColor = [UIColor blackColor].CGColor;
+        userView.layer.shadowOpacity = .3;
+        userView.layer.shadowOffset = CGSizeMake(1.5, -0.5);
+        userView.layer.shadowRadius = 1;
+        [view addSubview:userView];
+        xOffSet -= 27;
+    }
+    
+    [view setTag:42];
+    [cell.contentView addSubview:view];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (_transaction.participants.count) {
+            if (indexPath.row == 0) {
+                if (_transaction.participants.count == _transaction.participations.count) {
+                    [self.navigationController pushViewController:[[CollectParticipationViewController alloc] initWithCollectId:_transaction.transactionId] animated:YES];
+                } else {
+                    [self.navigationController pushViewController:[[CollectParticipantViewController alloc] initWithCollect:_transaction] animated:YES];
+                }
+            } else
+                [self.navigationController pushViewController:[[CollectParticipationViewController alloc] initWithCollectId:_transaction.transactionId] animated:YES];
+        }
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat scrollOffset = scrollView.contentOffset.y;
-    CGRect headerImageFrame = tableHeaderBackgroundView.frame;
+    if (_tableView.contentOffset.y < [tableHeaderView headerSize])
+        [(FLNavigationController*)self.navigationController hideShadow];
+    else
+        [(FLNavigationController*)self.navigationController showShadow];
+}
+
+- (void)showShareView {
+    shareViewVisible = YES;
+    [_mainBody insertSubview:shareButtonOverlay belowSubview:toolbar];
+    [_mainBody insertSubview:shareView belowSubview:toolbar];
     
-    if (scrollOffset < 0) {
-        // Adjust image proportionally
-        headerImageFrame.size.height = headerSize - scrollOffset;
-    } else {
-        // We're scrolling up, return to normal behavior
-        headerImageFrame.size.height = headerSize;
-    }
+    toolbar.layer.shadowOffset = CGSizeZero;
     
-    CGRectSetHeight(attachmentProgressBar.frame, headerImageFrame.size.height);
-    CGRectSetHeight(attachmentView.frame, headerImageFrame.size.height);
-    CGRectSetY(avatarView.frame, headerImageFrame.size.height - 40);
-    CGRectSetY(starterName.frame, headerImageFrame.size.height - 40);
-    tableHeaderBackgroundView.frame = headerImageFrame;
+    [UIView animateWithDuration:.5 animations:^{
+        CGRectSetY(shareView.frame, CGRectGetMinY(toolbar.frame) - CGRectGetHeight(shareView.frame));
+        shareButtonOverlay.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        shareButtonOverlay.userInteractionEnabled = YES;
+    }];
+}
+
+- (void)hideShareView {
+    shareButtonOverlay.userInteractionEnabled = NO;
+    
+    [UIView animateWithDuration:.3 animations:^{
+        CGRectSetY(shareView.frame, CGRectGetMinY(toolbar.frame));
+        shareButtonOverlay.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [shareView removeFromSuperview];
+        [shareButtonOverlay removeFromSuperview];
+        toolbar.layer.shadowOffset = CGSizeMake(0, -2);
+        shareViewVisible = NO;
+    }];
 }
 
 #pragma mark - Actions
 
-- (void)commentButtonClick {
+- (void)didCloseCommentButtonClick {
+    isCommenting = NO;
+    [commentTextField resignFirstResponder];
+    [self prepareViews];
+}
+
+- (void)didSendCommentButtonClick {
+    [commentTextField resignFirstResponder];
     
+    if (!commentData[@"comment"] || [commentData[@"comment"] isBlank] || [commentData[@"comment"] length] > 3000 || sendPressed) {
+        return;
+    }
+    sendPressed = YES;
+    
+    NSDictionary *comment = @{
+                              @"floozId": [_transaction transactionId],
+                              @"comment": commentData[@"comment"]
+                              };
+    
+    [commentData setObject:@"" forKey:@"comment"];
+    [commentTextField reload];
+    
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] createComment:comment success: ^(id result) {
+        [_transaction setJSON:result[@"item"]];
+        
+        sendPressed = NO;
+        [self reloadTransaction];
+//        [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+    } failure:^(NSError *error) {
+        sendPressed = NO;
+    }];
+
+}
+
+- (void)didCreatorClick {
+    [appDelegate showUser:_transaction.creator inController:self];
+}
+
+- (void)didShareInsideButtonClick {
+    if (shareViewVisible)
+        [self hideShareView];
+    
+    [[Flooz sharedInstance] showLoadView];
+    
+    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:[[ShareLinkViewController alloc] initWithCollectId:_transaction.transactionId]] animated:YES completion:^{
+        [[Flooz sharedInstance] hideLoadView];
+    }];
+}
+
+- (void)didShareOutsideButtonClick {
+    if (shareViewVisible)
+        [self hideShareView];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.flooz.me/pot/%@", _transaction.transactionId]];
+    
+    ARChromeActivity *chromeActivity = [ARChromeActivity new];
+    TUSafariActivity *safariActivity = [TUSafariActivity new];
+    FLCopyLinkActivity *copyActivity = [FLCopyLinkActivity new];
+    
+    UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:@[chromeActivity, safariActivity, copyActivity]];
+    
+    [shareController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
+        
+    }];
+    
+    [shareController setExcludedActivityTypes:@[UIActivityTypeCopyToPasteboard, UIActivityTypePrint, UIActivityTypeAddToReadingList, UIActivityTypeAssignToContact, UIActivityTypeAirDrop]];
+    
+    [self.navigationController presentViewController:shareController animated:YES completion:^{
+        
+    }];
+}
+
+- (void)didShareButtonOverlayClick {
+    if (shareViewVisible)
+        [self hideShareView];
+}
+
+- (void)commentButtonClick {
+    if (shareViewVisible)
+        [self hideShareView];
+    
+    isCommenting = YES;
+    [commentTextField becomeFirstResponder];
+    [self prepareViews];
 }
 
 - (void)shareButtonClick {
-    
+    if (shareViewVisible)
+        [self hideShareView];
+    else
+        [self showShareView];
 }
 
 - (void)closeButtonClick {
+    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.json[@"actionTriggers"][@"close"]]];
     
 }
 
 - (void)participateButtonClick {
-    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.json[@"triggers"]]];
+    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.json[@"actionTriggers"][@"participate"]]];
 }
 
 - (void)showReportMenu {
     [appDelegate showReportMenu:[[FLReport alloc] initWithType:ReportTransaction transac:_transaction]];
+}
+
+- (void)reloadTransaction {
+    [self prepareViews];
+    [self didUpdateTransactionData];
+}
+
+- (void)didUpdateTransactionData {
+    if (_indexPath) {
+        [_delegateController updateTransactionAtIndex:_indexPath transaction:_transaction];
+    }
 }
 
 #pragma mark - Keyboard Management
@@ -379,11 +714,31 @@
 
 - (void)keyboardDidAppear:(NSNotification *)notification {
     NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    
+    CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
+    CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
+    [self.tableView setContentOffset:CGPointMake(0, keyboardHeight) animated:YES];
 }
 
 - (void)keyboardWillDisappear {
-    //    _contentView.contentInset = UIEdgeInsetsZero;
+    keyboardHeight = 0;
+    
+    CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
+    CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
+    [self.tableView setContentOffset:CGPointMake(0, keyboardHeight) animated:YES];
+}
+
+- (void)didChangeHeight:(CGFloat)height {
+    if (height >= 30) {
+        CGRectSetHeight(toolbar.frame, height + 20);
+        CGRectSetY(sendCommentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        CGRectSetY(closeCommentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        CGRectSetY(shareButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        
+        CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
+        CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
+    }
 }
 
 @end

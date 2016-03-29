@@ -77,7 +77,6 @@
 
 - (void)didBackTouch {
     [timer invalidate];
-    [_delegate dismiss];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {

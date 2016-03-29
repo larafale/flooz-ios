@@ -7,8 +7,8 @@
 //
 
 #import "ShareCell.h"
-#import "ShareSMSViewController.h"
 #import "FriendAddSearchBar.h"
+#import "ShareSMSViewController.h"
 
 @interface ShareSMSViewController () {
     UIBarButtonItem *searchItem;
@@ -305,9 +305,9 @@
     [cell setUser:contact];
     
     if ([selectedContacts containsObject:contact])
-        [cell setSelected:YES];
+        [cell setOn];
     else
-        [cell setSelected:NO];
+        [cell setOff];
     
     return cell;
 }
@@ -333,6 +333,8 @@
     }
     
     [_sendButton setTitle:[NSString stringWithFormat:@"%@ (%lu)", buttonTitle, (unsigned long)[selectedContacts count]] forState:UIControlStateNormal];
+    
+    [tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -353,6 +355,8 @@
         [_sendButton setEnabled:NO];
         [_sendButton setTitle:buttonTitle forState:UIControlStateNormal];
     }
+    
+    [tableView reloadData];
 }
 
 - (void)scrollViewDidScroll:(id)scrollView {

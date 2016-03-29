@@ -98,6 +98,7 @@ static NSString *kLocationData = @"locationData";
 - (NSString *)formatBirthDate:(NSString *)birthdate;
 - (void)cashoutValidate:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)sendDiscountCode:(NSDictionary *)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)collectInvite:(NSString *)collectId invitations:(NSArray *)invitations success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)loadCactusData:(NSString*)identifier success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updateCurrentUser;
@@ -109,6 +110,8 @@ static NSString *kLocationData = @"locationData";
 
 - (void)uploadDocument:(NSData *)data field:(NSString *)field success:(void (^)())success failure:(void (^)(NSError *error))failure;
 
+- (void)collectTimeline:(NSString *)collectId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)collectTimelineNextPage:(NSString *)nextPageUrl collectId:(NSString *)collectId success:(void (^)(id result, NSString *nextPageUrl))success;
 - (void)userTimeline:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
 - (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
@@ -127,6 +130,7 @@ static NSString *kLocationData = @"locationData";
 - (void)placesFrom:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)placesSearch:(NSString *)search from:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
+- (void)createParticipationValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)createCollectValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;

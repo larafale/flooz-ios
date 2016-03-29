@@ -104,9 +104,13 @@
         firstView = YES;
         isDemo = currentPreset.popup != NULL || currentPreset.steps != NULL;
         
-        if (currentPreset.to) {
-            presetUser = currentPreset.to;
-            transaction[@"to"] = [@"@" stringByAppendingString :[currentPreset.to username]];
+        if (!currentPreset.isParticipation) {
+            if (currentPreset.to) {
+                presetUser = currentPreset.to;
+                transaction[@"to"] = [@"@" stringByAppendingString :[currentPreset.to username]];
+            }
+        } else {
+            transaction[@"potId"] = currentPreset.presetId;
         }
         
         if (currentPreset.title && ![currentPreset.title isBlank])
@@ -208,7 +212,12 @@
     cbItem = [[UIBarButtonItem alloc] initWithImage:cbImage style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
     [cbItem setTintColor:[UIColor customBlue]];
     
-    transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+    if (currentPreset && currentPreset.isParticipation) {
+        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionParticipate:@selector(validParticipation)];
+    } else {
+        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+    }
+    
     [transactionBar setDelegate:self];
     
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - PPStatusBarHeight() - NAVBAR_HEIGHT - CGRectGetHeight(transactionBar.frame))];
@@ -219,7 +228,12 @@
     if (currentPreset && currentPreset.blockBack)
         ((FLNavigationController*)self.parentViewController).blockBack = currentPreset.blockBack;
     
-    transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+    if (currentPreset && currentPreset.isParticipation) {
+        transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionParticipate:@selector(validParticipation)];
+    } else {
+        transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+    }
+    
     [transactionBarKeyboard setDelegate:self];
     
     _offset = 0;
@@ -250,6 +264,8 @@
         
         if (presetUser) {
             [contactPickerView addContact:presetUser withName:(presetUser.fullname ? presetUser.fullname : presetUser.username)];
+        } else if (currentPreset && currentPreset.isParticipation) {
+            [contactPickerView addContact:currentPreset.collectName withName:currentPreset.collectName];
         }
         
         [_contentView addSubview:contactPickerView];
@@ -381,6 +397,9 @@
 }
 
 - (void)validateView {
+    if (currentPreset && currentPreset.isParticipation)
+        return;
+    
     BOOL valid = YES;
     
     if (presetUser) {
@@ -419,26 +438,28 @@
 }
 
 - (void)resetPaymentButtons {
-    switch (currentTransactionType) {
-        case TransactionTypePayment: {
-            [self hideChargeButton:true];
-            [self hidePayButton:false];
-            break;
-        }
-        case TransactionTypeCharge: {
-            [self hideChargeButton:false];
-            [self hidePayButton:true];
-            break;
-        }
-        case TransactionTypeCollect: {
-            [self hideChargeButton:false];
-            [self hidePayButton:false];
-            break;
-        }
-        case TransactionTypeBase: {
-            [self hideChargeButton:false];
-            [self hidePayButton:false];
-            break;
+    if (!currentPreset || !currentPreset.isParticipation) {
+        switch (currentTransactionType) {
+            case TransactionTypePayment: {
+                [self hideChargeButton:true];
+                [self hidePayButton:false];
+                break;
+            }
+            case TransactionTypeCharge: {
+                [self hideChargeButton:false];
+                [self hidePayButton:true];
+                break;
+            }
+            case TransactionTypeCollect: {
+                [self hideChargeButton:false];
+                [self hidePayButton:false];
+                break;
+            }
+            case TransactionTypeBase: {
+                [self hideChargeButton:false];
+                [self hidePayButton:false];
+                break;
+            }
         }
     }
 }
@@ -827,6 +848,15 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)validParticipation {
+    [[self view] endEditing:YES];
+    
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] createParticipationValidate:transaction success: ^(id result) {
+        
+    }];
+}
+
 - (void)validSendMoney {
     [transaction setValue:[FLTransaction transactionTypeToParams:TransactionTypePayment] forKey:@"method"];
     [self valid];
@@ -868,7 +898,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createTransactionValidate:transaction success: ^(id result) {
-
+        
     }];
 }
 
@@ -1015,7 +1045,12 @@
         if (authStatus == AVAuthorizationStatusAuthorized) {
             if (!cameraView) {
                 if (!cameraBarKeyboard) {
-                    cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+                    if (currentPreset && currentPreset.isParticipation) {
+                        cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionParticipate:@selector(validParticipation)];
+                    } else {
+                        cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+                    }
+
                     [cameraBarKeyboard setDelegate:self];
                     [self validateView];
                     [cameraBarKeyboard reloadData];
@@ -1046,7 +1081,11 @@
                 if (granted){
                     if (!cameraView) {
                         if (!cameraBarKeyboard) {
-                            cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+                            if (currentPreset && currentPreset.isParticipation) {
+                                cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionParticipate:@selector(validParticipation)];
+                            } else {
+                                cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+                            }
                             [cameraBarKeyboard setDelegate:self];
                             [self validateView];
                             [cameraBarKeyboard reloadData];

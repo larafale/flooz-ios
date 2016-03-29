@@ -15,8 +15,6 @@
 	#import <Foundation/Foundation.h>
 #endif
 
-#import <Flooz-Swift.h>
-
 #import <QuartzCore/QuartzCore.h>
 
 #import <SDWebImage/UIImageView+WebCache.h>

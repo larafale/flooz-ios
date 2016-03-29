@@ -32,7 +32,7 @@
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(5.0f, 0, CGRectGetWidth(fr) - 10.0f, CGRectGetHeight(fr))];
     
     _textView.backgroundColor = [UIColor clearColor];
-    _textView.autocorrectionType = UITextAutocorrectionTypeYes;
+    _textView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     _textView.keyboardAppearance = UIKeyboardAppearanceDark;
     
@@ -66,13 +66,13 @@
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    _placeholder.hidden = YES;
+//    _placeholder.hidden = YES;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if ([textView.text isBlank]) {
         [_dictionary setValue:nil forKey:_dictionaryKey];
-        _placeholder.hidden = NO;
+//        _placeholder.hidden = NO;
     }
     else {
         [_dictionary setValue:textView.text forKey:_dictionaryKey];
@@ -124,6 +124,11 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
+    if (textView.text.length)
+        _placeholder.hidden = YES;
+    else
+        _placeholder.hidden = NO;
+    
     [self setHeight:_textView.contentSize.height];
     
     CGRect line = [textView caretRectForPosition:

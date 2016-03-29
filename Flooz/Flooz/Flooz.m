@@ -693,6 +693,35 @@
     [self requestPath:[NSString stringWithFormat:@"/users/%@/flooz", userId] method:@"GET" params:nil success:successBlock failure:failure];
 }
 
+- (void)collectTimeline:(NSString *)collectId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
+        
+        if (success) {
+            success(transactions, result[@"next"]);
+        }
+    };
+    
+    
+    [self requestPath:@"/flooz" method:@"GET" params:@{@"potId": collectId} success:successBlock failure:failure];
+}
+
+- (void)collectTimelineNextPage:(NSString *)nextPageUrl collectId:(NSString *)collectId success:(void (^)(id result, NSString *nextPageUrl))success {
+    id successBlock = ^(id result) {
+        NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
+        
+        if (success) {
+            success(transactions, result[@"next"]);
+        }
+    };
+    
+    [self requestPath:nextPageUrl method:@"GET" params:@{@"potId": collectId} success:successBlock failure:NULL];
+}
+
+- (void)collectInvite:(NSString *)collectId invitations:(NSArray *)invitations success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:[NSString stringWithFormat:@"/pots/%@/invite", collectId] method:@"POST" params:@{@"invitations":invitations} success:success failure:failure];
+}
+
 - (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
     [self timeline:scope state:nil success:success failure:failure];
 }
@@ -895,6 +924,25 @@
         [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
     
     [self requestPath:@"/flooz" method:@"POST" params:tempTransaction success:success fullFailure:nil];
+}
+
+- (void)createParticipationValidate:(NSDictionary *)transaction success:(void (^)(id result))success {
+    NSMutableDictionary *tempTransaction = [transaction mutableCopy];
+    
+    if (tempTransaction[@"image"]) {
+        [tempTransaction removeObjectForKey:@"image"];
+        [tempTransaction setObject:@YES forKey:@"hasImage"];
+    }
+    
+    [tempTransaction removeObjectForKey:@"toImage"];
+    [tempTransaction removeObjectForKey:@"preset"];
+    
+    tempTransaction[@"validate"] = @"true";
+    
+    if ([SecureCodeViewController hasSecureCodeForCurrentUser])
+        [tempTransaction setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
+    
+    [self requestPath:[NSString stringWithFormat:@"/pots/%@/participate", transaction[@"potId"]] method:@"POST" params:tempTransaction success:success fullFailure:nil];
 }
 
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {

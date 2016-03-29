@@ -30,7 +30,8 @@
 
 - (void)commonInit {
 	self.userInteractionEnabled = NO;
-
+    self.isRound = NO;
+    
 	avatar = [[UIImageView alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
 	placeholder = [UIImage imageNamed:@"default-avatar"];
 
@@ -52,6 +53,7 @@
 }
 
 - (void)setImageFromURL:(NSString *)url {
+    [self showPlaceholder];
 	if (!url || [url isBlank] || [url isEqualToString:@"/img/nopic.png"]) {
 		[self showPlaceholder];
     } else if ([url isEqualToString:@"/img/fake.png"]) {
@@ -122,12 +124,20 @@
 - (void)showPlaceholder {
 	avatar.layer.opacity = 1;
 	avatar.image = placeholder;
-    avatar.layer.cornerRadius = 5;
+    
+    if (self.isRound)
+        avatar.layer.cornerRadius = avatar.frame.size.height / 2;
+    else
+        avatar.layer.cornerRadius = 5;
 }
 
 - (void)hidePlaceholder {
     avatar.layer.opacity = 1;
-    avatar.layer.cornerRadius = 5;
+
+    if (self.isRound)
+        avatar.layer.cornerRadius = avatar.frame.size.height / 2;
+    else
+        avatar.layer.cornerRadius = 5;
 }
 
 @end

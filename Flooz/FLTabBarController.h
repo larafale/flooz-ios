@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class LiquidFloatingActionButton;
-
 @interface FLTabBarController : UITabBarController<UITabBarControllerDelegate, UINavigationControllerDelegate>
 
 - (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion;
