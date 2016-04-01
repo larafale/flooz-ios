@@ -17,7 +17,7 @@
     
     BOOL isSearching;
     BOOL isReloading;
-    
+
     NSString *searchString;
     
     FLUser *currentUser;
@@ -225,12 +225,10 @@
     }
     isReloading = YES;
     
-    [[Flooz sharedInstance] updateCurrentUserWithSuccess: ^() {
-        [[Flooz sharedInstance] friendsSuggestion: ^(id result) {
-            [refreshControl endRefreshing];
-            friendsSuggestion = result;
-            [self reloadFriendsList];
-        }];
+    [[Flooz sharedInstance] friendsSuggestion: ^(id result) {
+        [refreshControl endRefreshing];
+        friendsSuggestion = result;
+        [self reloadFriendsList];
     }];
 }
 
@@ -269,7 +267,7 @@
 
 - (void)acceptFriendSuggestion:(FLUser *)friend cell:(UITableViewCell *)cell {
     currentUser = friend;
-
+    
     NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
     
     FLUser *tmp = [FLUser new];
@@ -309,7 +307,7 @@
             currentUser.isFriend = NO;
             [_tableView reloadData];
         } failure:^(NSError *error) {
-
+            
         }];
     }]];
     

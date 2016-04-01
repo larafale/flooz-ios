@@ -92,7 +92,7 @@
     
     if ([item isKindOfClass:[FLTransaction class]]) {
         FLTransaction *transaction = item;
-        return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
+        return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame) hideTitle:YES];
     }
     return 0;
 }
@@ -119,7 +119,9 @@
         
         if (!cell) {
             cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier andDelegate:self];
+            cell.hideTitle = YES;
         }
+        
         FLTransaction *transaction = item;
         
         [cell setTransaction:transaction];

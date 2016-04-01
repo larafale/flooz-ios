@@ -22,6 +22,8 @@
     UILabel *amountSymbolLabel;
     UILabel *collectedLabel;
     FLImageView *attachmentView;
+    UILabel *closeLabel;
+    UILabel *locationLabel;
 }
 
 @end
@@ -80,20 +82,37 @@
     
     attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 80)];
     
+    closeLabel = [[UILabel alloc] initWithText:@"Cagnotte terminée" textColor:[UIColor redColor] font:[UIFont customContentBold:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    closeLabel.layer.masksToBounds = YES;
+    closeLabel.layer.borderWidth = 1.5;
+    closeLabel.layer.borderColor = [UIColor redColor].CGColor;
+    closeLabel.layer.cornerRadius = 4;
+    closeLabel.hidden = YES;
+    CGRectSetWidthHeight(closeLabel.frame, CGRectGetWidth(closeLabel.frame) + 15, CGRectGetHeight(closeLabel.frame) + 10);
+    CGRectSetXY(closeLabel.frame, CGRectGetWidth(contentView.frame) / 2 - CGRectGetWidth(closeLabel.frame) / 2, CGRectGetMaxY(attachmentView.frame) + 5);
+
     descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(attachmentView.frame) + 10, PPScreenWidth() - 20, 0)];
     descriptionLabel.font = [UIFont customContentRegular:15];
     descriptionLabel.textColor = [UIColor whiteColor];
-    descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    descriptionLabel.textAlignment = NSTextAlignmentLeft;
     descriptionLabel.numberOfLines = 0;
     descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
+    locationLabel = [UILabel newWithFrame:CGRectMake(7.0f, CGRectGetMaxY(descriptionLabel.frame), PPScreenWidth() - 20, 15.0f)];
+    locationLabel.textColor = [UIColor customPlaceholder];
+    locationLabel.numberOfLines = 1;
+    locationLabel.textAlignment = NSTextAlignmentLeft;
+    locationLabel.font = [UIFont customContentRegular:12];
+  
     [contentView addSubview:attachmentView];
+    [contentView addSubview:closeLabel];
     [contentView addSubview:descriptionLabel];
+    [contentView addSubview:locationLabel];
     
     [self addSubview:contentView];
     [self addSubview:headerView];
     
-    CGRectSetHeight(contentView.frame, CGRectGetMaxY(amountLabel.frame) + 10);
+    CGRectSetHeight(contentView.frame, CGRectGetMaxY(descriptionLabel.frame) + 20);
     CGRectSetHeight(self.frame, CGRectGetMaxY(contentView.frame));
 }
 
@@ -130,12 +149,58 @@
         CGRectSetHeight(attachmentView.frame, 0);
     }
     
-    CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(attachmentView.frame) + 20);
+    if (_transaction.status == TransactionStatusPending) {
+        closeLabel.hidden = NO;
+        CGRectSetY(closeLabel.frame, CGRectGetMaxY(attachmentView.frame) + 10);
+        CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(closeLabel.frame) + 10);
+    } else {
+        closeLabel.hidden = YES;
+        CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(attachmentView.frame) + 15);
+    }
 
     descriptionLabel.text = _transaction.content;
-    CGRectSetHeight(descriptionLabel.frame, [descriptionLabel heightToFit]);
+    CGRectSetHeight(descriptionLabel.frame, [descriptionLabel heightToFit] + 4);
     
-    CGRectSetHeight(contentView.frame, CGRectGetMaxY(descriptionLabel.frame) + 20);
+    if (_transaction.location) {
+        [locationLabel setHidden:NO];
+        CGRectSetHeight(locationLabel.frame, 15.0f);
+        
+        NSMutableAttributedString *attributedData = [NSMutableAttributedString new];
+        
+        UIImage *cbImage = [UIImage imageNamed:@"map"];
+        CGSize newImgSize = CGSizeMake(13, 13);
+        
+        cbImage = [FLHelper imageWithImage:cbImage scaledToSize:newImgSize];
+        cbImage = [FLHelper colorImage:cbImage color:[UIColor customPlaceholder]];
+        
+        NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+        attachment.image = cbImage;
+        attachment.bounds = CGRectMake(0, -2, attachment.image.size.width, attachment.image.size.height);
+        
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+        
+        [attributedData appendAttributedString:attachmentString];
+        
+        {
+            NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                                  initWithString:[NSString stringWithFormat:@" %@", _transaction.location]
+                                                  attributes:@{
+                                                               NSForegroundColorAttributeName: [UIColor customPlaceholder],
+                                                               NSFontAttributeName: [UIFont customContentRegular:12]
+                                                               }];
+            
+            [attributedData appendAttributedString:attributedText];
+        }
+        
+        locationLabel.attributedText = attributedData;
+        CGRectSetY(locationLabel.frame, CGRectGetMaxY(descriptionLabel.frame) + 5);
+        CGRectSetHeight(contentView.frame, CGRectGetMaxY(locationLabel.frame) + 15);
+    } else {
+        CGRectSetY(locationLabel.frame, CGRectGetMaxY(descriptionLabel.frame) + 5.0f);
+        [locationLabel setHidden:YES];
+        CGRectSetHeight(contentView.frame, CGRectGetMaxY(descriptionLabel.frame) + 15);
+    }
+    
     CGRectSetHeight(self.frame, CGRectGetMaxY(contentView.frame));
 }
 

@@ -213,6 +213,10 @@
 
 - (void)reload {
     [_textView setText:_dictionary[_dictionaryKey]];
+    if (_textView.text.length)
+        _placeholder.hidden = YES;
+    else
+        _placeholder.hidden = NO;
 }
 
 @end

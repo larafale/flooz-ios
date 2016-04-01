@@ -18,6 +18,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andDelegate:(id)delegate {
 	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 	if (self) {
+        self.hideTitle = NO;
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
 		self.backgroundColor = [UIColor customBackgroundHeader];
 		_delegateController = delegate;
@@ -27,8 +28,12 @@
 }
 
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction andWidth:(CGFloat)width {
+    return [TransactionCell getHeightForTransaction:transaction andWidth:width hideTitle:NO];
+}
+
++ (CGFloat)getHeightForTransaction:(FLTransaction *)transaction andWidth:(CGFloat)width hideTitle:(BOOL)hideTitle {
 	CGFloat heightCell = 0.0f;
-	heightCell += [FLTransactionDescriptionView getHeightForTransaction:transaction avatarDisplay:YES andWidth:width]; //height of description
+	heightCell += [FLTransactionDescriptionView getHeightForTransaction:transaction avatarDisplay:YES andWidth:width hideTitle:hideTitle]; //height of description
 	heightCell += 5.0f;
 	return heightCell;
 }
@@ -67,7 +72,7 @@
 #pragma mark - Prepare Views
 
 - (void)prepareViews {
-    [transactionDetailsView setTransaction:_transaction];
+    [transactionDetailsView setTransaction:_transaction hideTitle:_hideTitle];
 }
 
 #pragma mark - Actions

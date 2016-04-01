@@ -27,10 +27,10 @@
                                                context:nil];
     
     if (rect.size.height + 18.0f < 35) {
-        return 45.0f;
+        return 55.0f;
     }
     
-    return rect.size.height + 28.0f;
+    return rect.size.height + 38.0f;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -45,7 +45,7 @@
     self.backgroundColor = [UIColor customBackgroundHeader];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    avatar = [[FLUserView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+    avatar = [[FLUserView alloc] initWithFrame:CGRectMake(10, 10, 35, 35)];
     [avatar setUserInteractionEnabled:true];
     
     [self addSubview:avatar];
@@ -55,7 +55,7 @@
     CGFloat MARGE_LEFT = 35 + 20.;
     CGFloat WIDTH = PPScreenWidth() - MARGE_LEFT;
     
-    content = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, 5, WIDTH, 0)];
+    content = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, 10, WIDTH, 0)];
     dateView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, 0, WIDTH, 15)];
     
     content.font = [UIFont customContentLight:13];

@@ -39,6 +39,10 @@
 #import "TransactionViewController.h"
 #import "TimelineViewController.h"
 #import "NewCollectController.h"
+#import "CollectViewController.h"
+#import "CollectParticipantViewController.h"
+#import "CollectParticipationViewController.h"
+#import "ShareLinkViewController.h"
 
 @interface FLTriggerManager ()
 
@@ -324,6 +328,9 @@
     } else if ([trigger.category isEqualToString:@"flooz"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil];
         [self executeTriggerList:trigger.triggers];
+    } else if ([trigger.category isEqualToString:@"pot"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil];
+        [self executeTriggerList:trigger.triggers];
     } else if ([trigger.category isEqualToString:@"profile"]) {
         [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{
             [self executeTriggerList:trigger.triggers];
@@ -343,6 +350,10 @@
             [[[FLPopupTrigger alloc] initWithData:trigger.data] show:^{
                 [self executeTriggerList:trigger.triggers];
             }];
+        }
+    } else if ([trigger.viewCaregory isEqualToString:@"app:alert"]) {
+        if (trigger.data) {
+            [appDelegate displayMessage:[[FLAlert alloc] initWithJson:trigger.data]];
         }
     } else if ([trigger.viewCaregory isEqualToString:@"app:list"]) {
         if (trigger.data) {
@@ -642,6 +653,7 @@
     self.binderKeyView = @{
                            @"app:cashout": [CashOutViewController class],
                            @"app:flooz": [NewTransactionViewController class],
+                           @"app:pot": [NewCollectController class],
                            @"app:promo": [DiscountCodeViewController class],
                            @"app:search": [SearchViewController class],
                            @"app:notifs": [NotificationsViewController class],
@@ -661,11 +673,13 @@
                            @"settings:privacy": [SettingsPrivacyController class],
                            @"settings:documents": [SettingsDocumentsViewController class],
                            @"timeline:flooz": [TransactionViewController class],
-                           @"timeline:pot": [TransactionViewController class],
+                           @"timeline:pot": [CollectViewController class],
                            @"web:web": [WebViewController class],
                            @"phone:validate": [ValidateSMSViewController class],
                            @"friend:pending": [FriendRequestViewController class],
-                           @"app:pot": [NewCollectController class]
+                           @"pot:invitation": [ShareLinkViewController class],
+                           @"pot:participant": [CollectParticipantViewController class],
+                           @"pot:participation": [CollectParticipationViewController class]
                            };
 }
 
@@ -696,7 +710,10 @@
                            @"web:web": @"modal",
                            @"phone:validate": @"modal",
                            @"friend:pending": @"modal",
-                           @"app:pot": @"modal"
+                           @"app:pot": @"modal",
+                           @"pot:invitation": @"modal",
+                           @"pot:participant": @"push",
+                           @"pot:participation": @"push"
                            };
 }
 

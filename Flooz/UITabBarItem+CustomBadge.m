@@ -36,14 +36,12 @@
     
     for(UIView *sv in v.subviews)
     {
-        
         NSString *str = NSStringFromClass([sv class]);
         
-        if([str isEqualToString:@"_UIBadgeView"])
-        {
+        if ([str rangeOfString:@"BadgeView"].location != NSNotFound) {
+            
             for(UIView *ssv in sv.subviews)
             {
-                // REMOVE PREVIOUS IF EXIST
                 if(ssv.tag == CUSTOM_BADGE_TAG) { [ssv removeFromSuperview]; }
             }
             

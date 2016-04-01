@@ -77,6 +77,9 @@ static NSString *kLocationData = @"locationData";
 - (void)showLoadView;
 - (void)hideLoadView;
 - (void) clearLocationData;
+- (BOOL)isProd;
+- (BOOL)isDev;
+- (BOOL)isLocal;
 
 - (BOOL)autologin;
 - (void)clearLogin;

@@ -17,6 +17,7 @@
 #import "CollectParticipationViewController.h"
 #import "ShareLinkViewController.h"
 #import "FLTextViewComment.h"
+#import "FLSocialButton.h"
 
 @interface CollectViewController () {
     FLTransaction *_transaction;
@@ -35,15 +36,22 @@
     UIButton *sendCommentButton;
     UIButton *commentButton;
     NSMutableDictionary *commentData;
+    FLSocialButton *likeToolbarButton;
+    FLSocialButton *commentToolbarButton;
+    FLSocialButton *moreToolbarButton;
     
     FXBlurView *shareButtonOverlay;
     UIView *shareView;
+    
+    UIView *scopeHelper;
+    UILabel *scopeHelperLabel;
     
     BOOL shareViewVisible;
     CGFloat keyboardHeight;
     BOOL isCommenting;
     BOOL sendPressed;
     
+    UIView *socialToolbar;
 }
 
 @end
@@ -61,6 +69,10 @@
     return self;
 }
 
+- (NSString *)currentId {
+    return _transaction.transactionId;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -73,7 +85,8 @@
     
     [self registerForKeyboardNotifications];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction:) name:kNotificationRefreshTransaction object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction) name:kNotificationRefreshTransaction object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction) name:kNotificationReloadTimeline object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,19 +98,35 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    
+    if (focusOnCommentTextField) {
+        [self focusComment];
+    }
+    
     if (_tableView.contentOffset.y < [tableHeaderView headerSize])
         [(FLNavigationController*)self.navigationController hideShadow];
+}
+
+- (void)focusComment {
+    if (_transaction.actions.count) {
+        isCommenting = YES;
+        [self prepareViews];
+        [commentTextField becomeFirstResponder];
+    } else {
+        [commentTextField becomeFirstResponder];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    focusOnCommentTextField = NO;
+    
     if (shareViewVisible)
-        [self hideShareView];    
+        [self hideShareView];
 }
 
-- (void)refreshTransaction:(NSNotification *)notification {
+- (void)refreshTransaction {
     [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
         _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
         [self reloadTransaction];
@@ -117,16 +146,16 @@
     else if (_transaction.social.scope == SocialScopePublic) {
         imageNamed = @"transaction-scope-public";
     }
-
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[[UIImage imageNamed:imageNamed] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 0, 17, 17);
+    btn.frame = CGRectMake(0, 0, 20, 20);
     [btn setTintColor:[UIColor customWhite]];
+    [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.rightBarButtonItem = scopeButton;
-
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
     
@@ -164,7 +193,7 @@
 }
 
 - (void)createViews {
-    self.tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame) - 50) style:UITableViewStylePlain];
+    self.tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame) - 50) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -175,8 +204,8 @@
     tableHeaderView = [[CollectHeaderView alloc] initWithCollect:_transaction parentController:self];
     
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 1.0)];
-    separator.backgroundColor = [UIColor customBackground];
-
+    //    separator.backgroundColor = [UIColor customBackground];
+    
     self.tableView.tableHeaderView = tableHeaderView;
     self.tableView.tableFooterView = separator;
     
@@ -198,14 +227,14 @@
     shareButton.tintColor = [UIColor whiteColor];
     shareButton.contentMode = UIViewContentModeScaleAspectFit;
     [toolbar addSubview:shareButton];
-
+    
     closeCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 50 - 10)];
     [closeCommentButton setImage:[[UIImage imageNamed:@"navbar-cross"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [closeCommentButton addTarget:self action:@selector(didCloseCommentButtonClick) forControlEvents:UIControlEventTouchUpInside];
     closeCommentButton.tintColor = [UIColor whiteColor];
     closeCommentButton.contentMode = UIViewContentModeScaleAspectFit;
     [toolbar addSubview:closeCommentButton];
-
+    
     participateButton = [[FLActionButton alloc] initWithFrame:CGRectMake(60, 5, PPScreenWidth() - 120, 50 - 10) title:NSLocalizedString(@"MENU_PARTICIPATE", nil)];
     participateButton.titleLabel.font = [UIFont customTitleLight:16];
     [participateButton addTarget:self action:@selector(participateButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -220,7 +249,6 @@
     
     commentTextField = [[FLTextViewComment alloc] initWithPlaceholder:NSLocalizedString(@"SEND_COMMENT", nil) for:commentData key:@"comment" frame:CGRectMake(60, 10, PPScreenWidth() - 120, 30)];
     [commentTextField setDelegate:self];
-    [commentTextField setInputAccessoryView:toolbar];
     [toolbar addSubview:commentTextField];
     
     commentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(toolbar.frame) - 55, 5, 50, 50 - 10)];
@@ -229,18 +257,64 @@
     commentButton.tintColor = [UIColor whiteColor];
     commentButton.contentMode = UIViewContentModeScaleAspectFit;
     [toolbar addSubview:commentButton];
-
+    
     sendCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(toolbar.frame) - 55, 5, 50, 50 - 10)];
-    [sendCommentButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"send-text"] scaledToSize:CGSizeMake(32, 32)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [sendCommentButton setTitle:NSLocalizedString(@"GLOBAL_SEND", nil) forState:UIControlStateNormal];
+    [sendCommentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [sendCommentButton addTarget:self action:@selector(didSendCommentButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    sendCommentButton.tintColor = [UIColor whiteColor];
-    sendCommentButton.contentMode = UIViewContentModeScaleAspectFit;
+    sendCommentButton.titleLabel.font = [UIFont customTitleExtraLight:13];
+    sendCommentButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [toolbar addSubview:sendCommentButton];
-
+    
+    scopeHelper = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 20)];
+    scopeHelper.layer.masksToBounds = YES;
+    scopeHelper.layer.cornerRadius = 4;
+    scopeHelper.backgroundColor = [UIColor customBlue];
+    scopeHelper.userInteractionEnabled = NO;
+    
+    scopeHelperLabel = [UILabel newWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentLight:15] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    
+    [scopeHelper addSubview:scopeHelperLabel];
+    
     [_mainBody addSubview:self.tableView];
     [_mainBody addSubview:toolbar];
+    [_mainBody addSubview:scopeHelper];
     
     [self createShareView];
+    [self createSocialToolbar];
+}
+
+- (void)createSocialToolbar {
+    socialToolbar = [UIView newWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), 40.0f)];
+    socialToolbar.backgroundColor = [UIColor customBackground];
+    
+    [self createLikeButton];
+    [self createCommentButton];
+    [self createMoreButton];
+}
+
+- (void)createLikeButton {
+    likeToolbarButton = [[FLSocialButton alloc] initWithImageName:@"like-heart" color:[UIColor customSocialColor] selectedColor:[UIColor customPink] title:@"" height:CGRectGetHeight(socialToolbar.frame) - 15];
+    [likeToolbarButton addTarget:self action:@selector(didLikeButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    [socialToolbar addSubview:likeToolbarButton];
+    CGRectSetX(likeToolbarButton.frame, 10.0f);
+    CGRectSetY(likeToolbarButton.frame, 9.0);
+}
+
+- (void)createCommentButton {
+    commentToolbarButton = [[FLSocialButton alloc] initWithImageName:@"comment_bubble" color:[UIColor customSocialColor] selectedColor:[UIColor customBlue] title:@"" height:CGRectGetHeight(socialToolbar.frame) - 15];
+    [commentToolbarButton addTarget:self action:@selector(focusComment) forControlEvents:UIControlEventTouchUpInside];
+    [socialToolbar addSubview:commentToolbarButton];
+    CGRectSetX(commentToolbarButton.frame, CGRectGetMinX(likeToolbarButton.frame) + 65.0f);
+    CGRectSetY(commentToolbarButton.frame, 9.0);
+}
+
+- (void)createMoreButton {
+    moreToolbarButton = [[FLSocialButton alloc] initWithImageName:@"more" color:[UIColor customSocialColor] selectedColor:[UIColor customSocialColor] title:@"" height:CGRectGetHeight(socialToolbar.frame) - 15];
+    [moreToolbarButton addTarget:self action:@selector(showReportMenu) forControlEvents:UIControlEventTouchUpInside];
+    [socialToolbar addSubview:moreToolbarButton];
+    CGRectSetX(moreToolbarButton.frame, CGRectGetWidth(socialToolbar.frame) - CGRectGetWidth(moreToolbarButton.frame) - 10.0f);
+    CGRectSetY(moreToolbarButton.frame, 9.0);
 }
 
 - (void)createShareView {
@@ -366,15 +440,96 @@
             commentButton.hidden = NO;
             shareButton.hidden = NO;
         } else {
+            if (keyboardHeight) {
+                closeCommentButton.hidden = NO;
+                shareButton.hidden = YES;
+            } else {
+                closeCommentButton.hidden = YES;
+                shareButton.hidden = NO;
+            }
+            
             commentTextField.hidden = NO;
             participateButton.hidden = YES;
             closeButton.hidden = YES;
-            closeCommentButton.hidden = YES;
             sendCommentButton.hidden = NO;
             commentButton.hidden = YES;
-            shareButton.hidden = NO;
         }
     }
+    
+    FLSocial *social = [_transaction social];
+    
+    [likeToolbarButton setSelected:[[_transaction social] isLiked]];
+    [likeToolbarButton setText:[self castNumber:social.likesCount]];
+    
+    [commentToolbarButton setSelected:[[_transaction social] isCommented]];
+    [commentToolbarButton setText:[self castNumber:social.commentsCount]];
+    
+    [tableHeaderView setTransaction:_transaction];
+    self.tableView.tableHeaderView = tableHeaderView;
+
+    [self.tableView reloadData];
+}
+
+#pragma marks - number formatter
+
+- (NSString *)castNumber:(NSUInteger)number {
+    if (!number) {
+        return @"";
+    }
+    
+    if ((int)number == 0) {
+        return @"";
+    }
+    
+    return [self abbreviateNumber:(int)number];
+}
+
+-(NSString *)abbreviateNumber:(int)num {
+    
+    NSString *abbrevNum;
+    float number = (float)num;
+    
+    //Prevent numbers smaller than 1000 to return NULL
+    if (num >= 1000) {
+        NSArray *abbrev = @[@"K", @"M", @"B"];
+        
+        for (int i = (int)abbrev.count - 1; i >= 0; i--) {
+            
+            // Convert array index to "1000", "1000000", etc
+            int size = pow(10,(i+1)*3);
+            
+            if(size <= number) {
+                // Removed the round and dec to make sure small numbers are included like: 1.1K instead of 1K
+                number = number/size;
+                NSString *numberString = [self floatToString:number];
+                
+                // Add the letter for the abbreviation
+                abbrevNum = [NSString stringWithFormat:@"%@%@", numberString, [abbrev objectAtIndex:i]];
+            }
+            
+        }
+    } else {
+        abbrevNum = [NSString stringWithFormat:@"%02d", (int)number];
+    }
+    
+    return abbrevNum;
+}
+
+- (NSString *) floatToString:(float) val {
+    NSString *ret = [NSString stringWithFormat:@"%.1f", val];
+    unichar c = [ret characterAtIndex:[ret length] - 1];
+    
+    while (c == 48) { // 0
+        ret = [ret substringToIndex:[ret length] - 1];
+        c = [ret characterAtIndex:[ret length] - 1];
+        
+        //After finding the "." we know that everything left is the decimal number, so get a substring excluding the "."
+        if (c == 46) { // .
+            ret = [ret substringToIndex:[ret length] - 1];
+        }
+    }
+    
+    return ret;
 }
 
 #pragma marks - tableview delegate / datasource
@@ -404,17 +559,19 @@
     if (section == 0)
         return CGFLOAT_MIN;
     
-    if (_transaction.social.commentsCount)
-        return 20;
-    
+    return CGRectGetHeight(socialToolbar.frame);
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
 }
 
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor customBackground];
+    if (section == 0)
+        return [UIView new];
     
-    return view;
+    return socialToolbar;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -587,6 +744,30 @@
 
 #pragma mark - Actions
 
+- (void)focusOnComment {
+    focusOnCommentTextField = YES;
+    [self focusComment];
+}
+
+- (void)didLikeButtonTouch {
+    if ([[_transaction social] isLiked])
+        [[_transaction social] setLikesCount:[_transaction social].likesCount - 1];
+    else
+        [[_transaction social] setLikesCount:[_transaction social].likesCount + 1];
+    
+    [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
+    [self prepareViews];
+    
+    [[Flooz sharedInstance] createLikeOnTransaction:_transaction success: ^(id result) {
+        [_transaction setJSON:result[@"item"]];
+        [self prepareViews];
+    } failure:NULL];
+}
+
+- (void)showReportMenu {
+    [appDelegate showReportMenu:[[FLReport alloc] initWithType:ReportTransaction transac:_transaction]];
+}
+
 - (void)didCloseCommentButtonClick {
     isCommenting = NO;
     [commentTextField resignFirstResponder];
@@ -608,18 +789,24 @@
     
     [commentData setObject:@"" forKey:@"comment"];
     [commentTextField reload];
+    [commentTextField setHeight:30];
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createComment:comment success: ^(id result) {
+        isCommenting = NO;
+        sendPressed = NO;
         [_transaction setJSON:result[@"item"]];
         
-        sendPressed = NO;
         [self reloadTransaction];
-//        [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
+        
+        if (self.tableView.contentSize.height >= self.tableView.bounds.size.height) {
+            CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
+            [self.tableView setContentOffset:bottomOffset animated:YES];
+        }
     } failure:^(NSError *error) {
         sendPressed = NO;
     }];
-
+    
 }
 
 - (void)didCreatorClick {
@@ -675,23 +862,23 @@
 }
 
 - (void)shareButtonClick {
-    if (shareViewVisible)
-        [self hideShareView];
-    else
-        [self showShareView];
+    if (_transaction.actions && _transaction.actions.count) {
+        if (shareViewVisible)
+            [self hideShareView];
+        else
+            [self showShareView];
+    } else {
+        [self didShareOutsideButtonClick];
+    }
 }
 
 - (void)closeButtonClick {
-    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.json[@"actionTriggers"][@"close"]]];
+    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.actions[@"close"]]];
     
 }
 
 - (void)participateButtonClick {
-    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.json[@"actionTriggers"][@"participate"]]];
-}
-
-- (void)showReportMenu {
-    [appDelegate showReportMenu:[[FLReport alloc] initWithType:ReportTransaction transac:_transaction]];
+    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.actions[@"participate"]]];
 }
 
 - (void)reloadTransaction {
@@ -705,11 +892,47 @@
     }
 }
 
+- (void)showScopeHelper {
+    NSString *text;
+    
+    if (_transaction.social.scope == SocialScopeFriend) {
+        text = @"Cagnotte ouverte aux amis";
+    }
+    else if (_transaction.social.scope == SocialScopePrivate) {
+        text = @"Cagnotte privée";
+    }
+    else if (_transaction.social.scope == SocialScopePublic) {
+        text = @"Cagnotte publique";
+    }
+    
+    scopeHelperLabel.text = text;
+    [scopeHelperLabel sizeToFit];
+    
+    [UIView animateWithDuration:0.0 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        scopeHelper.alpha = 0.0f;
+        CGRectSetSize(scopeHelper.frame, CGSizeMake(CGRectGetWidth(scopeHelperLabel.frame) + 10, CGRectGetHeight(scopeHelperLabel.frame) + 10));
+        CGRectSetXY(scopeHelperLabel.frame, 5, 5);
+        CGRectSetXY(scopeHelper.frame, PPScreenWidth() - CGRectGetWidth(scopeHelper.frame) - 10, 0);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 delay:0.05 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            scopeHelper.alpha = 1.0f;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [UIView animateWithDuration:0.3 delay:2.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    scopeHelper.alpha = 0.0f;
+                } completion:^(BOOL finished) {
+                }];
+            }
+        }];
+    }];
+}
+
 #pragma mark - Keyboard Management
 
 - (void)registerForKeyboardNotifications {
     [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardWillShowNotification object:nil];
     [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
+    [self registerNotification:@selector(keyboardFrameChanged:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification {
@@ -718,7 +941,22 @@
     
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
-    [self.tableView setContentOffset:CGPointMake(0, keyboardHeight) animated:YES];
+    
+    CGFloat height = self.tableView.contentSize.height - self.tableView.bounds.size.height;
+    [self.tableView setContentOffset:CGPointMake(0, height) animated:YES];
+    
+    [self prepareViews];
+}
+
+- (void)keyboardFrameChanged:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    keyboardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+    
+    CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
+    CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
+    
+    CGFloat height = self.tableView.contentSize.height - self.tableView.bounds.size.height;
+    [self.tableView setContentOffset:CGPointMake(0, height) animated:YES];
 }
 
 - (void)keyboardWillDisappear {
@@ -726,7 +964,9 @@
     
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
-    [self.tableView setContentOffset:CGPointMake(0, keyboardHeight) animated:YES];
+    
+    CGFloat height = self.tableView.contentSize.height - self.tableView.bounds.size.height;
+    [self.tableView setContentOffset:CGPointMake(0, height) animated:YES];
 }
 
 - (void)didChangeHeight:(CGFloat)height {

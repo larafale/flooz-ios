@@ -1084,6 +1084,21 @@
         vc = [((FLTabBarController *)vc) selectedViewController];
     }
     
+    if ([vc isKindOfClass:[FLNavigationController class]]) {
+        UIViewController *current = [(FLNavigationController*)vc topViewController];
+        if ([current isKindOfClass:[TransactionViewController class]]) {
+            if ([[(TransactionViewController*)current currentId] isEqualToString:transaction.transactionId]) {
+                [(TransactionViewController*)vc refreshTransaction];
+                return;
+            }
+        }
+    } else if ([vc isKindOfClass:[CollectViewController class]]) {
+        if ([[(TransactionViewController*)vc currentId] isEqualToString:transaction.transactionId]) {
+            [(TransactionViewController*)vc refreshTransaction];
+            return;
+        }
+    }
+    
     TransactionViewController *controller;
     
     controller = [[TransactionViewController alloc] initWithTransaction:transaction indexPath:indexPath];
@@ -1118,6 +1133,21 @@
     
     if ([vc isKindOfClass:[FLTabBarController class]]) {
         vc = [((FLTabBarController *)vc) selectedViewController];
+    }
+    
+    if ([vc isKindOfClass:[FLNavigationController class]]) {
+        UIViewController *current = [(FLNavigationController*)vc topViewController];
+        if ([current isKindOfClass:[CollectViewController class]]) {
+            if ([[(CollectViewController*)current currentId] isEqualToString:transaction.transactionId]) {
+                [(CollectViewController*)vc refreshTransaction];
+                return;
+            }
+        }
+    } else if ([vc isKindOfClass:[CollectViewController class]]) {
+        if ([[(CollectViewController*)vc currentId] isEqualToString:transaction.transactionId]) {
+            [(CollectViewController*)vc refreshTransaction];
+            return;
+        }
     }
     
     CollectViewController *controller;

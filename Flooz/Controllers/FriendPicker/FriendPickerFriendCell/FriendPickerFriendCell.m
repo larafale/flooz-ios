@@ -15,6 +15,8 @@
     UILabel *_nameLabel;
     UILabel *_subLabel;
     
+    UIImageView *_certifImageView;
+    UIImageView *checkView;
     CGFloat widthLabel;
 }
 
@@ -44,7 +46,8 @@
     [self createAvatarView];
     [self createNameView];
     [self createSubTextView];
-    [self createCheckView];
+    [self createCertifView];
+//    [self createCheckView];
 }
 
 - (void)createAvatarView {
@@ -54,7 +57,7 @@
 
 - (void)createNameView {
     widthLabel = CGRectGetWidth(self.contentView.frame) - 75.0f;
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE, 17.0f, widthLabel, 11)];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_avatarView.frame) + PADDING_SIDE, 15.0f, widthLabel, 13)];
     
     _nameLabel.font = [UIFont customContentBold:13];
     _nameLabel.textColor = [UIColor whiteColor];
@@ -71,11 +74,19 @@
     [self.contentView addSubview:_subLabel];
 }
 
-- (void)createCheckView {
-    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 30, CGRectGetHeight(self.contentView.frame) / 2., 15, 10)];
-    [self.contentView addSubview:view];
+- (void)createCertifView {
+    _certifImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 14.0f, 15, 15)];
+    [_certifImageView setImage:[UIImage imageNamed:@"certified"]];
+    [_certifImageView setContentMode:UIViewContentModeScaleAspectFit];
     
-    view.image = [UIImage imageNamed:@"navbar-check"];
+    [self.contentView addSubview:_certifImageView];
+}
+
+- (void)createCheckView {
+    checkView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.contentView.frame) - 30, CGRectGetHeight(self.contentView.frame) / 2., 15, 10)];
+    [self.contentView addSubview:checkView];
+    
+    checkView.image = [UIImage imageNamed:@"navbar-check"];
 }
 
 #pragma mark - Prepare Views
@@ -95,6 +106,14 @@
 
 - (void)prepareNameView {
     _nameLabel.text = [_user.fullname uppercaseString];
+    [_nameLabel setWidthToFit];
+
+    if ([_user isCertified]) {
+        [_certifImageView setHidden:NO];
+        CGRectSetX(_certifImageView.frame, CGRectGetMaxX(_nameLabel.frame) + 5);
+    } else {
+        [_certifImageView setHidden:YES];
+    }
 }
 
 - (void)preparePhoneView {
@@ -111,7 +130,6 @@
 }
 
 - (void)setSelectedCheckView:(BOOL)selected {
-    UIImageView *checkView = [[self.contentView subviews] objectAtIndex:3];
     checkView.hidden = !selected;
 }
 

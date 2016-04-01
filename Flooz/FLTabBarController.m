@@ -19,6 +19,7 @@
 #import "FXBlurView.h"
 #import "FLTabBarController.h"
 #import "NewCollectController.h"
+#import "FLPlusButton.h"
 
 @interface UITabBarController (private)
 - (UITabBar *)tabBar;
@@ -31,7 +32,7 @@
     UITabBarItem *thirdItem;
     UITabBarItem *profileItem;
     
-    UIButton *homeButton;
+    FLPlusButton *homeButton;
     FXBlurView *homeButtonOverlay;
     
     UIView *homeSubview;
@@ -162,18 +163,21 @@
     [homeButtonOverlay setUserInteractionEnabled:false];
     [homeButtonOverlay addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didHomeButtonOverlayClick)]];
     
-    homeButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 15.0f, CGRectGetHeight(self.tabBar.frame) + 15.0f)];
-    [homeButton setImage:[UIImage imageNamed:@"add-flooz-plus-white"] forState:UIControlStateNormal];
-    homeButton.contentMode = UIViewContentModeScaleAspectFill;
+    homeButton = [[FLPlusButton alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 10.0f, CGRectGetHeight(self.tabBar.frame) + 10.0f)];
     homeButton.center = self.tabBar.center;
     [homeButton addTarget:self action:@selector(didHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    homeButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    homeButton.layer.shadowRadius = 1.0;
+    homeButton.layer.shadowOffset = CGSizeMake(0.0, -2.0);
+    homeButton.layer.shadowOpacity = 1.0f;
+    homeButton.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:homeButton.bounds cornerRadius:CGRectGetHeight(homeButton.frame) / 2].CGPath;
     
     CGRectSetY(homeButton.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(homeButton.frame) - 3.0f);
     
     [self.view addSubview:homeButtonOverlay];
     
     homeSubview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
-
+    
     UILabel *overlayTitle = [[UILabel alloc] initWithText:@"Choisissez une option" textColor:[UIColor customBlue] font:[UIFont customContentBold:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
     CGRectSetXY(overlayTitle.frame, 20, 50);
     CGRectSetWidth(overlayTitle.frame, PPScreenWidth() - 40);
@@ -184,31 +188,23 @@
     homeSubButtonShop.userInteractionEnabled = YES;
     [homeSubButtonShop addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didHomeSubShopClick)]];
     
-    [self fillHomeSubButton:homeSubButtonShop image:[UIImage imageNamed:@"home-sub-collect"] title:@"Faire du shopping" subtitle:@"Payez avec Flooz sur Amazon, iTunes, Netflix ou chez l'un de nos partenaires" available:NO];
-
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(50, CGRectGetMaxY(homeSubButtonShop.frame) + 10, PPScreenWidth() - 100, 1)];
-//    separator.backgroundColor = [UIColor customSeparator];
+    [self fillHomeSubButton:homeSubButtonShop image:[UIImage imageNamed:@"home-sub-shop"] title:@"Faire du shopping" subtitle:@"Payez avec Flooz sur Amazon, iTunes, Netflix ou chez l'un de nos partenaires" available:NO];
     
-    homeSubButtonCollect = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(separator.frame) + 10, PPScreenWidth() - 20, 80)];
+    homeSubButtonCollect = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(homeSubButtonShop.frame) + 20, PPScreenWidth() - 20, 80)];
     homeSubButtonCollect.userInteractionEnabled = YES;
     [homeSubButtonCollect addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didHomeSubCollectClick)]];
-
-    [self fillHomeSubButton:homeSubButtonCollect image:[UIImage imageNamed:@"home-sub-collect"] title:@"Créer une cagnotte" subtitle:@"Collectez de l'argent pour un anniv, un week-end ou un pot de départ" available:TRUE];
-
-    UIView *separator2 = [[UIView alloc] initWithFrame:CGRectMake(50, CGRectGetMaxY(homeSubButtonCollect.frame) + 10, PPScreenWidth() - 100, 1)];
-//    separator2.backgroundColor = [UIColor customSeparator];
-
-    homeSubButtonPay = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(separator2.frame) + 10, PPScreenWidth() - 20, 80)];
+    
+    [self fillHomeSubButton:homeSubButtonCollect image:[UIImage imageNamed:@"home-sub-collect"] title:@"Créer une cagnotte" subtitle:@"Collectez de l'argent pour un anniv, un week-end ou un pot de départ" available:YES];
+    
+    homeSubButtonPay = [[UIView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(homeSubButtonCollect.frame) + 20, PPScreenWidth() - 20, 80)];
     homeSubButtonPay.userInteractionEnabled = YES;
     [homeSubButtonPay addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didHomeSubPayClick)]];
-
-    [self fillHomeSubButton:homeSubButtonPay image:[UIImage imageNamed:@"home-sub-pay"] title:@"Payer ou rembourser" subtitle:@"Simplifiez vos échanges d'argent entre amis !" available:TRUE];
+    
+    [self fillHomeSubButton:homeSubButtonPay image:[UIImage imageNamed:@"home-sub-pay"] title:@"Payer ou rembourser" subtitle:@"Simplifiez vos échanges d'argent entre amis !" available:YES];
     
     [homeSubview addSubview:homeSubButtonShop];
     [homeSubview addSubview:homeSubButtonCollect];
     [homeSubview addSubview:homeSubButtonPay];
-    [homeSubview addSubview:separator];
-    [homeSubview addSubview:separator2];
     
     CGRectSetHeight(homeSubview.frame, CGRectGetMaxY(homeSubButtonPay.frame));
     CGRectSetY(homeSubview.frame, PPScreenHeight() / 2 + 100);
@@ -264,21 +260,22 @@
         nextIcon.tintColor = [UIColor customPlaceholder];
         button.userInteractionEnabled = NO;
         
-        UILabel *soonLabel = [[UILabel alloc] initWithText:@"Bientôt" textColor:[UIColor redColor] font:[UIFont customContentBold:13] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        UILabel *soonLabel = [[UILabel alloc] initWithText:@"Bientôt disponible" textColor:[UIColor redColor] font:[UIFont customContentBold:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
         soonLabel.layer.masksToBounds = YES;
-        soonLabel.layer.borderWidth = 1;
-        soonLabel.layer.borderColor = [UIColor customRed].CGColor;
+        soonLabel.layer.borderWidth = 1.5;
+        soonLabel.layer.borderColor = [UIColor redColor].CGColor;
         soonLabel.layer.cornerRadius = 4;
+        soonLabel.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.7];
         
-        soonLabel.layer.transform = CATransform3DMakeRotation((M_PI * 45.0) / 180, 0, 0, 1);
+        CGRectSetWidthHeight(soonLabel.frame, [soonLabel widthToFit] + 30, 30);
         
-        CGRectSetWidthHeight(soonLabel.frame, CGRectGetWidth(soonLabel.frame) + 15, 20);
-
-        soonLabel.center = imageView.center;
+        soonLabel.layer.transform = CATransform3DMakeRotation((M_PI * -15.0) / 180, 0, 0, 1);
+        
+        soonLabel.center = CGPointMake(CGRectGetWidth(button.frame) / 2, CGRectGetHeight(button.frame) / 2);
         
         [button addSubview:soonLabel];
     }
-
+    
 }
 
 - (void)openNewFlooz {
@@ -317,6 +314,11 @@
     }
     
     return YES;
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [self reloadBadge];
+    [self reloadCurrentUser];
 }
 
 - (void)openHomeMenu {
@@ -383,7 +385,7 @@
 }
 
 - (void)didHomeButtonOverlayClick {
-
+    
 }
 
 - (void)reloadBadge {

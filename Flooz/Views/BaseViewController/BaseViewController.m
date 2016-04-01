@@ -10,6 +10,7 @@
 
 #import "UserViewController.h"
 #import "TransactionViewController.h"
+#import "CollectViewController.h"
 
 @interface BaseViewController ()
 
@@ -38,7 +39,7 @@
             mainBodyHeight -= NAVBAR_HEIGHT;
     }
     
-    if (self.tabBarController && self.navigationController && self.navigationController.viewControllers.count == 1)
+    if (self.tabBarController && ![self isKindOfClass:TransactionViewController.class] && ![self isKindOfClass:CollectViewController.class])
         mainBodyHeight -= PPTabBarHeight();
     
     _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), mainBodyHeight)];

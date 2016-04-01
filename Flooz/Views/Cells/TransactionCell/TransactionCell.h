@@ -20,10 +20,12 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andDelegate:(id)delegate;
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction andWidth:(CGFloat)width;
++ (CGFloat)getHeightForTransaction:(FLTransaction *)transaction andWidth:(CGFloat)width hideTitle:(BOOL)hideTitle;
 - (void)block;
 
 @property (strong, nonatomic) UIViewController <TransactionCellDelegate> *delegateController;
 @property (strong, nonatomic) FLTransaction *transaction;
 @property (strong, nonatomic) NSIndexPath *indexPath;
+@property (nonatomic) Boolean hideTitle;
 
 @end

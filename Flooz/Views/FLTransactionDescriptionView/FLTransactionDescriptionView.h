@@ -19,6 +19,8 @@
 - (id)initWithFrame:(CGRect)frame andAvatar:(BOOL)avatar;
 - (id)initWithFrame:(CGRect)frame transaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath andAvatar:(BOOL)avatar;
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction avatarDisplay:(BOOL)withAvatar andWidth:(CGFloat)width;
++ (CGFloat)getHeightForTransaction:(FLTransaction *)transaction avatarDisplay:(BOOL)withAvatar andWidth:(CGFloat)width hideTitle:(BOOL)hideTitle;
+- (void)setTransaction:(FLTransaction *)transaction hideTitle:(BOOL)hideTitle;
 
 @property (weak, nonatomic) UIViewController<TransactionCellDelegate> *delegate;
 @property (weak, nonatomic) TransactionViewController *parentController;

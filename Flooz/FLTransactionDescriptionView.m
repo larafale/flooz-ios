@@ -17,6 +17,8 @@
 #define FONT_SIZE_LIKE 12
 
 @implementation FLTransactionDescriptionView {
+    BOOL stripTitle;
+    
     CGFloat height;
     
     UIView *leftView;
@@ -49,6 +51,7 @@
     if (self) {
         hasAvatar = avatar;
         [self createViews];
+        stripTitle = NO;
     }
     return self;
 }
@@ -69,7 +72,12 @@
 }
 
 - (void)setTransaction:(FLTransaction *)transaction {
+    [self setTransaction:transaction hideTitle:NO];
+}
+
+- (void)setTransaction:(FLTransaction *)transaction hideTitle:(BOOL)hideTitle {
     self->_transaction = transaction;
+    stripTitle = hideTitle;
     [self prepareViews];
 }
 
@@ -78,6 +86,10 @@
 }
 
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction avatarDisplay:(BOOL)withAvatar andWidth:(CGFloat)width {
+    return [FLTransactionDescriptionView getHeightForTransaction:transaction avatarDisplay:withAvatar andWidth:width hideTitle:NO];
+}
+
++ (CGFloat)getHeightForTransaction:(FLTransaction *)transaction avatarDisplay:(BOOL)withAvatar andWidth:(CGFloat)width hideTitle:(BOOL)hideTitle {
     NSAttributedString *attributedText = nil;
     CGRect rect = CGRectZero;
     
@@ -93,14 +105,26 @@
     // Details
     
     // Height for title
-    if ([transaction title] && ![[transaction title] isBlank]) {
-        attributedText = [[NSAttributedString alloc]
-                          initWithString:[transaction title]
-                          attributes:@{ NSFontAttributeName: [UIFont customContentBold:15]}];
-        rect = [attributedText boundingRectWithSize:(CGSize) {floozerLabelWidth, CGFLOAT_MAX }
-                                            options:NSLineBreakByClipping | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                            context:nil];
-        current_height += rect.size.height + 3.0f;
+    if (hideTitle) {
+        if ([transaction text3d][0] && ![[transaction text3d][0] isBlank]) {
+            attributedText = [[NSAttributedString alloc]
+                              initWithString:[transaction text3d][0]
+                              attributes:@{ NSFontAttributeName: [UIFont customContentBold:15]}];
+            rect = [attributedText boundingRectWithSize:(CGSize) {floozerLabelWidth, CGFLOAT_MAX }
+                                                options:NSLineBreakByClipping | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                context:nil];
+            current_height += rect.size.height + 3.0f;
+        }
+    } else {
+        if ([transaction title] && ![[transaction title] isBlank]) {
+            attributedText = [[NSAttributedString alloc]
+                              initWithString:[transaction title]
+                              attributes:@{ NSFontAttributeName: [UIFont customContentBold:15]}];
+            rect = [attributedText boundingRectWithSize:(CGSize) {floozerLabelWidth, CGFLOAT_MAX }
+                                                options:NSLineBreakByClipping | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                context:nil];
+            current_height += rect.size.height + 3.0f;
+        }
     }
     
     // Height for description
@@ -212,7 +236,7 @@
     likesLabel.font = [UIFont customContentRegular:12];
     [likesLabel setUserInteractionEnabled:YES];
     [likesLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeTextTouch)]];
-
+    
     [rightView addSubview:likesLabel];
 }
 
@@ -237,7 +261,7 @@
     
     [self createLikeButton];
     [self createCommentButton];
-    [self createShareButton];
+    //    [self createShareButton];
     //    [self createMoreButton];
     [self createAmountLabel];
 }
@@ -290,7 +314,7 @@
     [self prepareAttachmentView];
     [self prepareAmountLabel];
     [self prepareLocationView];
-
+    
     if (!hasAvatar)
         [self prepareLike];
     
@@ -331,8 +355,14 @@
     }
     
     {
+        NSString *text = @"";
+        
+        if (!stripTitle) {
+            text = _transaction.text3d[1];
+        }
+        
         NSAttributedString *attributedText = [[NSAttributedString alloc]
-                                              initWithString:_transaction.text3d[1]
+                                              initWithString:text
                                               attributes:@{
                                                            NSForegroundColorAttributeName: [UIColor customPlaceholder],
                                                            NSFontAttributeName: [UIFont customContentLight:15]
@@ -342,8 +372,14 @@
     }
     
     {
+        NSString *text = @"";
+        
+        if (!stripTitle) {
+            text = _transaction.text3d[2];
+        }
+
         NSAttributedString *attributedText = [[NSAttributedString alloc]
-                                              initWithString:_transaction.text3d[2]
+                                              initWithString:text
                                               attributes:@{
                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
                                                            NSFontAttributeName: [UIFont customContentBold:15]
@@ -541,7 +577,7 @@
     CGRectSetY(footerDescView.frame, height + 10.0f);
     [_likeButton setSelected:[[_transaction social] isLiked]];
     [_likeButton setText:[self castNumber:social.likesCount]];
-
+    
     [_commentButton setSelected:[[_transaction social] isCommented]];
     [_commentButton setText:[self castNumber:social.commentsCount]];
 }
@@ -611,21 +647,6 @@
         [self prepareViews];
         [self didUpdateTransactionData];
     } failure:NULL];
-}
-
-- (void)didShareButtonClick {
-    if (_parentController) {
-        [_parentController shareTransaction];
-    }
-    else {
-        if (_indexPath) {
-            [_delegate didTransactionShareTouchAtIndex:_indexPath transaction:_transaction];
-        }
-    }
-}
-
-- (void)didMoreButtonClick {
-    
 }
 
 - (void)didUpdateTransactionData {

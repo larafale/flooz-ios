@@ -86,6 +86,18 @@
     return self;
 }
 
+- (BOOL)isProd {
+    return [manager.baseURL.absoluteString rangeOfString:@"https://api.flooz.me"].location != NSNotFound;
+}
+
+- (BOOL)isDev {
+    return [manager.baseURL.absoluteString rangeOfString:@"http://dev.flooz.me"].location != NSNotFound;
+}
+
+- (BOOL)isLocal {
+    return [manager.baseURL.absoluteString rangeOfString:@"http://dev.flooz.me"].location == NSNotFound && [manager.baseURL.absoluteString rangeOfString:@"https://api.flooz.me"].location == NSNotFound;
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -689,7 +701,6 @@
         }
     };
     
-    
     [self requestPath:[NSString stringWithFormat:@"/users/%@/flooz", userId] method:@"GET" params:nil success:successBlock failure:failure];
 }
 
@@ -701,7 +712,6 @@
             success(transactions, result[@"next"]);
         }
     };
-    
     
     [self requestPath:@"/flooz" method:@"GET" params:@{@"potId": collectId} success:successBlock failure:failure];
 }
@@ -760,11 +770,11 @@
         params = @{ @"scope": scope };
     }
     
-    NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
-    if (transactions && success) {
-        self.timelinePageSize = [transactions count];
-        success(transactions, nil, [FLTransaction transactionParamsToScope:scope]);
-    }
+//    NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
+//    if (transactions && success) {
+//        self.timelinePageSize = [transactions count];
+//        success(transactions, nil, [FLTransaction transactionParamsToScope:scope]);
+//    }
     
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failureBlock];
 }

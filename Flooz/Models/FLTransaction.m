@@ -117,12 +117,6 @@
     _isCancelable = NO;
     _isAcceptable = NO;
     
-    if (_status == TransactionStatusPending) {
-        if ([[json objectForKey:@"actions"] count] == 2) {
-            _isAcceptable = YES;
-        }
-    }
-    
     _isAvailable = NO;
     _isClosable = NO;
     _actions = nil;
@@ -137,6 +131,16 @@
         
         if ([[_actions allKeys] containsObject:@"close"]) {
             _isClosable = YES;
+        }
+    }
+    
+    if (_actions && !_isCollect) {
+        if ([[_actions allKeys] containsObject:@"accept"]) {
+            _isAcceptable = YES;
+        }
+        
+        if ([[_actions allKeys] containsObject:@"decline"]) {
+            _isCancelable = YES;
         }
     }
     

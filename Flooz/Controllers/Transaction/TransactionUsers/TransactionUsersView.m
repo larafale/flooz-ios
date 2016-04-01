@@ -46,12 +46,13 @@
 
 - (void)createSeparators {
 	CGFloat x = CGRectGetWidth(self.frame) / 2;
-	CGFloat offset = 15;
-	CGFloat height = (CGRectGetHeight(self.frame) - offset) / 2.;
 
-	UIImageView *arrow = [UIImageView imageNamed:@"transaction-users-arrow"];
-	CGRectSetXY(arrow.frame, x - arrow.image.size.width / 2., height + arrow.image.size.height / 2.);
-	[self addSubview:arrow];
+    UIImageView *arrow  = [[UIImageView alloc] initWithFrame:CGRectMake(x - (35/2), 35, 35, 35)];
+    arrow.image = [[UIImage imageNamed:@"transaction-users-arrow"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    arrow.tintColor = [UIColor colorWithIntegerRed:54 green:70 blue:86 alpha:1.0f];
+    arrow.contentMode = UIViewContentModeScaleAspectFit;
+
+    [self addSubview:arrow];
 }
 
 - (UIView *)createUserView {
@@ -67,12 +68,14 @@
 	}
 
 	{
-		UILabel *fullname = [[UILabel alloc] initWithFrame:CGRectMake(0, 88, CGRectGetWidth(view.frame), 30)];
+		UILabel *fullname = [[UILabel alloc] initWithFrame:CGRectMake(5, 88, CGRectGetWidth(view.frame) - 10, 20)];
 
-		fullname.numberOfLines = 0;
+		fullname.numberOfLines = 1;
 		fullname.textAlignment = NSTextAlignmentCenter;
 		fullname.textColor = [UIColor whiteColor];
-		fullname.font = [UIFont customTitleExtraLight:13];
+		fullname.font = [UIFont customTitleExtraLight:14];
+        fullname.adjustsFontSizeToFitWidth = YES;
+        fullname.minimumScaleFactor = 8. / fullname.font.pointSize;
 
         [view addSubview:fullname];
 	}
@@ -130,8 +133,8 @@
     [avatar setImageFromUser:user];
     
     fullname.text = [[user fullname] uppercaseString];
-    [fullname setHeightToFit];
-    [fullname setWidthToFit];
+//    [fullname setHeightToFit];
+//    [fullname setWidthToFit];
 
     CGRectSetY(fullname.frame, CGRectGetMaxY(avatar.frame) + 8.0f);
     CGRectSetX(fullname.frame, CGRectGetWidth(view.frame) / 2 - CGRectGetWidth(fullname.frame) / 2);
@@ -139,7 +142,7 @@
     if (user.isCertified) {
         [star setHidden:NO];
         star.center = fullname.center;
-        CGRectSetX(star.frame, CGRectGetMaxX(fullname.frame) + 5);
+        CGRectSetX(star.frame, CGRectGetMaxX(fullname.frame) - CGRectGetWidth(fullname.frame) / 2 + [fullname widthToFit] / 2 + 5);
     } else {
         [star setHidden:YES];
     }

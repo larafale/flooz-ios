@@ -9,9 +9,11 @@
 #import "FLUserPickerTableView.h"
 #import "FriendPickerFriendCell.h"
 #import "FriendPickerEmptyCell.h"
+#import "LoadingCell.h"
 
 @interface FLUserPickerTableView () {
     Boolean firstInit;
+    BOOL isLoadingSearch;
 }
 
 @end
@@ -22,7 +24,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         firstInit = YES;
-        
+        isLoadingSearch = NO;
+
         self.delegate = self;
         self.dataSource = self;
         self.backgroundColor = [UIColor customBackgroundHeader];
@@ -30,6 +33,7 @@
         self.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
         self.separatorColor = [UIColor customMiddleBlue];
         self.separatorInset = UIEdgeInsetsMake(10, 10, 0, 0);
+        self.tableFooterView = [UIView new];
         
         _contactsFromAdressBook = [NSMutableArray new];
         
@@ -80,6 +84,9 @@
         
         if ([_filteredContacts count] == 0)
             _filteredContacts = _contactsFromAdressBook;
+
+        isLoadingSearch = NO;
+
         [self reloadData];
     } else {
         [self didFilterChange];
@@ -92,6 +99,7 @@
     }
     
     if (!_selectionText || [_selectionText isBlank]) {
+        isLoadingSearch = NO;
         [self reloadData];
         return;
     }
@@ -129,6 +137,9 @@
             }
         }
         
+        isLoadingSearch = YES;
+        [self reloadData];
+
         [[Flooz sharedInstance] friendSearch:_selectionText forNewFlooz:YES withPhones:phoneArray success: ^(id result, NSString *searchString) {
             if (searchString && ![searchString isEqualToString:_selectionText])
                 return;
@@ -170,6 +181,8 @@
             if (_friendsSearch.count > 0)
                 [_filteredContacts addObjectsFromArray:_friendsSearch];
             
+            isLoadingSearch = NO;
+
             [self reloadData];
         }];
     } else {
@@ -178,6 +191,8 @@
         if ([_filteredContacts count] == 0)
             _filteredContacts = _contactsFromAdressBook;
         
+        isLoadingSearch = NO;
+
         [self reloadData];
     }
 }
@@ -237,8 +252,12 @@
             return [FriendPickerFriendCell getHeight];
         return [FriendPickerEmptyCell getHeight];
     } else {
+        if (isLoadingSearch)
+            return [LoadingCell getHeight];
+
         if (![_filteredContacts count])
             return [FriendPickerFriendCell getHeight];
+        
         return [FriendPickerEmptyCell getHeight];
     };
 }
@@ -255,6 +274,9 @@
             return [_contactsFromAdressBook count];
         }
     } else {
+        if (isLoadingSearch)
+            return 1;
+        
         if ([_filteredContacts count])
             return [_filteredContacts count];
         return 1;
@@ -281,6 +303,9 @@
             currentUser = _contactsFromAdressBook[indexPath.row];
         }
     } else {
+        if (isLoadingSearch)
+            return [LoadingCell new];
+        
         if (![_filteredContacts count])
             return [self createEmptyCell:tableView];
         
@@ -331,6 +356,9 @@
                 currentUser = _contactsFromAdressBook[indexPath.row];
             }
         } else {
+            if (isLoadingSearch)
+                return;
+            
             if (![_filteredContacts count])
                 return;
             

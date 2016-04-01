@@ -12,16 +12,17 @@
 #import "TransactionCellDelegate.h"
 #import "FLNewTransactionAmountDelegate.h"
 #import "FLViewDelegate.h"
+#import "TransactionHeaderView.h"
 
-@interface TransactionViewController : BaseViewController <TransactionActionsViewDelegate, FLNewTransactionAmountDelegate, UIViewControllerTransitioningDelegate, FLViewDelegate>
+@interface TransactionViewController : BaseViewController <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, TransactionHeaderViewDelegate, FLViewDelegate>
 
-- (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath withSize:(CGSize)size;
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;
 - (void)focusOnComment;
 - (void)reloadTransaction;
-- (void)shareTransaction;
-- (void)acceptTransaction;
+- (NSString *)currentId;
+- (void)refreshTransaction;
 
 @property (strong, nonatomic) UIViewController <TransactionCellDelegate> *delegateController;
+@property (strong, nonatomic) UITableView *tableView;
 
 @end

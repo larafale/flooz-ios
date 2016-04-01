@@ -13,7 +13,6 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self setBackgroundColor:[UIColor customBackgroundHeader]];
         [self createIndicator];
         [self createBadge];
         [self createTitle];
@@ -86,6 +85,8 @@
 #pragma mark - Prepare Views
 
 - (void)prepareViews {
+    [self setBackgroundColor:[UIColor customBackground]];
+    
     [self prepareTitleView];
     [self prepareBadge];
 }

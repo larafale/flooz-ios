@@ -11,6 +11,7 @@
 #import "ShareLinkViewController.h"
 #import "FriendPickerFriendCell.h"
 #import "FriendPickerEmptyCell.h"
+#import "LoadingCell.h"
 
 @interface ShareLinkViewController () {
     UIBarButtonItem *searchItem;
@@ -40,6 +41,7 @@
     NSString *_smsText;
     
     BOOL isSearching;
+    BOOL isLoadingSearch;
     
     NSString *buttonTitle;
     
@@ -69,6 +71,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isLoadingSearch = NO;
     
     _contactsFromAdressBook = [NSMutableArray new];
     selectedContacts = [NSMutableArray new];
@@ -181,6 +185,9 @@
         
         if ([_filteredContacts count] == 0)
             _filteredContacts = _contactsFromAdressBook;
+        
+        isLoadingSearch = NO;
+
         [_tableView reloadData];
     } else {
         [self didFilterChange];
@@ -193,6 +200,7 @@
     }
     
     if (!_selectionText || [_selectionText isBlank]) {
+        isLoadingSearch = NO;
         [_tableView reloadData];
         return;
     }
@@ -230,6 +238,9 @@
             }
         }
         
+        isLoadingSearch = YES;
+        [_tableView reloadData];
+
         [[Flooz sharedInstance] friendSearch:_selectionText forNewFlooz:NO withPhones:phoneArray success: ^(id result, NSString *searchString) {
             if (searchString && ![searchString isEqualToString:_selectionText])
                 return;
@@ -271,6 +282,8 @@
             if (_friendsSearch.count > 0)
                 [_filteredContacts addObjectsFromArray:_friendsSearch];
             
+            isLoadingSearch = NO;
+
             [_tableView reloadData];
         }];
     } else {
@@ -279,6 +292,8 @@
         if ([_filteredContacts count] == 0)
             _filteredContacts = _contactsFromAdressBook;
         
+        isLoadingSearch = NO;
+
         [_tableView reloadData];
     }
 }
@@ -374,8 +389,12 @@
             return [ShareCell getHeight];
         return [FriendPickerEmptyCell getHeight];
     } else {
+        if (isLoadingSearch)
+            return [LoadingCell getHeight];
+        
         if ([_filteredContacts count])
             return [ShareCell getHeight];
+        
         return [FriendPickerEmptyCell getHeight];
     };
 }
@@ -389,6 +408,8 @@
         } else {
             return [_contactsFromAdressBook count];
         }
+    } else if (isLoadingSearch) {
+        return 1;
     } else {
         if ([_filteredContacts count])
             return [_filteredContacts count];
@@ -414,6 +435,9 @@
             currentUser = _contactsFromAdressBook[indexPath.row];
         }
     } else {
+        if (isLoadingSearch)
+            return [LoadingCell new];
+        
         if (![_filteredContacts count])
             return [self createEmptyCell:tableView];
         
@@ -468,8 +492,11 @@
             currentUser = _contactsFromAdressBook[indexPath.row];
         }
     } else {
+        if (isLoadingSearch)
+            return;
+        
         if (![_filteredContacts count])
-            return ;
+            return;
         
         if (_filteredContacts.count >= indexPath.row + 1)
             currentUser = _filteredContacts[indexPath.row];

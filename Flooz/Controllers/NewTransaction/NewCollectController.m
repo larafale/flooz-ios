@@ -84,7 +84,7 @@
             self.title = currentPreset.title;
         else
             self.title = NSLocalizedString(@"NEW_COLLECT", nil);
-
+        
         if (currentPreset.why)
             transaction[@"why"] = currentPreset.why;
         
@@ -182,7 +182,7 @@
         [_contentView addSubview:content];
         
         [name addForNextClickTarget:content action:@selector(becomeFirstResponder)];
-
+        
         [self prepareImage];
         
         if (currentPreset && currentPreset.blockWhy)
@@ -505,7 +505,7 @@
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification {
-
+    
 }
 
 - (void)keyboardWillAppear:(NSNotification *)notification {
