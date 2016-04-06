@@ -326,10 +326,10 @@
             [self executeTriggerList:trigger.triggers];
         }];
     } else if ([trigger.category isEqualToString:@"flooz"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
         [self executeTriggerList:trigger.triggers];
     } else if ([trigger.category isEqualToString:@"pot"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
         [self executeTriggerList:trigger.triggers];
     } else if ([trigger.category isEqualToString:@"profile"]) {
         [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{

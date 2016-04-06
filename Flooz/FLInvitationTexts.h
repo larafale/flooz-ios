@@ -10,12 +10,14 @@
 
 @interface FLInvitationTexts : NSObject
 
+@property (nonatomic, retain) NSArray *shareSteps;
 @property (nonatomic, retain) NSString *shareIcon;
 @property (nonatomic, retain) NSString *shareCode;
 @property (nonatomic, retain) NSString *shareTitle;
 @property (nonatomic, retain) NSString *shareHeader;
 @property (nonatomic, retain) NSString *shareSubheader;
 @property (nonatomic, retain) NSString *shareSms;
+@property (nonatomic, retain) NSString *sshareContent;
 @property (nonatomic, retain) NSString *shareMultiSms;
 @property (nonatomic, retain) NSString *shareTwitter;
 @property (nonatomic, retain) NSDictionary *shareMail;

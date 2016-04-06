@@ -21,6 +21,7 @@
 - (void)setJSON:(NSDictionary *)json {
     self.json = json;
     
+    self.shareSteps = json[@"steps"];
     self.shareIcon = json[@"icon"];
     self.shareSubheader = json[@"h2"];
     self.shareCode = json[@"code"];

@@ -64,6 +64,7 @@
     UILabel *locationLabel;
     UILabel *websiteLabel;
     UIImageView *certfifiedIcon;
+    UIView *badgeView;
     
     NSMutableArray *transactions;
     
@@ -253,6 +254,8 @@
     [certfifiedIcon setImage:[UIImage imageNamed:@"certified"]];
     [certfifiedIcon setContentMode:UIViewContentModeScaleAspectFit];
     
+    badgeView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(avatarImage.frame) + 10, 0, 20)];
+    
     usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(fullnameLabel.frame) + 3, PPScreenWidth() / 2, 15)];
     usernameLabel.font = [UIFont customContentBold:13];
     usernameLabel.textColor = [UIColor customGreyPseudo];
@@ -285,6 +288,7 @@
     [headerCell addSubview:avatarImage];
     [headerCell addSubview:fullnameLabel];
     [headerCell addSubview:certfifiedIcon];
+    [headerCell addSubview:badgeView];
     [headerCell addSubview:usernameLabel];
     [headerCell addSubview:floozActionButton];
     [headerCell addSubview:unfriendPendingActionButton];
@@ -337,6 +341,7 @@
     [friendActionButton setHidden:YES];
     [friendRequestActionButton setHidden:YES];
     [settingsButton setHidden:YES];
+    [badgeView setHidden:YES];
     
     if (currentUser.isCertified) {
         [certfifiedIcon setHidden:NO];
@@ -415,7 +420,7 @@
     [headerLabel setText:[NSString stringWithFormat:@"%@\n@%@", currentUser.fullname, currentUser.username]];
     
     if (currentUser.coverURL) {
-        [headerImageView sd_setImageWithURL:[NSURL URLWithString:currentUser.coverURL] placeholderImage:[UIImage imageNamed:@"default-cover"]];
+        [headerImageView sd_setImageWithURL:[NSURL URLWithString:currentUser.coverURL] placeholderImage:[UIImage imageNamed:@"default-cover"] options:SDWebImageRefreshCached|SDWebImageContinueInBackground];
         [headerBlurImageView sd_setImageWithURL:[NSURL URLWithString:currentUser.coverURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [headerBlurImageView setImage:[image blurredImageWithRadius:15 iterations:20 tintColor:[UIColor clearColor]]];
         }];
@@ -429,11 +434,39 @@
     [fullnameLabel setWidthToFit];
     [usernameLabel setWidthToFit];
     
+    CGFloat xOffset = CGRectGetMaxX(fullnameLabel.frame) + 5;
+    
     if (currentUser.isCertified) {
         [certfifiedIcon setHidden:NO];
-        CGRectSetX(certfifiedIcon.frame, CGRectGetMaxX(fullnameLabel.frame) + 5);
+        CGRectSetX(certfifiedIcon.frame, xOffset);
+        xOffset = CGRectGetMaxX(certfifiedIcon.frame) + 5;
     } else {
         [certfifiedIcon setHidden:YES];
+    }
+    
+    if (currentUser.badges) {
+        CGRectSetX(badgeView.frame, xOffset);
+        [[badgeView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        
+        CGFloat badgeOffsetX = 0;
+        
+        for (NSDictionary *badge in currentUser.badges) {
+            UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(badgeOffsetX, 0, 20, 20)];
+            view.contentMode = UIViewContentModeScaleAspectFit;
+            view.tintColor = [UIColor clearColor];
+            
+            [view sd_setImageWithURL:[NSURL URLWithString:badge[@"url"]] placeholderImage:nil options:SDWebImageRefreshCached|SDWebImageContinueInBackground];
+            
+            [badgeView addSubview:view];
+            
+            CGRectSetWidth(badgeView.frame, CGRectGetMaxX(view.frame));
+            
+            badgeOffsetX += 25;
+        }
+        
+        [badgeView setHidden:NO];
+    } else {
+        [badgeView setHidden:YES];
     }
     
     [controlTab updateMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:@"Flooz" andStat:currentUser.publicStats.nbFlooz] forSegmentAtIndex:0];

@@ -43,7 +43,7 @@
     
     UIView *scopeHelper;
     UILabel *scopeHelperLabel;
-
+    
     CGFloat keyboardHeight;
     BOOL isCommenting;
     BOOL sendPressed;
@@ -82,8 +82,7 @@
     
     [self registerForKeyboardNotifications];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction) name:kNotificationRefreshTransaction object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction) name:kNotificationReloadTimeline object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction:) name:kNotificationRefreshTransaction object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -120,11 +119,15 @@
     focusOnCommentTextField = NO;
 }
 
-- (void)refreshTransaction {
-    [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
-        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-        [self reloadTransaction];
-    }];
+- (void)refreshTransaction:(NSNotification*)notification {
+    NSDictionary* userInfo = notification.userInfo;
+    
+    if (userInfo && userInfo[@"_id"] && [userInfo[@"_id"] isEqualToString:_transaction.transactionId]) {
+        [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
+            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            [self reloadTransaction];
+        }];
+    }
 }
 
 #pragma mark - Views
@@ -146,19 +149,14 @@
     btn.frame = CGRectMake(0, 0, 20, 20);
     [btn setTintColor:[UIColor customWhite]];
     [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
-
+    
     UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
     
     self.navigationItem.rightBarButtonItem = scopeButton;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
     
-    NSString *headerString;
-    
-    if (_transaction.amountText && _transaction.amountText.length) {
-        headerString = [NSString stringWithFormat:@"%@ ⋅ %@", _transaction.amountText, [FLHelper momentWithDate:[_transaction date]]];
-    } else
-        headerString = [FLHelper momentWithDate:[_transaction date]];
+    NSString *headerString = [FLHelper momentWithDate:[_transaction date]];
     
     UILabel *headerMoment = [[UILabel alloc] initWithText:headerString textColor:[UIColor whiteColor] font:[UIFont customContentLight:12] textAlignment:NSTextAlignmentLeft numberOfLines:1];
     
@@ -187,7 +185,7 @@
     tableHeaderView = [[TransactionHeaderView alloc] initWithTransaction:_transaction parentController:self];
     
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 1.0)];
-//    separator.backgroundColor = [UIColor customBackground];
+    //    separator.backgroundColor = [UIColor customBackground];
     
     self.tableView.tableHeaderView = tableHeaderView;
     self.tableView.tableFooterView = separator;
@@ -258,11 +256,11 @@
     scopeHelperLabel = [UILabel newWithText:@"" textColor:[UIColor whiteColor] font:[UIFont customContentLight:15] textAlignment:NSTextAlignmentCenter numberOfLines:1];
     
     [scopeHelper addSubview:scopeHelperLabel];
-
+    
     [_mainBody addSubview:self.tableView];
     [_mainBody addSubview:toolbar];
     [_mainBody addSubview:scopeHelper];
-
+    
     [self createSocialToolbar];
 }
 
@@ -359,7 +357,7 @@
                 closeCommentButton.hidden = YES;
                 shareButton.hidden = NO;
             }
-
+            
             commentTextField.hidden = NO;
             acceptButton.hidden = YES;
             declineButton.hidden = YES;
@@ -575,7 +573,7 @@
     [commentData setObject:@"" forKey:@"comment"];
     [commentTextField reload];
     [commentTextField setHeight:30];
-
+    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createComment:comment success: ^(id result) {
         isCommenting = NO;
@@ -689,6 +687,12 @@
     
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
+    
+    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
+    if (bottomOffset.y < 0)
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+    else
+        [self.tableView setContentOffset:bottomOffset animated:YES];
 }
 
 - (void)keyboardFrameChanged:(NSNotification *)notification {
@@ -697,6 +701,12 @@
     
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
+    
+    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
+    if (bottomOffset.y < 0)
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+    else
+        [self.tableView setContentOffset:bottomOffset animated:YES];
 }
 
 - (void)keyboardWillDisappear {
@@ -704,6 +714,12 @@
     
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
+    
+    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
+    if (bottomOffset.y < 0)
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+    else
+        [self.tableView setContentOffset:bottomOffset animated:YES];
 }
 
 - (void)didChangeHeight:(CGFloat)height {

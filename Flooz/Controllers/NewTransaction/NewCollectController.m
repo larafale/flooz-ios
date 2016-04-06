@@ -159,6 +159,7 @@
         [name setLineDisableColor:[UIColor clearColor]];
         [name setInputAccessoryView:transactionBarKeyboard];
         [name addTextFocusTarget:self action:@selector(nameFocus)];
+        [name setAutocapitalizationType:UITextAutocapitalizationTypeSentences];
         
         [_contentView addSubview:name];
         

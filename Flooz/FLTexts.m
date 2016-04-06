@@ -9,6 +9,33 @@
 #import "FLTexts.h"
 #import "FLCountry.h"
 
+@implementation FLHomeButton
+
+- (id)initWithJSON:(NSDictionary *)json {
+    self = [super init];
+    if (self) {
+        [self setJSON:json];
+    }
+    return self;
+}
+
+- (void)setJSON:(NSDictionary *)json {
+
+    self.title = json[@"title"];
+    self.subtitle = json[@"subtitle"];
+    self.defaultImg = json[@"defaultPic"];
+    self.imgUrl = json[@"urlPic"];
+    
+    if (json[@"soon"])
+        self.soon = [json[@"soon"] boolValue];
+    else
+        self.soon = NO;
+        
+    self.triggers = [FLTriggerManager convertDataInList:json[@"triggers"]];
+}
+
+@end
+
 @implementation FLTexts
 
 - (id)initWithJSON:(NSDictionary *)json {
@@ -35,6 +62,17 @@
     self.avalaibleCountries = [NSMutableArray new];
     
     NSArray *countries = json[@"countries"];
+    
+    NSMutableArray *homeMutableButtons = [NSMutableArray new];
+    
+    if (json[@"homeButtons"]) {
+        for (id homeButton in json[@"homeButtons"]) {
+            if ([homeButton isKindOfClass:[NSDictionary class]])
+                [homeMutableButtons addObject:[[FLHomeButton alloc] initWithJSON:homeButton]];
+        }
+    }
+    
+    self.homeButtons = homeMutableButtons;
     
     for (NSDictionary *country in countries) {
         [self.avalaibleCountries addObject:[[FLCountry alloc] initWithJSON:country]];

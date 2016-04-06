@@ -17,6 +17,7 @@
     UIView *contentView;
     
     UILabel *nameLabel;
+    UILabel *descriptionTitleLabel;
     UILabel *descriptionLabel;
     UILabel *amountLabel;
     UILabel *amountSymbolLabel;
@@ -91,7 +92,14 @@
     CGRectSetWidthHeight(closeLabel.frame, CGRectGetWidth(closeLabel.frame) + 15, CGRectGetHeight(closeLabel.frame) + 10);
     CGRectSetXY(closeLabel.frame, CGRectGetWidth(contentView.frame) / 2 - CGRectGetWidth(closeLabel.frame) / 2, CGRectGetMaxY(attachmentView.frame) + 5);
 
-    descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(attachmentView.frame) + 10, PPScreenWidth() - 20, 0)];
+    descriptionTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(attachmentView.frame) + 10, PPScreenWidth() - 20, 13)];
+    descriptionTitleLabel.font = [UIFont customContentBold:11];
+    descriptionTitleLabel.textColor = [UIColor customPlaceholder];
+    descriptionTitleLabel.textAlignment = NSTextAlignmentLeft;
+    descriptionTitleLabel.numberOfLines = 1;
+    descriptionTitleLabel.text = [@"Description :" uppercaseString];
+    
+    descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(descriptionTitleLabel.frame), PPScreenWidth() - 20, 0)];
     descriptionLabel.font = [UIFont customContentRegular:15];
     descriptionLabel.textColor = [UIColor whiteColor];
     descriptionLabel.textAlignment = NSTextAlignmentLeft;
@@ -106,6 +114,7 @@
   
     [contentView addSubview:attachmentView];
     [contentView addSubview:closeLabel];
+    [contentView addSubview:descriptionTitleLabel];
     [contentView addSubview:descriptionLabel];
     [contentView addSubview:locationLabel];
     
@@ -152,12 +161,13 @@
     if (_transaction.status == TransactionStatusPending) {
         closeLabel.hidden = NO;
         CGRectSetY(closeLabel.frame, CGRectGetMaxY(attachmentView.frame) + 10);
-        CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(closeLabel.frame) + 10);
+        CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(closeLabel.frame) + 10);
     } else {
         closeLabel.hidden = YES;
-        CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(attachmentView.frame) + 15);
+        CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(attachmentView.frame) + 15);
     }
 
+    CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(descriptionTitleLabel.frame) + 5);
     descriptionLabel.text = _transaction.content;
     CGRectSetHeight(descriptionLabel.frame, [descriptionLabel heightToFit] + 4);
     

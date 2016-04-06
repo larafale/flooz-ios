@@ -66,7 +66,17 @@
     _isCertified = [[json objectForKey:@"isCertified"] boolValue];
     _isCactus = [[json objectForKey:@"isCactus"] boolValue];
     _isFriend = [[json objectForKey:@"isFriend"] boolValue];
+    _isAmbassador = [[json objectForKey:@"isAmbassador"] boolValue];
     _totalParticipation = [json objectForKey:@"total"];
+    _isPot = [[json objectForKey:@"isPot"] boolValue];
+    
+    if (_isAmbassador) {
+        _currentAmbassadorStep = [[json objectForKey:@"ambassador"] objectForKey:@"nextStep"];
+    } else {
+        _currentAmbassadorStep = [NSDictionary new];
+    }
+    
+    _badges = [json objectForKey:@"badges"];
     
     if ([json objectForKey:@"isFriendable"])
         _isFriendable = [[json objectForKey:@"isFriendable"] boolValue];

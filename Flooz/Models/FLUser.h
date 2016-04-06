@@ -73,6 +73,7 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) NSMutableArray *actions;
 
 @property (strong, nonatomic) NSArray *followings;
+@property (strong, nonatomic) NSArray *badges;
 @property (strong, nonatomic) NSArray *followers;
 @property (strong, nonatomic) NSArray *friends;
 @property (strong, nonatomic) NSArray *friendsRecent;
@@ -84,11 +85,15 @@ typedef enum e_FLUserKind {
 @property (nonatomic)  BOOL isCertified;
 @property (nonatomic)  BOOL isCactus;
 @property (nonatomic)  BOOL isFriend;
+@property (nonatomic)  BOOL isPot;
 @property (nonatomic)  BOOL isComplete;
 @property (nonatomic)  BOOL isFriendable;
+@property (nonatomic)  BOOL isAmbassador;
 
 @property (nonatomic)  BOOL isIdentified;
 @property (nonatomic)  BOOL isFloozer;
+
+@property (nonatomic, strong) NSDictionary *currentAmbassadorStep;
 
 @property (nonatomic) FLUserPublicStats publicStats;
 

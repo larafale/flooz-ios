@@ -70,8 +70,8 @@
 	{
 		UILabel *fullname = [[UILabel alloc] initWithFrame:CGRectMake(5, 88, CGRectGetWidth(view.frame) - 10, 20)];
 
-		fullname.numberOfLines = 1;
-		fullname.textAlignment = NSTextAlignmentCenter;
+        fullname.numberOfLines = 1;
+        fullname.textAlignment = NSTextAlignmentCenter;
 		fullname.textColor = [UIColor whiteColor];
 		fullname.font = [UIFont customTitleExtraLight:14];
         fullname.adjustsFontSizeToFitWidth = YES;
@@ -129,44 +129,70 @@
     UILabel *fullname = [[view subviews] objectAtIndex:1];
     UILabel *username = [[view subviews] objectAtIndex:2];
     UIImageView *star = [[view subviews] objectAtIndex:3];
-    
-    [avatar setImageFromUser:user];
-    
-    fullname.text = [[user fullname] uppercaseString];
-//    [fullname setHeightToFit];
-//    [fullname setWidthToFit];
 
+    fullname.text = [[user fullname] uppercaseString];
+    
     CGRectSetY(fullname.frame, CGRectGetMaxY(avatar.frame) + 8.0f);
     CGRectSetX(fullname.frame, CGRectGetWidth(view.frame) / 2 - CGRectGetWidth(fullname.frame) / 2);
-    
-    if (user.isCertified) {
-        [star setHidden:NO];
-        star.center = fullname.center;
-        CGRectSetX(star.frame, CGRectGetMaxX(fullname.frame) - CGRectGetWidth(fullname.frame) / 2 + [fullname widthToFit] / 2 + 5);
-    } else {
+
+    if (user.isPot) {
         [star setHidden:YES];
-    }
+        
+        fullname.numberOfLines = 2;
+        fullname.lineBreakMode = NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail;
+
+        avatar.avatar.image = [UIImage imageNamed:@"potavatar"];
+        
+        username.hidden = YES;
+    } else {
+        [avatar setImageFromUser:user];
+        
+        if (user.isCertified) {
+            [star setHidden:NO];
+            star.center = fullname.center;
+            CGRectSetX(star.frame, CGRectGetMaxX(fullname.frame) - CGRectGetWidth(fullname.frame) / 2 + [fullname widthToFit] / 2 + 5);
+        } else {
+            [star setHidden:YES];
+        }
+
+        if ([user username]) {
+            username.text = [@"@" stringByAppendingString :[user username]];
+        }
+        else {
+            username.text = @"";
+        }
     
-    if ([user username]) {
-        username.text = [@"@" stringByAppendingString :[user username]];
+        CGRectSetY(username.frame, CGRectGetMaxY(fullname.frame) + 2);
+        [username setHeightToFit];
     }
-    else {
-        username.text = @"";
-    }
-    CGRectSetY(username.frame, CGRectGetMaxY(fullname.frame) + 2);
-    [username setHeightToFit];
 }
 
 #pragma mark -
 
 - (void)didUserLeftViewTouch {
-    [[_transaction from] setSelectedCanal:TimelineCanal];
-    [appDelegate showUser:[_transaction from] inController:self.parentViewController];
+    if ([[_transaction from] isPot]) {
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] transactionWithId:[_transaction from].userId success: ^(id result) {
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            [appDelegate showPot:transaction inController:appDelegate.currentController withIndexPath:nil focusOnComment:NO completion:^{
+            }];
+        }];
+    } else {
+        [appDelegate showUser:[_transaction from] inController:self.parentViewController];
+    }
 }
 
 - (void)didUserRightViewTouch {
-    [[_transaction to] setSelectedCanal:TimelineCanal];
-    [appDelegate showUser:[_transaction to] inController:self.parentViewController];
+    if ([[_transaction to] isPot]) {
+        [[Flooz sharedInstance] showLoadView];
+        [[Flooz sharedInstance] transactionWithId:[_transaction to].userId success: ^(id result) {
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            [appDelegate showPot:transaction inController:appDelegate.currentController withIndexPath:nil focusOnComment:NO completion:^{
+            }];
+        }];
+    } else {
+        [appDelegate showUser:[_transaction to] inController:self.parentViewController];
+    }
 }
 
 @end

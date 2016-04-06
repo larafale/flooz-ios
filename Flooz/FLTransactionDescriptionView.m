@@ -327,7 +327,7 @@
 - (void)prepareAvatarView {
     FLUserView *view = [[leftView subviews] objectAtIndex:0];
     
-    [view setImageFromURLAnimate:_transaction.avatarURL];
+    [view setImageFromURL:_transaction.avatarURL];
 }
 
 - (void)prepareDetailView {
@@ -415,7 +415,7 @@
         CGFloat heightAttach = 250 / (500 / widthAttach);
         CGRectSetHeight(attachmentView.frame, heightAttach);
         
-        [attachmentView setImageWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
+        [attachmentView setImageWithURL:[NSURL URLWithString:[_transaction attachmentURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
         height = CGRectGetMaxY(attachmentView.frame);
     }
     else {

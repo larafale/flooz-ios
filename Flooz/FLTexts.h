@@ -10,6 +10,20 @@
 #import "FLSlider.h"
 #import "FLInvitationTexts.h"
 
+@interface FLHomeButton : NSObject
+
+@property (nonatomic, retain) NSString *defaultImg;
+@property (nonatomic, retain) NSString *imgUrl;
+@property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSString *subtitle;
+@property (nonatomic) Boolean soon;
+@property (nonatomic, retain) NSArray *triggers;
+
+
+- (id)initWithJSON:(NSDictionary *)json;
+
+@end
+
 @interface FLTexts : NSObject
 
 @property (nonatomic, retain) NSString *card;
@@ -20,6 +34,7 @@
 @property (nonatomic, retain) NSDictionary *menu;
 @property (nonatomic, retain) NSString *signupSponsor;
 @property (nonatomic, retain) NSMutableArray *avalaibleCountries;
+@property (nonatomic, retain) NSArray *homeButtons;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

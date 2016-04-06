@@ -85,8 +85,7 @@
     
     [self registerForKeyboardNotifications];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction) name:kNotificationRefreshTransaction object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction) name:kNotificationReloadTimeline object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTransaction:) name:kNotificationRefreshTransaction object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -126,11 +125,15 @@
         [self hideShareView];
 }
 
-- (void)refreshTransaction {
-    [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
-        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
-        [self reloadTransaction];
-    }];
+- (void)refreshTransaction:(NSNotification*)notification {
+    NSDictionary* userInfo = notification.userInfo;
+    
+    if (userInfo && userInfo[@"_id"] && [userInfo[@"_id"] isEqualToString:_transaction.transactionId]) {
+        [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
+            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+            [self reloadTransaction];
+        }];
+    }
 }
 
 #pragma mark - Views
@@ -799,10 +802,11 @@
         
         [self reloadTransaction];
         
-        if (self.tableView.contentSize.height >= self.tableView.bounds.size.height) {
-            CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
+        CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
+        if (bottomOffset.y < 0)
+            [self.tableView setContentOffset:CGPointZero animated:YES];
+        else
             [self.tableView setContentOffset:bottomOffset animated:YES];
-        }
     } failure:^(NSError *error) {
         sendPressed = NO;
     }];
@@ -942,8 +946,11 @@
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
     
-    CGFloat height = self.tableView.contentSize.height - self.tableView.bounds.size.height;
-    [self.tableView setContentOffset:CGPointMake(0, height) animated:YES];
+    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
+    if (bottomOffset.y < 0)
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+    else
+        [self.tableView setContentOffset:bottomOffset animated:YES];
     
     [self prepareViews];
 }
@@ -955,8 +962,11 @@
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
     
-    CGFloat height = self.tableView.contentSize.height - self.tableView.bounds.size.height;
-    [self.tableView setContentOffset:CGPointMake(0, height) animated:YES];
+    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
+    if (bottomOffset.y < 0)
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+    else
+        [self.tableView setContentOffset:bottomOffset animated:YES];
 }
 
 - (void)keyboardWillDisappear {
@@ -965,8 +975,11 @@
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
     
-    CGFloat height = self.tableView.contentSize.height - self.tableView.bounds.size.height;
-    [self.tableView setContentOffset:CGPointMake(0, height) animated:YES];
+    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
+    if (bottomOffset.y < 0)
+        [self.tableView setContentOffset:CGPointZero animated:YES];
+    else
+        [self.tableView setContentOffset:bottomOffset animated:YES];
 }
 
 - (void)didChangeHeight:(CGFloat)height {

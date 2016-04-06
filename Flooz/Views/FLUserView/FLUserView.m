@@ -53,14 +53,20 @@
 }
 
 - (void)setImageFromURL:(NSString *)url {
-    [self showPlaceholder];
 	if (!url || [url isBlank] || [url isEqualToString:@"/img/nopic.png"]) {
 		[self showPlaceholder];
     } else if ([url isEqualToString:@"/img/fake.png"]) {
         [self.avatar setImage:[UIImage imageNamed:@"fake"]];
     } else {
 		[self hidePlaceholder];
-		[avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder options:SDWebImageRefreshCached|SDWebImageContinueInBackground];
+        [[SDImageCache sharedImageCache] queryDiskCacheForKey:url done:^(UIImage *image, SDImageCacheType cacheType) {
+            if (image) {
+                avatar.image = image;
+                [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil options:SDWebImageRefreshCached|SDWebImageContinueInBackground];
+            } else {
+                [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder options:SDWebImageRefreshCached|SDWebImageContinueInBackground];
+            }
+        }];
 	}
 }
 
@@ -105,10 +111,11 @@
 
 - (void)setImageFromUser:(FLUser *)user {
     self.user = user;
-    [self showPlaceholder];
 	if (self.user.avatarURL) {
 		[self setImageFromURL:self.user.avatarURL];
-	}
+    } else {
+        [self showPlaceholder];
+    }
 }
 
 - (void)setImageFromData:(NSData *)data {

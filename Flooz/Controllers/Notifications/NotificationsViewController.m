@@ -88,9 +88,6 @@
 - (void)handleRefresh {
     [refreshControl beginRefreshing];
     
-    if (![notificationsArray count]) {
-        [[Flooz sharedInstance] showLoadView];
-    }
     [[Flooz sharedInstance] activitiesWithSuccess: ^(id result, NSString *nextPageUrl) {
         notificationsArray = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
@@ -106,9 +103,6 @@
     }
     nextPageIsLoading = YES;
     
-    if (![notificationsArray count]) {
-        [[Flooz sharedInstance] showLoadView];
-    }
     [[Flooz sharedInstance] activitiesNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl) {
         [notificationsArray addObjectsFromArray:result];
         _nextPageUrl = nextPageUrl;

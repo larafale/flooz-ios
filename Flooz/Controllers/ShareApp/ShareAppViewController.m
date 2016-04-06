@@ -16,6 +16,7 @@
 #import "FLClearActionTextView.h"
 #import "FLSharePopup.h"
 #import "ShareSMSViewController.h"
+#import "AmbassadorStepsViewController.h"
 
 @interface ShareAppViewController () {
     UIView *_footerView;
@@ -154,6 +155,18 @@
 }
 
 - (void)prepareViews {
+    if ([[[Flooz sharedInstance] currentUser] isAmbassador]) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setImage:[[UIImage imageNamed:@"alertview-info"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        btn.frame = CGRectMake(0, 0, 20, 20);
+        [btn setTintColor:[UIColor customBlue]];
+        [btn addTarget:self action:@selector(showStepPopup) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *ambassadorItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        self.navigationItem.rightBarButtonItem = ambassadorItem;
+    } else
+        self.navigationItem.rightBarButtonItem = nil;
+    
     [self.navigationItem setTitle:_viewTitle];
     
     if (_footerView)
@@ -454,6 +467,11 @@
             }
         }
     }];
+}
+
+- (void)showStepPopup {
+    AmbassadorStepsViewController *viewController = [AmbassadorStepsViewController new];
+    [viewController show];
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {

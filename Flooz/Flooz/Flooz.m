@@ -672,6 +672,8 @@
         self.currentTexts = [[FLTexts alloc] initWithJSON:result[@"item"]];
         [self saveTextData];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTexts object:nil];
+
         if (success) {
             success(self.currentTexts);
         }
@@ -992,13 +994,23 @@
 }
 
 - (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:@{@"_id":transId}];
+
+        if (success) {
+            success(result);
+        }
+    };
+
     id failureBlock = ^(NSURLSessionTask *task, NSError *error) {
         if (failure) {
             failure(error);
         }
     };
     
-    [self requestPath:[NSString stringWithFormat:@"/flooz/%@/pic", transId] method:@"POST" params:nil success:success failure:failureBlock constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
+    [self requestPath:[NSString stringWithFormat:@"/flooz/%@/pic", transId] method:@"POST" params:nil success:successBlock failure:failureBlock constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
         [formData appendPartWithFileData:image name:@"image" fileName:@"image.jpg" mimeType:@"image/jpg"];
     }];
 }

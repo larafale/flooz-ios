@@ -91,7 +91,7 @@
     [super viewWillAppear:animated];
     
     self.navigationItem.titleView = _searchBar;
-
+    
     [self registerForKeyboardNotifications];
     [self registerNotification:@selector(scrollViewDidScroll:) name:kNotificationCloseKeyboard object:nil];
 }
@@ -257,12 +257,12 @@
                 place = [placesSearch objectAtIndex:indexPath.row];
             else if (searchLoaded)
                 return;
+        } else {
+            if (placesSuggest.count)
+                place = [placesSuggest objectAtIndex:indexPath.row];
+            else if (suggestsLoaded)
+                return;
         }
-        
-        if (placesSuggest.count)
-            place = [placesSuggest objectAtIndex:indexPath.row];
-        else if (suggestsLoaded)
-            return;
     }
     
     if (place) {

@@ -37,6 +37,7 @@ static NSString *kNotificationAnswerAccessNotification = @"kNotificationAnswerAc
 static NSString *kNotificationRefreshTransaction = @"kNotificationRefreshTransaction";
 static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 static NSString *kNotificationReloadShareTexts = @"kNotificationReloadShareTexts";
+static NSString *kNotificationReloadTexts = @"kNotificationReloadTexts";
 
 static NSString *kSendContact = @"contactSended";
 

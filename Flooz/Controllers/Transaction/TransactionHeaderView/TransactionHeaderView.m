@@ -18,11 +18,12 @@
     UIView *contentView;
     
     TransactionUsersView *usersView;
-    
+    UILabel *amountLabel;
+
     UILabel *floozerLabel;
     UILabel *descriptionLabel;
     UILabel *locationLabel;
-
+    
     FLImageView *attachmentView;
 }
 
@@ -53,6 +54,17 @@
     usersView = [[TransactionUsersView alloc] initWithFrame:CGRectMake(0.0f, 10.0f, PPScreenWidth(), 0)];
     usersView.parentViewController = _parentController;
     [headerView addSubview:usersView];
+    
+    amountLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(usersView.frame) + 10.0f, PPScreenWidth() - 20, 30)];
+    amountLabel.font = [UIFont customContentBold:18];
+    amountLabel.textColor = [UIColor customBlue];
+    amountLabel.textAlignment = NSTextAlignmentCenter;
+    amountLabel.numberOfLines = 1;
+    amountLabel.backgroundColor = [UIColor customBackgroundHeader];
+    amountLabel.layer.masksToBounds = YES;
+    amountLabel.layer.cornerRadius = 4.0f;
+    
+    [headerView addSubview:amountLabel];
 
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(headerView.frame), PPScreenWidth(), 0)];
     contentView.backgroundColor = [UIColor customBackground];
@@ -63,7 +75,7 @@
     floozerLabel.textColor = [UIColor whiteColor];
     floozerLabel.font = [UIFont customContentRegular:14];
     floozerLabel.numberOfLines = 0;
-
+    
     descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(locationLabel.frame) + 10, PPScreenWidth() - 20, 0)];
     descriptionLabel.font = [UIFont customContentRegular:15];
     descriptionLabel.textColor = [UIColor whiteColor];
@@ -80,7 +92,7 @@
     [contentView addSubview:floozerLabel];
     [contentView addSubview:descriptionLabel];
     [contentView addSubview:locationLabel];
-
+    
     [self addSubview:contentView];
     [self addSubview:headerView];
     
@@ -93,15 +105,20 @@
 }
 
 - (void)reloadView {
-    if (![_transaction isParticipation]) {
-        headerView.hidden = NO;
-        usersView.transaction = _transaction;
-        CGRectSetHeight(headerView.frame, CGRectGetMaxY(usersView.frame) + 10);
+    usersView.transaction = _transaction;
+    
+    if (_transaction.amountText && ![_transaction.amountText isBlank]) {
+        amountLabel.hidden = NO;
+        amountLabel.text = _transaction.amountText;
+        CGRectSetWidth(amountLabel.frame, [amountLabel widthToFit] + 30);
+        CGRectSetX(amountLabel.frame, CGRectGetWidth(headerView.frame) / 2 - CGRectGetWidth(amountLabel.frame) / 2);
+        
+        CGRectSetHeight(headerView.frame, CGRectGetMaxY(amountLabel.frame) - 10);
     } else {
-        headerView.hidden = YES;
-        CGRectSetHeight(headerView.frame, 0);
+        amountLabel.hidden = YES;
+        CGRectSetHeight(headerView.frame, CGRectGetMaxY(usersView.frame) + 10);
     }
-
+    
     CGRectSetY(contentView.frame, CGRectGetMaxY(headerView.frame));
     
     if ([_transaction attachmentURL]) {
@@ -114,9 +131,9 @@
     else {
         CGRectSetHeight(attachmentView.frame, 0);
     }
-
+    
     CGRectSetY(floozerLabel.frame, CGRectGetMaxY(attachmentView.frame) + 20);
-
+    
     NSMutableAttributedString *attributedContent = [NSMutableAttributedString new];
     
     {
