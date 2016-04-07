@@ -50,6 +50,7 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (strong, nonatomic) NSNumber *amount;
 @property (strong, nonatomic) NSString *amountText;
 @property (strong, nonatomic) NSString *avatarURL;
+@property (strong, nonatomic) NSString *link;
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *title;

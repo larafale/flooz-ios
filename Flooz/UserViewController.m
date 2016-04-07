@@ -780,7 +780,11 @@
         if (transacLoaded) {
             if (transactions.count > indexPath.row) {
                 FLTransaction *transaction = [transactions objectAtIndex:indexPath.row];
-                [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+                if (transaction.isCollect) {
+                    [appDelegate showPot:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+                } else {
+                    [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+                }
             }
         }
     } else if (completeProfileLoaded) {

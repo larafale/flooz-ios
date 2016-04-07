@@ -86,6 +86,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
         _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
         [self reloadTransaction];
@@ -599,7 +601,7 @@
 }
 
 - (void)shareButtonClick {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.flooz.me/flooz/%@", _transaction.transactionId]];
+    NSURL *url = [NSURL URLWithString:_transaction.link];
     
     ARChromeActivity *chromeActivity = [ARChromeActivity new];
     TUSafariActivity *safariActivity = [TUSafariActivity new];

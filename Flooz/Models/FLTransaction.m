@@ -54,6 +54,8 @@
         _status = TransactionStatusExpired;
     }
     
+    _link = [json objectForKey:@"link"];
+    
     _amount = [json objectForKey:@"amount"];
     if (_amount && [[json objectForKey:@"payer"] isEqualToNumber:@1]) {
         _amount = [NSNumber numberWithFloat:([_amount floatValue] * -1.)];

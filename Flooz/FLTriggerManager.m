@@ -414,6 +414,7 @@
                 
                 [tmp presentViewController:message animated:YES completion:^{
                     [[Flooz sharedInstance] hideLoadView];
+                    [self executeTriggerList:trigger.triggers];
                 }];
             } else {
                 if (trigger.data[@"failure"]) {

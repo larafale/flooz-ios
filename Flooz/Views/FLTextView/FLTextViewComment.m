@@ -40,7 +40,7 @@
     
     _textView.font = [UIFont customContentLight:13];
     _textView.textColor = [UIColor whiteColor];
-    
+
     [self addSubview:_textView];
     
     {
@@ -129,7 +129,8 @@
     else
         _placeholder.hidden = NO;
     
-    [self setHeight:_textView.contentSize.height];
+    if (_textView.contentSize.height <= 120)
+        [self setHeight:_textView.contentSize.height];
     
     CGRect line = [textView caretRectForPosition:
                    textView.selectedTextRange.start];

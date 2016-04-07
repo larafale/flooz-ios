@@ -89,6 +89,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
         _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
         [self reloadTransaction];
@@ -161,7 +163,9 @@
     self.navigationItem.rightBarButtonItem = scopeButton;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
-    
+    view.userInteractionEnabled = YES;
+    [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCreatorClick)]];
+
     UILabel *createdByLabel = [[UILabel alloc] initWithText:@"créée par" textColor:[UIColor whiteColor] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
     [createdByLabel setWidthToFit];
     [createdByLabel setHeightToFit];
@@ -171,12 +175,10 @@
     [creatorAvatar setImageFromUser:_transaction.creator];
     creatorAvatar.avatar.layer.cornerRadius = 10;
     creatorAvatar.layer.cornerRadius = 10;
-    
+   
     UILabel *creatorUsername = [[UILabel alloc] initWithText:[NSString stringWithFormat:@"@%@", _transaction.creator.username] textColor:[UIColor customBlue] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
     [creatorUsername setWidthToFit];
     [creatorUsername setHeightToFit];
-    creatorUsername.userInteractionEnabled = YES;
-    [creatorUsername addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCreatorClick)]];
     
     CGFloat headerWidth = CGRectGetWidth(createdByLabel.frame) + 5 + CGRectGetWidth(creatorAvatar.frame) + 5 + CGRectGetWidth(creatorUsername.frame);
     
@@ -253,7 +255,7 @@
     commentTextField = [[FLTextViewComment alloc] initWithPlaceholder:NSLocalizedString(@"SEND_COMMENT", nil) for:commentData key:@"comment" frame:CGRectMake(60, 10, PPScreenWidth() - 120, 30)];
     [commentTextField setDelegate:self];
     [toolbar addSubview:commentTextField];
-    
+        
     commentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(toolbar.frame) - 55, 5, 50, 50 - 10)];
     [commentButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"speech_bubble"] scaledToSize:CGSizeMake(32, 32)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [commentButton addTarget:self action:@selector(commentButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -832,7 +834,7 @@
     if (shareViewVisible)
         [self hideShareView];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.flooz.me/pot/%@", _transaction.transactionId]];
+    NSURL *url = [NSURL URLWithString:_transaction.link];
     
     ARChromeActivity *chromeActivity = [ARChromeActivity new];
     TUSafariActivity *safariActivity = [TUSafariActivity new];

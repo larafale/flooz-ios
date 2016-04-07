@@ -46,6 +46,8 @@
     _mainBody.backgroundColor = [UIColor customBackgroundHeader];
         
     [self.view addSubview:_mainBody];
+    
+    [self registerNotification:@selector(updateHeight) name:kNotificationEnterForeground object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -55,7 +57,16 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    CGRectSetHeight(self.view.frame, CGRectGetHeight(_mainBody.frame));
+    CGFloat height = CGRectGetHeight(_mainBody.frame);
+    
+    CGRectSetHeight(self.view.frame, height);
+}
+
+- (void)updateHeight {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        CGFloat height = CGRectGetHeight(_mainBody.frame);
+        CGRectSetHeight(self.view.frame, height);
+    });
 }
 
 @end
