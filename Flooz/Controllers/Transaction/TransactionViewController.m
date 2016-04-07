@@ -216,12 +216,12 @@
     closeCommentButton.contentMode = UIViewContentModeScaleAspectFit;
     [toolbar addSubview:closeCommentButton];
     
-    acceptButton = [[FLActionButton alloc] initWithFrame:CGRectMake(60, 5, PPScreenWidth() - 120, 50 - 10) title:NSLocalizedString(@"MENU_PARTICIPATE", nil)];
+    acceptButton = [[FLActionButton alloc] initWithFrame:CGRectMake(60, 5, PPScreenWidth() - 120, 50 - 10) title:NSLocalizedString(@"MENU_ACCEPT", nil)];
     acceptButton.titleLabel.font = [UIFont customTitleLight:16];
     [acceptButton addTarget:self action:@selector(acceptButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [toolbar addSubview:acceptButton];
     
-    declineButton = [[FLActionButton alloc] initWithFrame:CGRectMake(60, 5, PPScreenWidth() - 120, 50 - 10) title:NSLocalizedString(@"MENU_CLOSE", nil)];
+    declineButton = [[FLActionButton alloc] initWithFrame:CGRectMake(60, 5, PPScreenWidth() - 120, 50 - 10) title:NSLocalizedString(@"MENU_DECLINE", nil)];
     declineButton.titleLabel.font = [UIFont customTitleLight:16];
     [declineButton addTarget:self action:@selector(declineButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [declineButton setBackgroundColor:[UIColor customRed] forState:UIControlStateNormal];

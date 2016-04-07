@@ -218,6 +218,9 @@
 "MENU_NEW_TRANSACTION_PAYMENT" = "Payer";
 "MENU_NEW_TRANSACTION_COLLECT" = "Réclamer";
 
+"MENU_ACCEPT" = "Accepter";
+"MENU_DECLINE" = "Refuser";
+
 "MENU_PARTICIPATE" = "Participer";
 "MENU_CLOSE" = "Clôturer";
 "MENU_PAYMENT" = "Payer";

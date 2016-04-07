@@ -233,7 +233,7 @@
     
     loginView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
     [loginView setHidden:YES];
-    [loginView setDynamic:YES];
+    [loginView setDynamic:NO];
     [loginView setBlurRadius:10];
     [loginView setTintColor:[UIColor clearColor]];
     [loginView setUnderlyingView:backgroundView];
@@ -328,7 +328,7 @@
     signupFormFields = [NSMutableArray new];
     
     signupView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
-    [signupView setDynamic:YES];
+    [signupView setDynamic:NO];
     [signupView setBlurRadius:10];
     [signupView setTintColor:[UIColor clearColor]];
     [signupView setUnderlyingView:backgroundView];
@@ -515,7 +515,7 @@
     forgetData = [NSMutableDictionary new];
     
     forgetView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
-    [forgetView setDynamic:YES];
+    [forgetView setDynamic:NO];
     [forgetView setBlurRadius:10];
     [forgetView setTintColor:[UIColor clearColor]];
     [forgetView setUnderlyingView:backgroundView];

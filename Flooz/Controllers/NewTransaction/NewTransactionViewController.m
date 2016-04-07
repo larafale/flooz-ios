@@ -952,8 +952,8 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
-    [content setHeight:CGRectGetHeight(_contentView.frame) - keyboardHeight - CGRectGetHeight(amountInput.frame) - 1];
-    
+    [content setHeight:CGRectGetHeight(_contentView.frame) - CGRectGetMinY(content.frame) - keyboardHeight + CGRectGetHeight(transactionBar.frame)];
+
     [self dismissCamera];
 }
 
