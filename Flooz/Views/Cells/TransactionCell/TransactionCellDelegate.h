@@ -10,7 +10,6 @@
 
 @protocol TransactionCellDelegate <NSObject>
 
-- (void)didTransactionShareTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;
 - (void)didTransactionUserTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;
 - (void)didTransactionTouchAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction;

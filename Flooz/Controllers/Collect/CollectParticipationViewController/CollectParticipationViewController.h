@@ -11,7 +11,7 @@
 
 @interface CollectParticipationViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, TransactionCellDelegate>
 
-- (id)initWithCollectId:(NSString *)collect;
+- (id)initWithCollectId:(NSString *)collect andUserId:(NSString *)user;
 
 @property (nonatomic, retain) UITableView *tableView;
 

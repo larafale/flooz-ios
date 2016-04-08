@@ -610,7 +610,7 @@
         if (success) {
             success(self.invitationTexts);
         }
-    
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadShareTexts object:nil];
     };
     
@@ -673,7 +673,7 @@
         [self saveTextData];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTexts object:nil];
-
+        
         if (success) {
             success(self.currentTexts);
         }
@@ -706,6 +706,18 @@
     [self requestPath:[NSString stringWithFormat:@"/users/%@/flooz", userId] method:@"GET" params:nil success:successBlock failure:failure];
 }
 
+- (void)collectTimeline:(NSString *)collectId withUser:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
+        
+        if (success) {
+            success(transactions, result[@"next"]);
+        }
+    };
+    
+    [self requestPath:@"/flooz" method:@"GET" params:@{@"potId": collectId, @"userId": userId} success:successBlock failure:failure];
+}
+
 - (void)collectTimeline:(NSString *)collectId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
@@ -716,6 +728,19 @@
     };
     
     [self requestPath:@"/flooz" method:@"GET" params:@{@"potId": collectId} success:successBlock failure:failure];
+}
+
+- (void)collectTimelineNextPage:(NSString *)nextPageUrl collectId:(NSString *)collectId withUser:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success {
+    id successBlock = ^(id result) {
+        NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
+        
+        if (success) {
+            success(transactions, result[@"next"]);
+        }
+    };
+    
+    [self requestPath:nextPageUrl method:@"GET" params:@{@"potId": collectId, @"userId": userId} success:successBlock failure:NULL];
+    
 }
 
 - (void)collectTimelineNextPage:(NSString *)nextPageUrl collectId:(NSString *)collectId success:(void (^)(id result, NSString *nextPageUrl))success {
@@ -772,11 +797,11 @@
         params = @{ @"scope": scope };
     }
     
-//    NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
-//    if (transactions && success) {
-//        self.timelinePageSize = [transactions count];
-//        success(transactions, nil, [FLTransaction transactionParamsToScope:scope]);
-//    }
+    //    NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
+    //    if (transactions && success) {
+    //        self.timelinePageSize = [transactions count];
+    //        success(transactions, nil, [FLTransaction transactionParamsToScope:scope]);
+    //    }
     
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failureBlock];
 }
@@ -979,7 +1004,7 @@
     
     if ([SecureCodeViewController hasSecureCodeForCurrentUser])
         [dic setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
-
+    
     successBlock1 = ^(id result) {
         if (success) {
             success(result);
@@ -998,12 +1023,12 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:@{@"_id":transId}];
-
+        
         if (success) {
             success(result);
         }
     };
-
+    
     id failureBlock = ^(NSURLSessionTask *task, NSError *error) {
         if (failure) {
             failure(error);
@@ -1303,7 +1328,7 @@
         }
         else if (errorData) {
             NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-
+            
             if (serializedData) {
                 [self displayPopupMessage:serializedData];
                 [self handleRequestTriggers:serializedData];
@@ -1966,12 +1991,14 @@
     NSArray *friends = result[@"items"];
     if (friends) {
         for (NSDictionary *json in friends) {
-            FLUser *friend = [[FLUser alloc] initWithJSON:json];
-            if (sorted) {
-                NSUInteger newIndex = [self findIndexForUser:friend inArray:arrayFriends];
-                [arrayFriends insertObject:friend atIndex:newIndex];
-            } else
-                [arrayFriends addObject:friend];
+            if (json && [json isKindOfClass:NSDictionary.class]) {
+                FLUser *friend = [[FLUser alloc] initWithJSON:json];
+                if (sorted) {
+                    NSUInteger newIndex = [self findIndexForUser:friend inArray:arrayFriends];
+                    [arrayFriends insertObject:friend atIndex:newIndex];
+                } else
+                    [arrayFriends addObject:friend];
+            }
         }
     }
     return arrayFriends;
@@ -2033,13 +2060,13 @@
     NSArray *transactions = result[@"items"];
     if (transactions) {
         for (NSDictionary *json in transactions) {
-//            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
-//                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
-//                [arrayTransactions addObject:deal];
-//            } else {
-                FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
-                [arrayTransactions addObject:transaction];
-//            }
+            //            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
+            //                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
+            //                [arrayTransactions addObject:deal];
+            //            } else {
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
+            [arrayTransactions addObject:transaction];
+            //            }
         }
     }
     return arrayTransactions;
@@ -2050,15 +2077,15 @@
     NSArray *transactions = result;
     if (transactions) {
         for (NSDictionary *json in transactions) {
-//            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
-//                continue;
-//                
-//                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
-//                [arrayTransactions addObject:deal];
-//            } else {
-                FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
-                [arrayTransactions addObject:transaction];
-//            }
+            //            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
+            //                continue;
+            //
+            //                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
+            //                [arrayTransactions addObject:deal];
+            //            } else {
+            FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
+            [arrayTransactions addObject:transaction];
+            //            }
         }
     }
     return arrayTransactions;

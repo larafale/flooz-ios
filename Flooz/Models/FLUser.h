@@ -57,7 +57,10 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) NSNumber *transactionsCount;
 @property (strong, nonatomic) NSString *selectedFrom;
 @property (nonatomic, strong) FLCountry *country;
-@property (strong, nonatomic) NSNumber *totalParticipation;
+
+@property (strong, nonatomic) NSNumber *totalParticipations;
+@property (strong, nonatomic) NSNumber *countParticipations;
+@property (strong, nonatomic) NSArray *participations;
 
 @property (strong, nonatomic) NSString *deviceToken;
 

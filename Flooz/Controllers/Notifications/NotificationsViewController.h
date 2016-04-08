@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NotificationsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate> {
-    UITableView *_tableView;
-}
+@interface NotificationsViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 
+@property (nonatomic, strong) UITableView *tableView;
 @end

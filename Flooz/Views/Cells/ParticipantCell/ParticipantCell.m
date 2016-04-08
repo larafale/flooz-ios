@@ -100,11 +100,7 @@
 
 - (void)prepareViews {
     
-    if (_participant.isCactus) {
-        self.accessoryType = UITableViewCellAccessoryNone;
-    } else {
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     [self prepareAvatarView];
     [self prepareNameView];
@@ -135,13 +131,12 @@
         NSString *s = [@"@" stringByAppendingString : _participant.username];
         _subLabel.text = s;
     }
-    
 }
 
 - (void)prepareAmountView {
-    if (_participant.totalParticipation && ![_participant.totalParticipation isEqualToNumber:@0]) {
+    if (_participant.totalParticipations && ![_participant.totalParticipations isEqualToNumber:@0]) {
         _amountLabel.hidden = NO;
-        _amountLabel.text = [FLHelper formatedAmount:_participant.totalParticipation withCurrency:YES withSymbol:NO];
+        _amountLabel.text = [FLHelper formatedAmount:_participant.totalParticipations withCurrency:YES withSymbol:NO];
     } else {
         _amountLabel.hidden = YES;
     }

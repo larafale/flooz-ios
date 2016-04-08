@@ -165,7 +165,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
     view.userInteractionEnabled = YES;
     [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCreatorClick)]];
-
+    
     UILabel *createdByLabel = [[UILabel alloc] initWithText:@"créée par" textColor:[UIColor whiteColor] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
     [createdByLabel setWidthToFit];
     [createdByLabel setHeightToFit];
@@ -175,7 +175,7 @@
     [creatorAvatar setImageFromUser:_transaction.creator];
     creatorAvatar.avatar.layer.cornerRadius = 10;
     creatorAvatar.layer.cornerRadius = 10;
-   
+    
     UILabel *creatorUsername = [[UILabel alloc] initWithText:[NSString stringWithFormat:@"@%@", _transaction.creator.username] textColor:[UIColor customBlue] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
     [creatorUsername setWidthToFit];
     [creatorUsername setHeightToFit];
@@ -255,7 +255,7 @@
     commentTextField = [[FLTextViewComment alloc] initWithPlaceholder:NSLocalizedString(@"SEND_COMMENT", nil) for:commentData key:@"comment" frame:CGRectMake(60, 10, PPScreenWidth() - 120, 30)];
     [commentTextField setDelegate:self];
     [toolbar addSubview:commentTextField];
-        
+    
     commentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(toolbar.frame) - 55, 5, 50, 50 - 10)];
     [commentButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"speech_bubble"] scaledToSize:CGSizeMake(32, 32)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [commentButton addTarget:self action:@selector(commentButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -471,7 +471,7 @@
     
     [tableHeaderView setTransaction:_transaction];
     self.tableView.tableHeaderView = tableHeaderView;
-
+    
     [self.tableView reloadData];
 }
 
@@ -541,9 +541,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        if (_transaction.participations && _transaction.participants && _transaction.participations.count == _transaction.participants.count)
-            return 1;
-        return 2;
+        return 1;
     }
     
     return _transaction.social.commentsCount;
@@ -581,73 +579,43 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            static NSString *cellIdentifier = @"CollectFromsCell1";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-                cell.backgroundColor = [UIColor customBackgroundHeader];
-                cell.textLabel.font = [UIFont customContentRegular:15];
-                cell.textLabel.textColor = [UIColor whiteColor];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            
-            if (_transaction.participants && _transaction.participants.count) {
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                
-                if (_transaction.participants.count == 1)
-                    cell.textLabel.text = @"1 Participant";
-                else
-                    cell.textLabel.text = [NSString stringWithFormat:@"%lu Participants", (unsigned long)_transaction.participants.count];
-                
-                [cell.textLabel setWidthToFit];
-                
-                [self createParticipantVignetteViewForCell:cell];
-            } else {
-                UIView *tmp = [cell.contentView viewWithTag:42];
-                
-                if (tmp)
-                    [tmp removeFromSuperview];
-                
-                cell.textLabel.text = @"0 Participant";
-                cell.accessoryType = UITableViewCellAccessoryNone;
-                [cell.textLabel setWidthToFit];
-            }
-            
-            CGRectSetY(cell.textLabel.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath] / 2 - CGRectGetHeight(cell.textLabel.frame) / 2);
-            CGRectSetHeight(cell.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath]);
-            
-            return cell;
-        } else {
-            static NSString *cellIdentifier = @"CollectFromsCell2";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-                cell.backgroundColor = [UIColor customBackgroundHeader];
-                cell.textLabel.font = [UIFont customContentRegular:15];
-                cell.textLabel.textColor = [UIColor whiteColor];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            
-            if (_transaction.participations && _transaction.participations.count) {
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                
-                if (_transaction.participations.count == 1)
-                    cell.textLabel.text = @"1 Participation";
-                else
-                    cell.textLabel.text = [NSString stringWithFormat:@"%lu Participations", (unsigned long)_transaction.participations.count];
-            } else {
-                cell.textLabel.text = @"0 Participation";
-                cell.accessoryType = UITableViewCellAccessoryNone;
-            }
-            
-            CGRectSetY(cell.textLabel.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath] / 2 - CGRectGetHeight(cell.textLabel.frame) / 2);
-            CGRectSetHeight(cell.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath]);
-            
-            return cell;
+        static NSString *cellIdentifier = @"CollectFromsCell1";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.backgroundColor = [UIColor customBackgroundHeader];
+            cell.textLabel.font = [UIFont customContentRegular:15];
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        
+        if (_transaction.participants && _transaction.participants.count) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            if (_transaction.participants.count == 1)
+                cell.textLabel.text = @"1 Participant";
+            else
+                cell.textLabel.text = [NSString stringWithFormat:@"%lu Participants", (unsigned long)_transaction.participants.count];
+            
+            [cell.textLabel setWidthToFit];
+            
+            [self createParticipantVignetteViewForCell:cell];
+        } else {
+            UIView *tmp = [cell.contentView viewWithTag:42];
+            
+            if (tmp)
+                [tmp removeFromSuperview];
+            
+            cell.textLabel.text = @"0 Participant";
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            [cell.textLabel setWidthToFit];
+        }
+        
+        CGRectSetY(cell.textLabel.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath] / 2 - CGRectGetHeight(cell.textLabel.frame) / 2);
+        CGRectSetHeight(cell.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath]);
+        
+        return cell;
     } else {
         static NSString *cellIdentifier = @"CommentCell";
         CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -699,14 +667,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_transaction.participants.count) {
-            if (indexPath.row == 0) {
-                if (_transaction.participants.count == _transaction.participations.count) {
-                    [self.navigationController pushViewController:[[CollectParticipationViewController alloc] initWithCollectId:_transaction.transactionId] animated:YES];
-                } else {
-                    [self.navigationController pushViewController:[[CollectParticipantViewController alloc] initWithCollect:_transaction] animated:YES];
-                }
-            } else
-                [self.navigationController pushViewController:[[CollectParticipationViewController alloc] initWithCollectId:_transaction.transactionId] animated:YES];
+            [self.navigationController pushViewController:[[CollectParticipantViewController alloc] initWithCollect:_transaction] animated:YES];
         }
     }
 }

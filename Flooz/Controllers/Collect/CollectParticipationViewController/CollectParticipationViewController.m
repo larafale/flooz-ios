@@ -19,13 +19,14 @@
     
     UIRefreshControl *refreshControl;
     NSString *collectId;
+    NSString *userId;
 }
 
 @end
 
 @implementation CollectParticipationViewController
 
-- (id)initWithCollectId:(NSString *)collect {
+- (id)initWithCollectId:(NSString *)collect andUserId:(NSString *)user {
     self = [super init];
     if (self) {
         collectId = collect;
@@ -41,6 +42,10 @@
     if (self) {
         if (data && data[@"_id"]) {
             collectId = data[@"_id"];
+        }
+
+        if (data && data[@"userId"]) {
+            userId = data[@"userId"];
         }
         
         transactions = [NSMutableArray new];
@@ -205,7 +210,7 @@
     
     nextPageIsLoading = YES;
     
-    [[Flooz sharedInstance] collectTimelineNextPage:_nextPageUrl collectId:collectId success:^(id result, NSString *nextPageUrl) {
+    [[Flooz sharedInstance] collectTimelineNextPage:_nextPageUrl collectId:collectId withUser:userId success:^(id result, NSString *nextPageUrl) {
         [transactions addObjectsFromArray:result];
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
@@ -215,11 +220,10 @@
 
 - (void)reloadTableView {
     if (![transactions count]) {
-        self.tableView.contentOffset = CGPointMake(0, -refreshControl.frame.size.height);
         [refreshControl beginRefreshing];
     }
     
-    [[Flooz sharedInstance] collectTimeline:collectId success:^(id result, NSString *nextPageUrl) {
+    [[Flooz sharedInstance] collectTimeline:collectId withUser:userId success:^(id result, NSString *nextPageUrl) {
         transactions = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;

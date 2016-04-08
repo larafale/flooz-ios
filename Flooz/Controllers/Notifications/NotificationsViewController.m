@@ -86,7 +86,9 @@
 }
 
 - (void)handleRefresh {
-    [refreshControl beginRefreshing];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [refreshControl beginRefreshing];
+    });
     
     [[Flooz sharedInstance] activitiesWithSuccess: ^(id result, NSString *nextPageUrl) {
         notificationsArray = [result mutableCopy];
