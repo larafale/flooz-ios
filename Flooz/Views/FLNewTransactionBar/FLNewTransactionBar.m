@@ -36,6 +36,8 @@
     UILabel *locationLabel;
     UIImageView *locationPrefix;
     
+    FLPreset *currentPreset;
+    
     WYPopoverController *popoverController;
     FLPrivacySelectorViewController *privacyListController;
     
@@ -51,13 +53,15 @@
 @synthesize collectButton;
 @synthesize participateButton;
 
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionParticipate:(SEL)actionParticipate {
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller preset:(FLPreset *)preset actionParticipate:(SEL)actionParticipate {
     heightBar = BAR_HEIGHT;
     marginH = MARGIN_H;
     marginV = MARGIN_V;
     widthBar = SCREEN_WIDTH;
     
     isParticipation = YES;
+    
+    currentPreset = preset;
     
     if (!IS_IPHONE_4)
         heightBar += LOCATION_BAR_HEIGHT;
@@ -77,19 +81,21 @@
         
         [self createTabBarView];
         
-        privacyListController = [FLPrivacySelectorViewController new];
+        privacyListController = [[FLPrivacySelectorViewController alloc] initWithPreset:preset];
         privacyListController.delegate = self;
     }
     return self;
 }
 
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCharge:(SEL)actionCharge{
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller preset:(FLPreset *)preset actionSend:(SEL)actionSend actionCharge:(SEL)actionCharge{
     heightBar = BAR_HEIGHT;
     marginH = MARGIN_H;
     marginV = MARGIN_V;
     widthBar = SCREEN_WIDTH;
     
     isParticipation = NO;
+
+    currentPreset = preset;
 
     if (!IS_IPHONE_4)
         heightBar += LOCATION_BAR_HEIGHT;
@@ -110,18 +116,20 @@
         
         [self createTabBarView];
         
-        privacyListController = [FLPrivacySelectorViewController new];
+        privacyListController = [[FLPrivacySelectorViewController alloc] initWithPreset:preset];
         privacyListController.delegate = self;
     }
     return self;
 }
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionCollect:(SEL)actionCollect {
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller preset:(FLPreset *)preset actionCollect:(SEL)actionCollect {
     heightBar = BAR_HEIGHT;
     marginH = MARGIN_H;
     marginV = MARGIN_V;
     widthBar = SCREEN_WIDTH;
     
     isParticipation = NO;
+
+    currentPreset = preset;
 
     if (!IS_IPHONE_4)
         heightBar += LOCATION_BAR_HEIGHT;
@@ -141,7 +149,7 @@
         
         [self createTabBarView];
         
-        privacyListController = [FLPrivacySelectorViewController new];
+        privacyListController = [[FLPrivacySelectorViewController alloc] initWithPreset:preset];
         privacyListController.delegate = self;
     }
     return self;
@@ -157,11 +165,21 @@
     
     {
         NSInteger currentIndex = [FLTransaction transactionParamsToScope:[[Flooz sharedInstance].currentUser.settings objectForKey:@"def"][@"scope"]];
+
+        if (currentPreset && currentPreset.scopeDefined)
+            currentIndex = currentPreset.scope;
+
         for (NSInteger scope = TransactionScopePublic; scope <= TransactionScopePrivate; ++scope) {
             if ([[_dictionary objectForKey:@"scope"] isEqualToString:[FLTransaction transactionScopeToParams:scope]]) {
                 currentIndex = scope;
                 break;
             }
+        }
+        
+        if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
+            NSNumber *currentScopeValue = [NSNumber numberWithInteger:currentIndex];
+            if (![currentPreset.scopes containsObject:currentScopeValue])
+                currentIndex = [FLTransaction transactionIDToScope:currentPreset.scopes[0]];
         }
         
         privacyListController.currentScope = currentIndex;
@@ -372,6 +390,9 @@
 }
 
 - (void)didPrivacyButtonTouch {
+    if (currentPreset && currentPreset.blockScope)
+        return;
+    
     if (self.delegate)
         [self.delegate scopePopoverWillAppear];
     

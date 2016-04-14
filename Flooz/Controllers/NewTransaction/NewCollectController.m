@@ -130,7 +130,7 @@
     
     [self registerForKeyboardNotifications];
     
-    transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionCollect:@selector(valid)];
+    transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionCollect:@selector(valid)];
     [transactionBar setDelegate:self];
     
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - PPStatusBarHeight() - NAVBAR_HEIGHT - CGRectGetHeight(transactionBar.frame))];
@@ -141,7 +141,7 @@
     if (currentPreset && currentPreset.blockBack)
         ((FLNavigationController*)self.parentViewController).blockBack = currentPreset.blockBack;
     
-    transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionCollect:@selector(valid)];
+    transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionCollect:@selector(valid)];
     [transactionBarKeyboard setDelegate:self];
     
     _offset = 0;
@@ -488,14 +488,6 @@
     [cameraBarKeyboard reloadData];
 }
 
-#pragma mark - PaymentFielDelegate
-
-- (void)didWalletSelected {
-}
-
-- (void)didCreditCardSelected {
-}
-
 #pragma mark - Keyboard Management
 
 - (void)registerForKeyboardNotifications {
@@ -574,7 +566,7 @@
         if (authStatus == AVAuthorizationStatusAuthorized) {
             if (!cameraView) {
                 if (!cameraBarKeyboard) {
-                    cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionCollect:@selector(valid)];
+                    cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionCollect:@selector(valid)];
                     [cameraBarKeyboard setDelegate:self];
                     [cameraBarKeyboard reloadData];
                 }
@@ -604,7 +596,7 @@
                 if (granted){
                     if (!cameraView) {
                         if (!cameraBarKeyboard) {
-                            cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionCollect:@selector(valid)];
+                            cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionCollect:@selector(valid)];
                             [cameraBarKeyboard setDelegate:self];
                             [cameraBarKeyboard reloadData];
                         }

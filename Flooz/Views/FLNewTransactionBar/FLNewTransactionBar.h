@@ -12,6 +12,7 @@
 #import "FLTransaction.h"
 #import "WYPopoverController.h"
 #import "FLPrivacySelectorViewController.h"
+#import "FLPreset.h"
 
 @protocol FLNewTransactionBarDelegate <NSObject>
 
@@ -42,9 +43,9 @@
 @property (nonatomic, retain) FLActionButton *collectButton;
 @property (nonatomic, retain) FLActionButton *participateButton;
 
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionParticipate:(SEL)actionParticipate;
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionSend:(SEL)actionSend actionCharge:(SEL)actionCharge;
-- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller actionCollect:(SEL)actionCollect;
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller preset:(FLPreset *)preset actionParticipate:(SEL)actionParticipate;
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller preset:(FLPreset *)preset actionSend:(SEL)actionSend actionCharge:(SEL)actionCharge;
+- (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller preset:(FLPreset *)preset actionCollect:(SEL)actionCollect;
 - (void)reloadData;
 - (void)enablePaymentButtons:(BOOL)enable;
 - (void)hideChargeButton:(BOOL)hidden;

@@ -28,6 +28,7 @@
     
     TransactionHeaderView *tableHeaderView;
     
+    UIView *navHeaderView;
     UIView *toolbar;
     FLActionButton *acceptButton;
     FLActionButton *declineButton;
@@ -156,23 +157,38 @@
     
     self.navigationItem.rightBarButtonItem = scopeButton;
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
-    
-    NSString *headerString = [FLHelper momentWithDate:[_transaction date]];
-    
-    UILabel *headerMoment = [[UILabel alloc] initWithText:headerString textColor:[UIColor whiteColor] font:[UIFont customContentLight:12] textAlignment:NSTextAlignmentLeft numberOfLines:1];
-    
-    CGFloat headerWidth = CGRectGetWidth(headerMoment.frame);
-    
-    CGRectSetWidth(view.frame, headerWidth);
-    
-    CGFloat midHeight = PPTabBarHeight() / 2;
-    
-    CGRectSetXY(headerMoment.frame, 0, midHeight - CGRectGetHeight(headerMoment.frame) / 2 - 2);
-    
-    [view addSubview:headerMoment];
-    
-    self.navigationItem.titleView = view;
+    if (!navHeaderView) {
+        navHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
+        
+        NSString *headerString = [FLHelper momentWithDate:[_transaction date]];
+        
+        UILabel *headerMoment = [[UILabel alloc] initWithText:headerString textColor:[UIColor whiteColor] font:[UIFont customContentLight:12] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+        headerMoment.tag = 42;
+        
+        CGFloat headerWidth = CGRectGetWidth(headerMoment.frame);
+        
+        CGRectSetWidth(navHeaderView.frame, headerWidth);
+        
+        CGFloat midHeight = PPTabBarHeight() / 2;
+        
+        CGRectSetXY(headerMoment.frame, 0, midHeight - CGRectGetHeight(headerMoment.frame) / 2 - 2);
+        
+        [navHeaderView addSubview:headerMoment];
+        self.navigationItem.titleView = navHeaderView;
+    } else {
+        NSString *headerString = [FLHelper momentWithDate:[_transaction date]];
+
+        UILabel *headerMoment = [navHeaderView viewWithTag:42];
+        headerMoment.text = headerString;
+        
+        CGFloat headerWidth = CGRectGetWidth(headerMoment.frame);
+        
+        CGRectSetWidth(navHeaderView.frame, headerWidth);
+        
+        CGFloat midHeight = PPTabBarHeight() / 2;
+        
+        CGRectSetXY(headerMoment.frame, 0, midHeight - CGRectGetHeight(headerMoment.frame) / 2 - 2);
+    }
 }
 
 - (void)createViews {
@@ -685,7 +701,7 @@
 
 - (void)keyboardDidAppear:(NSNotification *)notification {
     NSDictionary *info = [notification userInfo];
-    keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    keyboardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);

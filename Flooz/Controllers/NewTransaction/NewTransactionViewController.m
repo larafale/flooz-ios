@@ -213,9 +213,9 @@
     [cbItem setTintColor:[UIColor customBlue]];
     
     if (currentPreset && currentPreset.isParticipation) {
-        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionParticipate:@selector(validParticipation)];
+        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionParticipate:@selector(validParticipation)];
     } else {
-        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+        transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
     }
     
     [transactionBar setDelegate:self];
@@ -229,9 +229,9 @@
         ((FLNavigationController*)self.parentViewController).blockBack = currentPreset.blockBack;
     
     if (currentPreset && currentPreset.isParticipation) {
-        transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionParticipate:@selector(validParticipation)];
+        transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionParticipate:@selector(validParticipation)];
     } else {
-        transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+        transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
     }
     
     [transactionBarKeyboard setDelegate:self];
@@ -1046,9 +1046,9 @@
             if (!cameraView) {
                 if (!cameraBarKeyboard) {
                     if (currentPreset && currentPreset.isParticipation) {
-                        cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionParticipate:@selector(validParticipation)];
+                        cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionParticipate:@selector(validParticipation)];
                     } else {
-                        cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+                        cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
                     }
 
                     [cameraBarKeyboard setDelegate:self];
@@ -1082,9 +1082,9 @@
                     if (!cameraView) {
                         if (!cameraBarKeyboard) {
                             if (currentPreset && currentPreset.isParticipation) {
-                                cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionParticipate:@selector(validParticipation)];
+                                cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionParticipate:@selector(validParticipation)];
                             } else {
-                                cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
+                                cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
                             }
                             [cameraBarKeyboard setDelegate:self];
                             [self validateView];

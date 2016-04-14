@@ -553,7 +553,7 @@
 #pragma marks - button handlers
 
 - (void) didFloozButtonClick {
-    [appDelegate showNewTransactionController:currentUser transactionType:TransactionTypePayment];
+    [appDelegate showNewTransactionController:currentUser transactionType:TransactionTypeBase];
 }
 
 - (void) didBalanceButtonClick {

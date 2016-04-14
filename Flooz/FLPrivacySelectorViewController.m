@@ -13,6 +13,8 @@
     UITableView *_tableView;
     CGFloat viewHeight;
     CGFloat viewWidth;
+    
+    FLPreset *currentPreset;
 }
 
 @end
@@ -25,15 +27,18 @@
 @synthesize delegate;
 @synthesize currentScope;
 
-- (id)init {
+- (id)initWithPreset:(FLPreset *)preset {
     self = [super init];
     if (self) {
         
-        viewHeight = ([self tableView:_tableView heightForRowAtIndexPath:[NSIndexPath new]] * 3) + 20 + [self tableView:_tableView heightForHeaderInSection:0];
+        currentPreset = preset;
+
+        viewHeight = ([self tableView:_tableView heightForRowAtIndexPath:[NSIndexPath new]] * [self tableView:_tableView numberOfRowsInSection:0]) + 20 + [self tableView:_tableView heightForHeaderInSection:0];
         viewWidth = 200;
         
         [self setPreferredContentSize:CGSizeMake(viewWidth, viewHeight)];
         self.modalInPopover = NO;
+        
     }
     return self;
 }
@@ -48,6 +53,11 @@
     [_tableView setSeparatorColor:[UIColor clearColor]];
     [_tableView setBackgroundColor:[UIColor whiteColor]];
     
+    if (currentPreset && currentPreset.scopes && currentPreset.scopeDefined) {
+        currentScope = currentPreset.scope;
+        [delegate scopeChange:currentScope];
+    }
+        
     [self.view addSubview:_tableView];
     [self.view setBackgroundColor:[UIColor whiteColor]];
 }
@@ -70,6 +80,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count)
+        return currentPreset.scopes.count;
+    
     return 3;
 }
 
@@ -91,16 +104,20 @@
     
     TransactionScope scope;
     
-    switch (indexPath.row) {
-        case 0:
-            scope = TransactionScopePublic;
-            break;
-        case 1:
-            scope = TransactionScopeFriend;
-            break;
-        case 2:
-            scope = TransactionScopePrivate;
-            break;
+    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
+        scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+    } else {
+        switch (indexPath.row) {
+            case 0:
+                scope = TransactionScopePublic;
+                break;
+            case 1:
+                scope = TransactionScopeFriend;
+                break;
+            case 2:
+                scope = TransactionScopePrivate;
+                break;
+        }
     }
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -126,16 +143,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     TransactionScope scope;
     
-    switch (indexPath.row) {
-        case 0:
-            scope = TransactionScopePublic;
-            break;
-        case 1:
-            scope = TransactionScopeFriend;
-            break;
-        case 2:
-            scope = TransactionScopePrivate;
-            break;
+    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
+        scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+    } else {
+        switch (indexPath.row) {
+            case 0:
+                scope = TransactionScopePublic;
+                break;
+            case 1:
+                scope = TransactionScopeFriend;
+                break;
+            case 2:
+                scope = TransactionScopePrivate;
+                break;
+        }
     }
     
     self.currentScope = scope;

@@ -24,6 +24,7 @@
     self.blockTo = NO;
     self.blockBack = NO;
     self.blockWhy = NO;
+    self.blockScope = NO;
     self.focusAmount = NO;
     self.focusWhy = NO;
     self.isParticipation = NO;
@@ -52,6 +53,11 @@
     self.namePlaceholder = [json objectForKey:@"namePlaceholder"];
     self.popup = [json objectForKey:@"popup"];
     self.steps = [json objectForKey:@"steps"];
+
+    if ([json objectForKey:@"scope"]) {
+        self.scopeDefined = YES;
+        self.scope = [FLTransaction transactionIDToScope:[json objectForKey:@"scope"]];
+    }
     
     self.title = [json objectForKey:@"title"];
     
@@ -61,12 +67,17 @@
         if ([[json objectForKey:@"block"] objectForKey:@"amount"])
             self.blockAmount = [[[json objectForKey:@"block"] objectForKey:@"amount"] boolValue];
         
+        self.scopes = [[json objectForKey:@"block"] objectForKey:@"scopes"];
+        
         if ([[json objectForKey:@"block"] objectForKey:@"balance"])
             self.blockBalance = [[[json objectForKey:@"block"] objectForKey:@"balance"] boolValue];
         
         if ([[json objectForKey:@"block"] objectForKey:@"to"])
             self.blockTo = [[[json objectForKey:@"block"] objectForKey:@"to"] boolValue];
-        
+
+        if ([[json objectForKey:@"block"] objectForKey:@"scope"])
+            self.blockScope = [[[json objectForKey:@"block"] objectForKey:@"scope"] boolValue];
+
         if ([[json objectForKey:@"block"] objectForKey:@"pay"])
             self.type = TransactionTypeCharge;
         

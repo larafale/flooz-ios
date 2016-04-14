@@ -1979,8 +1979,10 @@
     NSArray *friends = result[@"items"];
     if (friends) {
         for (NSDictionary *json in friends) {
-            FLUser *friend = [[FLUser alloc] initWithJSON:json];
-            [arrayFriends addObject:friend];
+            if (json && [json isKindOfClass:NSDictionary.class]) {
+                FLUser *friend = [[FLUser alloc] initWithJSON:json];
+                [arrayFriends addObject:friend];
+            }
         }
     }
     return arrayFriends;
@@ -2034,9 +2036,11 @@
     NSArray *activities = result[@"items"];
     if (activities) {
         for (NSDictionary *json in activities) {
-            FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
-            if (activity)
-                [arrayActivities addObject:activity];
+            if (json && [json isKindOfClass:NSDictionary.class]) {
+                FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
+                if (activity)
+                    [arrayActivities addObject:activity];
+            }
         }
     }
     return arrayActivities;
@@ -2047,9 +2051,11 @@
     NSArray *activities = result;
     if (activities) {
         for (NSDictionary *json in activities) {
-            FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
-            if (activity)
-                [arrayActivities addObject:activity];
+            if (json && [json isKindOfClass:NSDictionary.class]) {
+                FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
+                if (activity)
+                    [arrayActivities addObject:activity];
+            }
         }
     }
     return arrayActivities;

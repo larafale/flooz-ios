@@ -271,6 +271,10 @@
         currentDictionaryKey = _dictionaryKey2;
     }
     
+    if ([currentDictionaryKey isEqualToString:@"iban"]) {
+        textField.text = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    }
+    
     if (textField.text.length == 0) {
         [_dictionary setValue:@"" forKey:currentDictionaryKey];
     }
@@ -383,6 +387,8 @@
     else if ([_dictionaryKey isEqualToString:@"iban"]) {
         if ([string isEqualToString:@"\r"])
             return YES;
+        
+        string = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
         

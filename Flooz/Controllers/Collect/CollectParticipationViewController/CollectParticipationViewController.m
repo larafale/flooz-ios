@@ -30,6 +30,7 @@
     self = [super init];
     if (self) {
         collectId = collect;
+        userId = user;
         
         transactions = [NSMutableArray new];
         nextPageIsLoading = NO;

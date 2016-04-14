@@ -12,13 +12,13 @@
 #import "FriendPickerFriendCell.h"
 #import "FriendPickerEmptyCell.h"
 #import "LoadingCell.h"
+#import "THContactPickerView.h"
 
 @interface ShareLinkViewController () {
-    UIBarButtonItem *searchItem;
-    
-    FriendAddSearchBar *_searchBar;
     FLTableView *_tableView;
     FLActionButton *_sendButton;
+    THContactPickerView *_contactPickerView;
+    UIView *_separator;
     
     NSMutableArray *_contactsFromAdressBook;
     NSMutableArray *_contactsFiltered;
@@ -129,19 +129,31 @@
         }];
     }
     
-    searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
-    [searchItem setTintColor:[UIColor customBlue]];
-    
-    _searchBar = [[FriendAddSearchBar alloc] initWithFrame:CGRectMake(10, -45, PPScreenWidth() - 20, 40)];
-    [_searchBar setDelegate:self];
-    [_searchBar setHidden:YES];
-    [_searchBar sizeToFit];
-    
     _sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(_mainBody.frame) - FLActionButtonDefaultHeight - 5, PPScreenWidth() - 20, FLActionButtonDefaultHeight) title:buttonTitle];
     [_sendButton setEnabled:NO];
     [_sendButton addTarget:self action:@selector(sendButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    _tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBar.frame) + 5, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_searchBar.frame) - FLActionButtonDefaultHeight - 15) style:UITableViewStylePlain];
+    THContactViewStyle *contactViewStyle = [[THContactViewStyle alloc] initWithTextColor:[UIColor whiteColor] gradientTop:[UIColor customMiddleBlue] gradientBottom:[UIColor customMiddleBlue] borderColor:[UIColor customMiddleBlue] borderWidth:0 cornerRadiusFactor:10.0f];
+    
+    THContactViewStyle *contactViewSelectedStyle = [[THContactViewStyle alloc] initWithTextColor:[UIColor whiteColor] gradientTop:[UIColor customBlue] gradientBottom:[UIColor customBlue] borderColor:[UIColor customBlue] borderWidth:0 cornerRadiusFactor:10.0f];
+
+    _contactPickerView = [[THContactPickerView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 30)];
+    _contactPickerView.delegate = self;
+    [_contactPickerView setPlaceholderLabelText:NSLocalizedString(@"GLOBAL_SEARCH", nil)];
+    [_contactPickerView setPlaceholderLabelTextColor:[UIColor customPlaceholder]];
+    [_contactPickerView setPromptLabelText:NSLocalizedString(@"FIELD_TRANSACTION_TO", nil)];
+    [_contactPickerView setPromptLabelTextColor:[UIColor whiteColor]];
+    [_contactPickerView setLimitToOne:NO];
+    [_contactPickerView setFont:[UIFont customTitleLight:17]];
+    [_contactPickerView setContactViewStyle:contactViewStyle selectedStyle:contactViewSelectedStyle];
+    [_contactPickerView setBackgroundColor:[UIColor customBackground]];
+    [_contactPickerView setVerticalPadding:5.0f];
+    _contactPickerView.textField.returnKeyType = UIReturnKeySearch;
+
+    _separator = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_contactPickerView.frame), SCREEN_WIDTH, 1)];
+    [_separator setBackgroundColor:[UIColor customMiddleBlue]];
+    
+    _tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_separator.frame), CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_contactPickerView.frame) - FLActionButtonDefaultHeight - 15) style:UITableViewStylePlain];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
@@ -149,7 +161,8 @@
     [_tableView setBackgroundColor:[UIColor customBackgroundHeader]];
     [_tableView setAllowsMultipleSelection:YES];
     
-    [_mainBody addSubview:_searchBar];
+    [_mainBody addSubview:_contactPickerView];
+    [_mainBody addSubview:_separator];
     [_mainBody addSubview:_tableView];
     [_mainBody addSubview:_sendButton];
     
@@ -162,8 +175,6 @@
             
         }];
     }
-    
-    self.navigationItem.rightBarButtonItem = searchItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -192,6 +203,44 @@
     } else {
         [self didFilterChange];
     }
+}
+
+#pragma mark - contact picker delegate
+
+- (void)contactPickerTextViewDidChange:(NSString *)textViewText {
+    [self searchUser:textViewText];
+}
+
+- (void)contactPickerDidRemoveContact:(id)contact {
+    FLUser *currentUser = contact;
+    
+    if (currentUser) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId == %@", currentUser.userId];
+        NSArray *filtered = [selectedContacts filteredArrayUsingPredicate:predicate];
+        
+        if ([selectedContacts containsObject:currentUser])
+            [selectedContacts removeObject:currentUser];
+        else if (filtered.count) {
+            [selectedContacts removeObject:filtered[0]];
+        }
+        
+        [_sendButton setTitle:[NSString stringWithFormat:@"%@ (%lu)", buttonTitle, (unsigned long)[selectedContacts count]] forState:UIControlStateNormal];
+        
+        if (![selectedContacts count] && [_sendButton isEnabled]) {
+            [_sendButton setEnabled:NO];
+            [_sendButton setTitle:buttonTitle forState:UIControlStateNormal];
+        }
+    }
+}
+
+- (void)contactPickerDidResize:(THContactPickerView *)contactPickerView {
+    CGRectSetY(_separator.frame, CGRectGetMaxY(contactPickerView.frame));
+    CGRectSetY(_tableView.frame, CGRectGetMaxY(_separator.frame));
+}
+
+- (BOOL)contactPickerTextFieldShouldReturn:(UITextField *)textField {
+    [_contactPickerView resignFirstResponder];
+    return YES;
 }
 
 - (void)didFilterChange {
@@ -295,29 +344,6 @@
         isLoadingSearch = NO;
 
         [_tableView reloadData];
-    }
-}
-
-- (void)showSearch {
-    if ([_searchBar isHidden]) {
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [_searchBar setHidden:NO];
-            CGRectSetY(_searchBar.frame, 5);
-            CGRectSetY(_tableView.frame, CGRectGetMaxY(_searchBar.frame) + 5);
-            CGRectSetHeight(_tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_searchBar.frame) - FLActionButtonDefaultHeight - 15);
-        } completion:^(BOOL finished) {
-            [_searchBar becomeFirstResponder];
-        }];
-    } else {
-        [_searchBar close];
-        
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            CGRectSetY(_searchBar.frame, -45);
-            CGRectSetY(_tableView.frame, CGRectGetMaxY(_searchBar.frame) + 5);
-            CGRectSetHeight(_tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_searchBar.frame) - FLActionButtonDefaultHeight - 15);
-        } completion:^(BOOL finished) {
-            [_searchBar setHidden:YES];
-        }];
     }
 }
 
@@ -506,9 +532,11 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId == %@", currentUser.userId];
         NSArray *filtered = [selectedContacts filteredArrayUsingPredicate:predicate];
         
-        if (![selectedContacts containsObject:currentUser] && !filtered.count)
+        if (![selectedContacts containsObject:currentUser] && !filtered.count) {
             [selectedContacts addObject:currentUser];
-        else {
+            [_contactPickerView addContact:currentUser withName:currentUser.fullname];
+            _contactPickerView.textField.text = _selectionText;
+        } else {
             [self tableView:tableView didDeselectRowAtIndexPath:indexPath];
             return;
         }
@@ -546,9 +574,10 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId == %@", currentUser.userId];
         NSArray *filtered = [selectedContacts filteredArrayUsingPredicate:predicate];
         
-        if ([selectedContacts containsObject:currentUser])
+        if ([selectedContacts containsObject:currentUser]) {
             [selectedContacts removeObject:currentUser];
-        else if (filtered.count) {
+            [_contactPickerView removeContact:currentUser];
+        } else if (filtered.count) {
             [selectedContacts removeObject:filtered[0]];
         }
         
@@ -564,7 +593,7 @@
 }
 
 - (void)scrollViewDidScroll:(id)scrollView {
-    [_searchBar close];
+    [_contactPickerView resignFirstResponder];
 }
 
 - (void)didFilterChange:(NSString *)text {

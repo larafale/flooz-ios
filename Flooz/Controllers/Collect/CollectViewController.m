@@ -27,6 +27,7 @@
     
     CollectHeaderView *tableHeaderView;
     
+    UIView *navHeaderView;
     UIView *toolbar;
     FLActionButton *participateButton;
     FLActionButton *closeButton;
@@ -162,39 +163,45 @@
     
     self.navigationItem.rightBarButtonItem = scopeButton;
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
-    view.userInteractionEnabled = YES;
-    [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCreatorClick)]];
-    
-    UILabel *createdByLabel = [[UILabel alloc] initWithText:@"créée par" textColor:[UIColor whiteColor] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
-    [createdByLabel setWidthToFit];
-    [createdByLabel setHeightToFit];
-    
-    FLUserView *creatorAvatar = [[FLUserView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    creatorAvatar.isRound = YES;
-    [creatorAvatar setImageFromUser:_transaction.creator];
-    creatorAvatar.avatar.layer.cornerRadius = 10;
-    creatorAvatar.layer.cornerRadius = 10;
-    
-    UILabel *creatorUsername = [[UILabel alloc] initWithText:[NSString stringWithFormat:@"@%@", _transaction.creator.username] textColor:[UIColor customBlue] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
-    [creatorUsername setWidthToFit];
-    [creatorUsername setHeightToFit];
-    
-    CGFloat headerWidth = CGRectGetWidth(createdByLabel.frame) + 5 + CGRectGetWidth(creatorAvatar.frame) + 5 + CGRectGetWidth(creatorUsername.frame);
-    
-    CGRectSetWidth(view.frame, headerWidth);
-    
-    CGFloat midHeight = PPTabBarHeight() / 2;
-    
-    CGRectSetXY(createdByLabel.frame, 0, midHeight - CGRectGetHeight(createdByLabel.frame) / 2 - 2);
-    CGRectSetXY(creatorAvatar.frame, CGRectGetMaxX(createdByLabel.frame) + 5, midHeight - CGRectGetHeight(creatorAvatar.frame) / 2);
-    CGRectSetXY(creatorUsername.frame, CGRectGetMaxX(creatorAvatar.frame) + 5, midHeight - CGRectGetHeight(creatorUsername.frame) / 2 - 2);
-    
-    [view addSubview:createdByLabel];
-    [view addSubview:creatorAvatar];
-    [view addSubview:creatorUsername];
-    
-    self.navigationItem.titleView = view;
+    if (!navHeaderView) {
+        navHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
+        
+        navHeaderView.userInteractionEnabled = YES;
+        [navHeaderView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCreatorClick)]];
+        
+        UILabel *createdByLabel = [[UILabel alloc] initWithText:@"créée par" textColor:[UIColor whiteColor] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+        [createdByLabel setWidthToFit];
+        [createdByLabel setHeightToFit];
+        createdByLabel.tag = 40;
+        
+        FLUserView *creatorAvatar = [[FLUserView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+        creatorAvatar.isRound = YES;
+        [creatorAvatar setImageFromUser:_transaction.creator];
+        creatorAvatar.avatar.layer.cornerRadius = 10;
+        creatorAvatar.layer.cornerRadius = 10;
+        creatorAvatar.tag = 41;
+        
+        UILabel *creatorUsername = [[UILabel alloc] initWithText:[NSString stringWithFormat:@"@%@", _transaction.creator.username] textColor:[UIColor customBlue] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+        [creatorUsername setWidthToFit];
+        [creatorUsername setHeightToFit];
+        creatorUsername.tag = 42;
+        
+        CGFloat headerWidth = CGRectGetWidth(createdByLabel.frame) + 5 + CGRectGetWidth(creatorAvatar.frame) + 5 + CGRectGetWidth(creatorUsername.frame);
+        
+        CGRectSetWidth(navHeaderView.frame, headerWidth);
+        
+        CGFloat midHeight = PPTabBarHeight() / 2;
+        
+        CGRectSetXY(createdByLabel.frame, 0, midHeight - CGRectGetHeight(createdByLabel.frame) / 2 - 2);
+        CGRectSetXY(creatorAvatar.frame, CGRectGetMaxX(createdByLabel.frame) + 5, midHeight - CGRectGetHeight(creatorAvatar.frame) / 2);
+        CGRectSetXY(creatorUsername.frame, CGRectGetMaxX(creatorAvatar.frame) + 5, midHeight - CGRectGetHeight(creatorUsername.frame) / 2 - 2);
+        
+        [navHeaderView addSubview:createdByLabel];
+        [navHeaderView addSubview:creatorAvatar];
+        [navHeaderView addSubview:creatorUsername];
+        
+        self.navigationItem.titleView = navHeaderView;
+    }
 }
 
 - (void)createViews {
@@ -686,7 +693,7 @@
     
     toolbar.layer.shadowOffset = CGSizeZero;
     
-    [UIView animateWithDuration:.5 animations:^{
+    [UIView animateWithDuration:.3 animations:^{
         CGRectSetY(shareView.frame, CGRectGetMinY(toolbar.frame) - CGRectGetHeight(shareView.frame));
         shareButtonOverlay.alpha = 1.0;
     } completion:^(BOOL finished) {
@@ -697,7 +704,7 @@
 - (void)hideShareView {
     shareButtonOverlay.userInteractionEnabled = NO;
     
-    [UIView animateWithDuration:.3 animations:^{
+    [UIView animateWithDuration:.2 animations:^{
         CGRectSetY(shareView.frame, CGRectGetMinY(toolbar.frame));
         shareButtonOverlay.alpha = 0.0;
     } completion:^(BOOL finished) {
@@ -904,16 +911,16 @@
 
 - (void)keyboardDidAppear:(NSNotification *)notification {
     NSDictionary *info = [notification userInfo];
-    keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    keyboardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
     
     CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
     if (bottomOffset.y < 0)
-        [self.tableView setContentOffset:CGPointZero animated:YES];
+        [self.tableView setContentOffset:CGPointZero animated:NO];
     else
-        [self.tableView setContentOffset:bottomOffset animated:YES];
+        [self.tableView setContentOffset:bottomOffset animated:NO];
     
     [self prepareViews];
 }
@@ -924,12 +931,6 @@
     
     CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
     CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
-    
-    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
-    if (bottomOffset.y < 0)
-        [self.tableView setContentOffset:CGPointZero animated:YES];
-    else
-        [self.tableView setContentOffset:bottomOffset animated:YES];
 }
 
 - (void)keyboardWillDisappear {
@@ -940,9 +941,9 @@
     
     CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height);
     if (bottomOffset.y < 0)
-        [self.tableView setContentOffset:CGPointZero animated:YES];
+        [self.tableView setContentOffset:CGPointZero animated:NO];
     else
-        [self.tableView setContentOffset:bottomOffset animated:YES];
+        [self.tableView setContentOffset:bottomOffset animated:NO];
 }
 
 - (void)didChangeHeight:(CGFloat)height {

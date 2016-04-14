@@ -34,6 +34,7 @@
 "GLOBAL_NEXT" = "Suivant";
 "GLOBAL_SHARE" = "Partager";
 "GLOBAL_INVITE" = "Inviter";
+"GLOBAL_SEARCH" = "rechercher";
 
 /************************************/
 /*              SHARE               */

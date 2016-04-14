@@ -397,7 +397,9 @@
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
     if (transactions.count - 1 >= indexPath.row) {
         [rowsWithPaymentField removeObject:indexPath];
-        [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
+    
+        if (transactions.count > indexPath.row)
+            [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
         
         [_tableView beginUpdates];
         [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];

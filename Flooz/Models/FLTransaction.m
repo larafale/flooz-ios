@@ -266,6 +266,20 @@
     return TransactionScopePublic;
 }
 
++ (TransactionScope)transactionIDToScope:(NSNumber *)param {
+    if (param) {
+        if ([param isEqualToNumber:@0])
+            return TransactionScopePublic;
+        if ([param isEqualToNumber:@01])
+            return TransactionScopeFriend;
+        if ([param isEqualToNumber:@2])
+            return TransactionScopePrivate;
+        if ([param isEqualToNumber:@3])
+            return TransactionScopeAll;
+    }
+    return TransactionScopePublic;
+}
+
 + (NSString *)transactionScopeToParams:(TransactionScope)scope {
     if (scope == TransactionScopePublic)
         return @"public";

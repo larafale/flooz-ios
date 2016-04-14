@@ -73,7 +73,7 @@
         if ([json objectForKey:@"participations"]) {
             _totalParticipations = [[json objectForKey:@"participations"] objectForKey:@"amount"];
             _countParticipations = [[json objectForKey:@"participations"] objectForKey:@"count"];
-            _participations = [[json objectForKey:@"participations"] objectForKey:@"participations"];
+            _participations = [[json objectForKey:@"participations"] objectForKey:@"list"];
         }
         
         if (_isAmbassador) {

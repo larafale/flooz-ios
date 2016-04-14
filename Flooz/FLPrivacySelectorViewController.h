@@ -16,6 +16,8 @@
 
 @interface FLPrivacySelectorViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
+- (id)initWithPreset:(FLPreset *)preset;
+
 @property (weak) id <FLPrivacySelectorDelegate> delegate;
 @property (nonatomic) TransactionScope currentScope;
 

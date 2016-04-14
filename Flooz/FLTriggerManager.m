@@ -43,6 +43,9 @@
 #import "CollectParticipantViewController.h"
 #import "CollectParticipationViewController.h"
 #import "ShareLinkViewController.h"
+#import "CashinViewController.h"
+#import "CashinAudiotelViewController.h"
+#import "CashinCreditCardViewController.h"
 
 @interface FLTriggerManager ()
 
@@ -652,6 +655,7 @@
 
 - (void)loadBinderKeyView {
     self.binderKeyView = @{
+                           @"app:cashin": [CashinViewController class],
                            @"app:cashout": [CashOutViewController class],
                            @"app:flooz": [NewTransactionViewController class],
                            @"app:pot": [NewCollectController class],
@@ -662,6 +666,8 @@
                            @"app:profile": [UserViewController class],
                            @"app:timeline": [TimelineViewController class],
                            @"auth:code": [SecureCodeViewController class],
+                           @"cashin:card": [CashinCreditCardViewController class],
+                           @"cashin:audiotel": [CashinAudiotelViewController class],
                            @"card:3ds": [Secure3DViewController class],
                            @"card:card": [CreditCardViewController class],
                            @"code:set": [ValidateSecureCodeViewController class],
@@ -686,6 +692,7 @@
 
 - (void)loadBinderKeyType {
     self.binderKeyType = @{
+                           @"app:cashin": @"modal",
                            @"app:cashout": @"modal",
                            @"app:flooz": @"modal",
                            @"app:promo": @"modal",
@@ -695,6 +702,8 @@
                            @"app:profile": @"root",
                            @"app:timeline": @"root",
                            @"auth:code": @"modal",
+                           @"cashin:card": @"modal",
+                           @"cashin:audiotel": @"modal",
                            @"card:3ds": @"modal",
                            @"card:card": @"modal",
                            @"code:set":@"modal",

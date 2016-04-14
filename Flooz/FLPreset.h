@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FLTransaction.h"
 
 @interface FLPreset : NSObject
 
@@ -20,20 +21,24 @@
 @property (nonatomic, retain) NSString *whyPlaceholder;
 @property (nonatomic, retain) NSString *image;
 @property (nonatomic) TransactionType type;
+@property (nonatomic) TransactionScope scope;
 @property (nonatomic, retain) NSDictionary *payload;
 @property (nonatomic) BOOL isParticipation;
 @property (nonatomic) BOOL blockAmount;
 @property (nonatomic) BOOL blockTo;
 @property (nonatomic) BOOL blockBack;
+@property (nonatomic) BOOL blockScope;
 @property (nonatomic) BOOL blockWhy;
 @property (nonatomic) BOOL blockBalance;
 @property (nonatomic) BOOL focusAmount;
 @property (nonatomic) BOOL focusWhy;
 @property (nonatomic) BOOL isDemo;
+@property (nonatomic) BOOL scopeDefined;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSArray *steps;
 @property (nonatomic, retain) NSDictionary *popup;
 @property (nonatomic, retain) NSArray *triggers;
+@property (nonatomic, retain) NSArray *scopes;
 @property (nonatomic, retain) NSDictionary *geo;
 
 - (id)initWithJson:(NSDictionary *)json;
