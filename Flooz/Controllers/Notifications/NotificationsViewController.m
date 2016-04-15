@@ -166,13 +166,6 @@
     
     [[FLTriggerManager sharedInstance] executeTriggerList:activity.triggers];
     
-    if (activity.isForCompleteProfil)
-        [[Flooz sharedInstance] readTransactionWithId:@"profile" success:nil];
-    
-    if (activity.isFriend) {
-        [[Flooz sharedInstance] readFriendActivity:nil];
-    }
-    
     [tableView reloadData];
 }
 

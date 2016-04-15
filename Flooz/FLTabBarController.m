@@ -169,7 +169,7 @@
     [homeButtonOverlay addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didHomeButtonOverlayClick)]];
  
     UILabel *overlayTitle = [[UILabel alloc] initWithText:@"Choisissez une option" textColor:[UIColor customBlue] font:[UIFont customContentBold:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    CGRectSetXY(overlayTitle.frame, 20, 50);
+    CGRectSetXY(overlayTitle.frame, 20, 40);
     CGRectSetWidth(overlayTitle.frame, PPScreenWidth() - 40);
     
     [homeButtonOverlay addSubview:overlayTitle];

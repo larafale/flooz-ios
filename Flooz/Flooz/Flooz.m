@@ -1082,6 +1082,29 @@
     [self requestPath:[NSString stringWithFormat:@"/social/comments/%@", comment[@"floozId"]] method:@"POST" params:comment success:success failure:failure];
 }
 
+- (void)cashinValidate:(NSDictionary *)data success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    NSMutableDictionary *tempDic = [NSMutableDictionary new];
+    
+    [tempDic setDictionary:data];
+    [tempDic setObject:@YES forKey:@"validate"];
+    
+    if ([SecureCodeViewController hasSecureCodeForCurrentUser])
+        [tempDic setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
+    
+    [self requestPath:@"/cashins" method:@"POST" params:tempDic success:success failure:failure];
+}
+
+- (void)cashin:(NSDictionary *)data success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    NSMutableDictionary *tempDic = [NSMutableDictionary new];
+    
+    [tempDic setDictionary:data];
+    
+    if ([SecureCodeViewController hasSecureCodeForCurrentUser])
+        [tempDic setObject:[SecureCodeViewController secureCodeForCurrentUser] forKey:@"secureCode"];
+    
+    [self requestPath:@"/cashins" method:@"POST" params:tempDic success:success failure:failure];
+}
+
 - (void)cashoutValidate:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     NSMutableDictionary *tempDic = [NSMutableDictionary new];
     

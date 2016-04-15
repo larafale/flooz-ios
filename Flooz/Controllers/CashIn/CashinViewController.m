@@ -7,6 +7,8 @@
 //
 
 #import "CashinViewController.h"
+#import "CashinCreditCardViewController.h"
+#import "CashinAudiotelViewController.h"
 
 @interface CashinViewController () {
     NSArray *methods;
@@ -27,20 +29,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    if (!self.title || [self.title isBlank])
-//        self.title = @"Charger son compte";
-
+    //    if (!self.title || [self.title isBlank])
+    //        self.title = @"Charger son compte";
+    
     [self createHeader];
     
     methods = @[@{
                     @"title":@"Carte bancaire",
                     @"subtitle":@"Blablabla",
-                    @"img":@"cashin_cb"
+                    @"img":@"cashin_cb",
+                    @"controller": [CashinCreditCardViewController new]
                     },
                 @{
                     @"title":@"Audiotel",
                     @"subtitle":@"Flaflaflafla",
-                    @"img":@"cashin_phone"
+                    @"img":@"cashin_phone",
+                    @"controller": [CashinAudiotelViewController new]
                     }];
     
     _tableView = [FLTableView newWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
@@ -108,10 +112,11 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.backgroundColor = [UIColor customBackgroundHeader];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-
+    
     [self fillCell:cell.contentView data:methods[indexPath.row]];
     
     return cell;
@@ -158,7 +163,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *rowData = methods[indexPath.row];
     
+    if (rowData && rowData[@"controller"] && [rowData[@"controller"] isKindOfClass:[BaseViewController class]])
+        [self.navigationController pushViewController:rowData[@"controller"] animated:YES];
 }
 
 @end
