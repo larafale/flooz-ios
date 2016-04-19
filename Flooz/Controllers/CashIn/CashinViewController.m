@@ -64,7 +64,7 @@
         
         NSString *headerString = [NSString stringWithFormat:@"Votre solde : %@", [FLHelper formatedAmount:[Flooz sharedInstance].currentUser.amount withCurrency:YES withSymbol:NO]];
         
-        UILabel *headerMoment = [[UILabel alloc] initWithText:headerString textColor:[UIColor whiteColor] font:[UIFont customContentLight:14] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+        UILabel *headerMoment = [[UILabel alloc] initWithText:headerString textColor:[UIColor customBlue] font:[UIFont customTitleLight:15] textAlignment:NSTextAlignmentLeft numberOfLines:1];
         headerMoment.tag = 42;
         
         CGFloat headerWidth = CGRectGetWidth(headerMoment.frame);

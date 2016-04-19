@@ -331,6 +331,9 @@
     } else if ([trigger.category isEqualToString:@"flooz"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
         [self executeTriggerList:trigger.triggers];
+    } else if ([trigger.category isEqualToString:@"text"]) {
+        [[Flooz sharedInstance] textObjectFromApi:nil failure:nil];
+        [self executeTriggerList:trigger.triggers];
     } else if ([trigger.category isEqualToString:@"pot"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
         [self executeTriggerList:trigger.triggers];

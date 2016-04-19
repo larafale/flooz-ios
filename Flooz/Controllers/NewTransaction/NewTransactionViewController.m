@@ -2,7 +2,7 @@
 //  NewTransactionViewController.m
 //  Flooz
 //
-//  Created by olivier on 1/17/2014.
+//  Created by Olivier on 1/17/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -32,7 +32,6 @@
     FLUser *presetUser;
     
     UIBarButtonItem *amountItem;
-    UIBarButtonItem *cbItem;
     
     FLNewTransactionBar *transactionBar;
     FLNewTransactionBar *transactionBarKeyboard;
@@ -208,9 +207,6 @@
     [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
     cbImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
-    cbItem = [[UIBarButtonItem alloc] initWithImage:cbImage style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
-    [cbItem setTintColor:[UIColor customBlue]];
     
     if (currentPreset && currentPreset.isParticipation) {
         transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionParticipate:@selector(validParticipation)];
@@ -486,15 +482,10 @@
         
         float tmp = [balance floatValue] - [amount floatValue];
         
-        if (tmp < 0) {
-            self.navigationItem.rightBarButtonItem = cbItem;
-        }
-        else {
-            [amountItem setTitle:[FLHelper formatedAmount:@(tmp) withSymbol:NO]];
-            
-            if (self.navigationItem.rightBarButtonItem != amountItem)
-                self.navigationItem.rightBarButtonItem = amountItem;
-        }
+        [amountItem setTitle:[FLHelper formatedAmount:@(tmp) withSymbol:NO]];
+        
+        if (self.navigationItem.rightBarButtonItem != amountItem)
+            self.navigationItem.rightBarButtonItem = amountItem;
     } else
         self.navigationItem.rightBarButtonItem = nil;
 }
@@ -503,24 +494,8 @@
     [self.view endEditing:YES];
     [self.view endEditing:NO];
     
-    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
-    CGSize newImgSize = CGSizeMake(20, 14);
-    
-    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
-    [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
-    cbImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-    attachment.image = cbImage;
-    
-    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
-    
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_1", nil)];
-    [string appendAttributedString:attachmentString];
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_2", nil)]];
-    
-    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:nil] show];
+    FLPopupTrigger *popupTrigger = [[FLPopupTrigger alloc] initWithData:@{@"close":@YES, @"content":@"Blabla", @"title":@"Title", @"buttons":@[@{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"triggers":@[@{@"key":@"app:cashin:show"}]}]}];
+    [popupTrigger show];
 }
 
 - (void)dismissKeyboard:(id)sender {
@@ -953,7 +928,7 @@
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
     [content setHeight:CGRectGetHeight(_contentView.frame) - CGRectGetMinY(content.frame) - keyboardHeight + CGRectGetHeight(transactionBar.frame)];
-
+    
     [self dismissCamera];
 }
 
@@ -1050,7 +1025,7 @@
                     } else {
                         cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionSend:@selector(validSendMoney) actionCharge:@selector(validCollectMoney)];
                     }
-
+                    
                     [cameraBarKeyboard setDelegate:self];
                     [self validateView];
                     [cameraBarKeyboard reloadData];

@@ -155,7 +155,7 @@
 }
 
 - (void)prepareViews {
-    if ([[[Flooz sharedInstance] currentUser] isAmbassador]) {
+    if ([[[Flooz sharedInstance] currentUser] isAmbassador] && [[[Flooz sharedInstance] currentUser] json][@"ambassador"][@"nextStep"]) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setImage:[[UIImage imageNamed:@"alertview-info"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
         btn.frame = CGRectMake(0, 0, 20, 20);

@@ -2,7 +2,7 @@
 //  UIViewController+RegisterNotification.h
 //  Flooz
 //
-//  Created by olivier on 31/07/14.
+//  Created by Olivier on 31/07/14.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

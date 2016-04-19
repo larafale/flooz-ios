@@ -2,7 +2,7 @@
 //  AccountViewController.m
 //  Flooz
 //
-//  Created by olivier on 1/24/2014.
+//  Created by Olivier on 1/24/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
@@ -25,6 +25,7 @@
 #import "FriendRequestViewController.h"
 #import "EditProfileViewController.h"
 #import "AddressBookController.h"
+#import "CashinViewController.h"
 
 #import "AccountCell.h"
 
@@ -138,7 +139,6 @@
 
 - (void)reloadData {
     
-    int cardNotifs = 0;
     int bankNotifs = 0;
     int coordsNotifs = 0;
     int friendsNotifs = 0;
@@ -174,8 +174,6 @@
     
     NSArray *missingFields = currentUser.json[@"missingFields"];
     
-    if ([missingFields containsObject:@"card"])
-        cardNotifs = 1;
     
     if ([missingFields containsObject:@"sepa"])
         bankNotifs = 1;
@@ -205,15 +203,14 @@
                        @"items":@[
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"action":@"cashin"},
                                @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
-//                               @{@"title":NSLocalizedString(@"SETTINGS_ADDRESS", @""), @"action":@"address"},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                ]
                        },
                      @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
                        @"items":@[
-                               @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
                                @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
@@ -236,6 +233,7 @@
                        @"items":@[
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"action":@"cashin"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
 //                               @{@"title":NSLocalizedString(@"SETTINGS_ADDRESS", @""), @"action":@"address"},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
@@ -243,7 +241,6 @@
                        },
                      @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
                        @"items":@[
-                               @{@"title":NSLocalizedString(@"SETTINGS_CARD", @""), @"action":@"card", @"notif":@(cardNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
                                @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
@@ -387,8 +384,8 @@
         
         if ([action isEqualToString:@"cashout"]) {
             [[self navigationController] pushViewController:[CashOutViewController new] animated:YES];
-        } else if ([action isEqualToString:@"card"]) {
-            [[self navigationController] pushViewController:[CreditCardViewController new] animated:YES];
+        } else if ([action isEqualToString:@"cashin"]) {
+            [[self navigationController] pushViewController:[CashinViewController new] animated:YES];
         } else if ([action isEqualToString:@"friends"]) {
             [[self navigationController] pushViewController:[FriendsViewController new] animated:YES];
         } else if ([action isEqualToString:@"bank"]) {

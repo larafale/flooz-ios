@@ -13,12 +13,29 @@
 #define PADDING_SIDE 20.0f
 
 @interface CashinCreditCardViewController () {
+    UIScrollView *contentView;
+    
+    FLActionButton *deleteCardButtton;
+    UIImageView *cardBackground;
+    UILabel *cardNumber;
+    UILabel *cardOwner;
+    UILabel *cardExpire;
+    
     NSMutableDictionary *dictionary;
     FLKeyboardView *inputView;
-
+    
+    UILabel *inputHint;
     STPPaymentCardTextField *paymentTextField;
+    
+    UILabel *amountHint;
     FLTextField *amountTextField;
     FLActionButton *sendButton;
+    
+    UIView *saveCardButton;
+    UIImageView *saveCardImageView;
+    UILabel *saveCardLabel;
+    
+    Boolean saveCard;
 }
 
 @end
@@ -28,12 +45,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    dictionary = [NSMutableDictionary new];
-
-    if (!self.title || [self.title isBlank])
-        self.title = @"Charger par carte bancaire";
+    saveCard = YES;
     
-    paymentTextField = [[STPPaymentCardTextField alloc] initWithFrame:CGRectMake(PADDING_SIDE, 25, PPScreenWidth() - (2 * PADDING_SIDE), 40)];
+    dictionary = [NSMutableDictionary new];
+    
+    if (!self.title || [self.title isBlank])
+        self.title = @"Créditer mon compte";
+    
+    contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
+    
+    inputHint = [[UILabel alloc] initWithText:@"Carte bancaire :" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+    CGRectSetXY(inputHint.frame, PADDING_SIDE, 20);
+    
+    paymentTextField = [[STPPaymentCardTextField alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(inputHint.frame) + 5, PPScreenWidth() - (2 * PADDING_SIDE), 40)];
     paymentTextField.delegate = self;
     [paymentTextField setTextColor:[UIColor whiteColor]];
     [paymentTextField setFont:[UIFont customContentRegular:16]];
@@ -42,8 +66,30 @@
     [paymentTextField setBorderColor:[UIColor clearColor]];
     [paymentTextField setNumberPlaceholder:@"•••• •••• •••• ••••"];
     [paymentTextField setTextErrorColor:[UIColor customRed]];
+    paymentTextField.layer.borderColor = [UIColor customPlaceholder].CGColor;
+    paymentTextField.layer.borderWidth = 1.0f;
+    paymentTextField.layer.cornerRadius = 5.0f;
     
-    amountTextField = [[FLTextField alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(paymentTextField.frame) + 10)];
+    saveCardButton = [[UIView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(paymentTextField.frame) + 10, PPScreenWidth() - 2 * PADDING_SIDE, 30)];
+    [saveCardButton setUserInteractionEnabled:YES];
+    [saveCardButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSaveCardButtonClick)]];
+    
+    saveCardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 20, 20)];
+    saveCardImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    saveCardLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(saveCardImageView.frame) + 10, 5, CGRectGetWidth(saveCardButton.frame) - CGRectGetMaxX(saveCardImageView.frame) - 10, 20)];
+    saveCardLabel.textColor = [UIColor whiteColor];
+    saveCardLabel.font = [UIFont customContentRegular:15];
+    saveCardLabel.text = @"Enregistrer cette carte";
+    
+    [saveCardButton addSubview:saveCardImageView];
+    [saveCardButton addSubview:saveCardLabel];
+    
+    amountHint = [[UILabel alloc] initWithText:@"Montant :" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+    CGRectSetXY(amountHint.frame, PADDING_SIDE, 20);
+    
+    amountTextField = [[FLTextField alloc] initWithPlaceholder:@"0€" for:dictionary key:@"amount" frame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(amountHint.frame) + 5, PPScreenWidth() / 2 - 1.5 * PADDING_SIDE, 35)];
+    amountTextField.floatLabelActiveColor = [UIColor clearColor];
     [amountTextField addForNextClickTarget:amountTextField action:@selector(resignFirstResponder)];
     
     inputView = [FLKeyboardView new];
@@ -51,12 +97,136 @@
     inputView.textField = amountTextField;
     amountTextField.inputView = inputView;
     
-    sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(amountTextField.frame) + 15, PPScreenWidth() - PADDING_SIDE * 2, 35) title:NSLocalizedString(@"GLOBAL_OK", nil)];
+    sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 + PADDING_SIDE / 2, CGRectGetMinY(amountTextField.frame), PPScreenWidth() / 2 - PADDING_SIDE * 1.5, 35) title:NSLocalizedString(@"GLOBAL_OK", nil)];
     [sendButton addTarget:self action:@selector(sendButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    [_mainBody addSubview:paymentTextField];
-    [_mainBody addSubview:amountTextField];
-    [_mainBody addSubview:sendButton];
+    [self createCardVisualView];
+    
+    [contentView addSubview:inputHint];
+    [contentView addSubview:amountHint];
+    [contentView addSubview:amountTextField];
+    [contentView addSubview:paymentTextField];
+    [contentView addSubview:amountTextField];
+    [contentView addSubview:sendButton];
+    [contentView addSubview:saveCardButton];
+
+    [_mainBody addSubview:contentView];
+    
+    [self reloadView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self reloadView];
+    
+    if ([[[Flooz sharedInstance] currentUser] creditCard]) {
+        [amountTextField becomeFirstResponder];
+    } else
+        [paymentTextField becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [_mainBody endEditing:YES];
+}
+
+- (void)createCardVisualView {
+    
+    cardBackground = [UIImageView imageNamed:@"card-background"];
+    
+    CGFloat scaleRatio = CGRectGetHeight(cardBackground.frame) / CGRectGetWidth(cardBackground.frame);
+    
+    [cardBackground setFrame:CGRectMake(PADDING_SIDE, 20, PPScreenWidth() - PADDING_SIDE * 2, (PPScreenWidth() - PADDING_SIDE * 2) * scaleRatio)];
+    [cardBackground setContentMode:UIViewContentModeScaleToFill];
+    
+    cardNumber = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, CGRectGetHeight(cardBackground.frame) / 2.0f - 10.0f, CGRectGetWidth(cardBackground.frame) - 20.0f*2, 30)];
+    
+    cardNumber.textColor = [UIColor whiteColor];
+    cardNumber.font = [UIFont customCreditCard:22];
+    cardNumber.adjustsFontSizeToFitWidth = YES;
+    cardNumber.minimumScaleFactor = 15. / cardNumber.font.pointSize;
+    
+    [cardBackground addSubview:cardNumber];
+    
+    cardOwner = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(cardNumber.frame), CGRectGetMaxY(cardNumber.frame) + 20.0f, CGRectGetWidth(cardNumber.frame), 30)];
+    cardOwner.textColor = [UIColor whiteColor];
+    cardOwner.font = [UIFont customCreditCard:12];
+    
+    [cardBackground addSubview:cardOwner];
+    
+    cardExpire = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(cardNumber.frame), CGRectGetMaxY(cardNumber.frame) + 20.0f, CGRectGetWidth(cardNumber.frame), 30)];
+    cardExpire.textColor = [UIColor whiteColor];
+    
+    cardExpire.font = [UIFont customCreditCard:12];
+    
+    [cardBackground addSubview:cardExpire];
+    
+    deleteCardButtton = [[FLActionButton alloc] initWithFrame:CGRectMake(PPScreenWidth() - PADDING_SIDE - 20, 10, 30, 30)];
+    [deleteCardButtton setBackgroundColor:[UIColor customRed] forState:UIControlStateNormal];
+    [deleteCardButtton setBackgroundColor:[UIColor customRed:0.5] forState:UIControlStateHighlighted];
+    [deleteCardButtton setImage:[UIImage imageNamed:@"trash"] size:CGSizeMake(17, 17)];
+    [deleteCardButtton centerImage];
+    [deleteCardButtton addTarget:self action:@selector(didDeleteCardButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    [contentView addSubview:cardBackground];
+    [contentView addSubview:deleteCardButtton];
+}
+
+- (void)reloadView {
+    if ([[[Flooz sharedInstance] currentUser] creditCard]) {
+        FLCreditCard *creditCard = [[[Flooz sharedInstance] currentUser] creditCard];
+        
+        [inputHint setHidden:YES];
+        [paymentTextField setHidden:YES];
+        [saveCardButton setHidden:YES];
+        
+        [cardBackground setHidden:NO];
+        [deleteCardButtton setHidden:NO];
+        
+        cardNumber.text = [NSString stringWithFormat:@"%@ **** **** %@", [creditCard.number substringToIndex:4], [creditCard.number substringFromIndex:creditCard.number.length - 4]];
+        cardOwner.text = [creditCard.owner uppercaseString];
+        [cardOwner setWidthToFit];
+        
+        cardExpire.text = [creditCard.expires uppercaseString];
+        [cardExpire setWidthToFit];
+        
+        CGRectSetX(cardExpire.frame, CGRectGetWidth(cardBackground.frame) - CGRectGetWidth(cardExpire.frame) - 20.0f);
+        
+        CGRectSetY(amountHint.frame, CGRectGetMaxY(cardBackground.frame) + 20);
+    } else {
+        [cardBackground setHidden:YES];
+        [deleteCardButtton setHidden:YES];
+        
+        [inputHint setHidden:NO];
+        [paymentTextField setHidden:NO];
+        [saveCardButton setHidden:NO];
+
+        if (saveCard)
+            [saveCardImageView setImage:[UIImage imageNamed:@"checkmark-on"]];
+        else
+            [saveCardImageView setImage:[UIImage imageNamed:@"checkmark-off"]];
+        
+        CGRectSetY(amountHint.frame, CGRectGetMaxY(saveCardButton.frame) + 20);
+    }
+    
+    CGRectSetY(amountTextField.frame, CGRectGetMaxY(amountHint.frame));
+    CGRectSetY(sendButton.frame, CGRectGetMaxY(amountHint.frame));
+    
+    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(sendButton.frame) + PADDING_SIDE);
+}
+
+- (void)didSaveCardButtonClick {
+    saveCard = !saveCard;
+    [self reloadView];
+}
+
+- (void)didDeleteCardButtonClick {
+    NSString *creditCardId = [[[[Flooz sharedInstance] currentUser] creditCard] cardId];
+    
+    [[Flooz sharedInstance] showLoadView];
+    [[Flooz sharedInstance] removeCreditCard:creditCardId success: ^(id result) {
+        [[[Flooz sharedInstance] currentUser] setCreditCard:nil];
+        [self reloadView];
+        [paymentTextField becomeFirstResponder];
+    }];
 }
 
 - (void)sendButtonClick {

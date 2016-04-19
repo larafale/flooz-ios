@@ -3,7 +3,7 @@
 //  Flooz
 //
 //  Created by Epitech on 9/8/15.
-//  Copyright © 2015 Jonathan Tribouharet. All rights reserved.
+//  Copyright © 2015 Jonathan Mouren. All rights reserved.
 //
 
 #import "FLCountry.h"

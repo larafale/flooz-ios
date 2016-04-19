@@ -2,7 +2,7 @@
 //  HomeViewController.m
 //  Flooz
 //
-//  Created by olivier on 12/26/2013.
+//  Created by Olivier on 12/26/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 
@@ -925,7 +925,7 @@
     } else if (signupVisible) {
         [signupScrollView setScrollEnabled:YES];
         NSDictionary* info = [notification userInfo];
-        CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
         
         CGRectSetHeight(signupScrollView.frame, CGRectGetHeight(signupView.frame) - kbSize.height);
         

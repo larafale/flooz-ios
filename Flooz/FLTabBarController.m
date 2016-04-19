@@ -36,9 +36,7 @@
     FXBlurView *homeButtonOverlay;
     
     UIView *homeSubview;
-    UIView *homeSubButtonPay;
-    UIView *homeSubButtonCollect;
-    UIView *homeSubButtonShop;
+    UILabel *homeOverlayTitle;
     
     BOOL homeViewOpen;
 }
@@ -168,11 +166,11 @@
     [homeButtonOverlay setUserInteractionEnabled:false];
     [homeButtonOverlay addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didHomeButtonOverlayClick)]];
  
-    UILabel *overlayTitle = [[UILabel alloc] initWithText:@"Choisissez une option" textColor:[UIColor customBlue] font:[UIFont customContentBold:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    CGRectSetXY(overlayTitle.frame, 20, 40);
-    CGRectSetWidth(overlayTitle.frame, PPScreenWidth() - 40);
+    homeOverlayTitle = [[UILabel alloc] initWithText:@"Choisissez une option" textColor:[UIColor customBlue] font:[UIFont customContentBold:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    CGRectSetXY(homeOverlayTitle.frame, 20, 40);
+    CGRectSetWidth(homeOverlayTitle.frame, PPScreenWidth() - 40);
     
-    [homeButtonOverlay addSubview:overlayTitle];
+    [homeButtonOverlay addSubview:homeOverlayTitle];
 
     homeButton = [[FLPlusButton alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 10.0f, CGRectGetHeight(self.tabBar.frame) + 10.0f)];
     homeButton.center = self.tabBar.center;
@@ -221,10 +219,23 @@
         homeButtonOverlay.hidden = NO;
         homeButtonOverlay.alpha = 0.0;
         homeButtonOverlay.userInteractionEnabled = YES;
+        
         [UIView animateWithDuration:0 animations:^{
             homeButton.layer.transform = CATransform3DMakeRotation((M_PI * 45.0) / 180, 0, 0, 1);
             homeButtonOverlay.alpha = 1.0;
-            CGRectSetY(homeSubview.frame, PPScreenHeight() / 2 - CGRectGetHeight(homeSubview.frame) / 2);
+            
+            CGFloat finalY;
+            CGFloat viewHeight = CGRectGetHeight(homeSubview.frame);
+            
+            if (CGRectGetMinY(homeButton.frame) - CGRectGetMaxY(homeOverlayTitle.frame) - 20 < viewHeight) {
+                homeOverlayTitle.hidden = YES;
+                finalY = CGRectGetMinY(homeButton.frame) / 2 - CGRectGetHeight(homeSubview.frame) / 2;
+            } else {
+                homeOverlayTitle.hidden = NO;
+                finalY = (CGRectGetMinY(homeButton.frame) - CGRectGetMaxY(homeOverlayTitle.frame)) / 2 - CGRectGetHeight(homeSubview.frame) / 2 + CGRectGetMaxY(homeOverlayTitle.frame);
+            }
+            
+            CGRectSetY(homeSubview.frame, finalY);
         } completion:^(BOOL finished) {
             homeViewOpen = YES;
         }];
@@ -337,10 +348,25 @@
         homeButtonOverlay.hidden = NO;
         homeButtonOverlay.alpha = 0.0;
         homeButtonOverlay.userInteractionEnabled = YES;
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+        
         [UIView animateWithDuration:0.3 animations:^{
             homeButton.layer.transform = CATransform3DMakeRotation((M_PI * 45.0) / 180, 0, 0, 1);
             homeButtonOverlay.alpha = 1.0;
-            CGRectSetY(homeSubview.frame, PPScreenHeight() / 2 - CGRectGetHeight(homeSubview.frame) / 2);
+            
+            CGFloat finalY;
+            CGFloat viewHeight = CGRectGetHeight(homeSubview.frame);
+            
+            if (CGRectGetMinY(homeButton.frame) - CGRectGetMaxY(homeOverlayTitle.frame) - 20 < viewHeight) {
+                homeOverlayTitle.hidden = YES;
+                finalY = CGRectGetMinY(homeButton.frame) / 2 - CGRectGetHeight(homeSubview.frame) / 2;
+            } else {
+                homeOverlayTitle.hidden = NO;
+                finalY = (CGRectGetMinY(homeButton.frame) - CGRectGetMaxY(homeOverlayTitle.frame)) / 2 - CGRectGetHeight(homeSubview.frame) / 2 + CGRectGetMaxY(homeOverlayTitle.frame);
+            }
+            
+            CGRectSetY(homeSubview.frame, finalY);
         } completion:^(BOOL finished) {
             homeViewOpen = YES;
         }];
@@ -349,6 +375,8 @@
 
 - (void)closeHomeMenu {
     if (homeViewOpen) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+
         [UIView animateWithDuration:0.3 animations:^{
             homeButton.layer.transform = CATransform3DIdentity;
             homeButtonOverlay.alpha = 0.0;

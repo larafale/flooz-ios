@@ -3,7 +3,7 @@
 //  Flooz
 //
 //  Created by Olivier on 2/24/15.
-//  Copyright (c) 2015 olivier Tribouharet. All rights reserved.
+//  Copyright (c) 2015 Olivier Mouren. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -19,13 +19,13 @@
 @property (nonatomic) Boolean soon;
 @property (nonatomic, retain) NSArray *triggers;
 
-
 - (id)initWithJSON:(NSDictionary *)json;
 
 @end
 
 @interface FLTexts : NSObject
 
+@property (nonatomic, retain) NSString *audiotelNumber;
 @property (nonatomic, retain) NSString *card;
 @property (nonatomic, retain) NSDictionary *notificationsText;
 @property (nonatomic, retain) NSDictionary *json;

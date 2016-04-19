@@ -3,7 +3,7 @@
 //  Flooz
 //
 //  Created by Epitech on 9/9/15.
-//  Copyright © 2015 Jonathan Tribouharet. All rights reserved.
+//  Copyright © 2015 Jonathan Mouren. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

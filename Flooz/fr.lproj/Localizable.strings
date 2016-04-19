@@ -2,7 +2,7 @@
  Localizable.strings
  Flooz
  
- Created by olivier on 1/2/2014.
+ Created by Olivier on 1/2/2014.
  Copyright (c) 2014 Flooz. All rights reserved.
  */
 
@@ -300,6 +300,7 @@
 
 "ACCOUNT_BUTTON_NOTIFICATION" = "Notifications";
 "ACCOUNT_BUTTON_CASH_OUT" = "Virer à ma banque";
+"ACCOUNT_BUTTON_CASH_IN" = "Créditer mon compte";
 "ACCOUNT_BUTTON_QRCODE" = "Scanner un code";
 
 

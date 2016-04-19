@@ -2,7 +2,7 @@
 //  Flooz.h
 //  Flooz
 //
-//  Created by olivier on 12/30/2013.
+//  Created by Olivier on 12/30/2013.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 

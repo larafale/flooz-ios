@@ -2,7 +2,7 @@
 //  SecureCodeField.m
 //  Flooz
 //
-//  Created by olivier on 2014-03-18.
+//  Created by Olivier on 2014-03-18.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

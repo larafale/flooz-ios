@@ -1,7 +1,7 @@
 //
 //  JTImageLabel.m
 //
-//  Created by olivier on 2013-03-15.
+//  Created by Olivier on 2013-03-15.
 //  Copyright (c) 2013 Flooz. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  FLScrollViewIndicator.m
 //  Flooz
 //
-//  Created by olivier on 2014-04-03.
+//  Created by Olivier on 2014-04-03.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 

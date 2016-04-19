@@ -2,7 +2,7 @@
 //  FLPaymentField.h
 //  Flooz
 //
-//  Created by olivier on 1/27/2014.
+//  Created by Olivier on 1/27/2014.
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
