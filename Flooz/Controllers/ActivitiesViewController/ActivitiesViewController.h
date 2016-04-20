@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 
-@interface ActivitiesViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource>
+@interface ActivitiesViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource> {
+    UIRefreshControl *refreshControl;
+}
 
 @end

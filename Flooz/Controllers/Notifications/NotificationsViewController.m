@@ -8,7 +8,7 @@
 
 #import "NotificationsViewController.h"
 
-#import "ActivityCell.h"
+#import "NotificationCell.h"
 
 #import "TransactionViewController.h"
 #import "FriendsViewController.h"
@@ -129,7 +129,7 @@
     }
     
     FLNotification *activity = [notificationsArray objectAtIndex:indexPath.row];
-    return [ActivityCell getHeightForActivity:activity forWidth:PPScreenWidth()];
+    return [NotificationCell getHeightForActivity:activity forWidth:PPScreenWidth()];
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -143,10 +143,10 @@
     }
     
     static NSString *cellIdentifier = @"ActivityCell";
-    ActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    NotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (!cell) {
-        cell = [[ActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[NotificationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     FLNotification *activity = [notificationsArray objectAtIndex:indexPath.row];

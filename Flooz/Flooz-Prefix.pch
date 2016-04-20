@@ -39,6 +39,7 @@
 #import "FLReport.h"
 #import "FLHelper.h"
 #import "FLError.h"
+#import "FLActivity.h"
 #import "FLCountry.h"
 #import "FLAddress.h"
 #import "FLTimelineDeal.h"

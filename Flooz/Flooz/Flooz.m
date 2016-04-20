@@ -850,6 +850,21 @@
     [self requestPath:path method:@"GET" params:nil success:success failure:NULL];
 }
 
+- (void)activitiesWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/cashouts" method:@"GET" params:nil success:^(id result) {
+        if (result[@"items"]) {
+            NSMutableArray *ret = [NSMutableArray new];
+            
+            for (NSDictionary *dic in result[@"items"]) {
+                [ret addObject:[[FLActivity alloc] initWithJSON:dic]];
+            }
+            
+            if (success)
+                success(ret);
+        }
+    } failure:failure];
+}
+
 - (void)notificationsWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *activities = [self createActivityArrayFromResult:result];
