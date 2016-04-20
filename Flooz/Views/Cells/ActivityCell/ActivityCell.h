@@ -20,8 +20,8 @@
 	UILabel *dateView;
 }
 
-+ (CGFloat)getHeightForActivity:(FLActivity *)activity forWidth:(CGFloat)widthCell;
++ (CGFloat)getHeightForActivity:(FLNotification *)activity forWidth:(CGFloat)widthCell;
 
-@property (weak, nonatomic) FLActivity *activity;
+@property (weak, nonatomic) FLNotification *activity;
 
 @end

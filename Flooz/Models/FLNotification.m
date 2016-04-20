@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
-#import "FLActivity.h"
+#import "FLNotification.h"
 
-@implementation FLActivity
+@implementation FLNotification
 
 - (id)initWithJSON:(NSDictionary *)json {
 	self = [super init];

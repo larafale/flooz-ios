@@ -400,7 +400,7 @@
 	        friendsSuggestion = result;
             [self reloadFriendsList];
 		}];
-        [[Flooz sharedInstance] readFriendActivity:nil];
+        [[Flooz sharedInstance] readFriendNotification:nil];
 	}];
 }
 

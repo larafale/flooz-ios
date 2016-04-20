@@ -221,7 +221,7 @@
     FLUser *currentUser = [[Flooz sharedInstance] currentUser];
     
     [[Flooz sharedInstance] textObjectFromApi:nil failure:nil];
-    [[Flooz sharedInstance] activitiesWithSuccess:nil failure:nil];
+    [[Flooz sharedInstance] notificationsWithSuccess:nil failure:nil];
     [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:TransactionScopeFriend] success:nil failure:nil];
     [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:TransactionScopePublic] success:nil failure:nil];
     [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:TransactionScopePrivate] success:nil failure:nil];

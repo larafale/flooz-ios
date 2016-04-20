@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FLActivity : NSObject
+@interface FLNotification : NSObject
 
 @property (nonatomic, retain) NSString *activityId;
 @property (strong, nonatomic) FLUser *user;

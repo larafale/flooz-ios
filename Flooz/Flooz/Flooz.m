@@ -75,7 +75,7 @@
         
         _notificationsCount = @0;
         _notifications = @[];
-        _activitiesCached = @[];
+        _notificationsCached = @[];
         
         self.socketConnected = NO;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkDeviceToken) name:kNotificationAnswerAccessNotification object:nil];
@@ -262,7 +262,7 @@
     _currentUser = nil;
     _access_token = nil;
     _facebook_token = nil;
-    _activitiesCached = @[];
+    _notificationsCached = @[];
     
     [self clearSaveData];
     
@@ -845,15 +845,15 @@
     [self requestPath:path method:@"GET" params:nil success:success failure:NULL];
 }
 
-- (void)readFriendActivity:(void (^)(id result))success {
+- (void)readFriendNotification:(void (^)(id result))success {
     NSString *path = @"/feeds/read/friend";
     [self requestPath:path method:@"GET" params:nil success:success failure:NULL];
 }
 
-- (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+- (void)notificationsWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *activities = [self createActivityArrayFromResult:result];
-        _activitiesCached = activities;
+        _notificationsCached = activities;
         [self saveNotificationData:result[@"items"]];
         
         if (success) {
@@ -864,7 +864,7 @@
     id failureBlock = ^(NSError *error) {
         if (![self connectionStatusFromError:error]) {
             NSArray *activities = [self loadNotificationData];
-            _activitiesCached = activities;
+            _notificationsCached = activities;
             if (activities && success)
                 success(activities, nil);
             else if (failure)
@@ -877,7 +877,7 @@
     [self requestPath:@"/feeds" method:@"GET" params:nil success:successBlock failure:failureBlock];
 }
 
-- (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success {
+- (void)notificationsNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success {
     id successBlock = ^(id result) {
         NSMutableArray *activities = [self createActivityArrayFromResult:result];
         if (success) {
@@ -888,14 +888,14 @@
     [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:NULL];
 }
 
-- (NSArray *)activitiesCached {
-    if ([_activitiesCached count] == 0)
-        _activitiesCached = [self loadNotificationData];
+- (NSArray *)notificationsCached {
+    if ([_notificationsCached count] == 0)
+        _notificationsCached = [self loadNotificationData];
     
-    if (_activitiesCached == nil)
+    if (_notificationsCached == nil)
         return @[];
     
-    return _activitiesCached;
+    return _notificationsCached;
 }
 
 - (void)placesFrom:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -2060,7 +2060,7 @@
     if (activities) {
         for (NSDictionary *json in activities) {
             if (json && [json isKindOfClass:NSDictionary.class]) {
-                FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
+                FLNotification *activity = [[FLNotification alloc] initWithJSON:json];
                 if (activity)
                     [arrayActivities addObject:activity];
             }
@@ -2075,7 +2075,7 @@
     if (activities) {
         for (NSDictionary *json in activities) {
             if (json && [json isKindOfClass:NSDictionary.class]) {
-                FLActivity *activity = [[FLActivity alloc] initWithJSON:json];
+                FLNotification *activity = [[FLNotification alloc] initWithJSON:json];
                 if (activity)
                     [arrayActivities addObject:activity];
             }

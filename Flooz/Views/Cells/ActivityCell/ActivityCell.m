@@ -25,7 +25,7 @@
 	return self;
 }
 
-+ (CGFloat)getHeightForActivity:(FLActivity *)activity forWidth:(CGFloat)widthCell {
++ (CGFloat)getHeightForActivity:(FLNotification *)activity forWidth:(CGFloat)widthCell {
 	CGFloat height = 0;
 
 	NSAttributedString *attributedText = [[NSAttributedString alloc]
@@ -44,7 +44,7 @@
 	return MAX(MIN_HEIGHT, height);
 }
 
-- (void)setActivity:(FLActivity *)activity {
+- (void)setActivity:(FLNotification *)activity {
 	self->_activity = activity;
 	[self prepareViews];
 }

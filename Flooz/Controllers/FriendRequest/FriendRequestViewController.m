@@ -103,7 +103,7 @@
             [_tableView reloadData];
         else
             [self dismissViewController];
-        [[Flooz sharedInstance] readFriendActivity:nil];
+        [[Flooz sharedInstance] readFriendNotification:nil];
     }];
 }
 

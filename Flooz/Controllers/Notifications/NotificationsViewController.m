@@ -80,7 +80,7 @@
 }
 
 - (void)loadCachedActivities {
-    notificationsArray = [[[Flooz sharedInstance] activitiesCached] mutableCopy];
+    notificationsArray = [[[Flooz sharedInstance] notificationsCached] mutableCopy];
     
     [_tableView reloadData];
 }
@@ -90,7 +90,7 @@
         [refreshControl beginRefreshing];
     });
     
-    [[Flooz sharedInstance] activitiesWithSuccess: ^(id result, NSString *nextPageUrl) {
+    [[Flooz sharedInstance] notificationsWithSuccess: ^(id result, NSString *nextPageUrl) {
         notificationsArray = [result mutableCopy];
         _nextPageUrl = nextPageUrl;
         [refreshControl endRefreshing];
@@ -105,7 +105,7 @@
     }
     nextPageIsLoading = YES;
     
-    [[Flooz sharedInstance] activitiesNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl) {
+    [[Flooz sharedInstance] notificationsNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl) {
         [notificationsArray addObjectsFromArray:result];
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;
@@ -128,7 +128,7 @@
         return [LoadingCell getHeight];
     }
     
-    FLActivity *activity = [notificationsArray objectAtIndex:indexPath.row];
+    FLNotification *activity = [notificationsArray objectAtIndex:indexPath.row];
     return [ActivityCell getHeightForActivity:activity forWidth:PPScreenWidth()];
 }
 
@@ -149,7 +149,7 @@
         cell = [[ActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    FLActivity *activity = [notificationsArray objectAtIndex:indexPath.row];
+    FLNotification *activity = [notificationsArray objectAtIndex:indexPath.row];
     [cell setActivity:activity];
     
     if (_nextPageUrl && ![_nextPageUrl isBlank] && !nextPageIsLoading && indexPath.row == [notificationsArray count] - 1) {
@@ -160,7 +160,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    FLActivity *activity = [notificationsArray objectAtIndex:indexPath.row];
+    FLNotification *activity = [notificationsArray objectAtIndex:indexPath.row];
     
     [activity setIsRead:YES];
     

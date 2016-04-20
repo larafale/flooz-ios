@@ -19,7 +19,7 @@
 #import "FLTransaction.h"
 #import "FLComment.h"
 #import "FLCreditCard.h"
-#import "FLActivity.h"
+#import "FLNotification.h"
 #import "FLTrigger.h"
 #import "FLReport.h"
 #import "FLTexts.h"
@@ -56,7 +56,7 @@ static NSString *kLocationData = @"locationData";
 	AFHTTPSessionManager *manager;
 	FLLoadView *loadView;
     
-	NSArray *_activitiesCached;
+	NSArray *_notificationsCached;
 }
 
 @property (nonatomic, retain) FBSDKLoginManager *fbLoginManager;
@@ -126,12 +126,12 @@ static NSString *kLocationData = @"locationData";
 - (void)transactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 - (void)readTransactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 - (void)readTransactionsSuccess:(void (^)(id result))success;
-- (void)readFriendActivity:(void (^)(id result))success;
+- (void)readFriendNotification:(void (^)(id result))success;
 - (void)passwordForget:(NSString*)phone success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
-- (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
-- (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
-- (NSArray *)activitiesCached;
+- (void)notificationsWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)notificationsNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
+- (NSArray *)notificationsCached;
 
 - (void)placesFrom:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)placesSearch:(NSString *)search from:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
