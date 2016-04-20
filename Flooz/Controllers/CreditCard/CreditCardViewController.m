@@ -300,8 +300,6 @@
 - (void)didValidTouch {
     [[self view] endEditing:YES];
     
-    //    [_nextButton setEnabled:NO];
-    
     if (paymentTextField.cardNumber && ![paymentTextField.cardNumber isBlank])
         _card[@"number"] = paymentTextField.cardNumber;
     

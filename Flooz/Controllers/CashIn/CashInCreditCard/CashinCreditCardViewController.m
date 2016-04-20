@@ -35,6 +35,8 @@
     UIImageView *saveCardImageView;
     UILabel *saveCardLabel;
     
+    UIImageView *cardsLogo;
+    
     Boolean saveCard;
 }
 
@@ -49,10 +51,13 @@
     
     dictionary = [NSMutableDictionary new];
     
+    dictionary[@"random"] = [FLHelper generateRandomString];
+
     if (!self.title || [self.title isBlank])
         self.title = @"Créditer mon compte";
     
     contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
+    contentView.bounces = NO;
     
     inputHint = [[UILabel alloc] initWithText:@"Carte bancaire :" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
     CGRectSetXY(inputHint.frame, PADDING_SIDE, 20);
@@ -80,7 +85,9 @@
     saveCardLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(saveCardImageView.frame) + 10, 5, CGRectGetWidth(saveCardButton.frame) - CGRectGetMaxX(saveCardImageView.frame) - 10, 20)];
     saveCardLabel.textColor = [UIColor whiteColor];
     saveCardLabel.font = [UIFont customContentRegular:15];
-    saveCardLabel.text = @"Enregistrer cette carte";
+    saveCardLabel.text = @"Enregistrer ma carte pour la prochaine fois";
+    saveCardLabel.adjustsFontSizeToFitWidth = YES;
+    saveCardLabel.minimumScaleFactor = 10. / saveCardLabel.font.pointSize;
     
     [saveCardButton addSubview:saveCardImageView];
     [saveCardButton addSubview:saveCardLabel];
@@ -100,6 +107,10 @@
     sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 + PADDING_SIDE / 2, CGRectGetMinY(amountTextField.frame), PPScreenWidth() / 2 - PADDING_SIDE * 1.5, 35) title:NSLocalizedString(@"GLOBAL_OK", nil)];
     [sendButton addTarget:self action:@selector(sendButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
+    cardsLogo = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(sendButton.frame) + 10, PPScreenWidth() - (2 * PADDING_SIDE), 80)];
+    [cardsLogo setImage:[UIImage imageNamed:@"cards"]];
+    [cardsLogo setContentMode:UIViewContentModeScaleAspectFit];
+    
     [self createCardVisualView];
     
     [contentView addSubview:inputHint];
@@ -109,19 +120,17 @@
     [contentView addSubview:amountTextField];
     [contentView addSubview:sendButton];
     [contentView addSubview:saveCardButton];
-
+    [contentView addSubview:cardsLogo];
+    
     [_mainBody addSubview:contentView];
     
     [self reloadView];
+    
+    [self registerForKeyboardNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self reloadView];
-    
-    if ([[[Flooz sharedInstance] currentUser] creditCard]) {
-        [amountTextField becomeFirstResponder];
-    } else
-        [paymentTextField becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -198,7 +207,7 @@
         [inputHint setHidden:NO];
         [paymentTextField setHidden:NO];
         [saveCardButton setHidden:NO];
-
+        
         if (saveCard)
             [saveCardImageView setImage:[UIImage imageNamed:@"checkmark-on"]];
         else
@@ -209,8 +218,9 @@
     
     CGRectSetY(amountTextField.frame, CGRectGetMaxY(amountHint.frame));
     CGRectSetY(sendButton.frame, CGRectGetMaxY(amountHint.frame));
+    CGRectSetY(cardsLogo.frame, CGRectGetMaxY(sendButton.frame) + 10);
     
-    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(sendButton.frame) + PADDING_SIDE);
+    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(cardsLogo.frame) + 10);
 }
 
 - (void)didSaveCardButtonClick {
@@ -231,7 +241,49 @@
 
 - (void)sendButtonClick {
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] cashinValidate:dictionary success:nil failure:nil];
+    
+    NSMutableDictionary *data = [NSMutableDictionary new];
+    
+    [data setDictionary:dictionary];
+    
+    if ([[[Flooz sharedInstance] currentUser] creditCard]) {
+        [data setObject:@{@"_id": [[[[Flooz sharedInstance] currentUser] creditCard] cardId]} forKey:@"card"];
+    } else {
+        NSMutableDictionary *card = [NSMutableDictionary new];
+        
+        if (paymentTextField.cardNumber && ![paymentTextField.cardNumber isBlank])
+            card[@"number"] = paymentTextField.cardNumber;
+        
+        if (paymentTextField.cvc && ![paymentTextField.cvc isBlank])
+            card[@"cvv"] = paymentTextField.cvc;
+        
+        if (paymentTextField.expirationMonth != 0 && paymentTextField.expirationYear != 0)
+            card[@"expires"] = [NSString stringWithFormat:@"%02lu-%02lu", (unsigned long)paymentTextField.expirationMonth, (unsigned long)paymentTextField.expirationYear];
+        
+        card[@"hidden"] = @(!saveCard);
+        
+        [data setObject:card forKey:@"card"];
+    }
+    
+    [[Flooz sharedInstance] cashinCard:data success:nil failure:nil];
+}
+
+#pragma mark - Keyboard Management
+
+- (void)registerForKeyboardNotifications {
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+    
+    CGRectSetHeight(contentView.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight);
+}
+
+- (void)keyboardWillDisappear {
+    CGRectSetHeight(contentView.frame, CGRectGetHeight(_mainBody.frame));
 }
 
 @end

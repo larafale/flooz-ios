@@ -11,7 +11,7 @@
 #import "CashinAudiotelViewController.h"
 
 @interface CashinViewController () {
-    NSArray *methods;
+    NSMutableArray *methods;
     UIView *navHeaderView;
 }
 
@@ -34,18 +34,20 @@
     
     [self createHeader];
     
-    methods = @[@{
+    methods = [@[@{
                     @"title":@"Carte bancaire",
                     @"subtitle":@"Blablabla",
                     @"img":@"cashin_cb",
-                    @"controller": [CashinCreditCardViewController new]
-                    },
-                @{
-                    @"title":@"Audiotel",
-                    @"subtitle":@"Flaflaflafla",
-                    @"img":@"cashin_phone",
-                    @"controller": [CashinAudiotelViewController new]
-                    }];
+                    @"controller": [CashinCreditCardViewController class]
+                    }] mutableCopy];
+    
+    if ([[[Flooz sharedInstance] currentTexts] audiotelNumber])
+        [methods addObject:@{
+          @"title":@"Audiotel",
+          @"subtitle":@"Flaflaflafla",
+          @"img":@"cashin_phone",
+          @"controller": [CashinAudiotelViewController class]
+          }];
     
     _tableView = [FLTableView newWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
     [_tableView setDelegate:self];
@@ -165,8 +167,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *rowData = methods[indexPath.row];
     
-    if (rowData && rowData[@"controller"] && [rowData[@"controller"] isKindOfClass:[BaseViewController class]])
-        [self.navigationController pushViewController:rowData[@"controller"] animated:YES];
+    if (rowData && rowData[@"controller"])
+        [self.navigationController pushViewController:[rowData[@"controller"] new] animated:YES];
 }
 
 @end

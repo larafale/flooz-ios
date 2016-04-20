@@ -10,4 +10,8 @@
 
 @interface ActivityCell : UITableViewCell
 
+@property (weak, nonatomic) FLActivity *activity;
+
++ (CGFloat)getHeightForActivity:(FLActivity *)activity;
+
 @end

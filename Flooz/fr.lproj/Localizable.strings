@@ -249,9 +249,19 @@
 "INFORMATIONS_RATE" = "Noter sur l'App Store";
 
 /************************************/
+/*            CASHINS               */
+/************************************/
+
+"CASHIN_AUDIOTEL_INFOS" = "Chaque appel vous communique un code qui une fois validé sur cette page donne lieu à un reversement de 1.60€ sur votre compte Flooz";
+"CASHIN_AUDIOTEL_AVALAIBLE" = "Code valable 48h";
+"CASHIN_AUDIOTEL_HINT" = "Veuillez saisir le code reçu :";
+"CASHIN_AUDIOTEL_PLACEHOLDER" = "• • • • • • • •";
+
+/************************************/
 /*           NAVIGATION             */
 /************************************/
 
+"NAV_ACTIVITIES" = "Mon activité";
 "NAV_DEALS" = "Deals";
 "NAV_NOTIFICATIONS" = "Notifications";
 "NAV_CREDIT_CARD" = "Carte bancaire";

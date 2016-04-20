@@ -150,8 +150,8 @@ static NSString *kLocationData = @"locationData";
 
 - (void)createComment:(NSDictionary *)comment success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
-- (void)cashin:(NSDictionary *)data success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
-- (void)cashinValidate:(NSDictionary *)data success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)cashinCard:(NSDictionary *)data success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)cashinAudiotel:(NSString *)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)cashout:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)cashoutValidate:(void (^)(id result))success failure:(void (^)(NSError *error))failure;

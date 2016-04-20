@@ -128,8 +128,8 @@
         return [LoadingCell getHeight];
     }
     
-    FLNotification *activity = [notificationsArray objectAtIndex:indexPath.row];
-    return [NotificationCell getHeightForActivity:activity forWidth:PPScreenWidth()];
+    FLNotification *notification = [notificationsArray objectAtIndex:indexPath.row];
+    return [NotificationCell getHeightForNotification:notification forWidth:PPScreenWidth()];
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -149,8 +149,8 @@
         cell = [[NotificationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    FLNotification *activity = [notificationsArray objectAtIndex:indexPath.row];
-    [cell setActivity:activity];
+    FLNotification *notification = [notificationsArray objectAtIndex:indexPath.row];
+    [cell setNotification:notification];
     
     if (_nextPageUrl && ![_nextPageUrl isBlank] && !nextPageIsLoading && indexPath.row == [notificationsArray count] - 1) {
         [self loadNextPage];

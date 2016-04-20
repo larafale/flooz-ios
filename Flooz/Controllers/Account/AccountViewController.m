@@ -26,6 +26,7 @@
 #import "EditProfileViewController.h"
 #import "AddressBookController.h"
 #import "CashinViewController.h"
+#import "ActivitiesViewController.h"
 
 #import "AccountCell.h"
 
@@ -204,9 +205,10 @@
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"action":@"cashin"},
-                               @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
+                               @{@"title":NSLocalizedString(@"NAV_ACTIVITIES", nil), @"action":@"activities"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
+                               @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
                                ]
                        },
                      @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
@@ -234,8 +236,8 @@
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"action":@"cashin"},
+                               @{@"title":NSLocalizedString(@"NAV_ACTIVITIES", nil), @"action":@"activities"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
-//                               @{@"title":NSLocalizedString(@"SETTINGS_ADDRESS", @""), @"action":@"address"},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                ]
                        },
@@ -388,6 +390,8 @@
             [[self navigationController] pushViewController:[CashinViewController new] animated:YES];
         } else if ([action isEqualToString:@"friends"]) {
             [[self navigationController] pushViewController:[FriendsViewController new] animated:YES];
+        } else if ([action isEqualToString:@"activities"]) {
+            [[self navigationController] pushViewController:[ActivitiesViewController new] animated:YES];
         } else if ([action isEqualToString:@"bank"]) {
             [[self navigationController] pushViewController:[SettingsBankViewController new] animated:YES];
         } else if ([action isEqualToString:@"documents"]) {

@@ -6,6 +6,7 @@
 //  Copyright © 2016 Flooz. All rights reserved.
 //
 
+#import "ActivityCell.h"
 #import "ActivitiesViewController.h"
 
 @interface ActivitiesViewController() {
@@ -22,13 +23,14 @@
     [super viewDidLoad];
     
     if (!self.title || [self.title isBlank])
-        self.title = NSLocalizedString(@"FRIEND_REQUEST_TITLE", nil);
+        self.title = NSLocalizedString(@"NAV_ACTIVITIES", nil);
     
     _tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame)) style:UITableViewStylePlain];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     [_tableView setSeparatorColor:[UIColor customBackground]];
+    [_tableView setTableFooterView:[UIView new]];
     
     [_mainBody addSubview:_tableView];
     
@@ -63,18 +65,23 @@
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [FriendCell getHeight];
+    if (activities && activities.count)
+        return [ActivityCell getHeightForActivity:[activities objectAtIndex:indexPath.row]];
+    
+    return CGFLOAT_MIN;
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"ActivityCell";
-    FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    ActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (!cell) {
-        cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[ActivityCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     FLActivity *activity = [activities objectAtIndex:indexPath.row];
+    
+    [cell setActivity:activity];
     
     return cell;
 }
