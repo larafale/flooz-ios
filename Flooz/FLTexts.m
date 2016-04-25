@@ -49,7 +49,7 @@
 - (void)setJSON:(NSDictionary *)json {
     self.json = json;
     
-    self.audiotelNumber = json[@"audiotelNumber"] ? json[@"audiotelNumber"] : @"0660718983";
+    self.audiotelNumber = json[@"audiotelNumber"];
     
     
     self.notificationsText = json[@"notificationsText"];

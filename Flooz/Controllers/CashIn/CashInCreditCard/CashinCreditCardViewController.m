@@ -36,6 +36,7 @@
     UILabel *saveCardLabel;
     
     UIImageView *cardsLogo;
+    UILabel *cardsInfos;
     
     Boolean saveCard;
 }
@@ -54,12 +55,12 @@
     dictionary[@"random"] = [FLHelper generateRandomString];
 
     if (!self.title || [self.title isBlank])
-        self.title = @"Créditer mon compte";
+        self.title = NSLocalizedString(@"NAV_CASHIN", nil);
     
     contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
     contentView.bounces = NO;
     
-    inputHint = [[UILabel alloc] initWithText:@"Carte bancaire :" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+    inputHint = [[UILabel alloc] initWithText:NSLocalizedString(@"CASHIN_CARD_PAYMENT_INPUT_HINT", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
     CGRectSetXY(inputHint.frame, PADDING_SIDE, 20);
     
     paymentTextField = [[STPPaymentCardTextField alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(inputHint.frame) + 5, PPScreenWidth() - (2 * PADDING_SIDE), 40)];
@@ -85,18 +86,20 @@
     saveCardLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(saveCardImageView.frame) + 10, 5, CGRectGetWidth(saveCardButton.frame) - CGRectGetMaxX(saveCardImageView.frame) - 10, 20)];
     saveCardLabel.textColor = [UIColor whiteColor];
     saveCardLabel.font = [UIFont customContentRegular:15];
-    saveCardLabel.text = @"Enregistrer ma carte pour la prochaine fois";
+    saveCardLabel.text = NSLocalizedString(@"CASHIN_CARD_CHECKBOX_TEXT", nil);
     saveCardLabel.adjustsFontSizeToFitWidth = YES;
     saveCardLabel.minimumScaleFactor = 10. / saveCardLabel.font.pointSize;
     
     [saveCardButton addSubview:saveCardImageView];
     [saveCardButton addSubview:saveCardLabel];
     
-    amountHint = [[UILabel alloc] initWithText:@"Montant :" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+    amountHint = [[UILabel alloc] initWithText:NSLocalizedString(@"CASHIN_CARD_AMOUNT_INPUT_HINT", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
     CGRectSetXY(amountHint.frame, PADDING_SIDE, 20);
     
     amountTextField = [[FLTextField alloc] initWithPlaceholder:@"0€" for:dictionary key:@"amount" frame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(amountHint.frame) + 5, PPScreenWidth() / 2 - 1.5 * PADDING_SIDE, 35)];
     amountTextField.floatLabelActiveColor = [UIColor clearColor];
+    amountTextField.floatLabelPassiveColor = [UIColor clearColor];
+    [amountTextField setType:FLTextFieldTypeFloatNumber];
     [amountTextField addForNextClickTarget:amountTextField action:@selector(resignFirstResponder)];
     
     inputView = [FLKeyboardView new];
@@ -104,12 +107,24 @@
     inputView.textField = amountTextField;
     amountTextField.inputView = inputView;
     
-    sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 + PADDING_SIDE / 2, CGRectGetMinY(amountTextField.frame), PPScreenWidth() / 2 - PADDING_SIDE * 1.5, 35) title:NSLocalizedString(@"GLOBAL_OK", nil)];
+    sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 + PADDING_SIDE / 2, CGRectGetMinY(amountTextField.frame), PPScreenWidth() / 2 - PADDING_SIDE * 1.5, 35) title:NSLocalizedString(@"GLOBAL_VALIDATE", nil)];
     [sendButton addTarget:self action:@selector(sendButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     cardsLogo = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(sendButton.frame) + 10, PPScreenWidth() - (2 * PADDING_SIDE), 80)];
     [cardsLogo setImage:[UIImage imageNamed:@"cards"]];
     [cardsLogo setContentMode:UIViewContentModeScaleAspectFit];
+    
+    cardsInfos = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(cardsLogo.frame) + 10, PPScreenWidth() - 2  * PADDING_SIDE, 0)];
+    cardsInfos.textColor = [UIColor customPlaceholder];
+    cardsInfos.textAlignment = NSTextAlignmentCenter;
+    cardsInfos.font = [UIFont customContentRegular:14];
+    cardsInfos.text = NSLocalizedString(@"CASHIN_CARD_INFOS", nil);
+    cardsInfos.adjustsFontSizeToFitWidth = YES;
+    cardsInfos.numberOfLines = 0;
+    cardsInfos.minimumScaleFactor = 10. / saveCardLabel.font.pointSize;
+    cardsInfos.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    [cardsInfos setHeightToFit];
     
     [self createCardVisualView];
     
@@ -121,12 +136,15 @@
     [contentView addSubview:sendButton];
     [contentView addSubview:saveCardButton];
     [contentView addSubview:cardsLogo];
+    [contentView addSubview:cardsInfos];
     
     [_mainBody addSubview:contentView];
     
     [self reloadView];
     
     [self registerForKeyboardNotifications];
+    
+    [self registerNotification:@selector(reloadView) name:kNotificationReloadCurrentUser object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -219,8 +237,9 @@
     CGRectSetY(amountTextField.frame, CGRectGetMaxY(amountHint.frame));
     CGRectSetY(sendButton.frame, CGRectGetMaxY(amountHint.frame));
     CGRectSetY(cardsLogo.frame, CGRectGetMaxY(sendButton.frame) + 10);
+    CGRectSetY(cardsInfos.frame, CGRectGetMaxY(cardsLogo.frame) + 5);
     
-    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(cardsLogo.frame) + 10);
+    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(cardsInfos.frame) + 10);
 }
 
 - (void)didSaveCardButtonClick {
@@ -240,6 +259,9 @@
 }
 
 - (void)sendButtonClick {
+    [self.view endEditing:YES];
+    [self.view endEditing:NO];
+    
     [[Flooz sharedInstance] showLoadView];
     
     NSMutableDictionary *data = [NSMutableDictionary new];
@@ -279,7 +301,7 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     
-    CGRectSetHeight(contentView.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight);
+    CGRectSetHeight(contentView.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight + PPScreenWidth());
 }
 
 - (void)keyboardWillDisappear {

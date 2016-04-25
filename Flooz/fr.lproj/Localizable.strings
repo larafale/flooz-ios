@@ -252,8 +252,19 @@
 /*            CASHINS               */
 /************************************/
 
-"CASHIN_AUDIOTEL_INFOS" = "Chaque appel vous communique un code qui une fois validé sur cette page donne lieu à un reversement de 1.60€ sur votre compte Flooz";
-"CASHIN_AUDIOTEL_AVALAIBLE" = "Code valable 48h";
+"CASHIN_INFOS" = "Ajoutez des fonds sur votre compte Flooz en choisissant l’un des moyens de paiement ci-dessous :";
+
+"CASHIN_CARD_TITLE" = "Carte bancaire";
+"CASHIN_CARD_SUBTITLE" = "Ajoutez des fonds via votre CB gratuitement et en toute sécurité";
+"CASHIN_CARD_PAYMENT_INPUT_HINT" = "Saisissez vos numéros de carte bancaire :";
+"CASHIN_CARD_CHECKBOX_TEXT" = "Enregistrer ma carte en toute sécurité";
+"CASHIN_CARD_AMOUNT_INPUT_HINT" = "Saisissez le montant :";
+"CASHIN_CARD_INFOS" = "Vos coordonnées bancaire sont stockées et sécurisées à distance chez notre partenaire Rentabiliweb qui accompagne les plus grandes marques comme la Fnac, Spartoo, Winamax et bien d’autres";
+
+"CASHIN_AUDIOTEL_TITLE" = "Appel téléphonique";
+"CASHIN_AUDIOTEL_SUBTITLE" = "1,60€ / appel reversés sur votre compte Flooz";
+"CASHIN_AUDIOTEL_INFOS" = "Chaque appel est facturé 3€ sur votre forfait. Saisissez ci-dessous le code mentionné pendant l’appel pour être crédité de 1.60€ sur votre compte Flooz";
+"CASHIN_AUDIOTEL_AVALAIBLE" = "Le code vous sera répété deux fois.\nVotre code a une validité de 48h";
 "CASHIN_AUDIOTEL_HINT" = "Veuillez saisir le code reçu :";
 "CASHIN_AUDIOTEL_PLACEHOLDER" = "• • • • • • • •";
 
@@ -261,6 +272,7 @@
 /*           NAVIGATION             */
 /************************************/
 
+"NAV_CASHIN" = "Ajouter des fonds";
 "NAV_ACTIVITIES" = "Mon activité";
 "NAV_DEALS" = "Deals";
 "NAV_NOTIFICATIONS" = "Notifications";

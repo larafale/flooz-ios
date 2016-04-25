@@ -34,7 +34,7 @@
     dictionary = [NSMutableDictionary new];
 
     if (!self.title || [self.title isBlank])
-        self.title = @"Créditer mon compte";
+        self.title = NSLocalizedString(@"NAV_CASHIN", nil);
 
     contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
     contentView.bounces = NO;
@@ -62,6 +62,8 @@
 
     codeTextField = [[FLTextField alloc] initWithPlaceholder:NSLocalizedString(@"CASHIN_AUDIOTEL_PLACEHOLDER", nil) for:dictionary key:@"audiotelCode" frame:CGRectMake(40, CGRectGetMaxY(codeHint.frame) + 10, PPScreenWidth() - 80, 35)];
     codeTextField.floatLabelActiveColor = [UIColor clearColor];
+    codeTextField.floatLabelPassiveColor = [UIColor clearColor];
+    codeTextField.maxLenght = 8;
     codeTextField.textAlignment = NSTextAlignmentCenter;
     codeTextField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
     [codeTextField addForNextClickTarget:codeTextField action:@selector(resignFirstResponder)];
@@ -81,6 +83,8 @@
     [_mainBody addSubview:contentView];
     
     [self registerForKeyboardNotifications];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAudiotelCodeField:) name:@"cashin:audiotel:sync" object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -90,13 +94,27 @@
 }
 
 - (void)callButtonClick {
+    [self.view endEditing:YES];
+    [self.view endEditing:NO];
+    
     NSString *phoneNumber = [@"telprompt://" stringByAppendingString:[[[Flooz sharedInstance] currentTexts] audiotelNumber]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }
 
 - (void)sendButtonClick {
+    [self.view endEditing:YES];
+    [self.view endEditing:NO];
+    
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] cashinAudiotel:dictionary[@"audiotelCode"] success:nil failure:nil];
+}
+
+- (void)updateAudiotelCodeField:(NSNotification*)notification {
+    NSDictionary* userInfo = notification.userInfo;
+    
+    if (userInfo && userInfo[@"code"]) {
+        dictionary[@"audiotelCode"] = userInfo[@"code"];
+    }
 }
 
 #pragma mark - Keyboard Management

@@ -21,6 +21,7 @@ typedef void (^CompleteBlock)();
 @property BOOL isForChangeSecureCode;
 @property (strong, nonatomic) CompleteBlock completeBlock;
 @property (nonatomic) SecureCodeMode currentSecureMode;
+@property (nonatomic) SecureCodeMode initSecureMode;
 
 - (id)initWithUser:(NSDictionary *)_user;
 

@@ -62,6 +62,7 @@ static BOOL canTouchID = YES;
 @implementation SecureCodeViewController
 
 @synthesize currentSecureMode;
+@synthesize initSecureMode;
 
 - (id)init {
     self = [super init];
@@ -82,14 +83,17 @@ static BOOL canTouchID = YES;
             
             if ([_userDic[@"hasSecureCode"] boolValue] && [_userDic[@"onKnowDevice"] boolValue]) {
                 currentSecureMode = SecureCodeModeNormal;
+                initSecureMode = SecureCodeModeNormal;
             }
             else {
                 currentSecureMode = SecureCodeModeForget;
+                initSecureMode = SecureCodeModeForget;
             }
         }
         else {
             _userDic = [NSMutableDictionary new];
             currentSecureMode = SecureCodeModeChangeNew;
+            initSecureMode = SecureCodeModeChangeNew;
         }
         
         _isForChangeSecureCode = NO;
@@ -104,6 +108,7 @@ static BOOL canTouchID = YES;
         
         _isForChangeSecureCode = NO;
         currentSecureMode = SecureCodeModeNormal;
+        initSecureMode = SecureCodeModeNormal;
     }
     return self;
 }
@@ -115,6 +120,7 @@ static BOOL canTouchID = YES;
     
     if (_isForChangeSecureCode) {
         currentSecureMode = SecureCodeModeChangeOld;
+        initSecureMode = SecureCodeModeNormal;
     }
     
     [self displayCorrectView];
@@ -699,11 +705,16 @@ static BOOL canTouchID = YES;
         UIButton *button = (UIButton *)view;
         expectedSize = [button.titleLabel.text sizeWithAttributes:@{ NSFontAttributeName: button.titleLabel.font }];
     }
+    
     return expectedSize;
 }
 
 - (void)dismissBack {
-    [self dismissWithSuccess:NO];
+    if (currentSecureMode == SecureCodeModeForget && (initSecureMode == SecureCodeModeNormal || initSecureMode == SecureCodeModeChangeOld)) {
+        currentSecureMode = initSecureMode;
+        [self displayCorrectView];
+    } else
+        [self dismissWithSuccess:NO];
 }
 
 - (void)dismissWithSuccess:(BOOL)success {

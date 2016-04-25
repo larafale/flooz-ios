@@ -12,7 +12,7 @@
 
 @interface CashinViewController () {
     NSMutableArray *methods;
-    UIView *navHeaderView;
+    UIView *headerView;
 }
 
 @end
@@ -29,74 +29,93 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //    if (!self.title || [self.title isBlank])
-    //        self.title = @"Charger son compte";
-    
-    [self createHeader];
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"NAV_CASHIN", nil);
     
     methods = [@[@{
-                    @"title":@"Carte bancaire",
-                    @"subtitle":@"Blablabla",
+                    @"title":NSLocalizedString(@"CASHIN_CARD_TITLE", nil),
+                    @"subtitle":NSLocalizedString(@"CASHIN_CARD_SUBTITLE", nil),
                     @"img":@"cashin_cb",
                     @"controller": [CashinCreditCardViewController class]
                     }] mutableCopy];
     
     if ([[[Flooz sharedInstance] currentTexts] audiotelNumber])
         [methods addObject:@{
-          @"title":@"Audiotel",
-          @"subtitle":@"Flaflaflafla",
+          @"title":NSLocalizedString(@"CASHIN_AUDIOTEL_TITLE", nil),
+          @"subtitle":NSLocalizedString(@"CASHIN_AUDIOTEL_SUBTITLE", nil),
           @"img":@"cashin_phone",
           @"controller": [CashinAudiotelViewController class]
           }];
     
+    [self createHeader];
+
     _tableView = [FLTableView newWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     [_tableView setScrollsToTop:YES];
     [_tableView setBackgroundColor:[UIColor clearColor]];
+    [_tableView setTableFooterView:[UIView new]];
+    [_tableView setTableHeaderView:headerView];
+    [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [_tableView setBounces:NO];
+    
     [_mainBody addSubview:_tableView];
     
-    // Padding pour que le dernier element au dessus du +
-    _tableView.tableFooterView = [UIView new];
+    [self registerNotification:@selector(createHeader) name:kNotificationReloadCurrentUser object:nil];
 }
 
 - (void)createHeader {
-    if (!navHeaderView) {
-        navHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
+    if (!headerView) {
+        headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), 0)];
         
-        NSString *headerString = [NSString stringWithFormat:@"Votre solde : %@", [FLHelper formatedAmount:[Flooz sharedInstance].currentUser.amount withCurrency:YES withSymbol:NO]];
+        UILabel *balanceHint = [[UILabel alloc] initWithText:@"Votre solde :" textColor:[UIColor customWhite] font:[UIFont customContentRegular:17] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+        balanceHint.tag = 42;
         
-        UILabel *headerMoment = [[UILabel alloc] initWithText:headerString textColor:[UIColor customBlue] font:[UIFont customTitleLight:15] textAlignment:NSTextAlignmentLeft numberOfLines:1];
-        headerMoment.tag = 42;
+        UILabel *balanceLabel = [[UILabel alloc] initWithText:[FLHelper formatedAmount:[Flooz sharedInstance].currentUser.amount withCurrency:NO withSymbol:NO] textColor:[UIColor customBlue] font:[UIFont customContentBold:17]];
+        balanceLabel.tag = 43;
         
-        CGFloat headerWidth = CGRectGetWidth(headerMoment.frame);
+        UILabel *currencySymbol = [[UILabel alloc] initWithText:NSLocalizedString(@"GLOBAL_EURO", nil) textColor:[UIColor customBlue] font:[UIFont customContentBold:14]];
+        currencySymbol.tag = 44;
         
-        CGRectSetWidth(navHeaderView.frame, headerWidth);
+        CGFloat fullBalanceWidth = CGRectGetWidth(balanceHint.frame) + CGRectGetWidth(balanceLabel.frame) + CGRectGetWidth(currencySymbol.frame) + 7;
         
-        CGFloat midHeight = PPTabBarHeight() / 2;
+        CGRectSetXY(balanceHint.frame, PPScreenWidth() / 2 - fullBalanceWidth / 2, 30);
+        CGRectSetXY(balanceLabel.frame, CGRectGetMaxX(balanceHint.frame) + 5, 30);
+        CGRectSetXY(currencySymbol.frame, CGRectGetMaxX(balanceLabel.frame) + 2, 28);
         
-        CGRectSetXY(headerMoment.frame, 0, midHeight - CGRectGetHeight(headerMoment.frame) / 2 - 2);
+        UILabel *cashinInfos = [[UILabel alloc] initWithText:NSLocalizedString(@"CASHIN_INFOS", nil) textColor:[UIColor whiteColor] font:[UIFont customTitleLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:3];
+        cashinInfos.adjustsFontSizeToFitWidth = YES;
+        cashinInfos.minimumScaleFactor = 12. / cashinInfos.font.pointSize;
         
-        [navHeaderView addSubview:headerMoment];
-        self.navigationItem.titleView = navHeaderView;
+        CGRectSetWidth(cashinInfos.frame, PPScreenWidth() - 80);
+        CGRectSetXY(cashinInfos.frame, 40, CGRectGetMaxY(balanceLabel.frame) + 20);
+        
+        [cashinInfos setHeightToFit];
+        
+        CGRectSetHeight(headerView.frame, CGRectGetMaxY(cashinInfos.frame) + 20);
+        
+        [headerView addSubview:balanceHint];
+        [headerView addSubview:balanceLabel];
+        [headerView addSubview:currencySymbol];
+        [headerView addSubview:cashinInfos];
     } else {
-        NSString *headerString = [NSString stringWithFormat:@"Votre solde : %@", [FLHelper formatedAmount:[Flooz sharedInstance].currentUser.amount withCurrency:YES withSymbol:NO]];
+        UILabel *balanceHint = [headerView viewWithTag:42];
+        UILabel *balanceLabel = [headerView viewWithTag:43];
+        UILabel *currencySymbol = [headerView viewWithTag:44];
         
-        UILabel *headerMoment = [navHeaderView viewWithTag:42];
-        headerMoment.text = headerString;
+        [balanceLabel setText:[FLHelper formatedAmount:[Flooz sharedInstance].currentUser.amount withCurrency:NO withSymbol:NO]];
+        [balanceLabel setWidthToFit];
         
-        CGFloat headerWidth = CGRectGetWidth(headerMoment.frame);
+        CGFloat fullBalanceWidth = CGRectGetWidth(balanceHint.frame) + CGRectGetWidth(balanceLabel.frame) + CGRectGetWidth(currencySymbol.frame) + 7;
         
-        CGRectSetWidth(navHeaderView.frame, headerWidth);
-        
-        CGFloat midHeight = PPTabBarHeight() / 2;
-        
-        CGRectSetXY(headerMoment.frame, 0, midHeight - CGRectGetHeight(headerMoment.frame) / 2 - 2);
+        CGRectSetX(balanceHint.frame, PPScreenWidth() / 2 - fullBalanceWidth / 2);
+        CGRectSetX(balanceLabel.frame, CGRectGetMaxX(balanceHint.frame) + 5);
+        CGRectSetX(currencySymbol.frame, CGRectGetMaxX(balanceLabel.frame) + 2);
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+    [self createHeader];
 }
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -104,7 +123,7 @@
 }
 
 - (CGFloat)tableView:(FLTableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 70;
 }
 
 - (UITableViewCell *)tableView:(FLTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -119,19 +138,26 @@
     
     [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    [self fillCell:cell.contentView data:methods[indexPath.row]];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 5, PPScreenWidth() - 20, 60)];
+    
+    [cell.contentView addSubview:view];
+    
+    [self fillCell:view data:methods[indexPath.row]];
     
     return cell;
 }
 
 - (void)fillCell:(UIView *)contentView data:(NSDictionary *)buttonData {
-    UIImageView *imageView  = [[UIImageView alloc] initWithFrame:CGRectMake(10, [self tableView:_tableView heightForRowAtIndexPath:[NSIndexPath new]] / 2 - 15, 30, 30)];
+    contentView.backgroundColor = [UIColor customBackground];
+    contentView.layer.cornerRadius = 5;
+
+    UIImageView *imageView  = [[UIImageView alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(contentView.frame) / 2 - 15, 30, 30)];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.tintColor = [UIColor customBlue];
     
     imageView.image = [[UIImage imageNamed:buttonData[@"img"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 10, 10, PPScreenWidth() - CGRectGetMaxX(imageView.frame) - 45, 15)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 15, 8, PPScreenWidth() - CGRectGetMaxX(imageView.frame) - 45, 15)];
     titleLabel.font = [UIFont customContentRegular:15];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.text = buttonData[@"title"];
@@ -140,20 +166,17 @@
     titleLabel.minimumScaleFactor = 10. / titleLabel.font.pointSize;
     titleLabel.textAlignment = NSTextAlignmentLeft;
     
-    UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 10, CGRectGetMaxY(titleLabel.frame), PPScreenWidth() - CGRectGetMaxX(imageView.frame) - 45, 25)];
+    UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 15, CGRectGetMaxY(titleLabel.frame), PPScreenWidth() - CGRectGetMaxX(imageView.frame) - 55, 30)];
     subtitleLabel.font = [UIFont customContentRegular:12];
     subtitleLabel.textColor = [UIColor customPlaceholder];
     subtitleLabel.text = buttonData[@"subtitle"];
     subtitleLabel.numberOfLines = 2;
     subtitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     subtitleLabel.adjustsFontSizeToFitWidth = YES;
-    subtitleLabel.minimumScaleFactor = 5. / titleLabel.font.pointSize;
+    subtitleLabel.minimumScaleFactor = 10. / titleLabel.font.pointSize;
     subtitleLabel.textAlignment = NSTextAlignmentLeft;
     
-    CGFloat fontSize = [subtitleLabel.text fontSizeWithFont:subtitleLabel.font constrainedToSize:subtitleLabel.frame.size];
-    subtitleLabel.font = [UIFont customContentRegular:fontSize];
-    
-    UIImageView *nextIcon = [[UIImageView alloc] initWithFrame:CGRectMake(PPScreenWidth() - 25, [self tableView:_tableView heightForRowAtIndexPath:[NSIndexPath new]] / 2 - 10, 20, 20)];
+    UIImageView *nextIcon = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(contentView.frame) - 25, CGRectGetHeight(contentView.frame) / 2 - 10, 20, 20)];
     nextIcon.contentMode = UIViewContentModeScaleAspectFit;
     nextIcon.tintColor = [UIColor customBlue];
     nextIcon.image = [[UIImage imageNamed:@"arrow-right-accessory"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

@@ -10,7 +10,7 @@
 
 @interface FLActivity : NSObject
 
-@property (nonatomic, retain) NSString *type;
+@property (nonatomic, retain) NSString *icon;
 @property (strong, nonatomic) NSString *content;
 
 @property (strong, nonatomic) NSDate *date;

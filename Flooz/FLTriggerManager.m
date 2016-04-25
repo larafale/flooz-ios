@@ -344,6 +344,9 @@
     } else if ([trigger.category isEqualToString:@"notifs"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotifications" object:nil];
         [self executeTriggerList:trigger.triggers];
+    } else if ([trigger.viewCaregory isEqualToString:@"cashin:audiotel"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:trigger.key object:nil userInfo:trigger.data];
+        [self executeTriggerList:trigger.triggers];
     }
 }
 
