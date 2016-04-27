@@ -10,12 +10,15 @@
 
 @interface FLActivity : NSObject
 
+@property (nonatomic, retain) UIColor *backIconColor;
 @property (nonatomic, retain) NSString *icon;
+@property (nonatomic, retain) NSString *imgURL;
 @property (strong, nonatomic) NSString *content;
 
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSString *when;
 @property (strong, nonatomic) NSString *dateText;
+@property (strong, nonatomic) NSArray *triggers;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

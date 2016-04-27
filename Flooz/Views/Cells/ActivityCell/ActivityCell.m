@@ -75,13 +75,17 @@
 }
 
 - (void)createIconView {
-    iconView = [[UIImageView alloc] initWithFrame:CGRectMake(MARGE_LEFT + 5 + MARGE_LEFT, MARGE_TOP_BOTTOM, 38.0f, 38.0f)];
-    iconView.contentMode = UIViewContentModeScaleAspectFit;
+    iconView = [[UIImageView alloc] initWithFrame:CGRectMake(MARGE_LEFT, MARGE_TOP_BOTTOM, 38.0f, 38.0f)];
+    iconView.contentMode = UIViewContentModeCenter;
+    iconView.layer.cornerRadius = CGRectGetHeight(iconView.frame) / 2;
+    iconView.layer.masksToBounds = YES;
+    iconView.tintColor = [UIColor whiteColor];
+    
     [self.contentView addSubview:iconView];
 }
 
 - (void)createTextView {
-    labelText = [[UILabel alloc] initWithFrame:CGRectMake(CONTENT_X, 0, PPScreenWidth() - CONTENT_X - MARGE_RIGHT, 0)];
+    labelText = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxY(iconView.frame) + MARGE_RIGHT, 0, PPScreenWidth() - CGRectGetMaxY(iconView.frame) - 2 * MARGE_RIGHT, 0)];
     
     labelText.textColor = [UIColor whiteColor];
     labelText.numberOfLines = 0;
@@ -112,7 +116,17 @@
 }
 
 - (void)prepareIconView {
-    [iconView setImage:[UIImage imageNamed:[_activity icon]]];
+    [iconView setImage:[[FLHelper imageWithImage:[UIImage imageNamed:[_activity icon]] scaledToSize:CGSizeMake(20, 20)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [iconView setBackgroundColor:_activity.backIconColor];
+    
+    if ([_activity imgURL] && ![[_activity imgURL] isBlank]) {
+        [iconView sd_setImageWithURL:[NSURL URLWithString:[_activity imgURL]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            if (image && !error) {
+                [iconView setImage:[[FLHelper imageWithImage:image scaledToSize:CGSizeMake(20, 20)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+            }
+        }];
+    }
+    
     iconView.center = CGPointMake(iconView.center.x, height / 2.);
 }
 

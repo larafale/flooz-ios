@@ -20,8 +20,30 @@
 
 - (void)setJSON:(NSDictionary *)json {
 
+    NSArray *splitType = [[json objectForKey:@"type"] componentsSeparatedByString:@":"];
+    
+    if ([splitType[0] isEqualToString:@"flooz"]) {
+        _icon = @"home_sub_flooz";
+    } else if ([splitType[0] isEqualToString:@"cash"]) {
+        _icon = @"home_sub_cashin";
+    } else if ([splitType[0] isEqualToString:@"pot"]) {
+        _icon = @"home_sub_pot";
+    } else if ([splitType[0] isEqualToString:@"card"]) {
+        _icon = @"cashin_cb";
+    }
+    
+    if ([splitType[1] isEqualToString:@"create"]) {
+        _backIconColor = [UIColor customBlue];
+    } else if ([splitType[1] isEqualToString:@"out"]) {
+        _backIconColor = [UIColor customRed];
+    } else if ([splitType[1] isEqualToString:@"int"]) {
+        _backIconColor = [UIColor customGreen];
+    }
+    
     _content = [json objectForKey:@"text"];
-
+    _imgURL = [json objectForKey:@"imageURL"];
+    _triggers = [FLTriggerManager convertDataInList:json[@"triggers"]];
+    
     {
         static NSDateFormatter *dateFormatter;
         if (!dateFormatter) {

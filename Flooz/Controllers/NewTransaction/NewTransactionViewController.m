@@ -200,13 +200,6 @@
     amountItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%.2f €", [[[Flooz sharedInstance] currentUser].amount floatValue]] style:UIBarButtonItemStylePlain target:self action:@selector(amountInfos)];
     [amountItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
-    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
-    CGSize newImgSize = CGSizeMake(30, 20);
-    
-    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
-    [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
-    cbImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
     
     if (currentPreset && currentPreset.isParticipation) {
         transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionParticipate:@selector(validParticipation)];
@@ -491,11 +484,11 @@
 }
 
 - (void)amountInfos {
-    [self.view endEditing:YES];
-    [self.view endEditing:NO];
-    
-    FLPopupTrigger *popupTrigger = [[FLPopupTrigger alloc] initWithData:@{@"close":@YES, @"content":@"Blabla", @"title":@"Title", @"buttons":@[@{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"triggers":@[@{@"key":@"app:cashin:show"}]}]}];
-    [popupTrigger show];
+//    [self.view endEditing:YES];
+//    [self.view endEditing:NO];
+//    
+//    FLPopupTrigger *popupTrigger = [[FLPopupTrigger alloc] initWithData:@{@"close":@YES, @"content":@"Blabla", @"title":@"Title", @"buttons":@[@{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"triggers":@[@{@"key":@"app:cashin:show"}]}]}];
+//    [popupTrigger show];
 }
 
 - (void)dismissKeyboard:(id)sender {

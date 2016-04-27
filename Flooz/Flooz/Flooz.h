@@ -38,6 +38,7 @@ static NSString *kNotificationRefreshTransaction = @"kNotificationRefreshTransac
 static NSString *kNotificationReloadTimeline = @"kNotificationReloadTimeline";
 static NSString *kNotificationReloadShareTexts = @"kNotificationReloadShareTexts";
 static NSString *kNotificationReloadTexts = @"kNotificationReloadTexts";
+static NSString *kNotificationRefreshActivities  = @"kNotificationRefreshActivities";
 
 static NSString *kSendContact = @"contactSended";
 
@@ -143,7 +144,8 @@ static NSString *kLocationData = @"locationData";
 - (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)sendSignupSMS:(NSString *)phone;
 - (void)confirmTransactionSMS:(NSString *)floozId validate:(Boolean)validate success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
-- (void)activitiesWithSuccess:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success;
 
 - (void)updateTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)updateTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
