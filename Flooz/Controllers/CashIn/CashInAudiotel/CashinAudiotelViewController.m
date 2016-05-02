@@ -49,7 +49,7 @@
     [numberView setUserInteractionEnabled:YES];
     [numberView setContentMode:UIViewContentModeScaleAspectFit];
     
-    [numberView sd_setImageWithURL:[NSURL URLWithString:@"http://www.flooz.me/img/audiotel/num3e.png"]];
+    [numberView sd_setImageWithURL:[NSURL URLWithString:[[[Flooz sharedInstance] currentTexts] audiotelImage]]];
     
     numberHint = [[UILabel alloc] initWithText:NSLocalizedString(@"CASHIN_AUDIOTEL_AVALAIBLE", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:13] textAlignment:NSTextAlignmentCenter numberOfLines:0];
     CGRectSetXY(numberHint.frame, 10, CGRectGetMaxY(numberView.frame) + 10);

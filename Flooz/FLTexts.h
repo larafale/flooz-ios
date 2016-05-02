@@ -27,6 +27,7 @@
 
 @property (nonatomic, retain) NSString *cardHolder;
 @property (nonatomic, retain) NSString *audiotelNumber;
+@property (nonatomic, retain) NSString *audiotelImage;
 @property (nonatomic, retain) NSString *card;
 @property (nonatomic, retain) NSDictionary *notificationsText;
 @property (nonatomic, retain) NSDictionary *json;

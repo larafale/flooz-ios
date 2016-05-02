@@ -20,7 +20,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json {
-
+    
     self.title = json[@"title"];
     self.subtitle = json[@"subtitle"];
     self.defaultImg = json[@"defaultPic"];
@@ -30,7 +30,7 @@
         self.soon = [json[@"soon"] boolValue];
     else
         self.soon = NO;
-        
+    
     self.triggers = [FLTriggerManager convertDataInList:json[@"triggers"]];
 }
 
@@ -49,7 +49,10 @@
 - (void)setJSON:(NSDictionary *)json {
     self.json = json;
     
-    self.audiotelNumber = json[@"audiotelNumber"];
+    if (json[@"audiotel"]) {
+        self.audiotelNumber = json[@"audiotel"][@"number"];
+        self.audiotelImage = json[@"audiotel"][@"image"];
+    }
     
     if (json[@"cardHolder"])
         self.cardHolder = [json[@"cardHolder"] boolValue] ? @"true" : @"false";
