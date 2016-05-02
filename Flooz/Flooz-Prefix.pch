@@ -18,7 +18,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import <SDWebImage/UIImageView+WebCache.h>
-#import <JTHelper.h>
+#import "JTHelper.h"
 
 #import "NSDictionary+JSONHelper.h"
 #import "NSArray+JSONHelper.h"
@@ -65,7 +65,7 @@
 #import "TTTAttributedLabel.h"
 
 #import <AVFoundation/AVFoundation.h>
-#import <NSDate+Calendar/NSDate+Calendar.h>
+#import "NSDate+Calendar.h"
 #import "GlobalViewController.h"
 #import "BaseViewController.h"
 #import "MZFormSheetController.h"

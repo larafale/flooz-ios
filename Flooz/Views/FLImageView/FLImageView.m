@@ -9,7 +9,7 @@
 #import "FLImageView.h"
 
 #import "AppDelegate.h"
-#import <IDMPhotoBrowser.h>
+#import "IDMPhotoBrowser.h"
 
 @implementation FLImageView
 

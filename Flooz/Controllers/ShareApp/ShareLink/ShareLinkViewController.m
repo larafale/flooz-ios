@@ -535,7 +535,6 @@
         if (![selectedContacts containsObject:currentUser] && !filtered.count) {
             [selectedContacts addObject:currentUser];
             [_contactPickerView addContact:currentUser withName:currentUser.fullname];
-            _contactPickerView.textField.text = _selectionText;
         } else {
             [self tableView:tableView didDeselectRowAtIndexPath:indexPath];
             return;

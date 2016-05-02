@@ -99,7 +99,7 @@
     
     dateView.textAlignment = NSTextAlignmentRight;
     dateView.textColor = [UIColor customPlaceholder];
-    dateView.font = [UIFont customContentLight:9];
+    dateView.font = [UIFont customContentLight:11];
     
     [self.contentView addSubview:dateView];
 }

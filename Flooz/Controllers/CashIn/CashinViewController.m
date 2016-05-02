@@ -11,7 +11,7 @@
 #import "CashinAudiotelViewController.h"
 
 @interface CashinViewController () {
-    NSMutableArray *methods;
+    NSArray *methods;
     UIView *headerView;
 }
 
@@ -32,20 +32,7 @@
     if (!self.title || [self.title isBlank])
         self.title = NSLocalizedString(@"NAV_CASHIN", nil);
     
-    methods = [@[@{
-                    @"title":NSLocalizedString(@"CASHIN_CARD_TITLE", nil),
-                    @"subtitle":NSLocalizedString(@"CASHIN_CARD_SUBTITLE", nil),
-                    @"img":@"cashin_cb",
-                    @"controller": [CashinCreditCardViewController class]
-                    }] mutableCopy];
-    
-    if ([[[Flooz sharedInstance] currentTexts] audiotelNumber])
-        [methods addObject:@{
-          @"title":NSLocalizedString(@"CASHIN_AUDIOTEL_TITLE", nil),
-          @"subtitle":NSLocalizedString(@"CASHIN_AUDIOTEL_SUBTITLE", nil),
-          @"img":@"cashin_phone",
-          @"controller": [CashinAudiotelViewController class]
-          }];
+    methods = [[[Flooz sharedInstance] currentTexts] cashinButtons];
     
     [self createHeader];
 
@@ -62,6 +49,13 @@
     [_mainBody addSubview:_tableView];
     
     [self registerNotification:@selector(createHeader) name:kNotificationReloadCurrentUser object:nil];
+    [self registerNotification:@selector(reloadMethods) name:kNotificationReloadTexts object:nil];
+}
+
+- (void)reloadMethods {
+    methods = [[[Flooz sharedInstance] currentTexts] cashinButtons];
+
+    [_tableView reloadData];
 }
 
 - (void)createHeader {
@@ -116,6 +110,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self createHeader];
+    [self reloadMethods];
 }
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -147,7 +142,7 @@
     return cell;
 }
 
-- (void)fillCell:(UIView *)contentView data:(NSDictionary *)buttonData {
+- (void)fillCell:(UIView *)contentView data:(FLHomeButton *)buttonData {
     contentView.backgroundColor = [UIColor customBackground];
     contentView.layer.cornerRadius = 5;
 
@@ -155,12 +150,20 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.tintColor = [UIColor customBlue];
     
-    imageView.image = [[UIImage imageNamed:buttonData[@"img"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    if (buttonData.imgUrl && ![buttonData.imgUrl isBlank]) {
+        [imageView sd_setImageWithURL:[NSURL URLWithString:buttonData.imgUrl] placeholderImage:[[UIImage imageNamed:buttonData.defaultImg] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] options:SDWebImageRefreshCached|SDWebImageContinueInBackground completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            if (imageView && !error) {
+                imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            }
+        }];
+    } else {
+        imageView.image = [[UIImage imageNamed:buttonData.defaultImg] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    }
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 15, 8, PPScreenWidth() - CGRectGetMaxX(imageView.frame) - 45, 15)];
     titleLabel.font = [UIFont customContentRegular:15];
     titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.text = buttonData[@"title"];
+    titleLabel.text = buttonData.title;
     titleLabel.numberOfLines = 1;
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 10. / titleLabel.font.pointSize;
@@ -169,7 +172,7 @@
     UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 15, CGRectGetMaxY(titleLabel.frame), PPScreenWidth() - CGRectGetMaxX(imageView.frame) - 55, 30)];
     subtitleLabel.font = [UIFont customContentRegular:12];
     subtitleLabel.textColor = [UIColor customPlaceholder];
-    subtitleLabel.text = buttonData[@"subtitle"];
+    subtitleLabel.text = buttonData.subtitle;
     subtitleLabel.numberOfLines = 2;
     subtitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     subtitleLabel.adjustsFontSizeToFitWidth = YES;
@@ -188,10 +191,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *rowData = methods[indexPath.row];
+    FLHomeButton *currentButton = methods[indexPath.row];
     
-    if (rowData && rowData[@"controller"])
-        [self.navigationController pushViewController:[rowData[@"controller"] new] animated:YES];
+    [[FLTriggerManager sharedInstance] executeTriggerList:currentButton.triggers];
 }
 
 @end

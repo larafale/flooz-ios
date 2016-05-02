@@ -87,7 +87,9 @@
         [_transaction setJSON:result[@"item"]];
 	    [transactionDetailsView setTransaction:_transaction];
 	    [self prepareViews];
-	} failure:NULL];
+	} failure:^(NSError *error) {
+        [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
+    }];
 }
 
 - (void)block {

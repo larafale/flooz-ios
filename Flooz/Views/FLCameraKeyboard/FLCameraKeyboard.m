@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Flooz. All rights reserved.
 //
 
-#import <JPSVolumeButtonHandler.h>
+#import "JPSVolumeButtonHandler.h"
 #import "FLCameraKeyboard.h"
 
 @implementation FLCameraKeyboard {

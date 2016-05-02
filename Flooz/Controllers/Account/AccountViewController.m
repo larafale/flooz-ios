@@ -205,7 +205,7 @@
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"action":@"cashin"},
-                               @{@"title":NSLocalizedString(@"NAV_ACTIVITIES", nil), @"action":@"activities"},
+//                               @{@"title":NSLocalizedString(@"NAV_ACTIVITIES", nil), @"action":@"activities"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
@@ -236,7 +236,7 @@
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"action":@"cashin"},
-                               @{@"title":NSLocalizedString(@"NAV_ACTIVITIES", nil), @"action":@"activities"},
+//                               @{@"title":NSLocalizedString(@"NAV_ACTIVITIES", nil), @"action":@"activities"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                ]

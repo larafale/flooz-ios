@@ -48,7 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    saveCard = YES;
+    saveCard = NO;
     
     dictionary = [NSMutableDictionary new];
     
@@ -252,9 +252,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] removeCreditCard:creditCardId success: ^(id result) {
-        [[[Flooz sharedInstance] currentUser] setCreditCard:nil];
-        [self reloadView];
-        [paymentTextField becomeFirstResponder];
+
     }];
 }
 

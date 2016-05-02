@@ -254,7 +254,7 @@
     [certfifiedIcon setImage:[UIImage imageNamed:@"certified"]];
     [certfifiedIcon setContentMode:UIViewContentModeScaleAspectFit];
     
-    badgeView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(avatarImage.frame) + 10, 0, 20)];
+    badgeView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(avatarImage.frame) + 5, 0, 30)];
     
     usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(fullnameLabel.frame) + 3, PPScreenWidth() / 2, 15)];
     usernameLabel.font = [UIFont customContentBold:13];
@@ -451,7 +451,7 @@
         CGFloat badgeOffsetX = 0;
         
         for (NSDictionary *badge in currentUser.badges) {
-            UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(badgeOffsetX, 0, 20, 20)];
+            UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(badgeOffsetX, 3.5f, 23, 24)];
             view.contentMode = UIViewContentModeScaleAspectFit;
             view.tintColor = [UIColor clearColor];
             

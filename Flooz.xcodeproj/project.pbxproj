@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11069BE039D887946D589528 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3EE7A13AE62DD40952627A /* libPods.a */; };
 		2F0F6AFB19DF0686004CA223 /* FLSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFA19DF0686004CA223 /* FLSwitch.m */; };
 		2F0F6AFC19DF0686004CA223 /* FLSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFA19DF0686004CA223 /* FLSwitch.m */; };
 		2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFE19DF3E35004CA223 /* SettingsBankViewController.m */; };
@@ -57,8 +56,12 @@
 		2FEAA9CB19DC50A200EE95C9 /* UISearchBar+Subviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */; };
 		2FEAA9CF19DC63B500EE95C9 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */; };
 		2FEAA9D019DC63B500EE95C9 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */; };
-		46B9169CFC85DB0C16B1BBF5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3EE7A13AE62DD40952627A /* libPods.a */; };
-		9863F5B6A7BAB4BADF9D41BF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3EE7A13AE62DD40952627A /* libPods.a */; };
+		33E098E490314AC98001C065 /* libPods-FloozTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF82B6606881392036BBA31B /* libPods-FloozTests.a */; };
+		3E1A872B1B5960C723B2883A /* libPods-Flooz-Flooz dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 075CEF3A68C4DB5E5A674E6B /* libPods-Flooz-Flooz dev.a */; };
+		408894527B8E3E709C73D228 /* libPods-Flooz local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636635C62B40A4E2D7EC3281 /* libPods-Flooz local.a */; };
+		6449C2DD62A77D26E8AF0A47 /* libPods-Flooz dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 724D25645AB0F60AC4695E96 /* libPods-Flooz dev.a */; };
+		64AD3BBC4AA40FB8641ECB08 /* libPods-Flooz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F2D479AEF0FD539571DEC5 /* libPods-Flooz.a */; };
+		8860AA91224F732EDD0049C3 /* libPods-Flooz-Flooz local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E85D77DE50EA0CA769FA02 /* libPods-Flooz-Flooz local.a */; };
 		AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0857FC1923AB13007C1927 /* SplashViewController.m */; };
 		AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
 		AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */; };
@@ -71,8 +74,8 @@
 		AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB53718AD8C7A0079AA1D /* FLTextFieldTitle2.m */; };
 		AB2FB54318AD9C7A0079AA1D /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54118AD9C7A0079AA1D /* PasswordViewController.m */; };
 		AB2FB54418AD9C7A0079AA1D /* PasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB54218AD9C7A0079AA1D /* PasswordViewController.xib */; };
-		AB2FB54818AE798D0079AA1D /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54718AE798D0079AA1D /* FLActivity.m */; };
-		AB2FB54C18B231B90079AA1D /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54B18B231B90079AA1D /* ActivityCell.m */; };
+		AB2FB54818AE798D0079AA1D /* FLNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54718AE798D0079AA1D /* FLNotification.m */; };
+		AB2FB54C18B231B90079AA1D /* NotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54B18B231B90079AA1D /* NotificationCell.m */; };
 		AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB55B18B2B4710079AA1D /* FriendsViewController.m */; };
 		AB2FB55E18B2B4710079AA1D /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB2FB55C18B2B4710079AA1D /* FriendsViewController.xib */; };
 		AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB56218B63B5F0079AA1D /* FriendCell.m */; };
@@ -130,7 +133,7 @@
 		ABAA3F95197E96BF009F29EF /* FLPaymentField.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9149F18968E52003AC722 /* FLPaymentField.m */; };
 		ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
 		ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
-		ABAA3F9C197E96BF009F29EF /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54B18B231B90079AA1D /* ActivityCell.m */; };
+		ABAA3F9C197E96BF009F29EF /* NotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54B18B231B90079AA1D /* NotificationCell.m */; };
 		ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9148A1892C734003AC722 /* FLKeyboardView.m */; };
 		ABAA3F9F197E96BF009F29EF /* FLValidNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE91423188944D5003AC722 /* FLValidNavBar.m */; };
 		ABAA3FA1197E96BF009F29EF /* TransactionCommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115118ACE4AA00C3C52D /* TransactionCommentsView.m */; };
@@ -150,7 +153,7 @@
 		ABAA3FBC197E96BF009F29EF /* FLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914AA1898558E003AC722 /* FLTextView.m */; };
 		ABAA3FBD197E96BF009F29EF /* TransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7092818A2CA3500517389 /* TransactionViewController.m */; };
 		ABAA3FBE197E96BF009F29EF /* FLTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914411890A12C003AC722 /* FLTransaction.m */; };
-		ABAA3FBF197E96BF009F29EF /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54718AE798D0079AA1D /* FLActivity.m */; };
+		ABAA3FBF197E96BF009F29EF /* FLNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54718AE798D0079AA1D /* FLNotification.m */; };
 		ABAA3FC1197E96BF009F29EF /* UIBarButtonItem+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9143C1890A08A003AC722 /* UIBarButtonItem+custom.m */; };
 		ABAA3FC2197E96BF009F29EF /* Flooz.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08DF1871AAB400CF8380 /* Flooz.m */; };
 		ABAA3FC3197E96BF009F29EF /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9147718929AC8003AC722 /* NotificationsViewController.m */; };
@@ -267,7 +270,9 @@
 		ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
 		ABF7094118A4D64300517389 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7094018A4D64300517389 /* TransactionCell.m */; };
 		ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
-		B4C18FA24272215246146A1A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3EE7A13AE62DD40952627A /* libPods.a */; };
+		C9006C921CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
+		C9006C931CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
+		C9006C941CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
 		C90252101B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
 		C90252111B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
 		C90252121B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
@@ -338,6 +343,9 @@
 		C92900DB1C8F1DE70008D61D /* CollectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */; };
 		C92900DC1C8F1DE70008D61D /* CollectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */; };
 		C92900DD1C8F1DE70008D61D /* CollectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */; };
+		C92A31AD1CAD27B9004BA50F /* TransactionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92A31AC1CAD27B9004BA50F /* TransactionHeaderView.m */; };
+		C92A31AE1CAD27B9004BA50F /* TransactionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92A31AC1CAD27B9004BA50F /* TransactionHeaderView.m */; };
+		C92A31AF1CAD27B9004BA50F /* TransactionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92A31AC1CAD27B9004BA50F /* TransactionHeaderView.m */; };
 		C92FB3AB1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
 		C92FB3AC1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
 		C92FB3AD1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */; };
@@ -346,30 +354,6 @@
 		C935B6E91B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */; };
 		C935B6EA1B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */; };
 		C935B6EB1B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */; };
-		C9377E741C8705C60064CB8B /* ArrayEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6C1C8705C60064CB8B /* ArrayEx.swift */; };
-		C9377E751C8705C60064CB8B /* ArrayEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6C1C8705C60064CB8B /* ArrayEx.swift */; };
-		C9377E761C8705C60064CB8B /* ArrayEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6C1C8705C60064CB8B /* ArrayEx.swift */; };
-		C9377E771C8705C60064CB8B /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6D1C8705C60064CB8B /* CGPointEx.swift */; };
-		C9377E781C8705C60064CB8B /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6D1C8705C60064CB8B /* CGPointEx.swift */; };
-		C9377E791C8705C60064CB8B /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6D1C8705C60064CB8B /* CGPointEx.swift */; };
-		C9377E7A1C8705C60064CB8B /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6E1C8705C60064CB8B /* CGRectEx.swift */; };
-		C9377E7B1C8705C60064CB8B /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6E1C8705C60064CB8B /* CGRectEx.swift */; };
-		C9377E7C1C8705C60064CB8B /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6E1C8705C60064CB8B /* CGRectEx.swift */; };
-		C9377E7D1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */; };
-		C9377E7E1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */; };
-		C9377E7F1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */; };
-		C9377E801C8705C60064CB8B /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E701C8705C60064CB8B /* LiquidUtil.swift */; };
-		C9377E811C8705C60064CB8B /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E701C8705C60064CB8B /* LiquidUtil.swift */; };
-		C9377E821C8705C60064CB8B /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E701C8705C60064CB8B /* LiquidUtil.swift */; };
-		C9377E831C8705C60064CB8B /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E711C8705C60064CB8B /* LiquittableCircle.swift */; };
-		C9377E841C8705C60064CB8B /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E711C8705C60064CB8B /* LiquittableCircle.swift */; };
-		C9377E851C8705C60064CB8B /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E711C8705C60064CB8B /* LiquittableCircle.swift */; };
-		C9377E861C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */; };
-		C9377E871C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */; };
-		C9377E881C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */; };
-		C9377E891C8705C60064CB8B /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E731C8705C60064CB8B /* UIColorEx.swift */; };
-		C9377E8A1C8705C60064CB8B /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E731C8705C60064CB8B /* UIColorEx.swift */; };
-		C9377E8B1C8705C60064CB8B /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9377E731C8705C60064CB8B /* UIColorEx.swift */; };
 		C938EFCE1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
 		C938EFCF1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
 		C938EFD01AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
@@ -385,9 +369,18 @@
 		C9436EBD1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
 		C9436EBE1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
 		C9436EBF1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
+		C94EF3B91CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C94EF3B81CB2AB8E003EA4CF /* AmbassadorStepsViewController.m */; };
+		C94EF3BA1CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C94EF3B81CB2AB8E003EA4CF /* AmbassadorStepsViewController.m */; };
+		C94EF3BB1CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C94EF3B81CB2AB8E003EA4CF /* AmbassadorStepsViewController.m */; };
 		C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
+		C95184A71CC77F860035BAAD /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184A61CC77F860035BAAD /* ActivitiesViewController.m */; };
+		C95184A81CC77F860035BAAD /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184A61CC77F860035BAAD /* ActivitiesViewController.m */; };
+		C95184A91CC77F860035BAAD /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184A61CC77F860035BAAD /* ActivitiesViewController.m */; };
+		C95184AC1CC780550035BAAD /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184AB1CC780550035BAAD /* FLActivity.m */; };
+		C95184AD1CC780550035BAAD /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184AB1CC780550035BAAD /* FLActivity.m */; };
+		C95184AE1CC780550035BAAD /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184AB1CC780550035BAAD /* FLActivity.m */; };
 		C95254D61B5E7BC300D88096 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95254D51B5E7BC300D88096 /* AccountCell.m */; };
 		C95254D71B5E7BC300D88096 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95254D51B5E7BC300D88096 /* AccountCell.m */; };
 		C95254D81B5E7BC300D88096 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95254D51B5E7BC300D88096 /* AccountCell.m */; };
@@ -472,7 +465,7 @@
 		C98012A01A76921000019682 /* FLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5EB7011882157300D81AF6 /* FLTableView.m */; };
 		C98012A11A76921000019682 /* FLCameraKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCBCD0F19BF3C6700FB31E0 /* FLCameraKeyboard.m */; };
 		C98012A21A76921000019682 /* FLSocialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F1307E819D9C1790062D194 /* FLSocialButton.m */; };
-		C98012A41A76921000019682 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54B18B231B90079AA1D /* ActivityCell.m */; };
+		C98012A41A76921000019682 /* NotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54B18B231B90079AA1D /* NotificationCell.m */; };
 		C98012A51A76921000019682 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */; };
 		C98012A61A76921000019682 /* FLKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9148A1892C734003AC722 /* FLKeyboardView.m */; };
 		C98012A71A76921000019682 /* SettingsPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E55E19DDE97700EC65C2 /* SettingsPreferencesViewController.m */; };
@@ -505,7 +498,7 @@
 		C98012CD1A76921000019682 /* TransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7092818A2CA3500517389 /* TransactionViewController.m */; };
 		C98012CE1A76921000019682 /* FLTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914411890A12C003AC722 /* FLTransaction.m */; };
 		C98012CF1A76921000019682 /* CodePinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE983E519CB73A200E05501 /* CodePinView.m */; };
-		C98012D21A76921000019682 /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54718AE798D0079AA1D /* FLActivity.m */; };
+		C98012D21A76921000019682 /* FLNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB54718AE798D0079AA1D /* FLNotification.m */; };
 		C98012D31A76921000019682 /* UIBarButtonItem+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9143C1890A08A003AC722 /* UIBarButtonItem+custom.m */; };
 		C98012D41A76921000019682 /* Flooz.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08DF1871AAB400CF8380 /* Flooz.m */; };
 		C98012D51A76921000019682 /* NotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE9147718929AC8003AC722 /* NotificationsViewController.m */; };
@@ -625,6 +618,9 @@
 		C99A51551AF7D69500342F8C /* IQActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */; };
 		C99A51561AF7D69500342F8C /* IQActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */; };
 		C99A51571AF7D69500342F8C /* IQActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */; };
+		C99CAE431C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99CAE421C9DAD9300CDC967 /* CollectParticipantViewController.m */; };
+		C99CAE441C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99CAE421C9DAD9300CDC967 /* CollectParticipantViewController.m */; };
+		C99CAE451C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99CAE421C9DAD9300CDC967 /* CollectParticipantViewController.m */; };
 		C99D11B31C8868090091F48C /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99D11B21C8868090091F48C /* NewCollectController.m */; };
 		C99D11B41C8868090091F48C /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99D11B21C8868090091F48C /* NewCollectController.m */; };
 		C99D11B51C8868090091F48C /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99D11B21C8868090091F48C /* NewCollectController.m */; };
@@ -644,15 +640,33 @@
 		C9AE77961ACA918B00CFF0AF /* FLSlide.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AE77931ACA918B00CFF0AF /* FLSlide.m */; };
 		C9AF4BE619F7C2D7005C696B /* AvatarMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AF4BE519F7C2D7005C696B /* AvatarMenu.m */; };
 		C9AF4BE719F7C340005C696B /* AvatarMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AF4BE519F7C2D7005C696B /* AvatarMenu.m */; };
+		C9B137C01CBFCB91002289C9 /* CashinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137BF1CBFCB91002289C9 /* CashinViewController.m */; };
+		C9B137C11CBFCB91002289C9 /* CashinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137BF1CBFCB91002289C9 /* CashinViewController.m */; };
+		C9B137C21CBFCB91002289C9 /* CashinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137BF1CBFCB91002289C9 /* CashinViewController.m */; };
+		C9B137C71CBFE5B3002289C9 /* CashinCreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137C61CBFE5B3002289C9 /* CashinCreditCardViewController.m */; };
+		C9B137C81CBFE5B3002289C9 /* CashinCreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137C61CBFE5B3002289C9 /* CashinCreditCardViewController.m */; };
+		C9B137C91CBFE5B3002289C9 /* CashinCreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137C61CBFE5B3002289C9 /* CashinCreditCardViewController.m */; };
+		C9B137CC1CBFE5D8002289C9 /* CashinAudiotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137CB1CBFE5D8002289C9 /* CashinAudiotelViewController.m */; };
+		C9B137CD1CBFE5D8002289C9 /* CashinAudiotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137CB1CBFE5D8002289C9 /* CashinAudiotelViewController.m */; };
+		C9B137CE1CBFE5D8002289C9 /* CashinAudiotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137CB1CBFE5D8002289C9 /* CashinAudiotelViewController.m */; };
 		C9B1866D1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1866C1A9E01D400077C5F /* FLTutoPopoverViewController.m */; };
 		C9B1866E1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1866C1A9E01D400077C5F /* FLTutoPopoverViewController.m */; };
 		C9B1866F1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1866C1A9E01D400077C5F /* FLTutoPopoverViewController.m */; };
 		C9B4AA6A1AE7C606002E0723 /* FLScannerOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */; };
 		C9B4AA6B1AE7C606002E0723 /* FLScannerOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */; };
 		C9B4AA6C1AE7C606002E0723 /* FLScannerOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */; };
+		C9B761901C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */; };
+		C9B761911C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */; };
+		C9B761921C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */; };
+		C9B975571C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */; };
+		C9B975581C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */; };
+		C9B975591C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */; };
 		C9BAB50E1AF26C2A00215CDC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */; };
 		C9BAB50F1AF26C3100215CDC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */; };
 		C9BAB5101AF26C3900215CDC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */; };
+		C9C3AD861CA29631009907D9 /* ParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C3AD851CA29631009907D9 /* ParticipantCell.m */; };
+		C9C3AD871CA29631009907D9 /* ParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C3AD851CA29631009907D9 /* ParticipantCell.m */; };
+		C9C3AD881CA29631009907D9 /* ParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C3AD851CA29631009907D9 /* ParticipantCell.m */; };
 		C9C660B21BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
 		C9C660B31BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
 		C9C660B41BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
@@ -743,6 +757,11 @@
 		C9ED41291A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9ED41281A9B7ABA000C4D7A /* NSArray+JSONHelper.m */; };
 		C9ED412A1A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9ED41281A9B7ABA000C4D7A /* NSArray+JSONHelper.m */; };
 		C9ED412B1A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9ED41281A9B7ABA000C4D7A /* NSArray+JSONHelper.m */; };
+		C9F517D11CABD1C600856D53 /* FLPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F517D01CABD1C600856D53 /* FLPlusButton.m */; };
+		C9F517D21CABD1C600856D53 /* FLPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F517D01CABD1C600856D53 /* FLPlusButton.m */; };
+		C9F517D31CABD1C600856D53 /* FLPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F517D01CABD1C600856D53 /* FLPlusButton.m */; };
+		DF35AD96007629641A487923 /* libPods-FloozT-FloozTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 491105F33C2B34EFA4DC2A59 /* libPods-FloozT-FloozTests.a */; };
+		F07DE36F42573ED4EFF359E7 /* libPods-Flooz-FloozTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C2709220CA055B8C6F04E51 /* libPods-Flooz-FloozTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -770,6 +789,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03EEE3E0927F7C6D21E79788 /* Pods-Flooz-Flooz dev.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-Flooz dev.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-Flooz dev/Pods-Flooz-Flooz dev.local.xcconfig"; sourceTree = "<group>"; };
+		075CEF3A68C4DB5E5A674E6B /* libPods-Flooz-Flooz dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz-Flooz dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		077076FBBD6BD88F871FD4DA /* Pods-Flooz-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-FloozTests/Pods-Flooz-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
+		0831405D5808D3555D8236BB /* Pods-Flooz-Flooz local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-Flooz local.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-Flooz local/Pods-Flooz-Flooz local.release.xcconfig"; sourceTree = "<group>"; };
+		1445C66C8E920174A75E9480 /* Pods-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
+		1A6BE2219B9A4C88A3708425 /* Pods-FloozT-Flooz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz/Pods-FloozT-Flooz.debug.xcconfig"; sourceTree = "<group>"; };
+		1C593880D8F3ECF239965B6F /* Pods-FloozTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.local.xcconfig"; sourceTree = "<group>"; };
+		1F125137565925ECA855FF4C /* Pods-Flooz dev.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.recette.xcconfig"; sourceTree = "<group>"; };
+		1F6695BBA288C445C5FC0139 /* Pods-FloozT-Flooz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz/Pods-FloozT-Flooz.release.xcconfig"; sourceTree = "<group>"; };
+		2241351E5F23835CDAF88E4D /* Pods-Flooz local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.release.xcconfig"; sourceTree = "<group>"; };
 		2F0F6AF919DF0686004CA223 /* FLSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSwitch.h; path = Views/FLSwitchView/FLSwitch.h; sourceTree = "<group>"; };
 		2F0F6AFA19DF0686004CA223 /* FLSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSwitch.m; path = Views/FLSwitchView/FLSwitch.m; sourceTree = "<group>"; };
 		2F0F6AFD19DF3E35004CA223 /* SettingsBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsBankViewController.h; sourceTree = "<group>"; };
@@ -786,6 +815,7 @@
 		2F444C8019ED6DAD00ACE12E /* FLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNavigationController.m; path = Controllers/FLNavigationController/FLNavigationController.m; sourceTree = "<group>"; };
 		2F49762419E472CA0089947F /* SettingsNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsNotificationsViewController.h; sourceTree = "<group>"; };
 		2F49762519E472CA0089947F /* SettingsNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsNotificationsViewController.m; sourceTree = "<group>"; };
+		2F4D7399D6C2AD59DF1376B6 /* Pods-Flooz.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.local.xcconfig"; sourceTree = "<group>"; };
 		2F50155119EDC46E00F61380 /* GlobalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = GlobalViewController.h; path = Views/BaseViewController/GlobalViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		2F50155219EDC46E00F61380 /* GlobalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlobalViewController.m; path = Views/BaseViewController/GlobalViewController.m; sourceTree = "<group>"; };
 		2F88A31F19F173EF001FC26F /* FLTextViewComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextViewComment.h; path = Views/FLTextView/FLTextViewComment.h; sourceTree = "<group>"; };
@@ -820,11 +850,36 @@
 		2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UISearchBar+Subviews.m"; path = "Util/UISearchBar+Subviews.m"; sourceTree = "<group>"; };
 		2FEAA9CD19DC63B500EE95C9 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = Views/BaseViewController/BaseViewController.h; sourceTree = "<group>"; };
 		2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = Views/BaseViewController/BaseViewController.m; sourceTree = "<group>"; };
-		4C3EE7A13AE62DD40952627A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CAD606A67C6A9CC082F6489 /* Pods.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.recette.xcconfig; path = "Pods/Target Support Files/Pods/Pods.recette.xcconfig"; sourceTree = "<group>"; };
+		30D110E3E61C286648EF0B5E /* Pods-FloozT-Flooz dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz dev/Pods-FloozT-Flooz dev.release.xcconfig"; sourceTree = "<group>"; };
+		3D1D9F2F39517CBAB6AA6CB8 /* Pods-FloozT-Flooz local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz local.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz local/Pods-FloozT-Flooz local.debug.xcconfig"; sourceTree = "<group>"; };
+		41A7B04AFEA15B6E236582C6 /* Pods-FloozT-FloozTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-FloozTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-FloozTests/Pods-FloozT-FloozTests.local.xcconfig"; sourceTree = "<group>"; };
+		491105F33C2B34EFA4DC2A59 /* libPods-FloozT-FloozTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozT-FloozTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A8948456F4CE85948AC978C /* Pods-Flooz-Flooz dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-Flooz dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-Flooz dev/Pods-Flooz-Flooz dev.release.xcconfig"; sourceTree = "<group>"; };
+		562A6486B0FF8CD84CD6F092 /* Pods-Flooz-FloozTests.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-FloozTests.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-FloozTests/Pods-Flooz-FloozTests.recette.xcconfig"; sourceTree = "<group>"; };
+		56E85D77DE50EA0CA769FA02 /* libPods-Flooz-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B472303FBA87646D7E383B6 /* Pods-FloozT-Flooz local.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz local.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz local/Pods-FloozT-Flooz local.recette.xcconfig"; sourceTree = "<group>"; };
+		5E4876E241495E39C91E489A /* libPods-FloozT-Flooz dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozT-Flooz dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61C6DE658FEF8BF4C4BBDDFE /* Pods-FloozT-Flooz dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz dev/Pods-FloozT-Flooz dev.debug.xcconfig"; sourceTree = "<group>"; };
+		636635C62B40A4E2D7EC3281 /* libPods-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		64A2CF636EE2859E8201B581 /* Pods-FloozT-Flooz local.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz local.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz local/Pods-FloozT-Flooz local.local.xcconfig"; sourceTree = "<group>"; };
+		6DEB5881A555E65930C65AFA /* Pods-Flooz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.debug.xcconfig"; sourceTree = "<group>"; };
+		6F46DACA281937CC8E3258E0 /* Pods-Flooz-Flooz local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-Flooz local.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-Flooz local/Pods-Flooz-Flooz local.debug.xcconfig"; sourceTree = "<group>"; };
+		71C696F24481B6D7E8691783 /* Pods-Flooz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.release.xcconfig"; sourceTree = "<group>"; };
+		724D25645AB0F60AC4695E96 /* libPods-Flooz dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C2709220CA055B8C6F04E51 /* libPods-Flooz-FloozTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz-FloozTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E05FA6BF2CD5267BE8808DF /* Pods-Flooz-Flooz dev.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-Flooz dev.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-Flooz dev/Pods-Flooz-Flooz dev.recette.xcconfig"; sourceTree = "<group>"; };
+		896C29FCEAD33703B3F0E8D6 /* Pods-Flooz-FloozTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-FloozTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-FloozTests/Pods-Flooz-FloozTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8F6FA50C2A45C51DB394DB0E /* Pods-FloozT-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-FloozTests/Pods-FloozT-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
+		947B80950FD0F812CB203872 /* Pods-FloozT-Flooz dev.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz dev.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz dev/Pods-FloozT-Flooz dev.recette.xcconfig"; sourceTree = "<group>"; };
+		94A0E868BC89D2FC89995083 /* Pods-FloozT-FloozTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-FloozTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-FloozTests/Pods-FloozT-FloozTests.debug.xcconfig"; sourceTree = "<group>"; };
+		94F2D479AEF0FD539571DEC5 /* libPods-Flooz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9875D68A8CFFD9CE9E3D3415 /* Pods-FloozT-Flooz local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz local.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz local/Pods-FloozT-Flooz local.release.xcconfig"; sourceTree = "<group>"; };
+		A226E840C650C3BC1C7350D7 /* Pods-Flooz local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.debug.xcconfig"; sourceTree = "<group>"; };
+		A59501F790CCEE212F1F656C /* Pods-Flooz local.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.recette.xcconfig"; sourceTree = "<group>"; };
 		AB0857FB1923AB13007C1927 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SplashViewController.h; path = Controllers/Splash/SplashViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AB0857FC1923AB13007C1927 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashViewController.m; path = Controllers/Splash/SplashViewController.m; sourceTree = "<group>"; };
 		AB0857FD1923AB13007C1927 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashViewController.xib; path = Controllers/Splash/SplashViewController.xib; sourceTree = "<group>"; };
+		AB0E2E724C26806A5B7C19DE /* Pods-FloozTests.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.recette.xcconfig"; sourceTree = "<group>"; };
 		AB119B3B198A3FD200F05ECE /* UIViewController+RegisterNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+RegisterNotification.h"; path = "Util/UIViewController+RegisterNotification.h"; sourceTree = "<group>"; };
 		AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+RegisterNotification.m"; path = "Util/UIViewController+RegisterNotification.m"; sourceTree = "<group>"; };
 		AB15DBB618E46861008E03FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -839,10 +894,10 @@
 		AB2FB54118AD9C7A0079AA1D /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PasswordViewController.m; path = Controllers/Password/PasswordViewController.m; sourceTree = "<group>"; };
 		AB2FB54218AD9C7A0079AA1D /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PasswordViewController.xib; path = Controllers/Password/PasswordViewController.xib; sourceTree = "<group>"; };
 		AB2FB54518AE6EE10079AA1D /* TransactionActionsViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TransactionActionsViewDelegate.h; path = Controllers/Transaction/TransactionActions/TransactionActionsViewDelegate.h; sourceTree = "<group>"; };
-		AB2FB54618AE798D0079AA1D /* FLActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLActivity.h; path = Models/FLActivity.h; sourceTree = "<group>"; };
-		AB2FB54718AE798D0079AA1D /* FLActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLActivity.m; path = Models/FLActivity.m; sourceTree = "<group>"; };
-		AB2FB54A18B231B90079AA1D /* ActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityCell.h; path = ActivityCell/ActivityCell.h; sourceTree = "<group>"; };
-		AB2FB54B18B231B90079AA1D /* ActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityCell.m; path = ActivityCell/ActivityCell.m; sourceTree = "<group>"; };
+		AB2FB54618AE798D0079AA1D /* FLNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNotification.h; path = Models/FLNotification.h; sourceTree = "<group>"; };
+		AB2FB54718AE798D0079AA1D /* FLNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNotification.m; path = Models/FLNotification.m; sourceTree = "<group>"; };
+		AB2FB54A18B231B90079AA1D /* NotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationCell.h; path = ActivityCell/NotificationCell.h; sourceTree = "<group>"; };
+		AB2FB54B18B231B90079AA1D /* NotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationCell.m; path = ActivityCell/NotificationCell.m; sourceTree = "<group>"; };
 		AB2FB55A18B2B4710079AA1D /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FriendsViewController.h; path = Controllers/Friends/FriendsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AB2FB55B18B2B4710079AA1D /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsViewController.m; path = Controllers/Friends/FriendsViewController.m; sourceTree = "<group>"; };
 		AB2FB55C18B2B4710079AA1D /* FriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FriendsViewController.xib; path = Controllers/Friends/FriendsViewController.xib; sourceTree = "<group>"; };
@@ -1010,7 +1065,16 @@
 		ABF7094018A4D64300517389 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionCell.m; path = TransactionCell/TransactionCell.m; sourceTree = "<group>"; };
 		ABF7095B18A4FD6B00517389 /* FLComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLComment.h; path = Models/FLComment.h; sourceTree = "<group>"; };
 		ABF7095C18A4FD6B00517389 /* FLComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLComment.m; path = Models/FLComment.m; sourceTree = "<group>"; };
-		B48C8D51E38315E83190602F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		AD52CABF4B2EF13BCABAEBEB /* Pods-Flooz-FloozTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-FloozTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-FloozTests/Pods-Flooz-FloozTests.local.xcconfig"; sourceTree = "<group>"; };
+		AE5230257A49ED8E9714726F /* Pods-Flooz dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.debug.xcconfig"; sourceTree = "<group>"; };
+		B049EC71B7A6C25905CCD910 /* Pods-Flooz.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.recette.xcconfig"; sourceTree = "<group>"; };
+		B28CC42A54F436520CFA8433 /* Pods-Flooz-Flooz dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-Flooz dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-Flooz dev/Pods-Flooz-Flooz dev.debug.xcconfig"; sourceTree = "<group>"; };
+		BB8FCA136C26530357D52293 /* Pods-FloozT-FloozTests.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-FloozTests.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-FloozTests/Pods-FloozT-FloozTests.recette.xcconfig"; sourceTree = "<group>"; };
+		C2B8F60C3884CD6002B6DFCE /* libPods-FloozT-Flooz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozT-Flooz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2FE461BFF53F0A5EAEFECD0 /* Pods-FloozT-Flooz.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz/Pods-FloozT-Flooz.recette.xcconfig"; sourceTree = "<group>"; };
+		C6A13063D8F6BFB760BC697D /* Pods-FloozTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C9006C901CC7863900A66E07 /* ActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityCell.h; path = ActivityCell/ActivityCell.h; sourceTree = "<group>"; };
+		C9006C911CC7863900A66E07 /* ActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityCell.m; path = ActivityCell/ActivityCell.m; sourceTree = "<group>"; };
 		C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTransactionDescriptionView.m; sourceTree = "<group>"; };
 		C9037F491BFE0481004256BF /* FLCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountry.m; sourceTree = "<group>"; };
 		C905A8D81A56D5BE00473963 /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
@@ -1061,20 +1125,14 @@
 		C92900D41C8F159E0008D61D /* CollectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectViewController.m; path = Controllers/Collect/CollectViewController.m; sourceTree = "<group>"; };
 		C92900D91C8F1DE70008D61D /* CollectHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectHeaderView.h; path = Controllers/Collect/CollectHeaderView/CollectHeaderView.h; sourceTree = "<group>"; };
 		C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectHeaderView.m; path = Controllers/Collect/CollectHeaderView/CollectHeaderView.m; sourceTree = "<group>"; };
+		C92A31AB1CAD27B9004BA50F /* TransactionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionHeaderView.h; path = Controllers/Transaction/TransactionHeaderView/TransactionHeaderView.h; sourceTree = "<group>"; };
+		C92A31AC1CAD27B9004BA50F /* TransactionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionHeaderView.m; path = Controllers/Transaction/TransactionHeaderView/TransactionHeaderView.m; sourceTree = "<group>"; };
 		C92FB3A91BBBEC1F006FB561 /* FLFilterSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilterSegmentedControl.h; sourceTree = "<group>"; };
 		C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilterSegmentedControl.m; sourceTree = "<group>"; };
 		C93118461A1F7E0B008C6EEC /* FLReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReport.h; sourceTree = "<group>"; };
 		C93118471A1F7E0B008C6EEC /* FLReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReport.m; sourceTree = "<group>"; };
 		C935B6E71B611DBD00861DAD /* FLFilterPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilterPopoverViewController.h; sourceTree = "<group>"; };
 		C935B6E81B611DBD00861DAD /* FLFilterPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilterPopoverViewController.m; sourceTree = "<group>"; };
-		C9377E6C1C8705C60064CB8B /* ArrayEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayEx.swift; sourceTree = "<group>"; };
-		C9377E6D1C8705C60064CB8B /* CGPointEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointEx.swift; sourceTree = "<group>"; };
-		C9377E6E1C8705C60064CB8B /* CGRectEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectEx.swift; sourceTree = "<group>"; };
-		C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquidFloatingActionButton.swift; sourceTree = "<group>"; };
-		C9377E701C8705C60064CB8B /* LiquidUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquidUtil.swift; sourceTree = "<group>"; };
-		C9377E711C8705C60064CB8B /* LiquittableCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquittableCircle.swift; sourceTree = "<group>"; };
-		C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleCircleLiquidEngine.swift; sourceTree = "<group>"; };
-		C9377E731C8705C60064CB8B /* UIColorEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorEx.swift; sourceTree = "<group>"; };
 		C938EFCC1AE68C5900A3F740 /* ScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerViewController.h; sourceTree = "<group>"; };
 		C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
 		C93A2D6E1C4FE75400C30821 /* FLTimelineDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTimelineDeal.h; path = Models/FLTimelineDeal.h; sourceTree = "<group>"; };
@@ -1085,8 +1143,14 @@
 		C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLMultiLineSegmentedControl.m; sourceTree = "<group>"; };
 		C9436EBB1BCBA34E000F382C /* ValidateSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSMSViewController.h; path = Controllers/ValidateSMS/ValidateSMSViewController.h; sourceTree = "<group>"; };
 		C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSMSViewController.m; path = Controllers/ValidateSMS/ValidateSMSViewController.m; sourceTree = "<group>"; };
+		C94EF3B71CB2AB8E003EA4CF /* AmbassadorStepsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmbassadorStepsViewController.h; path = Controllers/ShareApp/AmbassadorStepsList/AmbassadorStepsViewController.h; sourceTree = "<group>"; };
+		C94EF3B81CB2AB8E003EA4CF /* AmbassadorStepsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AmbassadorStepsViewController.m; path = Controllers/ShareApp/AmbassadorStepsList/AmbassadorStepsViewController.m; sourceTree = "<group>"; };
 		C950540C1B4E7E9A00B9FB2C /* FLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTabBarController.h; sourceTree = "<group>"; };
 		C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTabBarController.m; sourceTree = "<group>"; };
+		C95184A51CC77F860035BAAD /* ActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivitiesViewController.h; path = Controllers/ActivitiesViewController/ActivitiesViewController.h; sourceTree = "<group>"; };
+		C95184A61CC77F860035BAAD /* ActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivitiesViewController.m; path = Controllers/ActivitiesViewController/ActivitiesViewController.m; sourceTree = "<group>"; };
+		C95184AA1CC780550035BAAD /* FLActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLActivity.h; path = Models/FLActivity.h; sourceTree = "<group>"; };
+		C95184AB1CC780550035BAAD /* FLActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLActivity.m; path = Models/FLActivity.m; sourceTree = "<group>"; };
 		C95254D41B5E7BC300D88096 /* AccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountCell.h; sourceTree = "<group>"; };
 		C95254D51B5E7BC300D88096 /* AccountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountCell.m; sourceTree = "<group>"; };
 		C95502CD1C2AA8D8002E9046 /* ARChromeActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARChromeActivity.h; sourceTree = "<group>"; };
@@ -1152,6 +1216,8 @@
 		C99A514F1AF7D69500342F8C /* IQActionSheetPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetPickerView.m; sourceTree = "<group>"; };
 		C99A51501AF7D69500342F8C /* IQActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetViewController.h; sourceTree = "<group>"; };
 		C99A51511AF7D69500342F8C /* IQActionSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetViewController.m; sourceTree = "<group>"; };
+		C99CAE411C9DAD9300CDC967 /* CollectParticipantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectParticipantViewController.h; path = Controllers/Collect/CollectParticipantViewController/CollectParticipantViewController.h; sourceTree = "<group>"; };
+		C99CAE421C9DAD9300CDC967 /* CollectParticipantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectParticipantViewController.m; path = Controllers/Collect/CollectParticipantViewController/CollectParticipantViewController.m; sourceTree = "<group>"; };
 		C99D11B11C8868090091F48C /* NewCollectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewCollectController.h; path = Controllers/NewTransaction/NewCollectController.h; sourceTree = "<group>"; };
 		C99D11B21C8868090091F48C /* NewCollectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewCollectController.m; path = Controllers/NewTransaction/NewCollectController.m; sourceTree = "<group>"; };
 		C9A265541ACC460700859B32 /* SignupInvitationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupInvitationViewController.h; sourceTree = "<group>"; };
@@ -1166,11 +1232,23 @@
 		C9AE77931ACA918B00CFF0AF /* FLSlide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSlide.m; sourceTree = "<group>"; };
 		C9AF4BE419F7C2D7005C696B /* AvatarMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarMenu.h; sourceTree = "<group>"; };
 		C9AF4BE519F7C2D7005C696B /* AvatarMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarMenu.m; sourceTree = "<group>"; };
+		C9B137BE1CBFCB91002289C9 /* CashinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashinViewController.h; path = Controllers/CashIn/CashinViewController.h; sourceTree = "<group>"; };
+		C9B137BF1CBFCB91002289C9 /* CashinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashinViewController.m; path = Controllers/CashIn/CashinViewController.m; sourceTree = "<group>"; };
+		C9B137C51CBFE5B3002289C9 /* CashinCreditCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashinCreditCardViewController.h; path = Controllers/CashIn/CashInCreditCard/CashinCreditCardViewController.h; sourceTree = "<group>"; };
+		C9B137C61CBFE5B3002289C9 /* CashinCreditCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashinCreditCardViewController.m; path = Controllers/CashIn/CashInCreditCard/CashinCreditCardViewController.m; sourceTree = "<group>"; };
+		C9B137CA1CBFE5D8002289C9 /* CashinAudiotelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashinAudiotelViewController.h; path = Controllers/CashIn/CashInAudiotel/CashinAudiotelViewController.h; sourceTree = "<group>"; };
+		C9B137CB1CBFE5D8002289C9 /* CashinAudiotelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashinAudiotelViewController.m; path = Controllers/CashIn/CashInAudiotel/CashinAudiotelViewController.m; sourceTree = "<group>"; };
 		C9B1866B1A9E01D400077C5F /* FLTutoPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTutoPopoverViewController.h; sourceTree = "<group>"; };
 		C9B1866C1A9E01D400077C5F /* FLTutoPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTutoPopoverViewController.m; sourceTree = "<group>"; };
 		C9B4AA681AE7C606002E0723 /* FLScannerOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLScannerOverlay.h; sourceTree = "<group>"; };
 		C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLScannerOverlay.m; sourceTree = "<group>"; };
+		C9B7618E1C9FF666000BBAF5 /* ShareLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareLinkViewController.h; path = Controllers/ShareApp/ShareLink/ShareLinkViewController.h; sourceTree = "<group>"; };
+		C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareLinkViewController.m; path = Controllers/ShareApp/ShareLink/ShareLinkViewController.m; sourceTree = "<group>"; };
+		C9B975551C9EF4BA00163A05 /* CollectParticipationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectParticipationViewController.h; path = Controllers/Collect/CollectParticipationViewController/CollectParticipationViewController.h; sourceTree = "<group>"; };
+		C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectParticipationViewController.m; path = Controllers/Collect/CollectParticipationViewController/CollectParticipationViewController.m; sourceTree = "<group>"; };
 		C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		C9C3AD841CA29631009907D9 /* ParticipantCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticipantCell.h; path = ParticipantCell/ParticipantCell.h; sourceTree = "<group>"; };
+		C9C3AD851CA29631009907D9 /* ParticipantCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticipantCell.m; path = ParticipantCell/ParticipantCell.m; sourceTree = "<group>"; };
 		C9C660B01BCBB70E0029A79A /* ValidateSecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSecureCodeViewController.h; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.h; sourceTree = "<group>"; };
 		C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSecureCodeViewController.m; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.m; sourceTree = "<group>"; };
 		C9C7767F1C075E57006C22CB /* UITabBarItem+CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+CustomBadge.h"; sourceTree = "<group>"; };
@@ -1220,7 +1298,6 @@
 		C9DCC5EC1C28257F008BB370 /* Flooz dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flooz dev.entitlements"; sourceTree = SOURCE_ROOT; };
 		C9DD721E1C9891AD000D1664 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCell.h; path = CommentCell/CommentCell.h; sourceTree = "<group>"; };
 		C9DD721F1C9891AD000D1664 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentCell.m; path = CommentCell/CommentCell.m; sourceTree = "<group>"; };
-		C9E74D111C8453760069C1AD /* Flooz-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flooz-Bridging-Header.h"; sourceTree = "<group>"; };
 		C9EABF2E1C523A7700BDDEA1 /* AddressBookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookController.h; path = Controllers/AddressBookController/AddressBookController.h; sourceTree = "<group>"; };
 		C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBookController.m; path = Controllers/AddressBookController/AddressBookController.m; sourceTree = "<group>"; };
 		C9EABF331C523CE900BDDEA1 /* FLAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAddress.h; path = Models/FLAddress.h; sourceTree = "<group>"; };
@@ -1238,8 +1315,17 @@
 		C9ED41231A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JSONHelper.m"; sourceTree = "<group>"; };
 		C9ED41271A9B7ABA000C4D7A /* NSArray+JSONHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+JSONHelper.h"; sourceTree = "<group>"; };
 		C9ED41281A9B7ABA000C4D7A /* NSArray+JSONHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+JSONHelper.m"; sourceTree = "<group>"; };
-		DC453423FBACAB6C0B7E6680 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		E21FE25B89234484429CFEE5 /* Pods.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.local.xcconfig; path = "Pods/Target Support Files/Pods/Pods.local.xcconfig"; sourceTree = "<group>"; };
+		C9F517CF1CABD1C600856D53 /* FLPlusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPlusButton.h; path = Views/FLPlusButton/FLPlusButton.h; sourceTree = "<group>"; };
+		C9F517D01CABD1C600856D53 /* FLPlusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPlusButton.m; path = Views/FLPlusButton/FLPlusButton.m; sourceTree = "<group>"; };
+		CA70318CF8D4E51F94A2E441 /* Pods-Flooz-Flooz local.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-Flooz local.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-Flooz local/Pods-Flooz-Flooz local.recette.xcconfig"; sourceTree = "<group>"; };
+		CBD9E7E49CA67D4CA45CD376 /* Pods-Flooz dev.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.local.xcconfig"; sourceTree = "<group>"; };
+		D5B771FF8FFACF13E5AA90E9 /* Pods-Flooz local.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.local.xcconfig"; sourceTree = "<group>"; };
+		D75EDB5F7B7A4E202969E191 /* Pods-FloozT-Flooz.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz/Pods-FloozT-Flooz.local.xcconfig"; sourceTree = "<group>"; };
+		E056650DE336420B44029D89 /* Pods-FloozT-Flooz dev.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozT-Flooz dev.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozT-Flooz dev/Pods-FloozT-Flooz dev.local.xcconfig"; sourceTree = "<group>"; };
+		E47397102D4C3B3FDC4A9E6D /* Pods-Flooz dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.release.xcconfig"; sourceTree = "<group>"; };
+		EE8113EFA70BA79EC8494AFB /* Pods-Flooz-Flooz local.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz-Flooz local.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz-Flooz local/Pods-Flooz-Flooz local.local.xcconfig"; sourceTree = "<group>"; };
+		EF82B6606881392036BBA31B /* libPods-FloozTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0CF1B4A62487B86D6E35834 /* libPods-FloozT-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozT-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1269,7 +1355,7 @@
 				AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */,
 				ABA96DAB196EED4D00B8B7C7 /* libScanpay.a in Frameworks */,
-				9863F5B6A7BAB4BADF9D41BF /* libPods.a in Frameworks */,
+				64AD3BBC4AA40FB8641ECB08 /* libPods-Flooz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1279,7 +1365,9 @@
 			files = (
 				AB3D08AD186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D08AC186CA11A00CF8380 /* Foundation.framework in Frameworks */,
-				B4C18FA24272215246146A1A /* libPods.a in Frameworks */,
+				F07DE36F42573ED4EFF359E7 /* libPods-Flooz-FloozTests.a in Frameworks */,
+				DF35AD96007629641A487923 /* libPods-FloozT-FloozTests.a in Frameworks */,
+				33E098E490314AC98001C065 /* libPods-FloozTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1309,7 +1397,8 @@
 				ABAA3FF8197E96BF009F29EF /* UIKit.framework in Frameworks */,
 				ABAA3FF9197E96BF009F29EF /* Foundation.framework in Frameworks */,
 				ABAA3FFA197E96BF009F29EF /* libScanpay.a in Frameworks */,
-				11069BE039D887946D589528 /* libPods.a in Frameworks */,
+				3E1A872B1B5960C723B2883A /* libPods-Flooz-Flooz dev.a in Frameworks */,
+				6449C2DD62A77D26E8AF0A47 /* libPods-Flooz dev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1339,7 +1428,8 @@
 				C98013181A76921000019682 /* UIKit.framework in Frameworks */,
 				C98013191A76921000019682 /* Foundation.framework in Frameworks */,
 				C980131A1A76921000019682 /* libScanpay.a in Frameworks */,
-				46B9169CFC85DB0C16B1BBF5 /* libPods.a in Frameworks */,
+				8860AA91224F732EDD0049C3 /* libPods-Flooz-Flooz local.a in Frameworks */,
+				408894527B8E3E709C73D228 /* libPods-Flooz local.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1375,18 +1465,19 @@
 			name = FLNavigationController;
 			sourceTree = "<group>";
 		};
-		2FC2545C19B6740600EB1EED /* ShareApp */ = {
+		2FC2545C19B6740600EB1EED /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				C94EF3B61CB2AB0C003EA4CF /* AmbassadorStepsList */,
+				C9B7618D1C9FF616000BBAF5 /* ShareLink */,
+				C9B7618C1C9FF604000BBAF5 /* ShareAppSMS */,
 				2FC2545D19B6742500EB1EED /* ShareAppViewController.h */,
 				2FC2545E19B6742500EB1EED /* ShareAppViewController.m */,
 				2FC2545F19B6742500EB1EED /* ShareAppViewController.xib */,
 				C95AED951A49AF4A00000FB3 /* ClipboardPopoverViewController.h */,
 				C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */,
-				C91C5D3D1BC65E4F00B88D81 /* ShareSMSViewController.h */,
-				C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */,
 			);
-			name = ShareApp;
+			name = Share;
 			sourceTree = "<group>";
 		};
 		2FC8873419C879E500A109D8 /* FLTextFieldSignup */ = {
@@ -1436,13 +1527,53 @@
 			name = BaseViewController;
 			sourceTree = "<group>";
 		};
-		6E851BD514B9D45C654EE3B9 /* Pods */ = {
+		77C666BF4E09D3C9B2B42E58 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DC453423FBACAB6C0B7E6680 /* Pods.debug.xcconfig */,
-				E21FE25B89234484429CFEE5 /* Pods.local.xcconfig */,
-				B48C8D51E38315E83190602F /* Pods.release.xcconfig */,
-				5CAD606A67C6A9CC082F6489 /* Pods.recette.xcconfig */,
+				6DEB5881A555E65930C65AFA /* Pods-Flooz.debug.xcconfig */,
+				2F4D7399D6C2AD59DF1376B6 /* Pods-Flooz.local.xcconfig */,
+				71C696F24481B6D7E8691783 /* Pods-Flooz.release.xcconfig */,
+				B049EC71B7A6C25905CCD910 /* Pods-Flooz.recette.xcconfig */,
+				AE5230257A49ED8E9714726F /* Pods-Flooz dev.debug.xcconfig */,
+				CBD9E7E49CA67D4CA45CD376 /* Pods-Flooz dev.local.xcconfig */,
+				E47397102D4C3B3FDC4A9E6D /* Pods-Flooz dev.release.xcconfig */,
+				1F125137565925ECA855FF4C /* Pods-Flooz dev.recette.xcconfig */,
+				A226E840C650C3BC1C7350D7 /* Pods-Flooz local.debug.xcconfig */,
+				D5B771FF8FFACF13E5AA90E9 /* Pods-Flooz local.local.xcconfig */,
+				2241351E5F23835CDAF88E4D /* Pods-Flooz local.release.xcconfig */,
+				A59501F790CCEE212F1F656C /* Pods-Flooz local.recette.xcconfig */,
+				C6A13063D8F6BFB760BC697D /* Pods-FloozTests.debug.xcconfig */,
+				1C593880D8F3ECF239965B6F /* Pods-FloozTests.local.xcconfig */,
+				1445C66C8E920174A75E9480 /* Pods-FloozTests.release.xcconfig */,
+				AB0E2E724C26806A5B7C19DE /* Pods-FloozTests.recette.xcconfig */,
+				B28CC42A54F436520CFA8433 /* Pods-Flooz-Flooz dev.debug.xcconfig */,
+				03EEE3E0927F7C6D21E79788 /* Pods-Flooz-Flooz dev.local.xcconfig */,
+				4A8948456F4CE85948AC978C /* Pods-Flooz-Flooz dev.release.xcconfig */,
+				7E05FA6BF2CD5267BE8808DF /* Pods-Flooz-Flooz dev.recette.xcconfig */,
+				6F46DACA281937CC8E3258E0 /* Pods-Flooz-Flooz local.debug.xcconfig */,
+				EE8113EFA70BA79EC8494AFB /* Pods-Flooz-Flooz local.local.xcconfig */,
+				0831405D5808D3555D8236BB /* Pods-Flooz-Flooz local.release.xcconfig */,
+				CA70318CF8D4E51F94A2E441 /* Pods-Flooz-Flooz local.recette.xcconfig */,
+				896C29FCEAD33703B3F0E8D6 /* Pods-Flooz-FloozTests.debug.xcconfig */,
+				AD52CABF4B2EF13BCABAEBEB /* Pods-Flooz-FloozTests.local.xcconfig */,
+				077076FBBD6BD88F871FD4DA /* Pods-Flooz-FloozTests.release.xcconfig */,
+				562A6486B0FF8CD84CD6F092 /* Pods-Flooz-FloozTests.recette.xcconfig */,
+				1A6BE2219B9A4C88A3708425 /* Pods-FloozT-Flooz.debug.xcconfig */,
+				D75EDB5F7B7A4E202969E191 /* Pods-FloozT-Flooz.local.xcconfig */,
+				1F6695BBA288C445C5FC0139 /* Pods-FloozT-Flooz.release.xcconfig */,
+				C2FE461BFF53F0A5EAEFECD0 /* Pods-FloozT-Flooz.recette.xcconfig */,
+				61C6DE658FEF8BF4C4BBDDFE /* Pods-FloozT-Flooz dev.debug.xcconfig */,
+				E056650DE336420B44029D89 /* Pods-FloozT-Flooz dev.local.xcconfig */,
+				30D110E3E61C286648EF0B5E /* Pods-FloozT-Flooz dev.release.xcconfig */,
+				947B80950FD0F812CB203872 /* Pods-FloozT-Flooz dev.recette.xcconfig */,
+				3D1D9F2F39517CBAB6AA6CB8 /* Pods-FloozT-Flooz local.debug.xcconfig */,
+				64A2CF636EE2859E8201B581 /* Pods-FloozT-Flooz local.local.xcconfig */,
+				9875D68A8CFFD9CE9E3D3415 /* Pods-FloozT-Flooz local.release.xcconfig */,
+				5B472303FBA87646D7E383B6 /* Pods-FloozT-Flooz local.recette.xcconfig */,
+				94A0E868BC89D2FC89995083 /* Pods-FloozT-FloozTests.debug.xcconfig */,
+				41A7B04AFEA15B6E236582C6 /* Pods-FloozT-FloozTests.local.xcconfig */,
+				8F6FA50C2A45C51DB394DB0E /* Pods-FloozT-FloozTests.release.xcconfig */,
+				BB8FCA136C26530357D52293 /* Pods-FloozT-FloozTests.recette.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1486,13 +1617,13 @@
 			name = Password;
 			sourceTree = "<group>";
 		};
-		AB2FB54918B2319E0079AA1D /* ActivityCell */ = {
+		AB2FB54918B2319E0079AA1D /* NotificationCell */ = {
 			isa = PBXGroup;
 			children = (
-				AB2FB54A18B231B90079AA1D /* ActivityCell.h */,
-				AB2FB54B18B231B90079AA1D /* ActivityCell.m */,
+				AB2FB54A18B231B90079AA1D /* NotificationCell.h */,
+				AB2FB54B18B231B90079AA1D /* NotificationCell.m */,
 			);
-			name = ActivityCell;
+			name = NotificationCell;
 			sourceTree = "<group>";
 		};
 		AB2FB55918B2B4600079AA1D /* Friends */ = {
@@ -1526,7 +1657,7 @@
 				AB3D08B0186CA11A00CF8380 /* FloozTests */,
 				AB3D0890186CA11A00CF8380 /* Frameworks */,
 				AB3D088F186CA11A00CF8380 /* Products */,
-				6E851BD514B9D45C654EE3B9 /* Pods */,
+				77C666BF4E09D3C9B2B42E58 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1564,7 +1695,17 @@
 				AB3D0891186CA11A00CF8380 /* Foundation.framework */,
 				AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */,
 				AB3D0895186CA11A00CF8380 /* UIKit.framework */,
-				4C3EE7A13AE62DD40952627A /* libPods.a */,
+				075CEF3A68C4DB5E5A674E6B /* libPods-Flooz-Flooz dev.a */,
+				56E85D77DE50EA0CA769FA02 /* libPods-Flooz-Flooz local.a */,
+				7C2709220CA055B8C6F04E51 /* libPods-Flooz-FloozTests.a */,
+				C2B8F60C3884CD6002B6DFCE /* libPods-FloozT-Flooz.a */,
+				5E4876E241495E39C91E489A /* libPods-FloozT-Flooz dev.a */,
+				F0CF1B4A62487B86D6E35834 /* libPods-FloozT-Flooz local.a */,
+				491105F33C2B34EFA4DC2A59 /* libPods-FloozT-FloozTests.a */,
+				94F2D479AEF0FD539571DEC5 /* libPods-Flooz.a */,
+				724D25645AB0F60AC4695E96 /* libPods-Flooz dev.a */,
+				636635C62B40A4E2D7EC3281 /* libPods-Flooz local.a */,
+				EF82B6606881392036BBA31B /* libPods-FloozTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1587,7 +1728,6 @@
 		AB3D0898186CA11A00CF8380 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C9E74D111C8453760069C1AD /* Flooz-Bridging-Header.h */,
 				C9DCC5EC1C28257F008BB370 /* Flooz dev.entitlements */,
 				C9DCC5EB1C282573008BB370 /* Flooz.entitlements */,
 				C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */,
@@ -1625,8 +1765,10 @@
 			children = (
 				C90B947D1A00E94F00E2C53B /* 3DSecure */,
 				ABE9145E18929150003AC722 /* Account */,
+				C95184A41CC77F320035BAAD /* Activities */,
 				C9EABF2D1C5237C100BDDEA1 /* AddressBook */,
 				2FEAA9CC19DC638C00EE95C9 /* BaseViewController */,
+				C9B137BD1CBFCB54002289C9 /* CashIn */,
 				AB2FB52F18AD40120079AA1D /* CashOut */,
 				C92900D21C8F155E0008D61D /* Collect */,
 				ABBB75C718B63D930070C2A8 /* CreditCard */,
@@ -1646,7 +1788,7 @@
 				C9AD95B31BBEB91C0073BA32 /* Search */,
 				AB7C9B1E18D73AD2002775BA /* SecureCode */,
 				AB5EB6DF188214F000D81AF6 /* Settings */,
-				2FC2545C19B6740600EB1EED /* ShareApp */,
+				2FC2545C19B6740600EB1EED /* Share */,
 				AB4CB6F41886C1B000D1C573 /* Signup */,
 				AB0857FA1923AAF9007C1927 /* Splash */,
 				AB5EB6E9188214F000D81AF6 /* Timeline */,
@@ -1681,6 +1823,7 @@
 				ABE914A11896D166003AC722 /* FLNewTransactionBar */,
 				ABE9149D18968E1A003AC722 /* FLPaymentField */,
 				C9CD765F1BF227C700362962 /* FLPhoneField */,
+				C9F517CE1CABD19A00856D53 /* FLPlusButton */,
 				ABAFEE24197FFE3200D39C62 /* FLPopup */,
 				C9B4AA671AE7C5E3002E0723 /* FLScannerOverlay */,
 				ABD0164B18ECCCD800940F2D /* FLScrollViewIndicator */,
@@ -1709,7 +1852,6 @@
 				C92195E11C57848700318FD3 /* FLTriggerManager */,
 				C99A514D1AF7D67000342F8C /* IQActionSheetPickerView */,
 				ABF46A1C1875B54600E92A77 /* JTImageLabel */,
-				C9E74D101C8453580069C1AD /* LiquidFloatingActionButton */,
 				C966473619FFE9EC000851AF /* Modal Transitions */,
 				ABA96DA3196EED4D00B8B7C7 /* scanpay */,
 				C905A8D71A56D5AC00473963 /* SIOSocket */,
@@ -1733,8 +1875,8 @@
 		AB3D08DD1871A5D100CF8380 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AB2FB54618AE798D0079AA1D /* FLActivity.h */,
-				AB2FB54718AE798D0079AA1D /* FLActivity.m */,
+				C95184AA1CC780550035BAAD /* FLActivity.h */,
+				C95184AB1CC780550035BAAD /* FLActivity.m */,
 				C9EABF331C523CE900BDDEA1 /* FLAddress.h */,
 				C9EABF341C523CE900BDDEA1 /* FLAddress.m */,
 				C9C7EE9219F685B9009FE292 /* FLAlert.h */,
@@ -1751,6 +1893,8 @@
 				ABBB75DD18BA27E60070C2A8 /* FLFriendRequest.m */,
 				C921175A1B66726900CF2D51 /* FLInvitationTexts.h */,
 				C921175B1B66726900CF2D51 /* FLInvitationTexts.m */,
+				AB2FB54618AE798D0079AA1D /* FLNotification.h */,
+				AB2FB54718AE798D0079AA1D /* FLNotification.m */,
 				C9A7BE5E1A27801200195AFC /* FLPreset.h */,
 				C9A7BE5F1A27801200195AFC /* FLPreset.m */,
 				C93118461A1F7E0B008C6EEC /* FLReport.h */,
@@ -1892,14 +2036,16 @@
 		AB5EB6F91882157300D81AF6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C9DD721D1C989175000D1664 /* CommentCell */,
 				C95254D31B5E7B9200D88096 /* AccountCell */,
-				AB2FB54918B2319E0079AA1D /* ActivityCell */,
+				C9F47E0E1CC7852E00993412 /* ActivityCell */,
+				C9DD721D1C989175000D1664 /* CommentCell */,
 				2FD2460019A24DC4008DCFB5 /* ContactCell */,
 				C928E8CB1C3D2A1A0032FAE4 /* DealCell */,
 				AB2FB56018B63B300079AA1D /* FriendCell */,
 				ABBB75DF18BBADB40070C2A8 /* FriendRequestCell */,
 				AB94FAC51906B6EB007F8373 /* LoadingCell */,
+				AB2FB54918B2319E0079AA1D /* NotificationCell */,
+				C9C3AD831CA295C5009907D9 /* ParticipantCell */,
 				C917C8101BE7A6A50018043C /* PlaceCell */,
 				C91C5D411BC68F8700B88D81 /* ShareCell */,
 				C91D4EF31C50FA1A00C65382 /* TimelineDealCell */,
@@ -2266,6 +2412,7 @@
 		ABF7092618A2CA1300517389 /* Transaction */ = {
 			isa = PBXGroup;
 			children = (
+				C92A31AA1CAD2787004BA50F /* TransactionHeaderView */,
 				ABF7095318A4EC3B00517389 /* TransactionActions */,
 				ABF7095718A4FC9600517389 /* TransactionComments */,
 				ABF7094F18A4E02700517389 /* TransactionUsers */,
@@ -2435,6 +2582,8 @@
 		C92900D21C8F155E0008D61D /* Collect */ = {
 			isa = PBXGroup;
 			children = (
+				C9B975541C9EF47700163A05 /* CollectParticipationViewController */,
+				C99CAE401C9DAD0C00CDC967 /* CollectParticipantViewController */,
 				C92900D81C8F1DB30008D61D /* CollectHeaderView */,
 				C92900D31C8F159E0008D61D /* CollectViewController.h */,
 				C92900D41C8F159E0008D61D /* CollectViewController.m */,
@@ -2449,6 +2598,15 @@
 				C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */,
 			);
 			name = CollectHeaderView;
+			sourceTree = "<group>";
+		};
+		C92A31AA1CAD2787004BA50F /* TransactionHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				C92A31AB1CAD27B9004BA50F /* TransactionHeaderView.h */,
+				C92A31AC1CAD27B9004BA50F /* TransactionHeaderView.m */,
+			);
+			name = TransactionHeaderView;
 			sourceTree = "<group>";
 		};
 		C92FB3A81BBBEBF4006FB561 /* FLFilterSegmentedControl */ = {
@@ -2489,6 +2647,15 @@
 			name = Validate;
 			sourceTree = "<group>";
 		};
+		C94EF3B61CB2AB0C003EA4CF /* AmbassadorStepsList */ = {
+			isa = PBXGroup;
+			children = (
+				C94EF3B71CB2AB8E003EA4CF /* AmbassadorStepsViewController.h */,
+				C94EF3B81CB2AB8E003EA4CF /* AmbassadorStepsViewController.m */,
+			);
+			name = AmbassadorStepsList;
+			sourceTree = "<group>";
+		};
 		C950540B1B4E7E6600B9FB2C /* FLTabBarController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2496,6 +2663,15 @@
 				C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */,
 			);
 			name = FLTabBarController;
+			sourceTree = "<group>";
+		};
+		C95184A41CC77F320035BAAD /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				C95184A51CC77F860035BAAD /* ActivitiesViewController.h */,
+				C95184A61CC77F860035BAAD /* ActivitiesViewController.m */,
+			);
+			name = Activities;
 			sourceTree = "<group>";
 		};
 		C95254D31B5E7B9200D88096 /* AccountCell */ = {
@@ -2663,6 +2839,15 @@
 			name = IQActionSheetPickerView;
 			sourceTree = "<group>";
 		};
+		C99CAE401C9DAD0C00CDC967 /* CollectParticipantViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C99CAE411C9DAD9300CDC967 /* CollectParticipantViewController.h */,
+				C99CAE421C9DAD9300CDC967 /* CollectParticipantViewController.m */,
+			);
+			name = CollectParticipantViewController;
+			sourceTree = "<group>";
+		};
 		C9AD95B31BBEB91C0073BA32 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -2692,6 +2877,35 @@
 			name = AvatarMenu;
 			sourceTree = "<group>";
 		};
+		C9B137BD1CBFCB54002289C9 /* CashIn */ = {
+			isa = PBXGroup;
+			children = (
+				C9B137C41CBFE568002289C9 /* CashInAudiotel */,
+				C9B137C31CBFE549002289C9 /* CashInCreditCard */,
+				C9B137BE1CBFCB91002289C9 /* CashinViewController.h */,
+				C9B137BF1CBFCB91002289C9 /* CashinViewController.m */,
+			);
+			name = CashIn;
+			sourceTree = "<group>";
+		};
+		C9B137C31CBFE549002289C9 /* CashInCreditCard */ = {
+			isa = PBXGroup;
+			children = (
+				C9B137C51CBFE5B3002289C9 /* CashinCreditCardViewController.h */,
+				C9B137C61CBFE5B3002289C9 /* CashinCreditCardViewController.m */,
+			);
+			name = CashInCreditCard;
+			sourceTree = "<group>";
+		};
+		C9B137C41CBFE568002289C9 /* CashInAudiotel */ = {
+			isa = PBXGroup;
+			children = (
+				C9B137CA1CBFE5D8002289C9 /* CashinAudiotelViewController.h */,
+				C9B137CB1CBFE5D8002289C9 /* CashinAudiotelViewController.m */,
+			);
+			name = CashInAudiotel;
+			sourceTree = "<group>";
+		};
 		C9B1866A1A9E01B000077C5F /* FLTutoPopover */ = {
 			isa = PBXGroup;
 			children = (
@@ -2708,6 +2922,42 @@
 				C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */,
 			);
 			name = FLScannerOverlay;
+			sourceTree = "<group>";
+		};
+		C9B7618C1C9FF604000BBAF5 /* ShareAppSMS */ = {
+			isa = PBXGroup;
+			children = (
+				C91C5D3D1BC65E4F00B88D81 /* ShareSMSViewController.h */,
+				C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */,
+			);
+			name = ShareAppSMS;
+			sourceTree = "<group>";
+		};
+		C9B7618D1C9FF616000BBAF5 /* ShareLink */ = {
+			isa = PBXGroup;
+			children = (
+				C9B7618E1C9FF666000BBAF5 /* ShareLinkViewController.h */,
+				C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */,
+			);
+			name = ShareLink;
+			sourceTree = "<group>";
+		};
+		C9B975541C9EF47700163A05 /* CollectParticipationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C9B975551C9EF4BA00163A05 /* CollectParticipationViewController.h */,
+				C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */,
+			);
+			name = CollectParticipationViewController;
+			sourceTree = "<group>";
+		};
+		C9C3AD831CA295C5009907D9 /* ParticipantCell */ = {
+			isa = PBXGroup;
+			children = (
+				C9C3AD841CA29631009907D9 /* ParticipantCell.h */,
+				C9C3AD851CA29631009907D9 /* ParticipantCell.m */,
+			);
+			name = ParticipantCell;
 			sourceTree = "<group>";
 		};
 		C9CA678E1A5188BB003863D1 /* FLActionButton */ = {
@@ -2765,21 +3015,6 @@
 			name = CommentCell;
 			sourceTree = "<group>";
 		};
-		C9E74D101C8453580069C1AD /* LiquidFloatingActionButton */ = {
-			isa = PBXGroup;
-			children = (
-				C9377E6C1C8705C60064CB8B /* ArrayEx.swift */,
-				C9377E6D1C8705C60064CB8B /* CGPointEx.swift */,
-				C9377E6E1C8705C60064CB8B /* CGRectEx.swift */,
-				C9377E6F1C8705C60064CB8B /* LiquidFloatingActionButton.swift */,
-				C9377E701C8705C60064CB8B /* LiquidUtil.swift */,
-				C9377E711C8705C60064CB8B /* LiquittableCircle.swift */,
-				C9377E721C8705C60064CB8B /* SimpleCircleLiquidEngine.swift */,
-				C9377E731C8705C60064CB8B /* UIColorEx.swift */,
-			);
-			name = LiquidFloatingActionButton;
-			sourceTree = "<group>";
-		};
 		C9EABF2D1C5237C100BDDEA1 /* AddressBook */ = {
 			isa = PBXGroup;
 			children = (
@@ -2800,6 +3035,24 @@
 			name = FLBorderedActionButton;
 			sourceTree = "<group>";
 		};
+		C9F47E0E1CC7852E00993412 /* ActivityCell */ = {
+			isa = PBXGroup;
+			children = (
+				C9006C901CC7863900A66E07 /* ActivityCell.h */,
+				C9006C911CC7863900A66E07 /* ActivityCell.m */,
+			);
+			name = ActivityCell;
+			sourceTree = "<group>";
+		};
+		C9F517CE1CABD19A00856D53 /* FLPlusButton */ = {
+			isa = PBXGroup;
+			children = (
+				C9F517CF1CABD1C600856D53 /* FLPlusButton.h */,
+				C9F517D01CABD1C600856D53 /* FLPlusButton.m */,
+			);
+			name = FLPlusButton;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2807,12 +3060,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB3D08BA186CA11A00CF8380 /* Build configuration list for PBXNativeTarget "Flooz" */;
 			buildPhases = (
-				7C543B21F1AAC3A305631C0C /* Check Pods Manifest.lock */,
+				844AD5F290B85562FE57ABDA /* 📦 Check Pods Manifest.lock */,
 				AB3D088A186CA11A00CF8380 /* Sources */,
 				AB3D088B186CA11A00CF8380 /* Frameworks */,
 				AB3D088C186CA11A00CF8380 /* Resources */,
-				6E634A2949F5469076E819D3 /* Copy Pods Resources */,
-				28CFA25B08A35C6444A904B6 /* Embed Pods Frameworks */,
+				754ED0C5CE4371145979B4FC /* 📦 Embed Pods Frameworks */,
+				CAEE6E54FBE06E1A6E5D8361 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2827,12 +3080,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB3D08BD186CA11A00CF8380 /* Build configuration list for PBXNativeTarget "FloozTests" */;
 			buildPhases = (
-				4915A975F6D18A0EB41C5D89 /* Check Pods Manifest.lock */,
+				BAC02721E63D59AD4721F039 /* 📦 Check Pods Manifest.lock */,
 				AB3D08A5186CA11A00CF8380 /* Sources */,
 				AB3D08A6186CA11A00CF8380 /* Frameworks */,
 				AB3D08A7186CA11A00CF8380 /* Resources */,
-				C4395DA043E3AF023BF21082 /* Copy Pods Resources */,
-				46DA4BDEA246E84C12047A1F /* Embed Pods Frameworks */,
+				80907692CF4C87E4023242FC /* 📦 Embed Pods Frameworks */,
+				3BEEE6680241B05EE17E540B /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2850,12 +3103,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABAA4026197E96BF009F29EF /* Build configuration list for PBXNativeTarget "Flooz dev" */;
 			buildPhases = (
-				36D69480EB8CF264DF447602 /* Check Pods Manifest.lock */,
+				1DF9E60BA9A1AAEE9CF82AEC /* 📦 Check Pods Manifest.lock */,
 				ABAA3F7F197E96BF009F29EF /* Sources */,
 				ABAA3FE7197E96BF009F29EF /* Frameworks */,
 				ABAA3FFC197E96BF009F29EF /* Resources */,
-				28E085B265D94FB37A72EA1D /* Copy Pods Resources */,
-				9A44F81D7BC8B6DA25DD6DD3 /* Embed Pods Frameworks */,
+				2A58D924C7589FA8D915D591 /* 📦 Embed Pods Frameworks */,
+				2D7C2496CC5FAF175C616C24 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2870,12 +3123,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C980133E1A76921000019682 /* Build configuration list for PBXNativeTarget "Flooz local" */;
 			buildPhases = (
-				13ECFE0BDB01E2BAB2D1ED81 /* Check Pods Manifest.lock */,
+				8FB0ACAD3245518CBED406A5 /* 📦 Check Pods Manifest.lock */,
 				C98012711A76921000019682 /* Sources */,
 				C98013041A76921000019682 /* Frameworks */,
 				C980131C1A76921000019682 /* Resources */,
-				0316D686744A4C8C799C31D6 /* Copy Pods Resources */,
-				8866C31CF9C98DE737D3D38F /* Embed Pods Frameworks */,
+				9D2ECB76CF366F61DF6EAF2F /* 📦 Embed Pods Frameworks */,
+				1643C49B513DD0C763B9FAAE /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3079,29 +3332,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0316D686744A4C8C799C31D6 /* Copy Pods Resources */ = {
+		1643C49B513DD0C763B9FAAE /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		13ECFE0BDB01E2BAB2D1ED81 /* Check Pods Manifest.lock */ = {
+		1DF9E60BA9A1AAEE9CF82AEC /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3109,44 +3362,89 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		28CFA25B08A35C6444A904B6 /* Embed Pods Frameworks */ = {
+		2A58D924C7589FA8D915D591 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		28E085B265D94FB37A72EA1D /* Copy Pods Resources */ = {
+		2D7C2496CC5FAF175C616C24 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		36D69480EB8CF264DF447602 /* Check Pods Manifest.lock */ = {
+		3BEEE6680241B05EE17E540B /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		754ED0C5CE4371145979B4FC /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz/Pods-Flooz-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		80907692CF4C87E4023242FC /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		844AD5F290B85562FE57ABDA /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3154,29 +3452,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		46DA4BDEA246E84C12047A1F /* Embed Pods Frameworks */ = {
+		8FB0ACAD3245518CBED406A5 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4915A975F6D18A0EB41C5D89 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3184,29 +3467,29 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6E634A2949F5469076E819D3 /* Copy Pods Resources */ = {
+		9D2ECB76CF366F61DF6EAF2F /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7C543B21F1AAC3A305631C0C /* Check Pods Manifest.lock */ = {
+		BAC02721E63D59AD4721F039 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3214,49 +3497,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		8866C31CF9C98DE737D3D38F /* Embed Pods Frameworks */ = {
+		CAEE6E54FBE06E1A6E5D8361 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9A44F81D7BC8B6DA25DD6DD3 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C4395DA043E3AF023BF21082 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz/Pods-Flooz-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -3270,14 +3523,13 @@
 				ABBB75CB18B63DB20070C2A8 /* CreditCardViewController.m in Sources */,
 				AB3D08A2186CA11A00CF8380 /* AppDelegate.m in Sources */,
 				AB7C9B1718D71884002775BA /* FriendPickerFriendCell.m in Sources */,
-				C9377E7A1C8705C60064CB8B /* CGRectEx.swift in Sources */,
 				2FC8873719C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
 				C9CA67781A518811003863D1 /* SignupSMSViewController.m in Sources */,
 				C989591F1C089C8500D8D37F /* FLSocialPopup.m in Sources */,
 				2FE983EA19CB82E700E05501 /* NumPadAppleStyle.m in Sources */,
 				ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */,
-				C9377E7D1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */,
 				ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */,
+				C95184AC1CC780550035BAAD /* FLActivity.m in Sources */,
 				ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */,
 				C95254D61B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C975BB051A92BB8E000E5AEA /* YLMoment.m in Sources */,
@@ -3285,7 +3537,6 @@
 				C9CB22091A9615C10064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C9CB22141A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C9CB220E1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
-				C9377E771C8705C60064CB8B /* CGPointEx.swift in Sources */,
 				C9EB88581B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
 				C98959111C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
@@ -3294,9 +3545,11 @@
 				2FEAA9CF19DC63B500EE95C9 /* BaseViewController.m in Sources */,
 				C9C660B21BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
 				2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */,
+				C99CAE431C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
 				C9CB22041A95E9D30064389A /* THContactViewStyle.m in Sources */,
 				C960DC901BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
+				C94EF3B91CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,
 				C928E8C81C3D24F20032FAE4 /* DealViewController.m in Sources */,
 				C907297E1B59569900BA691C /* NSString+custom.m in Sources */,
 				C9B1866D1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
@@ -3306,6 +3559,7 @@
 				ABE914A018968E52003AC722 /* FLPaymentField.m in Sources */,
 				C989590B1C08892C00D8D37F /* Evaluate.m in Sources */,
 				C98959171C08892C00D8D37F /* YLShareButtonView.m in Sources */,
+				C9B137CC1CBFE5D8002289C9 /* CashinAudiotelViewController.m in Sources */,
 				C9CB22011A95E9D30064389A /* THContactView.m in Sources */,
 				C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */,
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
@@ -3316,15 +3570,16 @@
 				C9C7EE9419F685B9009FE292 /* FLAlert.m in Sources */,
 				2FCBCD1019BF3C6700FB31E0 /* FLCameraKeyboard.m in Sources */,
 				2F1307E919D9C1790062D194 /* FLSocialButton.m in Sources */,
-				AB2FB54C18B231B90079AA1D /* ActivityCell.m in Sources */,
+				AB2FB54C18B231B90079AA1D /* NotificationCell.m in Sources */,
+				C9B761901C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */,
 				C966473C19FFEA0D000851AF /* TransitionDelegate.m in Sources */,
 				ABE9148B1892C734003AC722 /* FLKeyboardView.m in Sources */,
+				C9F517D11CABD1C600856D53 /* FLPlusButton.m in Sources */,
 				2FA3E55F19DDE97700EC65C2 /* SettingsPreferencesViewController.m in Sources */,
 				ABE91424188944D5003AC722 /* FLValidNavBar.m in Sources */,
 				C98959081C08892C00D8D37F /* CAAnimation+Blocks.m in Sources */,
 				ABC1115218ACE4AA00C3C52D /* TransactionCommentsView.m in Sources */,
 				C95AEDA01A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */,
-				C9377E741C8705C60064CB8B /* ArrayEx.swift in Sources */,
 				AB3D089E186CA11A00CF8380 /* main.m in Sources */,
 				C989591A1C08892C00D8D37F /* YLShareView.m in Sources */,
 				C95AED971A49AF4A00000FB3 /* ClipboardPopoverViewController.m in Sources */,
@@ -3336,6 +3591,7 @@
 				C97EE6D61C4003B5003DE35B /* DealCell2.m in Sources */,
 				C93F66A11BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C928E8CE1C3D2A390032FAE4 /* DealCell.m in Sources */,
+				C9B137C01CBFCB91002289C9 /* CashinViewController.m in Sources */,
 				C9AE77941ACA918B00CFF0AF /* FLSlide.m in Sources */,
 				C95502D11C2AA8D8002E9046 /* ARChromeActivity.m in Sources */,
 				C95502D41C2AA8D8002E9046 /* OpenInChromeController.m in Sources */,
@@ -3348,6 +3604,7 @@
 				2FC6F6B419A773CF0051CB61 /* FLNewTransactionAmountInput.m in Sources */,
 				AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */,
 				C91D4EF61C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
+				C95184A71CC77F860035BAAD /* ActivitiesViewController.m in Sources */,
 				2FC8784419C08B0300F034E0 /* FLPopupInformation.m in Sources */,
 				C9AD95B61BBEB9480073BA32 /* SearchViewController.m in Sources */,
 				ABBB75DE18BA27E60070C2A8 /* FLFriendRequest.m in Sources */,
@@ -3355,8 +3612,10 @@
 				2F88A32119F173EF001FC26F /* FLTextViewComment.m in Sources */,
 				C99A51521AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */,
 				ABE914461890A12C003AC722 /* FLUser.m in Sources */,
+				C92A31AD1CAD27B9004BA50F /* TransactionHeaderView.m in Sources */,
 				ABE914871892AE59003AC722 /* FLNewTransactionAmount.m in Sources */,
 				C95AEDA51A49BB9100000FB3 /* FLClearActionTextView.m in Sources */,
+				C9B137C71CBFE5B3002289C9 /* CashinCreditCardViewController.m in Sources */,
 				ABE914371890A029003AC722 /* FLLoadView.m in Sources */,
 				AB7C9B2718D84F99002775BA /* SecureCodeField.m in Sources */,
 				C9CA678C1A518871003863D1 /* SignupSecureCodeViewController.m in Sources */,
@@ -3375,15 +3634,15 @@
 				ABF7092A18A2CA3500517389 /* TransactionViewController.m in Sources */,
 				ABE914451890A12C003AC722 /* FLTransaction.m in Sources */,
 				C95772711A9C7BB400CD6BC0 /* FLTexts.m in Sources */,
+				C9C3AD861CA29631009907D9 /* ParticipantCell.m in Sources */,
 				C938EFCE1AE68C5900A3F740 /* ScannerViewController.m in Sources */,
-				AB2FB54818AE798D0079AA1D /* FLActivity.m in Sources */,
+				AB2FB54818AE798D0079AA1D /* FLNotification.m in Sources */,
 				C910E0EE1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */,
 				2FE983E619CB73A200E05501 /* CodePinView.m in Sources */,
 				ABE9143D1890A08A003AC722 /* UIBarButtonItem+custom.m in Sources */,
 				C9CB21F81A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51551AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
 				AB3D08E01871AAB400CF8380 /* Flooz.m in Sources */,
-				C9377E801C8705C60064CB8B /* LiquidUtil.swift in Sources */,
 				C917C8131BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				ABE9147918929AC8003AC722 /* NotificationsViewController.m in Sources */,
 				ABBB75CF18B64A0B0070C2A8 /* FLCreditCard.m in Sources */,
@@ -3398,7 +3657,6 @@
 				C91C5D441BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9AE778F1ACA917B00CFF0AF /* FLSlider.m in Sources */,
 				C908A3EB1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
-				C9377E891C8705C60064CB8B /* UIColorEx.swift in Sources */,
 				C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABE914691892940A003AC722 /* FLAccountUserView.m in Sources */,
 				C9C776811C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
@@ -3409,13 +3667,13 @@
 				C9C7DB2D1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				C9AF4BE619F7C2D7005C696B /* AvatarMenu.m in Sources */,
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
-				C9377E861C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */,
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
 				AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */,
 				C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C92900D51C8F159E0008D61D /* CollectViewController.m in Sources */,
 				C99D11B31C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768B1C076078006C22CB /* UIButton+Badge.m in Sources */,
+				C9B975571C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */,
 				2F50155319EDC46E00F61380 /* GlobalViewController.m in Sources */,
 				C92900DB1C8F1DE70008D61D /* CollectHeaderView.m in Sources */,
 				C98A5F0F1C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
@@ -3433,7 +3691,6 @@
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
 				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
 				C90B94801A00E96900E2C53B /* 3DSecureViewController.m in Sources */,
-				C9377E831C8705C60064CB8B /* LiquittableCircle.swift in Sources */,
 				AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */,
 				C9436EBD1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
@@ -3443,6 +3700,7 @@
 				C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */,
 				C95502DA1C2AB440002E9046 /* FLCopyLinkActivity.m in Sources */,
+				C9006C921CC7863900A66E07 /* ActivityCell.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,
 				C9037F4A1BFE0481004256BF /* FLCountry.m in Sources */,
 				C919AD9D1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
@@ -3477,14 +3735,13 @@
 				C9CB220A1A961AAC0064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C95AED981A49B10700000FB3 /* ClipboardPopoverViewController.m in Sources */,
 				C9A7BE611A2788D800195AFC /* FLPreset.m in Sources */,
-				C9377E7B1C8705C60064CB8B /* CGRectEx.swift in Sources */,
 				C93118491A1FBD72008C6EEC /* FLReport.m in Sources */,
 				C90B94811A00EA2400E2C53B /* 3DSecureViewController.m in Sources */,
 				C98959201C089C8500D8D37F /* FLSocialPopup.m in Sources */,
 				C9CA67791A518811003863D1 /* SignupSMSViewController.m in Sources */,
 				C966474219FFEB80000851AF /* AnimatedTransitioning.m in Sources */,
-				C9377E7E1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */,
 				C966473E19FFEA28000851AF /* TransitionDelegate.m in Sources */,
+				C95184AD1CC780550035BAAD /* FLActivity.m in Sources */,
 				C9AF4BE719F7C340005C696B /* AvatarMenu.m in Sources */,
 				C95254D71B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C9C7EE9519F695E8009FE292 /* FLTrigger.m in Sources */,
@@ -3492,7 +3749,6 @@
 				C9C7EE9619F695E8009FE292 /* FLAlert.m in Sources */,
 				ABAA3F80197E96BF009F29EF /* CreditCardViewController.m in Sources */,
 				ABAA3F81197E96BF009F29EF /* AppDelegate.m in Sources */,
-				C9377E781C8705C60064CB8B /* CGPointEx.swift in Sources */,
 				C9CB22151A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C9CB220F1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				C98959121C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
@@ -3501,9 +3757,11 @@
 				AB119B44198A740600F05ECE /* UIViewController+RegisterNotification.m in Sources */,
 				C9C660B31BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
 				C9EB88591B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
+				C99CAE441C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
 				2FC8873819C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
 				C960DC911BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2FE983EB19CB82E700E05501 /* NumPadAppleStyle.m in Sources */,
+				C94EF3BA1CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,
 				C928E8C91C3D24F20032FAE4 /* DealViewController.m in Sources */,
 				C907297F1B59569900BA691C /* NSString+custom.m in Sources */,
 				ABAA3F84197E96BF009F29EF /* FriendPickerContactCell.m in Sources */,
@@ -3513,6 +3771,7 @@
 				C9B1866E1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
 				C989590C1C08892C00D8D37F /* Evaluate.m in Sources */,
 				C98959181C08892C00D8D37F /* YLShareButtonView.m in Sources */,
+				C9B137CD1CBFE5D8002289C9 /* CashinAudiotelViewController.m in Sources */,
 				ABAA3F87197E96BF009F29EF /* FLHelper.m in Sources */,
 				2F0F6B0419DF3EC5004CA223 /* SettingsDocumentsViewController.m in Sources */,
 				C9B4AA6B1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
@@ -3524,18 +3783,19 @@
 				C905A8DC1A56D5BE00473963 /* SIOSocket.m in Sources */,
 				ABAA3F8C197E96BF009F29EF /* TransactionActionsView.m in Sources */,
 				ABAA3F8D197E96BF009F29EF /* FLComment.m in Sources */,
+				C9B761911C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */,
 				2F0F6B0019DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
 				ABAA3F93197E96BF009F29EF /* TransactionUsersView.m in Sources */,
+				C9F517D21CABD1C600856D53 /* FLPlusButton.m in Sources */,
 				ABAA3F95197E96BF009F29EF /* FLPaymentField.m in Sources */,
 				ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */,
 				C98959091C08892C00D8D37F /* CAAnimation+Blocks.m in Sources */,
 				C95AEDA11A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */,
 				ABAA3F9A197E96BF009F29EF /* FLTableView.m in Sources */,
-				C9377E751C8705C60064CB8B /* ArrayEx.swift in Sources */,
 				2FCBCD1119BF406200FB31E0 /* FLCameraKeyboard.m in Sources */,
 				C989591B1C08892C00D8D37F /* YLShareView.m in Sources */,
 				2F1307EA19D9C1790062D194 /* FLSocialButton.m in Sources */,
-				ABAA3F9C197E96BF009F29EF /* ActivityCell.m in Sources */,
+				ABAA3F9C197E96BF009F29EF /* NotificationCell.m in Sources */,
 				C9EBBB9E1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				C95AED9F1A49B5E500000FB3 /* WYPopoverController.m in Sources */,
 				C92FB3AC1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
@@ -3543,6 +3803,7 @@
 				C97EE6D71C4003B5003DE35B /* DealCell2.m in Sources */,
 				C93F66A21BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C928E8CF1C3D2A390032FAE4 /* DealCell.m in Sources */,
+				C9B137C11CBFCB91002289C9 /* CashinViewController.m in Sources */,
 				C9A265571ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
 				C95502D21C2AA8D8002E9046 /* ARChromeActivity.m in Sources */,
 				C95502D51C2AA8D8002E9046 /* OpenInChromeController.m in Sources */,
@@ -3555,6 +3816,7 @@
 				ABAA3FA2197E96BF009F29EF /* main.m in Sources */,
 				ABAA3FA3197E96BF009F29EF /* SplashViewController.m in Sources */,
 				C91D4EF71C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
+				C95184A81CC77F860035BAAD /* ActivitiesViewController.m in Sources */,
 				ABAA3FA4197E96BF009F29EF /* NewTransactionDatePicker.m in Sources */,
 				C9AD95B71BBEB9480073BA32 /* SearchViewController.m in Sources */,
 				ABAA3FA9197E96BF009F29EF /* SecureCodeViewController.m in Sources */,
@@ -3562,8 +3824,10 @@
 				ABAA3FAA197E96BF009F29EF /* JTImageLabel.m in Sources */,
 				2FC6F6B519A776210051CB61 /* FLNewTransactionAmountInput.m in Sources */,
 				C99A51531AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */,
+				C92A31AE1CAD27B9004BA50F /* TransactionHeaderView.m in Sources */,
 				ABAA3FAC197E96BF009F29EF /* FriendsViewController.m in Sources */,
 				C95AEDA61A49BB9100000FB3 /* FLClearActionTextView.m in Sources */,
+				C9B137C81CBFE5B3002289C9 /* CashinCreditCardViewController.m in Sources */,
 				2FC8784519C08B0300F034E0 /* FLPopupInformation.m in Sources */,
 				ABAA3FAF197E96BF009F29EF /* FLFriendRequest.m in Sources */,
 				C9CA678D1A518871003863D1 /* SignupSecureCodeViewController.m in Sources */,
@@ -3582,6 +3846,7 @@
 				ABAA3FBA197E96BF009F29EF /* CashOutViewController.m in Sources */,
 				2F444C8219ED6DAD00ACE12E /* FLNavigationController.m in Sources */,
 				ABAA3FBB197E96BF009F29EF /* FLNewTransactionBar.m in Sources */,
+				C9C3AD871CA29631009907D9 /* ParticipantCell.m in Sources */,
 				C95772721A9C7BB400CD6BC0 /* FLTexts.m in Sources */,
 				C938EFCF1AE68C5900A3F740 /* ScannerViewController.m in Sources */,
 				2F0F6AFC19DF0686004CA223 /* FLSwitch.m in Sources */,
@@ -3590,12 +3855,11 @@
 				ABAA3FBC197E96BF009F29EF /* FLTextView.m in Sources */,
 				C9CB21F91A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51561AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
-				C9377E811C8705C60064CB8B /* LiquidUtil.swift in Sources */,
 				C917C8141BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				ABAA3FBD197E96BF009F29EF /* TransactionViewController.m in Sources */,
 				ABAA3FBE197E96BF009F29EF /* FLTransaction.m in Sources */,
 				2FE983E719CB73A200E05501 /* CodePinView.m in Sources */,
-				ABAA3FBF197E96BF009F29EF /* FLActivity.m in Sources */,
+				ABAA3FBF197E96BF009F29EF /* FLNotification.m in Sources */,
 				ABAA3FC1197E96BF009F29EF /* UIBarButtonItem+custom.m in Sources */,
 				C917C80E1BE79D950018043C /* LocationSearchBar.m in Sources */,
 				ABAA3FC2197E96BF009F29EF /* Flooz.m in Sources */,
@@ -3605,7 +3869,6 @@
 				C91C5D451BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9AE77901ACA917B00CFF0AF /* FLSlider.m in Sources */,
 				C908A3EC1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
-				C9377E8A1C8705C60064CB8B /* UIColorEx.swift in Sources */,
 				C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABAA3FC5197E96BF009F29EF /* NewTransactionViewController.m in Sources */,
 				C9C776821C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
@@ -3616,13 +3879,13 @@
 				C9CB21FF1A95E9D30064389A /* THContactTextField.m in Sources */,
 				ABAA3FC9197E96BF009F29EF /* FriendRequestCell.m in Sources */,
 				ABAA3FCA197E96BF009F29EF /* NewTransactionSelectTypeView.m in Sources */,
-				C9377E871C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */,
 				C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				ABAA3FCD197E96BF009F29EF /* FLAccountUserView.m in Sources */,
 				C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C92900D61C8F159E0008D61D /* CollectViewController.m in Sources */,
 				C99D11B41C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768C1C076078006C22CB /* UIButton+Badge.m in Sources */,
+				C9B975581C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */,
 				ABAA3FCE197E96BF009F29EF /* TimelineViewController.m in Sources */,
 				C92900DC1C8F1DE70008D61D /* CollectHeaderView.m in Sources */,
 				C98A5F101C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
@@ -3640,7 +3903,6 @@
 				ABAA3FD8197E96BF009F29EF /* TransactionCell.m in Sources */,
 				ABAA3FDA197E96BF009F29EF /* UIView+FindFirstResponder.m in Sources */,
 				ABAA3FDB197E96BF009F29EF /* FLScrollViewIndicator.m in Sources */,
-				C9377E841C8705C60064CB8B /* LiquittableCircle.swift in Sources */,
 				ABAA3FDD197E96BF009F29EF /* LoadingCell.m in Sources */,
 				C9436EBE1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */,
@@ -3650,6 +3912,7 @@
 				C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
 				C95502DB1C2AB440002E9046 /* FLCopyLinkActivity.m in Sources */,
+				C9006C931CC7863900A66E07 /* ActivityCell.m in Sources */,
 				ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */,
 				C9037F4B1BFE0481004256BF /* FLCountry.m in Sources */,
 				C919AD9E1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
@@ -3676,14 +3939,13 @@
 				C935B6EB1B611DBD00861DAD /* FLFilterPopoverViewController.m in Sources */,
 				C9CB220B1A961AD90064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C98012721A76921000019682 /* ClipboardPopoverViewController.m in Sources */,
-				C9377E7C1C8705C60064CB8B /* CGRectEx.swift in Sources */,
 				C98012731A76921000019682 /* FLPreset.m in Sources */,
 				C98012751A76921000019682 /* FLReport.m in Sources */,
 				C98959211C089C8500D8D37F /* FLSocialPopup.m in Sources */,
 				C98012791A76921000019682 /* 3DSecureViewController.m in Sources */,
 				C980127A1A76921000019682 /* SignupSMSViewController.m in Sources */,
-				C9377E7F1C8705C60064CB8B /* LiquidFloatingActionButton.swift in Sources */,
 				C980127B1A76921000019682 /* AnimatedTransitioning.m in Sources */,
+				C95184AE1CC780550035BAAD /* FLActivity.m in Sources */,
 				C980127C1A76921000019682 /* TransitionDelegate.m in Sources */,
 				C980127D1A76921000019682 /* AvatarMenu.m in Sources */,
 				C95254D81B5E7BC300D88096 /* AccountCell.m in Sources */,
@@ -3691,7 +3953,6 @@
 				C975BB071A92BB8E000E5AEA /* YLMoment.m in Sources */,
 				C980127F1A76921000019682 /* FLAlert.m in Sources */,
 				C98012801A76921000019682 /* CreditCardViewController.m in Sources */,
-				C9377E791C8705C60064CB8B /* CGPointEx.swift in Sources */,
 				C98012821A76921000019682 /* AppDelegate.m in Sources */,
 				C9CB22161A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C98959131C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
@@ -3700,9 +3961,11 @@
 				C98012841A76921000019682 /* FriendPickerFriendCell.m in Sources */,
 				C9C660B41BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
 				C98012851A76921000019682 /* UIViewController+RegisterNotification.m in Sources */,
+				C99CAE451C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
 				C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				C98012861A76921000019682 /* FLTextFieldSignup.m in Sources */,
 				C960DC921BB14D020089B074 /* FLSocialHelper.m in Sources */,
+				C94EF3BB1CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,
 				C928E8CA1C3D24F20032FAE4 /* DealViewController.m in Sources */,
 				C98012871A76921000019682 /* NumPadAppleStyle.m in Sources */,
 				C90729801B59569900BA691C /* NSString+custom.m in Sources */,
@@ -3712,6 +3975,7 @@
 				C980128A1A76921000019682 /* FriendPickerSearchBar.m in Sources */,
 				C989590D1C08892C00D8D37F /* Evaluate.m in Sources */,
 				C98959191C08892C00D8D37F /* YLShareButtonView.m in Sources */,
+				C9B137CE1CBFE5D8002289C9 /* CashinAudiotelViewController.m in Sources */,
 				C9B1866F1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
 				C980128B1A76921000019682 /* FLHelper.m in Sources */,
 				C980128D1A76921000019682 /* SettingsDocumentsViewController.m in Sources */,
@@ -3723,25 +3987,27 @@
 				C98012921A76921000019682 /* BaseViewController.m in Sources */,
 				C98012941A76921000019682 /* SIOSocket.m in Sources */,
 				C98012951A76921000019682 /* TransactionActionsView.m in Sources */,
+				C9B761921C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */,
 				C98012961A76921000019682 /* FLComment.m in Sources */,
 				C98012981A76921000019682 /* SettingsBankViewController.m in Sources */,
+				C9F517D31CABD1C600856D53 /* FLPlusButton.m in Sources */,
 				C980129A1A76921000019682 /* TransactionUsersView.m in Sources */,
 				C980129C1A76921000019682 /* FLPaymentField.m in Sources */,
 				C989590A1C08892C00D8D37F /* CAAnimation+Blocks.m in Sources */,
 				C980129D1A76921000019682 /* UIFont+custom.m in Sources */,
 				C980129F1A76921000019682 /* WYStoryboardPopoverSegue.m in Sources */,
-				C9377E761C8705C60064CB8B /* ArrayEx.swift in Sources */,
 				C98012A01A76921000019682 /* FLTableView.m in Sources */,
 				C989591C1C08892C00D8D37F /* YLShareView.m in Sources */,
 				C98012A11A76921000019682 /* FLCameraKeyboard.m in Sources */,
 				C98012A21A76921000019682 /* FLSocialButton.m in Sources */,
-				C98012A41A76921000019682 /* ActivityCell.m in Sources */,
+				C98012A41A76921000019682 /* NotificationCell.m in Sources */,
 				C9EBBB9F1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				C98012A51A76921000019682 /* WYPopoverController.m in Sources */,
 				C92FB3AD1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				C97EE6D81C4003B5003DE35B /* DealCell2.m in Sources */,
 				C98012A61A76921000019682 /* FLKeyboardView.m in Sources */,
 				C928E8D01C3D2A390032FAE4 /* DealCell.m in Sources */,
+				C9B137C21CBFCB91002289C9 /* CashinViewController.m in Sources */,
 				C93F66A31BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C95502D31C2AA8D8002E9046 /* ARChromeActivity.m in Sources */,
 				C95502D61C2AA8D8002E9046 /* OpenInChromeController.m in Sources */,
@@ -3754,6 +4020,7 @@
 				C98012AA1A76921000019682 /* TransactionCommentsView.m in Sources */,
 				C98012AB1A76921000019682 /* main.m in Sources */,
 				C91D4EF81C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
+				C95184A91CC77F860035BAAD /* ActivitiesViewController.m in Sources */,
 				C98012AC1A76921000019682 /* SplashViewController.m in Sources */,
 				C91C5D461BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C98012AD1A76921000019682 /* NewTransactionDatePicker.m in Sources */,
@@ -3761,8 +4028,10 @@
 				C9AD95B81BBEB9480073BA32 /* SearchViewController.m in Sources */,
 				C98012AF1A76921000019682 /* SecureCodeViewController.m in Sources */,
 				C98012B01A76921000019682 /* JTImageLabel.m in Sources */,
+				C92A31AF1CAD27B9004BA50F /* TransactionHeaderView.m in Sources */,
 				C98012B11A76921000019682 /* FLNewTransactionAmountInput.m in Sources */,
 				C99A51541AF7D69500342F8C /* IQActionSheetPickerView.m in Sources */,
+				C9B137C91CBFE5B3002289C9 /* CashinCreditCardViewController.m in Sources */,
 				C98012B31A76921000019682 /* FriendsViewController.m in Sources */,
 				C98012B41A76921000019682 /* FLClearActionTextView.m in Sources */,
 				C98012B51A76921000019682 /* FLPopupInformation.m in Sources */,
@@ -3781,6 +4050,7 @@
 				C98012C11A76921000019682 /* SecureCodeField.m in Sources */,
 				C98254731BC2B78B00678A53 /* FriendRequestViewController.m in Sources */,
 				C98012C31A76921000019682 /* CashOutViewController.m in Sources */,
+				C9C3AD881CA29631009907D9 /* ParticipantCell.m in Sources */,
 				C98012C41A76921000019682 /* FLNavigationController.m in Sources */,
 				C98012C51A76921000019682 /* FLNewTransactionBar.m in Sources */,
 				C95772731A9C7BB400CD6BC0 /* FLTexts.m in Sources */,
@@ -3789,7 +4059,6 @@
 				C98012C81A76921000019682 /* FLLikePopoverViewController.m in Sources */,
 				C98012C91A76921000019682 /* ContactCell.m in Sources */,
 				C98012CA1A76921000019682 /* FLTextView.m in Sources */,
-				C9377E821C8705C60064CB8B /* LiquidUtil.swift in Sources */,
 				C917C8151BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				C9CB21FA1A95E9D30064389A /* THContactPickerView.m in Sources */,
 				C99A51571AF7D69500342F8C /* IQActionSheetViewController.m in Sources */,
@@ -3797,14 +4066,13 @@
 				C98012CE1A76921000019682 /* FLTransaction.m in Sources */,
 				C98012CF1A76921000019682 /* CodePinView.m in Sources */,
 				C917C80F1BE79D950018043C /* LocationSearchBar.m in Sources */,
-				C98012D21A76921000019682 /* FLActivity.m in Sources */,
+				C98012D21A76921000019682 /* FLNotification.m in Sources */,
 				C98012D31A76921000019682 /* UIBarButtonItem+custom.m in Sources */,
 				C98012D41A76921000019682 /* Flooz.m in Sources */,
 				C95772791A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */,
 				C98012D51A76921000019682 /* NotificationsViewController.m in Sources */,
 				C98012D61A76921000019682 /* FLCreditCard.m in Sources */,
 				C9AE77911ACA917B00CFF0AF /* FLSlider.m in Sources */,
-				C9377E8B1C8705C60064CB8B /* UIColorEx.swift in Sources */,
 				C908A3ED1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D581B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				C9C776831C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
@@ -3815,13 +4083,13 @@
 				C98012D91A76921000019682 /* AccountViewController.m in Sources */,
 				C9CB22001A95E9D30064389A /* THContactTextField.m in Sources */,
 				C98012DA1A76921000019682 /* FriendRequestCell.m in Sources */,
-				C9377E881C8705C60064CB8B /* SimpleCircleLiquidEngine.swift in Sources */,
 				C98012DB1A76921000019682 /* NewTransactionSelectTypeView.m in Sources */,
 				C98012DC1A76921000019682 /* SettingsPrivacyController.m in Sources */,
 				C98012DF1A76921000019682 /* FLAccountUserView.m in Sources */,
 				C92900D71C8F159E0008D61D /* CollectViewController.m in Sources */,
 				C99D11B51C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768D1C076078006C22CB /* UIButton+Badge.m in Sources */,
+				C9B975591C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */,
 				C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C92900DD1C8F1DE70008D61D /* CollectHeaderView.m in Sources */,
 				C98A5F111C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
@@ -3839,7 +4107,6 @@
 				C9EB885F1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
 				C98012EB1A76921000019682 /* TransactionCell.m in Sources */,
 				C98012EE1A76921000019682 /* UIView+FindFirstResponder.m in Sources */,
-				C9377E851C8705C60064CB8B /* LiquittableCircle.swift in Sources */,
 				C98012EF1A76921000019682 /* FLScrollViewIndicator.m in Sources */,
 				C9436EBF1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				C98012F11A76921000019682 /* LoadingCell.m in Sources */,
@@ -3849,6 +4116,7 @@
 				C96E5A6A1BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				C98012F81A76921000019682 /* FriendPickerSelectionCell.m in Sources */,
 				C95502DC1C2AB440002E9046 /* FLCopyLinkActivity.m in Sources */,
+				C9006C941CC7863900A66E07 /* ActivityCell.m in Sources */,
 				C98012F91A76921000019682 /* HomeViewController.m in Sources */,
 				C9037F4C1BFE0481004256BF /* FLCountry.m in Sources */,
 				C919AD9F1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
@@ -3974,7 +4242,7 @@
 		};
 		8B81C5A619993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CAD606A67C6A9CC082F6489 /* Pods.recette.xcconfig */;
+			baseConfigurationReference = B049EC71B7A6C25905CCD910 /* Pods-Flooz.recette.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -3982,7 +4250,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4007,7 +4275,7 @@
 				PRODUCT_NAME = Flooz;
 				PROVISIONING_PROFILE = "c8c1ba0b-4e46-45ca-bc48-2b61fee26e42";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -4016,7 +4284,7 @@
 		};
 		8B81C5A719993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CAD606A67C6A9CC082F6489 /* Pods.recette.xcconfig */;
+			baseConfigurationReference = AB0E2E724C26806A5B7C19DE /* Pods-FloozTests.recette.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4039,15 +4307,15 @@
 		};
 		8B81C5A819993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CAD606A67C6A9CC082F6489 /* Pods.recette.xcconfig */;
+			baseConfigurationReference = 1F125137565925ECA855FF4C /* Pods-Flooz dev.recette.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4075,7 +4343,7 @@
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
 				PROVISIONING_PROFILE = "63605f9b-7d1a-4a05-b189-d87c0aaabe20";
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -4163,7 +4431,7 @@
 		};
 		AB3D08BB186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC453423FBACAB6C0B7E6680 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 6DEB5881A555E65930C65AFA /* Pods-Flooz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4171,7 +4439,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4196,7 +4464,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c8c1ba0b-4e46-45ca-bc48-2b61fee26e42";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -4206,7 +4474,7 @@
 		};
 		AB3D08BC186CA11A00CF8380 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B48C8D51E38315E83190602F /* Pods.release.xcconfig */;
+			baseConfigurationReference = 71C696F24481B6D7E8691783 /* Pods-Flooz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4214,7 +4482,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4238,7 +4506,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "01b0b01d-0ccd-4b16-9ed2-4c446a2a0704";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -4247,7 +4515,7 @@
 		};
 		AB3D08BE186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC453423FBACAB6C0B7E6680 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = C6A13063D8F6BFB760BC697D /* Pods-FloozTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4274,7 +4542,7 @@
 		};
 		AB3D08BF186CA11A00CF8380 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B48C8D51E38315E83190602F /* Pods.release.xcconfig */;
+			baseConfigurationReference = 1445C66C8E920174A75E9480 /* Pods-FloozTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4297,15 +4565,15 @@
 		};
 		ABAA4027197E96BF009F29EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC453423FBACAB6C0B7E6680 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = AE5230257A49ED8E9714726F /* Pods-Flooz dev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4333,7 +4601,7 @@
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
 				PROVISIONING_PROFILE = "63605f9b-7d1a-4a05-b189-d87c0aaabe20";
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
@@ -4343,15 +4611,15 @@
 		};
 		ABAA4028197E96BF009F29EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B48C8D51E38315E83190602F /* Pods.release.xcconfig */;
+			baseConfigurationReference = E47397102D4C3B3FDC4A9E6D /* Pods-Flooz dev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4379,7 +4647,7 @@
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
 				PROVISIONING_PROFILE = "63605f9b-7d1a-4a05-b189-d87c0aaabe20";
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -4430,7 +4698,7 @@
 		};
 		C980126C1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E21FE25B89234484429CFEE5 /* Pods.local.xcconfig */;
+			baseConfigurationReference = 2F4D7399D6C2AD59DF1376B6 /* Pods-Flooz.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4438,7 +4706,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4463,7 +4731,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c8c1ba0b-4e46-45ca-bc48-2b61fee26e42";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
@@ -4473,7 +4741,7 @@
 		};
 		C980126D1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E21FE25B89234484429CFEE5 /* Pods.local.xcconfig */;
+			baseConfigurationReference = 1C593880D8F3ECF239965B6F /* Pods-FloozTests.local.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4500,15 +4768,15 @@
 		};
 		C980126E1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E21FE25B89234484429CFEE5 /* Pods.local.xcconfig */;
+			baseConfigurationReference = CBD9E7E49CA67D4CA45CD376 /* Pods-Flooz dev.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4537,7 +4805,7 @@
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
 				PROVISIONING_PROFILE = "63605f9b-7d1a-4a05-b189-d87c0aaabe20";
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
@@ -4547,14 +4815,14 @@
 		};
 		C980133F1A76921000019682 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC453423FBACAB6C0B7E6680 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = A226E840C650C3BC1C7350D7 /* Pods-Flooz local.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4582,7 +4850,7 @@
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz local";
 				PROVISIONING_PROFILE = "c88dc719-3922-45fe-a238-f5ad075628b2";
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
@@ -4592,14 +4860,14 @@
 		};
 		C98013401A76921000019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E21FE25B89234484429CFEE5 /* Pods.local.xcconfig */;
+			baseConfigurationReference = D5B771FF8FFACF13E5AA90E9 /* Pods-Flooz local.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4628,7 +4896,7 @@
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz local";
 				PROVISIONING_PROFILE = "c88dc719-3922-45fe-a238-f5ad075628b2";
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
@@ -4638,14 +4906,14 @@
 		};
 		C98013411A76921000019682 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B48C8D51E38315E83190602F /* Pods.release.xcconfig */;
+			baseConfigurationReference = 2241351E5F23835CDAF88E4D /* Pods-Flooz local.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4673,7 +4941,7 @@
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz local";
 				PROVISIONING_PROFILE = "c88dc719-3922-45fe-a238-f5ad075628b2";
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;
@@ -4682,14 +4950,14 @@
 		};
 		C98013421A76921000019682 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CAD606A67C6A9CC082F6489 /* Pods.recette.xcconfig */;
+			baseConfigurationReference = A59501F790CCEE212F1F656C /* Pods-Flooz local.recette.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4717,7 +4985,7 @@
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz local";
 				PROVISIONING_PROFILE = "c88dc719-3922-45fe-a238-f5ad075628b2";
-				SWIFT_OBJC_BRIDGING_HEADER = "Flooz/Flooz-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
 				WRAPPER_EXTENSION = app;

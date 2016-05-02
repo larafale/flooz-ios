@@ -19,28 +19,37 @@
 }
 
 - (void)setJSON:(NSDictionary *)json {
-
+    
     NSArray *splitType = [[json objectForKey:@"type"] componentsSeparatedByString:@":"];
     
-    if ([splitType[0] isEqualToString:@"flooz"]) {
-        _icon = @"home_sub_flooz";
-    } else if ([splitType[0] isEqualToString:@"cash"]) {
-        _icon = @"home_sub_cashin";
-    } else if ([splitType[0] isEqualToString:@"pot"]) {
-        _icon = @"home_sub_pot";
-    } else if ([splitType[0] isEqualToString:@"card"]) {
-        _icon = @"cashin_cb";
-    }
+//    if ([splitType[0] isEqualToString:@"flooz"]) {
+//        _icon = @"home_sub_flooz";
+//    } else if ([splitType[0] isEqualToString:@"cash"]) {
+//        _icon = @"home_sub_cashin";
+//    } else if ([splitType[0] isEqualToString:@"pot"]) {
+//        _icon = @"home_sub_pot";
+//    } else if ([splitType[0] isEqualToString:@"card"]) {
+//        _icon = @"cashin_cb";
+//    } else if ([splitType[0] isEqualToString:@"audiotel"]) {
+//        _icon = @"cashin_phone";
+//    }
     
-    if ([splitType[1] isEqualToString:@"create"]) {
+    if ([splitType[1] isEqualToString:@"out"]) {
         _backIconColor = [UIColor customBlue];
-    } else if ([splitType[1] isEqualToString:@"out"]) {
-        _backIconColor = [UIColor customRed];
-    } else if ([splitType[1] isEqualToString:@"int"]) {
-        _backIconColor = [UIColor customGreen];
+        _icon = @"arrow_up";
+    } else if ([splitType[1] isEqualToString:@"in"]) {
+        _backIconColor = [UIColor colorWithHexString:@"7cc222"];
+        _icon = @"arrow_down";
     }
     
+    if ([json objectForKey:@"color"] && ![[json objectForKey:@"color"] isBlank])
+        _backIconColor = [json objectForKey:@"color"];
+
     _content = [json objectForKey:@"text"];
+    
+    if (!_content)
+        _content = @"";
+    
     _imgURL = [json objectForKey:@"imageURL"];
     _triggers = [FLTriggerManager convertDataInList:json[@"triggers"]];
     

@@ -26,7 +26,7 @@
 
 #import "FLPopupTrigger.h"
 #import "GeolocViewController.h"
-
+#import "CashinViewController.h"
 
 @interface NewTransactionViewController () {
     FLUser *presetUser;
@@ -473,9 +473,16 @@
     if (!currentPreset || !currentPreset.blockBalance) {
         NSNumber *balance = [Flooz sharedInstance].currentUser.amount;
         
-        float tmp = [balance floatValue] - [amount floatValue];
+//        float tmp = [balance floatValue] - [amount floatValue];
         
-        [amountItem setTitle:[FLHelper formatedAmount:@(tmp) withSymbol:NO]];
+        [amountItem setTitle:[FLHelper formatedAmount:balance withSymbol:NO]];
+        
+//        if (tmp >= 0.) {
+            [amountItem setTitleTextAttributes: @{NSForegroundColorAttributeName : [UIColor customBlue], NSFontAttributeName : [UIFont customTitleLight:15]} forState:UIControlStateNormal];
+//        }
+//        else {
+//            [amountItem setTitleTextAttributes: @{NSForegroundColorAttributeName : [UIColor customRed], NSFontAttributeName : [UIFont customTitleLight:15]} forState:UIControlStateNormal];
+//        }
         
         if (self.navigationItem.rightBarButtonItem != amountItem)
             self.navigationItem.rightBarButtonItem = amountItem;
@@ -484,11 +491,13 @@
 }
 
 - (void)amountInfos {
-//    [self.view endEditing:YES];
-//    [self.view endEditing:NO];
-//    
-//    FLPopupTrigger *popupTrigger = [[FLPopupTrigger alloc] initWithData:@{@"close":@YES, @"content":@"Blabla", @"title":@"Title", @"buttons":@[@{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"triggers":@[@{@"key":@"app:cashin:show"}]}]}];
+    [self.view endEditing:YES];
+    [self.view endEditing:NO];
+
+//    FLPopupTrigger *popupTrigger = [[FLPopupTrigger alloc] initWithData:@{@"close":@YES, @"content":[NSString stringWithFormat:@"Vous disposez d’un solde de %@ sur votre compte Flooz. Ajoutez des fonds en un clic en CB ou via votre forfait téléphonique."], @"title":@"Mon solde Flooz", @"buttons":@[@{@"title":NSLocalizedString(@"NAV_CASHIN", nil), @"triggers":@[@{@"key":@"app:cashin:show"}]}]}];
 //    [popupTrigger show];
+    
+    [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:[CashinViewController new]] animated:YES completion:nil];
 }
 
 - (void)dismissKeyboard:(id)sender {

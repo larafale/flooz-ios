@@ -35,7 +35,7 @@
 }
 
 - (void)show {
-    [[appDelegate topWindow] addSubview:self];
+    [[appDelegate window] addSubview:self];
 }
 
 - (void)hide {

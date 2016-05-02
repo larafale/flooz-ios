@@ -46,6 +46,7 @@
 #import "CashinViewController.h"
 #import "CashinAudiotelViewController.h"
 #import "CashinCreditCardViewController.h"
+#import "ActivitiesViewController.h"
 
 @interface FLTriggerManager ()
 
@@ -664,6 +665,7 @@
 
 - (void)loadBinderKeyView {
     self.binderKeyView = @{
+                           @"app:activities": [ActivitiesViewController new],
                            @"app:cashin": [CashinViewController class],
                            @"app:cashout": [CashOutViewController class],
                            @"app:flooz": [NewTransactionViewController class],
@@ -701,6 +703,7 @@
 
 - (void)loadBinderKeyType {
     self.binderKeyType = @{
+                           @"app:activities": @"modal",
                            @"app:cashin": @"modal",
                            @"app:cashout": @"modal",
                            @"app:flooz": @"modal",

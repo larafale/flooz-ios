@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FLDeal.h"
-#import <MGSwipeTableCell.h>
+#import "MGSwipeTableCell.h"
 
 @interface DealCell2 : MGSwipeTableCell
 

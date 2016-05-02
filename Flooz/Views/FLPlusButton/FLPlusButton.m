@@ -17,11 +17,19 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.clipsToBounds = false;
-        plusLayer = [CAShapeLayer new];
-        [self.layer addSublayer:plusLayer];
         self.layer.cornerRadius = self.frame.size.width * 0.5;
         self.layer.masksToBounds = true;
+        plusLayer = [CAShapeLayer new];
+        plusLayer.frame = CGRectMakeWithSize(self.frame.size);
+        plusLayer.lineCap = kCALineCapRound;
+        plusLayer.strokeColor = [UIColor whiteColor].CGColor;
+        plusLayer.lineWidth = 3.0;
+        plusLayer.path = [self pathPlus].CGPath;
+
+        [self.layer addSublayer:plusLayer];
         
+        plusLayer.path = [self pathPlus].CGPath;
+
         if ([[Flooz sharedInstance] isProd])
             self.layer.backgroundColor = [UIColor customBlue].CGColor;
         else if ([[Flooz sharedInstance] isDev])
@@ -30,19 +38,6 @@
             self.layer.backgroundColor = [UIColor customRed].CGColor;
     }
     return self;
-}
-
-- (void)drawRect:(CGRect)rect {
-    [self drawPlus];
-}
-
-- (void)drawPlus {
-    plusLayer.frame = CGRectMakeWithSize(self.frame.size);
-    plusLayer.lineCap = kCALineCapRound;
-    plusLayer.strokeColor = [UIColor whiteColor].CGColor;
-    plusLayer.lineWidth = 3.0;
-    
-    plusLayer.path = [self pathPlus].CGPath;
 }
 
 - (UIBezierPath *)pathPlus {

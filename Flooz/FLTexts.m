@@ -77,6 +77,17 @@
     
     self.homeButtons = homeMutableButtons;
     
+    NSMutableArray *cashinMutableButtons = [NSMutableArray new];
+    
+    if (json[@"cashins"]) {
+        for (id cashinButton in json[@"cashins"]) {
+            if ([cashinButton isKindOfClass:[NSDictionary class]])
+                [cashinMutableButtons addObject:[[FLHomeButton alloc] initWithJSON:cashinButton]];
+        }
+    }
+    
+    self.cashinButtons = cashinMutableButtons;
+    
     for (NSDictionary *country in countries) {
         [self.avalaibleCountries addObject:[[FLCountry alloc] initWithJSON:country]];
     }

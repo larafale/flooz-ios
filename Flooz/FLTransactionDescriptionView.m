@@ -646,7 +646,10 @@
         [_transaction setJSON:result[@"item"]];
         [self prepareViews];
         [self didUpdateTransactionData];
-    } failure:NULL];
+    } failure:^(NSError *error) {
+        [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
+        [_likeButton setSelected:[[_transaction social] isLiked]];
+    }];
 }
 
 - (void)didUpdateTransactionData {

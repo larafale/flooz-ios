@@ -85,7 +85,8 @@
 	        @{ @"CARD_ID_RECTO": @"cniRecto" },
 	        @{ @"CARD_ID_VERSO": @"cniVerso" },
             @{ @"HOME": @"justificatory" },
-            @{ @"HOME2": @"justificatory2" }
+            @{ @"HOME2": @"justificatory2" },
+            @{ @"CREDIT_CARD": @"card" }
 	    ];
     
 	registerButtonCount = 0;
@@ -146,7 +147,11 @@
         case 3:
             action = @selector(didDocumentTouch3);
             break;
-
+            
+        case 4:
+            action = @selector(didDocumentTouch4);
+            break;
+            
 		default:
 			action = nil;
 			break;
@@ -173,6 +178,11 @@
 
 - (void)didDocumentTouch3 {
     currentDocumentKey = [[documents[3] allValues] firstObject];
+    [self showImagePicker];
+}
+
+- (void)didDocumentTouch4 {
+    currentDocumentKey = [[documents[4] allValues] firstObject];
     [self showImagePicker];
 }
 
@@ -221,7 +231,14 @@
 }
 
 - (void)createAlertController {
-    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    NSString *message = nil;
+    
+    if ([currentDocumentKey isEqualToString:@"card"]) {
+        message = @"Les 4 premiers et derniers chiffres ainsi que le nom doivent être visibles";
+    }
+    
+    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleActionSheet];
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES) {
         [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CAMERA", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
             [self displayImagePickerWithType:UIImagePickerControllerSourceTypeCamera];

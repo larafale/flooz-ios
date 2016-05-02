@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-#import <Stripe.h>
+#import "Stripe.h"
 
 @interface CashinCreditCardViewController : BaseViewController<STPPaymentCardTextFieldDelegate>
 

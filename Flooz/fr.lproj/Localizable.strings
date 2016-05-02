@@ -181,6 +181,7 @@
 "SECORE_CODE_TEXT_SIGNUP_NEW" = "Choisissez un code secret";
 "SECORE_CODE_TEXT_SIGNUP_CONFIRM" = "Veuillez retaper votre code";
 
+"DOCUMENTS_CREDIT_CARD" = "Carte bancaire";
 "DOCUMENTS_CARD_ID_RECTO" = "Carte d’identité (Recto)";
 "DOCUMENTS_CARD_ID_VERSO" = "Carte d’identité (Verso)";
 "DOCUMENTS_HOME" = "Justificatif de domicile (< 3 mois)";
