@@ -25,6 +25,7 @@
     FLKeyboardView *inputView;
     
     UILabel *inputHint;
+    FLTextField *holderTextField;
     STPPaymentCardTextField *paymentTextField;
     
     UILabel *amountHint;
@@ -63,6 +64,11 @@
     inputHint = [[UILabel alloc] initWithText:NSLocalizedString(@"CASHIN_CARD_PAYMENT_INPUT_HINT", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
     CGRectSetXY(inputHint.frame, PADDING_SIDE, 20);
     
+    holderTextField = [[FLTextField alloc] initWithPlaceholder:@"Nom du titulaire" for:dictionary key:@"holder" frame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(inputHint.frame) + 5, PPScreenWidth() - (2 * PADDING_SIDE), 30)];
+    holderTextField.floatLabelActiveColor = [UIColor clearColor];
+    holderTextField.floatLabelPassiveColor = [UIColor clearColor];
+    [holderTextField setType:FLTextFieldTypeText];
+    
     paymentTextField = [[STPPaymentCardTextField alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(inputHint.frame) + 5, PPScreenWidth() - (2 * PADDING_SIDE), 40)];
     paymentTextField.delegate = self;
     [paymentTextField setTextColor:[UIColor whiteColor]];
@@ -75,7 +81,25 @@
     paymentTextField.layer.borderColor = [UIColor customPlaceholder].CGColor;
     paymentTextField.layer.borderWidth = 1.0f;
     paymentTextField.layer.cornerRadius = 5.0f;
+
+    if ([[[Flooz sharedInstance] currentTexts] cardHolder]) {
+        holderTextField.hidden = NO;
+        if ([[[[Flooz sharedInstance] currentTexts] cardHolder] isEqualToString:@"true"]) {
+            dictionary[@"holder"] = [[[Flooz sharedInstance] currentUser] fullname];
+            [holderTextField reloadTextField];
+        } else {
+            dictionary[@"holder"] = @"";
+            [holderTextField reloadTextField];
+        }
+        
+        CGRectSetY(paymentTextField.frame, CGRectGetMaxY(holderTextField.frame) + 10);
+    } else {
+        holderTextField.hidden = YES;
+        CGRectSetY(paymentTextField.frame, CGRectGetMaxY(inputHint.frame) + 5);
+    }
     
+    [amountTextField addForNextClickTarget:paymentTextField action:@selector(becomeFirstResponder)];
+
     saveCardButton = [[UIView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(paymentTextField.frame) + 10, PPScreenWidth() - 2 * PADDING_SIDE, 30)];
     [saveCardButton setUserInteractionEnabled:YES];
     [saveCardButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSaveCardButtonClick)]];
@@ -131,6 +155,7 @@
     [contentView addSubview:inputHint];
     [contentView addSubview:amountHint];
     [contentView addSubview:amountTextField];
+    [contentView addSubview:holderTextField];
     [contentView addSubview:paymentTextField];
     [contentView addSubview:amountTextField];
     [contentView addSubview:sendButton];
@@ -237,7 +262,7 @@
     CGRectSetY(amountTextField.frame, CGRectGetMaxY(amountHint.frame));
     CGRectSetY(sendButton.frame, CGRectGetMaxY(amountHint.frame));
     CGRectSetY(cardsLogo.frame, CGRectGetMaxY(sendButton.frame) + 10);
-    CGRectSetY(cardsInfos.frame, CGRectGetMaxY(cardsLogo.frame) + 5);
+    CGRectSetY(cardsInfos.frame, CGRectGetMaxY(cardsLogo.frame) + 7);
     
     contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(cardsInfos.frame) + 10);
 }
@@ -265,11 +290,17 @@
     NSMutableDictionary *data = [NSMutableDictionary new];
     
     [data setDictionary:dictionary];
-    
+
+    [data removeObjectForKey:@"holder"];
+
     if ([[[Flooz sharedInstance] currentUser] creditCard]) {
         [data setObject:@{@"_id": [[[[Flooz sharedInstance] currentUser] creditCard] cardId]} forKey:@"card"];
     } else {
         NSMutableDictionary *card = [NSMutableDictionary new];
+        
+        if (dictionary[@"holder"] && [[[Flooz sharedInstance] currentTexts] cardHolder]) {
+            card[@"holder"] = dictionary[@"holder"];
+        }
         
         if (paymentTextField.cardNumber && ![paymentTextField.cardNumber isBlank])
             card[@"number"] = paymentTextField.cardNumber;

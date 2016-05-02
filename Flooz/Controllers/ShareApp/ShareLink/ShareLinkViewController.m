@@ -396,17 +396,51 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
-    headerView.backgroundColor = [UIColor customBackground];
-    
-    UILabel *headerTitle = [[UILabel alloc] initWithText:[self tableView:tableView titleForHeaderInSection:section] textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
-    
-    [headerView addSubview:headerTitle];
-    
-    CGRectSetX(headerTitle.frame, 14);
-    CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2);
-    
-    return headerView;
+    if (!_selectionText || [_selectionText isBlank]) {
+        if (section == 0) {
+            if ([_friends count] || (!_friends.count && !_contactsFromAdressBook.count)){
+                UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
+                headerView.backgroundColor = [UIColor customBackground];
+                
+                UILabel *headerTitle = [[UILabel alloc] initWithText:[self tableView:tableView titleForHeaderInSection:section] textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+                
+                [headerView addSubview:headerTitle];
+                
+                CGRectSetX(headerTitle.frame, 14);
+                CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2);
+                
+                return headerView;
+            }
+            return [UIView new];
+        } else {
+            if ([_contactsFromAdressBook count]) {
+                UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
+                headerView.backgroundColor = [UIColor customBackground];
+                
+                UILabel *headerTitle = [[UILabel alloc] initWithText:[self tableView:tableView titleForHeaderInSection:section] textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+                
+                [headerView addSubview:headerTitle];
+                
+                CGRectSetX(headerTitle.frame, 14);
+                CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2);
+                
+                return headerView;
+            }
+            return [UIView new];
+        }
+    } else {
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), [self tableView:tableView heightForHeaderInSection:section])];
+        headerView.backgroundColor = [UIColor customBackground];
+        
+        UILabel *headerTitle = [[UILabel alloc] initWithText:[self tableView:tableView titleForHeaderInSection:section] textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+        
+        [headerView addSubview:headerTitle];
+        
+        CGRectSetX(headerTitle.frame, 14);
+        CGRectSetY(headerTitle.frame, CGRectGetHeight(headerView.frame) / 2 - CGRectGetHeight(headerTitle.frame) / 2);
+        
+        return headerView;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -69,6 +69,7 @@ static Secure3DViewController *instance = nil;
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     [super webViewDidStartLoad:webView];
+    [[Flooz sharedInstance] showLoadView];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -80,10 +81,14 @@ static Secure3DViewController *instance = nil;
     float rw = viewSize.width / contentSize.width;
     
     webView.scrollView.zoomScale = rw;
+    [[Flooz sharedInstance] hideLoadView];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [super webView:webView didFailLoadWithError:error];
+    [[Flooz sharedInstance] hideLoadView];
+    
+    [appDelegate displayMessage:@"Erreur" content:error.localizedDescription style:FLAlertViewStyleError time:@3 delay:@0];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {

@@ -182,7 +182,13 @@
         return YES;
     }
     
-    int maxLenght = self.currentCountry.numLength.intValue;
+    int maxLenght;
+    
+    if (self.currentCountry == nil || self.currentCountry.numLength == nil)
+        maxLenght = 10;
+    else
+        maxLenght = self.currentCountry.numLength.intValue;
+    
     if ([textField.text hasPrefix:@"0"]) {
         maxLenght += 1;
     }
@@ -205,7 +211,13 @@
         NBPhoneNumber *myNumber = [phoneUtil parse:_textfield.text defaultRegion:self.currentCountry.code error:&anError];
         
         if (anError == nil) {
-            int maxLenght = [_countryPicker getSelectedCountry].numLength.intValue;
+            int maxLenght;
+
+            if (self.currentCountry == nil || self.currentCountry.numLength == nil)
+                maxLenght = 10;
+            else
+                maxLenght = self.currentCountry.numLength.intValue;
+
             if ([textField.text hasPrefix:@"0"]) {
                 maxLenght += 1;
             }

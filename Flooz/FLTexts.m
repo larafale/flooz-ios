@@ -51,6 +51,8 @@
     
     self.audiotelNumber = json[@"audiotelNumber"];
     
+    if (json[@"cardHolder"])
+        self.cardHolder = [json[@"cardHolder"] boolValue] ? @"true" : @"false";
     
     self.notificationsText = json[@"notificationsText"];
     self.slider = [[FLSlider alloc] initWithJson:json[@"slider"]];

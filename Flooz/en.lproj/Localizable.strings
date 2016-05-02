@@ -257,7 +257,7 @@
 
 "CASHIN_CARD_TITLE" = "Carte bancaire";
 "CASHIN_CARD_SUBTITLE" = "Ajoutez des fonds via votre CB gratuitement et en toute sécurité";
-"CASHIN_CARD_PAYMENT_INPUT_HINT" = "Saisissez vos numéros de carte bancaire :";
+"CASHIN_CARD_PAYMENT_INPUT_HINT" = "Saisissez vos données de carte bancaire :";
 "CASHIN_CARD_CHECKBOX_TEXT" = "Enregistrer ma carte en toute sécurité";
 "CASHIN_CARD_AMOUNT_INPUT_HINT" = "Saisissez le montant :";
 "CASHIN_CARD_INFOS" = "Vos coordonnées bancaire sont stockées et sécurisées à distance chez notre partenaire Rentabiliweb qui accompagne les plus grandes marques comme la Fnac, Spartoo, Winamax et bien d’autres";

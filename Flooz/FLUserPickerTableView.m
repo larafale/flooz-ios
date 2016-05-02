@@ -34,6 +34,7 @@
         self.separatorColor = [UIColor customMiddleBlue];
         self.separatorInset = UIEdgeInsetsMake(10, 10, 0, 0);
         self.tableFooterView = [UIView new];
+        self.scrollsToTop = YES;
         
         _contactsFromAdressBook = [NSMutableArray new];
         
