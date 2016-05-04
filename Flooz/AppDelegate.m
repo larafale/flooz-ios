@@ -11,6 +11,8 @@
 
 #import "AppDelegate.h"
 
+#import <CoreTelephony/CTCallCenter.h>
+
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "FLTabBarController.h"
@@ -435,7 +437,16 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[Flooz sharedInstance] closeSocket];
+    CTCallCenter *callCenter = [[CTCallCenter alloc] init];
+    if (!callCenter.currentCalls.count)
+        [[Flooz sharedInstance] closeSocket];
+    else {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 30 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            if (!(application.applicationState == UIApplicationStateActive))
+                [[Flooz sharedInstance] closeSocket];
+        });
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationEnterBackground object:nil];
 }
 

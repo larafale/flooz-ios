@@ -26,6 +26,7 @@ static Secure3DViewController *instance = nil;
 
 + (void)clearInstance {
     instance = nil;
+    [[Flooz sharedInstance] hideLoadView];
 }
 
 - (id)init {
@@ -61,6 +62,12 @@ static Secure3DViewController *instance = nil;
     [_webView setBackgroundColor:[UIColor whiteColor]];
     [_webView setDelegate:self];
     [_webView loadHTMLString:self.htmlContent baseURL:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    [[Flooz sharedInstance] hideLoadView];
 }
 
 - (void)dismissViewController {

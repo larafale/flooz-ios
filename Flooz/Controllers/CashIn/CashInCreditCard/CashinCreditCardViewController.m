@@ -148,6 +148,9 @@
     cardsInfos.minimumScaleFactor = 10. / saveCardLabel.font.pointSize;
     cardsInfos.lineBreakMode = NSLineBreakByWordWrapping;
     
+    if ([Flooz sharedInstance].currentTexts.card && ![[Flooz sharedInstance].currentTexts.card isBlank])
+        [cardsInfos setText:[Flooz sharedInstance].currentTexts.card];
+    
     [cardsInfos setHeightToFit];
     
     [self createCardVisualView];

@@ -42,6 +42,10 @@
     h1 = [[UILabel alloc] initWithText:NSLocalizedString(@"CASHIN_AUDIOTEL_INFOS", nil) textColor:[UIColor whiteColor] font:[UIFont customContentRegular:15] textAlignment:NSTextAlignmentCenter numberOfLines:0];
     CGRectSetXY(h1.frame, 20, 20);
     CGRectSetWidth(h1.frame, PPScreenWidth() - 40);
+    
+    if ([Flooz sharedInstance].currentTexts.audiotelInfos && ![[Flooz sharedInstance].currentTexts.audiotelInfos isBlank])
+        h1.text = [Flooz sharedInstance].currentTexts.audiotelInfos;
+        
     [h1 setHeightToFit];
     
     numberView = [[UIImageView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(h1.frame) + 20, PPScreenWidth() - 40, 60)];
@@ -114,6 +118,7 @@
     
     if (userInfo && userInfo[@"code"]) {
         dictionary[@"audiotelCode"] = userInfo[@"code"];
+        [codeTextField reloadTextField];
     }
 }
 

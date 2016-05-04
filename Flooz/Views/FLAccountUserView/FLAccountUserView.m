@@ -74,24 +74,10 @@
 }
 
 - (void)showWalletMessage {
-    UIImage *cbImage = [UIImage imageNamed:@"picto-cb"];
-    CGSize newImgSize = CGSizeMake(20, 14);
-    
-    UIGraphicsBeginImageContextWithOptions(newImgSize, NO, 0.0);
-    [cbImage drawInRect:CGRectMake(0, 0, newImgSize.width, newImgSize.height)];
-    cbImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-    attachment.image = cbImage;
-    
-    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
-    
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_1", nil)];
-    [string appendAttributedString:attachmentString];
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"WALLET_INFOS_CONTENT_2", nil)]];
-    
-    [[[FLPopupInformation alloc] initWithTitle:NSLocalizedString(@"WALLET_INFOS_TITLE", nil) andMessage:string ok:nil] show];
+    if ([Flooz sharedInstance].currentTexts.balancePopupTitle && [Flooz sharedInstance].currentTexts.balancePopupText) {
+        [[[FLPopupInformation alloc] initWithTitle:[Flooz sharedInstance].currentTexts.balancePopupTitle andMessage:[[NSMutableAttributedString alloc] initWithString:[Flooz sharedInstance].currentTexts.balancePopupText] ok:nil] show];
+
+    }
 }
 
 - (void)reloadData {

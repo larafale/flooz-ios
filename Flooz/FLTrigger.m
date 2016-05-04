@@ -34,6 +34,12 @@
     else
         return NO;
     
+    if ([self.key isEqualToString:@"card:card:show"] && [Flooz sharedInstance].currentTexts.cashinButtons && [Flooz sharedInstance].currentTexts.cashinButtons.count)
+        self.key = @"cashin:card:show";
+    
+    if ([self.key isEqualToString:@"card:card:hide"] && [Flooz sharedInstance].currentTexts.cashinButtons && [Flooz sharedInstance].currentTexts.cashinButtons.count)
+        self.key = @"cashin:card:hide";
+    
     NSArray *splitKey = [self.key componentsSeparatedByString:@":"];
     
     if (splitKey == nil || splitKey.count != 3)

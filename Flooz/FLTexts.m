@@ -49,9 +49,15 @@
 - (void)setJSON:(NSDictionary *)json {
     self.json = json;
     
+    if (json[@"balance"]) {
+        self.balancePopupTitle = json[@"balance"][@"title"];
+        self.balancePopupText = json[@"balance"][@"text"];
+    }
+    
     if (json[@"audiotel"]) {
         self.audiotelNumber = json[@"audiotel"][@"number"];
         self.audiotelImage = json[@"audiotel"][@"image"];
+        self.audiotelInfos = json[@"audiotel"][@"info"];
     }
     
     if (json[@"cardHolder"])

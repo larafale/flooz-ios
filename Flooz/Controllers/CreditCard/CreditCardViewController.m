@@ -326,9 +326,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] removeCreditCard:creditCardId success: ^(id result) {
-        creditCard = nil;
-        [[[Flooz sharedInstance] currentUser] setCreditCard:nil];
-        [self reloadView];
+
     }];
 }
 

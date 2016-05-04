@@ -1113,7 +1113,7 @@
 }
 
 - (void)cashinAudiotel:(NSString *)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/cashins/audiotel" method:@"PUT" params:@{@"code": code} success:success failure:failure];
+    [self requestPath:@"/cashins/audiotel" method:@"PUT" params:(code ? @{@"code": code} : nil) success:success failure:failure];
 }
 
 - (void)cashinCard:(NSDictionary *)data success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {

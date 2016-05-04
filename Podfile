@@ -38,6 +38,7 @@ def prod_pods
     pod 'MGSwipeTableCell'
     pod 'OneSignal'
     pod 'YLProgressBar'
+
 end
 
 target 'Flooz' do
