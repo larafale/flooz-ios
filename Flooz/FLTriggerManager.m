@@ -47,6 +47,9 @@
 #import "CashinAudiotelViewController.h"
 #import "CashinCreditCardViewController.h"
 #import "ActivitiesViewController.h"
+#import "CashinCardKYCViewController.h"
+#import "PaymentAudiotelViewController.h"
+#import "PaymentSourceViewController.h"
 
 @interface FLTriggerManager ()
 
@@ -187,6 +190,12 @@
 
 - (void)hideActionHandler:(FLTrigger *)trigger {
     if ([self isTriggerKeyView:trigger]) {
+        Boolean animate = YES;
+        
+        if (trigger.data && trigger.data[@"noAnim"]) {
+            animate = ![trigger.data[@"noAnim"] boolValue];
+        }
+        
         Class controllerClass = [self.binderKeyView objectForKey:trigger.viewCaregory];
         UIViewController *topController = [appDelegate myTopViewController];
         
@@ -200,12 +209,12 @@
                     return;
                 
                 if ([currentController isKindOfClass:controllerClass]) {
-                    [currentController dismissViewControllerAnimated:YES completion:^{
+                    [currentController dismissViewControllerAnimated:animate completion:^{
                         [self executeTriggerList:trigger.triggers];
                     }];
                 }
             } else if ([tabController isKindOfClass:controllerClass]) {
-                [tabController dismissViewControllerAnimated:YES completion:^{
+                [tabController dismissViewControllerAnimated:animate completion:^{
                     [self executeTriggerList:trigger.triggers];
                 }];
             }
@@ -213,12 +222,12 @@
             UIViewController *currentController = [(FLNavigationController *)topController topViewController];
             
             if ([currentController isKindOfClass:controllerClass]) {
-                [currentController dismissViewControllerAnimated:YES completion:^{
+                [currentController dismissViewControllerAnimated:animate completion:^{
                     [self executeTriggerList:trigger.triggers];
                 }];
             }
         } else if ([topController isKindOfClass:controllerClass]) {
-            [topController dismissViewControllerAnimated:YES completion:^{
+            [topController dismissViewControllerAnimated:animate completion:^{
                 [self executeTriggerList:trigger.triggers];
             }];
         }
@@ -366,7 +375,9 @@
         }
     } else if ([trigger.viewCaregory isEqualToString:@"app:alert"]) {
         if (trigger.data) {
-            [appDelegate displayMessage:[[FLAlert alloc] initWithJson:trigger.data]];
+            [appDelegate displayMessage:[[FLAlert alloc] initWithJson:trigger.data] completion:^{
+                [self executeTriggerList:trigger.triggers];
+            }];
         }
     } else if ([trigger.viewCaregory isEqualToString:@"app:list"]) {
         if (trigger.data) {
@@ -666,7 +677,6 @@
 - (void)loadBinderKeyView {
     self.binderKeyView = @{
                            @"app:activities": [ActivitiesViewController new],
-                           @"app:cashin": [CashinViewController class],
                            @"app:cashout": [CashOutViewController class],
                            @"app:flooz": [NewTransactionViewController class],
                            @"app:pot": [NewCollectController class],
@@ -677,8 +687,9 @@
                            @"app:profile": [UserViewController class],
                            @"app:timeline": [TimelineViewController class],
                            @"auth:code": [SecureCodeViewController class],
-                           @"cashin:card": [CashinCreditCardViewController class],
-                           @"cashin:audiotel": [CashinAudiotelViewController class],
+                           @"pay:card": [CreditCardViewController class],
+                           @"pay:audiotel": [PaymentAudiotelViewController class],
+                           @"pay:source": [PaymentSourceViewController class],
                            @"card:3ds": [Secure3DViewController class],
                            @"card:card": [CreditCardViewController class],
                            @"code:set": [ValidateSecureCodeViewController class],
@@ -697,14 +708,13 @@
                            @"friend:pending": [FriendRequestViewController class],
                            @"pot:invitation": [ShareLinkViewController class],
                            @"pot:participant": [CollectParticipantViewController class],
-                           @"pot:participation": [CollectParticipationViewController class]
+                           @"pot:participation": [CollectParticipationViewController class],
                            };
 }
 
 - (void)loadBinderKeyType {
     self.binderKeyType = @{
                            @"app:activities": @"modal",
-                           @"app:cashin": @"modal",
                            @"app:cashout": @"modal",
                            @"app:flooz": @"modal",
                            @"app:promo": @"modal",
@@ -714,8 +724,9 @@
                            @"app:profile": @"root",
                            @"app:timeline": @"root",
                            @"auth:code": @"modal",
-                           @"cashin:card": @"modal",
-                           @"cashin:audiotel": @"modal",
+                           @"pay:card": @"modal",
+                           @"pay:audiotel": @"modal",
+                           @"pay:source": @"modal",
                            @"card:3ds": @"modal",
                            @"card:card": @"modal",
                            @"code:set":@"modal",
@@ -735,7 +746,7 @@
                            @"app:pot": @"modal",
                            @"pot:invitation": @"modal",
                            @"pot:participant": @"push",
-                           @"pot:participation": @"push"
+                           @"pot:participation": @"push",
                            };
 }
 

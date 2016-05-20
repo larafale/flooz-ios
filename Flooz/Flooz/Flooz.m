@@ -68,7 +68,7 @@
 #endif
         
         [manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
-        [manager.requestSerializer setTimeoutInterval:10];
+        [manager.requestSerializer setTimeoutInterval:20];
         [manager setResponseSerializer:[AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers]];
         
         loadView = [FLLoadView new];
@@ -1112,8 +1112,8 @@
     [self requestPath:[NSString stringWithFormat:@"/social/comments/%@", comment[@"floozId"]] method:@"POST" params:comment success:success failure:failure];
 }
 
-- (void)cashinAudiotel:(NSString *)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/cashins/audiotel" method:@"PUT" params:(code ? @{@"code": code} : nil) success:success failure:failure];
+- (void)cashinAudiotel:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/cashins/audiotel" method:@"PUT" params:params success:success failure:failure];
 }
 
 - (void)cashinCard:(NSDictionary *)data success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
@@ -1373,7 +1373,7 @@
             }
         }
         else if (errorData) {
-            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:errorData options:kNilOptions error:nil];
             
             if (serializedData) {
                 [self displayPopupMessage:serializedData];
@@ -1704,7 +1704,7 @@
 
 - (void)displayPopupMessage:(id)responseObject {
     if (responseObject && responseObject[@"popup"] && [responseObject objectForKey:@"popup"] != [NSNull null]) {
-        [appDelegate displayMessage:[[FLAlert alloc] initWithJson:responseObject[@"popup"]]];
+        [appDelegate displayMessage:[[FLAlert alloc] initWithJson:responseObject[@"popup"]] completion:nil];
     }
 }
 

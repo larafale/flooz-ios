@@ -1,15 +1,16 @@
 //
-//  CashinAudiotelViewController.m
+//  PaymentAudiotelViewController.m
 //  Flooz
 //
-//  Created by Olive on 4/14/16.
+//  Created by Olive on 18/05/16.
 //  Copyright © 2016 Flooz. All rights reserved.
 //
 
-#import "FLBorderedActionButton.h"
-#import "CashinAudiotelViewController.h"
 
-@interface CashinAudiotelViewController () {
+#import "FLBorderedActionButton.h"
+#import "PaymentAudiotelViewController.h"
+
+@interface PaymentAudiotelViewController () {
     NSMutableDictionary *dictionary;
     
     UIScrollView *contentView;
@@ -18,6 +19,8 @@
     UIImageView *numberView;
     UILabel *numberHint;
     
+    UILabel *currentBalance;
+    
     UILabel *codeHint;
     FLTextField *codeTextField;
     FLActionButton *useCodeButton;
@@ -25,8 +28,17 @@
 
 @end
 
-@implementation CashinAudiotelViewController
+@implementation PaymentAudiotelViewController
 
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [super initWithTriggerData:data];
+    if (self) {
+        if (self.triggerData && self.triggerData[@"flooz"]) {
+            _floozData = self.triggerData[@"flooz"];
+        }
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,8 +72,21 @@
     CGRectSetWidth(numberHint.frame, PPScreenWidth() - 20);
     [numberHint setHeightToFit];
     
+    UILabel *balanceHint = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(numberHint.frame) + 20, PPScreenWidth() - 40, 25)];
+    balanceHint.text = NSLocalizedString(@"FLOOZ_BALANCE", nil);
+    balanceHint.textColor = [UIColor whiteColor];
+    balanceHint.textAlignment = NSTextAlignmentCenter;
+    balanceHint.font = [UIFont customContentRegular:15];
+    
+    currentBalance = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(balanceHint.frame), PPScreenWidth() - 40, 30)];
+    currentBalance.textColor = [UIColor customBlue];
+    currentBalance.textAlignment = NSTextAlignmentCenter;
+    currentBalance.font = [UIFont customContentBold:20];
+    currentBalance.numberOfLines = 1;
+    currentBalance.text = [FLHelper formatedAmount:[Flooz sharedInstance].currentUser.amount withCurrency:YES withSymbol:NO];
+    
     codeHint = [[UILabel alloc] initWithText:NSLocalizedString(@"CASHIN_AUDIOTEL_HINT", nil) textColor:[UIColor whiteColor] font:[UIFont customContentRegular:15] textAlignment:NSTextAlignmentCenter numberOfLines:0];
-    CGRectSetXY(codeHint.frame, 40, CGRectGetMaxY(numberHint.frame) + 50);
+    CGRectSetXY(codeHint.frame, 40, CGRectGetMaxY(currentBalance.frame) + 30);
     CGRectSetWidth(codeHint.frame, PPScreenWidth() - 80);
     
     codeTextField = [[FLTextField alloc] initWithPlaceholder:NSLocalizedString(@"CASHIN_AUDIOTEL_PLACEHOLDER", nil) for:dictionary key:@"audiotelCode" frame:CGRectMake(40, CGRectGetMaxY(codeHint.frame) + 10, PPScreenWidth() - 80, 35)];
@@ -70,6 +95,7 @@
     codeTextField.maxLenght = 8;
     codeTextField.textAlignment = NSTextAlignmentCenter;
     codeTextField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    codeTextField.enableAllCaps = YES;
     [codeTextField addForNextClickTarget:codeTextField action:@selector(resignFirstResponder)];
     
     useCodeButton = [[FLActionButton alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(codeTextField.frame) + 10, PPScreenWidth() - 80, 40) title:NSLocalizedString(@"GLOBAL_VALIDATE", nil)];
@@ -79,8 +105,10 @@
     [contentView addSubview:numberView];
     [contentView addSubview:numberHint];
     [contentView addSubview:codeHint];
+    [contentView addSubview:currentBalance];
     [contentView addSubview:codeTextField];
     [contentView addSubview:useCodeButton];
+    [contentView addSubview:balanceHint];
     
     contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(useCodeButton.frame) + 20);
     
@@ -88,6 +116,7 @@
     
     [self registerForKeyboardNotifications];
     
+    [self registerNotification:@selector(updateBalance) name:kNotificationReloadCurrentUser object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAudiotelCodeField:) name:@"cashin:audiotel:sync" object:nil];
 }
 
@@ -95,6 +124,10 @@
     [codeTextField resignFirstResponder];
     
     [super viewWillDisappear:animated];
+}
+
+- (void)updateBalance {
+    currentBalance.text = [FLHelper formatedAmount:[Flooz sharedInstance].currentUser.amount withCurrency:YES withSymbol:NO];
 }
 
 - (void)callButtonClick {
@@ -112,7 +145,20 @@
     [self.view endEditing:NO];
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] cashinAudiotel:dictionary[@"audiotelCode"] success:nil failure:nil];
+    
+    NSDictionary *params;
+    
+    if (dictionary[@"audiotelCode"])
+        params = @{@"code":dictionary[@"audiotelCode"], @"flooz": _floozData};
+    else
+        params = @{@"flooz": _floozData};
+
+    [[Flooz sharedInstance] cashinAudiotel:params success:^(id result) {
+        dictionary[@"audiotelCode"] = @"";
+        [codeTextField reloadTextField];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)updateAudiotelCodeField:(NSNotification*)notification {

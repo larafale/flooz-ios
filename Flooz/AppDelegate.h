@@ -83,7 +83,7 @@ static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 
 - (void)displayError:(NSError *)error;
 - (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;
-- (void)displayMessage:(FLAlert*)alert;
+- (void)displayMessage:(FLAlert*)alert completion:(dispatch_block_t)completion;
 - (void)displayAlert:(NSString *)title content:(NSString *)content;
 - (void)noAccessToSettings;
 

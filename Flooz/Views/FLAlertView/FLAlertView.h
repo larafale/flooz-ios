@@ -26,6 +26,6 @@ typedef NS_ENUM (NSInteger, FLAlertViewStyle) {
 - (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style;
 - (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay andDictionnary:(NSDictionary *)info;
 - (void)show:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;
-- (void)show:(FLAlert*)alert;
+- (void)show:(FLAlert *)alert completion:(dispatch_block_t)completion;
 
 @end

@@ -11,6 +11,7 @@
 #import "FLKeyboardView.h"
 #import "ScanPayViewController.h"
 #import "3DSecureViewController.h"
+#import "FLCreditCardScanner.h"
 
 #define PADDING_SIDE 20.0f
 
@@ -21,7 +22,21 @@
     UIScrollView *_contentView;
     FLActionButton *_nextButton;
     
+    UILabel *inputHint;
+    FLTextField *holderTextField;
     STPPaymentCardTextField *paymentTextField;
+    UIImageView *scanCardButton;
+    
+    UIView *saveCardButton;
+    UIImageView *saveCardImageView;
+    UILabel *saveCardLabel;
+    
+    NSMutableDictionary *dictionary;
+    
+    Boolean hideSaveCard;
+    Boolean saveCard;
+    
+    FLCreditCardScanner *scanner;
 }
 
 @end
@@ -30,10 +45,33 @@
 
 @synthesize customLabel;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)init {
+    self = [super init];
     if (self) {
+        hideSaveCard = YES;
+        saveCard = YES;
 
+    }
+    return self;
+}
+
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [super initWithTriggerData:data];
+    if (self) {
+        hideSaveCard = NO;
+        saveCard = YES;
+
+        if (self.triggerData && self.triggerData[@"hideSave"]) {
+            hideSaveCard = [self.triggerData[@"hideSave"] boolValue];
+        }
+        
+        if (self.triggerData && self.triggerData[@"save"]) {
+            saveCard = [self.triggerData[@"save"] boolValue];
+        }
+        
+        if (self.triggerData && self.triggerData[@"flooz"]) {
+            _floozData = self.triggerData[@"flooz"];
+        }
     }
     return self;
 }
@@ -49,13 +87,15 @@
         self.title = NSLocalizedString(@"NAV_CREDIT_CARD", nil);
     }
     else {
-        self.title = NSLocalizedString(@"NAV_CREDIT_CARD_ADD", nil);
+        self.title = NSLocalizedString(@"NAV_CREDIT_CARD", nil);
     }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    dictionary = [NSMutableDictionary new];
+
     [self resetContentView];
     
     [self addTapGestureForDismissKeyboard];
@@ -64,9 +104,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{
-        [self reloadView];
-    }];
     [self reloadView];
 }
 
@@ -116,6 +153,14 @@
     [self createNextButton];
     [_nextButton addTarget:self action:@selector(didValidTouch) forControlEvents:UIControlEventTouchUpInside];
     
+    inputHint = [[UILabel alloc] initWithText:NSLocalizedString(@"CASHIN_CARD_PAYMENT_INPUT_HINT", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
+    CGRectSetXY(inputHint.frame, PADDING_SIDE, 20);
+    
+    holderTextField = [[FLTextField alloc] initWithPlaceholder:@"Nom du titulaire" for:dictionary key:@"holder" frame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(inputHint.frame) + 5, PPScreenWidth() - (2 * PADDING_SIDE), 30)];
+    holderTextField.floatLabelActiveColor = [UIColor clearColor];
+    holderTextField.floatLabelPassiveColor = [UIColor clearColor];
+    [holderTextField setType:FLTextFieldTypeText];
+
     paymentTextField = [[STPPaymentCardTextField alloc] initWithFrame:CGRectMake(PADDING_SIDE, 25, PPScreenWidth() - (2 * PADDING_SIDE), 40)];
     paymentTextField.delegate = self;
     [paymentTextField setTextColor:[UIColor whiteColor]];
@@ -123,17 +168,79 @@
     [paymentTextField setPlaceholderColor:[UIColor customPlaceholder]];
     [paymentTextField setKeyboardAppearance:UIKeyboardAppearanceDark];
     [paymentTextField setBorderColor:[UIColor clearColor]];
-    [paymentTextField setNumberPlaceholder:@"•••• •••• •••• ••••"];
+    [paymentTextField setNumberPlaceholder:@"••••••••••••••••"];
     [paymentTextField setTextErrorColor:[UIColor customRed]];
+    [paymentTextField addBottomBorderWithColor:[UIColor customBackground] andWidth:0.7];
     
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(paymentTextField.frame), PPScreenWidth() - (2 * PADDING_SIDE), 1)];
-    [separator setBackgroundColor:[UIColor customBackground]];
+    scanCardButton = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(paymentTextField.frame) - 33, CGRectGetMaxY(inputHint.frame) + 5, 33, 40)];
+    [scanCardButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"bar-camera"] scaledToSize:CGSizeMake(25, 23)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [scanCardButton setTintColor:[UIColor customPlaceholder]];
+    [scanCardButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scanButtonClick)]];
+    [scanCardButton setUserInteractionEnabled:YES];
+    [scanCardButton setContentMode:UIViewContentModeCenter];
+    [scanCardButton setHidden:YES];
+    [scanCardButton addBottomBorderWithColor:[UIColor customBackground] andWidth:0.7];
+
+    if ([CardIOUtilities canReadCardWithCamera]) {
+        CGRectSetWidth(paymentTextField.frame, PPScreenWidth() - (2 * PADDING_SIDE) - 30);
+        [scanCardButton setHidden:NO];
+    }
     
+    if ([[[Flooz sharedInstance] currentTexts] cardHolder]) {
+        holderTextField.hidden = NO;
+        if ([[[[Flooz sharedInstance] currentTexts] cardHolder] isEqualToString:@"true"]) {
+            dictionary[@"holder"] = [[[Flooz sharedInstance] currentUser] fullname];
+            [holderTextField reloadTextField];
+        } else {
+            dictionary[@"holder"] = @"";
+            [holderTextField reloadTextField];
+        }
+        
+        CGRectSetY(paymentTextField.frame, CGRectGetMaxY(holderTextField.frame) + 10);
+        CGRectSetY(scanCardButton.frame, CGRectGetMaxY(holderTextField.frame) + 10);
+    } else {
+        holderTextField.hidden = YES;
+        CGRectSetY(paymentTextField.frame, CGRectGetMaxY(inputHint.frame) + 5);
+        CGRectSetY(scanCardButton.frame, CGRectGetMaxY(inputHint.frame) + 5);
+    }
+
+    saveCardButton = [[UIView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(paymentTextField.frame) + 10, PPScreenWidth() - 2 * PADDING_SIDE, 30)];
+    [saveCardButton setUserInteractionEnabled:YES];
+    [saveCardButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSaveCardButtonClick)]];
+    
+    saveCardImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 20, 20)];
+    saveCardImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    saveCardLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(saveCardImageView.frame) + 10, 5, CGRectGetWidth(saveCardButton.frame) - CGRectGetMaxX(saveCardImageView.frame) - 10, 20)];
+    saveCardLabel.textColor = [UIColor whiteColor];
+    saveCardLabel.font = [UIFont customContentRegular:15];
+    saveCardLabel.text = NSLocalizedString(@"CASHIN_CARD_CHECKBOX_TEXT", nil);
+    saveCardLabel.adjustsFontSizeToFitWidth = YES;
+    saveCardLabel.minimumScaleFactor = 10. / saveCardLabel.font.pointSize;
+    
+    [saveCardButton addSubview:saveCardImageView];
+    [saveCardButton addSubview:saveCardLabel];
+    
+    [_contentView addSubview:inputHint];
+    [_contentView addSubview:holderTextField];
+    [_contentView addSubview:scanCardButton];
     [_contentView addSubview:paymentTextField];
-    [_contentView addSubview:separator];
+    [_contentView addSubview:saveCardButton];
     
     [_contentView addSubview:_nextButton];
-    CGRectSetY(_nextButton.frame, CGRectGetMaxY(paymentTextField.frame) + 20.0f);
+    
+    if (hideSaveCard) {
+        [saveCardButton setHidden:YES];
+        CGRectSetY(_nextButton.frame, CGRectGetMaxY(paymentTextField.frame) + 20.0f);
+    } else {
+        CGRectSetY(_nextButton.frame, CGRectGetMaxY(saveCardButton.frame) + 20.0f);
+        
+        if (saveCard)
+            [saveCardImageView setImage:[UIImage imageNamed:@"checkmark-on"]];
+        else
+            [saveCardImageView setImage:[UIImage imageNamed:@"checkmark-off"]];
+    }
+    
     [_nextButton setTitle:NSLocalizedString(@"GLOBAL_SAVE", @"") forState:UIControlStateNormal];
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), CGRectGetMaxY(_nextButton.frame) + 40);
     
@@ -232,74 +339,54 @@
     
 }
 
-#pragma mark - ScanPay
+#pragma mark - CardIO
 
-- (void)presentScanPayViewController {
+- (void)scanButtonClick {
+    [self.view endEditing:YES];
+    [self.view endEditing:NO];
     
-//    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-//    
-//    if (authStatus == AVAuthorizationStatusAuthorized) {
-//        ScanPayViewController *scanPayViewController = [[ScanPayViewController alloc] initWithToken:@"be38035037ed6ca3cba7089b" useConfirmationView:YES useManualEntry:YES];
-//        
-//        [scanPayViewController startScannerWithViewController:self success: ^(SPCreditCard *card) {
-//            [_card setValue:card.number forKey:@"number"];
-//            [_card setValue:card.cvc forKey:@"cvv"];
-//            
-//            NSString *expires = [NSString stringWithFormat:@"%@-%@", card.month, card.year];
-//            
-//            [_card setValue:expires forKey:@"expires"];
-//            
-//            for (FLTextFieldTitle2 * view in fieldsView) {
-//                [view reloadData];
-//            }
-//        } cancel: ^{
-//            [fieldsView[1] becomeFirstResponder];
-//        }];
-//    } else if (authStatus == AVAuthorizationStatusNotDetermined){
-//        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-//            if (granted){
-//                ScanPayViewController *scanPayViewController = [[ScanPayViewController alloc] initWithToken:@"be38035037ed6ca3cba7089b" useConfirmationView:YES useManualEntry:YES];
-//                
-//                [scanPayViewController startScannerWithViewController:self success: ^(SPCreditCard *card) {
-//                    [_card setValue:card.number forKey:@"number"];
-//                    [_card setValue:card.cvc forKey:@"cvv"];
-//                    
-//                    NSString *expires = [NSString stringWithFormat:@"%@-%@", card.month, card.year];
-//                    
-//                    [_card setValue:expires forKey:@"expires"];
-//                    
-//                    for (FLTextFieldTitle2 * view in fieldsView) {
-//                        [view reloadData];
-//                    }
-//                } cancel: ^{
-//                    [fieldsView[1] becomeFirstResponder];
-//                }];
-//            } else {
-//                
-//            }
-//        }];
-//    } else {
-//        UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
-//        [curr setTag:125];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [curr show];
-//        });
-//    }
+    scanner = nil;
+    scanner = [[FLCreditCardScanner alloc] initWithDelegate:self];
+    [scanner show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == 125 && buttonIndex == 1)
-    {
-        [[UIApplication sharedApplication] openURL:[NSURL  URLWithString:UIApplicationOpenSettingsURLString]];
+- (void)cardIOView:(CardIOView *)cardIOView didScanCard:(CardIOCreditCardInfo *)info {
+    if (info) {
+        STPCardParams *params = [STPCardParams new];
+        params.number = info.cardNumber;
+        params.expMonth = info.expiryMonth;
+        params.expYear = info.expiryYear;
+        params.cvc = info.cvv;
+        
+        [scanner dismiss];
+        scanner = nil;
+        
+        [paymentTextField setCardParams:params];
+        [paymentTextField becomeFirstResponder];
+    }
+    else {
+        [scanner dismiss];
+        scanner = nil;
     }
 }
 
 #pragma mark - Verification
 
+- (void)didSaveCardButtonClick {
+    saveCard = !saveCard;
+    
+    if (saveCard)
+        [saveCardImageView setImage:[UIImage imageNamed:@"checkmark-on"]];
+    else
+        [saveCardImageView setImage:[UIImage imageNamed:@"checkmark-off"]];
+}
+
 - (void)didValidTouch {
     [[self view] endEditing:YES];
     
+    if (dictionary[@"holder"] && [[[Flooz sharedInstance] currentTexts] cardHolder]) {
+        _card[@"holder"] = dictionary[@"holder"];
+    }
     if (paymentTextField.cardNumber && ![paymentTextField.cardNumber isBlank])
         _card[@"number"] = paymentTextField.cardNumber;
     
@@ -309,6 +396,9 @@
     if (paymentTextField.expirationMonth != 0 && paymentTextField.expirationYear != 0)
         _card[@"expires"] = [NSString stringWithFormat:@"%02lu-%02lu", (unsigned long)paymentTextField.expirationMonth, (unsigned long)paymentTextField.expirationYear];
     
+    if (!hideSaveCard)
+        _card[@"hidden"] = @(!saveCard);
+
     if (self.floozData && self.floozData.allKeys.count) {
         _card[@"flooz"] = self.floozData;
     } else if (self.triggerData && self.triggerData[@"flooz"]) {

@@ -9,7 +9,6 @@
 #import "SignupCreditCardViewController.h"
 #import "FLTextFieldTitle2.h"
 #import "FLKeyboardView.h"
-#import "ScanPayViewController.h"
 
 #define PADDING_SIDE 20.0f
 
@@ -64,20 +63,6 @@
         inputViewField.textField = cardNumberField.textfield;
         cardNumberField.textfield.inputView = inputViewField;
     }
-//    {
-//        UIImage *photo = [UIImage imageNamed:@"bar-camera"];
-//        UIButton *scanCardButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(cardNumberField.frame) - 50.0f, 0.0f, 50.0f, CGRectGetHeight(cardNumberField.frame))];
-//        [scanCardButton setImage:photo forState:UIControlStateNormal];
-//        
-//        CGSize size = photo.size;
-//        [scanCardButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, -size.height + 10.0f, -size.width)];
-//        
-//        [scanCardButton addTarget:self action:@selector(presentScanPayViewController) forControlEvents:UIControlEventTouchUpInside];
-//        if (!IS_IPHONE_4) {
-//            //Not working with iphone 4
-//            [cardNumberField addSubview:scanCardButton];
-//        }
-//    }
     
     FLTextFieldTitle2 *expireField = [[FLTextFieldTitle2 alloc] initWithTitle:@"" placeholder:@"SIGNUP_FIELD_CARD_EXPIRES_PLACEHOLDER" for:_card key:@"expires" position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(cardNumberField.frame) - 2.0f)];
     [expireField setKeyboardType:UIKeyboardTypeDecimalPad];
@@ -132,65 +117,6 @@
     [_contentView addGestureRecognizer:tapGesture];
     [_headerView addGestureRecognizer:tapGesture];
     [self registerForKeyboardNotifications];
-}
-
-#pragma mark - ScanPay
-
-- (void)presentScanPayViewController {
-    
-    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    
-    if (authStatus == AVAuthorizationStatusAuthorized) {
-        ScanPayViewController *scanPayViewController = [[ScanPayViewController alloc] initWithToken:@"be38035037ed6ca3cba7089b" useConfirmationView:YES useManualEntry:YES];
-        
-        [scanPayViewController startScannerWithViewController:self success: ^(SPCreditCard *card) {
-            [_card setValue:card.number forKey:@"number"];
-            [_card setValue:card.cvc forKey:@"cvv"];
-            
-            NSString *expires = [NSString stringWithFormat:@"%@-%@", card.month, card.year];
-            
-            [_card setValue:expires forKey:@"expires"];
-            
-            for (FLTextFieldTitle2 * view in fieldsView) {
-                [view reloadData];
-            }
-            if ([self verifAllFieldForCB])
-                [self didValidTouch];
-        } cancel: ^{
-            [fieldsView[1] becomeFirstResponder];
-        }];
-    } else if (authStatus == AVAuthorizationStatusNotDetermined){
-        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-            if (granted){
-                ScanPayViewController *scanPayViewController = [[ScanPayViewController alloc] initWithToken:@"be38035037ed6ca3cba7089b" useConfirmationView:YES useManualEntry:YES];
-                
-                [scanPayViewController startScannerWithViewController:self success: ^(SPCreditCard *card) {
-                    [_card setValue:card.number forKey:@"number"];
-                    [_card setValue:card.cvc forKey:@"cvv"];
-                    
-                    NSString *expires = [NSString stringWithFormat:@"%@-%@", card.month, card.year];
-                    
-                    [_card setValue:expires forKey:@"expires"];
-                    
-                    for (FLTextFieldTitle2 * view in fieldsView) {
-                        [view reloadData];
-                    }
-                    if ([self verifAllFieldForCB])
-                        [self didValidTouch];
-                } cancel: ^{
-                    [fieldsView[1] becomeFirstResponder];
-                }];
-            } else {
-                
-            }
-        }];
-    } else {
-        UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
-        [curr setTag:125];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [curr show];
-        });
-    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

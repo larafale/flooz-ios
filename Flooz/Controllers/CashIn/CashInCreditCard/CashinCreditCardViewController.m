@@ -9,6 +9,8 @@
 #import "FLActionButton.h"
 #import "FLTextField.h"
 #import "CashinCreditCardViewController.h"
+#import "CardIO.h"
+#import "FLCreditCardScanner.h"
 
 #define PADDING_SIDE 20.0f
 
@@ -26,9 +28,15 @@
     
     UILabel *inputHint;
     FLTextField *holderTextField;
+    UIImageView *scanCardButton;
     STPPaymentCardTextField *paymentTextField;
     
     UILabel *amountHint;
+    
+    NSInteger selectedAmount;
+    UIView *amountCheckboxView;
+    NSMutableArray *amountChecboxes;
+    
     FLTextField *amountTextField;
     FLActionButton *sendButton;
     
@@ -40,6 +48,8 @@
     UILabel *cardsInfos;
     
     Boolean saveCard;
+    
+    FLCreditCardScanner *scanner;
 }
 
 @end
@@ -50,11 +60,12 @@
     [super viewDidLoad];
     
     saveCard = NO;
+    selectedAmount = -1;
     
     dictionary = [NSMutableDictionary new];
     
     dictionary[@"random"] = [FLHelper generateRandomString];
-
+    
     if (!self.title || [self.title isBlank])
         self.title = NSLocalizedString(@"NAV_CASHIN", nil);
     
@@ -78,10 +89,22 @@
     [paymentTextField setBorderColor:[UIColor clearColor]];
     [paymentTextField setNumberPlaceholder:@"•••• •••• •••• ••••"];
     [paymentTextField setTextErrorColor:[UIColor customRed]];
-    paymentTextField.layer.borderColor = [UIColor customPlaceholder].CGColor;
-    paymentTextField.layer.borderWidth = 1.0f;
-    paymentTextField.layer.cornerRadius = 5.0f;
-
+    [paymentTextField addBottomBorderWithColor:[UIColor customBackground] andWidth:0.7];
+    
+    scanCardButton = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(paymentTextField.frame) - 33, CGRectGetMaxY(inputHint.frame) + 5, 33, 40)];
+    [scanCardButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"bar-camera"] scaledToSize:CGSizeMake(25, 23)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [scanCardButton setTintColor:[UIColor customPlaceholder]];
+    [scanCardButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scanButtonClick)]];
+    [scanCardButton setUserInteractionEnabled:YES];
+    [scanCardButton setContentMode:UIViewContentModeCenter];
+    [scanCardButton setHidden:YES];
+    [scanCardButton addBottomBorderWithColor:[UIColor customBackground] andWidth:0.7];
+    
+    if ([CardIOUtilities canReadCardWithCamera]) {
+        CGRectSetWidth(paymentTextField.frame, PPScreenWidth() - (2 * PADDING_SIDE) - 30);
+        [scanCardButton setHidden:NO];
+    }
+    
     if ([[[Flooz sharedInstance] currentTexts] cardHolder]) {
         holderTextField.hidden = NO;
         if ([[[[Flooz sharedInstance] currentTexts] cardHolder] isEqualToString:@"true"]) {
@@ -93,13 +116,13 @@
         }
         
         CGRectSetY(paymentTextField.frame, CGRectGetMaxY(holderTextField.frame) + 10);
+        CGRectSetY(scanCardButton.frame, CGRectGetMaxY(holderTextField.frame) + 10);
     } else {
         holderTextField.hidden = YES;
         CGRectSetY(paymentTextField.frame, CGRectGetMaxY(inputHint.frame) + 5);
+        CGRectSetY(scanCardButton.frame, CGRectGetMaxY(inputHint.frame) + 5);
     }
     
-    [amountTextField addForNextClickTarget:paymentTextField action:@selector(becomeFirstResponder)];
-
     saveCardButton = [[UIView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(paymentTextField.frame) + 10, PPScreenWidth() - 2 * PADDING_SIDE, 30)];
     [saveCardButton setUserInteractionEnabled:YES];
     [saveCardButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSaveCardButtonClick)]];
@@ -120,18 +143,45 @@
     amountHint = [[UILabel alloc] initWithText:NSLocalizedString(@"CASHIN_CARD_AMOUNT_INPUT_HINT", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:15]];
     CGRectSetXY(amountHint.frame, PADDING_SIDE, 20);
     
-    amountTextField = [[FLTextField alloc] initWithPlaceholder:@"0€" for:dictionary key:@"amount" frame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(amountHint.frame) + 5, PPScreenWidth() / 2 - 1.5 * PADDING_SIDE, 35)];
+    amountCheckboxView = [[UIView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(amountHint.frame) + 5, PPScreenWidth() - PADDING_SIDE * 2, 30)];
+    
+    NSArray *buttonsTitles = @[@"20€", @"50€", @"100€", @"Autre"];
+    
+    CGFloat xOffset = 0.0f;
+    CGFloat margin = 7.0f;
+    CGFloat buttonWidth = (CGRectGetWidth(amountCheckboxView.frame) - (buttonsTitles.count - 1) * margin) / buttonsTitles.count;
+    
+    for (NSString *title in buttonsTitles) {
+        UILabel *button = [[UILabel alloc] initWithFrame:CGRectMake(xOffset, 0, buttonWidth, 35)];
+        button.text = title;
+        button.textColor = [UIColor customBlue];
+        button.font = [UIFont customContentBold:14];
+        button.textAlignment = NSTextAlignmentCenter;
+        button.layer.cornerRadius = 4.;
+        button.layer.masksToBounds = YES;
+        button.layer.borderColor = [UIColor customBlue].CGColor;
+        button.layer.borderWidth = 1.;
+        button.userInteractionEnabled = YES;
+        [button addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didAmountCheckboxClicked:)]];
+        
+        [amountCheckboxView addSubview:button];
+        
+        xOffset += buttonWidth + margin;
+    }
+    
+    amountTextField = [[FLTextField alloc] initWithPlaceholder:@"0€" for:dictionary key:@"amount" frame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(amountHint.frame) + 5, PPScreenWidth() - 2 * PADDING_SIDE, 35)];
     amountTextField.floatLabelActiveColor = [UIColor clearColor];
     amountTextField.floatLabelPassiveColor = [UIColor clearColor];
     [amountTextField setType:FLTextFieldTypeFloatNumber];
     [amountTextField addForNextClickTarget:amountTextField action:@selector(resignFirstResponder)];
+    amountTextField.hidden = YES;
     
     inputView = [FLKeyboardView new];
     [inputView setKeyboardDecimal];
     inputView.textField = amountTextField;
     amountTextField.inputView = inputView;
     
-    sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 + PADDING_SIDE / 2, CGRectGetMinY(amountTextField.frame), PPScreenWidth() / 2 - PADDING_SIDE * 1.5, 35) title:NSLocalizedString(@"GLOBAL_VALIDATE", nil)];
+    sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE * 2, CGRectGetMinY(amountCheckboxView.frame) + 5, PPScreenWidth() - PADDING_SIDE * 4, 35) title:NSLocalizedString(@"GLOBAL_VALIDATE", nil)];
     [sendButton addTarget:self action:@selector(sendButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     cardsLogo = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(sendButton.frame) + 10, PPScreenWidth() - (2 * PADDING_SIDE), 80)];
@@ -155,8 +205,10 @@
     
     [self createCardVisualView];
     
+    [contentView addSubview:amountCheckboxView];
     [contentView addSubview:inputHint];
     [contentView addSubview:amountHint];
+    [contentView addSubview:scanCardButton];
     [contentView addSubview:amountTextField];
     [contentView addSubview:holderTextField];
     [contentView addSubview:paymentTextField];
@@ -176,10 +228,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self reloadView];
+    [CardIOUtilities preload];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
     [_mainBody endEditing:YES];
 }
 
@@ -231,6 +287,7 @@
         
         [inputHint setHidden:YES];
         [paymentTextField setHidden:YES];
+        [scanCardButton setHidden:YES];
         [saveCardButton setHidden:YES];
         
         [cardBackground setHidden:NO];
@@ -251,6 +308,16 @@
         [deleteCardButtton setHidden:YES];
         
         [inputHint setHidden:NO];
+        
+        [scanCardButton setHidden:YES];
+
+        CGRectSetWidth(paymentTextField.frame, PPScreenWidth() - (2 * PADDING_SIDE));
+        
+        if ([CardIOUtilities canReadCardWithCamera]) {
+            CGRectSetWidth(paymentTextField.frame, PPScreenWidth() - (2 * PADDING_SIDE) - 30);
+            [scanCardButton setHidden:NO];
+        }
+        
         [paymentTextField setHidden:NO];
         [saveCardButton setHidden:NO];
         
@@ -262,12 +329,48 @@
         CGRectSetY(amountHint.frame, CGRectGetMaxY(saveCardButton.frame) + 20);
     }
     
-    CGRectSetY(amountTextField.frame, CGRectGetMaxY(amountHint.frame));
-    CGRectSetY(sendButton.frame, CGRectGetMaxY(amountHint.frame));
-    CGRectSetY(cardsLogo.frame, CGRectGetMaxY(sendButton.frame) + 10);
-    CGRectSetY(cardsInfos.frame, CGRectGetMaxY(cardsLogo.frame) + 7);
+    CGRectSetY(amountCheckboxView.frame, CGRectGetMaxY(amountHint.frame) + 10);
     
-    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(cardsInfos.frame) + 10);
+    int i = 0;
+    for (UILabel *label in amountCheckboxView.subviews) {
+        if (selectedAmount == i) {
+            label.backgroundColor = [UIColor customBlue];
+            label.textColor = [UIColor whiteColor];
+        } else {
+            label.backgroundColor = [UIColor clearColor];
+            label.textColor = [UIColor customBlue];
+        }
+        ++i;
+    }
+    
+    if (selectedAmount == 3) {
+        amountTextField.hidden = NO;
+        CGRectSetY(amountTextField.frame, CGRectGetMaxY(amountCheckboxView.frame) + 10);
+        CGRectSetY(sendButton.frame, CGRectGetMaxY(amountTextField.frame) + 10);
+        CGRectSetY(cardsLogo.frame, CGRectGetMaxY(sendButton.frame) + 10);
+        CGRectSetY(cardsInfos.frame, CGRectGetMaxY(cardsLogo.frame) + 7);
+        
+        contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(cardsInfos.frame) + 10);
+    } else {
+        amountTextField.hidden = YES;
+        CGRectSetY(sendButton.frame, CGRectGetMaxY(amountCheckboxView.frame) + 20);
+        CGRectSetY(cardsLogo.frame, CGRectGetMaxY(sendButton.frame) + 10);
+        CGRectSetY(cardsInfos.frame, CGRectGetMaxY(cardsLogo.frame) + 7);
+        
+        contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(cardsInfos.frame) + 10);
+    }
+}
+
+- (void)didAmountCheckboxClicked:(UITapGestureRecognizer *)sender {
+    NSInteger pos = [amountCheckboxView.subviews indexOfObject:sender.view];
+    
+    if (pos != NSNotFound) {
+        selectedAmount = pos;
+    } else {
+        selectedAmount = -1;
+    }
+    
+    [self reloadView];
 }
 
 - (void)didSaveCardButtonClick {
@@ -280,8 +383,17 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] removeCreditCard:creditCardId success: ^(id result) {
-
+        
     }];
+}
+
+- (void)scanButtonClick {
+    [self.view endEditing:YES];
+    [self.view endEditing:NO];
+    
+    scanner = nil;
+    scanner = [[FLCreditCardScanner alloc] initWithDelegate:self];
+    [scanner show];
 }
 
 - (void)sendButtonClick {
@@ -292,10 +404,26 @@
     
     NSMutableDictionary *data = [NSMutableDictionary new];
     
-    [data setDictionary:dictionary];
-
+    if (selectedAmount == 3) {
+        [data setDictionary:dictionary];
+    } else if (selectedAmount >= 0) {
+        switch (selectedAmount) {
+            case 0:
+                data[@"amount"] = @"20";
+                break;
+            case 1:
+                data[@"amount"] = @"50";
+                break;
+            case 2:
+                data[@"amount"] = @"100";
+                break;
+            default:
+                break;
+        }
+    }
+    
     [data removeObjectForKey:@"holder"];
-
+    
     if ([[[Flooz sharedInstance] currentUser] creditCard]) {
         [data setObject:@{@"_id": [[[[Flooz sharedInstance] currentUser] creditCard] cardId]} forKey:@"card"];
     } else {
@@ -320,6 +448,26 @@
     }
     
     [[Flooz sharedInstance] cashinCard:data success:nil failure:nil];
+}
+
+- (void)cardIOView:(CardIOView *)cardIOView didScanCard:(CardIOCreditCardInfo *)info {
+    if (info) {
+        STPCardParams *params = [STPCardParams new];
+        params.number = info.cardNumber;
+        params.expMonth = info.expiryMonth;
+        params.expYear = info.expiryYear;
+        params.cvc = info.cvv;
+        
+        [scanner dismiss];
+        scanner = nil;
+        
+        [paymentTextField setCardParams:params];
+        [paymentTextField becomeFirstResponder];
+    }
+    else {
+        [scanner dismiss];
+        scanner = nil;
+    }
 }
 
 #pragma mark - Keyboard Management

@@ -105,8 +105,6 @@
 		AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA518E18F45006039D0 /* NewTransactionDatePicker.m */; };
 		AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F9FA918E1EF93006039D0 /* FLAlertView.m */; };
 		AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB94FAC71906B720007F8373 /* LoadingCell.m */; };
-		ABA96DAB196EED4D00B8B7C7 /* libScanpay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DA9196EED4D00B8B7C7 /* libScanpay.a */; };
-		ABA96DAC196EED4D00B8B7C7 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAA196EED4D00B8B7C7 /* opencv2.framework */; };
 		ABA96DAF196EF22300B8B7C7 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAD196EF22300B8B7C7 /* CoreMedia.framework */; };
 		ABA96DB0196EF22300B8B7C7 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAE196EF22300B8B7C7 /* CoreVideo.framework */; };
 		ABA96DB2196EF23600B8B7C7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DB1196EF23600B8B7C7 /* AudioToolbox.framework */; };
@@ -189,11 +187,9 @@
 		ABAA3FF3197E96BF009F29EF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB818E4686A008E03FE /* CFNetwork.framework */; };
 		ABAA3FF4197E96BF009F29EF /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB618E46861008E03FE /* libicucore.dylib */; };
 		ABAA3FF5197E96BF009F29EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBB75D918B656820070C2A8 /* AVFoundation.framework */; };
-		ABAA3FF6197E96BF009F29EF /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAA196EED4D00B8B7C7 /* opencv2.framework */; };
 		ABAA3FF7197E96BF009F29EF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */; };
 		ABAA3FF8197E96BF009F29EF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0895186CA11A00CF8380 /* UIKit.framework */; };
 		ABAA3FF9197E96BF009F29EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0891186CA11A00CF8380 /* Foundation.framework */; };
-		ABAA3FFA197E96BF009F29EF /* libScanpay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DA9196EED4D00B8B7C7 /* libScanpay.a */; };
 		ABAA3FFE197E96BF009F29EF /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */; };
 		ABAA3FFF197E96BF009F29EF /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */; };
 		ABAA4000197E96BF009F29EF /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
@@ -390,6 +386,12 @@
 		C95502DA1C2AB440002E9046 /* FLCopyLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C95502D91C2AB43F002E9046 /* FLCopyLinkActivity.m */; };
 		C95502DB1C2AB440002E9046 /* FLCopyLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C95502D91C2AB43F002E9046 /* FLCopyLinkActivity.m */; };
 		C95502DC1C2AB440002E9046 /* FLCopyLinkActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C95502D91C2AB43F002E9046 /* FLCopyLinkActivity.m */; };
+		C955716A1CEC7771001A79AA /* PaymentAudiotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95571691CEC7771001A79AA /* PaymentAudiotelViewController.m */; };
+		C955716B1CEC7771001A79AA /* PaymentAudiotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95571691CEC7771001A79AA /* PaymentAudiotelViewController.m */; };
+		C955716C1CEC7771001A79AA /* PaymentAudiotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95571691CEC7771001A79AA /* PaymentAudiotelViewController.m */; };
+		C955716F1CEC8926001A79AA /* PaymentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C955716E1CEC8926001A79AA /* PaymentSourceViewController.m */; };
+		C95571701CEC8926001A79AA /* PaymentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C955716E1CEC8926001A79AA /* PaymentSourceViewController.m */; };
+		C95571711CEC8926001A79AA /* PaymentSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C955716E1CEC8926001A79AA /* PaymentSourceViewController.m */; };
 		C95772711A9C7BB400CD6BC0 /* FLTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772701A9C7BB400CD6BC0 /* FLTexts.m */; };
 		C95772721A9C7BB400CD6BC0 /* FLTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772701A9C7BB400CD6BC0 /* FLTexts.m */; };
 		C95772731A9C7BB400CD6BC0 /* FLTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772701A9C7BB400CD6BC0 /* FLTexts.m */; };
@@ -547,11 +549,9 @@
 		C98013121A76921000019682 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBBA18E46872008E03FE /* Security.framework */; };
 		C98013131A76921000019682 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB818E4686A008E03FE /* CFNetwork.framework */; };
 		C98013141A76921000019682 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15DBB618E46861008E03FE /* libicucore.dylib */; };
-		C98013161A76921000019682 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DAA196EED4D00B8B7C7 /* opencv2.framework */; };
 		C98013171A76921000019682 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */; };
 		C98013181A76921000019682 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0895186CA11A00CF8380 /* UIKit.framework */; };
 		C98013191A76921000019682 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D0891186CA11A00CF8380 /* Foundation.framework */; };
-		C980131A1A76921000019682 /* libScanpay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA96DA9196EED4D00B8B7C7 /* libScanpay.a */; };
 		C980131E1A76921000019682 /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */; };
 		C980131F1A76921000019682 /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABF46A291875C0B100E92A77 /* ProximaNova-Light.otf */; };
 		C98013201A76921000019682 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
@@ -655,6 +655,9 @@
 		C9B761901C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */; };
 		C9B761911C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */; };
 		C9B761921C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */; };
+		C9B7CF871CE613ED00C1D2E2 /* FLCreditCardScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7CF861CE613ED00C1D2E2 /* FLCreditCardScanner.m */; };
+		C9B7CF881CE613ED00C1D2E2 /* FLCreditCardScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7CF861CE613ED00C1D2E2 /* FLCreditCardScanner.m */; };
+		C9B7CF891CE613ED00C1D2E2 /* FLCreditCardScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7CF861CE613ED00C1D2E2 /* FLCreditCardScanner.m */; };
 		C9B975571C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */; };
 		C9B975581C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */; };
 		C9B975591C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */; };
@@ -727,6 +730,9 @@
 		C9D4E7061B18BD380096725B /* Flooz dev-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */; };
 		C9D4E7071B18BD380096725B /* Flooz local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7031B18BD380096725B /* Flooz local-Info.plist */; };
 		C9D4E7081B18BD380096725B /* Flooz local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9D4E7031B18BD380096725B /* Flooz local-Info.plist */; };
+		C9D977901CE37E2300F94460 /* UIView+Border.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D9778F1CE37E2300F94460 /* UIView+Border.m */; };
+		C9D977911CE37E2300F94460 /* UIView+Border.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D9778F1CE37E2300F94460 /* UIView+Border.m */; };
+		C9D977921CE37E2300F94460 /* UIView+Border.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D9778F1CE37E2300F94460 /* UIView+Border.m */; };
 		C9DD72201C9891AD000D1664 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD721F1C9891AD000D1664 /* CommentCell.m */; };
 		C9DD72211C9891AD000D1664 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD721F1C9891AD000D1664 /* CommentCell.m */; };
 		C9DD72221C9891AD000D1664 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD721F1C9891AD000D1664 /* CommentCell.m */; };
@@ -739,6 +745,9 @@
 		C9EABF3A1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */; };
 		C9EABF3B1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */; };
 		C9EABF3C1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */; };
+		C9EB21B51CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */; };
+		C9EB21B61CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */; };
+		C9EB21B71CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */; };
 		C9EB88581B1F21C20042E65B /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */; };
 		C9EB88591B1F21C20042E65B /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */; };
 		C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */; };
@@ -1158,6 +1167,10 @@
 		C95502D01C2AA8D8002E9046 /* OpenInChromeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInChromeController.m; sourceTree = "<group>"; };
 		C95502D81C2AB43F002E9046 /* FLCopyLinkActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLCopyLinkActivity.h; path = FLCopyLinkActivity/FLCopyLinkActivity.h; sourceTree = "<group>"; };
 		C95502D91C2AB43F002E9046 /* FLCopyLinkActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLCopyLinkActivity.m; path = FLCopyLinkActivity/FLCopyLinkActivity.m; sourceTree = "<group>"; };
+		C95571681CEC7771001A79AA /* PaymentAudiotelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentAudiotelViewController.h; path = Controllers/Payments/PaymentAudiotelViewController.h; sourceTree = "<group>"; };
+		C95571691CEC7771001A79AA /* PaymentAudiotelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentAudiotelViewController.m; path = Controllers/Payments/PaymentAudiotelViewController.m; sourceTree = "<group>"; };
+		C955716D1CEC8926001A79AA /* PaymentSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentSourceViewController.h; path = Controllers/Payments/PaymentSourceViewController.h; sourceTree = "<group>"; };
+		C955716E1CEC8926001A79AA /* PaymentSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentSourceViewController.m; path = Controllers/Payments/PaymentSourceViewController.m; sourceTree = "<group>"; };
 		C957726F1A9C7BB400CD6BC0 /* FLTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTexts.h; sourceTree = "<group>"; };
 		C95772701A9C7BB400CD6BC0 /* FLTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTexts.m; sourceTree = "<group>"; };
 		C95772751A9CBDB400CD6BC0 /* FriendPickerEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendPickerEmptyCell.h; sourceTree = "<group>"; };
@@ -1243,6 +1256,8 @@
 		C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLScannerOverlay.m; sourceTree = "<group>"; };
 		C9B7618E1C9FF666000BBAF5 /* ShareLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareLinkViewController.h; path = Controllers/ShareApp/ShareLink/ShareLinkViewController.h; sourceTree = "<group>"; };
 		C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareLinkViewController.m; path = Controllers/ShareApp/ShareLink/ShareLinkViewController.m; sourceTree = "<group>"; };
+		C9B7CF851CE613ED00C1D2E2 /* FLCreditCardScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLCreditCardScanner.h; path = Views/FLCreditCardScanner/FLCreditCardScanner.h; sourceTree = "<group>"; };
+		C9B7CF861CE613ED00C1D2E2 /* FLCreditCardScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLCreditCardScanner.m; path = Views/FLCreditCardScanner/FLCreditCardScanner.m; sourceTree = "<group>"; };
 		C9B975551C9EF4BA00163A05 /* CollectParticipationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectParticipationViewController.h; path = Controllers/Collect/CollectParticipationViewController/CollectParticipationViewController.h; sourceTree = "<group>"; };
 		C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectParticipationViewController.m; path = Controllers/Collect/CollectParticipationViewController/CollectParticipationViewController.m; sourceTree = "<group>"; };
 		C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -1293,6 +1308,8 @@
 		C9CD766F1BF227FB00362962 /* FLCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCountry.h; sourceTree = "<group>"; };
 		C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz dev-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C9D4E7031B18BD380096725B /* Flooz local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz local-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C9D9778E1CE37E2300F94460 /* UIView+Border.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Border.h"; path = "Util/UIView+Border.h"; sourceTree = "<group>"; };
+		C9D9778F1CE37E2300F94460 /* UIView+Border.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Border.m"; path = "Util/UIView+Border.m"; sourceTree = "<group>"; };
 		C9DCC5EB1C282573008BB370 /* Flooz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Flooz.entitlements; sourceTree = "<group>"; };
 		C9DCC5EC1C28257F008BB370 /* Flooz dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flooz dev.entitlements"; sourceTree = SOURCE_ROOT; };
 		C9DD721E1C9891AD000D1664 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCell.h; path = CommentCell/CommentCell.h; sourceTree = "<group>"; };
@@ -1303,6 +1320,8 @@
 		C9EABF341C523CE900BDDEA1 /* FLAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAddress.m; path = Models/FLAddress.m; sourceTree = "<group>"; };
 		C9EABF381C5253E200BDDEA1 /* AddressBookFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookFormController.h; path = Controllers/AddressBookController/AddressBookFormController.h; sourceTree = "<group>"; };
 		C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBookFormController.m; path = Controllers/AddressBookController/AddressBookFormController.m; sourceTree = "<group>"; };
+		C9EB21B31CE2207200B3E009 /* CashinCardKYCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashinCardKYCViewController.h; path = Controllers/CashIn/CashinCardKYC/CashinCardKYCViewController.h; sourceTree = "<group>"; };
+		C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashinCardKYCViewController.m; path = Controllers/CashIn/CashinCardKYC/CashinCardKYCViewController.m; sourceTree = "<group>"; };
 		C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendAddSearchBar.m; sourceTree = "<group>"; };
 		C9EB88561B1F21C20042E65B /* FriendAddSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendAddSearchBar.h; sourceTree = "<group>"; };
 		C9EB88571B1F21C20042E65B /* FriendAddSearchBarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendAddSearchBarDelegate.h; sourceTree = "<group>"; };
@@ -1348,11 +1367,9 @@
 				AB15DBBB18E46872008E03FE /* Security.framework in Frameworks */,
 				AB15DBB918E4686A008E03FE /* CFNetwork.framework in Frameworks */,
 				AB15DBB718E46861008E03FE /* libicucore.dylib in Frameworks */,
-				ABA96DAC196EED4D00B8B7C7 /* opencv2.framework in Frameworks */,
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
 				AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */,
-				ABA96DAB196EED4D00B8B7C7 /* libScanpay.a in Frameworks */,
 				183CF0B93EDA351428F1E489 /* libPods-Flooz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1390,11 +1407,9 @@
 				ABAA3FF2197E96BF009F29EF /* Security.framework in Frameworks */,
 				ABAA3FF3197E96BF009F29EF /* CFNetwork.framework in Frameworks */,
 				ABAA3FF4197E96BF009F29EF /* libicucore.dylib in Frameworks */,
-				ABAA3FF6197E96BF009F29EF /* opencv2.framework in Frameworks */,
 				ABAA3FF7197E96BF009F29EF /* CoreGraphics.framework in Frameworks */,
 				ABAA3FF8197E96BF009F29EF /* UIKit.framework in Frameworks */,
 				ABAA3FF9197E96BF009F29EF /* Foundation.framework in Frameworks */,
-				ABAA3FFA197E96BF009F29EF /* libScanpay.a in Frameworks */,
 				8380D07AC7F96227AA89451F /* libPods-Flooz dev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1420,11 +1435,9 @@
 				C98013121A76921000019682 /* Security.framework in Frameworks */,
 				C98013131A76921000019682 /* CFNetwork.framework in Frameworks */,
 				C98013141A76921000019682 /* libicucore.dylib in Frameworks */,
-				C98013161A76921000019682 /* opencv2.framework in Frameworks */,
 				C98013171A76921000019682 /* CoreGraphics.framework in Frameworks */,
 				C98013181A76921000019682 /* UIKit.framework in Frameworks */,
 				C98013191A76921000019682 /* Foundation.framework in Frameworks */,
-				C980131A1A76921000019682 /* libScanpay.a in Frameworks */,
 				C9514CCE1CA86456EEC4951D /* libPods-Flooz local.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1759,6 +1772,7 @@
 		AB3D08C5186CA17F00CF8380 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C95571651CEC76B6001A79AA /* Payments */,
 				C90B947D1A00E94F00E2C53B /* 3DSecure */,
 				ABE9145E18929150003AC722 /* Account */,
 				C95184A41CC77F320035BAAD /* Activities */,
@@ -1810,6 +1824,7 @@
 				C95AEDA21A49BB5E00000FB3 /* FLClearActionTextView */,
 				C95502D71C2AB409002E9046 /* FLCopyLinkActivity */,
 				C95974F91B9EFC9500F2F7D1 /* FLCountryPicker */,
+				C9B7CF841CE613BB00C1D2E2 /* FLCreditCardScanner */,
 				C935B6E61B611D7800861DAD /* FLFilterPopoverViewController */,
 				C92FB3A81BBBEBF4006FB561 /* FLFilterSegmentedControl */,
 				AB6DA50D18C4DDE80073B947 /* FLImageView */,
@@ -1952,6 +1967,8 @@
 				C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */,
 				AB119B3B198A3FD200F05ECE /* UIViewController+RegisterNotification.h */,
 				AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */,
+				C9D9778E1CE37E2300F94460 /* UIView+Border.h */,
+				C9D9778F1CE37E2300F94460 /* UIView+Border.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -2699,6 +2716,33 @@
 			name = FLCopyLinkActivity;
 			sourceTree = "<group>";
 		};
+		C95571651CEC76B6001A79AA /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				C95571671CEC7705001A79AA /* PaymentAudiotel */,
+				C95571661CEC76ED001A79AA /* PaymentSources */,
+			);
+			name = Payments;
+			sourceTree = "<group>";
+		};
+		C95571661CEC76ED001A79AA /* PaymentSources */ = {
+			isa = PBXGroup;
+			children = (
+				C955716D1CEC8926001A79AA /* PaymentSourceViewController.h */,
+				C955716E1CEC8926001A79AA /* PaymentSourceViewController.m */,
+			);
+			name = PaymentSources;
+			sourceTree = "<group>";
+		};
+		C95571671CEC7705001A79AA /* PaymentAudiotel */ = {
+			isa = PBXGroup;
+			children = (
+				C95571681CEC7771001A79AA /* PaymentAudiotelViewController.h */,
+				C95571691CEC7771001A79AA /* PaymentAudiotelViewController.m */,
+			);
+			name = PaymentAudiotel;
+			sourceTree = "<group>";
+		};
 		C95772741A9CBD8C00CD6BC0 /* FriendPickerEmptyCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2877,6 +2921,7 @@
 			isa = PBXGroup;
 			children = (
 				C9B137C41CBFE568002289C9 /* CashInAudiotel */,
+				C9EB21B81CE2207A00B3E009 /* CashInCardKYC */,
 				C9B137C31CBFE549002289C9 /* CashInCreditCard */,
 				C9B137BE1CBFCB91002289C9 /* CashinViewController.h */,
 				C9B137BF1CBFCB91002289C9 /* CashinViewController.m */,
@@ -2936,6 +2981,15 @@
 				C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */,
 			);
 			name = ShareLink;
+			sourceTree = "<group>";
+		};
+		C9B7CF841CE613BB00C1D2E2 /* FLCreditCardScanner */ = {
+			isa = PBXGroup;
+			children = (
+				C9B7CF851CE613ED00C1D2E2 /* FLCreditCardScanner.h */,
+				C9B7CF861CE613ED00C1D2E2 /* FLCreditCardScanner.m */,
+			);
+			name = FLCreditCardScanner;
 			sourceTree = "<group>";
 		};
 		C9B975541C9EF47700163A05 /* CollectParticipationViewController */ = {
@@ -3020,6 +3074,15 @@
 				C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */,
 			);
 			name = AddressBook;
+			sourceTree = "<group>";
+		};
+		C9EB21B81CE2207A00B3E009 /* CashInCardKYC */ = {
+			isa = PBXGroup;
+			children = (
+				C9EB21B31CE2207200B3E009 /* CashinCardKYCViewController.h */,
+				C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */,
+			);
+			name = CashInCardKYC;
 			sourceTree = "<group>";
 		};
 		C9EBBB9A1BAAC960009DAF88 /* FLBorderedActionButton */ = {
@@ -3533,6 +3596,7 @@
 				C9CB22091A9615C10064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C9CB22141A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C9CB220E1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
+				C955716F1CEC8926001A79AA /* PaymentSourceViewController.m in Sources */,
 				C9EB88581B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
 				C98959111C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
@@ -3543,6 +3607,7 @@
 				2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */,
 				C99CAE431C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
 				C9CB22041A95E9D30064389A /* THContactViewStyle.m in Sources */,
+				C9EB21B51CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */,
 				C960DC901BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
 				C94EF3B91CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,
@@ -3587,6 +3652,7 @@
 				C97EE6D61C4003B5003DE35B /* DealCell2.m in Sources */,
 				C93F66A11BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C928E8CE1C3D2A390032FAE4 /* DealCell.m in Sources */,
+				C9B7CF871CE613ED00C1D2E2 /* FLCreditCardScanner.m in Sources */,
 				C9B137C01CBFCB91002289C9 /* CashinViewController.m in Sources */,
 				C9AE77941ACA918B00CFF0AF /* FLSlide.m in Sources */,
 				C95502D11C2AA8D8002E9046 /* ARChromeActivity.m in Sources */,
@@ -3632,6 +3698,7 @@
 				C95772711A9C7BB400CD6BC0 /* FLTexts.m in Sources */,
 				C9C3AD861CA29631009907D9 /* ParticipantCell.m in Sources */,
 				C938EFCE1AE68C5900A3F740 /* ScannerViewController.m in Sources */,
+				C955716A1CEC7771001A79AA /* PaymentAudiotelViewController.m in Sources */,
 				AB2FB54818AE798D0079AA1D /* FLNotification.m in Sources */,
 				C910E0EE1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */,
 				2FE983E619CB73A200E05501 /* CodePinView.m in Sources */,
@@ -3685,6 +3752,7 @@
 				C90252101B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
 				C9A7BE601A27801200195AFC /* FLPreset.m in Sources */,
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
+				C9D977901CE37E2300F94460 /* UIView+Border.m in Sources */,
 				ABD0164E18ECCCFA00940F2D /* FLScrollViewIndicator.m in Sources */,
 				C90B94801A00E96900E2C53B /* 3DSecureViewController.m in Sources */,
 				AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */,
@@ -3745,6 +3813,7 @@
 				C9C7EE9619F695E8009FE292 /* FLAlert.m in Sources */,
 				ABAA3F80197E96BF009F29EF /* CreditCardViewController.m in Sources */,
 				ABAA3F81197E96BF009F29EF /* AppDelegate.m in Sources */,
+				C95571701CEC8926001A79AA /* PaymentSourceViewController.m in Sources */,
 				C9CB22151A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C9CB220F1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				C98959121C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
@@ -3755,6 +3824,7 @@
 				C9EB88591B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				C99CAE441C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
 				2FC8873819C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
+				C9EB21B61CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */,
 				C960DC911BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2FE983EB19CB82E700E05501 /* NumPadAppleStyle.m in Sources */,
 				C94EF3BA1CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,
@@ -3799,6 +3869,7 @@
 				C97EE6D71C4003B5003DE35B /* DealCell2.m in Sources */,
 				C93F66A21BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C928E8CF1C3D2A390032FAE4 /* DealCell.m in Sources */,
+				C9B7CF881CE613ED00C1D2E2 /* FLCreditCardScanner.m in Sources */,
 				C9B137C11CBFCB91002289C9 /* CashinViewController.m in Sources */,
 				C9A265571ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
 				C95502D21C2AA8D8002E9046 /* ARChromeActivity.m in Sources */,
@@ -3844,6 +3915,7 @@
 				ABAA3FBB197E96BF009F29EF /* FLNewTransactionBar.m in Sources */,
 				C9C3AD871CA29631009907D9 /* ParticipantCell.m in Sources */,
 				C95772721A9C7BB400CD6BC0 /* FLTexts.m in Sources */,
+				C955716B1CEC7771001A79AA /* PaymentAudiotelViewController.m in Sources */,
 				C938EFCF1AE68C5900A3F740 /* ScannerViewController.m in Sources */,
 				2F0F6AFC19DF0686004CA223 /* FLSwitch.m in Sources */,
 				C910E0EF1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */,
@@ -3897,6 +3969,7 @@
 				C90252111B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
 				C9EB885E1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
 				ABAA3FD8197E96BF009F29EF /* TransactionCell.m in Sources */,
+				C9D977911CE37E2300F94460 /* UIView+Border.m in Sources */,
 				ABAA3FDA197E96BF009F29EF /* UIView+FindFirstResponder.m in Sources */,
 				ABAA3FDB197E96BF009F29EF /* FLScrollViewIndicator.m in Sources */,
 				ABAA3FDD197E96BF009F29EF /* LoadingCell.m in Sources */,
@@ -3949,6 +4022,7 @@
 				C975BB071A92BB8E000E5AEA /* YLMoment.m in Sources */,
 				C980127F1A76921000019682 /* FLAlert.m in Sources */,
 				C98012801A76921000019682 /* CreditCardViewController.m in Sources */,
+				C95571711CEC8926001A79AA /* PaymentSourceViewController.m in Sources */,
 				C98012821A76921000019682 /* AppDelegate.m in Sources */,
 				C9CB22161A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C98959131C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
@@ -3959,6 +4033,7 @@
 				C98012851A76921000019682 /* UIViewController+RegisterNotification.m in Sources */,
 				C99CAE451C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
 				C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
+				C9EB21B71CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */,
 				C98012861A76921000019682 /* FLTextFieldSignup.m in Sources */,
 				C960DC921BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				C94EF3BB1CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,
@@ -4003,6 +4078,7 @@
 				C97EE6D81C4003B5003DE35B /* DealCell2.m in Sources */,
 				C98012A61A76921000019682 /* FLKeyboardView.m in Sources */,
 				C928E8D01C3D2A390032FAE4 /* DealCell.m in Sources */,
+				C9B7CF891CE613ED00C1D2E2 /* FLCreditCardScanner.m in Sources */,
 				C9B137C21CBFCB91002289C9 /* CashinViewController.m in Sources */,
 				C93F66A31BB5556F0032ED56 /* UIView+LayerShot.m in Sources */,
 				C95502D31C2AA8D8002E9046 /* ARChromeActivity.m in Sources */,
@@ -4048,6 +4124,7 @@
 				C98012C31A76921000019682 /* CashOutViewController.m in Sources */,
 				C9C3AD881CA29631009907D9 /* ParticipantCell.m in Sources */,
 				C98012C41A76921000019682 /* FLNavigationController.m in Sources */,
+				C955716C1CEC7771001A79AA /* PaymentAudiotelViewController.m in Sources */,
 				C98012C51A76921000019682 /* FLNewTransactionBar.m in Sources */,
 				C95772731A9C7BB400CD6BC0 /* FLTexts.m in Sources */,
 				C938EFD01AE68C5900A3F740 /* ScannerViewController.m in Sources */,
@@ -4101,6 +4178,7 @@
 				C9ED41261A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m in Sources */,
 				C90252121B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */,
 				C9EB885F1B1F32A00042E65B /* SignupCreditCardViewController.m in Sources */,
+				C9D977921CE37E2300F94460 /* UIView+Border.m in Sources */,
 				C98012EB1A76921000019682 /* TransactionCell.m in Sources */,
 				C98012EE1A76921000019682 /* UIView+FindFirstResponder.m in Sources */,
 				C98012EF1A76921000019682 /* FLScrollViewIndicator.m in Sources */,
@@ -4270,7 +4348,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Flooz;
-				PROVISIONING_PROFILE = "c8c1ba0b-4e46-45ca-bc48-2b61fee26e42";
+				PROVISIONING_PROFILE = "8f255820-a316-4b17-ba51-fe6ad6e7436b";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4339,7 +4417,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "63605f9b-7d1a-4a05-b189-d87c0aaabe20";
+				PROVISIONING_PROFILE = "61a2ffe5-aa83-4543-9bf1-322c65b6a9c7";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
@@ -4460,7 +4538,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c8c1ba0b-4e46-45ca-bc48-2b61fee26e42";
+				PROVISIONING_PROFILE = "8f255820-a316-4b17-ba51-fe6ad6e7436b";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -4600,7 +4678,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "63605f9b-7d1a-4a05-b189-d87c0aaabe20";
+				PROVISIONING_PROFILE = "61a2ffe5-aa83-4543-9bf1-322c65b6a9c7";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4646,7 +4724,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "63605f9b-7d1a-4a05-b189-d87c0aaabe20";
+				PROVISIONING_PROFILE = "61a2ffe5-aa83-4543-9bf1-322c65b6a9c7";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
@@ -4730,7 +4808,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c8c1ba0b-4e46-45ca-bc48-2b61fee26e42";
+				PROVISIONING_PROFILE = "8f255820-a316-4b17-ba51-fe6ad6e7436b";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -4806,7 +4884,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "63605f9b-7d1a-4a05-b189-d87c0aaabe20";
+				PROVISIONING_PROFILE = "61a2ffe5-aa83-4543-9bf1-322c65b6a9c7";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4852,7 +4930,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "c88dc719-3922-45fe-a238-f5ad075628b2";
+				PROVISIONING_PROFILE = "ef713b5a-f54b-4678-ac99-efc6420480a8";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4899,7 +4977,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "c88dc719-3922-45fe-a238-f5ad075628b2";
+				PROVISIONING_PROFILE = "ef713b5a-f54b-4678-ac99-efc6420480a8";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4945,7 +5023,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "c88dc719-3922-45fe-a238-f5ad075628b2";
+				PROVISIONING_PROFILE = "ef713b5a-f54b-4678-ac99-efc6420480a8";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
@@ -4990,7 +5068,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz local";
-				PROVISIONING_PROFILE = "c88dc719-3922-45fe-a238-f5ad075628b2";
+				PROVISIONING_PROFILE = "ef713b5a-f54b-4678-ac99-efc6420480a8";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";

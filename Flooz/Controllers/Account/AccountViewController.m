@@ -204,7 +204,7 @@
                        @"items":@[
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
-                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"action":@"cashin"},
+                               @{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
@@ -234,7 +234,7 @@
                        @"items":@[
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
-                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_IN", nil), @"action":@"cashin"},
+                               @{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                ]
@@ -263,12 +263,12 @@
     NSMutableDictionary *mutableAccountDic = [_menuDic[0] mutableCopy];
     NSMutableArray *mutableAccountArray = [mutableAccountDic[@"items"] mutableCopy];
     
-    if (![Flooz sharedInstance].currentTexts.cashinButtons || ![Flooz sharedInstance].currentTexts.cashinButtons.count) {
-        [mutableAccountArray replaceObjectAtIndex:2 withObject:@{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"}];
-        mutableAccountDic[@"items"] = mutableAccountArray;
-        [mutableMenuDic replaceObjectAtIndex:0 withObject:mutableAccountDic];
-        _menuDic = mutableMenuDic;
-    }
+//    if (![Flooz sharedInstance].currentTexts.cashinButtons || ![Flooz sharedInstance].currentTexts.cashinButtons.count) {
+//        [mutableAccountArray replaceObjectAtIndex:2 withObject:@{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"}];
+//        mutableAccountDic[@"items"] = mutableAccountArray;
+//        [mutableMenuDic replaceObjectAtIndex:0 withObject:mutableAccountDic];
+//        _menuDic = mutableMenuDic;
+//    }
     
     if ([Flooz sharedInstance].currentTexts.menu[@"promo"]
         && [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"]

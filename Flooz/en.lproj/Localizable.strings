@@ -253,13 +253,15 @@
 /*            CASHINS               */
 /************************************/
 
+"PAYMENT_INFOS" = "Choisissez l’un des moyens de paiement ci-dessous :";
+
 "CASHIN_INFOS" = "Ajoutez des fonds sur votre compte Flooz en choisissant l’un des moyens de paiement ci-dessous :";
 
 "CASHIN_CARD_TITLE" = "Carte bancaire";
 "CASHIN_CARD_SUBTITLE" = "Ajoutez des fonds via votre CB gratuitement et en toute sécurité";
 "CASHIN_CARD_PAYMENT_INPUT_HINT" = "Saisissez vos données de carte bancaire :";
-"CASHIN_CARD_CHECKBOX_TEXT" = "Enregistrer ma carte en toute sécurité";
-"CASHIN_CARD_AMOUNT_INPUT_HINT" = "Saisissez le montant :";
+"CASHIN_CARD_CHECKBOX_TEXT" = "Enregistrer ma carte bancaire";
+"CASHIN_CARD_AMOUNT_INPUT_HINT" = "Combien souhaitez-vous créditer ?";
 "CASHIN_CARD_INFOS" = "Vos coordonnées bancaire sont stockées et sécurisées à distance chez notre partenaire Rentabiliweb qui accompagne les plus grandes marques comme la Fnac, Spartoo, Winamax et bien d’autres";
 
 "CASHIN_AUDIOTEL_TITLE" = "Appel téléphonique";
@@ -284,6 +286,7 @@
 "NAV_3DSECURE" = "3D Secure";
 "NAV_SHARESMS" = "Partager l'app";
 "NAV_SECURECODE" = "Code Secret";
+"NAV_PAY_SOURCE" = "Moyens de paiement";
 
 /************************************/
 /*         ALERTS / ERROR           */
@@ -441,7 +444,7 @@
 "IDEA_THX_TITLE" = "Merci";
 "IDEA_THX_CONTENT" = "Merci pour vos idées et votre contribution afin d'améliorer Flooz.";
 
-"FORGOT_RECIPIENTS" = "support@flooz.me";
+"FORGOT_RECIPIENTS" = "hello@flooz.me";
 "FORGOT_OBJECT" = "Mot de passe oublié !";
 "FORGOT_MESSAGE" = "J'ai oublié mon mot de passe. Je souhaite être contacté au %@";
 

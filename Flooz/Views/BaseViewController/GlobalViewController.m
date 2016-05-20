@@ -17,8 +17,16 @@
 
 @synthesize triggerData;
 
-- (id)initWithTriggerData:(NSDictionary *)data {
+- (id)init {
     self = [super init];
+    if (self) {
+        self.hideNavShadow = NO;
+    }
+    return self;
+}
+
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [self init];
     if (self) {
         if (data) {
             triggerData = data;
@@ -33,6 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
 }
 
@@ -59,14 +68,14 @@
     [self.view endEditing:YES];
     if ([self navigationController]) {
         if ([[[self navigationController] viewControllers] count] == 1) {
-            [[self navigationController] dismissViewControllerAnimated:YES completion:completion];
+            [[self navigationController] dismissViewControllerAnimated:flag completion:completion];
         }
         else {
-            [(FLNavigationController*)[self navigationController] popViewControllerAnimated:YES completion:completion];
+            [(FLNavigationController*)[self navigationController] popViewControllerAnimated:flag completion:completion];
         }
     }
     else {
-        [super dismissViewControllerAnimated:YES completion:completion];
+        [super dismissViewControllerAnimated:flag completion:completion];
     }
 }
 

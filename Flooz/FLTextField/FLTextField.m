@@ -11,7 +11,7 @@
 
 @interface FLTextField () {
     UIView *lineView;
-
+    
     id _target;
     SEL _action;
     
@@ -20,7 +20,7 @@
     
     id _focusId;
     SEL _focusAction;
-
+    
     NSString *_filterDate;
     
     UIImage *tintedClearImage;
@@ -58,6 +58,7 @@
 
 - (void)commonInit {
     self.readOnly = false;
+    self.enableAllCaps = false;
     self.maxLenght = -1;
     self.isValid = YES;
     
@@ -143,7 +144,7 @@
         type = t;
         
         self.secureTextEntry = NO;
-
+        
         switch (type) {
             case FLTextFieldTypeDate: {
                 self.keyboardType = UIKeyboardTypeNumberPad;
@@ -181,7 +182,7 @@
 
 -(void) setEnabled:(BOOL)enabled{
     super.enabled = enabled;
- 
+    
     [self updateBottomLine];
 }
 
@@ -226,7 +227,7 @@
         [textField resignFirstResponder];
     
     [self setSelected:NO];
-
+    
     [self updateBottomLine];
 }
 
@@ -235,7 +236,7 @@
         [_dictionary setValue:nil forKey:_dictionaryKey];
     else
         [_dictionary setValue:textField.text forKey:_dictionaryKey];
-
+    
     [_targetTextChange performSelector:_actionTextChange withObject:self];
 }
 
@@ -250,9 +251,10 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
     if (type == FLTextFieldTypeDate) {
         _filterDate = @"## / ## / ##";
-
+        
         if ([string isEqualToString:@"\r"] && textField.text.length > 0) {
             if ([textField.text hasSuffix:@" / "]) {
                 textField.text = [textField.text substringToIndex:textField.text.length - 4];
@@ -362,7 +364,26 @@
     
     if (self.maxLenght > 0) {
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        return (newLength > self.maxLenght) ? NO : YES;
+        if (newLength > self.maxLenght)
+            return NO;
+        else if (self.enableAllCaps) {
+            NSRange lowercaseCharRange = [string rangeOfCharacterFromSet:[NSCharacterSet lowercaseLetterCharacterSet]];
+            
+            if (lowercaseCharRange.location != NSNotFound) {
+                textField.text = [textField.text stringByReplacingCharactersInRange:range withString:[string uppercaseString]];
+                return NO;
+            }
+        }
+        return YES;
+    }
+    
+    if (self.enableAllCaps) {
+        NSRange lowercaseCharRange = [string rangeOfCharacterFromSet:[NSCharacterSet lowercaseLetterCharacterSet]];
+        
+        if (lowercaseCharRange.location != NSNotFound) {
+            textField.text = [textField.text stringByReplacingCharactersInRange:range withString:[string uppercaseString]];
+            return NO;
+        }
     }
     
     return YES;

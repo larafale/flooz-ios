@@ -10,6 +10,7 @@
 
 @interface GlobalViewController : UIViewController
 
+@property (nonatomic) Boolean hideNavShadow;
 @property (nonatomic, strong) NSDictionary *triggerData;
 
 - (id)initWithTriggerData:(NSDictionary *)data;

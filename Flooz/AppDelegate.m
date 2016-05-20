@@ -378,9 +378,9 @@
     [_alertView show:title content:content style:style time:time delay:delay andDictionnary:nil];
 }
 
-- (void)displayMessage:(FLAlert*)alert {
+- (void)displayMessage:(FLAlert*)alert completion:(dispatch_block_t)completion {
     _alertView = [FLAlertView new];
-    [_alertView show:alert];
+    [_alertView show:alert completion:completion];
 }
 
 - (void)displayAlert:(NSString *)title content:(NSString *)content {
@@ -396,8 +396,8 @@
 }
 
 - (void)noAccessToSettings {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Pas accès à vos contacts", nil)
-                                                    message:NSLocalizedString(@"Vous n'avez pas laissez Flooz accéder à vos contacts, allez dans les réglages pour corriger ça", nil)
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Pas d'accès à vos contacts", nil)
+                                                    message:NSLocalizedString(@"Vous n'avez pas laissé Flooz accéder à vos contacts, allez dans les réglages pour corriger ça", nil)
                                                    delegate:self
                                           cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil)
                                           otherButtonTitles:NSLocalizedString(@"Go", nil), nil

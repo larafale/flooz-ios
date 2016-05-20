@@ -22,6 +22,7 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.7.0)
   - Branch (0.12.1)
+  - CardIO (5.3.2)
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
   - DACircularProgress (2.3.1)
@@ -81,12 +82,12 @@ PODS:
   - UICKeyChainStore (2.1.0)
   - UIFloatLabelTextField (1.2.4)
   - VCTransitionsLibrary (1.5.0)
-  - YLProgressBar (3.8.1)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
   - AFNetworking
   - Branch
+  - CardIO
   - Crashlytics
   - EAIntroView
   - Fabric
@@ -120,13 +121,13 @@ DEPENDENCIES:
   - UICKeyChainStore
   - UIFloatLabelTextField
   - VCTransitionsLibrary
-  - YLProgressBar
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 8312778b6815578e6a86d630fbcf31dc94c534e7
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
   Branch: 32fb6e2048118a7ff23be984e731569517fbc5f3
+  CardIO: 92c45caef0d986c4a303a7afba0c9b76ff2b1f6e
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: e948c83e642f30010d427e643c18a6f2b529afed
@@ -165,8 +166,7 @@ SPEC CHECKSUMS:
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
   UIFloatLabelTextField: bb30a4ae6720a89fc9fb51134f39f0e776ff9551
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
-  YLProgressBar: c6699d75d58042377132c9301d3ab8fd0204937d
 
-PODFILE CHECKSUM: 88793579cd5358d2a1b7dcc5cc57c38e9e947f87
+PODFILE CHECKSUM: 397e718bdfecb725f6a4cc695195184cccf71af6
 
 COCOAPODS: 1.0.0.beta.8

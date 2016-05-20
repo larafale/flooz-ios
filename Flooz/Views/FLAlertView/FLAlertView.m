@@ -72,7 +72,7 @@
 	}
 }
 
-- (void)show:(FLAlert *)alert {
+- (void)show:(FLAlert *)alert completion:(dispatch_block_t)completion {
     if (alert.visible) {
         
         _alert = alert;
@@ -96,6 +96,9 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:.4 animations: ^{
                 CGRectSetHeight(self.frame, CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM);
+            } completion:^(BOOL finished) {
+                if (completion)
+                    completion();
             }];
         });
     });

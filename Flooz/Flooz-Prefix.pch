@@ -59,6 +59,7 @@
 #import "FLValidNavBar.h"
 #import "FLPhoneField.h"
 
+#import "UIView+Border.h"
 #import "UIViewController+RegisterNotification.h"
 #import <PPHelpMe/PPHelpMe.h>
 #import <HHRouter/HHRouter.h>

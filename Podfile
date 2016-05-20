@@ -1,6 +1,7 @@
 platform :ios, '7.0'
 
 def prod_pods
+    
     pod 'AFNetworking'
     pod 'SDWebImage'
     pod 'IDMPhotoBrowser'
@@ -37,7 +38,7 @@ def prod_pods
     pod 'UIFloatLabelTextField'
     pod 'MGSwipeTableCell'
     pod 'OneSignal'
-    pod 'YLProgressBar'
+    pod 'CardIO'
 
 end
 

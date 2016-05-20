@@ -494,14 +494,14 @@
 //    FLPopupTrigger *popupTrigger = [[FLPopupTrigger alloc] initWithData:@{@"close":@YES, @"content":[NSString stringWithFormat:@"Vous disposez d’un solde de %@ sur votre compte Flooz. Ajoutez des fonds en un clic en CB ou via votre forfait téléphonique."], @"title":@"Mon solde Flooz", @"buttons":@[@{@"title":NSLocalizedString(@"NAV_CASHIN", nil), @"triggers":@[@{@"key":@"app:cashin:show"}]}]}];
 //    [popupTrigger show];
 
-    [self.view endEditing:YES];
-    [self.view endEditing:NO];
-    
-    if ([[[Flooz sharedInstance] currentTexts] cashinButtons] && [[[[Flooz sharedInstance] currentTexts] cashinButtons] count]) {
-        [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:[CashinViewController new]] animated:YES completion:nil];
-    } else {
-        [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:[CreditCardViewController new]] animated:YES completion:nil];
-    }
+//    [self.view endEditing:YES];
+//    [self.view endEditing:NO];
+//    
+//    if ([[[Flooz sharedInstance] currentTexts] cashinButtons] && [[[[Flooz sharedInstance] currentTexts] cashinButtons] count]) {
+//        [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:[CashinViewController new]] animated:YES completion:nil];
+//    } else {
+//        [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:[CreditCardViewController new]] animated:YES completion:nil];
+//    }
 }
 
 - (void)dismissKeyboard:(id)sender {

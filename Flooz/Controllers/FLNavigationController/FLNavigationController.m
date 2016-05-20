@@ -145,7 +145,14 @@
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [self.view endEditing:YES];
     
-    [self showShadow];
+    if ([viewController isKindOfClass:[GlobalViewController class]]) {
+        if ([((GlobalViewController *)viewController) hideNavShadow]) {
+            [self hideShadow];
+        } else {
+            [self showShadow];
+        }
+    } else
+        [self showShadow];
     
     controller = viewController;
     

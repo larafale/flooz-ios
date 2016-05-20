@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "Stripe.h"
+#import "CardIO.h"
 
-@interface CreditCardViewController : BaseViewController<STPPaymentCardTextFieldDelegate>
+@interface CreditCardViewController : BaseViewController<STPPaymentCardTextFieldDelegate, CardIOViewDelegate>
 
 @property (nonatomic, retain) NSString *customLabel;
 @property (nonatomic, retain) NSDictionary *floozData;

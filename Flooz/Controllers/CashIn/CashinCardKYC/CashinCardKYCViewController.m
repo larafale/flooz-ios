@@ -1,28 +1,18 @@
 //
-//  SettingsIdentityViewController.m
+//  CashinCardKYCViewController.m
 //  Flooz
 //
-//  Created by Arnaud on 2014-10-03.
-//  Copyright (c) 2014 Flooz. All rights reserved.
+//  Created by Olive on 10/05/16.
+//  Copyright © 2016 Flooz. All rights reserved.
 //
 
-#import "SettingsDocumentsViewController.h"
-
-#import "FLKeyboardView.h"
+#import "CashinCardKYCViewController.h"
 
 #define PADDING_SIDE 20.0f
 
-@interface SettingsDocumentsViewController () {
-    UIScrollView *_contentView;
-    
+@interface CashinCardKYCViewController () {
     NSMutableDictionary *_userDic;
     NSMutableDictionary *_sepa;
-    
-    FLUserView *userView;
-    //
-    //	NSMutableArray *fieldsView;
-    //	FLKeyboardView *inputView;
-    
     
     NSArray *documents;
     NSMutableArray *documentsButton;
@@ -30,53 +20,61 @@
     NSInteger registerButtonCount;
     NSString *currentDocumentKey;
     
-    //	FLActionButton *_saveButton;
+    FLActionButton *_saveButton;
     
     CGFloat height;
 }
 
 @end
 
-@implementation SettingsDocumentsViewController
+@implementation CashinCardKYCViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.hideNavShadow = YES;
+    
     if (!self.title || [self.title isBlank])
-        self.title = NSLocalizedString(@"SETTINGS_DOCUMENTS", @"");
+        self.title = @"Enregistrer ma carte";
     
     [self initWithInfo];
     
     documentsButton = [NSMutableArray new];
-    //	fieldsView = [NSMutableArray new];
     
-    _contentView = [UIScrollView newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
-    [_mainBody addSubview:_contentView];
+    UILabel *infosLabel = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_SIDE, PADDING_SIDE, PPScreenWidth() - 2 * PADDING_SIDE, 0)];
+    [infosLabel setText:[Flooz sharedInstance].currentTexts.kyc];
+    [infosLabel setTextColor:[UIColor whiteColor]];
+    [infosLabel setTextAlignment:NSTextAlignmentCenter];
+    [infosLabel setFont:[UIFont customContentRegular:15]];
+    [infosLabel setNumberOfLines:0];
+    [infosLabel setLineBreakMode:NSLineBreakByWordWrapping];
     
-    height = 5.0f;
+    [infosLabel setHeightToFit];
+    
+    [_mainBody addSubview:infosLabel];
+    
+    UIImageView *cardInfos = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING_SIDE, CGRectGetMaxY(infosLabel.frame) + PADDING_SIDE, PPScreenWidth() - 2 * PADDING_SIDE, 150)];
+    [cardInfos setContentMode:UIViewContentModeScaleAspectFit];
+    [cardInfos setImage:[UIImage imageNamed:@"visa_paper"]];
+    
+    
+    [_mainBody addSubview:cardInfos];
+    
+    height = CGRectGetMaxY(cardInfos.frame) + PADDING_SIDE;
     
     for (NSDictionary *dic in documents) {
         NSString *key = [[dic allKeys] firstObject];
         NSString *value = [[dic allValues] firstObject];
         [self createDocumentsButtonWithKey:key andValue:value];
     }
-    
-    UILabel *infos = [[UILabel alloc] initWithText:[Flooz sharedInstance].currentTexts.menu[@"documents"][@"info"] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
-    [infos setLineBreakMode:NSLineBreakByWordWrapping];
-    
-    CGRectSetWidth(infos.frame, CGRectGetWidth(_contentView.frame) - PADDING_SIDE * 2);
-    [infos sizeToFit];
-    CGRectSetXY(infos.frame, CGRectGetWidth(_contentView.frame) / 2 - CGRectGetWidth(infos.frame) / 2, height + PADDING_SIDE);
-    
-    [_contentView addSubview:infos];
-    
-    _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), height);
-    
-    [self addTapGestureForDismissKeyboard];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];    
 }
 
 - (void)initWithInfo {
@@ -93,11 +91,18 @@
 }
 
 - (void)createDocumentsButtonWithKey:(NSString *)key andValue:(NSString *)value {
+    static int buttonId = 0;
+    
     UIButton *view = [[UIButton alloc] initWithFrame:CGRectMake(PADDING_SIDE, height, PPScreenWidth() - PADDING_SIDE * 2.0f, 45)];
-    [_contentView addSubview:view];
+    [view setTag:50 + buttonId];
+    [_mainBody addSubview:view];
+
+    ++buttonId;
+    
     height = CGRectGetMaxY(view.frame);
     
-    [self registerButtonForAction:view];
+    [view addTarget:self action:@selector(didDocumentButtonTouch:) forControlEvents:UIControlEventTouchUpInside];
+
     view.backgroundColor = [UIColor customBackgroundHeader];
     view.titleLabel.font = [UIFont customTitleExtraLight:16];
     view.titleLabel.textColor = [UIColor whiteColor];
@@ -129,91 +134,11 @@
     [view addSubview:bottomBar];
 }
 
-- (void)registerButtonForAction:(UIButton *)button {
-    SEL action;
-    switch (registerButtonCount) {
-        case 0:
-            action = @selector(didDocumentTouch0);
-            break;
-            
-        case 1:
-            action = @selector(didDocumentTouch1);
-            break;
-            
-        case 2:
-            action = @selector(didDocumentTouch2);
-            break;
-            
-        case 3:
-            action = @selector(didDocumentTouch3);
-            break;
-            
-        case 4:
-            action = @selector(didDocumentTouch4);
-            break;
-            
-        default:
-            action = nil;
-            break;
-    }
+- (void)didDocumentButtonTouch:(UIView *)sender {
+    long buttonId = sender.tag - 50;
     
-    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
-    registerButtonCount++;
-}
-
-- (void)didDocumentTouch0 {
-    currentDocumentKey = [[documents[0] allValues] firstObject];
+    currentDocumentKey = [[documents[buttonId] allValues] firstObject];
     [self showImagePicker];
-}
-
-- (void)didDocumentTouch1 {
-    currentDocumentKey = [[documents[1] allValues] firstObject];
-    [self showImagePicker];
-}
-
-- (void)didDocumentTouch2 {
-    currentDocumentKey = [[documents[2] allValues] firstObject];
-    [self showImagePicker];
-}
-
-- (void)didDocumentTouch3 {
-    currentDocumentKey = [[documents[3] allValues] firstObject];
-    [self showImagePicker];
-}
-
-- (void)didDocumentTouch4 {
-    currentDocumentKey = [[documents[4] allValues] firstObject];
-    [self showImagePicker];
-}
-
-- (void)addTapGestureForDismissKeyboard {
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    tapGesture.cancelsTouchesInView = NO;
-    [_mainBody addGestureRecognizer:tapGesture];
-    [_contentView addGestureRecognizer:tapGesture];
-    [self registerForKeyboardNotifications];
-}
-
-#pragma mark - Keyboard Management
-
-- (void)registerForKeyboardNotifications {
-    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
-    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)keyboardDidAppear:(NSNotification *)notification {
-    NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
-    
-    _contentView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight + 30, 0);
-}
-
-- (void)keyboardWillDisappear {
-    _contentView.contentInset = UIEdgeInsetsZero;
-}
-
-- (void)hideKeyboard {
-    [self.view endEditing:YES];
 }
 
 #pragma mark - imagePicker

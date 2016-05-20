@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, FLTextFieldType) {
 }
 
 @property (nonatomic) Boolean readOnly;
+@property (nonatomic) Boolean enableAllCaps;
 
 @property (nonatomic) NSInteger maxLenght;
 
