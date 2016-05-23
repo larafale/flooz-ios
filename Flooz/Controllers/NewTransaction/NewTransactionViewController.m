@@ -104,7 +104,7 @@
         isDemo = currentPreset.popup != NULL || currentPreset.steps != NULL;
         
         if (!currentPreset.isParticipation) {
-            if (currentPreset.to) {
+            if (currentPreset.to && currentPreset.to.username) {
                 presetUser = currentPreset.to;
                 transaction[@"to"] = [@"@" stringByAppendingString :[currentPreset.to username]];
             }

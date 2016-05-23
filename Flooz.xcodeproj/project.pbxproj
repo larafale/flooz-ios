@@ -358,6 +358,9 @@
 		C93F66A61BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
 		C93F66A71BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
 		C93F66A81BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
+		C941A7601CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */; };
+		C941A7611CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */; };
+		C941A7621CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */; };
 		C9436EBD1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
 		C9436EBE1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
 		C9436EBF1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
@@ -1149,6 +1152,8 @@
 		C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayerShot.m"; sourceTree = "<group>"; };
 		C93F66A41BB555AD0032ED56 /* FLMultiLineSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLMultiLineSegmentedControl.h; sourceTree = "<group>"; };
 		C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLMultiLineSegmentedControl.m; sourceTree = "<group>"; };
+		C941A75E1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+NVSBlurAppScreen.h"; sourceTree = "<group>"; };
+		C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+NVSBlurAppScreen.m"; sourceTree = "<group>"; };
 		C9436EBB1BCBA34E000F382C /* ValidateSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSMSViewController.h; path = Controllers/ValidateSMS/ValidateSMSViewController.h; sourceTree = "<group>"; };
 		C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSMSViewController.m; path = Controllers/ValidateSMS/ValidateSMSViewController.m; sourceTree = "<group>"; };
 		C94EF3B71CB2AB8E003EA4CF /* AmbassadorStepsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmbassadorStepsViewController.h; path = Controllers/ShareApp/AmbassadorStepsList/AmbassadorStepsViewController.h; sourceTree = "<group>"; };
@@ -1930,6 +1935,8 @@
 		AB3D08E11871BEC300CF8380 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				C941A75E1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.h */,
+				C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */,
 				ABF7091B18A03B1D00517389 /* FLError.h */,
 				ABE914A21896D2D9003AC722 /* FLHelper.h */,
 				ABE914A31896D2D9003AC722 /* FLHelper.m */,
@@ -3125,6 +3132,7 @@
 				AB3D088C186CA11A00CF8380 /* Resources */,
 				754ED0C5CE4371145979B4FC /* 📦 Embed Pods Frameworks */,
 				CAEE6E54FBE06E1A6E5D8361 /* 📦 Copy Pods Resources */,
+				C941A75C1CF2FCEE007E9B63 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3168,6 +3176,7 @@
 				ABAA3FFC197E96BF009F29EF /* Resources */,
 				2A58D924C7589FA8D915D591 /* 📦 Embed Pods Frameworks */,
 				2D7C2496CC5FAF175C616C24 /* 📦 Copy Pods Resources */,
+				C941A75B1CF2FCE3007E9B63 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3188,6 +3197,7 @@
 				C980131C1A76921000019682 /* Resources */,
 				9D2ECB76CF366F61DF6EAF2F /* 📦 Embed Pods Frameworks */,
 				1643C49B513DD0C763B9FAAE /* 📦 Copy Pods Resources */,
+				C941A75D1CF2FCF7007E9B63 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3556,6 +3566,45 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		C941A75B1CF2FCE3007E9B63 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
+		};
+		C941A75C1CF2FCEE007E9B63 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
+		};
+		C941A75D1CF2FCF7007E9B63 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
+		};
 		CAEE6E54FBE06E1A6E5D8361 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3728,6 +3777,7 @@
 				C919AD981BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */,
 				C9C7DB2D1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
+				C941A7601CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */,
 				C9AF4BE619F7C2D7005C696B /* AvatarMenu.m in Sources */,
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
@@ -3945,6 +3995,7 @@
 				C919AD991BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				ABAA3FC6197E96BF009F29EF /* AccountViewController.m in Sources */,
 				C9CB21FF1A95E9D30064389A /* THContactTextField.m in Sources */,
+				C941A7611CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */,
 				ABAA3FC9197E96BF009F29EF /* FriendRequestCell.m in Sources */,
 				ABAA3FCA197E96BF009F29EF /* NewTransactionSelectTypeView.m in Sources */,
 				C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
@@ -4154,6 +4205,7 @@
 				C98012D81A76921000019682 /* SettingsCoordsViewController.m in Sources */,
 				C919AD9A1BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C98012D91A76921000019682 /* AccountViewController.m in Sources */,
+				C941A7621CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */,
 				C9CB22001A95E9D30064389A /* THContactTextField.m in Sources */,
 				C98012DA1A76921000019682 /* FriendRequestCell.m in Sources */,
 				C98012DB1A76921000019682 /* NewTransactionSelectTypeView.m in Sources */,

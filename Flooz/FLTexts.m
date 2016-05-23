@@ -100,6 +100,17 @@
     
     self.cashinButtons = cashinMutableButtons;
     
+    NSMutableArray *sourcesMutableArray = [NSMutableArray new];
+    
+    if (json[@"sources"]) {
+        for (id paymentSource in json[@"sources"]) {
+            if ([paymentSource isKindOfClass:[NSDictionary class]])
+                [sourcesMutableArray addObject:[[FLHomeButton alloc] initWithJSON:paymentSource]];
+        }
+    }
+    
+    self.paymentSources = sourcesMutableArray;
+
     for (NSDictionary *country in countries) {
         [self.avalaibleCountries addObject:[[FLCountry alloc] initWithJSON:country]];
     }

@@ -43,6 +43,7 @@
 @property (nonatomic, retain) NSMutableArray *avalaibleCountries;
 @property (nonatomic, retain) NSArray *homeButtons;
 @property (nonatomic, retain) NSArray *cashinButtons;
+@property (nonatomic, retain) NSArray *paymentSources;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

@@ -28,7 +28,8 @@
             }
             
             methods = items;
-        }
+        } else
+            methods = [Flooz sharedInstance].currentTexts.paymentSources;
     }
     return self;
 }

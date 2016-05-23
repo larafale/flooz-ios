@@ -230,7 +230,8 @@
             [topController dismissViewControllerAnimated:animate completion:^{
                 [self executeTriggerList:trigger.triggers];
             }];
-        }
+        } else
+            [self executeTriggerList:trigger.triggers];
     }
 }
 

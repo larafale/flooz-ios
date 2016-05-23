@@ -10,6 +10,7 @@
 #import "Branch.h"
 
 #import "AppDelegate.h"
+#import "AppDelegate+NVSBlurAppScreen.h"
 
 #import <CoreTelephony/CTCallCenter.h>
 
@@ -432,8 +433,7 @@
 #pragma mark -
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [self nvs_blurPresentedView];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -451,6 +451,7 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+
 #ifndef FLOOZ_DEV_LOCAL
     if ([[Flooz sharedInstance] currentUser]) {
         [[Flooz sharedInstance] startSocket];
@@ -507,7 +508,9 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBSDKAppEvents activateApp];
-    
+
+    [self nvs_unblurPresentedView];
+
 #ifndef FLOOZ_DEV_LOCAL
     if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
         double delayInSeconds = 0.5;
