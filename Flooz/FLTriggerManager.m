@@ -340,14 +340,20 @@
             [self executeTriggerList:trigger.triggers];
         }];
     } else if ([trigger.category isEqualToString:@"flooz"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
-        [self executeTriggerList:trigger.triggers];
+        [[Flooz sharedInstance] transactionWithId:trigger.data[@"_id"] success:^(id result) {
+            [trigger.data setValue:result[@"item"] forKey:@"flooz"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
+            [self executeTriggerList:trigger.triggers];
+        }];
     } else if ([trigger.category isEqualToString:@"text"]) {
         [[Flooz sharedInstance] textObjectFromApi:nil failure:nil];
         [self executeTriggerList:trigger.triggers];
     } else if ([trigger.category isEqualToString:@"pot"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
-        [self executeTriggerList:trigger.triggers];
+        [[Flooz sharedInstance] transactionWithId:trigger.data[@"_id"] success:^(id result) {
+            [trigger.data setValue:result[@"item"] forKey:@"flooz"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
+            [self executeTriggerList:trigger.triggers];
+        }];
     } else if ([trigger.category isEqualToString:@"activities"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshActivities object:nil userInfo:trigger.data];
         [self executeTriggerList:trigger.triggers];

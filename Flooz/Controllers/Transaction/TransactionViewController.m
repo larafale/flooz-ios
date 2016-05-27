@@ -125,10 +125,23 @@
     NSDictionary* userInfo = notification.userInfo;
     
     if (userInfo && userInfo[@"_id"] && [userInfo[@"_id"] isEqualToString:_transaction.transactionId]) {
-        [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
-            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        if (userInfo[@"flooz"]) {
+            _transaction = [[FLTransaction alloc] initWithJSON:userInfo[@"flooz"]];
             [self reloadTransaction];
-        }];
+            
+            if (userInfo[@"commentId"]) {
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_transaction.social.commentsCount - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
+        } else {
+            [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
+                _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                [self reloadTransaction];
+                
+                if (userInfo[@"commentId"]) {
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_transaction.social.commentsCount - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                }
+            }];
+        }
     }
 }
 

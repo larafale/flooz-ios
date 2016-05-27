@@ -57,9 +57,6 @@
     _link = [json objectForKey:@"link"];
     
     _amount = [json objectForKey:@"amount"];
-    if (_amount && [[json objectForKey:@"payer"] isEqualToNumber:@1]) {
-        _amount = [NSNumber numberWithFloat:([_amount floatValue] * -1.)];
-    }
     
     if (json[@"amountText"]) {
         _amountText = json[@"amountText"];

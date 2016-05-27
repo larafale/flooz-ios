@@ -267,11 +267,13 @@
             _publicStats.nbFriends = [[[json objectForKey:@"publicMetrics"] objectForKey:@"friends"] integerValue];
             _publicStats.nbFollowers = [[[json objectForKey:@"publicMetrics"] objectForKey:@"followers"] integerValue];
             _publicStats.nbFollowings = [[[json objectForKey:@"publicMetrics"] objectForKey:@"followings"] integerValue];
+            _publicStats.nbPots = [[[json objectForKey:@"publicMetrics"] objectForKey:@"pots"] integerValue];
         } else {
             _publicStats.nbFlooz = [[[[json objectForKey:@"metrics"] objectForKey:@"emitted"] objectForKey:@"count"] integerValue];
             _publicStats.nbFriends = [_friends count];
             _publicStats.nbFollowers = [_followers count];
             _publicStats.nbFollowings = [_followings count];
+            _publicStats.nbPots = 0;
         }
         
         _checkDocuments = @{};

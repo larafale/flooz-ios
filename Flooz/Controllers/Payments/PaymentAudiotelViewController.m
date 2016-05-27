@@ -46,7 +46,7 @@
     dictionary = [NSMutableDictionary new];
     
     if (!self.title || [self.title isBlank])
-        self.title = NSLocalizedString(@"NAV_CASHIN", nil);
+        self.title = NSLocalizedString(@"NAV_AUDIOTEL", nil);
     
     contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
     contentView.bounces = NO;
@@ -155,7 +155,8 @@
 
     [[Flooz sharedInstance] cashinAudiotel:params success:^(id result) {
         dictionary[@"audiotelCode"] = @"";
-        [codeTextField reloadTextField];
+        [codeTextField setText:@""];
+        [codeTextField setPlaceholder:NSLocalizedString(@"CASHIN_AUDIOTEL_PLACEHOLDER", nil)];
     } failure:^(NSError *error) {
         
     }];

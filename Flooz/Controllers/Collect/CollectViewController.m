@@ -131,10 +131,23 @@
     NSDictionary* userInfo = notification.userInfo;
     
     if (userInfo && userInfo[@"_id"] && [userInfo[@"_id"] isEqualToString:_transaction.transactionId]) {
-        [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
-            _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        if (userInfo[@"flooz"]) {
+            _transaction = [[FLTransaction alloc] initWithJSON:userInfo[@"flooz"]];
             [self reloadTransaction];
-        }];
+            
+            if (userInfo[@"commentId"]) {
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_transaction.social.commentsCount - 1 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
+        } else {
+            [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
+                _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                [self reloadTransaction];
+                
+                if (userInfo[@"commentId"]) {
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_transaction.social.commentsCount - 1 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                }
+            }];
+        }
     }
 }
 
@@ -355,14 +368,14 @@
     shareInsideButton.userInteractionEnabled = YES;
     [shareInsideButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didShareInsideButtonClick)]];
     
-    [self fillShareButton:shareInsideButton image:[UIImage imageNamed:@"share_inside"] title:@"Inviter des Amis" subtitle:@"Inviter par nom, tel, ou email"];
+    [self fillShareButton:shareInsideButton image:[UIImage imageNamed:@"share_inside"] title:@"Inviter des amis" subtitle:@"Inviter par pseudo ou tel"];
     
     UIView *shareOutsideButton = [[UIView alloc] initWithFrame:CGRectMake(0, shareButtonHeight, PPScreenWidth(), shareButtonHeight)];
     shareOutsideButton.backgroundColor = [UIColor customBackgroundHeader];
     shareOutsideButton.userInteractionEnabled = YES;
     [shareOutsideButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didShareOutsideButtonClick)]];
     
-    [self fillShareButton:shareOutsideButton image:[UIImage imageNamed:@"share_outside"] title:@"Partager le Lien" subtitle:@"Partager sur Facebook, Twitter, etc"];
+    [self fillShareButton:shareOutsideButton image:[UIImage imageNamed:@"share_outside"] title:@"Partager le lien" subtitle:@"Partager sur Facebook, Twitter, etc"];
     
     [shareView addSubview:shareInsideButton];
     [shareView addSubview:shareOutsideButton];

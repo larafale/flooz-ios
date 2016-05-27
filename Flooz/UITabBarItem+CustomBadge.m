@@ -16,7 +16,7 @@
 @implementation UITabBarItem (CustomBadge)
 
 
--(void) setMyAppCustomBadgeValue: (NSString *) value
+-(void) setMyAppCustomBadgeValue:(NSString *)value
 {
     
     UIFont *myAppFont = [UIFont systemFontOfSize:13.0];
@@ -28,7 +28,7 @@
 
 
 
--(void) setCustomBadgeValue: (NSString *) value withFont: (UIFont *) font andFontColor: (UIColor *) color andBackgroundColor: (UIColor *) backColor
+-(void) setCustomBadgeValue:(NSString *)value withFont:(UIFont *)font andFontColor:(UIColor *)color andBackgroundColor:(UIColor *)backColor
 {
     UIView *v = [self valueForKey:@"view"];
     

@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate+NVSBlurAppScreen.h"
+#import "CreditCardViewController.h"
+#import "CashinCreditCardViewController.h"
 
 static const int kNVSBlurViewTag = 198490;
 
@@ -19,16 +21,32 @@ static const int kNVSBlurViewTag = 198490;
     if ([self.window viewWithTag:kNVSBlurViewTag]){
         return;
     }
-
-    [[self window] endEditing:YES];
-
-    [self.window addSubview:[self p_blurView]];
+    
+    UIViewController *vc = [self myTopViewController];
+    
+    
+    if ([vc isKindOfClass:[FLTabBarController class]]) {
+        vc = [((FLTabBarController *)vc) selectedViewController];
+    }
+    
+    if ([vc isKindOfClass:[FLNavigationController class]]) {
+        UIViewController *current = [(FLNavigationController*)vc topViewController];
+        if ([current isKindOfClass:[CreditCardViewController class]] || [current isKindOfClass:[CashinCreditCardViewController class]]) {
+            [[self window] endEditing:YES];
+            
+            [self.window addSubview:[self p_blurView]];
+        }
+    } else if ([vc isKindOfClass:[CreditCardViewController class]] || [vc isKindOfClass:[CashinCreditCardViewController class]]) {
+        [[self window] endEditing:YES];
+        
+        [self.window addSubview:[self p_blurView]];
+    }
 }
 
 - (void)nvs_unblurPresentedView
 {
     [[self window] endEditing:NO];
-
+    
     [[self.window viewWithTag:kNVSBlurViewTag] removeFromSuperview];
 }
 

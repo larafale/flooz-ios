@@ -33,7 +33,6 @@
 @property (nonatomic, retain) NSString *audiotelImage;
 @property (nonatomic, retain) NSString *audiotelInfos;
 @property (nonatomic, retain) NSString *card;
-@property (nonatomic, retain) NSString *kyc;
 @property (nonatomic, retain) NSDictionary *notificationsText;
 @property (nonatomic, retain) NSDictionary *json;
 @property (nonatomic, retain) FLSlider *slider;

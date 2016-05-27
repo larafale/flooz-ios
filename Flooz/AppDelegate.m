@@ -1102,7 +1102,7 @@
         UIViewController *current = [(FLNavigationController*)vc topViewController];
         if ([current isKindOfClass:[TransactionViewController class]]) {
             if ([[(TransactionViewController*)current currentId] isEqualToString:transaction.transactionId]) {
-                [(TransactionViewController*)vc refreshTransaction];
+                [(TransactionViewController*)current refreshTransaction];
                 return;
             }
         }
@@ -1153,7 +1153,7 @@
         UIViewController *current = [(FLNavigationController*)vc topViewController];
         if ([current isKindOfClass:[CollectViewController class]]) {
             if ([[(CollectViewController*)current currentId] isEqualToString:transaction.transactionId]) {
-                [(CollectViewController*)vc refreshTransaction];
+                [(CollectViewController*)current refreshTransaction];
                 return;
             }
         }

@@ -706,6 +706,18 @@
     [self requestPath:[NSString stringWithFormat:@"/users/%@/flooz", userId] method:@"GET" params:nil success:successBlock failure:failure];
 }
 
+- (void)userPots:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
+        
+        if (success) {
+            success(transactions, result[@"next"]);
+        }
+    };
+    
+    [self requestPath:[NSString stringWithFormat:@"/users/%@/pots", userId] method:@"GET" params:nil success:successBlock failure:failure];
+}
+
 - (void)collectTimeline:(NSString *)collectId withUser:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];

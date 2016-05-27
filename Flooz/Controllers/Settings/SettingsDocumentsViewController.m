@@ -25,9 +25,9 @@
     
     
     NSArray *documents;
+    NSMutableArray *buttons;
     NSMutableArray *documentsButton;
     
-    NSInteger registerButtonCount;
     NSString *currentDocumentKey;
     
     //	FLActionButton *_saveButton;
@@ -48,27 +48,72 @@
     [self initWithInfo];
     
     documentsButton = [NSMutableArray new];
-    //	fieldsView = [NSMutableArray new];
+    buttons = [NSMutableArray new];
     
     _contentView = [UIScrollView newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     [_mainBody addSubview:_contentView];
     
-    height = 5.0f;
+    height = PADDING_SIDE;
     
-    for (NSDictionary *dic in documents) {
-        NSString *key = [[dic allKeys] firstObject];
-        NSString *value = [[dic allValues] firstObject];
-        [self createDocumentsButtonWithKey:key andValue:value];
+    NSString *contentString = [Flooz sharedInstance].currentTexts.menu[@"documents"][@"content"];
+    
+    if (self.triggerData && self.triggerData[@"content"] && ![self.triggerData[@"content"] isBlank])
+        contentString = self.triggerData[@"content"];
+    
+    if (contentString && ![contentString isBlank]) {
+        UILabel *infosLabel = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_SIDE, height, PPScreenWidth() - 2 * PADDING_SIDE, 0)];
+        [infosLabel setText:contentString];
+        [infosLabel setTextColor:[UIColor whiteColor]];
+        [infosLabel setTextAlignment:NSTextAlignmentCenter];
+        [infosLabel setFont:[UIFont customContentRegular:15]];
+        [infosLabel setNumberOfLines:0];
+        [infosLabel setLineBreakMode:NSLineBreakByWordWrapping];
+        
+        [infosLabel setHeightToFit];
+        
+        [_contentView addSubview:infosLabel];
+        
+        height = CGRectGetMaxY(infosLabel.frame) + PADDING_SIDE;
     }
     
-    UILabel *infos = [[UILabel alloc] initWithText:[Flooz sharedInstance].currentTexts.menu[@"documents"][@"info"] textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
-    [infos setLineBreakMode:NSLineBreakByWordWrapping];
+    NSString *picString = [Flooz sharedInstance].currentTexts.menu[@"documents"][@"pic"];
     
-    CGRectSetWidth(infos.frame, CGRectGetWidth(_contentView.frame) - PADDING_SIDE * 2);
-    [infos sizeToFit];
-    CGRectSetXY(infos.frame, CGRectGetWidth(_contentView.frame) / 2 - CGRectGetWidth(infos.frame) / 2, height + PADDING_SIDE);
+    if (self.triggerData && self.triggerData[@"pic"] && ![self.triggerData[@"pic"] isBlank])
+        picString = self.triggerData[@"pic"];
     
-    [_contentView addSubview:infos];
+    if (picString && ![picString isBlank]) {
+        UIImageView *cardInfos = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING_SIDE, height, PPScreenWidth() - 2 * PADDING_SIDE, 150)];
+        [cardInfos setContentMode:UIViewContentModeScaleAspectFit];
+        [cardInfos sd_setImageWithURL:[NSURL URLWithString:picString]];
+        
+        [_contentView addSubview:cardInfos];
+        
+        height = CGRectGetMaxY(cardInfos.frame) + PADDING_SIDE;
+    }
+    
+    for (NSDictionary *dic in documents) {
+        NSString *title = dic[@"title"];
+        NSString *key = dic[@"key"];
+        [self createDocumentsButtonWithKey:key andValue:title];
+    }
+    
+    NSString *infoString = [Flooz sharedInstance].currentTexts.menu[@"documents"][@"info"];
+    
+    if (self.triggerData && self.triggerData[@"info"] && ![self.triggerData[@"info"] isBlank])
+        infoString = self.triggerData[@"info"];
+    
+    if (infoString && ![infoString isBlank]) {
+        UILabel *infos = [[UILabel alloc] initWithText:infoString textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
+        [infos setLineBreakMode:NSLineBreakByWordWrapping];
+        
+        CGRectSetWidth(infos.frame, CGRectGetWidth(_contentView.frame) - PADDING_SIDE * 2);
+        [infos sizeToFit];
+        CGRectSetXY(infos.frame, CGRectGetWidth(_contentView.frame) / 2 - CGRectGetWidth(infos.frame) / 2, height + PADDING_SIDE);
+        
+        [_contentView addSubview:infos];
+        
+        height = CGRectGetMaxY(infos.frame) + PADDING_SIDE;
+    }
     
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), height);
     
@@ -81,15 +126,10 @@
 
 - (void)initWithInfo {
     
-    documents = @[
-                  @{ @"CREDIT_CARD": @"card" },
-                  @{ @"CARD_ID_RECTO": @"cniRecto" },
-                  @{ @"CARD_ID_VERSO": @"cniVerso" },
-                  @{ @"HOME": @"justificatory" },
-                  @{ @"HOME2": @"justificatory2" }
-                  ];
+    documents = [Flooz sharedInstance].currentTexts.menu[@"documents"][@"items"];
     
-    registerButtonCount = 0;
+    if (self.triggerData != nil && self.triggerData[@"items"] && [self.triggerData[@"items"] count])
+        documents = self.triggerData[@"items"];
 }
 
 - (void)createDocumentsButtonWithKey:(NSString *)key andValue:(NSString *)value {
@@ -97,21 +137,24 @@
     [_contentView addSubview:view];
     height = CGRectGetMaxY(view.frame);
     
-    [self registerButtonForAction:view];
+    [buttons addObject:view];
+    
+    [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDocumentButtonClick:)]];
+    
     view.backgroundColor = [UIColor customBackgroundHeader];
     view.titleLabel.font = [UIFont customTitleExtraLight:16];
     view.titleLabel.textColor = [UIColor whiteColor];
     
-    [view setTitle:NSLocalizedString(([NSString stringWithFormat:@"DOCUMENTS_%@", key]), nil) forState:UIControlStateNormal];
+    [view setTitle:value forState:UIControlStateNormal];
     view.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [view setTitleEdgeInsets:UIEdgeInsetsMake(0, 10.0f, 0, 0)];
     
     {
         UIImageView *imageView = [UIImageView imageNamed:@"friends-field-in"];
-        if ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] intValue] == 0){
+        if ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:key] intValue] == 0){
             imageView = [UIImageView imageNamed:@"document-refused"];
         }
-        if ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:value] intValue] == 3){
+        if ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:key] intValue] == 3){
             imageView = [UIImageView imageNamed:@"friends-field-add"];
         }
         [documentsButton addObject:imageView];
@@ -129,61 +172,15 @@
     [view addSubview:bottomBar];
 }
 
-- (void)registerButtonForAction:(UIButton *)button {
-    SEL action;
-    switch (registerButtonCount) {
-        case 0:
-            action = @selector(didDocumentTouch0);
-            break;
-            
-        case 1:
-            action = @selector(didDocumentTouch1);
-            break;
-            
-        case 2:
-            action = @selector(didDocumentTouch2);
-            break;
-            
-        case 3:
-            action = @selector(didDocumentTouch3);
-            break;
-            
-        case 4:
-            action = @selector(didDocumentTouch4);
-            break;
-            
-        default:
-            action = nil;
-            break;
-    }
+- (void)didDocumentButtonClick:(UITapGestureRecognizer *)gestureRecognizer {
+    UIView *sender = gestureRecognizer.view;
     
-    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
-    registerButtonCount++;
-}
-
-- (void)didDocumentTouch0 {
-    currentDocumentKey = [[documents[0] allValues] firstObject];
-    [self showImagePicker];
-}
-
-- (void)didDocumentTouch1 {
-    currentDocumentKey = [[documents[1] allValues] firstObject];
-    [self showImagePicker];
-}
-
-- (void)didDocumentTouch2 {
-    currentDocumentKey = [[documents[2] allValues] firstObject];
-    [self showImagePicker];
-}
-
-- (void)didDocumentTouch3 {
-    currentDocumentKey = [[documents[3] allValues] firstObject];
-    [self showImagePicker];
-}
-
-- (void)didDocumentTouch4 {
-    currentDocumentKey = [[documents[4] allValues] firstObject];
-    [self showImagePicker];
+    NSInteger pos = [buttons indexOfObject:sender];
+    
+    if (pos != NSNotFound) {
+        currentDocumentKey = documents[pos][@"key"];
+        [self showImagePicker];
+    }
 }
 
 - (void)addTapGestureForDismissKeyboard {
@@ -222,6 +219,7 @@
     if ([[[Flooz sharedInstance] currentUser] settings][currentDocumentKey] && ([[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 1 || [[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 2)) {
         return;
     }
+    
     if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
         [self createActionSheet];
     }
@@ -352,7 +350,7 @@
             
             NSUInteger index = 0;
             for (NSDictionary * dic in documents) {
-                if ([[[dic allValues] firstObject] isEqualToString:currentDocumentKey]) {
+                if ([dic[@"key"] isEqualToString:currentDocumentKey]) {
                     break;
                 }
                 index++;

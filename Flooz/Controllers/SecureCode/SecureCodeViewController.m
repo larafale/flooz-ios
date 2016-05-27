@@ -594,7 +594,7 @@ static BOOL canTouchID = YES;
 }
 
 - (void)didCodeForgetTouch {
-    [appDelegate displayMessage:@"Récupérer votre code" content:@"Veuillez vous identifier pour réinitialiser votre code à 4 chiffres." style:FLAlertViewStyleInfo time:@3 delay:@0];
+    [appDelegate displayMessage:@"Récupérer votre code" content:@"Veuillez vous identifier pour réinitialiser votre code à 4 chiffres" style:FLAlertViewStyleInfo time:@3 delay:@0];
     currentSecureMode = SecureCodeModeForget;
     [self displayCorrectView];
 }

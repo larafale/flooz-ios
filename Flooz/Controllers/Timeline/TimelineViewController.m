@@ -415,18 +415,6 @@
     }
 }
 
-- (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath {
-    NSMutableSet *rowsToReload = [rowsWithPaymentField mutableCopy];
-    
-    [rowsWithPaymentField removeAllObjects];
-    [rowsWithPaymentField addObject:indexPath];
-    [rowsToReload addObject:indexPath];
-    
-    [_tableView beginUpdates];
-    [_tableView reloadRowsAtIndexPaths:[rowsToReload allObjects] withRowAnimation:UITableViewRowAnimationNone];
-    [_tableView endUpdates];
-}
-
 - (BOOL)transactionAlreadyLoaded:(FLTransaction *)transaction {
     if ([transactionsLoaded containsObject:[transaction transactionId]]) {
         return YES;

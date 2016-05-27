@@ -42,7 +42,7 @@
     documentsButton = [NSMutableArray new];
     
     UILabel *infosLabel = [[UILabel alloc] initWithFrame:CGRectMake(PADDING_SIDE, PADDING_SIDE, PPScreenWidth() - 2 * PADDING_SIDE, 0)];
-    [infosLabel setText:[Flooz sharedInstance].currentTexts.kyc];
+    [infosLabel setText:[Flooz sharedInstance].currentTexts.menu[@"documents"][@"content"]];
     [infosLabel setTextColor:[UIColor whiteColor]];
     [infosLabel setTextAlignment:NSTextAlignmentCenter];
     [infosLabel setFont:[UIFont customContentRegular:15]];

@@ -169,7 +169,7 @@
 
     CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(descriptionTitleLabel.frame) + 5);
     descriptionLabel.text = _transaction.content;
-    CGRectSetHeight(descriptionLabel.frame, [descriptionLabel heightToFit] + 4);
+    CGRectSetHeight(descriptionLabel.frame, [descriptionLabel heightToFit] + 5);
     
     if (_transaction.location) {
         [locationLabel setHidden:NO];

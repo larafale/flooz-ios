@@ -52,6 +52,7 @@
     FLBorderedActionButton *editProfileActionButton;
     
     BOOL transacLoaded;
+    BOOL potsLoaded;
     BOOL completeProfileLoaded;
     
     FLMultiLineSegmentedControl *controlTab;
@@ -67,13 +68,13 @@
     UIView *badgeView;
     
     NSMutableArray *transactions;
+    NSMutableArray *pots;
     
     NSString *_nextPageUrl;
     BOOL nextPageIsLoading;
     
-    NSMutableSet *rowsWithPaymentField;
-    NSMutableArray *cells;
-    NSMutableArray *transactionsLoaded;
+    NSString *_nextPageUrlPots;
+    BOOL nextPageIsLoadingPots;
     
     CGFloat emptyCellHeight;
 }
@@ -89,13 +90,12 @@
     if (self) {
         currentUser = user;
         transactions = [NSMutableArray new];
-        rowsWithPaymentField = [NSMutableSet new];
+        pots = [NSMutableArray new];
         nextPageIsLoading = NO;
+        nextPageIsLoadingPots = NO;
         transacLoaded = NO;
+        potsLoaded = NO;
         completeProfileLoaded = NO;
-        
-        transactionsLoaded = [NSMutableArray new];
-        cells = [NSMutableArray new];
     }
     return self;
 }
@@ -105,13 +105,12 @@
     if (self) {
         currentUser = [[FLUser alloc] initWithJSON:data];
         transactions = [NSMutableArray new];
-        rowsWithPaymentField = [NSMutableSet new];
+        pots = [NSMutableArray new];
         nextPageIsLoading = NO;
+        nextPageIsLoadingPots = NO;
         transacLoaded = NO;
+        potsLoaded = NO;
         completeProfileLoaded = NO;
-        
-        transactionsLoaded = [NSMutableArray new];
-        cells = [NSMutableArray new];
     }
     return self;
 }
@@ -142,14 +141,20 @@
     if (self.navigationController.viewControllers.count > 1)
         [_mainBody addSubview:headerBack];
     
-    emptyCellHeight = CGRectGetHeight(self.tableView.frame) - CGRectGetHeight(headerCell.frame);
+    emptyCellHeight = CGRectGetHeight(self.tableView.frame) - NAVBAR_HEIGHT;
+    
+    [self reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self reloadData];
-    [self refreshData];
+    if ([currentUser.userId isEqualToString:[Flooz sharedInstance].currentUser.userId]) {
+        [[Flooz sharedInstance] updateCurrentUserWithSuccess:nil];
+    } else {
+        [self refreshData];
+    }
+    
     [self registerNotification:@selector(refreshData) name:kNotificationReloadCurrentUser object:nil];
 }
 
@@ -160,13 +165,19 @@
 }
 
 - (void) refreshData {
-    [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
-        if (result) {
-            currentUser = result;
-            currentUser.isComplete = YES;
-        }
+    if ([currentUser.userId isEqualToString:[Flooz sharedInstance].currentUser.userId]) {
+        currentUser = [Flooz sharedInstance].currentUser;
+        currentUser.isComplete = YES;
         [self reloadData];
-    } failure:nil];
+    } else {
+        [[Flooz sharedInstance] getUserProfile:currentUser.userId success:^(FLUser *result) {
+            if (result) {
+                currentUser = result;
+                currentUser.isComplete = YES;
+            }
+            [self reloadData];
+        } failure:nil];
+    }
 }
 
 - (void)createHeader {
@@ -282,6 +293,7 @@
     
     [controlTab setMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:@"Flooz" andStat:0] forSegmentAtIndex:0];
     [controlTab setMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"FRIEND", nil) andStat:0] forSegmentAtIndex:1];
+    [controlTab setMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"COLLECT", nil) andStat:0] forSegmentAtIndex:2];
     
     [controlTab setSelectedSegmentIndex:0];
     
@@ -318,7 +330,7 @@
 - (void)reloadData {
     [self reloadTableView];
     
-    if (!currentUser.isComplete)
+    if (!currentUser.isComplete && ![currentUser.userId isEqualToString:[Flooz sharedInstance].currentUser.userId])
         [self reloadMiniUser];
     else
         [self reloadUser];
@@ -475,6 +487,11 @@
         [controlTab updateMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"FRIEND", nil) andStat:currentUser.publicStats.nbFriends] forSegmentAtIndex:1];
     else
         [controlTab updateMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"FRIENDS", nil) andStat:currentUser.publicStats.nbFriends] forSegmentAtIndex:1];
+    
+    if (currentUser.publicStats.nbPots < 2)
+        [controlTab updateMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"COLLECT", nil) andStat:currentUser.publicStats.nbPots] forSegmentAtIndex:2];
+    else
+        [controlTab updateMultilineTitle:[FLMultiLineSegmentedControl itemTitleWithText:NSLocalizedString(@"COLLECTS", nil) andStat:currentUser.publicStats.nbPots] forSegmentAtIndex:2];
     
     [bioLabel setText:currentUser.bio];
     CGRectSetHeight(bioLabel.frame, [bioLabel heightToFit] + 5);
@@ -653,6 +670,8 @@
 #pragma marks - segmented control handler
 
 - (void)segmentedControlValueChanged:(UISegmentedControl*)sender {
+    [self.tableView scrollsToTop];
+    
     [self.tableView reloadData];
 }
 
@@ -669,12 +688,24 @@
                 return 1;
         } else
             return 1;
-    } else if (!completeProfileLoaded)
-        return 1;
-    else {
-        if (currentUser.friends.count)
-            return currentUser.friends.count;
-        return 1;
+    } else if (controlTab.selectedSegmentIndex == 1) {
+        if (!completeProfileLoaded)
+            return 1;
+        else {
+            if (currentUser.friends.count)
+                return currentUser.friends.count;
+            return 1;
+        }
+    } else {
+        if (potsLoaded) {
+            if (_nextPageUrlPots && ![_nextPageUrlPots isBlank]) {
+                return [pots count] + 1;
+            } else if ([pots count])
+                return [pots count];
+            else
+                return 1;
+        } else
+            return 1;
     }
 }
 
@@ -697,13 +728,29 @@
             }
         } else
             return [LoadingCell getHeight];
-    } else if (!completeProfileLoaded)
-        return [LoadingCell getHeight];
-    else {
-        if (currentUser.friends.count)
-            return [FriendCell getHeight];
-        else
-            return emptyCellHeight;
+    } else if (controlTab.selectedSegmentIndex == 1) {
+        if (!completeProfileLoaded)
+            return [LoadingCell getHeight];
+        else {
+            if (currentUser.friends.count)
+                return [FriendCell getHeight];
+            else
+                return emptyCellHeight;
+        }
+    } else {
+        if (potsLoaded) {
+            if ([pots count]) {
+                if (indexPath.row >= [pots count]) {
+                    return [LoadingCell getHeight];
+                }
+                
+                FLTransaction *transaction = [pots objectAtIndex:indexPath.row];
+                return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
+            } else {
+                return emptyCellHeight;
+            }
+        } else
+            return [LoadingCell getHeight];
     }
 }
 
@@ -754,24 +801,60 @@
         } else {
             return [LoadingCell new];
         }
-    } else if (!completeProfileLoaded) {
-        return [LoadingCell new];
-    } else {
-        if (controlTab.selectedSegmentIndex == 1 && currentUser.friends.count == 0)
-            return [self generateEmptyFriendsCell];
-        
-        static NSString *cellIdentifier = @"FriendCell";
-        FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
-        if (!cell) {
-            cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    } else if (controlTab.selectedSegmentIndex == 1) {
+        if (!completeProfileLoaded) {
+            return [LoadingCell new];
+        } else {
+            if (controlTab.selectedSegmentIndex == 1 && currentUser.friends.count == 0)
+                return [self generateEmptyFriendsCell];
+            
+            static NSString *cellIdentifier = @"FriendCell";
+            FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            
+            if (!cell) {
+                cell = [[FriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            }
+            
+            FLUser *friend = [currentUser.friends objectAtIndex:indexPath.row];
+            
+            [cell setFriend:friend];
+            [cell hideAddButton];
+            return cell;
         }
-        
-        FLUser *friend = [currentUser.friends objectAtIndex:indexPath.row];
-        
-        [cell setFriend:friend];
-        [cell hideAddButton];
-        return cell;
+    } else {
+        if (potsLoaded) {
+            if (pots.count) {
+                if (indexPath.row == [pots count]) {
+                    static LoadingCell *footerView;
+                    if (!footerView) {
+                        footerView = [LoadingCell new];
+                    }
+                    return footerView;
+                }
+                
+                static NSString *cellIdentifier = @"PotCell";
+                TransactionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                
+                if (!cell) {
+                    cell = [[TransactionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier andDelegate:self];
+                }
+                
+                FLTransaction *transaction = [pots objectAtIndex:indexPath.row];
+                
+                [cell setTransaction:transaction];
+                [cell setIndexPath:indexPath];
+                
+                if (_nextPageUrlPots && ![_nextPageUrlPots isBlank] && !nextPageIsLoadingPots && indexPath.row == [pots count] - 1) {
+                    [self loadPotsNextPage];
+                }
+                
+                return cell;
+            } else {
+                return [self generateEmptyTimelineCell];
+            }
+        } else {
+            return [LoadingCell new];
+        }
     }
 }
 
@@ -787,14 +870,27 @@
                 }
             }
         }
-    } else if (completeProfileLoaded) {
-        FLUser *friend;
-        
-        if (controlTab.selectedSegmentIndex == 1 && currentUser.friends.count)
-            friend = [currentUser.friends objectAtIndex:indexPath.row];
-        
-        if (friend) {
-            [appDelegate showUser:friend inController:self];
+    } else if (controlTab.selectedSegmentIndex == 1) {
+        if (completeProfileLoaded) {
+            FLUser *friend;
+            
+            if (controlTab.selectedSegmentIndex == 1 && currentUser.friends.count)
+                friend = [currentUser.friends objectAtIndex:indexPath.row];
+            
+            if (friend) {
+                [appDelegate showUser:friend inController:self];
+            }
+        }
+    } else if (controlTab.selectedSegmentIndex == 2) {
+        if (transacLoaded) {
+            if (pots.count > indexPath.row) {
+                FLTransaction *transaction = [pots objectAtIndex:indexPath.row];
+                if (transaction.isCollect) {
+                    [appDelegate showPot:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+                } else {
+                    [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:NO];
+                }
+            }
         }
     }
 }
@@ -830,7 +926,6 @@
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
-    [rowsWithPaymentField removeObject:indexPath];
     [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
     
     [self.tableView beginUpdates];
@@ -840,32 +935,6 @@
 
 - (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
     [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:YES];
-}
-
-- (void)showPayementFieldAtIndex:(NSIndexPath *)indexPath {
-    NSMutableSet *rowsToReload = [rowsWithPaymentField mutableCopy];
-    
-    [rowsWithPaymentField removeAllObjects];
-    [rowsWithPaymentField addObject:indexPath];
-    [rowsToReload addObject:indexPath];
-    
-    [self.tableView beginUpdates];
-    [self.tableView reloadRowsAtIndexPaths:[rowsToReload allObjects] withRowAnimation:UITableViewRowAnimationNone];
-    [self.tableView endUpdates];
-}
-
-- (BOOL)transactionAlreadyLoaded:(FLTransaction *)transaction {
-    if ([transactionsLoaded containsObject:[transaction transactionId]]) {
-        return YES;
-    }
-    
-    [transactionsLoaded addObject:[transaction transactionId]];
-    
-    return NO;
-}
-
-- (void)resetTransactionsLoaded {
-    [transactionsLoaded removeAllObjects];
 }
 
 - (void)reloadTableView {
@@ -881,11 +950,38 @@
             [self.tableView setContentOffset:CGPointZero animated:YES];
         }];
     }
+    
+    if (currentUser && ((!pots || !pots.count) || [currentUser.userId isEqualToString:[Flooz sharedInstance].currentUser.userId])) {
+        [[Flooz sharedInstance] userPots:currentUser.userId success: ^(id result, NSString *nextPageUrl) {
+            pots = [result mutableCopy];
+            _nextPageUrlPots = nextPageUrl;
+            
+            nextPageIsLoadingPots = NO;
+            potsLoaded = YES;
+            [self didFilterChange];
+        } failure:^(NSError *error) {
+            [self.tableView setContentOffset:CGPointZero animated:YES];
+        }];
+    }
 }
 
 - (void)didFilterChange {
-    rowsWithPaymentField = [NSMutableSet new];
     [self.tableView reloadData];
+}
+
+- (void)loadPotsNextPage {
+    if (!_nextPageUrlPots || [_nextPageUrlPots isBlank]) {
+        return;
+    }
+    
+    nextPageIsLoadingPots = YES;
+    
+    [[Flooz sharedInstance] timelineNextPage:_nextPageUrlPots success: ^(id result, NSString *nextPageUrl, TransactionScope scope) {
+        [pots addObjectsFromArray:result];
+        _nextPageUrlPots = nextPageUrl;
+        nextPageIsLoadingPots = NO;
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)loadNextPage {
@@ -915,7 +1011,7 @@
         
         [text setWidthToFit];
         
-        CGRectSetY(text.frame, emptyCellHeight / 2 - CGRectGetHeight(text.frame) / 2);
+        CGRectSetY(text.frame, emptyCellHeight / 4 - CGRectGetHeight(text.frame));
         CGRectSetX(text.frame, PPScreenWidth() / 2 - CGRectGetWidth(text.frame) / 2);
         
         [emptyCell addSubview:text];
@@ -936,7 +1032,7 @@
         
         [text setWidthToFit];
         
-        CGRectSetY(text.frame, emptyCellHeight / 2 - CGRectGetHeight(text.frame) / 2);
+        CGRectSetY(text.frame, emptyCellHeight / 4 - CGRectGetHeight(text.frame));
         CGRectSetX(text.frame, PPScreenWidth() / 2 - CGRectGetWidth(text.frame) / 2);
         
         [emptyCell addSubview:text];

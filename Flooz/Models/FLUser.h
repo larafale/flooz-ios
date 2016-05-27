@@ -16,6 +16,7 @@ typedef struct s_FLUserPublicStats {
     NSInteger nbFriends;
     NSInteger nbFollowers;
     NSInteger nbFollowings;
+    NSInteger nbPots;
 } FLUserPublicStats;
 
 typedef enum e_FLUserSelectedCanal {

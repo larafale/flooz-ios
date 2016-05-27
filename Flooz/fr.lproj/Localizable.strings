@@ -275,6 +275,7 @@
 /*           NAVIGATION             */
 /************************************/
 
+"NAV_AUDIOTEL" = "Forfait Tél.";
 "NAV_CASHIN" = "Ajouter des fonds";
 "NAV_ACTIVITIES" = "Mon activité";
 "NAV_DEALS" = "Deals";
@@ -337,6 +338,9 @@
 /************************************/
 /*           TRANSACTIONS           */
 /************************************/
+
+"COLLECT" = "Cagnotte";
+"COLLECTS" = "Cagnottes";
 
 "NEW_TRANSACTION" = "Flooz";
 "NEW_COLLECT" = "Cagnotte";
