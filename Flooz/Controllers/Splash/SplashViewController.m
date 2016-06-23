@@ -78,7 +78,9 @@
                                           otherButtonTitles:@"Local", nil];
     alert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     [[alert textFieldAtIndex:1] setSecureTextEntry:NO];
-    [[alert textFieldAtIndex:0] setText:@"172.20.113."];
+//    [[alert textFieldAtIndex:0] setText:@"192.168.1.44"];
+    [[alert textFieldAtIndex:0] setText:@"172.20.113.3"];
+//    [[alert textFieldAtIndex:0] setText:@"172.20.113."];
     [[alert textFieldAtIndex:1] setText:@"3002"];
     [[alert textFieldAtIndex:0] setPlaceholder:@"IP"];
     [[alert textFieldAtIndex:1] setPlaceholder:@"Port"];

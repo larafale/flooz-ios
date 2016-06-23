@@ -171,7 +171,7 @@
     if (self.selectedContactView){
         // if there is a selected contact, deselect it
         [self.selectedContactView unSelect];
-        [self selectTextView];
+//        [self selectTextView];
     }
     
     // update the position of the contacts
@@ -293,7 +293,7 @@
     [self.contactKeys removeObject:contactKey];
     
     self.textField.text = @"";
-    [self selectTextView];
+//    [self selectTextView];
     
     // update layout
     [self layoutContactViews];
@@ -548,7 +548,7 @@
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     if (_shouldSelectTextView){
         _shouldSelectTextView = NO;
-        [self selectTextView];
+//        [self selectTextView];
     }
 }
 

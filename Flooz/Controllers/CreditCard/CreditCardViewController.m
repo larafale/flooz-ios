@@ -387,6 +387,7 @@
     if (dictionary[@"holder"] && [[[Flooz sharedInstance] currentTexts] cardHolder]) {
         _card[@"holder"] = dictionary[@"holder"];
     }
+    
     if (paymentTextField.cardNumber && ![paymentTextField.cardNumber isBlank])
         _card[@"number"] = paymentTextField.cardNumber;
     

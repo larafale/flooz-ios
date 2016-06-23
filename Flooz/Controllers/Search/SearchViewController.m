@@ -319,7 +319,7 @@
 - (void)createUnfriendActionSheet {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
     
-    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"UNFOLLOW", nil)];
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"UNFRIEND", nil)];
     [actionSheet setDestructiveButtonIndex:index];
     
     index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];

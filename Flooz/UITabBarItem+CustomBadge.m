@@ -34,38 +34,40 @@
     
     [self setBadgeValue:value];
     
-    for(UIView *sv in v.subviews)
-    {
-        NSString *str = NSStringFromClass([sv class]);
-        
-        if ([str rangeOfString:@"BadgeView"].location != NSNotFound) {
+    if (v != nil && v.subviews != nil && v.subviews.count > 0) {
+        for(UIView *sv in v.subviews)
+        {
+            NSString *str = NSStringFromClass([sv class]);
             
-            for(UIView *ssv in sv.subviews)
-            {
-                if(ssv.tag == CUSTOM_BADGE_TAG) { [ssv removeFromSuperview]; }
+            if ([str rangeOfString:@"BadgeView"].location != NSNotFound) {
+                
+                for(UIView *ssv in sv.subviews)
+                {
+                    if(ssv.tag == CUSTOM_BADGE_TAG) { [ssv removeFromSuperview]; }
+                }
+                
+                UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sv.frame.size.width, sv.frame.size.height)];
+                
+                [l setFont:font];
+                [l setText:value];
+                [l setBackgroundColor:backColor];
+                [l setTextColor:color];
+                [l setTextAlignment:NSTextAlignmentCenter];
+                
+                l.layer.cornerRadius = l.frame.size.height/2;
+                l.layer.masksToBounds = YES;
+                
+                // Fix for border
+                sv.layer.borderWidth = 1;
+                sv.layer.borderColor = [backColor CGColor];
+                sv.layer.cornerRadius = sv.frame.size.height/2;
+                sv.layer.masksToBounds = YES;
+                
+                
+                [sv addSubview:l];
+                
+                l.tag = CUSTOM_BADGE_TAG;
             }
-            
-            UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sv.frame.size.width, sv.frame.size.height)];
-            
-            [l setFont:font];
-            [l setText:value];
-            [l setBackgroundColor:backColor];
-            [l setTextColor:color];
-            [l setTextAlignment:NSTextAlignmentCenter];
-            
-            l.layer.cornerRadius = l.frame.size.height/2;
-            l.layer.masksToBounds = YES;
-            
-            // Fix for border
-            sv.layer.borderWidth = 1;
-            sv.layer.borderColor = [backColor CGColor];
-            sv.layer.cornerRadius = sv.frame.size.height/2;
-            sv.layer.masksToBounds = YES;
-            
-            
-            [sv addSubview:l];
-            
-            l.tag = CUSTOM_BADGE_TAG;
         }
     }
 }

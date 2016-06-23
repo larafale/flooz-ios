@@ -74,7 +74,7 @@
     
     if ([json objectForKey:@"participants"] && [[json objectForKey:@"participants"] count]) {
         NSMutableArray *tmp = [NSMutableArray new];
-       NSArray *array = [json objectForKey:@"participants"];
+        NSArray *array = [json objectForKey:@"participants"];
         for (NSDictionary *userDic in array) {
             FLUser *user = [[FLUser alloc] initWithJSON:userDic];
             if (userDic[@"userId"])
@@ -84,7 +84,7 @@
         }
         _participants = tmp;
     }
-
+    
     _participations = [json objectForKey:@"participations"];
     
     _location = [json objectForKey:@"location"];
@@ -145,7 +145,7 @@
     
     _from = [[FLUser alloc] initWithJSON:[json objectForKey:@"from"]];
     _to = [[FLUser alloc] initWithJSON:[json objectForKey:@"to"]];
-
+    
     if ([json objectForKey:@"creator"] && [[json objectForKey:@"creator"] isKindOfClass:[NSDictionary class]])
         _creator = [[FLUser alloc] initWithJSON:[json objectForKey:@"creator"]];
     
@@ -178,6 +178,20 @@
         _comments = comments;
     }
     
+    _invitations = json[@"invitations"];
+    
+    if (_invitations) {
+        NSMutableArray *mutableInvitations = [_invitations mutableCopy];
+        NSMutableArray *removeObjects = [NSMutableArray new];
+        
+        for (NSString *data in mutableInvitations) {
+            if ([data rangeOfString:@"+"].location != NSNotFound)
+                [removeObjects addObject:data];
+        }
+        
+        [mutableInvitations removeObjectsInArray:removeObjects];
+    }
+    
     if ([[Flooz sharedInstance] isConnectionAvailable] && [json objectForKey:@"when"]) {
         _when = [json objectForKey:@"when"];
     } else {
@@ -187,6 +201,8 @@
     if ([json objectForKey:@"text3d"]) {
         _text3d = [json objectForKey:@"text3d"];
     }
+    
+    _triggerOptions = json[@"settings"];
     
     _haveAction = NO;
     if (_isAcceptable) {

@@ -23,7 +23,6 @@
     UILabel *amountSymbolLabel;
     UILabel *collectedLabel;
     FLImageView *attachmentView;
-    UILabel *closeLabel;
     UILabel *locationLabel;
 }
 
@@ -50,7 +49,7 @@
     headerView.layer.shadowOffset = CGSizeMake(0, 2);
     headerView.layer.shadowRadius = 1;
     headerView.clipsToBounds = NO;
-
+    
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, PPScreenWidth() - 20, 0)];
     nameLabel.textColor = [UIColor customWhite];
     nameLabel.textAlignment = NSTextAlignmentCenter;
@@ -72,26 +71,17 @@
     collectedLabel.textColor = [UIColor customBlue];
     collectedLabel.textAlignment = NSTextAlignmentCenter;
     collectedLabel.text = @"collecté(s)";
-
+    
     [headerView addSubview:nameLabel];
     [headerView addSubview:amountLabel];
     [headerView addSubview:amountSymbolLabel];
     [headerView addSubview:collectedLabel];
-    
+
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(headerView.frame), PPScreenWidth(), 0)];
     contentView.backgroundColor = [UIColor customBackground];
     
     attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 80)];
     
-    closeLabel = [[UILabel alloc] initWithText:@"Cagnotte terminée" textColor:[UIColor redColor] font:[UIFont customContentBold:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
-    closeLabel.layer.masksToBounds = YES;
-    closeLabel.layer.borderWidth = 1.5;
-    closeLabel.layer.borderColor = [UIColor redColor].CGColor;
-    closeLabel.layer.cornerRadius = 4;
-    closeLabel.hidden = YES;
-    CGRectSetWidthHeight(closeLabel.frame, CGRectGetWidth(closeLabel.frame) + 15, CGRectGetHeight(closeLabel.frame) + 10);
-    CGRectSetXY(closeLabel.frame, CGRectGetWidth(contentView.frame) / 2 - CGRectGetWidth(closeLabel.frame) / 2, CGRectGetMaxY(attachmentView.frame) + 5);
-
     descriptionTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(attachmentView.frame) + 10, PPScreenWidth() - 20, 13)];
     descriptionTitleLabel.font = [UIFont customContentBold:11];
     descriptionTitleLabel.textColor = [UIColor customPlaceholder];
@@ -111,9 +101,8 @@
     locationLabel.numberOfLines = 1;
     locationLabel.textAlignment = NSTextAlignmentLeft;
     locationLabel.font = [UIFont customContentRegular:12];
-  
+
     [contentView addSubview:attachmentView];
-    [contentView addSubview:closeLabel];
     [contentView addSubview:descriptionTitleLabel];
     [contentView addSubview:descriptionLabel];
     [contentView addSubview:locationLabel];
@@ -144,7 +133,7 @@
     CGRectSetY(collectedLabel.frame, CGRectGetMaxY(amountLabel.frame));
     
     CGRectSetHeight(headerView.frame, CGRectGetMaxY(collectedLabel.frame) + 10);
-    
+
     CGRectSetY(contentView.frame, CGRectGetMaxY(headerView.frame));
     
     if ([_transaction attachmentURL]) {
@@ -158,15 +147,8 @@
         CGRectSetHeight(attachmentView.frame, 0);
     }
     
-    if (_transaction.status == TransactionStatusPending) {
-        closeLabel.hidden = NO;
-        CGRectSetY(closeLabel.frame, CGRectGetMaxY(attachmentView.frame) + 10);
-        CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(closeLabel.frame) + 10);
-    } else {
-        closeLabel.hidden = YES;
-        CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(attachmentView.frame) + 15);
-    }
-
+    CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(attachmentView.frame) + 15);
+    
     CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(descriptionTitleLabel.frame) + 5);
     descriptionLabel.text = _transaction.content;
     CGRectSetHeight(descriptionLabel.frame, [descriptionLabel heightToFit] + 5);

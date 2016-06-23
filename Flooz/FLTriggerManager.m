@@ -341,7 +341,9 @@
         }];
     } else if ([trigger.category isEqualToString:@"flooz"]) {
         [[Flooz sharedInstance] transactionWithId:trigger.data[@"_id"] success:^(id result) {
-            [trigger.data setValue:result[@"item"] forKey:@"flooz"];
+            NSMutableDictionary *tmp = [trigger.data mutableCopy];
+            [tmp setValue:result[@"item"] forKey:@"flooz"];
+            trigger.data = tmp;
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
             [self executeTriggerList:trigger.triggers];
         }];
@@ -350,7 +352,9 @@
         [self executeTriggerList:trigger.triggers];
     } else if ([trigger.category isEqualToString:@"pot"]) {
         [[Flooz sharedInstance] transactionWithId:trigger.data[@"_id"] success:^(id result) {
-            [trigger.data setValue:result[@"item"] forKey:@"flooz"];
+            NSMutableDictionary *tmp = [trigger.data mutableCopy];
+            [tmp setValue:result[@"item"] forKey:@"flooz"];
+            trigger.data = tmp;
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:trigger.data];
             [self executeTriggerList:trigger.triggers];
         }];

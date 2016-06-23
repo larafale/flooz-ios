@@ -82,6 +82,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveUserData) name:kNotificationReloadCurrentUser object:nil];
         
         self.fbLoginManager = [[FBSDKLoginManager alloc] init];
+        
+        [self clearSaveData];
     }
     return self;
 }
@@ -716,6 +718,19 @@
     };
     
     [self requestPath:[NSString stringWithFormat:@"/users/%@/pots", userId] method:@"GET" params:nil success:successBlock failure:failure];
+}
+
+- (void)collectInvitations:(NSString *)collectId success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        NSMutableArray *friends = [self createFriendsArrayFromSearchResult:result];
+        if (success) {
+            success(friends);
+        }
+    };
+    
+    NSString *path = [NSString stringWithFormat:@"/pots/%@/invitations", collectId];
+    
+    [self requestPath:path method:@"GET" params:nil success:successBlock failure:failure];
 }
 
 - (void)collectTimeline:(NSString *)collectId withUser:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {

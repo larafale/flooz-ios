@@ -417,20 +417,25 @@
             contact.firstname = firstName;
             contact.lastname = lastName;
             contact.fullname = name;
-            contact.phone = phone;
             contact.avatarData = image;
             
-            [_contactsFromAdressBook addObject:contact];
+            if ([FLHelper isValidPhoneNumber:phone]) {
+                contact.phone = [FLHelper formatedPhone:phone];
+                
+                if (contact.phone) {
+                    [_contactsFromAdressBook addObject:contact];
+                }
+            }
         }
     }
     
     _contactsFromAdressBook = [self processContacts:_contactsFromAdressBook];
     
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:kSendContact] || ![[NSUserDefaults standardUserDefaults] boolForKey:kSendContact]) {
+//    if (![[NSUserDefaults standardUserDefaults] objectForKey:kSendContact] || ![[NSUserDefaults standardUserDefaults] boolForKey:kSendContact]) {
         [[Flooz sharedInstance] createContactList:^(NSMutableArray *arrayContactAdressBook, NSMutableArray *arrayContactFlooz) {
-            [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kSendContact];
+//            [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kSendContact];
         } atSignup:YES];
-    }
+//    }
 }
 
 - (NSMutableArray *)processContacts:(NSArray *)contacts {

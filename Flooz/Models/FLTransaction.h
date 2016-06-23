@@ -81,6 +81,8 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (strong, nonatomic) NSArray *participants;
 @property (strong, nonatomic) NSArray *participations;
 @property (strong, nonatomic) NSDictionary *actions;
+@property (strong, nonatomic) NSArray *triggerOptions;
+@property (strong, nonatomic) NSArray *invitations;
 
 @property (nonatomic) BOOL isCollect;
 @property (nonatomic) BOOL isParticipation;

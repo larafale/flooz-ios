@@ -16,6 +16,8 @@
     
     UIImageView *image;
     UILabel *titleButton;
+    
+    CGFloat customHeight;
 }
 
 - (nullable id)initWithImageName:(NSString *)imageNamed color:(UIColor *)color selectedColor:(UIColor *)colorSelected title:(NSString *)title height:(CGFloat)height {
@@ -30,6 +32,7 @@
         selectedColor = colorSelected;
         
         titleText = title;
+        customHeight = height;
         
         [self createViews];
     }
@@ -37,7 +40,7 @@
 }
 
 - (void)createViews {
-    CGRectSetHeight(self.frame, 22.5);
+    CGRectSetHeight(self.frame, customHeight);
     [self.layer setCornerRadius:5];
     [self createImage];
     [self createTitle];

@@ -33,6 +33,6 @@
 
 + (UIImage *)createNonInterpolatedUIImageFromCIImage:(CIImage *)image withScale:(CGFloat)scale;
 + (CIImage *)createQRForString:(NSString *)qrString;
-
++ (NSString *)castNumber:(NSUInteger)number;
 
 @end

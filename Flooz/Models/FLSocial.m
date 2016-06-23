@@ -30,6 +30,18 @@
 	_isLiked = NO;
 
     _likes = [json objectForKey:@"likes"];
+    
+    NSMutableArray *mutableLikes = [NSMutableArray new];
+    
+    for (NSDictionary* like in _likes) {
+        FLUser *liker = [[FLUser alloc] initWithJSON:like];
+        liker.userId = like[@"userId"];
+        
+        [mutableLikes addObject:liker];
+    }
+    
+    _likes = mutableLikes;
+    
     _comments = [json objectForKey:@"comments"];
     
 	for (NSDictionary *comment in [json objectForKey:@"comments"]) {

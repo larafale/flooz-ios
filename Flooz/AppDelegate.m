@@ -1152,14 +1152,16 @@
     if ([vc isKindOfClass:[FLNavigationController class]]) {
         UIViewController *current = [(FLNavigationController*)vc topViewController];
         if ([current isKindOfClass:[CollectViewController class]]) {
-            if ([[(CollectViewController*)current currentId] isEqualToString:transaction.transactionId]) {
-                [(CollectViewController*)current refreshTransaction];
+            CollectViewController *collectController = (CollectViewController*)current;
+            if ([[collectController currentId] isEqualToString:transaction.transactionId]) {
+                [collectController refreshTransaction];
                 return;
             }
         }
     } else if ([vc isKindOfClass:[CollectViewController class]]) {
-        if ([[(CollectViewController*)vc currentId] isEqualToString:transaction.transactionId]) {
-            [(CollectViewController*)vc refreshTransaction];
+        CollectViewController *collectController = (CollectViewController*)vc;
+        if ([[collectController currentId] isEqualToString:transaction.transactionId]) {
+            [collectController refreshTransaction];
             return;
         }
     }

@@ -17,6 +17,8 @@
 #import "ShareLinkViewController.h"
 #import "FLTextViewComment.h"
 #import "FLSocialButton.h"
+#import "TransactionLikeViewController.h"
+#import "CollectInvitationsViewController.h"
 
 @interface CollectViewController () {
     FLTransaction *_transaction;
@@ -28,6 +30,7 @@
     
     UIView *navHeaderView;
     UIView *toolbar;
+    UILabel *closeLabel;
     FLActionButton *participateButton;
     FLActionButton *closeButton;
     FLTextViewComment *commentTextField;
@@ -36,8 +39,12 @@
     UIButton *sendCommentButton;
     UIButton *commentButton;
     NSMutableDictionary *commentData;
+    
+    UILabel *likeLabel;
+    UILabel *commentLabel;
     FLSocialButton *likeToolbarButton;
     FLSocialButton *commentToolbarButton;
+    FLSocialButton *shareToolbarButton;
     FLSocialButton *moreToolbarButton;
     
     FXBlurView *shareButtonOverlay;
@@ -52,6 +59,7 @@
     BOOL sendPressed;
     
     UIView *socialToolbar;
+    UIView *socialSeparator;
 }
 
 @end
@@ -125,6 +133,13 @@
     
     if (shareViewVisible)
         [self hideShareView];
+}
+
+- (void)refreshTransaction {
+    [[Flooz sharedInstance] transactionWithId:_transaction.transactionId success:^(id result) {
+        _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+        [self reloadTransaction];
+    }];
 }
 
 - (void)refreshTransaction:(NSNotification*)notification {
@@ -246,7 +261,7 @@
     toolbar.layer.shadowPath = shadowPath.CGPath;
     
     shareButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 50 - 10)];
-    [shareButton setImage:[[UIImage imageNamed:@"share-native"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [shareButton setImage:[[UIImage imageNamed:@"share_inside"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [shareButton addTarget:self action:@selector(shareButtonClick) forControlEvents:UIControlEventTouchUpInside];
     shareButton.tintColor = [UIColor whiteColor];
     shareButton.contentMode = UIViewContentModeScaleAspectFit;
@@ -258,6 +273,17 @@
     closeCommentButton.tintColor = [UIColor whiteColor];
     closeCommentButton.contentMode = UIViewContentModeScaleAspectFit;
     [toolbar addSubview:closeCommentButton];
+    
+    closeLabel = [[UILabel alloc] initWithText:@"Cagnotte clôturée" textColor:[UIColor customBlue] font:[UIFont customContentLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    closeLabel.layer.masksToBounds = YES;
+    closeLabel.layer.borderWidth = 1.5;
+    closeLabel.layer.borderColor = [UIColor customBlue].CGColor;
+    closeLabel.layer.cornerRadius = 4;
+    closeLabel.backgroundColor = [UIColor clearColor];
+    closeLabel.hidden = YES;
+    CGRectSetWidthHeight(closeLabel.frame, CGRectGetWidth(closeLabel.frame) + 15, CGRectGetHeight(closeLabel.frame) + 10);
+    CGRectSetXY(closeLabel.frame, CGRectGetWidth(toolbar.frame) / 2 - CGRectGetWidth(closeLabel.frame) / 2, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(closeLabel.frame) / 2);
+    [toolbar addSubview:closeLabel];
     
     participateButton = [[FLActionButton alloc] initWithFrame:CGRectMake(60, 5, PPScreenWidth() - 120, 50 - 10) title:NSLocalizedString(@"MENU_PARTICIPATE", nil)];
     participateButton.titleLabel.font = [UIFont customTitleLight:16];
@@ -312,33 +338,69 @@
     socialToolbar = [UIView newWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), 40.0f)];
     socialToolbar.backgroundColor = [UIColor customBackground];
     
+    [self createSocialLabels];
+    
     [self createLikeButton];
     [self createCommentButton];
+    [self createShareButton];
     [self createMoreButton];
 }
 
+- (void) createSocialLabels {
+    likeLabel = [UILabel newWithFrame:CGRectMake(10.0f, 7.5, PPScreenWidth() - 20, 15.0f)];
+    likeLabel.textColor = [UIColor customPlaceholder];
+    likeLabel.numberOfLines = 1;
+    likeLabel.textAlignment = NSTextAlignmentLeft;
+    likeLabel.font = [UIFont customContentRegular:12];
+    likeLabel.userInteractionEnabled = YES;
+    [likeLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeLabelClicked)]];
+    
+    commentLabel = [UILabel newWithFrame:CGRectMake(10.0f, 7.5, PPScreenWidth() - 20, 15.0f)];
+    commentLabel.textColor = [UIColor customPlaceholder];
+    commentLabel.numberOfLines = 1;
+    commentLabel.textAlignment = NSTextAlignmentLeft;
+    commentLabel.font = [UIFont customContentRegular:12];
+    
+    socialSeparator = [[UIView alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(likeLabel.frame) + 7.5, PPScreenWidth() - 10, 0.8f)];
+    [socialSeparator setBackgroundColor:[UIColor colorWithHexString:@"#2f3a45"]];
+    socialSeparator.layer.masksToBounds = YES;
+    socialSeparator.layer.cornerRadius = 0.4;
+    
+    [socialToolbar addSubview:likeLabel];
+    [socialToolbar addSubview:commentLabel];
+    [socialToolbar addSubview:socialSeparator];
+}
+
 - (void)createLikeButton {
-    likeToolbarButton = [[FLSocialButton alloc] initWithImageName:@"like-heart" color:[UIColor customSocialColor] selectedColor:[UIColor customPink] title:@"" height:CGRectGetHeight(socialToolbar.frame) - 15];
+    likeToolbarButton = [[FLSocialButton alloc] initWithImageName:@"like-heart" color:[UIColor customSocialColor] selectedColor:[UIColor customPink] title:@"" height:25];
     [likeToolbarButton addTarget:self action:@selector(didLikeButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     [socialToolbar addSubview:likeToolbarButton];
     CGRectSetX(likeToolbarButton.frame, 10.0f);
-    CGRectSetY(likeToolbarButton.frame, 9.0);
+    CGRectSetY(likeToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5);
 }
 
 - (void)createCommentButton {
-    commentToolbarButton = [[FLSocialButton alloc] initWithImageName:@"comment_bubble" color:[UIColor customSocialColor] selectedColor:[UIColor customBlue] title:@"" height:CGRectGetHeight(socialToolbar.frame) - 15];
-    [commentToolbarButton addTarget:self action:@selector(focusComment) forControlEvents:UIControlEventTouchUpInside];
+    commentToolbarButton = [[FLSocialButton alloc] initWithImageName:@"comment_bubble" color:[UIColor customSocialColor] selectedColor:[UIColor customBlue] title:@"" height:25];
+    [commentToolbarButton addTarget:self action:@selector(commentButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [socialToolbar addSubview:commentToolbarButton];
-    CGRectSetX(commentToolbarButton.frame, CGRectGetMinX(likeToolbarButton.frame) + 65.0f);
-    CGRectSetY(commentToolbarButton.frame, 9.0);
+    CGRectSetX(commentToolbarButton.frame, ((CGRectGetWidth(socialToolbar.frame) - 20) / 3));
+    CGRectSetY(commentToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5);
+}
+
+- (void)createShareButton {
+    shareToolbarButton = [[FLSocialButton alloc] initWithImageName:@"share" color:[UIColor customSocialColor] selectedColor:[UIColor customSocialColor] title:@"" height:25];
+    [shareToolbarButton addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
+    [socialToolbar addSubview:shareToolbarButton];
+    CGRectSetX(shareToolbarButton.frame, ((CGRectGetWidth(socialToolbar.frame) - 20) / 3) * 2);
+    CGRectSetY(shareToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5);
 }
 
 - (void)createMoreButton {
-    moreToolbarButton = [[FLSocialButton alloc] initWithImageName:@"more" color:[UIColor customSocialColor] selectedColor:[UIColor customSocialColor] title:@"" height:CGRectGetHeight(socialToolbar.frame) - 15];
+    moreToolbarButton = [[FLSocialButton alloc] initWithImageName:@"more" color:[UIColor customSocialColor] selectedColor:[UIColor customSocialColor] title:@"" height:25];
     [moreToolbarButton addTarget:self action:@selector(showReportMenu) forControlEvents:UIControlEventTouchUpInside];
     [socialToolbar addSubview:moreToolbarButton];
     CGRectSetX(moreToolbarButton.frame, CGRectGetWidth(socialToolbar.frame) - CGRectGetWidth(moreToolbarButton.frame) - 10.0f);
-    CGRectSetY(moreToolbarButton.frame, 9.0);
+    CGRectSetY(moreToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5);
 }
 
 - (void)createShareView {
@@ -414,6 +476,27 @@
 }
 
 - (void)prepareViews {
+    NSString *imageNamed = @"";
+    if (_transaction.social.scope == SocialScopeFriend) {
+        imageNamed = @"transaction-scope-friend";
+    }
+    else if (_transaction.social.scope == SocialScopePrivate) {
+        imageNamed = @"transaction-scope-private";
+    }
+    else if (_transaction.social.scope == SocialScopePublic) {
+        imageNamed = @"transaction-scope-public";
+    }
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[[UIImage imageNamed:imageNamed] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    btn.frame = CGRectMake(0, 0, 20, 20);
+    [btn setTintColor:[UIColor customWhite]];
+    [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.rightBarButtonItem = scopeButton;
+    
     if (isCommenting) {
         commentTextField.hidden = NO;
         participateButton.hidden = YES;
@@ -422,6 +505,7 @@
         sendCommentButton.hidden = NO;
         commentButton.hidden = YES;
         shareButton.hidden = YES;
+        closeLabel.hidden = YES;
     } else {
         if (_transaction.isAvailable && _transaction.isClosable) {
             participateButton.hidden = NO;
@@ -438,6 +522,7 @@
             participateButton.titleLabel.font = [UIFont customTitleLight:16];
             closeButton.titleLabel.font = [UIFont customTitleLight:16];
             shareButton.hidden = NO;
+            closeLabel.hidden = YES;
         } else if (_transaction.isAvailable) {
             participateButton.hidden = NO;
             closeButton.hidden = YES;
@@ -451,6 +536,7 @@
             CGRectSetWidth(closeButton.frame, PPScreenWidth() - 120);
             participateButton.titleLabel.font = [UIFont customTitleLight:20];
             shareButton.hidden = NO;
+            closeLabel.hidden = YES;
         } else if (_transaction.isClosable) {
             participateButton.hidden = YES;
             closeButton.hidden = NO;
@@ -463,7 +549,24 @@
             sendCommentButton.hidden = YES;
             commentButton.hidden = NO;
             shareButton.hidden = NO;
+            closeLabel.hidden = YES;
         } else {
+            if (_transaction.status == TransactionStatusPending) {
+                closeLabel.hidden = NO;
+                commentTextField.hidden = YES;
+                participateButton.hidden = YES;
+                closeButton.hidden = YES;
+                sendCommentButton.hidden = YES;
+                commentButton.hidden = NO;
+            } else {
+                closeLabel.hidden = YES;
+                commentTextField.hidden = NO;
+                participateButton.hidden = YES;
+                closeButton.hidden = YES;
+                sendCommentButton.hidden = NO;
+                commentButton.hidden = YES;
+            }
+            
             if (keyboardHeight) {
                 closeCommentButton.hidden = NO;
                 shareButton.hidden = YES;
@@ -471,22 +574,112 @@
                 closeCommentButton.hidden = YES;
                 shareButton.hidden = NO;
             }
-            
-            commentTextField.hidden = NO;
-            participateButton.hidden = YES;
-            closeButton.hidden = YES;
-            sendCommentButton.hidden = NO;
-            commentButton.hidden = YES;
         }
     }
     
     FLSocial *social = [_transaction social];
     
-    [likeToolbarButton setSelected:[[_transaction social] isLiked]];
-    [likeToolbarButton setText:[self castNumber:social.likesCount]];
+    NSString *likeString = @" J'AIME";
+    NSString *commentString = @" COMMENTAIRE";
+    NSString *commentsString = @" COMMENTAIRES";
     
-    [commentToolbarButton setSelected:[[_transaction social] isCommented]];
-    [commentToolbarButton setText:[self castNumber:social.commentsCount]];
+    if (_transaction.social.likesCount > 0 && _transaction.social.commentsCount > 0) {
+        likeLabel.hidden = NO;
+        commentLabel.hidden = NO;
+        socialSeparator.hidden = NO;
+        
+        CGRectSetX(likeLabel.frame, 10.0f);
+        
+        NSMutableAttributedString *likeAttrString = [[NSMutableAttributedString alloc] initWithString:[FLHelper castNumber:_transaction.social.likesCount] attributes:@{NSFontAttributeName: [UIFont customContentBold:13], NSForegroundColorAttributeName: [UIColor whiteColor]}];
+        
+        [likeAttrString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:likeString attributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]}]];
+        
+        likeLabel.attributedText = likeAttrString;
+        
+        [likeLabel setWidthToFit];
+        
+        CGRectSetX(commentLabel.frame, CGRectGetMaxX(likeLabel.frame) + 15);
+        
+        NSMutableAttributedString *commentAttrString = [[NSMutableAttributedString alloc] initWithString:[FLHelper castNumber:_transaction.social.commentsCount] attributes:@{NSFontAttributeName: [UIFont customContentBold:13], NSForegroundColorAttributeName: [UIColor whiteColor]}];
+        
+        if (_transaction.social.commentsCount > 1)
+            [commentAttrString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:commentsString attributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]}]];
+        else
+            [commentAttrString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:commentString attributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]}]];
+        
+        commentLabel.attributedText = commentAttrString;
+        
+        [commentLabel setWidthToFit];
+        
+        CGRectSetY(likeToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        CGRectSetY(commentToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        CGRectSetY(shareToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        CGRectSetY(moreToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        
+        CGRectSetHeight(socialToolbar.frame, CGRectGetMaxY(likeToolbarButton.frame) + 5.5);
+        
+    } else if (_transaction.social.likesCount > 0) {
+        likeLabel.hidden = NO;
+        commentLabel.hidden = YES;
+        socialSeparator.hidden = NO;
+        
+        CGRectSetX(likeLabel.frame, 10.0f);
+        
+        NSMutableAttributedString *likeAttrString = [[NSMutableAttributedString alloc] initWithString:[FLHelper castNumber:_transaction.social.likesCount] attributes:@{NSFontAttributeName: [UIFont customContentBold:13], NSForegroundColorAttributeName: [UIColor whiteColor]}];
+        
+        [likeAttrString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:likeString attributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]}]];
+        
+        likeLabel.attributedText = likeAttrString;
+        
+        [likeLabel setWidthToFit];
+        
+        CGRectSetY(likeToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        CGRectSetY(commentToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        CGRectSetY(shareToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        CGRectSetY(moreToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        
+        CGRectSetHeight(socialToolbar.frame, CGRectGetMaxY(likeToolbarButton.frame) + 5.5);
+        
+    } else if (_transaction.social.commentsCount > 0) {
+        likeLabel.hidden = YES;
+        commentLabel.hidden = NO;
+        socialSeparator.hidden = NO;
+        
+        CGRectSetX(commentLabel.frame, 10.0f);
+        
+        NSMutableAttributedString *commentAttrString = [[NSMutableAttributedString alloc] initWithString:[FLHelper castNumber:_transaction.social.commentsCount] attributes:@{NSFontAttributeName: [UIFont customContentBold:13], NSForegroundColorAttributeName: [UIColor whiteColor]}];
+        
+        if (_transaction.social.commentsCount > 1)
+            [commentAttrString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:commentsString attributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]}]];
+        else
+            [commentAttrString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:commentString attributes:@{NSFontAttributeName: [UIFont customContentRegular:12], NSForegroundColorAttributeName: [UIColor customPlaceholder]}]];
+        
+        commentLabel.attributedText = commentAttrString;
+        
+        [commentLabel setWidthToFit];
+        
+        CGRectSetY(likeToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        CGRectSetY(commentToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        CGRectSetY(shareToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        CGRectSetY(moreToolbarButton.frame, CGRectGetMaxY(socialSeparator.frame) + 5.5);
+        
+        CGRectSetHeight(socialToolbar.frame, CGRectGetMaxY(likeToolbarButton.frame) + 5.5);
+    } else {
+        likeLabel.hidden = YES;
+        commentLabel.hidden = YES;
+        socialSeparator.hidden = YES;
+        
+        CGRectSetY(likeToolbarButton.frame, 5.5);
+        CGRectSetY(commentToolbarButton.frame, 5.5);
+        CGRectSetY(shareToolbarButton.frame, 5.5);
+        CGRectSetY(moreToolbarButton.frame, 5.5);
+        
+        CGRectSetHeight(socialToolbar.frame, CGRectGetMaxY(likeToolbarButton.frame) + 5.5);
+    }
+    
+    
+    [likeToolbarButton setSelected:[social isLiked]];
+    [commentToolbarButton setSelected:[social isCommented]];
     
     [tableHeaderView setTransaction:_transaction];
     self.tableView.tableHeaderView = tableHeaderView;
@@ -494,73 +687,13 @@
     [self.tableView reloadData];
 }
 
-#pragma marks - number formatter
-
-- (NSString *)castNumber:(NSUInteger)number {
-    if (!number) {
-        return @"";
-    }
-    
-    if ((int)number == 0) {
-        return @"";
-    }
-    
-    return [self abbreviateNumber:(int)number];
-}
-
--(NSString *)abbreviateNumber:(int)num {
-    
-    NSString *abbrevNum;
-    float number = (float)num;
-    
-    //Prevent numbers smaller than 1000 to return NULL
-    if (num >= 1000) {
-        NSArray *abbrev = @[@"K", @"M", @"B"];
-        
-        for (int i = (int)abbrev.count - 1; i >= 0; i--) {
-            
-            // Convert array index to "1000", "1000000", etc
-            int size = pow(10,(i+1)*3);
-            
-            if(size <= number) {
-                // Removed the round and dec to make sure small numbers are included like: 1.1K instead of 1K
-                number = number/size;
-                NSString *numberString = [self floatToString:number];
-                
-                // Add the letter for the abbreviation
-                abbrevNum = [NSString stringWithFormat:@"%@%@", numberString, [abbrev objectAtIndex:i]];
-            }
-            
-        }
-    } else {
-        abbrevNum = [NSString stringWithFormat:@"%02d", (int)number];
-    }
-    
-    return abbrevNum;
-}
-
-- (NSString *) floatToString:(float) val {
-    NSString *ret = [NSString stringWithFormat:@"%.1f", val];
-    unichar c = [ret characterAtIndex:[ret length] - 1];
-    
-    while (c == 48) { // 0
-        ret = [ret substringToIndex:[ret length] - 1];
-        c = [ret characterAtIndex:[ret length] - 1];
-        
-        //After finding the "." we know that everything left is the decimal number, so get a substring excluding the "."
-        if (c == 46) { // .
-            ret = [ret substringToIndex:[ret length] - 1];
-        }
-    }
-    
-    return ret;
-}
-
 #pragma marks - tableview delegate / datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
+        if (_transaction.status == TransactionStatusPending)
+            return 1;
+        return 2;
     }
     
     return _transaction.social.commentsCount;
@@ -598,43 +731,81 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        static NSString *cellIdentifier = @"CollectFromsCell1";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-            cell.backgroundColor = [UIColor customBackgroundHeader];
-            cell.textLabel.font = [UIFont customContentRegular:15];
-            cell.textLabel.textColor = [UIColor whiteColor];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-        
-        if (_transaction.participants && _transaction.participants.count) {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (indexPath.row == 0) {
+            static NSString *cellIdentifier = @"CollectFromsCell1";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
-            if (_transaction.participants.count == 1)
-                cell.textLabel.text = @"1 Participant";
-            else
-                cell.textLabel.text = [NSString stringWithFormat:@"%lu Participants", (unsigned long)_transaction.participants.count];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.backgroundColor = [UIColor customBackgroundHeader];
+                cell.textLabel.font = [UIFont customContentRegular:15];
+                cell.textLabel.textColor = [UIColor whiteColor];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
             
-            [cell.textLabel setWidthToFit];
+            if (_transaction.participants && _transaction.participants.count) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                
+                if (_transaction.participants.count == 1)
+                    cell.textLabel.text = @"1 Participant";
+                else
+                    cell.textLabel.text = [NSString stringWithFormat:@"%lu Participants", (unsigned long)_transaction.participants.count];
+                
+                [cell.textLabel setWidthToFit];
+                
+                [self createParticipantVignetteViewForCell:cell];
+            } else {
+                UIView *tmp = [cell.contentView viewWithTag:42];
+                
+                if (tmp)
+                    [tmp removeFromSuperview];
+                
+                cell.textLabel.text = @"0 Participant";
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                [cell.textLabel setWidthToFit];
+            }
             
-            [self createParticipantVignetteViewForCell:cell];
+            CGRectSetY(cell.textLabel.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath] / 2 - CGRectGetHeight(cell.textLabel.frame) / 2);
+            CGRectSetHeight(cell.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath]);
+            
+            return cell;
         } else {
-            UIView *tmp = [cell.contentView viewWithTag:42];
+            static NSString *cellIdentifier = @"CollectFromsCell2";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
-            if (tmp)
-                [tmp removeFromSuperview];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.backgroundColor = [UIColor customBackgroundHeader];
+                cell.textLabel.font = [UIFont customContentRegular:15];
+                cell.textLabel.textColor = [UIColor whiteColor];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
             
-            cell.textLabel.text = @"0 Participant";
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            [cell.textLabel setWidthToFit];
+            if (_transaction.invitations && _transaction.invitations.count) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                
+                if (_transaction.invitations.count == 1)
+                    cell.textLabel.text = @"1 Invité";
+                else
+                    cell.textLabel.text = [NSString stringWithFormat:@"%lu Invités", (unsigned long)_transaction.invitations.count];
+                
+                [cell.textLabel setWidthToFit];
+            } else {
+                UIView *tmp = [cell.contentView viewWithTag:42];
+                
+                if (tmp)
+                    [tmp removeFromSuperview];
+                
+                cell.textLabel.text = @"0 Invité";
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                [cell.textLabel setWidthToFit];
+            }
+            
+            CGRectSetY(cell.textLabel.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath] / 2 - CGRectGetHeight(cell.textLabel.frame) / 2);
+            CGRectSetHeight(cell.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath]);
+            
+            return cell;
         }
-        
-        CGRectSetY(cell.textLabel.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath] / 2 - CGRectGetHeight(cell.textLabel.frame) / 2);
-        CGRectSetHeight(cell.frame, [self tableView:tableView heightForRowAtIndexPath:indexPath]);
-        
-        return cell;
     } else {
         static NSString *cellIdentifier = @"CommentCell";
         CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -655,7 +826,7 @@
     if (tmp)
         [tmp removeFromSuperview];
     
-    UIView *view  = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(cell.textLabel.frame), 10, PPScreenWidth() - CGRectGetMaxX(cell.textLabel.frame) - 40, 30)];
+    UIView *view  = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(cell.textLabel.frame) + 10, 10, PPScreenWidth() - CGRectGetMaxX(cell.textLabel.frame) - 50, 30)];
     
     int nbSubView = (int)CGRectGetWidth(view.frame) % 27;
     
@@ -685,8 +856,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        if (_transaction.participants.count) {
-            [self.navigationController pushViewController:[[CollectParticipantViewController alloc] initWithCollect:_transaction] animated:YES];
+        if (indexPath.row == 0) {
+            if (_transaction.participants.count) {
+                [self.navigationController pushViewController:[[CollectParticipantViewController alloc] initWithCollect:_transaction] animated:YES];
+            }
+        } else {
+            if (_transaction.invitations.count) {
+                [self.navigationController pushViewController:[[CollectInvitationsViewController alloc] initWithTransactionId:_transaction.transactionId] animated:YES];
+            }
         }
     }
 }
@@ -734,6 +911,10 @@
     [self focusComment];
 }
 
+- (void)didLikeLabelClicked {
+    [self.navigationController pushViewController:[[TransactionLikeViewController alloc] initWithTransaction:_transaction] animated:YES];
+}
+
 - (void)didLikeButtonTouch {
     if ([[_transaction social] isLiked])
         [[_transaction social] setLikesCount:[_transaction social].likesCount - 1];
@@ -759,7 +940,7 @@
 }
 
 - (void)showReportMenu {
-    [appDelegate showReportMenu:[[FLReport alloc] initWithType:ReportTransaction transac:_transaction]];
+    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.triggerOptions]];
 }
 
 - (void)didCloseCommentButtonClick {

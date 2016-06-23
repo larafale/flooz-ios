@@ -926,15 +926,21 @@
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
-    [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
-    
-    [self.tableView beginUpdates];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView endUpdates];
+//    if (transaction && transactions.count) {
+//        [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
+//        
+//        [self.tableView beginUpdates];
+//        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        [self.tableView endUpdates];
+//    }
 }
 
 - (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
-    [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:YES];
+    if (transaction.isCollect) {
+        [appDelegate showPot:transaction inController:self withIndexPath:indexPath focusOnComment:YES];
+    } else {
+        [appDelegate showTransaction:transaction inController:self withIndexPath:indexPath focusOnComment:YES];
+    }
 }
 
 - (void)reloadTableView {
@@ -1127,7 +1133,7 @@
 - (void)createUnfriendActionSheet {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
     
-    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"UNFOLLOW", nil)];
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"UNFRIEND", nil)];
     [actionSheet setDestructiveButtonIndex:index];
     
     index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
@@ -1227,7 +1233,7 @@
 - (void)createPendingActionSheet {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:currentUser.fullname delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
     
-    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"UNFOLLOW", nil)];
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"UNFRIEND", nil)];
     [actionSheet setDestructiveButtonIndex:index];
     
     index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
