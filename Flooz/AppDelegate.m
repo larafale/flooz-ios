@@ -113,7 +113,7 @@
         }
     } autoRegister:NO];
     [self.oneSignal enableInAppAlertNotification:false];
-
+    
 #ifdef FLOOZ_DEV_LOCAL
     [self initLocalTesting];
 #else
@@ -172,6 +172,32 @@
     return YES;
 }
 
+- (void)updateShortcutList {
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0") && [self.window.traitCollection forceTouchCapability] == UIForceTouchCapabilityAvailable) {
+        if ([Flooz sharedInstance].currentUser) {
+            NSMutableArray *items = [NSMutableArray new];
+            
+            for (FLHomeButton* button in [Flooz sharedInstance].currentTexts.homeButtons) {
+                UIApplicationShortcutItem *item = [[UIApplicationShortcutItem alloc] initWithType:button.title localizedTitle:button.title localizedSubtitle:nil icon:[UIApplicationShortcutIcon iconWithTemplateImageName:button.defaultImg] userInfo:button.json];
+                
+                [items addObject:item];
+            }
+            
+            [UIApplication sharedApplication].shortcutItems = items;
+        } else {
+            NSMutableArray *items = [NSMutableArray new];
+            
+            for (FLHomeButton* button in [Flooz sharedInstance].currentTexts.homeButtons) {
+                UIApplicationShortcutItem *item = [[UIApplicationShortcutItem alloc] initWithType:button.title localizedTitle:button.title localizedSubtitle:button.subtitle icon:[UIApplicationShortcutIcon iconWithTemplateImageName:button.defaultImg] userInfo:button.json];
+                
+                [items addObject:item];
+            }
+            
+            [UIApplication sharedApplication].shortcutItems = @[];
+        }
+    }
+}
+
 - (void)saveBranchParams {
     if (branchParam)
         [UICKeyChainStore setString:[branchParam jsonStringWithPrettyPrint:NO] forKey:kBranchData];
@@ -225,9 +251,6 @@
     
     [[Flooz sharedInstance] textObjectFromApi:nil failure:nil];
     [[Flooz sharedInstance] notificationsWithSuccess:nil failure:nil];
-    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:TransactionScopeFriend] success:nil failure:nil];
-    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:TransactionScopePublic] success:nil failure:nil];
-    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:TransactionScopePrivate] success:nil failure:nil];
     
     [[Mixpanel sharedInstance] identify:currentUser.userId];
     
@@ -257,7 +280,7 @@
         [application registerForRemoteNotificationTypes:
          (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     }
-//    [oneSignal registerForPushNotifications];
+    //    [oneSignal registerForPushNotifications];
 }
 
 - (void)flipToViewController:(UIViewController *)viewController {
@@ -343,6 +366,7 @@
     
     pendingData = nil;
     [Flooz sharedInstance].notificationsCount = @0;
+    [self updateShortcutList];
     [self displayHome];
 }
 
@@ -451,7 +475,7 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-
+    
 #ifndef FLOOZ_DEV_LOCAL
     if ([[Flooz sharedInstance] currentUser]) {
         [[Flooz sharedInstance] startSocket];
@@ -508,9 +532,9 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBSDKAppEvents activateApp];
-
+    
     [self nvs_unblurPresentedView];
-
+    
 #ifndef FLOOZ_DEV_LOCAL
     if (pendingData && [Flooz sharedInstance].currentUser && [self isViewAfterAuthentication]) {
         double delayInSeconds = 0.5;
@@ -526,6 +550,18 @@
     if (![[self myTopViewController] isKindOfClass:[SplashViewController class]] && ![[self myTopViewController] isKindOfClass:[SplashViewController class]] && ![[self myTopViewController] isKindOfClass:[SignupNavigationController class]])
         return YES;
     return NO;
+}
+
+#pragma mark - Shortcut List
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    NSMutableDictionary *tmp = [pendingData mutableCopy];
+    if (tmp == nil)
+        tmp = [NSMutableDictionary new];
+    [tmp addEntriesFromDictionary:shortcutItem.userInfo];
+    pendingData = tmp;
+    
+    [self handlePendingData];
 }
 
 #pragma mark - Notifications Push

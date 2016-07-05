@@ -10,10 +10,10 @@
 #import "FriendCell.h"
 #import "FriendRequestCellDelegate.h"
 
-@interface CollectInvitationsViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource, FriendRequestCellDelegate>
+@interface CollectInvitationsViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource, FriendRequestCellDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, retain) UITableView *tableView;
 
-- (id)initWithTransactionId:(NSString *)transactionId;
+- (id)initWithTransaction:(FLTransaction *)transaction;
 
 @end

@@ -926,13 +926,53 @@
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
-//    if (transaction && transactions.count) {
-//        [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
-//        
-//        [self.tableView beginUpdates];
-//        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//        [self.tableView endUpdates];
-//    }
+    if (controlTab.selectedSegmentIndex == 0) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"transactionId == %@", transaction.transactionId ];
+        NSArray *filtered  = [transactions filteredArrayUsingPredicate:predicate];
+        
+        NSMutableArray *indexPaths = [NSMutableArray new];
+        
+        if (filtered && filtered.count) {
+            for (FLTransaction *tmp in filtered) {
+                NSUInteger index = [transactions indexOfObject:tmp];
+                
+                if (index != NSNotFound) {
+                    [transactions replaceObjectAtIndex:index withObject:transaction];
+                    
+                    [indexPaths addObject:[NSIndexPath indexPathForRow:index inSection:0]];
+                }
+            }
+            
+            if (indexPaths.count) {
+                [_tableView beginUpdates];
+                [_tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                [_tableView endUpdates];
+            }
+        }
+    } else if (controlTab.selectedSegmentIndex == 2) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"transactionId == %@", transaction.transactionId ];
+        NSArray *filtered  = [pots filteredArrayUsingPredicate:predicate];
+        
+        NSMutableArray *indexPaths = [NSMutableArray new];
+        
+        if (filtered && filtered.count) {
+            for (FLTransaction *tmp in filtered) {
+                NSUInteger index = [pots indexOfObject:tmp];
+                
+                if (index != NSNotFound) {
+                    [pots replaceObjectAtIndex:index withObject:transaction];
+                    
+                    [indexPaths addObject:[NSIndexPath indexPathForRow:index inSection:0]];
+                }
+            }
+            
+            if (indexPaths.count) {
+                [_tableView beginUpdates];
+                [_tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                [_tableView endUpdates];
+            }
+        }
+    }
 }
 
 - (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {

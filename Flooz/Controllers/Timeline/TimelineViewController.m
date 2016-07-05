@@ -395,16 +395,28 @@
 }
 
 - (void)updateTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {
-//    if (transactions.count - 1 >= indexPath.row) {
-//        [rowsWithPaymentField removeObject:indexPath];
-//    
-//        if (transactions.count > indexPath.row)
-//            [transactions replaceObjectAtIndex:indexPath.row withObject:transaction];
-//        
-//        [_tableView beginUpdates];
-//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//        [_tableView endUpdates];
-//    }
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"transactionId == %@", transaction.transactionId ];
+    NSArray *filtered  = [transactions filteredArrayUsingPredicate:predicate];
+    
+    NSMutableArray *indexPaths = [NSMutableArray new];
+    
+    if (filtered && filtered.count) {
+        for (FLTransaction *tmp in filtered) {
+            NSUInteger index = [transactions indexOfObject:tmp];
+            
+            if (index != NSNotFound) {
+                [transactions replaceObjectAtIndex:index withObject:transaction];
+                
+                [indexPaths addObject:[NSIndexPath indexPathForRow:index inSection:0]];
+            }
+        }
+        
+        if (indexPaths.count) {
+            [_tableView beginUpdates];
+            [_tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_tableView endUpdates];
+        }
+    }
 }
 
 - (void)commentTransactionAtIndex:(NSIndexPath *)indexPath transaction:(FLTransaction *)transaction {

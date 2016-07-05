@@ -653,11 +653,11 @@
         [[_transaction social] setLikesCount:[_transaction social].likesCount + 1];
     
     [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
-    [self prepareViews];
+    [self reloadTransaction];
     
     [[Flooz sharedInstance] createLikeOnTransaction:_transaction success: ^(id result) {
         [_transaction setJSON:result[@"item"]];
-        [self prepareViews];
+        [self reloadTransaction];
     } failure:^(NSError *error) {
         [[_transaction social] setIsLiked:![[_transaction social] isLiked]];
 
@@ -666,7 +666,7 @@
         else
             [[_transaction social] setLikesCount:[_transaction social].likesCount - 1];
         
-        [self prepareViews];
+        [self reloadTransaction];
     }];
 }
 

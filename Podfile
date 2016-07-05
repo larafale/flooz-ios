@@ -3,7 +3,7 @@ platform :ios, '7.0'
 def prod_pods
     
     pod 'AFNetworking'
-    pod 'SDWebImage'
+    pod 'SDWebImage', '3.7'
     pod 'IDMPhotoBrowser'
     pod 'UICKeyChainStore'
     pod "FBSDKCoreKit"

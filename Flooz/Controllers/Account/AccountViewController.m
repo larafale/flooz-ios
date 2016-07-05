@@ -204,7 +204,6 @@
                        @"items":@[
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
                                @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
-                               @{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
@@ -213,6 +212,7 @@
                      @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
                        @"items":@[
                                @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
+                               @{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"},
                                @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
                                @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
                                ]

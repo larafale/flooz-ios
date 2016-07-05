@@ -10,7 +10,7 @@
 #import "FriendCell.h"
 #import "FriendRequestCellDelegate.h"
 
-@interface TransactionLikeViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource, FriendRequestCellDelegate>
+@interface TransactionLikeViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource, FriendRequestCellDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, retain) UITableView *tableView;
 

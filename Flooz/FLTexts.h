@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString *subtitle;
 @property (nonatomic) Boolean soon;
 @property (nonatomic, retain) NSArray *triggers;
+@property (nonatomic, retain) NSDictionary *json;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

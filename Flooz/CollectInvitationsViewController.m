@@ -7,10 +7,11 @@
 //
 
 #import "CollectInvitationsViewController.h"
+#import "ShareLinkViewController.h"
 
 @interface CollectInvitationsViewController () {
     NSArray *transactionLikes;
-    NSString *_transactionId;
+    FLTransaction *_transaction;
     FLUser *currentUser;
 }
 
@@ -20,10 +21,10 @@
 
 @synthesize tableView;
 
-- (id)initWithTransactionId:(NSString *)transactionId {
+- (id)initWithTransaction:(FLTransaction *)transaction {
     self = [super init];
     if (self) {
-        _transactionId = transactionId;
+        _transaction = transaction;
     }
     return self;
 }
@@ -32,7 +33,12 @@
     self = [super initWithTriggerData:data];
     if (self) {
         if (data && data[@"_id"]) {
-            _transactionId = data[@"_id"];
+            [[Flooz sharedInstance] transactionWithId:data[@"_id"] success:^(id result) {
+                _transaction = [[FLTransaction alloc] initWithJSON:[result objectForKey:@"item"]];
+                [tableView reloadData];
+                
+                [self didReloadData];
+            }];
         }
     }
     return self;
@@ -45,14 +51,41 @@
         self.title = @"Invités";
     }
     
-    [self didReloadData];
+    if (_transaction)
+        [self didReloadData];
     
     self.tableView = [[FLTableView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     
+    if ([[Flooz sharedInstance].currentUser.userId isEqualToString:_transaction.creator.userId] && _transaction.status != TransactionStatusPending) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setImage:[[UIImage imageNamed:@"share_inside"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        btn.frame = CGRectMake(0, 0, 25, 25);
+        [btn setTintColor:[UIColor customBlue]];
+        [btn addTarget:self action:@selector(openInviteMenu) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        
+        self.navigationItem.rightBarButtonItem = inviteButton;
+    }
+    
     [_mainBody addSubview:self.tableView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self didReloadData];
+}
+
+- (void)openInviteMenu {
+    [[Flooz sharedInstance] showLoadView];
+    
+    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:[[ShareLinkViewController alloc] initWithCollectId:_transaction.transactionId]] animated:YES completion:^{
+        [[Flooz sharedInstance] hideLoadView];
+    }];
 }
 
 #pragma marks - tableview delegate / datasource
@@ -108,7 +141,7 @@
 }
 
 - (void)didReloadData {
-    [[Flooz sharedInstance] collectInvitations:_transactionId success:^(id result) {
+    [[Flooz sharedInstance] collectInvitations:_transaction.transactionId success:^(id result) {
         transactionLikes = result;
         [tableView reloadData];
     } failure:^(NSError *error) {

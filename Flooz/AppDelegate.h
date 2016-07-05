@@ -80,7 +80,7 @@ static NSString *kNotificationEnterForeground = @"kNotificationEnterForeground";
 - (void)clearPendingData;
 - (void)showNewTransactionController:(FLUser *)user transactionType:(NSUInteger)transactionType;
 - (void)dismissControllersAnimated:(BOOL)animated completion:(void (^)(void))completion;
-
+- (void)updateShortcutList;
 - (void)displayError:(NSError *)error;
 - (void)displayMessage:(NSString *)title content:(NSString *)content style:(FLAlertViewStyle)style time:(NSNumber *)time delay:(NSNumber *)delay;
 - (void)displayMessage:(FLAlert*)alert completion:(dispatch_block_t)completion;

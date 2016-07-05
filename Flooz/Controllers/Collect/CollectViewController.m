@@ -781,7 +781,14 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             
+            UIView *tmp = [cell.contentView viewWithTag:57];
+            
+            if (tmp)
+                [tmp removeFromSuperview];
+            
             if (_transaction.invitations && _transaction.invitations.count) {
+               
+                
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 
                 if (_transaction.invitations.count == 1)
@@ -798,6 +805,26 @@
                 
                 cell.textLabel.text = @"0 Invité";
                 cell.accessoryType = UITableViewCellAccessoryNone;
+                
+                if ([[Flooz sharedInstance].currentUser.userId isEqualToString:_transaction.creator.userId]) {
+                    UIButton *inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 0, 30)];
+                    [inviteButton setTitle:@"Inviter des amis" forState:UIControlStateNormal];
+                    [inviteButton setTitleColor:[UIColor customBlue] forState:UIControlStateNormal];
+                    inviteButton.titleLabel.font = [UIFont customContentRegular:14];
+                    inviteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+                    inviteButton.layer.masksToBounds = YES;
+                    inviteButton.layer.cornerRadius = 4.;
+                    inviteButton.layer.borderColor = [UIColor customBlue].CGColor;
+                    inviteButton.layer.borderWidth = 1.0f;
+                    inviteButton.tag = 57;
+                    [inviteButton addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
+                    
+                    CGRectSetWidth(inviteButton.frame, [inviteButton.titleLabel widthToFit] + 30);
+                    CGRectSetX(inviteButton.frame, PPScreenWidth() - CGRectGetWidth(inviteButton.frame) - 10);
+                    
+                    [cell.contentView addSubview:inviteButton];
+                }
+                
                 [cell.textLabel setWidthToFit];
             }
             
@@ -826,12 +853,15 @@
     if (tmp)
         [tmp removeFromSuperview];
     
-    UIView *view  = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(cell.textLabel.frame) + 10, 10, PPScreenWidth() - CGRectGetMaxX(cell.textLabel.frame) - 50, 30)];
+    UIView *view  = [[UIView alloc] initWithFrame:CGRectMake([cell.textLabel widthToFit] + 20, 10, PPScreenWidth() - ([cell.textLabel widthToFit] + 20) - 40, 30)];
     
     int nbSubView = (int)CGRectGetWidth(view.frame) % 27;
     
     if (nbSubView > _transaction.participants.count)
         nbSubView = (int)_transaction.participants.count;
+    
+    if (nbSubView > 6)
+        nbSubView = 6;
     
     CGFloat xOffSet = CGRectGetWidth(view.frame) - 30;
     
@@ -862,7 +892,7 @@
             }
         } else {
             if (_transaction.invitations.count) {
-                [self.navigationController pushViewController:[[CollectInvitationsViewController alloc] initWithTransactionId:_transaction.transactionId] animated:YES];
+                [self.navigationController pushViewController:[[CollectInvitationsViewController alloc] initWithTransaction:_transaction] animated:YES];
             }
         }
     }

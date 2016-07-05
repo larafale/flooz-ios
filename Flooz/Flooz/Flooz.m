@@ -676,6 +676,8 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTexts object:nil];
         
+        [appDelegate updateShortcutList];
+        
         if (success) {
             success(self.currentTexts);
         }
@@ -1807,7 +1809,7 @@
 - (void)socketIODidConnect:(SIOSocket *)socket {
     self.socketConnected = YES;
     if (self.socketIO && _access_token && _currentUser) {
-        [self.socketIO emit:@"session start" args:@[@{@"token": _access_token, @"nick": [_currentUser username]}]];
+        [self.socketIO emit:@"session start" args:@[@{@"token": _access_token, @"nick": [_currentUser username], @"via": @"ios"}]];
     }
 }
 

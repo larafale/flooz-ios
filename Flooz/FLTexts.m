@@ -20,7 +20,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json {
-    
+    self.json = json;
     self.title = json[@"title"];
     self.subtitle = json[@"subtitle"];
     self.defaultImg = json[@"defaultPic"];
