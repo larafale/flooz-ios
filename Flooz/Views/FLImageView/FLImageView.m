@@ -47,22 +47,19 @@
             [progressView setProgress:progress];
         };
         
-        SDWebImageCompletionBlock completedBlock = ^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            if (error) {
-                [progressView setTintColor:[UIColor redColor]];
-                [progressView setProgress:1];
-            }
-            else {
-                [progressView setHidden:YES];
-            }
-        };
-        
-        
         [self sd_setImageWithURL:url
                 placeholderImage:nil
                          options:SDWebImageRetryFailed
                         progress:progressBlock
-                       completed:completedBlock];
+                       completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                           if (error) {
+                               [progressView setTintColor:[UIColor redColor]];
+                               [progressView setProgress:1];
+                           }
+                           else {
+                               [progressView setHidden:YES];
+                           }
+                       }];
     }
     fullScreenImageURL = fullScreenURL;
 }

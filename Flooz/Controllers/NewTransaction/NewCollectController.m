@@ -237,13 +237,12 @@
     
     if (currentPreset) {
         if (currentPreset.image) {
-            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:currentPreset.image] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
-             {
-                 if (image && !error && finished) {
-                     [self rotateImageWithRadians:0 imageRotate:image andImage:nil];
-                     currentPreset.image = @"";
-                 }
-             }];
+            [[[SDWebImageManager sharedManager] imageDownloader] downloadImageWithURL:[NSURL URLWithString:currentPreset.image] options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+                if (image && !error && finished) {
+                    [self rotateImageWithRadians:0 imageRotate:image andImage:nil];
+                    currentPreset.image = @"";
+                }
+            }];
         }
     }
     

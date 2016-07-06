@@ -3,9 +3,9 @@ platform :ios, '7.0'
 def prod_pods
     
     pod 'AFNetworking'
-    pod 'SDWebImage', '3.7'
     pod 'IDMPhotoBrowser'
-    pod 'UICKeyChainStore'
+    pod 'UICKeyChainStore' 
+    pod 'SDWebImage/GIF', :path => '~/Desktop/Flooz/flooz-ios/SDWebImage'
     pod "FBSDKCoreKit"
     pod "FBSDKLoginKit"
     pod "FBSDKShareKit"

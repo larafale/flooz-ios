@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0E3A7852C15B74FA26A49B /* libPods-Flooz dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C92BE6D543E27FA2BB9D9E69 /* libPods-Flooz dev.a */; };
+		278EF3BDE6654A8AF0546261 /* libPods-Flooz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7610E4C1D3335712B8B222E9 /* libPods-Flooz.a */; };
 		2F0F6AFB19DF0686004CA223 /* FLSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFA19DF0686004CA223 /* FLSwitch.m */; };
 		2F0F6AFC19DF0686004CA223 /* FLSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFA19DF0686004CA223 /* FLSwitch.m */; };
 		2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFE19DF3E35004CA223 /* SettingsBankViewController.m */; };
@@ -56,7 +58,6 @@
 		2FEAA9CB19DC50A200EE95C9 /* UISearchBar+Subviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */; };
 		2FEAA9CF19DC63B500EE95C9 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */; };
 		2FEAA9D019DC63B500EE95C9 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */; };
-		3D55D2A24FF7907300DC3697 /* libPods-Flooz dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 057AC804E3568F92B41EC6F5 /* libPods-Flooz dev.a */; };
 		AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0857FC1923AB13007C1927 /* SplashViewController.m */; };
 		AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
 		AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */; };
@@ -261,6 +262,7 @@
 		ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
 		ABF7094118A4D64300517389 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7094018A4D64300517389 /* TransactionCell.m */; };
 		ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
+		B7C05FF5543D57184C2B831C /* libPods-Flooz local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 830C7DACF47C881B4E4475F1 /* libPods-Flooz local.a */; };
 		C9006C921CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
 		C9006C931CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
 		C9006C941CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
@@ -357,9 +359,6 @@
 		C93F66A61BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
 		C93F66A71BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
 		C93F66A81BB555AD0032ED56 /* FLMultiLineSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */; };
-		C941A7601CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */; };
-		C941A7611CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */; };
-		C941A7621CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */; };
 		C9436EBD1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
 		C9436EBE1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
 		C9436EBF1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */; };
@@ -668,6 +667,9 @@
 		C9BAB50E1AF26C2A00215CDC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */; };
 		C9BAB50F1AF26C3100215CDC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */; };
 		C9BAB5101AF26C3900215CDC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */; };
+		C9BD5BBB1D2D051C00F294E8 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BD5BBA1D2D051C00F294E8 /* ImageIO.framework */; };
+		C9BD5BBC1D2D052600F294E8 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BD5BBA1D2D051C00F294E8 /* ImageIO.framework */; };
+		C9BD5BBD1D2D052E00F294E8 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BD5BBA1D2D051C00F294E8 /* ImageIO.framework */; };
 		C9C3AD861CA29631009907D9 /* ParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C3AD851CA29631009907D9 /* ParticipantCell.m */; };
 		C9C3AD871CA29631009907D9 /* ParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C3AD851CA29631009907D9 /* ParticipantCell.m */; };
 		C9C3AD881CA29631009907D9 /* ParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C3AD851CA29631009907D9 /* ParticipantCell.m */; };
@@ -773,9 +775,10 @@
 		C9F517D11CABD1C600856D53 /* FLPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F517D01CABD1C600856D53 /* FLPlusButton.m */; };
 		C9F517D21CABD1C600856D53 /* FLPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F517D01CABD1C600856D53 /* FLPlusButton.m */; };
 		C9F517D31CABD1C600856D53 /* FLPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F517D01CABD1C600856D53 /* FLPlusButton.m */; };
-		CBEDA6D8520C7CEBEEE221C4 /* libPods-FloozTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 875BF3F5850CA3C9BDD90C21 /* libPods-FloozTests.a */; };
-		CED4869B4186F09335ED9810 /* libPods-Flooz local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA76FACB4057E2096E036AE9 /* libPods-Flooz local.a */; };
-		E5DDFAE0AE5F2CD0F21FC2E2 /* libPods-Flooz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBE5B66C8AED21D426073838 /* libPods-Flooz.a */; };
+		C9FC68C51D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */; };
+		C9FC68C61D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */; };
+		C9FC68C71D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */; };
+		E9ABA191073B1CAF2B42E68F /* libPods-FloozTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C6725452A13D2299B23CCFDB /* libPods-FloozTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -803,12 +806,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		057AC804E3568F92B41EC6F5 /* libPods-Flooz dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		05823E008F31AE47F6630FF7 /* Pods-Flooz local.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.local.xcconfig"; sourceTree = "<group>"; };
-		0ED724EEAC47593FD5BDE198 /* Pods-Flooz dev.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.local.xcconfig"; sourceTree = "<group>"; };
-		0F42623563BDF6C764F0F91C /* Pods-Flooz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.debug.xcconfig"; sourceTree = "<group>"; };
-		2331BB5CD8D1A69A19009A3A /* Pods-Flooz local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.debug.xcconfig"; sourceTree = "<group>"; };
-		291448CF59CC5312E95A5572 /* Pods-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
+		08140646A1C89798AF449317 /* Pods-FloozTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0FFD1BC46E7F2BD4E086F1E4 /* Pods-FloozTests.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.recette.xcconfig"; sourceTree = "<group>"; };
+		114BDDF668C23023F2D120A7 /* Pods-Flooz local.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.local.xcconfig"; sourceTree = "<group>"; };
+		13F6E117D68D96CEB968FC05 /* Pods-Flooz local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.debug.xcconfig"; sourceTree = "<group>"; };
+		14E4C6A46487E85BAB9AA0F4 /* Pods-Flooz.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.recette.xcconfig"; sourceTree = "<group>"; };
+		2B54481A779A105C56E04BFE /* Pods-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
 		2F0F6AF919DF0686004CA223 /* FLSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSwitch.h; path = Views/FLSwitchView/FLSwitch.h; sourceTree = "<group>"; };
 		2F0F6AFA19DF0686004CA223 /* FLSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSwitch.m; path = Views/FLSwitchView/FLSwitch.m; sourceTree = "<group>"; };
 		2F0F6AFD19DF3E35004CA223 /* SettingsBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsBankViewController.h; sourceTree = "<group>"; };
@@ -859,16 +862,16 @@
 		2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UISearchBar+Subviews.m"; path = "Util/UISearchBar+Subviews.m"; sourceTree = "<group>"; };
 		2FEAA9CD19DC63B500EE95C9 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = Views/BaseViewController/BaseViewController.h; sourceTree = "<group>"; };
 		2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = Views/BaseViewController/BaseViewController.m; sourceTree = "<group>"; };
-		3AF5E10BD99B599E288360A6 /* Pods-Flooz dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.debug.xcconfig"; sourceTree = "<group>"; };
-		6865A609F7D983A7273C47B5 /* Pods-Flooz dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.release.xcconfig"; sourceTree = "<group>"; };
-		837D247F126CE0B324A200D0 /* Pods-Flooz.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.recette.xcconfig"; sourceTree = "<group>"; };
-		84D54B69FAC6BC5B25EEDD68 /* Pods-Flooz dev.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.recette.xcconfig"; sourceTree = "<group>"; };
-		866E734EC41280B6E60DF417 /* Pods-FloozTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.debug.xcconfig"; sourceTree = "<group>"; };
-		875BF3F5850CA3C9BDD90C21 /* libPods-FloozTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8934D427BCA46D2D49B6CE06 /* Pods-FloozTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.local.xcconfig"; sourceTree = "<group>"; };
-		9984ED69C12F3B5220DF0BAD /* Pods-Flooz local.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.recette.xcconfig"; sourceTree = "<group>"; };
-		9F48BE6D3BCCA65AE852B2C8 /* Pods-Flooz local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.release.xcconfig"; sourceTree = "<group>"; };
-		A57F4C194DDEE6E70542094D /* Pods-Flooz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.release.xcconfig"; sourceTree = "<group>"; };
+		4CB30BE88BEBC1047009AADA /* Pods-Flooz dev.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.local.xcconfig"; sourceTree = "<group>"; };
+		4DCB1956B83BC48A58EB065D /* Pods-Flooz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.debug.xcconfig"; sourceTree = "<group>"; };
+		5350ED423CE11FA07C919F83 /* Pods-Flooz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.release.xcconfig"; sourceTree = "<group>"; };
+		5B4622258FABEC6882231C1F /* Pods-Flooz dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.release.xcconfig"; sourceTree = "<group>"; };
+		710A9173349CCDDF7D536A75 /* Pods-Flooz local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.release.xcconfig"; sourceTree = "<group>"; };
+		7610E4C1D3335712B8B222E9 /* libPods-Flooz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		830C7DACF47C881B4E4475F1 /* libPods-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84717EF8D217337809A8216E /* Pods-FloozTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.local.xcconfig"; sourceTree = "<group>"; };
+		883148CD5D120D9776D47079 /* Pods-Flooz.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.local.xcconfig"; sourceTree = "<group>"; };
+		8BDFD29F29529336E82A9625 /* Pods-Flooz dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.debug.xcconfig"; sourceTree = "<group>"; };
 		AB0857FB1923AB13007C1927 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SplashViewController.h; path = Controllers/Splash/SplashViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AB0857FC1923AB13007C1927 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashViewController.m; path = Controllers/Splash/SplashViewController.m; sourceTree = "<group>"; };
 		AB0857FD1923AB13007C1927 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashViewController.xib; path = Controllers/Splash/SplashViewController.xib; sourceTree = "<group>"; };
@@ -1057,6 +1060,7 @@
 		ABF7094018A4D64300517389 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionCell.m; path = TransactionCell/TransactionCell.m; sourceTree = "<group>"; };
 		ABF7095B18A4FD6B00517389 /* FLComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLComment.h; path = Models/FLComment.h; sourceTree = "<group>"; };
 		ABF7095C18A4FD6B00517389 /* FLComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLComment.m; path = Models/FLComment.m; sourceTree = "<group>"; };
+		C6725452A13D2299B23CCFDB /* libPods-FloozTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9006C901CC7863900A66E07 /* ActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityCell.h; path = ActivityCell/ActivityCell.h; sourceTree = "<group>"; };
 		C9006C911CC7863900A66E07 /* ActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityCell.m; path = ActivityCell/ActivityCell.m; sourceTree = "<group>"; };
 		C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTransactionDescriptionView.m; sourceTree = "<group>"; };
@@ -1111,6 +1115,7 @@
 		C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectHeaderView.m; path = Controllers/Collect/CollectHeaderView/CollectHeaderView.m; sourceTree = "<group>"; };
 		C92A31AB1CAD27B9004BA50F /* TransactionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionHeaderView.h; path = Controllers/Transaction/TransactionHeaderView/TransactionHeaderView.h; sourceTree = "<group>"; };
 		C92A31AC1CAD27B9004BA50F /* TransactionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionHeaderView.m; path = Controllers/Transaction/TransactionHeaderView/TransactionHeaderView.m; sourceTree = "<group>"; };
+		C92BE6D543E27FA2BB9D9E69 /* libPods-Flooz dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C92FB3A91BBBEC1F006FB561 /* FLFilterSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLFilterSegmentedControl.h; sourceTree = "<group>"; };
 		C92FB3AA1BBBEC1F006FB561 /* FLFilterSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLFilterSegmentedControl.m; sourceTree = "<group>"; };
 		C93118461A1F7E0B008C6EEC /* FLReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReport.h; sourceTree = "<group>"; };
@@ -1125,8 +1130,6 @@
 		C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayerShot.m"; sourceTree = "<group>"; };
 		C93F66A41BB555AD0032ED56 /* FLMultiLineSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLMultiLineSegmentedControl.h; sourceTree = "<group>"; };
 		C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLMultiLineSegmentedControl.m; sourceTree = "<group>"; };
-		C941A75E1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+NVSBlurAppScreen.h"; sourceTree = "<group>"; };
-		C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+NVSBlurAppScreen.m"; sourceTree = "<group>"; };
 		C9436EBB1BCBA34E000F382C /* ValidateSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSMSViewController.h; path = Controllers/ValidateSMS/ValidateSMSViewController.h; sourceTree = "<group>"; };
 		C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSMSViewController.m; path = Controllers/ValidateSMS/ValidateSMSViewController.m; sourceTree = "<group>"; };
 		C94EF3B71CB2AB8E003EA4CF /* AmbassadorStepsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmbassadorStepsViewController.h; path = Controllers/ShareApp/AmbassadorStepsList/AmbassadorStepsViewController.h; sourceTree = "<group>"; };
@@ -1241,6 +1244,7 @@
 		C9B975551C9EF4BA00163A05 /* CollectParticipationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectParticipationViewController.h; path = Controllers/Collect/CollectParticipationViewController/CollectParticipationViewController.h; sourceTree = "<group>"; };
 		C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectParticipationViewController.m; path = Controllers/Collect/CollectParticipationViewController/CollectParticipationViewController.m; sourceTree = "<group>"; };
 		C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		C9BD5BBA1D2D051C00F294E8 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		C9C3AD841CA29631009907D9 /* ParticipantCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticipantCell.h; path = ParticipantCell/ParticipantCell.h; sourceTree = "<group>"; };
 		C9C3AD851CA29631009907D9 /* ParticipantCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticipantCell.m; path = ParticipantCell/ParticipantCell.m; sourceTree = "<group>"; };
 		C9C660B01BCBB70E0029A79A /* ValidateSecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSecureCodeViewController.h; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.h; sourceTree = "<group>"; };
@@ -1317,10 +1321,10 @@
 		C9ED41281A9B7ABA000C4D7A /* NSArray+JSONHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+JSONHelper.m"; sourceTree = "<group>"; };
 		C9F517CF1CABD1C600856D53 /* FLPlusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPlusButton.h; path = Views/FLPlusButton/FLPlusButton.h; sourceTree = "<group>"; };
 		C9F517D01CABD1C600856D53 /* FLPlusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPlusButton.m; path = Views/FLPlusButton/FLPlusButton.m; sourceTree = "<group>"; };
-		CD7EBAA6202C352496D20C39 /* Pods-FloozTests.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.recette.xcconfig"; sourceTree = "<group>"; };
-		DBE5B66C8AED21D426073838 /* libPods-Flooz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E53C3F743130917455E57231 /* Pods-Flooz.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.local.xcconfig"; sourceTree = "<group>"; };
-		FA76FACB4057E2096E036AE9 /* libPods-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+NVSBlurAppScreen.m"; sourceTree = "<group>"; };
+		C9FC68C41D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+NVSBlurAppScreen.h"; sourceTree = "<group>"; };
+		CB0921C1118F2A870745CD4A /* Pods-Flooz local.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.recette.xcconfig"; sourceTree = "<group>"; };
+		FA527C642A639D29C5130780 /* Pods-Flooz dev.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.recette.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1328,6 +1332,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9BD5BBB1D2D051C00F294E8 /* ImageIO.framework in Frameworks */,
+				ABA9B72318F3037500A81929 /* libsqlite3.dylib in Frameworks */,
 				C9BAB50E1AF26C2A00215CDC /* MediaPlayer.framework in Frameworks */,
 				ABA96DB2196EF23600B8B7C7 /* AudioToolbox.framework in Frameworks */,
 				2FC8FCC919C771F000F38497 /* Social.framework in Frameworks */,
@@ -1336,7 +1342,6 @@
 				ABA96DB4196EF24400B8B7C7 /* AssetsLibrary.framework in Frameworks */,
 				ABA96DAF196EF22300B8B7C7 /* CoreMedia.framework in Frameworks */,
 				ABA96DB0196EF22300B8B7C7 /* CoreVideo.framework in Frameworks */,
-				ABA9B72318F3037500A81929 /* libsqlite3.dylib in Frameworks */,
 				ABA9B72218F3036F00A81929 /* libz.dylib in Frameworks */,
 				ABA9B72118F3036800A81929 /* AdSupport.framework in Frameworks */,
 				ABA9B72018F3035E00A81929 /* CoreTelephony.framework in Frameworks */,
@@ -1348,7 +1353,7 @@
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
 				AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */,
-				E5DDFAE0AE5F2CD0F21FC2E2 /* libPods-Flooz.a in Frameworks */,
+				278EF3BDE6654A8AF0546261 /* libPods-Flooz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1358,7 +1363,7 @@
 			files = (
 				AB3D08AD186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D08AC186CA11A00CF8380 /* Foundation.framework in Frameworks */,
-				CBEDA6D8520C7CEBEEE221C4 /* libPods-FloozTests.a in Frameworks */,
+				E9ABA191073B1CAF2B42E68F /* libPods-FloozTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1366,6 +1371,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9BD5BBC1D2D052600F294E8 /* ImageIO.framework in Frameworks */,
 				C9BAB50F1AF26C3100215CDC /* MediaPlayer.framework in Frameworks */,
 				ABAA3FE9197E96BF009F29EF /* AudioToolbox.framework in Frameworks */,
 				2FC8FCC819C771E800F38497 /* Social.framework in Frameworks */,
@@ -1386,7 +1392,7 @@
 				ABAA3FF7197E96BF009F29EF /* CoreGraphics.framework in Frameworks */,
 				ABAA3FF8197E96BF009F29EF /* UIKit.framework in Frameworks */,
 				ABAA3FF9197E96BF009F29EF /* Foundation.framework in Frameworks */,
-				3D55D2A24FF7907300DC3697 /* libPods-Flooz dev.a in Frameworks */,
+				1D0E3A7852C15B74FA26A49B /* libPods-Flooz dev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1394,6 +1400,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9BD5BBD1D2D052E00F294E8 /* ImageIO.framework in Frameworks */,
 				C9BAB5101AF26C3900215CDC /* MediaPlayer.framework in Frameworks */,
 				C98013091A76921000019682 /* AudioToolbox.framework in Frameworks */,
 				C98013051A76921000019682 /* Social.framework in Frameworks */,
@@ -1414,13 +1421,36 @@
 				C98013171A76921000019682 /* CoreGraphics.framework in Frameworks */,
 				C98013181A76921000019682 /* UIKit.framework in Frameworks */,
 				C98013191A76921000019682 /* Foundation.framework in Frameworks */,
-				CED4869B4186F09335ED9810 /* libPods-Flooz local.a in Frameworks */,
+				B7C05FF5543D57184C2B831C /* libPods-Flooz local.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19391EDA5C6DA14D95239E16 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4DCB1956B83BC48A58EB065D /* Pods-Flooz.debug.xcconfig */,
+				883148CD5D120D9776D47079 /* Pods-Flooz.local.xcconfig */,
+				5350ED423CE11FA07C919F83 /* Pods-Flooz.release.xcconfig */,
+				14E4C6A46487E85BAB9AA0F4 /* Pods-Flooz.recette.xcconfig */,
+				8BDFD29F29529336E82A9625 /* Pods-Flooz dev.debug.xcconfig */,
+				4CB30BE88BEBC1047009AADA /* Pods-Flooz dev.local.xcconfig */,
+				5B4622258FABEC6882231C1F /* Pods-Flooz dev.release.xcconfig */,
+				FA527C642A639D29C5130780 /* Pods-Flooz dev.recette.xcconfig */,
+				13F6E117D68D96CEB968FC05 /* Pods-Flooz local.debug.xcconfig */,
+				114BDDF668C23023F2D120A7 /* Pods-Flooz local.local.xcconfig */,
+				710A9173349CCDDF7D536A75 /* Pods-Flooz local.release.xcconfig */,
+				CB0921C1118F2A870745CD4A /* Pods-Flooz local.recette.xcconfig */,
+				08140646A1C89798AF449317 /* Pods-FloozTests.debug.xcconfig */,
+				84717EF8D217337809A8216E /* Pods-FloozTests.local.xcconfig */,
+				2B54481A779A105C56E04BFE /* Pods-FloozTests.release.xcconfig */,
+				0FFD1BC46E7F2BD4E086F1E4 /* Pods-FloozTests.recette.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		2F1307E619D9C1510062D194 /* FLSocialButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1512,29 +1542,6 @@
 			name = BaseViewController;
 			sourceTree = "<group>";
 		};
-		A6A0AD68D555B6E490862D53 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0F42623563BDF6C764F0F91C /* Pods-Flooz.debug.xcconfig */,
-				E53C3F743130917455E57231 /* Pods-Flooz.local.xcconfig */,
-				A57F4C194DDEE6E70542094D /* Pods-Flooz.release.xcconfig */,
-				837D247F126CE0B324A200D0 /* Pods-Flooz.recette.xcconfig */,
-				3AF5E10BD99B599E288360A6 /* Pods-Flooz dev.debug.xcconfig */,
-				0ED724EEAC47593FD5BDE198 /* Pods-Flooz dev.local.xcconfig */,
-				6865A609F7D983A7273C47B5 /* Pods-Flooz dev.release.xcconfig */,
-				84D54B69FAC6BC5B25EEDD68 /* Pods-Flooz dev.recette.xcconfig */,
-				2331BB5CD8D1A69A19009A3A /* Pods-Flooz local.debug.xcconfig */,
-				05823E008F31AE47F6630FF7 /* Pods-Flooz local.local.xcconfig */,
-				9F48BE6D3BCCA65AE852B2C8 /* Pods-Flooz local.release.xcconfig */,
-				9984ED69C12F3B5220DF0BAD /* Pods-Flooz local.recette.xcconfig */,
-				866E734EC41280B6E60DF417 /* Pods-FloozTests.debug.xcconfig */,
-				8934D427BCA46D2D49B6CE06 /* Pods-FloozTests.local.xcconfig */,
-				291448CF59CC5312E95A5572 /* Pods-FloozTests.release.xcconfig */,
-				CD7EBAA6202C352496D20C39 /* Pods-FloozTests.recette.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		AB0857FA1923AAF9007C1927 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -1614,7 +1621,7 @@
 				AB3D08B0186CA11A00CF8380 /* FloozTests */,
 				AB3D0890186CA11A00CF8380 /* Frameworks */,
 				AB3D088F186CA11A00CF8380 /* Products */,
-				A6A0AD68D555B6E490862D53 /* Pods */,
+				19391EDA5C6DA14D95239E16 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1632,6 +1639,7 @@
 		AB3D0890186CA11A00CF8380 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9BD5BBA1D2D051C00F294E8 /* ImageIO.framework */,
 				C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */,
 				2FC8FCC719C771E800F38497 /* Social.framework */,
 				2FD2460519A3F6CC008DCFB5 /* MessageUI.framework */,
@@ -1652,10 +1660,10 @@
 				AB3D0891186CA11A00CF8380 /* Foundation.framework */,
 				AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */,
 				AB3D0895186CA11A00CF8380 /* UIKit.framework */,
-				DBE5B66C8AED21D426073838 /* libPods-Flooz.a */,
-				057AC804E3568F92B41EC6F5 /* libPods-Flooz dev.a */,
-				FA76FACB4057E2096E036AE9 /* libPods-Flooz local.a */,
-				875BF3F5850CA3C9BDD90C21 /* libPods-FloozTests.a */,
+				7610E4C1D3335712B8B222E9 /* libPods-Flooz.a */,
+				C92BE6D543E27FA2BB9D9E69 /* libPods-Flooz dev.a */,
+				830C7DACF47C881B4E4475F1 /* libPods-Flooz local.a */,
+				C6725452A13D2299B23CCFDB /* libPods-FloozTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1872,8 +1880,8 @@
 		AB3D08E11871BEC300CF8380 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				C941A75E1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.h */,
-				C941A75F1CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m */,
+				C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */,
+				C9FC68C41D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.h */,
 				ABF7091B18A03B1D00517389 /* FLError.h */,
 				ABE914A21896D2D9003AC722 /* FLHelper.h */,
 				ABE914A31896D2D9003AC722 /* FLHelper.m */,
@@ -3653,6 +3661,7 @@
 				C95AED971A49AF4A00000FB3 /* ClipboardPopoverViewController.m in Sources */,
 				AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */,
 				C9EBBB9D1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
+				C9FC68C51D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m in Sources */,
 				AB8F9FA618E18F45006039D0 /* NewTransactionDatePicker.m in Sources */,
 				C92FB3AB1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				C9A265561ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
@@ -3735,7 +3744,6 @@
 				C919AD981BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */,
 				C9C7DB2D1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
-				C941A7601CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */,
 				C9AF4BE619F7C2D7005C696B /* AvatarMenu.m in Sources */,
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
@@ -3873,6 +3881,7 @@
 				2F1307EA19D9C1790062D194 /* FLSocialButton.m in Sources */,
 				ABAA3F9C197E96BF009F29EF /* NotificationCell.m in Sources */,
 				C9EBBB9E1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
+				C9FC68C61D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m in Sources */,
 				C95AED9F1A49B5E500000FB3 /* WYPopoverController.m in Sources */,
 				C92FB3AC1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
 				ABAA3F9D197E96BF009F29EF /* FLKeyboardView.m in Sources */,
@@ -3955,7 +3964,6 @@
 				C919AD991BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				ABAA3FC6197E96BF009F29EF /* AccountViewController.m in Sources */,
 				C9CB21FF1A95E9D30064389A /* THContactTextField.m in Sources */,
-				C941A7611CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */,
 				ABAA3FC9197E96BF009F29EF /* FriendRequestCell.m in Sources */,
 				ABAA3FCA197E96BF009F29EF /* NewTransactionSelectTypeView.m in Sources */,
 				C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
@@ -4085,6 +4093,7 @@
 				C98012A11A76921000019682 /* FLCameraKeyboard.m in Sources */,
 				C98012A21A76921000019682 /* FLSocialButton.m in Sources */,
 				C98012A41A76921000019682 /* NotificationCell.m in Sources */,
+				C9FC68C71D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m in Sources */,
 				C9EBBB9F1BAAC988009DAF88 /* FLBorderedActionButton.m in Sources */,
 				C98012A51A76921000019682 /* WYPopoverController.m in Sources */,
 				C92FB3AD1BBBEC1F006FB561 /* FLFilterSegmentedControl.m in Sources */,
@@ -4167,7 +4176,6 @@
 				C98012D81A76921000019682 /* SettingsCoordsViewController.m in Sources */,
 				C919AD9A1BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C98012D91A76921000019682 /* AccountViewController.m in Sources */,
-				C941A7621CF30FD7007E9B63 /* AppDelegate+NVSBlurAppScreen.m in Sources */,
 				C9CB22001A95E9D30064389A /* THContactTextField.m in Sources */,
 				C98012DA1A76921000019682 /* FriendRequestCell.m in Sources */,
 				C98012DB1A76921000019682 /* NewTransactionSelectTypeView.m in Sources */,
@@ -4331,7 +4339,7 @@
 		};
 		8B81C5A619993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 837D247F126CE0B324A200D0 /* Pods-Flooz.recette.xcconfig */;
+			baseConfigurationReference = 14E4C6A46487E85BAB9AA0F4 /* Pods-Flooz.recette.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4367,14 +4375,14 @@
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Recette;
 		};
 		8B81C5A719993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD7EBAA6202C352496D20C39 /* Pods-FloozTests.recette.xcconfig */;
+			baseConfigurationReference = 0FFD1BC46E7F2BD4E086F1E4 /* Pods-FloozTests.recette.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4397,7 +4405,7 @@
 		};
 		8B81C5A819993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 84D54B69FAC6BC5B25EEDD68 /* Pods-Flooz dev.recette.xcconfig */;
+			baseConfigurationReference = FA527C642A639D29C5130780 /* Pods-Flooz dev.recette.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4435,7 +4443,7 @@
 				PROVISIONING_PROFILE = "61a2ffe5-aa83-4543-9bf1-322c65b6a9c7";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Recette;
@@ -4523,7 +4531,7 @@
 		};
 		AB3D08BB186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F42623563BDF6C764F0F91C /* Pods-Flooz.debug.xcconfig */;
+			baseConfigurationReference = 4DCB1956B83BC48A58EB065D /* Pods-Flooz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4560,14 +4568,14 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		AB3D08BC186CA11A00CF8380 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A57F4C194DDEE6E70542094D /* Pods-Flooz.release.xcconfig */;
+			baseConfigurationReference = 5350ED423CE11FA07C919F83 /* Pods-Flooz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4602,14 +4610,14 @@
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 		AB3D08BE186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 866E734EC41280B6E60DF417 /* Pods-FloozTests.debug.xcconfig */;
+			baseConfigurationReference = 08140646A1C89798AF449317 /* Pods-FloozTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4636,7 +4644,7 @@
 		};
 		AB3D08BF186CA11A00CF8380 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 291448CF59CC5312E95A5572 /* Pods-FloozTests.release.xcconfig */;
+			baseConfigurationReference = 2B54481A779A105C56E04BFE /* Pods-FloozTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4659,7 +4667,7 @@
 		};
 		ABAA4027197E96BF009F29EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AF5E10BD99B599E288360A6 /* Pods-Flooz dev.debug.xcconfig */;
+			baseConfigurationReference = 8BDFD29F29529336E82A9625 /* Pods-Flooz dev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4699,14 +4707,14 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		ABAA4028197E96BF009F29EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6865A609F7D983A7273C47B5 /* Pods-Flooz dev.release.xcconfig */;
+			baseConfigurationReference = 5B4622258FABEC6882231C1F /* Pods-Flooz dev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4744,7 +4752,7 @@
 				PROVISIONING_PROFILE = "61a2ffe5-aa83-4543-9bf1-322c65b6a9c7";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -4794,7 +4802,7 @@
 		};
 		C980126C1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E53C3F743130917455E57231 /* Pods-Flooz.local.xcconfig */;
+			baseConfigurationReference = 883148CD5D120D9776D47079 /* Pods-Flooz.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4831,14 +4839,14 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Local;
 		};
 		C980126D1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8934D427BCA46D2D49B6CE06 /* Pods-FloozTests.local.xcconfig */;
+			baseConfigurationReference = 84717EF8D217337809A8216E /* Pods-FloozTests.local.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4865,7 +4873,7 @@
 		};
 		C980126E1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0ED724EEAC47593FD5BDE198 /* Pods-Flooz dev.local.xcconfig */;
+			baseConfigurationReference = 4CB30BE88BEBC1047009AADA /* Pods-Flooz dev.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4906,14 +4914,14 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Local;
 		};
 		C980133F1A76921000019682 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2331BB5CD8D1A69A19009A3A /* Pods-Flooz local.debug.xcconfig */;
+			baseConfigurationReference = 13F6E117D68D96CEB968FC05 /* Pods-Flooz local.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4952,14 +4960,14 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		C98013401A76921000019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05823E008F31AE47F6630FF7 /* Pods-Flooz local.local.xcconfig */;
+			baseConfigurationReference = 114BDDF668C23023F2D120A7 /* Pods-Flooz local.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4999,14 +5007,14 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Local;
 		};
 		C98013411A76921000019682 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9F48BE6D3BCCA65AE852B2C8 /* Pods-Flooz local.release.xcconfig */;
+			baseConfigurationReference = 710A9173349CCDDF7D536A75 /* Pods-Flooz local.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -5044,14 +5052,14 @@
 				PROVISIONING_PROFILE = "ef713b5a-f54b-4678-ac99-efc6420480a8";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 		C98013421A76921000019682 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9984ED69C12F3B5220DF0BAD /* Pods-Flooz local.recette.xcconfig */;
+			baseConfigurationReference = CB0921C1118F2A870745CD4A /* Pods-Flooz local.recette.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -5089,7 +5097,7 @@
 				PROVISIONING_PROFILE = "ef713b5a-f54b-4678-ac99-efc6420480a8";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/**";
+				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Recette;

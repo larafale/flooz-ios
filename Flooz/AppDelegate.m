@@ -844,7 +844,7 @@
 
 - (void)showAvatarView:(UIImageView *)view withUrl:(NSURL *)urlImage {
     if (urlImage && ![urlImage.absoluteString isEqualToString:@"/img/fake.png"]) {
-        [[SDImageCache sharedImageCache] queryDiskCacheForKey:urlImage.absoluteString done:^(UIImage *image, SDImageCacheType cacheType) {
+        [[SDImageCache sharedImageCache] queryDiskCacheForKey:urlImage.absoluteString done:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
             if (image) {
                 JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
                 imageInfo.image = image;
@@ -873,9 +873,7 @@
                 imageViewer.interactionsDelegate = self;
                 [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
                 
-                [[SDWebImageManager sharedManager] downloadImageWithURL:urlImage options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                    
-                }];
+                [[[SDWebImageManager sharedManager] imageDownloader] downloadImageWithURL:urlImage options:0 progress:nil completed:nil];
             }
         }];
     } else if (urlImage) {

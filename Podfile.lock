@@ -41,6 +41,7 @@ PODS:
   - FBSDKMessengerShareKit (1.3.2)
   - FBSDKShareKit (4.13.1):
     - FBSDKCoreKit
+  - FLAnimatedImage (1.0.12)
   - FXBlurView (1.6.4)
   - GBDeviceInfo (4.1.0):
     - GBDeviceInfo/Core (= 4.1.0)
@@ -73,9 +74,12 @@ PODS:
   - pop (1.0.9)
   - PPHelpMe (1.0.2)
   - RDVTabBarController (1.1.9)
-  - SDWebImage (3.7.0):
-    - SDWebImage/Core (= 3.7.0)
-  - SDWebImage/Core (3.7.0)
+  - SDWebImage (3.8.1):
+    - SDWebImage/Core (= 3.8.1)
+  - SDWebImage/Core (3.8.1)
+  - SDWebImage/GIF (3.8.1):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
   - SMPageControl (1.2)
   - SocketRocket (0.5.1)
   - Stripe (8.0.0)
@@ -115,7 +119,7 @@ DEPENDENCIES:
   - PonyDebugger
   - PPHelpMe
   - RDVTabBarController
-  - SDWebImage (= 3.7)
+  - SDWebImage/GIF (from `~/Desktop/Flooz/flooz-ios/SDWebImage`)
   - SMPageControl
   - Stripe
   - TTTAttributedLabel
@@ -123,6 +127,10 @@ DEPENDENCIES:
   - UICKeyChainStore
   - UIFloatLabelTextField
   - VCTransitionsLibrary
+
+EXTERNAL SOURCES:
+  SDWebImage:
+    :path: "~/Desktop/Flooz/flooz-ios/SDWebImage"
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
@@ -139,6 +147,7 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 6d350cb6a22d6956e9d078885de6ee8a0ebc51b4
   FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
   FBSDKShareKit: c9438df7573b33780ac8c3451201c5ebb260ffca
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GBDeviceInfo: e50df975a95e21faec93e2bf98376846fe17d307
   HHRouter: c096524e95a07a1970e6e23a19ee5a9592dc326d
@@ -159,7 +168,7 @@ SPEC CHECKSUMS:
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
   RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
-  SDWebImage: b42db92951f9d565c55f1d7f1d5efe47e33a7515
+  SDWebImage: c36166b920a2d7cafcd48f6bef4a51c8a547bdba
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
   Stripe: 1e20396b4dad7b9a08312bf914c233154fb8fcfd
@@ -169,6 +178,6 @@ SPEC CHECKSUMS:
   UIFloatLabelTextField: bb30a4ae6720a89fc9fb51134f39f0e776ff9551
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
 
-PODFILE CHECKSUM: a5bcb732328d58d724b027ec65337b537cdf14e3
+PODFILE CHECKSUM: c50db2af4e13111b1ad101b60cb9cba92181cbed
 
 COCOAPODS: 1.0.1

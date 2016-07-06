@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FLAnimatedImageView.h"
+#import "FLAnimatedImageView+WebCache.h"
 
-@interface FLImageView : UIImageView {
+@interface FLImageView : FLAnimatedImageView {
 	NSURL *fullScreenImageURL;
 	UIProgressView *progressView;
 }
