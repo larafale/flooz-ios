@@ -723,6 +723,12 @@
 		C9CB22141A963C840064389A /* FLUserPickerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CB22131A963C840064389A /* FLUserPickerTableView.m */; };
 		C9CB22151A963C840064389A /* FLUserPickerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CB22131A963C840064389A /* FLUserPickerTableView.m */; };
 		C9CB22161A963C840064389A /* FLUserPickerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CB22131A963C840064389A /* FLUserPickerTableView.m */; };
+		C9CC31961D2E8FA30086F19A /* NewFloozViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CC31951D2E8FA30086F19A /* NewFloozViewController.m */; };
+		C9CC31971D2E8FA30086F19A /* NewFloozViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CC31951D2E8FA30086F19A /* NewFloozViewController.m */; };
+		C9CC31981D2E8FA30086F19A /* NewFloozViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CC31951D2E8FA30086F19A /* NewFloozViewController.m */; };
+		C9CC319B1D2E8FD20086F19A /* UserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CC319A1D2E8FD20086F19A /* UserPickerViewController.m */; };
+		C9CC319C1D2E8FD20086F19A /* UserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CC319A1D2E8FD20086F19A /* UserPickerViewController.m */; };
+		C9CC319D1D2E8FD20086F19A /* UserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CC319A1D2E8FD20086F19A /* UserPickerViewController.m */; };
 		C9CD76611BF227DC00362962 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9CD76601BF227DC00362962 /* CountryPicker.bundle */; };
 		C9CD76621BF227DC00362962 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9CD76601BF227DC00362962 /* CountryPicker.bundle */; };
 		C9CD76631BF227DC00362962 /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C9CD76601BF227DC00362962 /* CountryPicker.bundle */; };
@@ -1284,6 +1290,10 @@
 		C9CB220D1A961F0D0064389A /* FLPrivacyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPrivacyCell.m; sourceTree = "<group>"; };
 		C9CB22121A963C840064389A /* FLUserPickerTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLUserPickerTableView.h; sourceTree = "<group>"; };
 		C9CB22131A963C840064389A /* FLUserPickerTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLUserPickerTableView.m; sourceTree = "<group>"; };
+		C9CC31941D2E8FA30086F19A /* NewFloozViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewFloozViewController.h; path = Controllers/NewFlooz/NewFloozViewController.h; sourceTree = "<group>"; };
+		C9CC31951D2E8FA30086F19A /* NewFloozViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewFloozViewController.m; path = Controllers/NewFlooz/NewFloozViewController.m; sourceTree = "<group>"; };
+		C9CC31991D2E8FD20086F19A /* UserPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserPickerViewController.h; path = Controllers/UserPicker/UserPickerViewController.h; sourceTree = "<group>"; };
+		C9CC319A1D2E8FD20086F19A /* UserPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserPickerViewController.m; path = Controllers/UserPicker/UserPickerViewController.m; sourceTree = "<group>"; };
 		C9CD76601BF227DC00362962 /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CountryPicker.bundle; sourceTree = "<group>"; };
 		C9CD76641BF227EF00362962 /* FLPhoneField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPhoneField.h; sourceTree = "<group>"; };
 		C9CD76651BF227EF00362962 /* FLPhoneField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPhoneField.m; sourceTree = "<group>"; };
@@ -1739,6 +1749,7 @@
 				AB2FB55918B2B4600079AA1D /* Friends */,
 				C917C8051BE7738C0018043C /* Geoloc */,
 				AB5EB6D7188214F000D81AF6 /* Home */,
+				C9CC31931D2E8F580086F19A /* NewFlooz */,
 				ABE9141C1889436B003AC722 /* NewTransaction */,
 				ABE9147518929A61003AC722 /* Notifications */,
 				AB2FB53F18AD9C660079AA1D /* Password */,
@@ -1754,6 +1765,7 @@
 				ABF7092618A2CA1300517389 /* Transaction */,
 				C9D0562D1D194C9100F14576 /* TransactionLike */,
 				C96E5A651BA95ED100F201E9 /* User */,
+				C9CC319E1D2E8FD70086F19A /* UserPicker */,
 				C9436EBA1BCBA316000F382C /* Validate */,
 				AB6DA50718C4A5BC0073B947 /* Web */,
 			);
@@ -3007,6 +3019,24 @@
 			name = NewTransactionUserList;
 			sourceTree = "<group>";
 		};
+		C9CC31931D2E8F580086F19A /* NewFlooz */ = {
+			isa = PBXGroup;
+			children = (
+				C9CC31941D2E8FA30086F19A /* NewFloozViewController.h */,
+				C9CC31951D2E8FA30086F19A /* NewFloozViewController.m */,
+			);
+			name = NewFlooz;
+			sourceTree = "<group>";
+		};
+		C9CC319E1D2E8FD70086F19A /* UserPicker */ = {
+			isa = PBXGroup;
+			children = (
+				C9CC31991D2E8FD20086F19A /* UserPickerViewController.h */,
+				C9CC319A1D2E8FD20086F19A /* UserPickerViewController.m */,
+			);
+			name = UserPicker;
+			sourceTree = "<group>";
+		};
 		C9CD765F1BF227C700362962 /* FLPhoneField */ = {
 			isa = PBXGroup;
 			children = (
@@ -3613,6 +3643,7 @@
 				C9EB88581B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
 				C98959111C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
+				C9CC319B1D2E8FD20086F19A /* UserPickerViewController.m in Sources */,
 				C9C776881C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */,
 				ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */,
 				2FEAA9CF19DC63B500EE95C9 /* BaseViewController.m in Sources */,
@@ -3621,6 +3652,7 @@
 				C99CAE431C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
 				C9CB22041A95E9D30064389A /* THContactViewStyle.m in Sources */,
 				C9EB21B51CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */,
+				C9CC31961D2E8FA30086F19A /* NewFloozViewController.m in Sources */,
 				C960DC901BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
 				C94EF3B91CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,
@@ -3833,6 +3865,7 @@
 				C9CB22151A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C9CB220F1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				C98959121C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
+				C9CC319C1D2E8FD20086F19A /* UserPickerViewController.m in Sources */,
 				C9C776891C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */,
 				ABAA3F82197E96BF009F29EF /* FriendPickerFriendCell.m in Sources */,
 				AB119B44198A740600F05ECE /* UIViewController+RegisterNotification.m in Sources */,
@@ -3841,6 +3874,7 @@
 				C99CAE441C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
 				2FC8873819C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
 				C9EB21B61CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */,
+				C9CC31971D2E8FA30086F19A /* NewFloozViewController.m in Sources */,
 				C960DC911BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				2FE983EB19CB82E700E05501 /* NumPadAppleStyle.m in Sources */,
 				C94EF3BA1CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,
@@ -4045,6 +4079,7 @@
 				C98012821A76921000019682 /* AppDelegate.m in Sources */,
 				C9CB22161A963C840064389A /* FLUserPickerTableView.m in Sources */,
 				C98959131C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
+				C9CC319D1D2E8FD20086F19A /* UserPickerViewController.m in Sources */,
 				C9C7768A1C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */,
 				C9CB22101A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				C98012841A76921000019682 /* FriendPickerFriendCell.m in Sources */,
@@ -4053,6 +4088,7 @@
 				C99CAE451C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
 				C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				C9EB21B71CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */,
+				C9CC31981D2E8FA30086F19A /* NewFloozViewController.m in Sources */,
 				C98012861A76921000019682 /* FLTextFieldSignup.m in Sources */,
 				C960DC921BB14D020089B074 /* FLSocialHelper.m in Sources */,
 				C94EF3BB1CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,

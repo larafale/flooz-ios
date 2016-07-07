@@ -19,7 +19,6 @@ def prod_pods
     pod 'TTTAttributedLabel'
     pod 'NSDate+Calendar'
     pod 'MZFormSheetController'
-    pod 'JTSImageViewController'
     pod 'EAIntroView'
     pod 'JPSVolumeButtonHandler'
     pod 'ActionSheetPicker-3.0'
@@ -39,7 +38,7 @@ def prod_pods
     pod 'MGSwipeTableCell'
     pod 'OneSignal'
     pod 'CardIO'
-
+    pod 'JTSImageViewController'
 end
 
 target 'Flooz' do

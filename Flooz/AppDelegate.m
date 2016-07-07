@@ -844,7 +844,11 @@
 
 - (void)showAvatarView:(UIImageView *)view withUrl:(NSURL *)urlImage {
     if (urlImage && ![urlImage.absoluteString isEqualToString:@"/img/fake.png"]) {
-        [[SDImageCache sharedImageCache] queryDiskCacheForKey:urlImage.absoluteString done:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
+        
+        if ([[SDWebImageManager sharedManager] cachedImageExistsForURL:urlImage]) {
+            NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:urlImage];
+            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:key];
+            
             if (image) {
                 JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
                 imageInfo.image = image;
@@ -859,9 +863,14 @@
                 imageViewer.interactionsDelegate = self;
                 
                 [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
-            } else {
+            }
+        } else if ([[SDWebImageManager sharedManager] diskImageExistsForURL:urlImage]) {
+            NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:urlImage];
+            UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
+            
+            if (image) {
                 JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-                imageInfo.imageURL = urlImage;
+                imageInfo.image = image;
                 imageInfo.referenceRect = view.frame;
                 imageInfo.referenceView = view.superview;
                 imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
@@ -871,11 +880,25 @@
                                                        mode:JTSImageViewControllerMode_Image
                                                        backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
                 imageViewer.interactionsDelegate = self;
-                [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
                 
-                [[[SDWebImageManager sharedManager] imageDownloader] downloadImageWithURL:urlImage options:0 progress:nil completed:nil];
+                [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
             }
-        }];
+        } else {
+            JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+            imageInfo.imageURL = urlImage;
+            imageInfo.referenceRect = view.frame;
+            imageInfo.referenceView = view.superview;
+            imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
+            
+            JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                                   initWithImageInfo:imageInfo
+                                                   mode:JTSImageViewControllerMode_Image
+                                                   backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+            imageViewer.interactionsDelegate = self;
+            [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
+
+            [[SDWebImageManager sharedManager] loadImageWithURL:urlImage options:0 progress:nil completed:nil];
+        }
     } else if (urlImage) {
         JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
         imageInfo.image = [UIImage imageNamed:@"fake"];
