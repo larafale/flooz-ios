@@ -138,12 +138,14 @@ static NSString *kLocationData = @"locationData";
 
 - (void)placesFrom:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)placesSearch:(NSString *)search from:(NSString *)ll success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)imagesSearch:(NSString *)search type:(NSString *)type success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 - (void)createParticipationValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)createCollectValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)createTransaction:(NSDictionary *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)createTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 - (void)uploadTransactionPic:(NSString *)transId image:(NSData*)image success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)uploadTransactionPic:(NSString *)transId imageUrl:(NSString*)imageUrl success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)sendSignupSMS:(NSString *)phone;
 - (void)confirmTransactionSMS:(NSString *)floozId validate:(Boolean)validate success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;

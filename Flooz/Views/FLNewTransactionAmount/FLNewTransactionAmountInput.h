@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "VENCalculatorInputTextField.h"
 #import "FLNewTransactionAmountDelegate.h"
 
 @interface FLNewTransactionAmountInput : UIView <UITextFieldDelegate> {
@@ -27,7 +28,7 @@
 	BOOL isEmpty;
 }
 
-@property UITextField *textfield;
+@property VENCalculatorInputTextField *textfield;
 @property (weak, nonatomic) id <FLNewTransactionAmountDelegate> delegate;
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey currencySymbol:(NSString *)symbol andFrame:(CGRect)frame delegate:(id <FLNewTransactionAmountDelegate> )delegate;

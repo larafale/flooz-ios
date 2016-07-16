@@ -11,26 +11,25 @@
 #import "AppDelegate.h"
 #import "NewTransactionViewController.h"
 #import "NewCollectController.h"
+#import "NewFloozViewController.h"
 
 #define LOCATION_BAR_HEIGHT 20
-#define BAR_HEIGHT 50.
+#define BAR_HEIGHT 35.
+#define ACTION_BAR_HEIGHT 37.5
 #define MARGIN_H 5.
-#define MARGIN_V 10.
+#define MARGIN_V 2.5
 
 @implementation FLNewTransactionBar {
     CGFloat heightBar;
     CGFloat widthBar;
     CGFloat marginH;
     CGFloat marginV;
-    CGFloat paymentButtonWidth;
-    CGFloat paymentButtonHeight;
     CGFloat actionButtonWidth;
     CGFloat actionButtonHeight;
     CGFloat actionButtonMargin;
     
-    UIView *separatorButtonBar;
-    
     UIView *tabBarView;
+    UIView *actionView;
     
     UIView *locationView;
     UILabel *locationLabel;
@@ -38,23 +37,22 @@
     
     FLPreset *currentPreset;
     
-    WYPopoverController *popoverController;
-    FLPrivacySelectorViewController *privacyListController;
-    
     BOOL isParticipation;
 }
 
-@synthesize facebookButton;
-@synthesize privacyButton;
+@synthesize textButton;
+@synthesize cameraButton;
+@synthesize gifButton;
 @synthesize imageButton;
 @synthesize askButton;
 @synthesize sendButton;
 @synthesize locationButton;
 @synthesize collectButton;
 @synthesize participateButton;
+@synthesize paymentButtonsSeparator;
 
 - (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller preset:(FLPreset *)preset actionParticipate:(SEL)actionParticipate {
-    heightBar = BAR_HEIGHT;
+    heightBar = BAR_HEIGHT + ACTION_BAR_HEIGHT;
     marginH = MARGIN_H;
     marginV = MARGIN_V;
     widthBar = SCREEN_WIDTH;
@@ -68,9 +66,8 @@
     
     self = [super initWithFrame:CGRectMake(0, 0, widthBar, heightBar)];
     if (self) {
-        paymentButtonWidth = (widthBar / 4.0f) - marginH - (marginH / 2);
-        actionButtonHeight = actionButtonWidth = paymentButtonHeight = BAR_HEIGHT - (marginV * 2.0f);
-        actionButtonMargin = ((widthBar / 2.0f) - (3.0f * actionButtonWidth)) / 4.0f;
+        actionButtonHeight = actionButtonWidth = BAR_HEIGHT - (marginV * 2.0f);
+        actionButtonMargin = (widthBar - (5.0f * actionButtonWidth)) / 6.0f;
         
         _dictionary = dictionary;
         currentController = controller;
@@ -80,31 +77,28 @@
             [self createLocationView];
         
         [self createTabBarView];
-        
-        privacyListController = [[FLPrivacySelectorViewController alloc] initWithPreset:preset];
-        privacyListController.delegate = self;
+        [self createActionBarView];
     }
     return self;
 }
 
 - (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller preset:(FLPreset *)preset actionSend:(SEL)actionSend actionCharge:(SEL)actionCharge{
-    heightBar = BAR_HEIGHT;
+    heightBar = BAR_HEIGHT + ACTION_BAR_HEIGHT;
     marginH = MARGIN_H;
     marginV = MARGIN_V;
     widthBar = SCREEN_WIDTH;
     
     isParticipation = NO;
-
+    
     currentPreset = preset;
-
+    
     if (!IS_IPHONE_4)
         heightBar += LOCATION_BAR_HEIGHT;
     
     self = [super initWithFrame:CGRectMake(0, 0, widthBar, heightBar)];
     if (self) {
-        paymentButtonWidth = (widthBar / 4.0f) - marginH - (marginH / 2);
-        actionButtonHeight = actionButtonWidth = paymentButtonHeight = BAR_HEIGHT - (marginV * 2.0f);
-        actionButtonMargin = ((widthBar / 2.0f) - (3.0f * actionButtonWidth)) / 4.0f;
+        actionButtonHeight = actionButtonWidth = BAR_HEIGHT - (marginV * 2.0f);
+        actionButtonMargin = (widthBar - (5.0f * actionButtonWidth)) / 6.0f;
         
         _dictionary = dictionary;
         currentController = controller;
@@ -115,30 +109,28 @@
             [self createLocationView];
         
         [self createTabBarView];
-        
-        privacyListController = [[FLPrivacySelectorViewController alloc] initWithPreset:preset];
-        privacyListController.delegate = self;
+        [self createActionBarView];
     }
     return self;
 }
+
 - (id)initWithFor:(NSMutableDictionary *)dictionary controller:(UIViewController *)controller preset:(FLPreset *)preset actionCollect:(SEL)actionCollect {
-    heightBar = BAR_HEIGHT;
+    heightBar = BAR_HEIGHT + ACTION_BAR_HEIGHT;
     marginH = MARGIN_H;
     marginV = MARGIN_V;
     widthBar = SCREEN_WIDTH;
     
     isParticipation = NO;
-
+    
     currentPreset = preset;
-
+    
     if (!IS_IPHONE_4)
         heightBar += LOCATION_BAR_HEIGHT;
     
     self = [super initWithFrame:CGRectMake(0, 0, widthBar, heightBar)];
     if (self) {
-        paymentButtonWidth = (widthBar / 4.0f) - marginH - (marginH / 2);
-        actionButtonHeight = actionButtonWidth = paymentButtonHeight = BAR_HEIGHT - (marginV * 2.0f);
-        actionButtonMargin = ((widthBar / 2.0f) - (3.0f * actionButtonWidth)) / 4.0f;
+        actionButtonHeight = actionButtonWidth = BAR_HEIGHT - (marginV * 2.0f);
+        actionButtonMargin = (widthBar - (5.0f * actionButtonWidth)) / 6.0f;
         
         _dictionary = dictionary;
         currentController = controller;
@@ -148,48 +140,12 @@
             [self createLocationView];
         
         [self createTabBarView];
-        
-        privacyListController = [[FLPrivacySelectorViewController alloc] initWithPreset:preset];
-        privacyListController.delegate = self;
+        [self createActionBarView];
     }
     return self;
 }
 
 - (void)reloadData {
-    imageButton.selected = NO;
-    facebookButton.selected = NO;
-    
-    if ([_dictionary objectForKey:@"share"]) {
-        facebookButton.selected = YES;
-    }
-    
-    {
-        NSInteger currentIndex = [FLTransaction transactionParamsToScope:[[Flooz sharedInstance].currentUser.settings objectForKey:@"def"][@"scope"]];
-
-        if (currentPreset && currentPreset.scopeDefined)
-            currentIndex = currentPreset.scope;
-
-        for (NSInteger scope = TransactionScopePublic; scope <= TransactionScopePrivate; ++scope) {
-            if ([[_dictionary objectForKey:@"scope"] isEqualToString:[FLTransaction transactionScopeToParams:scope]]) {
-                currentIndex = scope;
-                break;
-            }
-        }
-        
-        if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-            NSNumber *currentScopeValue = [NSNumber numberWithInteger:currentIndex];
-            if (![currentPreset.scopes containsObject:currentScopeValue])
-                currentIndex = [FLTransaction transactionIDToScope:currentPreset.scopes[0]];
-        }
-        
-        privacyListController.currentScope = currentIndex;
-        
-        [privacyButton setImage:[[FLTransaction transactionScopeToImage:currentIndex] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-        [privacyButton setTintColor:[UIColor whiteColor]];
-        
-        [_dictionary setValue:[FLTransaction transactionScopeToParams:currentIndex] forKey:@"scope"];
-    }
-    
     if (_dictionary[@"geo"]) {
         if (!IS_IPHONE_4) {
             [locationView setHidden:NO];
@@ -202,102 +158,32 @@
     }
 }
 
-- (void)createButtonSend {
-    askButton = [[FLActionButton alloc] initWithFrame:CGRectMake((widthBar / 2) + marginH, marginV, paymentButtonWidth, paymentButtonHeight)];
-    [askButton setTitle:NSLocalizedString(@"MENU_CHARGE", nil) forState:UIControlStateNormal];
-    askButton.titleLabel.font = [UIFont customTitleLight:14];
-    [askButton addTarget:currentController action:actionValidCharge forControlEvents:UIControlEventTouchUpInside];
-    [tabBarView addSubview:askButton];
-    
-    sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake((widthBar / 2) + (widthBar / 4) + (marginH / 2), marginV, paymentButtonWidth, paymentButtonHeight)];
-    [sendButton setTitle:NSLocalizedString(@"MENU_PAYMENT", nil) forState:UIControlStateNormal];
-    sendButton.titleLabel.font = [UIFont customTitleLight:14];
-    [sendButton addTarget:currentController action:actionValidSend forControlEvents:UIControlEventTouchUpInside];
-    [tabBarView addSubview:sendButton];
-    
-    collectButton = [[FLActionButton alloc] initWithFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-    [collectButton setTitle:NSLocalizedString(@"MENU_COLLECT", nil) forState:UIControlStateNormal];
-    collectButton.titleLabel.font = [UIFont customTitleLight:16];
-    [collectButton addTarget:currentController action:actionValidCollect forControlEvents:UIControlEventTouchUpInside];
-    [tabBarView addSubview:collectButton];
-
-    participateButton = [[FLActionButton alloc] initWithFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-    [participateButton setTitle:NSLocalizedString(@"MENU_PARTICIPATE", nil) forState:UIControlStateNormal];
-    participateButton.titleLabel.font = [UIFont customTitleLight:16];
-    [participateButton addTarget:currentController action:actionValidParticipation forControlEvents:UIControlEventTouchUpInside];
-    [tabBarView addSubview:participateButton];
-
-    if (isParticipation) {
-        [collectButton removeFromSuperview];
-        [askButton removeFromSuperview];
-        [sendButton removeFromSuperview];
-    } else if ([currentController isKindOfClass:[NewTransactionViewController class]]) {
-        [participateButton removeFromSuperview];
-        [collectButton removeFromSuperview];
-        if ([_dictionary[@"preset"] boolValue]) {
-            if ([_dictionary[@"method"] isEqualToString:@"pay"]) {
-                [askButton removeFromSuperview];
-                
-                [sendButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-                sendButton.titleLabel.font = [UIFont customTitleLight:16];
-            }
-            else if ([_dictionary[@"method"] isEqualToString:@"charge"]) {
-                [sendButton removeFromSuperview];
-                
-                [askButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-                askButton.titleLabel.font = [UIFont customTitleLight:16];
-            }
-        }
-    } else if ([currentController isKindOfClass:[NewCollectController class]]) {
-        [askButton removeFromSuperview];
-        [sendButton removeFromSuperview];
-        [participateButton removeFromSuperview];
-    }
-}
-
 - (void)hideChargeButton:(BOOL)hidden {
-    if (hidden && askButton.superview != nil){
-        [askButton removeFromSuperview];
-        
-        [sendButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-        sendButton.titleLabel.font = [UIFont customTitleLight:16];
-    } else if (!hidden && askButton.superview == nil) {
-        [sendButton setFrame:CGRectMake((widthBar / 2) + (widthBar / 4) + (marginH / 2), marginV, paymentButtonWidth, paymentButtonHeight)];
-        sendButton.titleLabel.font = [UIFont customTitleLight:14];
-        
-        [tabBarView addSubview:askButton];
-    }
+    //    if (hidden && askButton.superview != nil){
+    //        [askButton removeFromSuperview];
+    //
+    //        [sendButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
+    //        sendButton.titleLabel.font = [UIFont customTitleLight:16];
+    //    } else if (!hidden && askButton.superview == nil) {
+    //        [sendButton setFrame:CGRectMake((widthBar / 2) + (widthBar / 4) + (marginH / 2), marginV, paymentButtonWidth, paymentButtonHeight)];
+    //        sendButton.titleLabel.font = [UIFont customTitleLight:14];
+    //
+    //        [tabBarView addSubview:askButton];
+    //    }
 }
 
 - (void)hidePayButton:(BOOL)hidden {
-    if (hidden && sendButton.superview != nil){
-        [sendButton removeFromSuperview];
-        
-        [askButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-        askButton.titleLabel.font = [UIFont customTitleLight:16];
-    } else if (!hidden && askButton.superview == nil) {
-        [askButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, paymentButtonWidth, paymentButtonHeight)];
-        askButton.titleLabel.font = [UIFont customTitleLight:14];
-        
-        [tabBarView addSubview:sendButton];
-    }
-}
-
-- (void)createTabBarView {
-    CGFloat offsetY = 0;
-    
-    if (!IS_IPHONE_4)
-        offsetY = LOCATION_BAR_HEIGHT;
-    
-    tabBarView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, PPScreenWidth(), BAR_HEIGHT)];
-    tabBarView.backgroundColor = [UIColor customMiddleBlue];
-    
-    [self createPrivacyButton];
-    [self createImageButton];
-    [self createLocationButton];
-    [self createButtonSend];
-    
-    [self addSubview:tabBarView];
+    //    if (hidden && sendButton.superview != nil){
+    //        [sendButton removeFromSuperview];
+    //
+    //        [askButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
+    //        askButton.titleLabel.font = [UIFont customTitleLight:16];
+    //    } else if (!hidden && askButton.superview == nil) {
+    //        [askButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, paymentButtonWidth, paymentButtonHeight)];
+    //        askButton.titleLabel.font = [UIFont customTitleLight:14];
+    //
+    //        [tabBarView addSubview:sendButton];
+    //    }
 }
 
 - (void)createLocationView {
@@ -321,19 +207,47 @@
     [self addSubview:locationView];
 }
 
-- (void)createLocationButton {
-    locationButton = [[UIButton alloc] initWithFrame:CGRectMake((actionButtonMargin * 3) + (actionButtonWidth * 2), marginV, actionButtonWidth, actionButtonHeight)];
-    [locationButton setImage:[[UIImage imageNamed:@"map"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [locationButton setTintColor:[UIColor whiteColor]];
+- (void)createTabBarView {
+    CGFloat offsetY = 0;
     
-    [locationButton addTarget:self action:@selector(didLocationButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    if (!IS_IPHONE_4)
+        offsetY = LOCATION_BAR_HEIGHT;
     
-    [tabBarView addSubview:locationButton];
+    tabBarView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, PPScreenWidth(), BAR_HEIGHT)];
+    tabBarView.backgroundColor = [UIColor customMiddleBlue];
+    
+    [self createTextButton];
+    [self createCameraButton];
+    [self createImageButton];
+    [self createGIFButton];
+    [self createLocationButton];
+    
+    [self addSubview:tabBarView];
+}
+
+- (void)createTextButton {
+    textButton = [[UIButton alloc] initWithFrame:CGRectMake(actionButtonMargin, marginV, actionButtonWidth, actionButtonHeight)];
+    [textButton setImage:[[UIImage imageNamed:@"action-text"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [textButton setTintColor:[UIColor whiteColor]];
+    
+    [textButton addTarget:self action:@selector(didTextButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    
+    [tabBarView addSubview:textButton];
+}
+
+- (void)createCameraButton {
+    cameraButton = [[UIButton alloc] initWithFrame:CGRectMake((actionButtonMargin * 2) + (actionButtonWidth * 1), marginV, actionButtonWidth, actionButtonHeight)];
+    [cameraButton setImage:[[UIImage imageNamed:@"action-camera"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [cameraButton setTintColor:[UIColor whiteColor]];
+    
+    [cameraButton addTarget:self action:@selector(didCameraButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    
+    [tabBarView addSubview:cameraButton];
 }
 
 - (void)createImageButton {
-    imageButton = [[UIButton alloc] initWithFrame:CGRectMake((actionButtonMargin * 2) + actionButtonWidth, marginV, actionButtonWidth, actionButtonHeight)];
-    [imageButton setImage:[[UIImage imageNamed:@"bar-camera"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    imageButton = [[UIButton alloc] initWithFrame:CGRectMake((actionButtonMargin * 3) + (actionButtonWidth * 2), marginV, actionButtonWidth, actionButtonHeight)];
+    [imageButton setImage:[[UIImage imageNamed:@"action-album"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [imageButton setTintColor:[UIColor whiteColor]];
     
     [imageButton addTarget:self action:@selector(didImageButtonTouch) forControlEvents:UIControlEventTouchUpInside];
@@ -341,12 +255,93 @@
     [tabBarView addSubview:imageButton];
 }
 
-- (void)createPrivacyButton {
-    privacyButton = [[UIButton alloc] initWithFrame:CGRectMake(actionButtonMargin, marginV, actionButtonWidth, actionButtonHeight)];
+- (void)createGIFButton {
+    gifButton = [[UIButton alloc] initWithFrame:CGRectMake((actionButtonMargin * 4) + (actionButtonWidth * 3), marginV, actionButtonWidth, actionButtonHeight)];
+    [gifButton setImage:[[UIImage imageNamed:@"action-gif"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [gifButton setTintColor:[UIColor whiteColor]];
     
-    [privacyButton addTarget:self action:@selector(didPrivacyButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    [gifButton addTarget:self action:@selector(didGIFButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     
-    [tabBarView addSubview:privacyButton];
+    [tabBarView addSubview:gifButton];
+}
+
+- (void)createLocationButton {
+    locationButton = [[UIButton alloc] initWithFrame:CGRectMake((actionButtonMargin * 5) + (actionButtonWidth * 4), marginV, actionButtonWidth, actionButtonHeight)];
+    [locationButton setImage:[[UIImage imageNamed:@"action-location"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [locationButton setTintColor:[UIColor whiteColor]];
+    
+    [locationButton addTarget:self action:@selector(didLocationButtonTouch) forControlEvents:UIControlEventTouchUpInside];
+    
+    [tabBarView addSubview:locationButton];
+}
+
+- (void)createActionBarView {
+    actionView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(tabBarView.frame), PPScreenWidth(), ACTION_BAR_HEIGHT)];
+    actionView.backgroundColor = [UIColor customBlue];
+    
+    [self createButtonSend];
+    
+    [self addSubview:actionView];
+}
+
+- (void)createButtonSend {
+    askButton = [[FLActionButton alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth() / 2, ACTION_BAR_HEIGHT)];
+    [askButton setTitle:NSLocalizedString(@"MENU_CHARGE", nil) forState:UIControlStateNormal];
+    askButton.titleLabel.font = [UIFont customTitleLight:17];
+    [askButton addTarget:currentController action:actionValidCharge forControlEvents:UIControlEventTouchUpInside];
+    [actionView addSubview:askButton];
+    
+    sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2, 0, PPScreenWidth() / 2, ACTION_BAR_HEIGHT)];
+    [sendButton setTitle:NSLocalizedString(@"MENU_PAYMENT", nil) forState:UIControlStateNormal];
+    sendButton.titleLabel.font = [UIFont customTitleLight:17];
+    [sendButton addTarget:currentController action:actionValidSend forControlEvents:UIControlEventTouchUpInside];
+    [actionView addSubview:sendButton];
+    
+    collectButton = [[FLActionButton alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), ACTION_BAR_HEIGHT)];
+    [collectButton setTitle:NSLocalizedString(@"MENU_COLLECT", nil) forState:UIControlStateNormal];
+    collectButton.titleLabel.font = [UIFont customTitleLight:18];
+    [collectButton addTarget:currentController action:actionValidCollect forControlEvents:UIControlEventTouchUpInside];
+    [actionView addSubview:collectButton];
+    
+    participateButton = [[FLActionButton alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), ACTION_BAR_HEIGHT)];
+    [participateButton setTitle:NSLocalizedString(@"MENU_PARTICIPATE", nil) forState:UIControlStateNormal];
+    participateButton.titleLabel.font = [UIFont customTitleLight:18];
+    [participateButton addTarget:currentController action:actionValidParticipation forControlEvents:UIControlEventTouchUpInside];
+    [actionView addSubview:participateButton];
+    
+    paymentButtonsSeparator = [[UIView alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 - .5, 5, 1, ACTION_BAR_HEIGHT - 10)];
+    [paymentButtonsSeparator setBackgroundColor:[UIColor whiteColor]];
+    [actionView addSubview:paymentButtonsSeparator];
+    
+    if (isParticipation) {
+        [collectButton removeFromSuperview];
+        [askButton removeFromSuperview];
+        [sendButton removeFromSuperview];
+        [paymentButtonsSeparator removeFromSuperview];
+    } else if ([currentController isKindOfClass:[NewFloozViewController class]]) {
+        [participateButton removeFromSuperview];
+        [collectButton removeFromSuperview];
+        if ([_dictionary[@"preset"] boolValue]) {
+            if ([_dictionary[@"method"] isEqualToString:@"pay"]) {
+                [askButton removeFromSuperview];
+                [paymentButtonsSeparator removeFromSuperview];
+                
+                [sendButton setFrame:CGRectMake(0, 0, PPScreenWidth(), ACTION_BAR_HEIGHT)];
+                sendButton.titleLabel.font = [UIFont customTitleLight:18];
+            }
+            else if ([_dictionary[@"method"] isEqualToString:@"charge"]) {
+                [sendButton removeFromSuperview];
+                [paymentButtonsSeparator removeFromSuperview];
+                
+                [askButton setFrame:CGRectMake(0, 0, PPScreenWidth(), ACTION_BAR_HEIGHT)];
+                askButton.titleLabel.font = [UIFont customTitleLight:18];
+            }
+        }
+    } else if ([currentController isKindOfClass:[NewCollectController class]]) {
+        [askButton removeFromSuperview];
+        [sendButton removeFromSuperview];
+        [participateButton removeFromSuperview];
+    }
 }
 
 - (void)enablePaymentButtons:(BOOL)enable {
@@ -355,6 +350,30 @@
 }
 
 #pragma mark -
+
+- (void)didTextButtonTouch {
+    if (_delegate){
+        [_delegate focusDescription];
+    }
+}
+
+- (void)didCameraButtonTouch {
+    if (_delegate){
+        [_delegate presentCamera];
+    }
+}
+
+- (void)didImageButtonTouch {
+    if (_delegate){
+        [_delegate presentImagePicker];
+    }
+}
+
+- (void)didGIFButtonTouch {
+    if (_delegate){
+        [_delegate presentGIFPicker];
+    }
+}
 
 - (void)didLocationButtonTouch {
     locationManager = [CLLocationManager new];
@@ -365,68 +384,10 @@
     if ([CLLocationManager locationServicesEnabled]) {
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 && ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways)) {
             [locationManager requestWhenInUseAuthorization];
-        } else {
-            [(NewTransactionViewController *)currentController presentLocation];
+        } else if (_delegate){
+            [_delegate presentLocation];
         }
     }
-}
-
-- (void)didImageButtonTouch {
-    [(NewTransactionViewController *)currentController presentCamera];
-}
-
-- (void)didFacebookButtonTouch {
-    facebookButton.selected = !facebookButton.selected;
-    
-    if (facebookButton.selected) {
-        [_dictionary setValue:[[Flooz sharedInstance] facebook_token] forKey:@"share"];
-        if (![[Flooz sharedInstance] facebook_token]) {
-            [[Flooz sharedInstance] connectFacebook];
-        }
-    }
-    else {
-        [_dictionary setValue:nil forKey:@"share"];
-    }
-}
-
-- (void)didPrivacyButtonTouch {
-    if (currentPreset && currentPreset.blockScope)
-        return;
-    
-    if (self.delegate)
-        [self.delegate scopePopoverWillAppear];
-    
-    popoverController = [[WYPopoverController alloc] initWithContentViewController:privacyListController];
-    popoverController.delegate = self;
-    popoverController.theme.dimsBackgroundViewsTintColor = NO;
-    
-    [popoverController presentPopoverFromRect:privacyButton.bounds inView:privacyButton permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
-}
-
-- (void)scopeChange:(TransactionScope)scope {
-    [_dictionary setValue:[FLTransaction transactionScopeToParams:scope] forKey:@"scope"];
-    [privacyButton setImage:[[FLTransaction transactionScopeToImage:scope] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    
-    [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-        if (self.delegate)
-            [self.delegate scopePopoverDidDisappear];
-    }];
-}
-
-- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
-{
-    return YES;
-}
-
-- (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller
-{
-    if (self.delegate)
-        [self.delegate scopePopoverDidDisappear];
-}
-
-- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(float *)value
-{
-    *value = 0;
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -440,10 +401,15 @@
             
         } break;
         case kCLAuthorizationStatusAuthorizedWhenInUse:
-            [(NewTransactionViewController *)currentController presentLocation];
+            if (_delegate){
+                [_delegate presentLocation];
+            }
         case kCLAuthorizationStatusAuthorizedAlways: {
-            [(NewTransactionViewController *)currentController presentLocation];
-        } break;
+            if (_delegate){
+                [_delegate presentLocation];
+            }
+        }
+            break;
         default:
             break;
     }

@@ -33,6 +33,11 @@
     return self;
 }
 
+- (void)setImage:(UIImage *)image {
+    [progressView setHidden:YES];
+    [super setImage:image];
+}
+
 - (void)setImageWithURL:(NSURL *)url fullScreenURL:(NSURL *)fullScreenURL {
     //    [super sd_setImageWithURL:url];
     

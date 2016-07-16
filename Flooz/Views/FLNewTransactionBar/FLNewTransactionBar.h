@@ -16,12 +16,15 @@
 
 @protocol FLNewTransactionBarDelegate <NSObject>
 
-- (void) scopePopoverWillAppear;
-- (void) scopePopoverDidDisappear;
+- (void)presentCamera;
+- (void)presentLocation;
+- (void)presentImagePicker;
+- (void)presentGIFPicker;
+- (void)focusDescription;
 
 @end
 
-@interface FLNewTransactionBar : UIView <CLLocationManagerDelegate, WYPopoverControllerDelegate, FLPrivacySelectorDelegate> {
+@interface FLNewTransactionBar : UIView <CLLocationManagerDelegate> {
 	SEL actionValidSend;
 	SEL actionValidCollect;
     SEL actionValidCharge;
@@ -34,12 +37,14 @@
 }
 
 @property (weak) id <FLNewTransactionBarDelegate> delegate;
-@property (nonatomic, retain) UIButton *imageButton;;
-@property (nonatomic, retain) UIButton *facebookButton;;
-@property (nonatomic, retain) UIButton *privacyButton;;
-@property (nonatomic, retain) UIButton *locationButton;;
-@property (nonatomic, retain) FLActionButton *askButton;;
-@property (nonatomic, retain) FLActionButton *sendButton;;
+@property (nonatomic, retain) UIButton *cameraButton;
+@property (nonatomic, retain) UIButton *imageButton;
+@property (nonatomic, retain) UIButton *gifButton;
+@property (nonatomic, retain) UIButton *textButton;;
+@property (nonatomic, retain) UIButton *locationButton;
+@property (nonatomic, retain) UIView *paymentButtonsSeparator;
+@property (nonatomic, retain) FLActionButton *askButton;
+@property (nonatomic, retain) FLActionButton *sendButton;
 @property (nonatomic, retain) FLActionButton *collectButton;
 @property (nonatomic, retain) FLActionButton *participateButton;
 

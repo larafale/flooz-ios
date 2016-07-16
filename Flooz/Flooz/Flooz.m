@@ -984,6 +984,15 @@
     } failure:failure];
 }
 
+- (void)imagesSearch:(NSString *)search type:(NSString *)type success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [self requestPath:@"/images/search" method:@"GET" params:@{@"type": type, @"q": search} success:^(id result) {
+        NSArray *items = result[@"items"];
+        
+        if (success)
+            success(items);
+    } failure:failure];
+}
+
 - (void)createCollectValidate:(NSDictionary *)transaction success:(void (^)(id result))success {
     NSMutableDictionary *tempTransaction = [transaction mutableCopy];
     
@@ -1098,6 +1107,27 @@
         [formData appendPartWithFileData:image name:@"image" fileName:@"image.jpg" mimeType:@"image/jpg"];
     }];
 }
+
+- (void)uploadTransactionPic:(NSString *)transId imageUrl:(NSString*)imageUrl success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReloadTimeline object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRefreshTransaction object:nil userInfo:@{@"_id":transId}];
+        
+        if (success) {
+            success(result);
+        }
+    };
+    
+    id failureBlock = ^(NSURLSessionTask *task, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    };
+    
+    [self requestPath:[NSString stringWithFormat:@"/flooz/%@/pic", transId] method:@"POST" params:@{@"imageUrl" : imageUrl} success:successBlock failure:failureBlock];
+}
+
 
 - (void)updateTransactionValidate:(NSDictionary *)transaction success:(void (^)(id result))success;
 {

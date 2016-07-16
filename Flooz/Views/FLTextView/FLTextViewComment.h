@@ -19,7 +19,7 @@
 	CGFloat maxHeight;
 }
 
-@property (weak, nonatomic) UIView <FLViewDelegate> *delegate;
+@property (weak, nonatomic) id<FLViewDelegate> delegate;
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey frame:(CGRect)frame;
 - (void)setInputAccessoryView:(UIView *)accessoryView;
@@ -28,5 +28,6 @@
 - (void)setMaxHeight:(CGFloat)height;
 - (void)setWidth:(CGFloat)width;
 - (void)reload;
+- (void)addTextFocusTarget:(id)instance action:(SEL)action;
 
 @end

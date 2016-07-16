@@ -101,22 +101,22 @@
         
         infoDisplayed = NO;
         firstView = YES;
-        isDemo = currentPreset.popup != NULL || currentPreset.steps != NULL;
-        
-        if (!currentPreset.isParticipation) {
-            if (currentPreset.to && currentPreset.to.username) {
-                presetUser = currentPreset.to;
-                transaction[@"to"] = [@"@" stringByAppendingString :[currentPreset.to username]];
-            }
-        } else {
-            transaction[@"potId"] = currentPreset.presetId;
-        }
-        
-        if (currentPreset.title && ![currentPreset.title isBlank])
-            self.title = currentPreset.title;
-        else
-            self.title = NSLocalizedString(@"NEW_TRANSACTION", nil);
-        
+//        isDemo = currentPreset.popup != NULL || currentPreset.steps != NULL;
+//        
+//        if (!currentPreset.isParticipation) {
+//            if (currentPreset.to && currentPreset.to.username) {
+//                presetUser = currentPreset.to;
+//                transaction[@"to"] = [@"@" stringByAppendingString :[currentPreset.to username]];
+//            }
+//        } else {
+//            transaction[@"potId"] = currentPreset.presetId;
+//        }
+//        
+//        if (currentPreset.title && ![currentPreset.title isBlank])
+//            self.title = currentPreset.title;
+//        else
+//            self.title = NSLocalizedString(@"NEW_TRANSACTION", nil);
+//        
         if (currentPreset.amount) {
             transaction[@"amount"] = [FLHelper formatedAmount:currentPreset.amount withCurrency:NO withSymbol:NO];
         }
@@ -510,41 +510,41 @@
 #pragma mark - demo handler
 
 - (void)launchDemo {
-    [demoTimer invalidate];
-    demoTimer = nil;
-    if (currentPreset.popup) {
-        [[[FLPopupTrigger alloc] initWithData:currentPreset.popup dismiss:^{
-            if (currentPreset.popup[@"triggers"]) {
-                [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:currentPreset.popup[@"triggers"]]];
-            }
-            
-            if (currentPreset.steps) {
-                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-            }
-            currentPreset.popup = nil;
-        }] show];
-    } else if (currentPreset.steps) {
-        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-    }
+//    [demoTimer invalidate];
+//    demoTimer = nil;
+//    if (currentPreset.popup) {
+//        [[[FLPopupTrigger alloc] initWithData:currentPreset.popup dismiss:^{
+//            if (currentPreset.popup[@"triggers"]) {
+//                [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:currentPreset.popup[@"triggers"]]];
+//            }
+//            
+//            if (currentPreset.steps) {
+//                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//            }
+//            currentPreset.popup = nil;
+//        }] show];
+//    } else if (currentPreset.steps) {
+//        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//    }
 }
 
 - (void) showDemoStepPopover:(NSDictionary*)stepData {
-    tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:stepData[@"title"] message:stepData[@"desc"] step:[NSNumber numberWithInt:currentDemoStep + 1] button:stepData[@"btn"] action:^(FLTutoPopoverViewController *viewController) {
-        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-            if ([stepData[@"focus"] isEqualToString:@"why"]) {
-                [content becomeFirstResponder];
-            }
-            else if ([stepData[@"focus"] isEqualToString:@"to"]) {
-                [contactPickerView becomeFirstResponder];
-            }
-            else if ([stepData[@"focus"] isEqualToString:@"scope"]) {
-                [transactionBar.privacyButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-            }
-            else if (currentDemoStep < currentPreset.steps.count) {
-                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-            }
-        }];
-    }];
+//    tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:stepData[@"title"] message:stepData[@"desc"] step:[NSNumber numberWithInt:currentDemoStep + 1] button:stepData[@"btn"] action:^(FLTutoPopoverViewController *viewController) {
+//        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+//            if ([stepData[@"focus"] isEqualToString:@"why"]) {
+//                [content becomeFirstResponder];
+//            }
+//            else if ([stepData[@"focus"] isEqualToString:@"to"]) {
+//                [contactPickerView becomeFirstResponder];
+//            }
+//            else if ([stepData[@"focus"] isEqualToString:@"scope"]) {
+//                [transactionBar.privacyButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+//            }
+//            else if (currentDemoStep < currentPreset.steps.count) {
+//                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//            }
+//        }];
+//    }];
     popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
     [popoverController setTheme:[FLPopoverTutoTheme theme]];
     [popoverController setDelegate:self];
@@ -553,8 +553,8 @@
     [popoverController presentPopoverFromRect:[self getDemoStepPopoverRect:stepData[@"focus"]] inView:[self getDemoStepPopoverView:stepData[@"focus"]] permittedArrowDirections:[self getDemoStepPopoverArrowDirection:stepData[@"focus"]] animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
     ++currentDemoStep;
     
-    if (currentDemoStep == currentPreset.steps.count)
-        isDemo = false;
+//    if (currentDemoStep == currentPreset.steps.count)
+//        isDemo = false;
 }
 
 - (CGRect) getDemoStepPopoverRect:(NSString*)focus {
@@ -574,30 +574,30 @@
 }
 
 - (UIView*) getDemoStepPopoverView:(NSString*)focus {
-    if ([focus isEqualToString:@"amount"]) {
-        return amountInput;
-    }
-    if ([focus isEqualToString:@"to"]) {
-        return contactPickerView;
-    }
-    if ([focus isEqualToString:@"fb"]) {
-        return transactionBar.facebookButton;
-    }
-    if ([focus isEqualToString:@"image"]) {
-        return transactionBar.imageButton;
-    }
-    if ([focus isEqualToString:@"scope"]) {
-        return transactionBar.privacyButton;
-    }
-    if ([focus isEqualToString:@"why"]) {
-        return content;
-    }
-    if ([focus isEqualToString:@"pay"]) {
-        return transactionBar.sendButton;
-    }
-    if ([focus isEqualToString:@"geo"]) {
-        return transactionBar.locationButton;
-    }
+//    if ([focus isEqualToString:@"amount"]) {
+//        return amountInput;
+//    }
+//    if ([focus isEqualToString:@"to"]) {
+//        return contactPickerView;
+//    }
+//    if ([focus isEqualToString:@"fb"]) {
+//        return transactionBar.facebookButton;
+//    }
+//    if ([focus isEqualToString:@"image"]) {
+//        return transactionBar.imageButton;
+//    }
+//    if ([focus isEqualToString:@"scope"]) {
+//        return transactionBar.privacyButton;
+//    }
+//    if ([focus isEqualToString:@"why"]) {
+//        return content;
+//    }
+//    if ([focus isEqualToString:@"pay"]) {
+//        return transactionBar.sendButton;
+//    }
+//    if ([focus isEqualToString:@"geo"]) {
+//        return transactionBar.locationButton;
+//    }
     return nil;
 }
 
@@ -630,18 +630,18 @@
 }
 
 - (NSArray*) getDemoStepPopoverPassthroughViews:(NSString*)focus {
-    if ([focus isEqualToString:@"to"]) {
-        return @[contactPickerView];
-    }
-    if ([focus isEqualToString:@"scope"]) {
-        return @[transactionBar.privacyButton];
-    }
-    if ([focus isEqualToString:@"why"]) {
-        return @[content];
-    }
-    if ([focus isEqualToString:@"pay"]) {
-        return @[transactionBar.sendButton];
-    }
+//    if ([focus isEqualToString:@"to"]) {
+//        return @[contactPickerView];
+//    }
+//    if ([focus isEqualToString:@"scope"]) {
+//        return @[transactionBar.privacyButton];
+//    }
+//    if ([focus isEqualToString:@"why"]) {
+//        return @[content];
+//    }
+//    if ([focus isEqualToString:@"pay"]) {
+//        return @[transactionBar.sendButton];
+//    }
     return @[];
 }
 
@@ -654,9 +654,9 @@
 }
 
 - (void) scopePopoverDidDisappear {
-    if (isDemo && currentDemoStep < currentPreset.steps.count) {
-        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-    }
+//    if (isDemo && currentDemoStep < currentPreset.steps.count) {
+//        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//    }
 }
 
 #pragma mark - popover delegate
@@ -674,25 +674,25 @@
 #pragma mark - contact picker delegate
 
 - (void)userSelected:(FLUser *)user {
-    presetUser = user;
-    if (user.userKind == CactusUser)
-        [contactPickerView addContact:user withName:user.phone];
-    else
-        [contactPickerView addContact:user withName:user.fullname];
-    
-    if (contactPickerVisible) {
-        [pickerTableView removeFromSuperview];
-        contactPickerVisible = NO;
-    }
-    if (isDemo && currentDemoStep < currentPreset.steps.count) {
-        [self.view endEditing:YES];
-        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-    }
-    else if (transaction[@"why"] && ![transaction[@"why"] isBlank])
-        [self.view endEditing:YES];
-    else
-        [content becomeFirstResponder];
-    [self validateView];
+//    presetUser = user;
+//    if (user.userKind == CactusUser)
+//        [contactPickerView addContact:user withName:user.phone];
+//    else
+//        [contactPickerView addContact:user withName:user.fullname];
+//    
+//    if (contactPickerVisible) {
+//        [pickerTableView removeFromSuperview];
+//        contactPickerVisible = NO;
+//    }
+//    if (isDemo && currentDemoStep < currentPreset.steps.count) {
+//        [self.view endEditing:YES];
+//        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//    }
+//    else if (transaction[@"why"] && ![transaction[@"why"] isBlank])
+//        [self.view endEditing:YES];
+//    else
+//        [content becomeFirstResponder];
+//    [self validateView];
 }
 
 - (void)amountDidBeginEditing {
@@ -747,35 +747,35 @@
 }
 
 - (BOOL)contactPickerTextFieldShouldReturn:(UITextField *)textField {
-    NSString *text = textField.text;
-    text = [FLHelper formatedPhone:text];
-    if (text) {
-        FLUser *user = [FLUser new];
-        user.username = text;
-        user.phone = text;
-        user.userKind = CactusUser;
-        presetUser = user;
-        
-        [contactPickerView addContact:user withName:text];
-    } else {
-        [contactPickerView removeAllContacts];
-    }
-    if (contactPickerVisible) {
-        [pickerTableView removeFromSuperview];
-        contactPickerVisible = NO;
-    }
-    if (isDemo && currentDemoStep < currentPreset.steps.count) {
-        [self.view endEditing:YES];
-        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-    }
-    else if (transaction[@"why"] && ![transaction[@"why"] isBlank])
-        [self.view endEditing:YES];
-    else {
-        [content becomeFirstResponder];
-        [self validateView];
-        return NO;
-    }
-    [self validateView];
+//    NSString *text = textField.text;
+//    text = [FLHelper formatedPhone:text];
+//    if (text) {
+//        FLUser *user = [FLUser new];
+//        user.username = text;
+//        user.phone = text;
+//        user.userKind = CactusUser;
+//        presetUser = user;
+//        
+//        [contactPickerView addContact:user withName:text];
+//    } else {
+//        [contactPickerView removeAllContacts];
+//    }
+//    if (contactPickerVisible) {
+//        [pickerTableView removeFromSuperview];
+//        contactPickerVisible = NO;
+//    }
+//    if (isDemo && currentDemoStep < currentPreset.steps.count) {
+//        [self.view endEditing:YES];
+//        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//    }
+//    else if (transaction[@"why"] && ![transaction[@"why"] isBlank])
+//        [self.view endEditing:YES];
+//    else {
+//        [content becomeFirstResponder];
+//        [self validateView];
+//        return NO;
+//    }
+//    [self validateView];
     return YES;
 }
 

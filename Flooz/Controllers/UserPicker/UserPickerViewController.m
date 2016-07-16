@@ -8,6 +8,7 @@
 
 #import "UserPickerViewController.h"
 #import "FriendAddSearchBar.h"
+#import "NewFloozViewController.h"
 
 @interface UserPickerViewController() {
     UIBarButtonItem *searchItem;
@@ -17,16 +18,32 @@
     
     BOOL isSearching;
     NSString *searchString;
-
+    
 }
 
 @end
 
 @implementation UserPickerViewController
 
++ (id)newWithDelegate:(id<UserPickerViewControllerDelegate>)delegate {
+    return [[UserPickerViewController alloc] initWithDelegate:delegate];
+}
+
+- (id)initWithDelegate:(id<UserPickerViewControllerDelegate>)delegate {
+    self = [super init];
+    if (self) {
+        self.delegate = delegate;
+        
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (!self.title || [self.title isBlank])
+        self.title = NSLocalizedString(@"NAV_USER_PICKER", @"");
+
     searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
     [searchItem setTintColor:[UIColor customBlue]];
     
@@ -37,7 +54,6 @@
     
     tableView = [[FLUserPickerTableView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
     [tableView setPickerDelegate:self];
-    [tableView initializeView];
     
     [_mainBody addSubview:_searchBar];
     [_mainBody addSubview:tableView];
@@ -47,11 +63,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    [tableView initializeView];
-
     
     [self registerForKeyboardNotifications];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [tableView initializeView];
 }
 
 - (void)didFilterChange:(NSString *)text {
@@ -69,7 +88,35 @@
 }
 
 - (void)userSelected:(FLUser *)user {
-
+    
+    if (_delegate) {
+        [_delegate user:user pickedFrom:self];
+    } else {
+        NSMutableDictionary *data = [NSMutableDictionary new];
+        
+        if (user.userKind == FloozUser) {
+            data[@"to"] = user.username;
+            data[@"toFullName"] = user.fullname;
+            data[@"block"] = user.blockObject;
+        } else {
+            data[@"to"] = user.username;
+            data[@"toFullName"] = user.fullname;
+            if (user.firstname || user.lastname) {
+                NSMutableDictionary *contact = [NSMutableDictionary new];
+                if (![user.firstname isBlank]) {
+                    [contact setValue:user.firstname forKey:@"firstName"];
+                }
+                
+                if (![user.lastname isBlank]) {
+                    [contact setValue:user.lastname forKey:@"lastName"];
+                }
+            }
+        }
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:[[NewFloozViewController alloc] initWithTriggerData:data]] animated:YES completion:nil];
+        }];
+    }
 }
 
 - (void)showSearch {

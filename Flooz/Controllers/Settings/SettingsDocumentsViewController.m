@@ -150,13 +150,15 @@
     [view setTitleEdgeInsets:UIEdgeInsetsMake(0, 10.0f, 0, 0)];
     
     {
-        UIImageView *imageView = [UIImageView imageNamed:@"friends-field-in"];
+        UIImageView *imageView = [UIImageView new];
         if ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:key] intValue] == 0){
             imageView = [UIImageView imageNamed:@"document-refused"];
-        }
-        if ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:key] intValue] == 3){
+        } else if ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:key] intValue] == 1 || [[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:key] intValue] == 2) {
+            imageView = [UIImageView imageNamed:@"friends-field-in"];
+        } else if ([[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:key] intValue] == 3 || [[[[[Flooz sharedInstance] currentUser] checkDocuments] objectForKey:key] intValue] == 4){
             imageView = [UIImageView imageNamed:@"friends-field-add"];
         }
+        
         [documentsButton addObject:imageView];
         CGRectSetXY(imageView.frame, CGRectGetWidth(view.frame) - CGRectGetWidth(imageView.frame), (CGRectGetHeight(view.frame) - CGRectGetHeight(imageView.frame)) / 2.0f);
         [view addSubview:imageView];

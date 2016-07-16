@@ -25,7 +25,7 @@
     if (self) {
         firstInit = YES;
         isLoadingSearch = NO;
-
+        
         self.delegate = self;
         self.dataSource = self;
         self.backgroundColor = [UIColor customBackgroundHeader];
@@ -85,9 +85,9 @@
         
         if ([_filteredContacts count] == 0)
             _filteredContacts = _contactsFromAdressBook;
-
+        
         isLoadingSearch = NO;
-
+        
         [self reloadData];
     } else {
         [self didFilterChange];
@@ -140,7 +140,7 @@
         
         isLoadingSearch = YES;
         [self reloadData];
-
+        
         [[Flooz sharedInstance] friendSearch:_selectionText forNewFlooz:YES withPhones:phoneArray success: ^(id result, NSString *searchString) {
             if (searchString && ![searchString isEqualToString:_selectionText])
                 return;
@@ -183,7 +183,7 @@
                 [_filteredContacts addObjectsFromArray:_friendsSearch];
             
             isLoadingSearch = NO;
-
+            
             [self reloadData];
         }];
     } else {
@@ -193,7 +193,7 @@
             _filteredContacts = _contactsFromAdressBook;
         
         isLoadingSearch = NO;
-
+        
         [self reloadData];
     }
 }
@@ -255,7 +255,7 @@
     } else {
         if (isLoadingSearch)
             return [LoadingCell getHeight];
-
+        
         if (![_filteredContacts count])
             return [FriendPickerFriendCell getHeight];
         
@@ -375,7 +375,10 @@
 - (void)requestAddressBookPermission {
     [[Flooz sharedInstance] grantedAccessToContacts: ^(BOOL granted) {
         if (granted) {
-            [self didAddressBookPermissionGranted];
+            dispatch_queue_t queue = dispatch_queue_create("me.flooz.app.contact", NULL);
+            dispatch_async(queue, ^{
+                [self didAddressBookPermissionGranted];
+            });
         }
         else {
             
@@ -431,11 +434,15 @@
     
     _contactsFromAdressBook = [self processContacts:_contactsFromAdressBook];
     
-//    if (![[NSUserDefaults standardUserDefaults] objectForKey:kSendContact] || ![[NSUserDefaults standardUserDefaults] boolForKey:kSendContact]) {
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:kSendContact] || ![[NSUserDefaults standardUserDefaults] boolForKey:kSendContact]) {
         [[Flooz sharedInstance] createContactList:^(NSMutableArray *arrayContactAdressBook, NSMutableArray *arrayContactFlooz) {
-//            [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kSendContact];
+            [[Flooz sharedInstance] saveSettingsObject:@YES withKey:kSendContact];
         } atSignup:YES];
-//    }
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self reloadData];
+    });
 }
 
 - (NSMutableArray *)processContacts:(NSArray *)contacts {

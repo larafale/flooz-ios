@@ -88,6 +88,7 @@ PODS:
   - UICKeyChainStore (2.1.0)
   - UIFloatLabelTextField (1.2.4)
   - VCTransitionsLibrary (1.5.0)
+  - VENCalculatorInputView (1.5.4)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
@@ -127,6 +128,7 @@ DEPENDENCIES:
   - UICKeyChainStore
   - UIFloatLabelTextField
   - VCTransitionsLibrary
+  - VENCalculatorInputView (~> 1.5)
 
 EXTERNAL SOURCES:
   SDWebImage:
@@ -177,7 +179,8 @@ SPEC CHECKSUMS:
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
   UIFloatLabelTextField: bb30a4ae6720a89fc9fb51134f39f0e776ff9551
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
+  VENCalculatorInputView: 988fa681ba6bb9b1f067842493bb622e80cc8da2
 
-PODFILE CHECKSUM: 3d55103c57d514f7cbabf6327c4e38b6a6a74acb
+PODFILE CHECKSUM: c0a1ad59d4dceae2690b7cbf7b2bbb33f70fa75f
 
 COCOAPODS: 1.0.1

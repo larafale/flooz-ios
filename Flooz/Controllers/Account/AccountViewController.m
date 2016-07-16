@@ -184,6 +184,9 @@
     
     if ([missingFields containsObject:@"cniVerso"])
         docNotifs++;
+
+    if ([missingFields containsObject:@"card"])
+        docNotifs++;
     
     if ([missingFields containsObject:@"address"])
         coordsNotifs++;

@@ -10,6 +10,9 @@
 
 @implementation FLTextViewComment {
     CGRect fr;
+    
+    id focusId;
+    SEL focusAction;
 }
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey frame:(CGRect)frame {
@@ -65,8 +68,17 @@
 
 #pragma mark - UITextViewDelegate
 
+- (void)addTextFocusTarget:(id)instance action:(SEL)action {
+    focusId = instance;
+    focusAction = action;
+}
+
 - (void)textViewDidBeginEditing:(UITextView *)textView {
 //    _placeholder.hidden = YES;
+    
+    if (focusId) {
+        [focusId performSelector:focusAction withObject:@YES];
+    }
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
@@ -76,6 +88,10 @@
     }
     else {
         [_dictionary setValue:textView.text forKey:_dictionaryKey];
+    }
+    
+    if (focusId) {
+        [focusId performSelector:focusAction withObject:@NO];
     }
 }
 
@@ -161,6 +177,10 @@
 
 - (BOOL)becomeFirstResponder {
     return [_textView becomeFirstResponder];
+}
+
+- (BOOL)isFirstResponder {
+    return [_textView isFirstResponder];
 }
 
 - (void)setHeight:(CGFloat)height {

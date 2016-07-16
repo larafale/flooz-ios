@@ -19,6 +19,15 @@
 }
 
 + (id)createCloseButtonWithTarget:(id)target action:(SEL)action {
+    UIImage *image = [[FLHelper imageWithImage:[UIImage imageNamed:@"navbar-cross"] scaledToSize:CGSizeMake(20, 20)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(image.size)];
+    [button setTintColor:[UIColor customBlue]];
+    [button setImage:image  forState:UIControlStateNormal];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    
+    return [[UIBarButtonItem alloc] initWithCustomView:button];
+    
 	return [UIBarButtonItem barButtonWithImageNamed:@"navbar-cross" target:target action:action];
 }
 

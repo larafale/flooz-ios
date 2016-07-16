@@ -32,6 +32,7 @@
 #import "UserViewController.h"
 #import "FLNavigationController.h"
 #import "CollectViewController.h"
+#import "JTSAnimatedGIFUtility.h"
 
 @interface AppDelegate() {
     NSDictionary *tmpUser;
@@ -845,44 +846,29 @@
 - (void)showAvatarView:(UIImageView *)view withUrl:(NSURL *)urlImage {
     if (urlImage && ![urlImage.absoluteString isEqualToString:@"/img/fake.png"]) {
         
-        if ([[SDWebImageManager sharedManager] cachedImageExistsForURL:urlImage]) {
-            NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:urlImage];
-            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:key];
-            
-            if (image) {
-                JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-                imageInfo.image = image;
-                imageInfo.referenceRect = view.frame;
-                imageInfo.referenceView = view.superview;
-                imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
+        if ([[SDWebImageManager sharedManager] cachedImageExistsForURL:urlImage] || [[SDWebImageManager sharedManager] diskImageExistsForURL:urlImage]) {
+            [[SDWebImageManager sharedManager] loadImageWithURL:urlImage options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
                 
-                JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-                                                       initWithImageInfo:imageInfo
-                                                       mode:JTSImageViewControllerMode_Image
-                                                       backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
-                imageViewer.interactionsDelegate = self;
+                if ([JTSAnimatedGIFUtility imageURLIsAGIF:urlImage.absoluteString]) {
+                    image = [JTSAnimatedGIFUtility animatedImageWithAnimatedGIFData:data];
+                }
                 
-                [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
-            }
-        } else if ([[SDWebImageManager sharedManager] diskImageExistsForURL:urlImage]) {
-            NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:urlImage];
-            UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
-            
-            if (image) {
-                JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-                imageInfo.image = image;
-                imageInfo.referenceRect = view.frame;
-                imageInfo.referenceView = view.superview;
-                imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
-                
-                JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-                                                       initWithImageInfo:imageInfo
-                                                       mode:JTSImageViewControllerMode_Image
-                                                       backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
-                imageViewer.interactionsDelegate = self;
-                
-                [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
-            }
+                if (image) {
+                    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+                    imageInfo.image = image;
+                    imageInfo.referenceRect = view.frame;
+                    imageInfo.referenceView = view.superview;
+                    imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
+                    
+                    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                                           initWithImageInfo:imageInfo
+                                                           mode:JTSImageViewControllerMode_Image
+                                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+                    imageViewer.interactionsDelegate = self;
+                    
+                    [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
+                }
+            }];
         } else {
             JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
             imageInfo.imageURL = urlImage;

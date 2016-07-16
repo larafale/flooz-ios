@@ -17,6 +17,7 @@
 "GLOBAL_CANCEL" = "Annuler";
 "GLOBAL_CAMERA" = "Appareil photo";
 "GLOBAL_ALBUMS" = "Albums";
+"GLOBAL_WEB" = "Web";
 "GLOBAL_EURO" = "€";
 "GLOBAL_SEND" = "Publier";
 "GLOBAL_YES" = "Oui";
@@ -86,7 +87,7 @@
 
 "FIELD_TRANSACTION_TO" = "À :";
 "FIELD_TRANSACTION_TO_PLACEHOLDER" = "nom, pseudo ou 06";
-"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Ex: Pour le resto";
+"FIELD_TRANSACTION_CONTENT_PLACEHOLDER" = "Ex: Pour le resto 🍕";
 "FIELD_TRANSACTION_SELECT_FRIEND" = "A qui ?";
 
 "FIELD_COLLECT_NAME_PLACEHOLDER" = "Nom de la cagnotte";
@@ -288,6 +289,7 @@
 "NAV_SHARESMS" = "Partager l'app";
 "NAV_SECURECODE" = "Code Secret";
 "NAV_PAY_SOURCE" = "Moyens de paiement";
+"NAV_USER_PICKER" = "Choisir un destinataire";
 
 /************************************/
 /*         ALERTS / ERROR           */
@@ -354,10 +356,20 @@
 "TRANSACTION_STATUS_REFUSED" = "Refused";
 "TRANSACTION_STATUS_PENDING" = "Waiting";
 
-"TRANSACTION_SCOPE_TITLE" = "Qui peut voir ce Flooz :";
+"TRANSACTION_SCOPE_TITLE" = "Qui peut voir ça ?";
+"TRANSACTION_SCOPE_POT_TITLE" = "Qui peut voir ça ?";
+
 "TRANSACTION_SCOPE_PUBLIC" = "Tout le monde";
 "TRANSACTION_SCOPE_FRIEND" = "Mes amis & moi";
 "TRANSACTION_SCOPE_PRIVATE" = "Moi uniquement";
+
+"TRANSACTION_SCOPE_SUB_PUBLIC" = "Visible sur le fil d'actualité Flooz";
+"TRANSACTION_SCOPE_SUB_FRIEND" = "Visible par vos amis sur Flooz";
+"TRANSACTION_SCOPE_SUB_PRIVATE" = "Seul les personnes concernées pourront accéder à ce Flooz";
+
+"TRANSACTION_SCOPE_SUB_POT_PUBLIC" = "Visible sur le fil d'actualité Flooz";
+"TRANSACTION_SCOPE_SUB_POT_FRIEND" = "Visible par vos amis sur Flooz";
+"TRANSACTION_SCOPE_SUB_POT_PRIVATE" = "Seul les personnes concernées pourront accéder à cette cagnotte";
 
 "SEND_COMMENT" = "Ajouter un commentaire...";
 
@@ -467,7 +479,6 @@
 /************************************/
 /*              OTHER               */
 /************************************/
-
 
 "KEYBOARD_ABC" = "ABC";
 

@@ -78,7 +78,7 @@
         
         infoDisplayed = NO;
         firstView = YES;
-        isDemo = currentPreset.popup != NULL || currentPreset.steps != NULL;
+//        isDemo = currentPreset.popup != NULL || currentPreset.steps != NULL;
         
         if (currentPreset.title && ![currentPreset.title isBlank])
             self.title = currentPreset.title;
@@ -272,51 +272,51 @@
 #pragma mark - demo handler
 
 - (void)launchDemo {
-    [demoTimer invalidate];
-    demoTimer = nil;
-    if (currentPreset.popup) {
-        [[[FLPopupTrigger alloc] initWithData:currentPreset.popup dismiss:^{
-            if (currentPreset.popup[@"triggers"]) {
-                [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:currentPreset.popup[@"triggers"]]];
-            }
-            
-            if (currentPreset.steps) {
-                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-            }
-            currentPreset.popup = nil;
-        }] show];
-    } else if (currentPreset.steps) {
-        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-    }
+//    [demoTimer invalidate];
+//    demoTimer = nil;
+//    if (currentPreset.popup) {
+//        [[[FLPopupTrigger alloc] initWithData:currentPreset.popup dismiss:^{
+//            if (currentPreset.popup[@"triggers"]) {
+//                [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:currentPreset.popup[@"triggers"]]];
+//            }
+//            
+//            if (currentPreset.steps) {
+//                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//            }
+//            currentPreset.popup = nil;
+//        }] show];
+//    } else if (currentPreset.steps) {
+//        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//    }
 }
 
 - (void) showDemoStepPopover:(NSDictionary*)stepData {
-    tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:stepData[@"title"] message:stepData[@"desc"] step:[NSNumber numberWithInt:currentDemoStep + 1] button:stepData[@"btn"] action:^(FLTutoPopoverViewController *viewController) {
-        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-            if ([stepData[@"focus"] isEqualToString:@"why"]) {
-                [content becomeFirstResponder];
-            }
-            else if ([stepData[@"focus"] isEqualToString:@"name"]) {
-                [name becomeFirstResponder];
-            }
-            else if ([stepData[@"focus"] isEqualToString:@"scope"]) {
-                [transactionBar.privacyButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-            }
-            else if (currentDemoStep < currentPreset.steps.count) {
-                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-            }
-        }];
-    }];
-    popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
-    [popoverController setTheme:[FLPopoverTutoTheme theme]];
-    [popoverController setDelegate:self];
-    [popoverController setPassthroughViews:[self getDemoStepPopoverPassthroughViews:stepData[@"focus"]]];
-    
-    [popoverController presentPopoverFromRect:[self getDemoStepPopoverRect:stepData[@"focus"]] inView:[self getDemoStepPopoverView:stepData[@"focus"]] permittedArrowDirections:[self getDemoStepPopoverArrowDirection:stepData[@"focus"]] animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
-    ++currentDemoStep;
-    
-    if (currentDemoStep == currentPreset.steps.count)
-        isDemo = false;
+//    tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:stepData[@"title"] message:stepData[@"desc"] step:[NSNumber numberWithInt:currentDemoStep + 1] button:stepData[@"btn"] action:^(FLTutoPopoverViewController *viewController) {
+//        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
+//            if ([stepData[@"focus"] isEqualToString:@"why"]) {
+//                [content becomeFirstResponder];
+//            }
+//            else if ([stepData[@"focus"] isEqualToString:@"name"]) {
+//                [name becomeFirstResponder];
+//            }
+//            else if ([stepData[@"focus"] isEqualToString:@"scope"]) {
+//                [transactionBar.privacyButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+//            }
+//            else if (currentDemoStep < currentPreset.steps.count) {
+//                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//            }
+//        }];
+//    }];
+//    popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
+//    [popoverController setTheme:[FLPopoverTutoTheme theme]];
+//    [popoverController setDelegate:self];
+//    [popoverController setPassthroughViews:[self getDemoStepPopoverPassthroughViews:stepData[@"focus"]]];
+//    
+//    [popoverController presentPopoverFromRect:[self getDemoStepPopoverRect:stepData[@"focus"]] inView:[self getDemoStepPopoverView:stepData[@"focus"]] permittedArrowDirections:[self getDemoStepPopoverArrowDirection:stepData[@"focus"]] animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
+//    ++currentDemoStep;
+//    
+//    if (currentDemoStep == currentPreset.steps.count)
+//        isDemo = false;
 }
 
 - (CGRect) getDemoStepPopoverRect:(NSString*)focus {
@@ -338,24 +338,24 @@
 }
 
 - (UIView*) getDemoStepPopoverView:(NSString*)focus {
-    if ([focus isEqualToString:@"name"]) {
-        return name;
-    }
-    if ([focus isEqualToString:@"image"]) {
-        return transactionBar.imageButton;
-    }
-    if ([focus isEqualToString:@"scope"]) {
-        return transactionBar.privacyButton;
-    }
-    if ([focus isEqualToString:@"why"]) {
-        return content;
-    }
-    if ([focus isEqualToString:@"pay"]) {
-        return transactionBar.collectButton;
-    }
-    if ([focus isEqualToString:@"geo"]) {
-        return transactionBar.locationButton;
-    }
+//    if ([focus isEqualToString:@"name"]) {
+//        return name;
+//    }
+//    if ([focus isEqualToString:@"image"]) {
+//        return transactionBar.imageButton;
+//    }
+//    if ([focus isEqualToString:@"scope"]) {
+//        return transactionBar.privacyButton;
+//    }
+//    if ([focus isEqualToString:@"why"]) {
+//        return content;
+//    }
+//    if ([focus isEqualToString:@"pay"]) {
+//        return transactionBar.collectButton;
+//    }
+//    if ([focus isEqualToString:@"geo"]) {
+//        return transactionBar.locationButton;
+//    }
     return nil;
 }
 
@@ -382,18 +382,18 @@
 }
 
 - (NSArray*) getDemoStepPopoverPassthroughViews:(NSString*)focus {
-    if ([focus isEqualToString:@"name"]) {
-        return @[name];
-    }
-    if ([focus isEqualToString:@"scope"]) {
-        return @[transactionBar.privacyButton];
-    }
-    if ([focus isEqualToString:@"why"]) {
-        return @[content];
-    }
-    if ([focus isEqualToString:@"pay"]) {
-        return @[transactionBar.collectButton];
-    }
+//    if ([focus isEqualToString:@"name"]) {
+//        return @[name];
+//    }
+//    if ([focus isEqualToString:@"scope"]) {
+//        return @[transactionBar.privacyButton];
+//    }
+//    if ([focus isEqualToString:@"why"]) {
+//        return @[content];
+//    }
+//    if ([focus isEqualToString:@"pay"]) {
+//        return @[transactionBar.collectButton];
+//    }
     return @[];
 }
 
@@ -406,9 +406,9 @@
 }
 
 - (void) scopePopoverDidDisappear {
-    if (isDemo && currentDemoStep < currentPreset.steps.count) {
-        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-    }
+//    if (isDemo && currentDemoStep < currentPreset.steps.count) {
+//        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
+//    }
 }
 
 #pragma mark - popover delegate

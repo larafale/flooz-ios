@@ -174,7 +174,7 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[[UIImage imageNamed:imageNamed] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 0, 20, 20);
+    btn.frame = CGRectMake(0, 0, 25, 25);
     [btn setTintColor:[UIColor customWhite]];
     [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
     

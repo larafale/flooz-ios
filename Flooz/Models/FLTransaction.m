@@ -102,11 +102,11 @@
     if (_location && [_location isBlank])
         _location = nil;
     
-//    _attachmentURL = [json objectForKey:@"pic"];
-//    _attachmentThumbURL = [json objectForKey:@"picMini"];
-
-    _attachmentURL = @"https://media.giphy.com/media/l0HlvuN8cHzsURwc0/giphy.gif";
-    _attachmentThumbURL = @"https://media.giphy.com/media/l0HlvuN8cHzsURwc0/giphy.gif";
+    //    _attachmentURL = [json objectForKey:@"pic"];
+    //    _attachmentThumbURL = [json objectForKey:@"picMini"];
+    
+    _attachmentURL = @"https://media.giphy.com/media/3oEjI05FjQKObwBFGU/giphy.gif";
+    _attachmentThumbURL = @"https://media.giphy.com/media/3oEjI05FjQKObwBFGU/giphy.gif";
     
     if (!_attachmentURL.length)
         _attachmentURL = nil;
@@ -242,6 +242,22 @@
         key = @"PRIVATE";
     
     return NSLocalizedString([@"TRANSACTION_SCOPE_" stringByAppendingString: key], nil);
+}
+
++ (NSString *)transactionScopeToSubtitle:(TransactionScope)scope forPot:(Boolean)isPot {
+    NSString *key = nil;
+    
+    if (scope == TransactionScopePublic)
+        key = @"PUBLIC";
+    else if (scope == TransactionScopeFriend)
+        key = @"FRIEND";
+    else // if(status == TransactionScopePrivate){
+        key = @"PRIVATE";
+    
+    if (isPot)
+        return NSLocalizedString([@"TRANSACTION_SCOPE_SUB_POT_" stringByAppendingString: key], nil);
+    
+    return NSLocalizedString([@"TRANSACTION_SCOPE_SUB_" stringByAppendingString: key], nil);
 }
 
 + (UIImage *)transactionScopeToImage:(TransactionScope)scope {

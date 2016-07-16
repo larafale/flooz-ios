@@ -34,8 +34,9 @@
     }
     
     if (!self.isParticipation) {
-        if (json[@"to"])
-            self.to = [[FLUser alloc] initWithJSON:json[@"to"]];
+        self.to = json[@"to"];
+        self.toFullName = json[@"toFullName"];
+        self.contact = json[@"contact"];
     } else {
         self.collectName = json[@"to"];
     }
@@ -52,8 +53,8 @@
     self.name = [json objectForKey:@"name"];
     self.namePlaceholder = [json objectForKey:@"namePlaceholder"];
     self.popup = [json objectForKey:@"popup"];
-    self.steps = [json objectForKey:@"steps"];
-
+//    self.steps = [json objectForKey:@"steps"];
+    
     if ([json objectForKey:@"scope"]) {
         self.scopeDefined = YES;
         self.scope = [FLTransaction transactionIDToScope:[json objectForKey:@"scope"]];
@@ -74,10 +75,10 @@
         
         if ([[json objectForKey:@"block"] objectForKey:@"to"])
             self.blockTo = [[[json objectForKey:@"block"] objectForKey:@"to"] boolValue];
-
+        
         if ([[json objectForKey:@"block"] objectForKey:@"scope"])
             self.blockScope = [[[json objectForKey:@"block"] objectForKey:@"scope"] boolValue];
-
+        
         if ([[json objectForKey:@"block"] objectForKey:@"pay"])
             self.type = TransactionTypeCharge;
         

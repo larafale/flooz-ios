@@ -39,6 +39,8 @@ def prod_pods
     pod 'OneSignal'
     pod 'CardIO'
     pod 'JTSImageViewController'
+    pod 'VENCalculatorInputView', '~> 1.5'
+
 end
 
 target 'Flooz' do
