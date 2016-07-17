@@ -93,7 +93,7 @@
     bgCircleLayer = [CAShapeLayer layer];
     bgCircleLayer.path = path.CGPath;
     bgCircleLayer.fillColor = [UIColor clearColor].CGColor;
-    bgCircleLayer.strokeColor = BackGroundColor.CGColor;
+    bgCircleLayer.strokeColor = [UIColor customPlaceholder].CGColor;
     bgCircleLayer.lineWidth = ChartWidth;
     [self.layer addSublayer:bgCircleLayer];
 }

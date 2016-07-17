@@ -15,7 +15,7 @@
 
 @end
 
-@interface ImagePickerViewController : BaseViewController<FriendAddSearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ImagePickerViewController : BaseViewController<FriendAddSearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate>
 
 @property (nonatomic, weak) id<ImagePickerViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSString *type;

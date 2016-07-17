@@ -46,7 +46,7 @@
         self.title = NSLocalizedString(@"NAV_USER_PICKER", @"");
     
     items = @[];
-    searchString = @"";
+    searchString = @"money";
     
     refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshSearch)];
     [refreshItem setTintColor:[UIColor customBlue]];
@@ -56,18 +56,17 @@
     [_searchBar setHidden:YES];
     [_searchBar sizeToFit];
     
-    collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
-    [collectionView setDelegate:self];
-    [collectionView setDataSource:self];
-    collectionView.backgroundColor = [UIColor clearColor];
-    
     UICollectionViewFlowLayout *collectionLayout = [UICollectionViewFlowLayout new];
     collectionLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     collectionLayout.minimumLineSpacing = 5.0f;
     collectionLayout.minimumInteritemSpacing = 5.0f;
-    collectionLayout.itemSize = CGSizeMake(PPScreenWidth() / 4 - 20, PPScreenWidth() / 4 - 20);
+    collectionLayout.itemSize = CGSizeMake((PPScreenWidth() - 20) / 3, (PPScreenWidth() - 20) / 3);
+
+    collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(5, 0, PPScreenWidth() - 10, CGRectGetHeight(_mainBody.frame)) collectionViewLayout:collectionLayout];
+    [collectionView setDelegate:self];
+    [collectionView setDataSource:self];
+    collectionView.backgroundColor = [UIColor clearColor];
     
-    collectionView.collectionViewLayout = collectionLayout;
     [collectionView registerClass:[ImagePickerCollectionViewCell class] forCellWithReuseIdentifier:@"imagePickerCell"];
     
     [_mainBody addSubview:_searchBar];
@@ -97,7 +96,7 @@
             CGRectSetY(collectionView.frame, CGRectGetMaxY(_searchBar.frame) + 5);
             CGRectSetHeight(collectionView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_searchBar.frame));
         } completion:^(BOOL finished) {
-            [_searchBar becomeFirstResponder];
+
         }];
     } else {
         [_searchBar close];
@@ -179,6 +178,10 @@
     NSDictionary *info = [notification userInfo];
     CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [_searchBar close];
 }
 
 - (void)keyboardDidDisappear:(NSNotification *)notification {

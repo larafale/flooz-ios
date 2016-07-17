@@ -15,8 +15,9 @@
 #import "FLNewTransactionAmountInput.h"
 #import "UserPickerViewController.h"
 #import "ScopePickerViewController.h"
+#import "ImagePickerViewController.h"
 
-@interface NewFloozViewController : BaseViewController<GeolocDelegate, FLNewTransactionBarDelegate, JTSImageViewControllerInteractionsDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UserPickerViewControllerDelegate, ScopePickerViewControllerDelegate>
+@interface NewFloozViewController : BaseViewController<GeolocDelegate, FLNewTransactionBarDelegate, JTSImageViewControllerInteractionsDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UserPickerViewControllerDelegate, ScopePickerViewControllerDelegate, ImagePickerViewControllerDelegate>
 
 @property (nonatomic, retain) NSMutableDictionary *transaction;
 

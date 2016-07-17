@@ -10,6 +10,7 @@
 #import "NewFloozViewController.h"
 #import "FLTextViewComment.h"
 #import "LBCircleView.h"
+#import "ImagePickerViewController.h"
 
 @interface NewFloozViewController () {
     FLPreset *currentPreset;
@@ -562,7 +563,9 @@
         }];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"GLOBAL_WEB", nil)]) {
+        ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"images"];
         
+        [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
     }
 }
 
@@ -581,7 +584,9 @@
     }
     
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_WEB", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+        ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"images"];
         
+        [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
     }]];
     
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
@@ -613,6 +618,10 @@
 
 - (void)presentGIFPicker {
     [self.view endEditing:YES];
+    
+    ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"gifs"];
+    
+    [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
 }
 
 - (void)focusDescription {

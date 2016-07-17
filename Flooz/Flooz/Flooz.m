@@ -985,7 +985,15 @@
 }
 
 - (void)imagesSearch:(NSString *)search type:(NSString *)type success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/images/search" method:@"GET" params:@{@"type": type, @"q": search} success:^(id result) {
+    
+    NSDictionary *dic;
+    
+    if (search && search.length)
+        dic = @{@"type": type, @"q": search};
+    else
+        dic = @{@"type": type};
+    
+    [self requestPath:@"/images/search" method:@"GET" params:dic success:^(id result) {
         NSArray *items = result[@"items"];
         
         if (success)
