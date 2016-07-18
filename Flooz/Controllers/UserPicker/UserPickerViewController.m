@@ -91,7 +91,9 @@
     
     if (_delegate) {
         [_delegate user:user pickedFrom:self];
-    } else {
+    } else if (self.triggerData) {
+        FLTrigger *successTrigger = [[FLTrigger alloc] initWithJson:self.triggerData[@"success"][0]];
+        
         NSMutableDictionary *data = [NSMutableDictionary new];
         
         if (user.userKind == FloozUser) {
@@ -113,8 +115,11 @@
             }
         }
         
+        [data addEntriesFromDictionary:successTrigger.data];
+        successTrigger.data = data;
+        
         [self dismissViewControllerAnimated:YES completion:^{
-            [[appDelegate myTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:[[NewFloozViewController alloc] initWithTriggerData:data]] animated:YES completion:nil];
+            [[FLTriggerManager sharedInstance] executeTrigger:successTrigger];
         }];
     }
 }

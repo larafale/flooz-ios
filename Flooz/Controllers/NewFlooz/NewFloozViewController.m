@@ -9,7 +9,8 @@
 #import "FLAnimatedImage.h"
 #import "NewFloozViewController.h"
 #import "FLTextViewComment.h"
-#import "LBCircleView.h"
+#import "DotActivityIndicatorView.h"
+#import "DotActivityIndicatorParms.h"
 #import "ImagePickerViewController.h"
 
 @interface NewFloozViewController () {
@@ -24,7 +25,7 @@
     
     FLAnimatedImageView *imageTransaction;
     UIButton *imageCloseButton;
-    LBCircleView *imageProgressView;
+    DotActivityIndicatorView *imageProgressView;
     
     UIButton *closeImage;
     
@@ -218,6 +219,7 @@
     
     content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" frame:CGRectMake(0, 5, PPScreenWidth(), 30)];
     [content setBackgroundColor:[UIColor clearColor]];
+    content.textView.keyboardAppearance = UIKeyboardAppearanceLight;
     [content addTextFocusTarget:self action:@selector(contentFocusChanged:)];
     [content addTextChangeTarget:self action:@selector(contentTextChanged)];
     content.textView.scrollEnabled = NO;
@@ -245,7 +247,25 @@
     [imageCloseButton setTintColor:[UIColor darkGrayColor]];
     [imageCloseButton addTarget:self action:@selector(didCloseImageButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
+    imageProgressView = [[DotActivityIndicatorView alloc] initWithFrame:CGRectMake(CGRectGetWidth(imageTransaction.frame) / 2 - CGRectGetHeight(imageTransaction.frame) / 6, CGRectGetHeight(imageTransaction.frame) / 3, CGRectGetHeight(imageTransaction.frame) / 3, CGRectGetHeight(imageTransaction.frame) / 3)];
+    [imageProgressView setBackgroundColor:[UIColor clearColor]];
+    [imageProgressView setHidden:YES];
+    
+    DotActivityIndicatorParms *dotParms = [DotActivityIndicatorParms new];
+    dotParms.activityViewWidth = imageProgressView.frame.size.width;
+    dotParms.activityViewHeight = imageProgressView.frame.size.height;
+    dotParms.numberOfCircles = 3;
+    dotParms.internalSpacing = 5;
+    dotParms.animationDelay = 0.2;
+    dotParms.animationDuration = 0.6;
+    dotParms.animationFromValue = 0.3;
+    dotParms.defaultColor = [UIColor customBlue];
+    dotParms.isDataValidationEnabled = YES;
+    
+    [imageProgressView setDotParms:dotParms];
+    
     [imageTransaction addSubview:imageCloseButton];
+    [imageTransaction addSubview:imageProgressView];
     
     [contentView addSubview:imageTransaction];
     
@@ -264,6 +284,49 @@
     
     [self updateScope];
     [transactionBar reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (currentPreset) {
+        if (currentPreset.image) {
+            [transaction setValue:currentPreset.image forKey:@"imageUrl"];
+            [transaction removeObjectForKey:@"image"];
+            imageTransaction.hidden = NO;
+            imageTransaction.image = nil;
+            imageTransaction.animatedImage = nil;
+            
+            [imageProgressView setHidden:NO];
+            [imageProgressView startAnimating];
+            
+            [imageCloseButton setHidden:YES];
+            
+            [imageTransaction sd_setImageWithURL:[NSURL URLWithString:currentPreset.image] placeholderImage:nil options:0 completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                if (error) {
+                    [imageProgressView stopAnimating];
+                }
+                else {
+                    [imageProgressView stopAnimating];
+                    [imageProgressView setHidden:YES];
+                    [imageCloseButton setHidden:NO];
+                }
+            }];
+            
+            CGRectSetY(imageTransaction.frame, CGRectGetMaxY(content.frame) + 10);
+            contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(imageTransaction.frame) + 10);
+        }
+    }
+    
+    if (firstViewAmount) {
+        [amountInput becomeFirstResponder];
+        firstViewAmount = NO;
+    }
+    
+    if (firstViewWhy) {
+        [content becomeFirstResponder];
+        firstViewWhy = NO;
+    }
 }
 
 - (void)viewDidUnload {
@@ -318,6 +381,35 @@
     [self updateScope];
     
     [viewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)image:(NSString *)imageUrl pickedFrom:(UIViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+    
+    [transaction setValue:imageUrl forKey:@"imageUrl"];
+    [transaction removeObjectForKey:@"image"];
+    imageTransaction.hidden = NO;
+    imageTransaction.image = nil;
+    imageTransaction.animatedImage = nil;
+    
+    [imageProgressView setHidden:NO];
+    [imageProgressView startAnimating];
+    
+    [imageCloseButton setHidden:YES];
+    
+    [imageTransaction sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil options:0 completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        if (error) {
+            [imageProgressView stopAnimating];
+        }
+        else {
+            [imageProgressView stopAnimating];
+            [imageProgressView setHidden:YES];
+            [imageCloseButton setHidden:NO];
+        }
+    }];
+    
+    CGRectSetY(imageTransaction.frame, CGRectGetMaxY(content.frame) + 10);
+    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(imageTransaction.frame) + 10);
 }
 
 - (void)contentFocusChanged:(NSNumber *)focus {
@@ -563,7 +655,7 @@
         }];
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"GLOBAL_WEB", nil)]) {
-        ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"images"];
+        ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"web"];
         
         [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
     }
@@ -584,7 +676,7 @@
     }
     
     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_WEB", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-        ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"images"];
+        ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"web"];
         
         [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
     }]];
@@ -604,7 +696,9 @@
     }];
     
     [transaction setValue:imageData forKey:@"image"];
+    [transaction removeObjectForKey:@"imageUrl"];
     imageTransaction.hidden = NO;
+    [imageProgressView setHidden:YES];
     imageTransaction.image = originalImage;
     
     CGRectSetY(imageTransaction.frame, CGRectGetMaxY(content.frame) + 10);
@@ -619,7 +713,7 @@
 - (void)presentGIFPicker {
     [self.view endEditing:YES];
     
-    ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"gifs"];
+    ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"gif"];
     
     [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
 }

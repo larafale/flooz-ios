@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, FLTriggerAction) {
     FLTriggerActionLogout,
     FLTriggerActionOpen,
     FLTriggerActionNone,
+    FLTriggerActionPicker,
     FLTriggerActionSend,
     FLTriggerActionShow,
     FLTriggerActionSync

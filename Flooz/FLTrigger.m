@@ -80,6 +80,8 @@
             self.action = FLTriggerActionLogout;
         else if ([actionData isEqualToString:@"open"])
             self.action = FLTriggerActionOpen;
+        else if ([actionData isEqualToString:@"picker"])
+            self.action = FLTriggerActionPicker;
         else if ([actionData isEqualToString:@"show"])
             self.action = FLTriggerActionShow;
         else if ([actionData isEqualToString:@"sync"])

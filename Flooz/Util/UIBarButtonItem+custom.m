@@ -19,7 +19,7 @@
 }
 
 + (id)createCloseButtonWithTarget:(id)target action:(SEL)action {
-    UIImage *image = [[FLHelper imageWithImage:[UIImage imageNamed:@"navbar-cross"] scaledToSize:CGSizeMake(20, 20)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage *image = [[FLHelper imageWithImage:[UIImage imageNamed:@"navbar-cross"] scaledToSize:CGSizeMake(18, 18)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMakeWithSize(image.size)];
     [button setTintColor:[UIColor customBlue]];
@@ -28,7 +28,7 @@
     
     return [[UIBarButtonItem alloc] initWithCustomView:button];
     
-	return [UIBarButtonItem barButtonWithImageNamed:@"navbar-cross" target:target action:action];
+//	return [UIBarButtonItem barButtonWithImageNamed:@"navbar-cross" target:target action:action];
 }
 
 + (id)createSearchButtonWithTarget:(id)target action:(SEL)action {

@@ -989,9 +989,9 @@
     NSDictionary *dic;
     
     if (search && search.length)
-        dic = @{@"type": type, @"q": search};
+        dic = @{@"type": type, @"q": search, @"flush": @YES};
     else
-        dic = @{@"type": type};
+        dic = @{@"type": type, @"flush": @YES};
     
     [self requestPath:@"/images/search" method:@"GET" params:dic success:^(id result) {
         NSArray *items = result[@"items"];

@@ -345,35 +345,33 @@
 }
 
 - (void)openHomeMenu {
-    [self presentViewController:[[FLNavigationController alloc] initWithRootViewController:[UserPickerViewController new]] animated:YES completion:nil];
-    
-//    if (!homeViewOpen) {
-//        homeButtonOverlay.hidden = NO;
-//        homeButtonOverlay.alpha = 0.0;
-//        homeButtonOverlay.userInteractionEnabled = YES;
-//        
-//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-//        
-//        [UIView animateWithDuration:0.3 animations:^{
-//            homeButton.layer.transform = CATransform3DMakeRotation((M_PI * 45.0) / 180, 0, 0, 1);
-//            homeButtonOverlay.alpha = 1.0;
-//            
-//            CGFloat finalY;
-//            CGFloat viewHeight = CGRectGetHeight(homeSubview.frame);
-//            
-//            if (CGRectGetMinY(homeButton.frame) - CGRectGetMaxY(homeOverlayTitle.frame) - 20 < viewHeight) {
-//                homeOverlayTitle.hidden = YES;
-//                finalY = CGRectGetMinY(homeButton.frame) / 2 - CGRectGetHeight(homeSubview.frame) / 2;
-//            } else {
-//                homeOverlayTitle.hidden = NO;
-//                finalY = (CGRectGetMinY(homeButton.frame) - CGRectGetMaxY(homeOverlayTitle.frame)) / 2 - CGRectGetHeight(homeSubview.frame) / 2 + CGRectGetMaxY(homeOverlayTitle.frame);
-//            }
-//            
-//            CGRectSetY(homeSubview.frame, finalY);
-//        } completion:^(BOOL finished) {
-//            homeViewOpen = YES;
-//        }];
-//    }
+    if (!homeViewOpen) {
+        homeButtonOverlay.hidden = NO;
+        homeButtonOverlay.alpha = 0.0;
+        homeButtonOverlay.userInteractionEnabled = YES;
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            homeButton.layer.transform = CATransform3DMakeRotation((M_PI * 45.0) / 180, 0, 0, 1);
+            homeButtonOverlay.alpha = 1.0;
+            
+            CGFloat finalY;
+            CGFloat viewHeight = CGRectGetHeight(homeSubview.frame);
+            
+            if (CGRectGetMinY(homeButton.frame) - CGRectGetMaxY(homeOverlayTitle.frame) - 20 < viewHeight) {
+                homeOverlayTitle.hidden = YES;
+                finalY = CGRectGetMinY(homeButton.frame) / 2 - CGRectGetHeight(homeSubview.frame) / 2;
+            } else {
+                homeOverlayTitle.hidden = NO;
+                finalY = (CGRectGetMinY(homeButton.frame) - CGRectGetMaxY(homeOverlayTitle.frame)) / 2 - CGRectGetHeight(homeSubview.frame) / 2 + CGRectGetMaxY(homeOverlayTitle.frame);
+            }
+            
+            CGRectSetY(homeSubview.frame, finalY);
+        } completion:^(BOOL finished) {
+            homeViewOpen = YES;
+        }];
+    }
 }
 
 - (void)closeHomeMenu {

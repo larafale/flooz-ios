@@ -6,6 +6,7 @@
 //  Copyright © 2016 Flooz. All rights reserved.
 //
 
+#import "ScopePickerCell.h"
 #import "ScopePickerViewController.h"
 
 @interface ScopePickerViewController() {
@@ -64,15 +65,33 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 45;
+    TransactionScope scope;
+    
+    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
+        scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+    } else {
+        switch (indexPath.row) {
+            case 0:
+                scope = TransactionScopePublic;
+                break;
+            case 1:
+                scope = TransactionScopeFriend;
+                break;
+            case 2:
+                scope = TransactionScopePrivate;
+                break;
+        }
+    }
+    
+    return [ScopePickerCell getHeight:scope pot:isPot];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"CellIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ScopePickerCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[ScopePickerCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     TransactionScope scope;
@@ -93,23 +112,7 @@
         }
     }
     
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    [cell setBackgroundColor:[UIColor clearColor]];
-    
-    [cell.imageView setImage:[[FLHelper imageWithImage:[FLTransaction transactionScopeToImage:scope] scaledToSize:CGSizeMake(30, 30)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-    [cell.imageView setTintColor:[UIColor whiteColor]];
-    
-    [cell.textLabel setText:[FLTransaction transactionScopeToText:scope]];
-    [cell.textLabel setFont:[UIFont customContentRegular:15]];
-    [cell.textLabel setTextColor:[UIColor whiteColor]];
-
-    [cell.detailTextLabel setText:[FLTransaction transactionScopeToSubtitle:scope forPot:isPot]];
-    [cell.detailTextLabel setFont:[UIFont customContentRegular:12]];
-    [cell.detailTextLabel setTextColor:[UIColor customPlaceholder]];
-    [cell.detailTextLabel setNumberOfLines:0];
-    [cell.detailTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
-
-    CGRectSetY(cell.detailTextLabel.frame, CGRectGetMinY(cell.detailTextLabel.frame) + 10);
+    [cell setScope:scope pot:isPot];
     
     if (scope == self.currentScope) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

@@ -7,13 +7,12 @@
 //
 
 #import "ImagePickerCollectionViewCell.h"
-#import "LBCircleView.h"
+#import "DotActivityIndicatorParms.h"
+#import "DotActivityIndicatorView.h"
 
 @interface ImagePickerCollectionViewCell () {
-    UIProgressView *progressView;
     FLAnimatedImageView *imageView;
-    LBCircleView *imageProgressView;
-
+    DotActivityIndicatorView *imageProgressView;
 }
 
 @end
@@ -28,63 +27,40 @@
         imageView.layer.masksToBounds = YES;
         imageView.layer.cornerRadius = 2.0;
         
-        imageProgressView = [[LBCircleView alloc] initWithFrame:CGRectMake(CGRectGetWidth(frame) / 4, CGRectGetHeight(frame) / 4, CGRectGetWidth(frame) / 2, CGRectGetHeight(frame) / 2)];
-        imageProgressView.percentColor = [UIColor clearColor];
-        [imageProgressView setCircleColor:[UIColor customBlue]];
-        [imageProgressView setBackgroundColor:[UIColor customPlaceholder]];
+        imageProgressView = [[DotActivityIndicatorView alloc] initWithFrame:CGRectMake(CGRectGetWidth(frame) / 4, CGRectGetHeight(frame) / 4, CGRectGetWidth(frame) / 2, CGRectGetHeight(frame) / 2)];
+        [imageProgressView setBackgroundColor:[UIColor clearColor]];
         
-        progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame) - 2, CGRectGetWidth(frame), 2)];
-        progressView.hidden = YES;
+        DotActivityIndicatorParms *dotParms = [DotActivityIndicatorParms new];
+        dotParms.activityViewWidth = imageProgressView.frame.size.width;
+        dotParms.activityViewHeight = imageProgressView.frame.size.height;
+        dotParms.numberOfCircles = 3;
+        dotParms.internalSpacing = 3;
+        dotParms.animationDelay = 0.2;
+        dotParms.animationDuration = 0.6;
+        dotParms.animationFromValue = 0.3;
+        dotParms.defaultColor = [UIColor customBlue];
+        dotParms.isDataValidationEnabled = YES;
+        
+        [imageProgressView setDotParms:dotParms];
         
         [self.contentView addSubview:imageView];
         [imageView addSubview:imageProgressView];
-        [imageView addSubview:progressView];
         
         self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
-- (void)resetProgressBar {
-    [progressView setProgress:0];
-    progressView.trackTintColor = self.backgroundColor;
-    progressView.tintColor = [UIColor customBlue];
-    progressView.hidden = NO;
-}
-
 - (void)setItem:(NSDictionary *)item {
     imageView.image = nil;
     imageView.animatedImage = nil;
     
-    [self resetProgressBar];
-
-    [imageProgressView setHidden:YES];
-    [imageProgressView setProgress:0 animated:NO];
+    [imageProgressView setHidden:NO];
+    [imageProgressView startAnimating];
     
-    SDWebImageDownloaderProgressBlock progressBlock = ^(NSInteger receivedSize, NSInteger expectedSize) {
-        CGFloat progress = ((CGFloat)receivedSize / (CGFloat)expectedSize);
-        
-//        [imageProgressView setHidden:NO];
-//        [imageProgressView setCircleColor:[UIColor customBlue]];
-        [progressView setProgress:progress];
-//        [imageProgressView setProgress:progress animated:YES];
-    };
-
-    
-    [imageView sd_setImageWithURL:[NSURL URLWithString:item[@"thumbnail"]] placeholderImage:nil options:0 progress:progressBlock completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        if (error) {
-            [imageProgressView setCircleColor:[UIColor redColor]];
-            [imageProgressView setProgress:1 animated:YES];
-            [progressView setTintColor:[UIColor redColor]];
-            [progressView setProgress:1];
-        }
-        else {
-            [imageProgressView setCircleColor:[UIColor customBlue]];
-            [imageProgressView setProgress:1 animated:YES];
-            [progressView setHidden:YES];
-
-//            [imageProgressView setHidden:YES];
-        }
+    [imageView sd_setImageWithURL:[NSURL URLWithString:item[@"thumbnail"]] placeholderImage:nil options:0 completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        [imageProgressView stopAnimating];
+        [imageProgressView setHidden:YES];
     }];
 }
 

@@ -50,6 +50,8 @@
 #import "CashinCardKYCViewController.h"
 #import "PaymentAudiotelViewController.h"
 #import "PaymentSourceViewController.h"
+#import "UserPickerViewController.h"
+#import "NewFloozViewController.h"
 
 @interface FLTriggerManager ()
 
@@ -264,6 +266,10 @@
             [self executeTriggerList:trigger.triggers];
         }
     }
+}
+
+- (void)pickerActionHandler:(FLTrigger *)trigger {
+    
 }
 
 - (void)sendActionHandler:(FLTrigger *)trigger {
@@ -616,6 +622,7 @@
                                   [NSNumber numberWithInteger:FLTriggerActionLogin]: NSStringFromSelector(@selector(loginActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionLogout]: NSStringFromSelector(@selector(logoutActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionOpen]: NSStringFromSelector(@selector(openActionHandler:)),
+                                  [NSNumber numberWithInteger:FLTriggerActionPicker]: NSStringFromSelector(@selector(pickerActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionSend]: NSStringFromSelector(@selector(sendActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionShow]: NSStringFromSelector(@selector(showActionHandler:)),
                                   [NSNumber numberWithInteger:FLTriggerActionSync]: NSStringFromSelector(@selector(syncActionHandler:))};
@@ -689,7 +696,7 @@
     self.binderKeyView = @{
                            @"app:activities": [ActivitiesViewController new],
                            @"app:cashout": [CashOutViewController class],
-                           @"app:flooz": [NewTransactionViewController class],
+                           @"app:flooz": [NewFloozViewController class],
                            @"app:pot": [NewCollectController class],
                            @"app:promo": [DiscountCodeViewController class],
                            @"app:search": [SearchViewController class],
@@ -714,6 +721,7 @@
                            @"settings:documents": [SettingsDocumentsViewController class],
                            @"timeline:flooz": [TransactionViewController class],
                            @"timeline:pot": [CollectViewController class],
+                           @"user:picker": [UserPickerViewController class],
                            @"web:web": [WebViewController class],
                            @"phone:validate": [ValidateSMSViewController class],
                            @"friend:pending": [FriendRequestViewController class],
@@ -751,6 +759,7 @@
                            @"settings:documents": @"modal",
                            @"timeline:flooz": @"push",
                            @"timeline:pot": @"push",
+                           @"user:picker": @"modal",
                            @"web:web": @"modal",
                            @"phone:validate": @"modal",
                            @"friend:pending": @"modal",

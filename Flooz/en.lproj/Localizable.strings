@@ -16,8 +16,8 @@
 "GLOBAL_ERROR" =  "Erreur";
 "GLOBAL_CANCEL" = "Annuler";
 "GLOBAL_CAMERA" = "Appareil photo";
-"GLOBAL_ALBUMS" = "Albums";
-"GLOBAL_WEB" = "Web";
+"GLOBAL_ALBUMS" = "Albums Photos";
+"GLOBAL_WEB" = "Rechercher sur le Web";
 "GLOBAL_EURO" = "€";
 "GLOBAL_SEND" = "Publier";
 "GLOBAL_YES" = "Oui";
@@ -290,6 +290,8 @@
 "NAV_SECURECODE" = "Code Secret";
 "NAV_PAY_SOURCE" = "Moyens de paiement";
 "NAV_USER_PICKER" = "Choisir un destinataire";
+"NAV_IMAGE_PICKER" = "Choisir une image";
+"NAV_GIF_PICKER" = "Choisir un GIF";
 
 /************************************/
 /*         ALERTS / ERROR           */

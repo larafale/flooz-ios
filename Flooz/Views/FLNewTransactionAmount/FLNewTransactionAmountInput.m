@@ -59,7 +59,7 @@
     _textfield.adjustsFontSizeToFitWidth = YES;
     _textfield.minimumFontSize = 15;
     
-    _textfield.delegate = self;
+//    _textfield.delegate = self;
 
 	NSAttributedString *attributedText = [[NSAttributedString alloc]
 	                                      initWithString:NSLocalizedString(placeholder, nil)

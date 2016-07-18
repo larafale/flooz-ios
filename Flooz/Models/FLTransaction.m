@@ -102,11 +102,8 @@
     if (_location && [_location isBlank])
         _location = nil;
     
-    //    _attachmentURL = [json objectForKey:@"pic"];
-    //    _attachmentThumbURL = [json objectForKey:@"picMini"];
-    
-    _attachmentURL = @"https://media.giphy.com/media/3oEjI05FjQKObwBFGU/giphy.gif";
-    _attachmentThumbURL = @"https://media.giphy.com/media/3oEjI05FjQKObwBFGU/giphy.gif";
+    _attachmentURL = [json objectForKey:@"pic"];
+    _attachmentThumbURL = [json objectForKey:@"picMini"];
     
     if (!_attachmentURL.length)
         _attachmentURL = nil;
