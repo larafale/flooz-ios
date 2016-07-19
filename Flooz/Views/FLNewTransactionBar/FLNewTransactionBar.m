@@ -9,7 +9,6 @@
 #import "FLNewTransactionBar.h"
 
 #import "AppDelegate.h"
-#import "NewTransactionViewController.h"
 #import "NewCollectController.h"
 #import "NewFloozViewController.h"
 
@@ -341,6 +340,7 @@
         [askButton removeFromSuperview];
         [sendButton removeFromSuperview];
         [participateButton removeFromSuperview];
+        [paymentButtonsSeparator removeFromSuperview];
     }
 }
 

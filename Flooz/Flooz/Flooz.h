@@ -193,6 +193,7 @@ static NSString *kLocationData = @"locationData";
 
 - (void)createLikeOnTransaction:(FLTransaction *)transaction success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSURLSessionTask *task, NSError *error))failure constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))constructingBodyWithBlock;
 
 - (void)sendSMSValidation;
 - (void)sendEmailValidation;

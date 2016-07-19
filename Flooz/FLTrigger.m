@@ -41,7 +41,7 @@
     
     self.category = splitKey[0];
     self.view = splitKey[1];
-    self.viewCaregory = [NSString stringWithFormat:@"%@:%@", splitKey[0], splitKey[1]];
+    self.viewCategory = [NSString stringWithFormat:@"%@:%@", splitKey[0], splitKey[1]];
     
     if (![self fillTriggerActionFromData:splitKey[2]])
         return NO;

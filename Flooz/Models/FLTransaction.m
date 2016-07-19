@@ -118,6 +118,7 @@
     
     _isAvailable = NO;
     _isClosable = NO;
+    _isPublishable = NO;
     _actions = nil;
     
     if ([json objectForKey:@"actions"] && [[json objectForKey:@"actions"] isKindOfClass:[NSDictionary class]])
@@ -131,7 +132,10 @@
         if ([[_actions allKeys] containsObject:@"close"]) {
             _isClosable = YES;
         }
-    }
+
+        if ([[_actions allKeys] containsObject:@"publish"]) {
+            _isPublishable = YES;
+        }}
     
     if (_actions && !_isCollect) {
         if ([[_actions allKeys] containsObject:@"accept"]) {
@@ -264,8 +268,10 @@
         key = @"transaction-scope-public";
     else if (scope == TransactionScopeFriend)
         key = @"transaction-scope-friend";
-    else // if(status == TransactionScopePrivate){
+    else if (scope == TransactionScopePrivate)
         key = @"transaction-scope-private";
+    else if (scope == TransactionScopeNone)
+        return nil;
     
     return [UIImage imageNamed:key];
 }
@@ -292,7 +298,7 @@
         if ([param isEqualToString:@"all"])
             return TransactionScopeAll;
     }
-    return TransactionScopePublic;
+    return TransactionScopeNone;
 }
 
 + (TransactionScope)transactionIDToScope:(NSNumber *)param {
@@ -306,7 +312,7 @@
         if ([param isEqualToNumber:@3])
             return TransactionScopeAll;
     }
-    return TransactionScopePublic;
+    return TransactionScopeNone;
 }
 
 + (NSString *)transactionScopeToParams:(TransactionScope)scope {

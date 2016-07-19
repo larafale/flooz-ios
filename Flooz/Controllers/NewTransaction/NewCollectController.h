@@ -18,19 +18,11 @@
 #import "JTSImageInfo.h"
 #import "FLTransactionDescriptionView.h"
 #import "GeolocViewController.h"
+#import "ImagePickerViewController.h"
 
-@interface NewCollectController : GlobalViewController <UIAlertViewDelegate, FLCameraKeyboardDelegate, WYPopoverControllerDelegate, FLNewTransactionBarDelegate, JTSImageViewControllerInteractionsDelegate, GeolocDelegate>
 
-- (void)presentCamera;
-- (void)presentLocation;
-
-@property (weak, nonatomic) IBOutlet FLValidNavBar *navBar;
-@property (retain, nonatomic) UIView *contentView;
-
-@property (retain) AVCaptureStillImageOutput *stillImageOutput;
+@interface NewCollectController : BaseViewController <UIAlertViewDelegate, FLNewTransactionBarDelegate, JTSImageViewControllerInteractionsDelegate, GeolocDelegate, ImagePickerViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, retain) NSMutableDictionary *transaction;
-
-- (void)rotateImageWithRadians:(CGFloat)radian imageRotate:(UIImage *)rotateImage andImage:(UIImage *)image;
 
 @end

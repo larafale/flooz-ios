@@ -168,7 +168,34 @@
         NSDictionary *item = items[indexPath.item];
         
         if (self.triggerData) {
+            FLTrigger *successTrigger = [[FLTrigger alloc] initWithJson:self.triggerData[@"success"][0]];
             
+            NSMutableDictionary *data = [NSMutableDictionary new];
+            
+            data[@"imageUrl"] = item[@"url"];
+            
+            NSDictionary *baseDic;
+            
+            if (self.triggerData[@"in"]) {
+                baseDic = successTrigger.data[self.triggerData[@"in"]];
+                
+                [data addEntriesFromDictionary:baseDic];
+                
+                NSMutableDictionary *newData = [successTrigger.data mutableCopy];
+                
+                newData[self.triggerData[@"in"]] = data;
+                
+                successTrigger.data = newData;
+            } else {
+                baseDic = successTrigger.data;
+                [data addEntriesFromDictionary:baseDic];
+                
+                successTrigger.data = data;
+            }
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                [[FLTriggerManager sharedInstance] executeTrigger:successTrigger];
+            }];
         } else if (self.delegate) {
             [self.delegate image:item[@"url"] pickedFrom:self];
         }

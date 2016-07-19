@@ -26,13 +26,13 @@
 #import "TimelineViewController.h"
 #import "SecureCodeViewController.h"
 #import "TransactionViewController.h"
-#import "NewTransactionViewController.h"
 #import "UICKeyChainStore.h"
 #import "SignupNavigationController.h"
 #import "UserViewController.h"
 #import "FLNavigationController.h"
 #import "CollectViewController.h"
 #import "JTSAnimatedGIFUtility.h"
+#import "NewFloozViewController.h"
 
 @interface AppDelegate() {
     NSDictionary *tmpUser;
@@ -924,11 +924,11 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if (_formSheet.presentedFSViewController) {
             [[self currentController] mz_dismissFormSheetControllerAnimated:NO completionHandler: ^(MZFormSheetController *formSheetController) {
-                FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:user]];
+                FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewFloozViewController alloc] initWithTransactionType:transactionType user:user]];
                 [self.tabBarController presentViewController:controller animated:YES completion:NULL];
             }];
         } else {
-            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewTransactionViewController alloc] initWithTransactionType:transactionType user:user]];
+            FLNavigationController *controller = [[FLNavigationController alloc] initWithRootViewController:[[NewFloozViewController alloc] initWithTransactionType:transactionType user:user]];
             [self.tabBarController presentViewController:controller animated:YES completion:NULL];
         }
     });

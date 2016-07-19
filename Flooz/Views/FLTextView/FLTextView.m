@@ -64,7 +64,7 @@
                                                        NSForegroundColorAttributeName: [UIColor customPlaceholder]
                                                        }];
     
-    _placeholder = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, CGRectGetWidth(_textView.frame), 39)];
+    _placeholder = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, CGRectGetWidth(_textView.frame), 31)];
     _placeholder.attributedText = attributedText;
     [_textView addSubview:_placeholder];
     

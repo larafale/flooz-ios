@@ -161,26 +161,21 @@
 #pragma mark - Views
 
 - (void)createHeader {
-    NSString *imageNamed = @"";
-    if (_transaction.social.scope == SocialScopeFriend) {
-        imageNamed = @"transaction-scope-friend";
+    UIImage *scopeImage = [FLTransaction transactionScopeToImage:_transaction.social.scope];
+
+    if (scopeImage) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setImage:[scopeImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        btn.frame = CGRectMake(0, 0, 20, 20);
+        [btn setTintColor:[UIColor customWhite]];
+        [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        
+        self.navigationItem.rightBarButtonItem = scopeButton;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
     }
-    else if (_transaction.social.scope == SocialScopePrivate) {
-        imageNamed = @"transaction-scope-private";
-    }
-    else if (_transaction.social.scope == SocialScopePublic) {
-        imageNamed = @"transaction-scope-public";
-    }
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[[UIImage imageNamed:imageNamed] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 0, 25, 25);
-    [btn setTintColor:[UIColor customWhite]];
-    [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    self.navigationItem.rightBarButtonItem = scopeButton;
     
     if (!navHeaderView) {
         navHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
@@ -551,6 +546,8 @@
     [commentToolbarButton setSelected:[social isCommented]];
     
     [tableHeaderView setTransaction:_transaction];
+    self.tableView.tableHeaderView = tableHeaderView;
+
     [self.tableView reloadData];
 }
 
@@ -768,13 +765,13 @@
 - (void)showScopeHelper {
     NSString *text;
     
-    if (_transaction.social.scope == SocialScopeFriend) {
+    if (_transaction.social.scope == TransactionScopeFriend) {
         text = @"Flooz visible par vos amis";
     }
-    else if (_transaction.social.scope == SocialScopePrivate) {
+    else if (_transaction.social.scope == TransactionScopePrivate) {
         text = @"Flooz privé";
     }
-    else if (_transaction.social.scope == SocialScopePublic) {
+    else if (_transaction.social.scope == TransactionScopePublic) {
         text = @"Flooz public";
     }
     

@@ -8,7 +8,6 @@
 
 #import "TimelineViewController.h"
 #import "NotificationsViewController.h"
-#import "NewTransactionViewController.h"
 #import "FriendsViewController.h"
 #import "AccountViewController.h"
 #import "ShareAppViewController.h"

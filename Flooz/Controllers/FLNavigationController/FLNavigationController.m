@@ -7,7 +7,6 @@
 //
 
 #import "FLNavigationController.h"
-#import "NewTransactionViewController.h"
 #import "FLPopupInformation.h"
 #import "UserViewController.h"
 #import "3DSecureViewController.h"

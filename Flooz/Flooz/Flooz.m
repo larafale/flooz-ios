@@ -35,7 +35,6 @@
 #import "ValidateSMSViewController.h"
 #import "EditProfileViewController.h"
 #import "ValidateSecureCodeViewController.h"
-#import "NewTransactionViewController.h"
 #import "NotificationsViewController.h"
 #import "DeviceUID.h"
 

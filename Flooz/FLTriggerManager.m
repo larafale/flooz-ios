@@ -24,7 +24,6 @@
 #import "ValidateSMSViewController.h"
 #import "EditProfileViewController.h"
 #import "ValidateSecureCodeViewController.h"
-#import "NewTransactionViewController.h"
 #import "NotificationsViewController.h"
 #import "AddressBookController.h"
 #import "CashOutViewController.h"
@@ -52,6 +51,8 @@
 #import "PaymentSourceViewController.h"
 #import "UserPickerViewController.h"
 #import "NewFloozViewController.h"
+#import "ScopePickerViewController.h"
+#import "ImagePickerViewController.h"
 
 @interface FLTriggerManager ()
 
@@ -61,6 +62,7 @@
 
 @property (nonatomic, strong) FLTrigger *smsTrigger;
 @property (nonatomic, strong) FLTrigger *listTrigger;
+@property (nonatomic, strong) FLTrigger *imageTrigger;
 
 @end
 
@@ -172,10 +174,20 @@
                     if (trigger.data[@"success"]) {
                         [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"success"]]];
                     }
-                } failure:^(NSError *error) {
+                } failure:^(NSURLSessionTask *task, NSError *error) {
                     [self executeTriggerList:trigger.triggers];
                     if (trigger.data[@"failure"]) {
                         [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"failure"]]];
+                    }
+                } constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
+                    if (trigger.data[@"multipart"]) {
+                        for (NSString *key in [trigger.data[@"multipart"] allKeys]) {
+                            NSDictionary *fileInfos = trigger.data[@"multipart"][key];
+                            
+                            if (fileInfos[@"data"] && fileInfos[@"type"] && fileInfos[@"name"]) {
+                                [formData appendPartWithFileData:fileInfos[@"data"] name:key fileName:fileInfos[@"name"] mimeType:fileInfos[@"type"]];
+                            }
+                        }
                     }
                 }];
             }
@@ -198,7 +210,7 @@
             animate = ![trigger.data[@"noAnim"] boolValue];
         }
         
-        Class controllerClass = [self.binderKeyView objectForKey:trigger.viewCaregory];
+        Class controllerClass = [self.binderKeyView objectForKey:trigger.viewCategory];
         UIViewController *topController = [appDelegate myTopViewController];
         
         if ([topController isKindOfClass:[FLTabBarController class]]) {
@@ -269,23 +281,133 @@
 }
 
 - (void)pickerActionHandler:(FLTrigger *)trigger {
+    if ([trigger.viewCategory isEqualToString:@"image:camera"]) {
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        
+        if (authStatus == AVAuthorizationStatusAuthorized) {
+            UIImagePickerController *cameraUI = [UIImagePickerController new];
+            cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+            cameraUI.delegate = self;
+            cameraUI.allowsEditing = YES;
+            
+            UIViewController *tmp = [appDelegate myTopViewController];
+
+            _imageTrigger = trigger;
+
+            [tmp presentViewController:cameraUI animated:YES completion: ^{
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+            }];
+        } else if (authStatus == AVAuthorizationStatusNotDetermined){
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if (granted){
+                    UIImagePickerController *cameraUI = [UIImagePickerController new];
+                    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    cameraUI.delegate = self;
+                    cameraUI.allowsEditing = YES;
+                    
+                    UIViewController *tmp = [appDelegate myTopViewController];
+
+                    _imageTrigger = trigger;
+                    
+                    [tmp presentViewController:cameraUI animated:YES completion: ^{
+                        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+                    }];
+                } else {
+                    
+                }
+            }];
+        } else {
+            UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+            [curr setTag:125];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [curr show];
+            });
+        }
+    } else if ([trigger.viewCategory isEqualToString:@"image:album"]) {
+        UIImagePickerController *cameraUI = [UIImagePickerController new];
+        cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        cameraUI.delegate = self;
+        cameraUI.allowsEditing = YES;
+
+        UIViewController *tmp = [appDelegate myTopViewController];
+
+        _imageTrigger = trigger;
+
+        [tmp presentViewController:cameraUI animated:YES completion: ^{
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }];
+    } else if ([trigger.viewCategory isEqualToString:@"image:gif"]) {
+        ImagePickerViewController *pickerViewController = [[ImagePickerViewController alloc] initWithTriggerData:trigger.data];
+        pickerViewController.type = @"gif";
+        
+        UIViewController *tmp = [appDelegate myTopViewController];
+        
+        [tmp presentViewController:[[FLNavigationController alloc] initWithRootViewController:pickerViewController] animated:YES completion:nil];
+    } else if ([trigger.viewCategory isEqualToString:@"image:web"]) {
+        ImagePickerViewController *pickerViewController = [[ImagePickerViewController alloc] initWithTriggerData:trigger.data];
+        pickerViewController.type = @"web";
+
+        UIViewController *tmp = [appDelegate myTopViewController];
+
+        [tmp presentViewController:[[FLNavigationController alloc] initWithRootViewController:pickerViewController] animated:YES completion:nil];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+    NSData *imageData = UIImageJPEGRepresentation(originalImage, 1);
     
+    [picker dismissViewControllerAnimated:YES completion: ^{
+        FLTrigger *successTrigger = [[FLTrigger alloc] initWithJson:self.imageTrigger.data[@"success"][0]];
+        
+        NSMutableDictionary *data = [NSMutableDictionary new];
+        
+        data[@"image"] = @{@"data": imageData, @"name": @"image.jpg", @"type": @"image/jpg"};
+        
+        NSDictionary *baseDic;
+        
+        if (self.imageTrigger.data[@"in"]) {
+            baseDic = successTrigger.data[self.imageTrigger.data[@"in"]];
+            
+            [data addEntriesFromDictionary:baseDic];
+            
+            NSMutableDictionary *newData = [successTrigger.data mutableCopy];
+            
+            newData[self.imageTrigger.data[@"in"]] = data;
+            
+            successTrigger.data = newData;
+        } else {
+            baseDic = successTrigger.data;
+            [data addEntriesFromDictionary:baseDic];
+            
+            successTrigger.data = data;
+        }
+        
+        [self executeTrigger:successTrigger];
+        self.imageTrigger = nil;
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)sendActionHandler:(FLTrigger *)trigger {
-    if ([trigger.viewCaregory isEqualToString:@"image:flooz"]) {
+    if ([trigger.viewCategory isEqualToString:@"image:flooz"]) {
         if (trigger.data && trigger.data[@"_id"]) {
             UIViewController *topViewController = [appDelegate myTopViewController];
-            NewTransactionViewController *transacViewController;
+            NewFloozViewController *transacViewController;
             
-            if ([topViewController isKindOfClass:[NewTransactionViewController class]]) {
-                transacViewController = (NewTransactionViewController *) topViewController;
-            } else if ([topViewController isKindOfClass:[FLNavigationController class]] && [[((FLNavigationController *)topViewController) topViewController] isKindOfClass:[NewTransactionViewController class]]) {
-                transacViewController = (NewTransactionViewController *) [((FLNavigationController *)topViewController) topViewController];
+            if ([topViewController isKindOfClass:[NewFloozViewController class]]) {
+                transacViewController = (NewFloozViewController *) topViewController;
+            } else if ([topViewController isKindOfClass:[FLNavigationController class]] && [[((FLNavigationController *)topViewController) topViewController] isKindOfClass:[NewFloozViewController class]]) {
+                transacViewController = (NewFloozViewController *) [((FLNavigationController *)topViewController) topViewController];
             } else if ([topViewController isKindOfClass:[FLTabBarController class]]) {
                 FLNavigationController *selectedNav = (FLNavigationController *) [((FLTabBarController *)topViewController) selectedViewController];
-                if ([[selectedNav topViewController] isKindOfClass:[NewTransactionViewController class]])
-                    transacViewController = (NewTransactionViewController *) [selectedNav topViewController];
+                if ([[selectedNav topViewController] isKindOfClass:[NewFloozViewController class]])
+                    transacViewController = (NewFloozViewController *) [selectedNav topViewController];
             }
             
             if (transacViewController) {
@@ -300,7 +422,7 @@
                 }
             }
         }
-    } else if ([trigger.viewCaregory isEqualToString:@"image:pot"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"image:pot"]) {
         if (trigger.data && trigger.data[@"_id"]) {
             UIViewController *topViewController = [appDelegate myTopViewController];
             NewCollectController *transacViewController;
@@ -374,29 +496,29 @@
     } else if ([trigger.category isEqualToString:@"notifs"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotifications" object:nil];
         [self executeTriggerList:trigger.triggers];
-    } else if ([trigger.viewCaregory isEqualToString:@"cashin:audiotel"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"cashin:audiotel"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:trigger.key object:nil userInfo:trigger.data];
         [self executeTriggerList:trigger.triggers];
     }
 }
 
 - (void)showActionHandler:(FLTrigger *)trigger {
-    if ([trigger.viewCaregory isEqualToString:@"app:signup"]) {
+    if ([trigger.viewCategory isEqualToString:@"app:signup"]) {
         [appDelegate showSignupWithUser:trigger.data];
         [self executeTriggerList:trigger.triggers];
-    } else if ([trigger.viewCaregory isEqualToString:@"app:popup"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"app:popup"]) {
         if (trigger.data) {
             [[[FLPopupTrigger alloc] initWithData:trigger.data] show:^{
                 [self executeTriggerList:trigger.triggers];
             }];
         }
-    } else if ([trigger.viewCaregory isEqualToString:@"app:alert"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"app:alert"]) {
         if (trigger.data) {
             [appDelegate displayMessage:[[FLAlert alloc] initWithJson:trigger.data] completion:^{
                 [self executeTriggerList:trigger.triggers];
             }];
         }
-    } else if ([trigger.viewCaregory isEqualToString:@"app:list"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"app:list"]) {
         if (trigger.data) {
             if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
                 UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:trigger.data[@"title"] delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
@@ -438,7 +560,7 @@
                 }];
             }
         }
-    } else if ([trigger.viewCaregory isEqualToString:@"app:sms"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"app:sms"]) {
         if (trigger.data && trigger.data[@"recipients"] && trigger.data[@"body"]) {
             if ([MFMessageComposeViewController canSendText]) {
                 [[Flooz sharedInstance] showLoadView];
@@ -463,7 +585,7 @@
                 }
             }
         }
-    } else if ([trigger.viewCaregory isEqualToString:@"auth:code"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"auth:code"]) {
         [[Flooz sharedInstance] showLoadView];
         
         CompleteBlock completeBlock = ^{
@@ -513,7 +635,7 @@
                 }];
             });
         }
-    } else if ([trigger.viewCaregory isEqualToString:@"profile:user"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"profile:user"]) {
         if ([trigger.data objectForKey:@"nick"]) {
             FLUser *user = [[FLUser alloc] initWithJSON:trigger.data];
             [appDelegate showUser:user inController:nil completion:^{
@@ -529,7 +651,7 @@
                 }
             } failure:nil];
         }
-    } else if ([trigger.viewCaregory isEqualToString:@"timeline:flooz"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"timeline:flooz"]) {
         NSString *resourceID = trigger.data[@"_id"];
         
         if (resourceID) {
@@ -542,7 +664,7 @@
             }];
         }
         
-    } else if ([trigger.viewCaregory isEqualToString:@"timeline:pot"]) {
+    } else if ([trigger.viewCategory isEqualToString:@"timeline:pot"]) {
         NSString *resourceID = trigger.data[@"_id"];
         
         if (resourceID) {
@@ -556,7 +678,7 @@
         }
         
     } else if ([self isTriggerKeyView:trigger]) {
-        Class controllerClass = [self.binderKeyView objectForKey:trigger.viewCaregory];
+        Class controllerClass = [self.binderKeyView objectForKey:trigger.viewCategory];
         
         if ([self isTriggerKeyViewRoot:trigger]) {
             NSInteger rootId = [self isViewClassRoot:controllerClass];
@@ -629,19 +751,19 @@
 }
 
 - (BOOL)isTriggerKeyView:(FLTrigger *)trigger {
-    return (trigger && trigger.viewCaregory && [self.binderKeyView objectForKey:trigger.viewCaregory]);
+    return (trigger && trigger.viewCategory && [self.binderKeyView objectForKey:trigger.viewCategory]);
 }
 
 - (BOOL)isTriggerKeyViewModal:(FLTrigger *)trigger {
-    return (trigger && trigger.viewCaregory && [self.binderKeyType objectForKey:trigger.viewCaregory] && [[self.binderKeyType objectForKey:trigger.viewCaregory] isEqualToString:@"modal"]);
+    return (trigger && trigger.viewCategory && [self.binderKeyType objectForKey:trigger.viewCategory] && [[self.binderKeyType objectForKey:trigger.viewCategory] isEqualToString:@"modal"]);
 }
 
 - (BOOL)isTriggerKeyViewPush:(FLTrigger *)trigger {
-    return (trigger && trigger.viewCaregory && [self.binderKeyType objectForKey:trigger.viewCaregory] && [[self.binderKeyType objectForKey:trigger.viewCaregory] isEqualToString:@"push"]);
+    return (trigger && trigger.viewCategory && [self.binderKeyType objectForKey:trigger.viewCategory] && [[self.binderKeyType objectForKey:trigger.viewCategory] isEqualToString:@"push"]);
 }
 
 - (BOOL)isTriggerKeyViewRoot:(FLTrigger *)trigger {
-    return (trigger && trigger.viewCaregory && [self.binderKeyType objectForKey:trigger.viewCaregory] && [[self.binderKeyType objectForKey:trigger.viewCaregory] isEqualToString:@"root"]);
+    return (trigger && trigger.viewCategory && [self.binderKeyType objectForKey:trigger.viewCategory] && [[self.binderKeyType objectForKey:trigger.viewCategory] isEqualToString:@"root"]);
 }
 
 - (NSInteger)isViewClassRoot:(Class)viewClass {
@@ -705,6 +827,7 @@
                            @"app:profile": [UserViewController class],
                            @"app:timeline": [TimelineViewController class],
                            @"auth:code": [SecureCodeViewController class],
+                           @"scope:picker": [ScopePickerViewController class],
                            @"pay:card": [CreditCardViewController class],
                            @"pay:audiotel": [PaymentAudiotelViewController class],
                            @"pay:source": [PaymentSourceViewController class],
@@ -743,6 +866,7 @@
                            @"app:profile": @"root",
                            @"app:timeline": @"root",
                            @"auth:code": @"modal",
+                           @"scope:picker" : @"modal",
                            @"pay:card": @"modal",
                            @"pay:audiotel": @"modal",
                            @"pay:source": @"modal",

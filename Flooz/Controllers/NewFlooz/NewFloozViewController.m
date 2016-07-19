@@ -27,8 +27,6 @@
     UIButton *imageCloseButton;
     DotActivityIndicatorView *imageProgressView;
     
-    UIButton *closeImage;
-    
     UIBarButtonItem *scopeItem;
     
     BOOL firstView;
@@ -336,7 +334,7 @@
 }
 
 - (void)changeUser {
-    [self.navigationController pushViewController:[UserPickerViewController newWithDelegate:self] animated:YES];
+//    [self.navigationController pushViewController:[UserPickerViewController newWithDelegate:self] animated:YES];
 }
 
 - (void)user:(FLUser *)user pickedFrom:(UIViewController *)viewController {

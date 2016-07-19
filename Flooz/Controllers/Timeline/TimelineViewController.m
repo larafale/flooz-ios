@@ -11,7 +11,6 @@
 #import "TransactionCell.h"
 #import "TimelineDealCell.h"
 
-#import "NewTransactionViewController.h"
 #import "TransactionViewController.h"
 #import "NotificationsViewController.h"
 #import "AppDelegate.h"

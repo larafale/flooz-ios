@@ -33,6 +33,7 @@
     UILabel *closeLabel;
     FLActionButton *participateButton;
     FLActionButton *closeButton;
+    FLActionButton *publishButton;
     FLTextViewComment *commentTextField;
     UIButton *shareButton;
     UIButton *closeCommentButton;
@@ -169,26 +170,21 @@
 #pragma mark - Views
 
 - (void)createHeader {
-    NSString *imageNamed = @"";
-    if (_transaction.social.scope == SocialScopeFriend) {
-        imageNamed = @"transaction-scope-friend";
-    }
-    else if (_transaction.social.scope == SocialScopePrivate) {
-        imageNamed = @"transaction-scope-private";
-    }
-    else if (_transaction.social.scope == SocialScopePublic) {
-        imageNamed = @"transaction-scope-public";
-    }
+    UIImage *scopeImage = [FLTransaction transactionScopeToImage:_transaction.social.scope];
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[[UIImage imageNamed:imageNamed] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 0, 25, 25);
-    [btn setTintColor:[UIColor customWhite]];
-    [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    self.navigationItem.rightBarButtonItem = scopeButton;
+    if (scopeImage) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setImage:[scopeImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        btn.frame = CGRectMake(0, 0, 20, 20);
+        [btn setTintColor:[UIColor customWhite]];
+        [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        
+        self.navigationItem.rightBarButtonItem = scopeButton;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
     
     if (!navHeaderView) {
         navHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPTabBarHeight())];
@@ -296,6 +292,11 @@
     [closeButton setBackgroundColor:[UIColor customRed] forState:UIControlStateNormal];
     [closeButton setBackgroundColor:[UIColor customRed:0.5] forState:UIControlStateHighlighted];
     [toolbar addSubview:closeButton];
+    
+    publishButton = [[FLActionButton alloc] initWithFrame:CGRectMake(60, 5, PPScreenWidth() - 120, 50 - 10) title:NSLocalizedString(@"MENU_PUBLISH", nil)];
+    publishButton.titleLabel.font = [UIFont customTitleLight:16];
+    [publishButton addTarget:self action:@selector(publishButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [toolbar addSubview:publishButton];
     
     commentTextField = [[FLTextViewComment alloc] initWithPlaceholder:NSLocalizedString(@"SEND_COMMENT", nil) for:commentData key:@"comment" frame:CGRectMake(60, 10, PPScreenWidth() - 120, 30)];
     [commentTextField setDelegate:self];
@@ -476,26 +477,22 @@
 }
 
 - (void)prepareViews {
-    NSString *imageNamed = @"";
-    if (_transaction.social.scope == SocialScopeFriend) {
-        imageNamed = @"transaction-scope-friend";
-    }
-    else if (_transaction.social.scope == SocialScopePrivate) {
-        imageNamed = @"transaction-scope-private";
-    }
-    else if (_transaction.social.scope == SocialScopePublic) {
-        imageNamed = @"transaction-scope-public";
-    }
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[[UIImage imageNamed:imageNamed] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 0, 20, 20);
-    [btn setTintColor:[UIColor customWhite]];
-    [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *scopeImage = [FLTransaction transactionScopeToImage:_transaction.social.scope];
     
-    UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    
-    self.navigationItem.rightBarButtonItem = scopeButton;
+    if (scopeImage) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setImage:[scopeImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        btn.frame = CGRectMake(0, 0, 20, 20);
+        [btn setTintColor:[UIColor customWhite]];
+        [btn addTarget:self action:@selector(showScopeHelper) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *scopeButton = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        
+        self.navigationItem.rightBarButtonItem = scopeButton;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
     
     if (isCommenting) {
         commentTextField.hidden = NO;
@@ -506,6 +503,7 @@
         commentButton.hidden = YES;
         shareButton.hidden = YES;
         closeLabel.hidden = YES;
+        publishButton.hidden = YES;
     } else {
         if (_transaction.isAvailable && _transaction.isClosable) {
             participateButton.hidden = NO;
@@ -514,6 +512,7 @@
             closeCommentButton.hidden = YES;
             sendCommentButton.hidden = YES;
             commentButton.hidden = NO;
+            publishButton.hidden = YES;
             
             CGRectSetWidth(participateButton.frame, (PPScreenWidth() - 120) / 2 - 5);
             CGRectSetX(closeButton.frame, PPScreenWidth() / 2 + 5);
@@ -530,6 +529,7 @@
             closeCommentButton.hidden = YES;
             sendCommentButton.hidden = YES;
             commentButton.hidden = NO;
+            publishButton.hidden = YES;
             
             CGRectSetWidth(participateButton.frame, PPScreenWidth() - 120);
             CGRectSetX(closeButton.frame, 60);
@@ -541,10 +541,27 @@
             participateButton.hidden = YES;
             closeButton.hidden = NO;
             commentTextField.hidden = YES;
+            publishButton.hidden = YES;
             
             CGRectSetWidth(participateButton.frame, PPScreenWidth() - 120);
             CGRectSetWidth(closeButton.frame, PPScreenWidth() - 120);
+            CGRectSetWidth(publishButton.frame, PPScreenWidth() - 120);
             closeButton.titleLabel.font = [UIFont customTitleLight:20];
+            closeCommentButton.hidden = YES;
+            sendCommentButton.hidden = YES;
+            commentButton.hidden = NO;
+            shareButton.hidden = NO;
+            closeLabel.hidden = YES;
+        } else if (_transaction.isPublishable) {
+            participateButton.hidden = YES;
+            closeButton.hidden = YES;
+            publishButton.hidden = NO;
+            commentTextField.hidden = YES;
+            
+            CGRectSetWidth(participateButton.frame, PPScreenWidth() - 120);
+            CGRectSetWidth(closeButton.frame, PPScreenWidth() - 120);
+            CGRectSetWidth(publishButton.frame, PPScreenWidth() - 120);
+            publishButton.titleLabel.font = [UIFont customTitleLight:20];
             closeCommentButton.hidden = YES;
             sendCommentButton.hidden = YES;
             commentButton.hidden = NO;
@@ -555,6 +572,7 @@
                 closeLabel.hidden = NO;
                 commentTextField.hidden = YES;
                 participateButton.hidden = YES;
+                publishButton.hidden = YES;
                 closeButton.hidden = YES;
                 sendCommentButton.hidden = YES;
                 commentButton.hidden = NO;
@@ -562,6 +580,7 @@
                 closeLabel.hidden = YES;
                 commentTextField.hidden = NO;
                 participateButton.hidden = YES;
+                publishButton.hidden = YES;
                 closeButton.hidden = YES;
                 sendCommentButton.hidden = NO;
                 commentButton.hidden = YES;
@@ -787,7 +806,7 @@
                 [tmp removeFromSuperview];
             
             if (_transaction.invitations && _transaction.invitations.count) {
-               
+                
                 
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 
@@ -1087,6 +1106,10 @@
     [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.actions[@"participate"]]];
 }
 
+- (void)publishButtonClick {
+    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.actions[@"publish"]]];
+}
+
 - (void)reloadTransaction {
     [self prepareViews];
     [self didUpdateTransactionData];
@@ -1101,15 +1124,16 @@
 - (void)showScopeHelper {
     NSString *text;
     
-    if (_transaction.social.scope == SocialScopeFriend) {
+    if (_transaction.social.scope == TransactionScopeFriend) {
         text = @"Cagnotte ouverte aux amis";
     }
-    else if (_transaction.social.scope == SocialScopePrivate) {
+    else if (_transaction.social.scope == TransactionScopePrivate) {
         text = @"Cagnotte privée";
     }
-    else if (_transaction.social.scope == SocialScopePublic) {
+    else if (_transaction.social.scope == TransactionScopePublic) {
         text = @"Cagnotte publique";
-    }
+    } else
+        return;
     
     scopeHelperLabel.text = text;
     [scopeHelperLabel sizeToFit];

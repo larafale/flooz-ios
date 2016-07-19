@@ -225,6 +225,7 @@
 "MENU_DECLINE" = "Refuser";
 
 "MENU_PARTICIPATE" = "Participer";
+"MENU_PUBLISH" = "Publier";
 "MENU_CLOSE" = "Clôturer";
 "MENU_PAYMENT" = "Payer";
 "MENU_CHARGE" = "Réclamer";
@@ -358,8 +359,8 @@
 "TRANSACTION_STATUS_REFUSED" = "Refused";
 "TRANSACTION_STATUS_PENDING" = "Waiting";
 
-"TRANSACTION_SCOPE_TITLE" = "Qui peut voir ça ?";
-"TRANSACTION_SCOPE_POT_TITLE" = "Qui peut voir ça ?";
+"TRANSACTION_SCOPE_TITLE" = "Qui peut voir ce Flooz ?";
+"TRANSACTION_SCOPE_POT_TITLE" = "Qui peut voir cette cagnotte ?";
 
 "TRANSACTION_SCOPE_PUBLIC" = "Tout le monde";
 "TRANSACTION_SCOPE_FRIEND" = "Mes amis & moi";
@@ -367,11 +368,11 @@
 
 "TRANSACTION_SCOPE_SUB_PUBLIC" = "Visible sur le fil d'actualité Flooz";
 "TRANSACTION_SCOPE_SUB_FRIEND" = "Visible par vos amis sur Flooz";
-"TRANSACTION_SCOPE_SUB_PRIVATE" = "Seul les personnes concernées pourront accéder à ce Flooz";
+"TRANSACTION_SCOPE_SUB_PRIVATE" = "Seules les personnes concernées pourront accéder à ce Flooz";
 
 "TRANSACTION_SCOPE_SUB_POT_PUBLIC" = "Visible sur le fil d'actualité Flooz";
 "TRANSACTION_SCOPE_SUB_POT_FRIEND" = "Visible par vos amis sur Flooz";
-"TRANSACTION_SCOPE_SUB_POT_PRIVATE" = "Seul les personnes concernées pourront accéder à cette cagnotte";
+"TRANSACTION_SCOPE_SUB_POT_PRIVATE" = "Seules les personnes concernées pourront accéder à cette cagnotte";
 
 "SEND_COMMENT" = "Ajouter un commentaire...";
 

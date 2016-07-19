@@ -14,6 +14,8 @@
 #import "TimelineViewController.h"
 
 #import "AppDelegate.h"
+#import "DotActivityIndicatorView.h"
+#import "DotActivityIndicatorParms.h"
 
 #import "FLTutoPopoverViewController.h"
 #import "UIView+FindFirstResponder.h"
@@ -24,39 +26,23 @@
 
 @interface NewCollectController () {
     
+    UIScrollView *contentView;
     FLNewTransactionBar *transactionBar;
-    FLNewTransactionBar *transactionBarKeyboard;
-    FLNewTransactionBar *cameraBarKeyboard;
     
     FLPreset *currentPreset;
     
     FLTextField *name;
     FLTextView *content;
     
-    FLTutoPopoverViewController *tutoPopover;
-    WYPopoverController *popoverController;
-    
     BOOL infoDisplayed;
     BOOL firstView;
-    BOOL firstViewAmount;
     BOOL firstViewWhy;
-    BOOL isDemo;
     
-    NSTimer *demoTimer;
+    FLAnimatedImageView *imageTransaction;
+    UIButton *imageCloseButton;
+    DotActivityIndicatorView *imageProgressView;
     
-    int currentDemoStep;
-    
-    FLCameraKeyboard *camera;
-    UIView *cameraView;
-    UIImageView *imageTransaction;
-    UIButton *closeImage;
-    
-    CGFloat _offset;
-    
-    BOOL cameraDisplayed;
-    NSTimer *timerForSlider;
-    CGFloat heightTarget;
-    CGFloat pictureZoneSize;
+    CGFloat keyboardHeight;
 }
 
 @end
@@ -78,7 +64,6 @@
         
         infoDisplayed = NO;
         firstView = YES;
-//        isDemo = currentPreset.popup != NULL || currentPreset.steps != NULL;
         
         if (currentPreset.title && ![currentPreset.title isBlank])
             self.title = currentPreset.title;
@@ -94,14 +79,12 @@
         if (currentPreset.payload)
             transaction[@"payload"] = currentPreset.payload;
         
-        currentDemoStep = 0;
         firstViewWhy = currentPreset.focusWhy;
         
         [[Flooz sharedInstance] clearLocationData];
     }
     return self;
 }
-
 
 - (id)init {
     self = [super initWithNibName:nil bundle:nil];
@@ -116,9 +99,7 @@
         
         infoDisplayed = NO;
         firstView = YES;
-        firstViewAmount = YES;
         firstViewWhy = NO;
-        isDemo = NO;
         
         [[Flooz sharedInstance] clearLocationData];
     }
@@ -133,70 +114,97 @@
     transactionBar = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionCollect:@selector(valid)];
     [transactionBar setDelegate:self];
     
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight() - PPStatusBarHeight() - NAVBAR_HEIGHT - CGRectGetHeight(transactionBar.frame))];
-    [self.view addSubview:self.contentView];
-    
-    self.view.backgroundColor = [UIColor customBackground];
-    
     if (currentPreset && currentPreset.blockBack)
         ((FLNavigationController*)self.parentViewController).blockBack = currentPreset.blockBack;
     
-    transactionBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionCollect:@selector(valid)];
-    [transactionBarKeyboard setDelegate:self];
+    NSString *namePlaceholder = NSLocalizedString(@"FIELD_COLLECT_NAME_PLACEHOLDER", nil);
     
-    _offset = 0;
+    if (currentPreset && currentPreset.namePlaceholder)
+        namePlaceholder = currentPreset.namePlaceholder;
     
-    {
-        NSString *namePlaceholder = NSLocalizedString(@"FIELD_COLLECT_NAME_PLACEHOLDER", nil);
-        
-        if (currentPreset && currentPreset.namePlaceholder)
-            namePlaceholder = currentPreset.namePlaceholder;
-        
-        name = [[FLTextField alloc] initWithPlaceholder:namePlaceholder for:transaction key:@"name" frame:CGRectMake(5, 3, PPScreenWidth() - 10, 50)];
-        [name setLineNormalColor:[UIColor clearColor]];
-        [name setLineErrorColor:[UIColor clearColor]];
-        [name setLineSelectedColor:[UIColor clearColor]];
-        [name setLineDisableColor:[UIColor clearColor]];
-        [name setInputAccessoryView:transactionBarKeyboard];
-        [name addTextFocusTarget:self action:@selector(nameFocus)];
-        [name setAutocapitalizationType:UITextAutocapitalizationTypeSentences];
-        
-        [_contentView addSubview:name];
-        
-        _offset = CGRectGetHeight(name.frame);
-        
-        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, _offset, SCREEN_WIDTH, 1)];
-        [separator setBackgroundColor:[UIColor customMiddleBlue]];
-        [_contentView addSubview:separator];
-        
-        ++_offset;
-        
-        NSString *contentPlaceholder = @"FIELD_COLLECT_CONTENT_PLACEHOLDER";
-        
-        if (currentPreset && currentPreset.whyPlaceholder)
-            contentPlaceholder = currentPreset.whyPlaceholder;
-        
-        content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" frame:CGRectMake(0, _offset, PPScreenWidth(), CGRectGetHeight(_contentView.frame) - CGRectGetHeight(transactionBar.frame) - _offset)];
-        [content setInputAccessoryView:transactionBarKeyboard];
-        [content addTextFocusTarget:self action:@selector(contentFocus)];
-        
-        [_contentView addSubview:content];
-        
-        [name addForNextClickTarget:content action:@selector(becomeFirstResponder)];
-        
-        [self prepareImage];
-        
-        if (currentPreset && currentPreset.blockWhy)
-            [content setUserInteractionEnabled:!currentPreset.blockWhy];
-        
-        _offset = CGRectGetMaxY(content.frame);
-        
-        UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard:)];
-        [_contentView addGestureRecognizer:tapG];
-    }
+    name = [[FLTextField alloc] initWithPlaceholder:namePlaceholder for:transaction key:@"name" frame:CGRectMake(5, 3, PPScreenWidth() - 10, 50)];
+    [name setLineNormalColor:[UIColor clearColor]];
+    [name setLineErrorColor:[UIColor clearColor]];
+    [name setLineSelectedColor:[UIColor clearColor]];
+    [name setLineDisableColor:[UIColor clearColor]];
+    [name addTextFocusTarget:self action:@selector(nameFocus)];
+    [name setFont:[UIFont customContentLight:16]];
+    [name setKeyboardAppearance:UIKeyboardAppearanceLight];
+    [name setAutocapitalizationType:UITextAutocapitalizationTypeSentences];
     
-    CGRectSetY(transactionBar.frame,  CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
-    [self.view addSubview:transactionBar];
+    [_mainBody addSubview:name];
+    
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(name.frame), SCREEN_WIDTH, .7f)];
+    [separator setBackgroundColor:[UIColor customBackground]];
+    [_mainBody addSubview:separator];
+    
+    contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(separator.frame), PPScreenWidth(), CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame) - CGRectGetMaxY(separator.frame))];
+    [contentView setBounces:NO];
+    contentView.userInteractionEnabled = YES;
+    
+    NSString *contentPlaceholder = @"FIELD_TRANSACTION_CONTENT_PLACEHOLDER";
+    
+    if (currentPreset && currentPreset.whyPlaceholder)
+        contentPlaceholder = currentPreset.whyPlaceholder;
+    
+    content = [[FLTextView alloc] initWithPlaceholder:contentPlaceholder for:transaction key:@"why" frame:CGRectMake(0, 5, PPScreenWidth(), 30)];
+    [content setBackgroundColor:[UIColor clearColor]];
+    content.textView.keyboardAppearance = UIKeyboardAppearanceLight;
+    [content addTextFocusTarget:self action:@selector(contentFocusChanged:)];
+    [content addTextChangeTarget:self action:@selector(contentTextChanged)];
+    content.textView.scrollEnabled = NO;
+    
+    [contentView addTapGestureWithTarget:content action:@selector(becomeFirstResponder)];
+    
+    [contentView addSubview:content];
+    
+    if (currentPreset && currentPreset.blockWhy)
+        [content setUserInteractionEnabled:!currentPreset.blockWhy];
+    
+    imageTransaction = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(10, 0, PPScreenWidth() - 20, ((PPScreenWidth() - 20) * 3) / 4)];
+    imageTransaction.hidden = YES;
+    imageTransaction.layer.masksToBounds = YES;
+    imageTransaction.layer.cornerRadius = 3.;
+    imageTransaction.contentMode = UIViewContentModeScaleAspectFill;
+    imageTransaction.backgroundColor = [UIColor customBackground];
+    [imageTransaction addTapGestureWithTarget:self action:@selector(showFullImage)];
+    
+    imageCloseButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(imageTransaction.frame) - 35, 5, 30, 30)];
+    imageCloseButton.backgroundColor = [UIColor whiteColor];
+    imageCloseButton.layer.masksToBounds = YES;
+    imageCloseButton.layer.cornerRadius = 2.;
+    [imageCloseButton setImage:[[UIImage imageNamed:@"trash"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [imageCloseButton setTintColor:[UIColor darkGrayColor]];
+    [imageCloseButton addTarget:self action:@selector(didCloseImageButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    imageProgressView = [[DotActivityIndicatorView alloc] initWithFrame:CGRectMake(CGRectGetWidth(imageTransaction.frame) / 2 - CGRectGetHeight(imageTransaction.frame) / 6, CGRectGetHeight(imageTransaction.frame) / 3, CGRectGetHeight(imageTransaction.frame) / 3, CGRectGetHeight(imageTransaction.frame) / 3)];
+    [imageProgressView setBackgroundColor:[UIColor clearColor]];
+    [imageProgressView setHidden:YES];
+    
+    DotActivityIndicatorParms *dotParms = [DotActivityIndicatorParms new];
+    dotParms.activityViewWidth = imageProgressView.frame.size.width;
+    dotParms.activityViewHeight = imageProgressView.frame.size.height;
+    dotParms.numberOfCircles = 3;
+    dotParms.internalSpacing = 5;
+    dotParms.animationDelay = 0.2;
+    dotParms.animationDuration = 0.6;
+    dotParms.animationFromValue = 0.3;
+    dotParms.defaultColor = [UIColor customBlue];
+    dotParms.isDataValidationEnabled = YES;
+    
+    [imageProgressView setDotParms:dotParms];
+    
+    [imageTransaction addSubview:imageCloseButton];
+    [imageTransaction addSubview:imageProgressView];
+    
+    [contentView addSubview:imageTransaction];
+    
+    [_mainBody addSubview:contentView];
+    
+    CGRectSetY(transactionBar.frame,  CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame));
+    [_mainBody addSubview:transactionBar];
+    
+    [self registerForKeyboardNotifications];
 }
 
 - (void)viewDidUnload {
@@ -207,16 +215,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [cameraView setHidden:YES];
-    cameraView = nil;
-    
-    if ([popoverController isPopoverVisible])
-        [popoverController dismissPopoverAnimated:YES];
-    
-    if (demoTimer) {
-        [demoTimer invalidate];
-        demoTimer = nil;
-    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -237,232 +235,169 @@
     
     if (currentPreset) {
         if (currentPreset.image) {
-            [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:currentPreset.image] options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-                if (image && !error && finished) {
-                    [self rotateImageWithRadians:0 imageRotate:image andImage:nil];
-                    currentPreset.image = @"";
+            [transaction setValue:currentPreset.image forKey:@"imageUrl"];
+            [transaction removeObjectForKey:@"image"];
+            imageTransaction.hidden = NO;
+            imageTransaction.image = nil;
+            imageTransaction.animatedImage = nil;
+            
+            [imageProgressView setHidden:NO];
+            [imageProgressView startAnimating];
+            
+            [imageCloseButton setHidden:YES];
+            
+            [imageTransaction sd_setImageWithURL:[NSURL URLWithString:currentPreset.image] placeholderImage:nil options:0 completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                if (error) {
+                    [imageProgressView stopAnimating];
+                }
+                else {
+                    [imageProgressView stopAnimating];
+                    [imageProgressView setHidden:YES];
+                    [imageCloseButton setHidden:NO];
                 }
             }];
+            
+            CGRectSetY(imageTransaction.frame, CGRectGetMaxY(content.frame) + 10);
+            contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(imageTransaction.frame) + 10);
         }
     }
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
     
-    if (isDemo) {
-        demoTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(launchDemo) userInfo:nil repeats:NO];
+    [name becomeFirstResponder];
+}
+
+- (void)contentFocusChanged:(NSNumber *)focus {
+    if ([focus boolValue])
+        [transactionBar.textButton setTintColor:[UIColor customBlue]];
+    else
+        [transactionBar.textButton setTintColor:[UIColor whiteColor]];
+}
+
+- (void)contentTextChanged {
+    
+    CGFloat textViewWidth = content.textView.frame.size.width;
+    
+    CGSize size = [content.textView sizeThatFits:CGSizeMake(textViewWidth, CGFLOAT_MAX)];
+    
+    [content.textView setHeight:size.height];
+    
+    content.textView.contentSize = CGSizeMake(textViewWidth, size.height);
+    
+    CGRectSetHeight(content.frame, CGRectGetHeight(content.textView.frame));
+    
+    if (imageTransaction.isHidden) {
+        contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(content.frame) + 10);
+        
+        CGRect cursorRect = [content.textView caretRectForPosition:content.textView.selectedTextRange.start];
+        
+        cursorRect = [contentView convertRect:cursorRect fromView:content.textView];
+        
+        if (![self rectVisible:cursorRect]) {
+            cursorRect.size.height += 8; // To add some space underneath the cursor
+            [contentView scrollRectToVisible:cursorRect animated:YES];
+        }
     } else {
-        [name becomeFirstResponder];
+        CGRectSetY(imageTransaction.frame, CGRectGetMaxY(content.frame) + 10);
+        contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(imageTransaction.frame) + 10);
+        
+        CGRect cursorRect = [content.textView caretRectForPosition:content.textView.selectedTextRange.start];
+        
+        cursorRect = [contentView convertRect:cursorRect fromView:content.textView];
+        
+        if (![self rectVisible:cursorRect]) {
+            cursorRect.size.height += 8; // To add some space underneath the cursor
+            [contentView scrollRectToVisible:cursorRect animated:YES];
+        }
     }
 }
 
-- (void)contentFocus {
-    if ([popoverController isPopoverVisible])
-        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale];
+- (BOOL)rectVisible: (CGRect)rect {
+    CGRect visibleRect;
+    visibleRect.origin = contentView.contentOffset;
+    visibleRect.origin.y += contentView.contentInset.top;
+    visibleRect.size = contentView.bounds.size;
+    visibleRect.size.height -= contentView.contentInset.top + contentView.contentInset.bottom;
+    
+    return CGRectContainsRect(visibleRect, rect);
 }
 
 - (void)nameFocus {
-    if ([popoverController isPopoverVisible])
-        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale];
+    
 }
 
 - (void)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
 }
 
-#pragma mark - demo handler
-
-- (void)launchDemo {
-//    [demoTimer invalidate];
-//    demoTimer = nil;
-//    if (currentPreset.popup) {
-//        [[[FLPopupTrigger alloc] initWithData:currentPreset.popup dismiss:^{
-//            if (currentPreset.popup[@"triggers"]) {
-//                [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:currentPreset.popup[@"triggers"]]];
-//            }
-//            
-//            if (currentPreset.steps) {
-//                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-//            }
-//            currentPreset.popup = nil;
-//        }] show];
-//    } else if (currentPreset.steps) {
-//        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-//    }
-}
-
-- (void) showDemoStepPopover:(NSDictionary*)stepData {
-//    tutoPopover = [[FLTutoPopoverViewController alloc] initWithTitle:stepData[@"title"] message:stepData[@"desc"] step:[NSNumber numberWithInt:currentDemoStep + 1] button:stepData[@"btn"] action:^(FLTutoPopoverViewController *viewController) {
-//        [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionFadeWithScale completion:^{
-//            if ([stepData[@"focus"] isEqualToString:@"why"]) {
-//                [content becomeFirstResponder];
-//            }
-//            else if ([stepData[@"focus"] isEqualToString:@"name"]) {
-//                [name becomeFirstResponder];
-//            }
-//            else if ([stepData[@"focus"] isEqualToString:@"scope"]) {
-//                [transactionBar.privacyButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-//            }
-//            else if (currentDemoStep < currentPreset.steps.count) {
-//                [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-//            }
-//        }];
-//    }];
-//    popoverController = [[WYPopoverController alloc] initWithContentViewController:tutoPopover];
-//    [popoverController setTheme:[FLPopoverTutoTheme theme]];
-//    [popoverController setDelegate:self];
-//    [popoverController setPassthroughViews:[self getDemoStepPopoverPassthroughViews:stepData[@"focus"]]];
-//    
-//    [popoverController presentPopoverFromRect:[self getDemoStepPopoverRect:stepData[@"focus"]] inView:[self getDemoStepPopoverView:stepData[@"focus"]] permittedArrowDirections:[self getDemoStepPopoverArrowDirection:stepData[@"focus"]] animated:YES options:WYPopoverAnimationOptionFadeWithScale completion:nil];
-//    ++currentDemoStep;
-//    
-//    if (currentDemoStep == currentPreset.steps.count)
-//        isDemo = false;
-}
-
-- (CGRect) getDemoStepPopoverRect:(NSString*)focus {
-    UIView *tmp = [self getDemoStepPopoverView:focus];
-    
-    CGRect retRec = tmp.bounds;
-    
-    if ([focus isEqualToString:@"why"]) {
-        retRec = CGRectMake(retRec.origin.x, retRec.origin.y, 150, 35);
-    } else if ([focus isEqualToString:@"name"]) {
-        retRec = CGRectMake(retRec.origin.x, retRec.origin.y, 50, 40);
-    } else if ([focus isEqualToString:@"scope"] || [focus isEqualToString:@"image"] || [focus isEqualToString:@"fb"] || [focus isEqualToString:@"pay"] || [focus isEqualToString:@"geo"]) {
-        retRec = CGRectMake(retRec.origin.x, retRec.origin.y - 5, retRec.size.width, retRec.size.height);
-    } else if ([focus isEqualToString:@"amount"]) {
-        retRec = CGRectMake(retRec.origin.x + 15, retRec.origin.y - 5, retRec.size.width, retRec.size.height);
-    }
-    
-    return retRec;
-}
-
-- (UIView*) getDemoStepPopoverView:(NSString*)focus {
-//    if ([focus isEqualToString:@"name"]) {
-//        return name;
-//    }
-//    if ([focus isEqualToString:@"image"]) {
-//        return transactionBar.imageButton;
-//    }
-//    if ([focus isEqualToString:@"scope"]) {
-//        return transactionBar.privacyButton;
-//    }
-//    if ([focus isEqualToString:@"why"]) {
-//        return content;
-//    }
-//    if ([focus isEqualToString:@"pay"]) {
-//        return transactionBar.collectButton;
-//    }
-//    if ([focus isEqualToString:@"geo"]) {
-//        return transactionBar.locationButton;
-//    }
-    return nil;
-}
-
-- (WYPopoverArrowDirection) getDemoStepPopoverArrowDirection:(NSString*)focus {
-    if ([focus isEqualToString:@"name"]) {
-        return WYPopoverArrowDirectionUp;
-    }
-    if ([focus isEqualToString:@"image"]) {
-        return WYPopoverArrowDirectionDown;
-    }
-    if ([focus isEqualToString:@"scope"]) {
-        return WYPopoverArrowDirectionDown;
-    }
-    if ([focus isEqualToString:@"why"]) {
-        return WYPopoverArrowDirectionUp;
-    }
-    if ([focus isEqualToString:@"pay"]) {
-        return WYPopoverArrowDirectionDown;
-    }
-    if ([focus isEqualToString:@"geo"]) {
-        return WYPopoverArrowDirectionDown;
-    }
-    return WYPopoverArrowDirectionAny;
-}
-
-- (NSArray*) getDemoStepPopoverPassthroughViews:(NSString*)focus {
-//    if ([focus isEqualToString:@"name"]) {
-//        return @[name];
-//    }
-//    if ([focus isEqualToString:@"scope"]) {
-//        return @[transactionBar.privacyButton];
-//    }
-//    if ([focus isEqualToString:@"why"]) {
-//        return @[content];
-//    }
-//    if ([focus isEqualToString:@"pay"]) {
-//        return @[transactionBar.collectButton];
-//    }
-    return @[];
-}
-
-#pragma mark - transaction bar delegate
-
-- (void) scopePopoverWillAppear {
-    if (isDemo && [popoverController isPopoverVisible]) {
-        [popoverController dismissPopoverAnimated:NO];
-    }
-}
-
-- (void) scopePopoverDidDisappear {
-//    if (isDemo && currentDemoStep < currentPreset.steps.count) {
-//        [self showDemoStepPopover:currentPreset.steps[currentDemoStep]];
-//    }
-}
-
-#pragma mark - popover delegate
-
-- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
-{
-    return NO;
-}
-
-- (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller
-{
-    
-}
-
 #pragma mark - prepare Views
 
-- (void)prepareImage {
-    pictureZoneSize = (PPScreenWidth() / 100.0f) * 40;
+- (void)image:(NSString *)imageUrl pickedFrom:(UIViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
     
-    imageTransaction = [[UIImageView alloc] initWithFrame:CGRectMake(PPScreenWidth() - 14 - pictureZoneSize, _offset + 10, 0, 0)];
-    [_contentView addSubview:imageTransaction];
-    [imageTransaction setMultipleTouchEnabled:YES];
-    [imageTransaction setUserInteractionEnabled:YES];
-    [imageTransaction addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showFullscreenImage)]];
+    [transaction setValue:imageUrl forKey:@"imageUrl"];
+    [transaction removeObjectForKey:@"image"];
+    imageTransaction.hidden = NO;
+    imageTransaction.image = nil;
+    imageTransaction.animatedImage = nil;
     
-    closeImage = [UIButton newWithFrame:CGRectMake(pictureZoneSize - 45, 0, 40, 40)];
-    [closeImage setImage:[UIImage imageNamed:@"image-close"] forState:UIControlStateNormal];
-    [closeImage addTarget:self action:@selector(touchImage) forControlEvents:UIControlEventTouchUpInside];
-    [closeImage setImageEdgeInsets:UIEdgeInsetsMake(2, 15, 15, 2)];
-    [imageTransaction addSubview:closeImage];
+    [imageProgressView setHidden:NO];
+    [imageProgressView startAnimating];
     
-    [imageTransaction setAlpha:0.0];
+    [imageCloseButton setHidden:YES];
+    
+    [imageTransaction sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil options:0 completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        if (error) {
+            [imageProgressView stopAnimating];
+        }
+        else {
+            [imageProgressView stopAnimating];
+            [imageProgressView setHidden:YES];
+            [imageCloseButton setHidden:NO];
+        }
+    }];
+    
+    CGRectSetY(imageTransaction.frame, CGRectGetMaxY(content.frame) + 10);
+    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(imageTransaction.frame) + 10);
 }
 
 #pragma mark -
 
-- (void)showFullscreenImage {
-    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-    imageInfo.image = imageTransaction.image;
-    imageInfo.referenceRect = imageTransaction.frame;
-    imageInfo.referenceView = imageTransaction.superview;
-    imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
-    
-    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-                                           initWithImageInfo:imageInfo
-                                           mode:JTSImageViewControllerMode_Image
-                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
-    imageViewer.interactionsDelegate = self;
-    
-    [imageViewer showFromViewController:[appDelegate myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
+- (void)showFullImage {
+    if (imageTransaction.image || imageTransaction.animatedImage) {
+        JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+        
+        if (transaction[@"image"])
+            imageInfo.image = imageTransaction.image;
+        else if (transaction[@"imageUrl"]) {
+            [appDelegate showAvatarView:imageTransaction withUrl:[NSURL URLWithString:transaction[@"imageUrl"]]];
+            return;
+        } else
+            return;
+        
+        imageInfo.referenceRect = imageTransaction.frame;
+        imageInfo.referenceView = imageTransaction.superview;
+        imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
+        
+        JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                               initWithImageInfo:imageInfo
+                                               mode:JTSImageViewControllerMode_Image
+                                               backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+        imageViewer.interactionsDelegate = self;
+        
+        [imageViewer showFromViewController:[appDelegate myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
+    }
 }
 
-- (void)imageViewerDidLongPress:(JTSImageViewController *)imageViewer atRect:(CGRect)rect {
+- (void)didCloseImageButtonClick {
+    [transaction removeObjectForKey:@"image"];
+    [transaction removeObjectForKey:@"imageUrl"];
     
+    imageTransaction.image = nil;
+    imageTransaction.animatedImage = nil;
+    imageTransaction.hidden = YES;
+    
+    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(content.frame) + 10);
 }
 
 #pragma mark - callbacks
@@ -483,66 +418,164 @@
 
 - (void)reloadTransactionBarData {
     [transactionBar reloadData];
-    [transactionBarKeyboard reloadData];
-    [cameraBarKeyboard reloadData];
 }
 
-#pragma mark - Keyboard Management
+#pragma mark - Transaction Bar Delegate
 
-- (void)registerForKeyboardNotifications {
-    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
-    [self registerNotification:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
-    [self registerNotification:@selector(keyboardDidDisappear:) name:UIKeyboardDidHideNotification object:nil];
-    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)keyboardDidAppear:(NSNotification *)notification {
+- (void)presentCamera {
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     
-}
-
-- (void)keyboardWillAppear:(NSNotification *)notification {
-    [self reloadTransactionBarData];
-    NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
-    
-    [content setHeight:CGRectGetHeight(_contentView.frame) - CGRectGetMinY(content.frame) - keyboardHeight + CGRectGetHeight(transactionBar.frame)];
-    
-    [self dismissCamera];
-}
-
-- (void)keyboardDidDisappear:(NSNotification *)notification {
-    [self reloadTransactionBarData];
-    transactionBar.hidden = NO;
-    
-    [content setHeight:CGRectGetHeight(_contentView.frame) - CGRectGetMinY(content.frame)];
-}
-
-- (void)keyboardWillDisappear {
-    
-}
-
-#pragma mark - AlertView Delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 125 && buttonIndex == 1)
-    {
-        [[UIApplication sharedApplication] openURL:[NSURL  URLWithString:UIApplicationOpenSettingsURLString]];
+    if (authStatus == AVAuthorizationStatusAuthorized) {
+        [self.view endEditing:YES];
+        
+        UIImagePickerController *cameraUI = [UIImagePickerController new];
+        cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+        cameraUI.delegate = self;
+        cameraUI.allowsEditing = YES;
+        [self presentViewController:cameraUI animated:YES completion: ^{
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }];
+    } else if (authStatus == AVAuthorizationStatusNotDetermined){
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if (granted){
+                [self.view endEditing:YES];
+                
+                UIImagePickerController *cameraUI = [UIImagePickerController new];
+                cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+                cameraUI.delegate = self;
+                cameraUI.allowsEditing = YES;
+                [self presentViewController:cameraUI animated:YES completion: ^{
+                    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+                }];
+            } else {
+                
+            }
+        }];
+    } else {
+        UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
+        [curr setTag:125];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [curr show];
+        });
     }
 }
 
-- (void)dismissView {
-    [self dismissViewControllerAnimated:YES completion: ^{
-        if (currentPreset && currentPreset.isDemo) {
-            [appDelegate askNotification];
-        }
-    }];
+- (void)presentImagePicker {
+    [self.view endEditing:YES];
+    
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+        [self createImagePickerActionSheet];
+    }
+    else {
+        [self createImagePickerAlertController];
+    }
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    return YES;
+- (void)createImagePickerActionSheet {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    NSMutableArray *menus = [NSMutableArray new];
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
+        [menus addObject:NSLocalizedString(@"GLOBAL_ALBUMS", nil)];
+    }
+    
+    [menus addObject:NSLocalizedString(@"GLOBAL_WEB", nil)];
+    
+    for (NSString *menu in menus) {
+        [actionSheet addButtonWithTitle:menu];
+    }
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([buttonTitle isEqualToString:NSLocalizedString(@"GLOBAL_ALBUMS", nil)]) {
+        UIImagePickerController *cameraUI = [UIImagePickerController new];
+        cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        cameraUI.delegate = self;
+        cameraUI.allowsEditing = YES;
+        [self presentViewController:cameraUI animated:YES completion: ^{
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }];
+    }
+    else if ([buttonTitle isEqualToString:NSLocalizedString(@"GLOBAL_WEB", nil)]) {
+        ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"web"];
+        
+        [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+    }
+}
+
+- (void)createImagePickerAlertController {
+    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
+        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_ALBUMS", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+            UIImagePickerController *cameraUI = [UIImagePickerController new];
+            cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            cameraUI.delegate = self;
+            cameraUI.allowsEditing = YES;
+            [self presentViewController:cameraUI animated:YES completion: ^{
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+            }];
+        }]];
+    }
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_WEB", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+        ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"web"];
+        
+        [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+    }]];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:newAlert animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+    NSData *imageData = UIImageJPEGRepresentation(originalImage, 1);
+    
+    [picker dismissViewControllerAnimated:YES completion: ^{
+        
+    }];
+    
+    [transaction setValue:imageData forKey:@"image"];
+    [transaction removeObjectForKey:@"imageUrl"];
+    imageTransaction.hidden = NO;
+    [imageProgressView setHidden:YES];
+    imageTransaction.image = originalImage;
+    
+    CGRectSetY(imageTransaction.frame, CGRectGetMaxY(content.frame) + 10);
+    contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(imageTransaction.frame) + 10);
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)presentGIFPicker {
+    [self.view endEditing:YES];
+    
+    ImagePickerViewController *controller = [[ImagePickerViewController alloc] initWithDelegate:self andType:@"gif"];
+    
+    [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+}
+
+- (void)focusDescription {
+    if ([content isFirstResponder])
+        [content resignFirstResponder];
+    else
+        [content becomeFirstResponder];
 }
 
 - (void)presentLocation {
+    [self.view endEditing:YES];
+    
     GeolocViewController *controller = [GeolocViewController new];
     [controller setDelegate:self];
     
@@ -553,206 +586,53 @@
     [self.navigationController presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
 }
 
-- (void)presentCamera {
-    if (cameraDisplayed) {
-        [self dismissCamera];
-    }
-    else {
-        [self.view endEditing:YES];
-        
-        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-        
-        if (authStatus == AVAuthorizationStatusAuthorized) {
-            if (!cameraView) {
-                if (!cameraBarKeyboard) {
-                    cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionCollect:@selector(valid)];
-                    [cameraBarKeyboard setDelegate:self];
-                    [cameraBarKeyboard reloadData];
-                }
-                if (!camera) {
-                    camera = [[FLCameraKeyboard alloc] initWithController:self height:216 delegate:self];
-                }
-                CGRectSetY(cameraBarKeyboard.frame, 0);
-                CGRectSetY(camera.frame, CGRectGetHeight(cameraBarKeyboard.frame));
-                
-                cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(cameraBarKeyboard.frame) + CGRectGetHeight(camera.frame))];
-                [cameraView addSubview:cameraBarKeyboard];
-                [cameraView addSubview:camera];
-                
-                CGRectSetY(cameraView.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(cameraBarKeyboard.frame));
-                
-                [appDelegate.window addSubview:cameraView];
-            }
-            
-            [camera startCamera];
-            [UIView animateWithDuration:0.3 animations: ^{
-                CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame) - CGRectGetHeight(cameraView.frame));
-            } completion: ^(BOOL finished) {
-                cameraDisplayed = YES;
-            }];
-        } else if (authStatus == AVAuthorizationStatusNotDetermined){
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-                if (granted){
-                    if (!cameraView) {
-                        if (!cameraBarKeyboard) {
-                            cameraBarKeyboard = [[FLNewTransactionBar alloc] initWithFor:transaction controller:self preset:currentPreset actionCollect:@selector(valid)];
-                            [cameraBarKeyboard setDelegate:self];
-                            [cameraBarKeyboard reloadData];
-                        }
-                        if (!camera) {
-                            camera = [[FLCameraKeyboard alloc] initWithController:self height:216 delegate:self];
-                        }
-                        CGRectSetY(cameraBarKeyboard.frame, 0);
-                        CGRectSetY(camera.frame, CGRectGetHeight(cameraBarKeyboard.frame));
-                        
-                        cameraView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(cameraBarKeyboard.frame) + CGRectGetHeight(camera.frame))];
-                        [cameraView addSubview:cameraBarKeyboard];
-                        [cameraView addSubview:camera];
-                        
-                        CGRectSetY(cameraView.frame, CGRectGetHeight(_contentView.frame) - CGRectGetHeight(cameraBarKeyboard.frame));
-                        
-                        [appDelegate.window addSubview:cameraView];
-                    }
-                    
-                    [camera startCamera];
-                    [UIView animateWithDuration:0.3 animations: ^{
-                        CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame) - CGRectGetHeight(cameraView.frame));
-                    } completion: ^(BOOL finished) {
-                        cameraDisplayed = YES;
-                    }];
-                } else {
-                    
-                }
-            }];
-        } else {
-            UIAlertView* curr = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_ACCESS_CAMERA_TITLE", nil) message:NSLocalizedString(@"ERROR_ACCESS_CAMERA_CONTENT", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"GLOBAL_OK", nil) otherButtonTitles:NSLocalizedString(@"GLOBAL_SETTINGS", nil), nil];
-            [curr setTag:125];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [curr show];
-            });
-        }
-    }
-}
-
 #pragma mark - Geoloc Delegate
 
 - (void) locationPlaceSelected:(NSDictionary *)place {
     [transaction setObject:place forKey:@"geo"];
-    [self reloadTransactionBarData];
+    [transactionBar reloadData];
 }
 
 - (void) removeLocation {
     [transaction removeObjectForKey:@"geo"];
-    [self reloadTransactionBarData];
+    [transactionBar reloadData];
 }
 
-#pragma mark - CameraKeyboard Delegate
+#pragma mark - Keyboard Management
 
-- (void)goToFullScreen:(BOOL)fullScreen {
-    [timerForSlider invalidate];
-    CGFloat he = PPScreenHeight();
-    if (!fullScreen) {
-        he = 216;
-    }
-    heightTarget = he;
+- (void)registerForKeyboardNotifications {
+    [self registerNotification:@selector(keyboardDidAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [self registerNotification:@selector(keyboardWillDisappear) name:UIKeyboardWillHideNotification object:nil];
+    [self registerNotification:@selector(keyboardFrameChanged:) name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+
+- (void)keyboardDidAppear:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    keyboardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     
-    CGFloat dif = ABS(he - CGRectGetHeight(camera.frame)) * 10.0f;
-    timerForSlider = [NSTimer scheduledTimerWithTimeInterval:(1 / dif) target:self selector:@selector(updateSlider) userInfo:nil repeats:YES];
-}
-
-- (void)updateSlider {
-    CGFloat f = CGRectGetHeight(camera.frame);
-    if (heightTarget > CGRectGetHeight(camera.frame)) {
-        f += 1;
-    }
-    else {
-        f -= 1;
-    }
-    [self growCameraToHeight:f];
-    if (PPScreenHeight() == f || 216 == f) {
-        [timerForSlider invalidate];
-    }
-}
-
-- (void)growCameraToHeight:(CGFloat)he {
-    CGFloat heightInput = he + CGRectGetHeight(cameraBarKeyboard.frame);
-    CGFloat minHeight = 216 + CGRectGetHeight(cameraBarKeyboard.frame);
-    if (minHeight > heightInput) {
-        heightInput = minHeight;
-    }
-    else if (he > PPScreenHeight()) {
-        heightInput = PPScreenHeight() + CGRectGetHeight(cameraBarKeyboard.frame);
-    }
-    CGRectSetY(cameraView.frame, PPScreenHeight() - heightInput);
-    CGRectSetHeight(camera.frame, heightInput - CGRectGetHeight(cameraBarKeyboard.frame));
-    [camera setCameraHeight:heightInput - CGRectGetHeight(cameraBarKeyboard.frame)];
-    CGRectSetHeight(cameraView.frame, heightInput);
-    cameraDisplayed = YES;
-}
-
-- (void)presentCameraRoll:(UIImagePickerController *)cameraRoll {
-    [self dismissCamera];
-    [self presentViewController:cameraRoll animated:YES completion: ^{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    }];
-}
-
-- (void)rotateImageWithRadians:(CGFloat)radian imageRotate:(UIImage *)rotateImage andImage:(UIImage *)image {
-    [imageTransaction setAlpha:1.0];
-    [imageTransaction setImage:rotateImage];
-    CGRectSetHeight(imageTransaction.frame, pictureZoneSize);
-    CGRectSetWidth(imageTransaction.frame, pictureZoneSize);
-    [imageTransaction setContentMode:UIViewContentModeScaleAspectFit];
+    CGRectSetY(transactionBar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(transactionBar.frame));
+    CGRectSetHeight(contentView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame) - keyboardHeight - CGRectGetMinY(contentView.frame));
     
-    CGFloat scaleFactor = [self scaleFactor];
-    CGRectSetHeight(imageTransaction.frame, imageTransaction.image.size.height / scaleFactor);
-    CGRectSetWidth(imageTransaction.frame, imageTransaction.image.size.width / scaleFactor);
+    //    CGPoint bottomOffset = CGPointMake(0, contentView.contentSize.height - contentView.bounds.size.height);
+    //    if (bottomOffset.y < 0)
+    //        [contentView setContentOffset:CGPointZero animated:YES];
+    //    else
+    //        [contentView setContentOffset:bottomOffset animated:YES];
+}
+
+- (void)keyboardFrameChanged:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    keyboardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     
-    CGRectSetY(imageTransaction.frame, 60);
-    CGRectSetX(imageTransaction.frame, PPScreenWidth() - 14 - CGRectGetWidth(imageTransaction.frame));
+    CGRectSetY(transactionBar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(transactionBar.frame));
+    CGRectSetHeight(contentView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame) - keyboardHeight - CGRectGetMinY(contentView.frame));
+}
+
+- (void)keyboardWillDisappear {
+    keyboardHeight = 0;
     
-    CGRectSetX(closeImage.frame, CGRectGetWidth(imageTransaction.frame) - CGRectGetWidth(closeImage.frame));
-    
-    [transaction setValue:UIImageJPEGRepresentation(rotateImage, 0.7) forKey:@"image"];
-    [content setInputView:nil];
-    [content setWidth:PPScreenWidth() - CGRectGetWidth(imageTransaction.frame) - 14];
-}
-
-- (CGFloat)scaleFactor {
-    if (imageTransaction.image.size.width >= imageTransaction.image.size.height) {
-        return [self scaleFactorWidth];
-    }
-    else {
-        return [self scaleFactorHeight];
-    }
-}
-
-- (CGFloat)scaleFactorWidth {
-    return imageTransaction.image.size.width / CGRectGetWidth(imageTransaction.frame);
-}
-
-- (CGFloat)scaleFactorHeight {
-    return imageTransaction.image.size.height / CGRectGetHeight(imageTransaction.frame);
-}
-
-- (void)touchImage {
-    CGRectSetHeight(imageTransaction.frame, 0);
-    CGRectSetWidth(imageTransaction.frame, 0);
-    [content setWidth:PPScreenWidth() - CGRectGetWidth(imageTransaction.frame)];
-    [imageTransaction setImage:nil];
-    [imageTransaction setAlpha:0.0];
-    [transaction setValue:@"" forKey:@"image"];
-}
-
-- (void)dismissCamera {
-    if (cameraDisplayed) {
-        [UIView animateWithDuration:0.3 animations: ^{
-            CGRectSetY(cameraView.frame, CGRectGetHeight(appDelegate.window.frame));
-        } completion: ^(BOOL finished) {
-            [camera stopCamera];
-            cameraDisplayed = NO;
-        }];
-    }
+    CGRectSetY(transactionBar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(transactionBar.frame));
+    CGRectSetHeight(contentView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame) - keyboardHeight - CGRectGetMinY(contentView.frame));
 }
 
 @end

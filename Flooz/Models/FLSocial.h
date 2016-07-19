@@ -7,15 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FLTransaction.h"
 
 @interface FLSocial : NSObject
-
-	typedef NS_ENUM (NSInteger, SocialScope) {
-	SocialScopeNone, // Pour desactiver pour les cagnottes
-	SocialScopePublic,
-	SocialScopeFriend,
-	SocialScopePrivate
-};
 
 @property (nonatomic) NSArray *likes;
 @property (nonatomic) NSArray *comments;
@@ -25,7 +19,7 @@
 @property BOOL isLiked;
 @property (strong, nonatomic) NSString *likeText;
 @property (strong, nonatomic) NSString *commentText;
-@property (nonatomic) SocialScope scope;
+@property (nonatomic) TransactionScope scope;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

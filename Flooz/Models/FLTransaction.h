@@ -8,38 +8,39 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FLSocial.h"
-#import "FLComment.h"
-
-@interface FLTransaction : NSObject
-
-	typedef NS_ENUM (NSInteger, TransactionType) {
-	TransactionTypePayment,
-	TransactionTypeCharge,
-	TransactionTypeCollect,
+typedef NS_ENUM (NSInteger, TransactionType) {
+    TransactionTypePayment,
+    TransactionTypeCharge,
+    TransactionTypeCollect,
     TransactionTypeBase
 };
 
 typedef NS_ENUM (NSInteger, TransactionStatus) {
-	TransactionStatusAccepted,
-	TransactionStatusRefused,
-	TransactionStatusPending,
-	TransactionStatusCanceled,
-	TransactionStatusExpired,
-	TransactionStatusNone
+    TransactionStatusAccepted,
+    TransactionStatusRefused,
+    TransactionStatusPending,
+    TransactionStatusCanceled,
+    TransactionStatusExpired,
+    TransactionStatusNone
 };
 
 typedef NS_ENUM (NSInteger, TransactionScope) {
-	TransactionScopePublic,
-	TransactionScopeFriend,
-	TransactionScopePrivate,
-    TransactionScopeAll
+    TransactionScopePublic,
+    TransactionScopeFriend,
+    TransactionScopePrivate,
+    TransactionScopeAll,
+    TransactionScopeNone
 };
 
 typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
-	TransactionPaymentMethodWallet,
-	TransactionPaymentMethodCreditCard
+    TransactionPaymentMethodWallet,
+    TransactionPaymentMethodCreditCard
 };
+
+#import "FLSocial.h"
+#import "FLComment.h"
+
+@interface FLTransaction : NSObject
 
 @property (nonatomic) TransactionType type;
 @property (nonatomic) TransactionStatus status;
@@ -65,6 +66,7 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 
 @property (nonatomic) BOOL isAvailable;
 @property (nonatomic) BOOL isClosable;
+@property (nonatomic) BOOL isPublishable;
 
 @property (strong, nonatomic) NSDate *date;
 

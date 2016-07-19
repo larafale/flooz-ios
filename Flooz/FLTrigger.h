@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, FLTriggerAction) {
 @property (nonatomic, strong) NSString *key;
 @property (nonatomic, strong) NSString *view;
 @property (nonatomic, strong) NSString *category;
-@property (nonatomic, strong) NSString *viewCaregory;
+@property (nonatomic, strong) NSString *viewCategory;
 @property (nonatomic, strong) NSDictionary *data;
 @property (nonatomic, strong) NSNumber *delay;
 @property (nonatomic, strong) NSArray<FLTrigger *> *triggers;

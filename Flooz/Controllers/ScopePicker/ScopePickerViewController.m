@@ -30,6 +30,24 @@
     if (self) {
         self.delegate = delegate;
         currentPreset = preset;
+        isPot = pot;
+        _currentScope = TransactionScopeNone;
+    }
+    return self;
+}
+
+- (id)initWithTriggerData:(NSDictionary *)data {
+    self = [super initWithTriggerData:data];
+    if (self) {
+        _currentScope = TransactionScopeNone;
+
+        isPot = NO;
+        
+        if (self.triggerData && self.triggerData[@"isPot"] && [self.triggerData[@"isPot"] boolValue])
+            isPot = YES;
+        
+        if (self.triggerData && self.triggerData[@"scope"])
+            _currentScope = [FLTransaction transactionIDToScope:self.triggerData[@"scope"]];
     }
     return self;
 }
@@ -145,8 +163,38 @@
     self.currentScope = scope;
     [_tableView reloadData];
     
-    if (self.delegate)
+    if (self.delegate) {
         [self.delegate scope:self.currentScope pickedFrom:self];
+    } else if (self.triggerData) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            FLTrigger *successTrigger = [[FLTrigger alloc] initWithJson:self.triggerData[@"success"][0]];
+            
+            NSMutableDictionary *data = [NSMutableDictionary new];
+            
+            data[@"scope"] = [FLTransaction transactionScopeToParams:self.currentScope];
+            
+            NSDictionary *baseDic;
+            
+            if (self.triggerData[@"in"]) {
+                baseDic = successTrigger.data[self.triggerData[@"in"]];
+                
+                [data addEntriesFromDictionary:baseDic];
+                
+                NSMutableDictionary *newData = [successTrigger.data mutableCopy];
+                
+                newData[self.triggerData[@"in"]] = data;
+                
+                successTrigger.data = newData;
+            } else {
+                baseDic = successTrigger.data;
+                [data addEntriesFromDictionary:baseDic];
+                
+                successTrigger.data = data;
+            }
+
+            [[FLTriggerManager sharedInstance] executeTrigger:successTrigger];
+        }];
+    }
 }
 
 @end

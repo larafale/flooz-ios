@@ -18,7 +18,6 @@
     
     BOOL isSearching;
     NSString *searchString;
-    
 }
 
 @end
@@ -101,7 +100,7 @@
             data[@"toFullName"] = user.fullname;
             data[@"block"] = user.blockObject;
         } else {
-            data[@"to"] = user.username;
+            data[@"to"] = user.phone;
             data[@"toFullName"] = user.fullname;
             if (user.firstname || user.lastname) {
                 NSMutableDictionary *contact = [NSMutableDictionary new];
@@ -112,11 +111,29 @@
                 if (![user.lastname isBlank]) {
                     [contact setValue:user.lastname forKey:@"lastName"];
                 }
+                
+                data[@"contact"] = contact;
             }
         }
         
-        [data addEntriesFromDictionary:successTrigger.data];
-        successTrigger.data = data;
+        NSDictionary *baseDic;
+        
+        if (self.triggerData[@"in"]) {
+            baseDic = successTrigger.data[self.triggerData[@"in"]];
+            
+            [data addEntriesFromDictionary:baseDic];
+            
+            NSMutableDictionary *newData = [successTrigger.data mutableCopy];
+            
+            newData[self.triggerData[@"in"]] = data;
+            
+            successTrigger.data = newData;
+        } else {
+            baseDic = successTrigger.data;
+            [data addEntriesFromDictionary:baseDic];
+            
+            successTrigger.data = data;
+        }
         
         [self dismissViewControllerAnimated:YES completion:^{
             [[FLTriggerManager sharedInstance] executeTrigger:successTrigger];
