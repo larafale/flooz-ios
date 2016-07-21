@@ -75,7 +75,7 @@
 - (void)didFilterChange:(NSString *)text {
     searchString = text;
     
-    if ([searchString isBlank]) {
+    if ([searchString length] < 3) {
         isSearching = NO;
         [tableView searchUser:text];
         return;
@@ -91,7 +91,8 @@
     if (_delegate) {
         [_delegate user:user pickedFrom:self];
     } else if (self.triggerData) {
-        FLTrigger *successTrigger = [[FLTrigger alloc] initWithJson:self.triggerData[@"success"][0]];
+        NSArray<FLTrigger *> *successTriggers = [FLTriggerManager convertDataInList:self.triggerData[@"success"]];
+        FLTrigger *successTrigger = successTriggers[0];
         
         NSMutableDictionary *data = [NSMutableDictionary new];
         
@@ -136,7 +137,7 @@
         }
         
         [self dismissViewControllerAnimated:YES completion:^{
-            [[FLTriggerManager sharedInstance] executeTrigger:successTrigger];
+            [[FLTriggerManager sharedInstance] executeTriggerList:successTriggers];
         }];
     }
 }

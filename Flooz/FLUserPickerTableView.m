@@ -99,7 +99,7 @@
         _selectionText = [_selectionText substringFromIndex:1];
     }
     
-    if (!_selectionText || [_selectionText isBlank]) {
+    if (!_selectionText || [_selectionText isBlank] || [_selectionText length] < 3) {
         isLoadingSearch = NO;
         [self reloadData];
         return;

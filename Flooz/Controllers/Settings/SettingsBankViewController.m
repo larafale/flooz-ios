@@ -82,6 +82,7 @@
 	[[self view] endEditing:YES];
 
 	_userDic[@"settings"] = @{ @"sepa": _sepa };
+    _userDic[@"validate"] = @YES;
 
 	[[Flooz sharedInstance] showLoadView];
 	[[Flooz sharedInstance] updateUser:_userDic success: ^(id result) {

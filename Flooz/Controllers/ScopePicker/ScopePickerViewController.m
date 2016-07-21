@@ -167,7 +167,8 @@
         [self.delegate scope:self.currentScope pickedFrom:self];
     } else if (self.triggerData) {
         [self dismissViewControllerAnimated:YES completion:^{
-            FLTrigger *successTrigger = [[FLTrigger alloc] initWithJson:self.triggerData[@"success"][0]];
+            NSArray<FLTrigger *> *successTriggers = [FLTriggerManager convertDataInList:self.triggerData[@"success"]];
+            FLTrigger *successTrigger = successTriggers[0];
             
             NSMutableDictionary *data = [NSMutableDictionary new];
             
@@ -192,7 +193,7 @@
                 successTrigger.data = data;
             }
 
-            [[FLTriggerManager sharedInstance] executeTrigger:successTrigger];
+            [[FLTriggerManager sharedInstance] executeTriggerList:successTriggers];
         }];
     }
 }

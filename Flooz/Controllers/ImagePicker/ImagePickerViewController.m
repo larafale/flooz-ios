@@ -181,7 +181,7 @@
     items = @[];
     [collectionView reloadData];
     
-    if (searchString && searchString.length) {
+    if (searchString && searchString.length > 3) {
         collectionView.hidden = YES;
         backgroundView.hidden = YES;
         loadingView.hidden = NO;
@@ -252,7 +252,8 @@
         NSDictionary *item = items[indexPath.item];
         
         if (self.triggerData) {
-            FLTrigger *successTrigger = [[FLTrigger alloc] initWithJson:self.triggerData[@"success"][0]];
+            NSArray<FLTrigger *> *successTriggers = [FLTriggerManager convertDataInList:self.triggerData[@"success"]];
+            FLTrigger *successTrigger = successTriggers[0];
             
             NSMutableDictionary *data = [NSMutableDictionary new];
             
@@ -278,7 +279,7 @@
             }
             
             [self dismissViewControllerAnimated:YES completion:^{
-                [[FLTriggerManager sharedInstance] executeTrigger:successTrigger];
+                [[FLTriggerManager sharedInstance] executeTriggerList:successTriggers];
             }];
         } else if (self.delegate) {
             [self.delegate image:item[@"url"] pickedFrom:self];

@@ -359,7 +359,8 @@
     NSData *imageData = UIImageJPEGRepresentation(originalImage, 1);
     
     [picker dismissViewControllerAnimated:YES completion: ^{
-        FLTrigger *successTrigger = [[FLTrigger alloc] initWithJson:self.imageTrigger.data[@"success"][0]];
+        NSArray<FLTrigger *> *successTriggers = [FLTriggerManager convertDataInList:self.imageTrigger.data[@"success"]];
+        FLTrigger *successTrigger = successTriggers[0];
         
         NSMutableDictionary *data = [NSMutableDictionary new];
         
@@ -384,7 +385,7 @@
             successTrigger.data = data;
         }
         
-        [self executeTrigger:successTrigger];
+        [self executeTriggerList:successTriggers];
         self.imageTrigger = nil;
     }];
 }
