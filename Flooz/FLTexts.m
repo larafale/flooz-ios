@@ -116,6 +116,9 @@
     
     if (!self.avalaibleCountries.count)
         [self.avalaibleCountries addObject:[FLCountry defaultCountry]];
+    
+    self.suggestGif = json[@"suggest"][@"gifs"];
+    self.suggestWeb = json[@"suggest"][@"webs"];
 }
 
 @end

@@ -208,6 +208,19 @@
     
     _triggerOptions = json[@"settings"];
     
+    _triggerImage = nil;
+    
+    if (_triggerOptions && _triggerOptions.count) {
+        NSArray *listItems = _triggerOptions[0][@"data"][@"items"];
+        
+        for (NSDictionary *item in listItems) {
+            if (item[@"id"] && [item[@"id"] isEqualToString:@"image"]) {
+                _triggerImage = item[@"triggers"];
+                break;
+            }
+        }
+    }
+    
     _haveAction = NO;
     if (_isAcceptable) {
         _haveAction = YES;

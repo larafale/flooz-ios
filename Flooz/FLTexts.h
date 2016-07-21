@@ -44,6 +44,8 @@
 @property (nonatomic, retain) NSArray *homeButtons;
 @property (nonatomic, retain) NSArray *cashinButtons;
 @property (nonatomic, retain) NSArray *paymentSources;
+@property (nonatomic, retain) NSArray *suggestGif;
+@property (nonatomic, retain) NSArray *suggestWeb;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

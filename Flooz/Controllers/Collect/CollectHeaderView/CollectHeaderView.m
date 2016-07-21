@@ -23,6 +23,7 @@
     UILabel *amountSymbolLabel;
     UILabel *collectedLabel;
     FLImageView *attachmentView;
+    UIView *addAttachmentView;
     UILabel *locationLabel;
 }
 
@@ -76,11 +77,51 @@
     [headerView addSubview:amountLabel];
     [headerView addSubview:amountSymbolLabel];
     [headerView addSubview:collectedLabel];
-
+    
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(headerView.frame), PPScreenWidth(), 0)];
     contentView.backgroundColor = [UIColor customBackground];
     
     attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 80)];
+    
+    addAttachmentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 100)];
+    [addAttachmentView setBackgroundColor:[UIColor customBackground]];
+    [addAttachmentView addTapGestureWithTarget:self action:@selector(didAddAttachmentClick)];
+    addAttachmentView.layer.masksToBounds = YES;
+    
+    UIImageView *addBack = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(addAttachmentView.frame), CGRectGetHeight(addAttachmentView.frame))];
+    addBack.contentMode = UIViewContentModeScaleAspectFill;
+    [addBack setImage:[UIImage imageNamed:@"attachment-background"]];
+    addBack.layer.masksToBounds = YES;
+    
+    [addAttachmentView addSubview:addBack];
+    
+    UILabel *addLabel = [[UILabel alloc] initWithText:@"Ajouter une image" textColor:[UIColor customBlue] font:[UIFont customContentBold:17] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    
+    CGRectSetWidthHeight(addLabel.frame, [addLabel widthToFit] + 40, [addLabel heightToFit] + 30);
+    CGRectSetXY(addLabel.frame, CGRectGetWidth(addAttachmentView.frame) / 2 - CGRectGetWidth(addLabel.frame) / 2, CGRectGetHeight(addAttachmentView.frame) / 2 - CGRectGetHeight(addLabel.frame) / 2);
+    
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    
+    CGSize frameSize = addLabel.frame.size;
+    
+    CGRect shapeRect = CGRectMake(0.0f, 0.0f, frameSize.width, frameSize.height);
+    [shapeLayer setBounds:shapeRect];
+    [shapeLayer setPosition:CGPointMake( frameSize.width/2,frameSize.height/2)];
+    
+    [shapeLayer setFillColor:[[UIColor clearColor] CGColor]];
+    [shapeLayer setStrokeColor:[UIColor customBlue].CGColor];
+    [shapeLayer setLineWidth:2.0f];
+    [shapeLayer setLineJoin:kCALineJoinMiter];
+    [shapeLayer setLineDashPattern:
+     [NSArray arrayWithObjects:[NSNumber numberWithInt:10],
+      [NSNumber numberWithInt:5],
+      nil]];
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:shapeRect cornerRadius:3.0];
+    [shapeLayer setPath:path.CGPath];
+    
+    [addLabel.layer addSublayer:shapeLayer];
+    
+    [addAttachmentView addSubview:addLabel];
     
     descriptionTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(attachmentView.frame) + 10, PPScreenWidth() - 20, 13)];
     descriptionTitleLabel.font = [UIFont customContentBold:11];
@@ -101,8 +142,9 @@
     locationLabel.numberOfLines = 1;
     locationLabel.textAlignment = NSTextAlignmentLeft;
     locationLabel.font = [UIFont customContentRegular:12];
-
+    
     [contentView addSubview:attachmentView];
+    [contentView addSubview:addAttachmentView];
     [contentView addSubview:descriptionTitleLabel];
     [contentView addSubview:descriptionLabel];
     [contentView addSubview:locationLabel];
@@ -133,21 +175,30 @@
     CGRectSetY(collectedLabel.frame, CGRectGetMaxY(amountLabel.frame));
     
     CGRectSetHeight(headerView.frame, CGRectGetMaxY(collectedLabel.frame) + 10);
-
+    
     CGRectSetY(contentView.frame, CGRectGetMaxY(headerView.frame));
     
     if ([_transaction attachmentURL]) {
+        [addAttachmentView setHidden:YES];
         CGFloat widthAttach = CGRectGetWidth(attachmentView.frame);
         CGFloat heightAttach = 250 / (500 / widthAttach);
         CGRectSetHeight(attachmentView.frame, heightAttach);
         
         [attachmentView setImageWithURL:[NSURL URLWithString:[_transaction attachmentURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
-    }
-    else {
+        
+        CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(attachmentView.frame) + 15);
+    } else if ([_transaction.creator.userId isEqualToString:[Flooz sharedInstance].currentUser.userId] && _transaction.triggerImage) {
         CGRectSetHeight(attachmentView.frame, 0);
+        
+        [addAttachmentView setHidden:NO];
+        
+        CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(addAttachmentView.frame) + 15);
+    } else {
+        [addAttachmentView setHidden:YES];
+        
+        CGRectSetHeight(attachmentView.frame, 0);
+        CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(attachmentView.frame) + 15);
     }
-    
-    CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(attachmentView.frame) + 15);
     
     CGRectSetY(descriptionLabel.frame, CGRectGetMaxY(descriptionTitleLabel.frame) + 5);
     descriptionLabel.text = _transaction.content;
@@ -194,6 +245,10 @@
     }
     
     CGRectSetHeight(self.frame, CGRectGetMaxY(contentView.frame));
+}
+
+- (void)didAddAttachmentClick {
+    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:_transaction.triggerImage]];
 }
 
 - (void)setTransaction:(FLTransaction *)transaction {

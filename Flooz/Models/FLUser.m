@@ -281,6 +281,11 @@
             _checkDocuments = [json objectForKey:@"check"];
         }
         
+        _linkDocuments = @{};
+        if ([json objectForKey:@"documentsLink"]) {
+            _linkDocuments = [json objectForKey:@"documentsLink"];
+        }
+        
         _isFriendWaiting = NO;
         if (json[@"state"] && ![json[@"state"] isEqualToNumber:@1]) {
             _isFriendWaiting = YES;

@@ -181,7 +181,11 @@
     
     if (pos != NSNotFound) {
         currentDocumentKey = documents[pos][@"key"];
-        [self showImagePicker];
+        
+        if ([[[Flooz sharedInstance] currentUser] linkDocuments][currentDocumentKey]) {
+            [self showGlobalPicker];
+        } else
+            [self showImagePicker];
     }
 }
 
@@ -214,6 +218,71 @@
 - (void)hideKeyboard {
     [self.view endEditing:YES];
 }
+
+#pragma mark - picker
+
+- (void)showGlobalPicker {
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending)) {
+        [self createGlobalActionSheet];
+    }
+    else {
+        [self createGlobalAlertController];
+    }
+}
+
+- (void)createGlobalAlertController {
+    
+    UIAlertController *newAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"DOCUMENTS_IMAGE_VIEWER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+        [self showImageViewer];
+    }]];
+    
+    if (!([[[Flooz sharedInstance] currentUser] settings][currentDocumentKey] && ([[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 1 || [[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 2))) {
+        [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"DOCUMENTS_IMAGE_PICKER", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+            [self showImagePicker];
+        }]];
+    }
+    
+    [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:newAlert animated:YES completion:nil];
+}
+
+- (void)createGlobalActionSheet {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    NSMutableArray *menus = [NSMutableArray new];
+    
+    [menus addObject:NSLocalizedString(@"DOCUMENTS_IMAGE_VIEWER", nil)];
+    
+    if (!([[[Flooz sharedInstance] currentUser] settings][currentDocumentKey] && ([[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 1 || [[[[Flooz sharedInstance] currentUser] checkDocuments][currentDocumentKey] intValue] == 2))) {
+        [menus addObject:NSLocalizedString(@"DOCUMENTS_IMAGE_PICKER", nil)];
+    }
+    
+    for (NSString *menu in menus) {
+        [actionSheet addButtonWithTitle:menu];
+    }
+    
+    NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
+    [actionSheet setCancelButtonIndex:index];
+    [actionSheet showInView:self.view];
+}
+
+#pragma mark - imageViewer
+
+- (void)showImageViewer {
+    
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.imageURL = [NSURL URLWithString:[[[Flooz sharedInstance] currentUser] linkDocuments][currentDocumentKey]];
+
+    imageInfo.referenceContentMode = UIViewContentModeScaleAspectFill;
+    
+    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                           initWithImageInfo:imageInfo
+                                           mode:JTSImageViewControllerMode_Image
+                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+
+    [imageViewer showFromViewController:[self navigationController] transition:JTSImageViewControllerTransition_FromOriginalPosition];}
 
 #pragma mark - imagePicker
 
@@ -283,6 +352,12 @@
     }
     else if ([buttonTitle isEqualToString:NSLocalizedString(@"GLOBAL_ALBUMS", nil)]) {
         [self displayImagePickerWithType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }
+    else if ([buttonTitle isEqualToString:NSLocalizedString(@"DOCUMENTS_IMAGE_VIEWER", nil)]) {
+        [self showImageViewer];
+    }
+    else if ([buttonTitle isEqualToString:NSLocalizedString(@"DOCUMENTS_IMAGE_PICKER", nil)]) {
+        [self showImagePicker];
     }
 }
 

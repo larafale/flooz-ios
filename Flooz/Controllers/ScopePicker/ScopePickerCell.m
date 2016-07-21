@@ -29,7 +29,7 @@
                                         options:NSLineBreakByClipping | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                         context:nil];
 
-    return 30 + (MAX(rect.size.height, 15));
+    return 40 + (MAX(rect.size.height, 15));
 }
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -44,15 +44,15 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor clearColor];
     
-    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
+    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 30, 30)];
     [imageView setTintColor:[UIColor whiteColor]];
-    [imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [imageView setContentMode:UIViewContentModeCenter];
 
     title = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 5, PPScreenWidth() - 100, 20)];
     [title setFont:[UIFont customContentRegular:15]];
     [title setTextColor:[UIColor whiteColor]];
 
-    subtitle = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 25, PPScreenWidth() - 100, 20)];
+    subtitle = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 27, PPScreenWidth() - 100, 20)];
     [subtitle setFont:[UIFont customContentRegular:12]];
     [subtitle setTextColor:[UIColor customPlaceholder]];
     [subtitle setNumberOfLines:0];
@@ -64,7 +64,7 @@
 }
 
 - (void) setScope:(TransactionScope)scope pot:(Boolean)isPot {
-    [imageView setImage:[[FLHelper imageWithImage:[FLTransaction transactionScopeToImage:scope] scaledToSize:CGSizeMake(30, 30)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [imageView setImage:[[FLHelper imageWithImage:[FLTransaction transactionScopeToImage:scope] scaledToSize:CGSizeMake(25, 25)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     [title setText:[FLTransaction transactionScopeToText:scope]];
     [subtitle setText:[FLTransaction transactionScopeToSubtitle:scope forPot:isPot]];
 

@@ -156,6 +156,8 @@
     
     [contentView addTapGestureWithTarget:content action:@selector(becomeFirstResponder)];
     
+    [name addForNextClickTarget:content action:@selector(becomeFirstResponder)];
+
     [contentView addSubview:content];
     
     if (currentPreset && currentPreset.blockWhy)

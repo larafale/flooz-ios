@@ -59,7 +59,7 @@
     _textfield.adjustsFontSizeToFitWidth = YES;
     _textfield.minimumFontSize = 15;
     
-//    _textfield.delegate = self;
+    _textfield.delegate = self;
 
 	NSAttributedString *attributedText = [[NSAttributedString alloc]
 	                                      initWithString:NSLocalizedString(placeholder, nil)
@@ -75,11 +75,6 @@
 }
 
 - (void)commontInit {
-//	FLKeyboardView *inputView = [FLKeyboardView new];
-//	[inputView setKeyboardDecimal];
-//	inputView.textField = _textfield;
-//	_textfield.inputView = inputView;
-
     if (_dictionary[_dictionaryKey] && ![_dictionary[_dictionaryKey] isBlank])
         _textfield.text = _dictionary[_dictionaryKey];
     
@@ -105,9 +100,22 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ([textField.text isBlank]) {
+        NSCharacterSet* notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        
+        if ([string rangeOfCharacterFromSet:notDigits].location == NSNotFound)
+            return YES;
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
 	if (textField == _textfield && [textField.text isBlank]) {
-		textField.text = @"0";
+		textField.text = @"";
 	}
 
 	NSString *floatCast = [NSString stringWithFormat:@"%.2f", [_textfield.text floatValue]];
