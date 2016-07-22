@@ -99,6 +99,11 @@
         _isParticipation = [[json objectForKey:@"isParticipation"] boolValue];
     }
     
+    _isShareable = NO;
+    if ([json objectForKey:@"isShareable"]) {
+        _isShareable = [[json objectForKey:@"isShareable"] boolValue];
+    }
+    
     if (_location && [_location isBlank])
         _location = nil;
     

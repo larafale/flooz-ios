@@ -158,31 +158,37 @@
 }
 
 - (void)hideChargeButton:(BOOL)hidden {
-    //    if (hidden && askButton.superview != nil){
-    //        [askButton removeFromSuperview];
-    //
-    //        [sendButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-    //        sendButton.titleLabel.font = [UIFont customTitleLight:16];
-    //    } else if (!hidden && askButton.superview == nil) {
-    //        [sendButton setFrame:CGRectMake((widthBar / 2) + (widthBar / 4) + (marginH / 2), marginV, paymentButtonWidth, paymentButtonHeight)];
-    //        sendButton.titleLabel.font = [UIFont customTitleLight:14];
-    //
-    //        [tabBarView addSubview:askButton];
-    //    }
+    if (hidden && askButton.superview != nil){
+        [askButton removeFromSuperview];
+        
+        [paymentButtonsSeparator removeFromSuperview];
+        
+        [sendButton setFrame:CGRectMake(0, 0, PPScreenWidth(), ACTION_BAR_HEIGHT)];
+        sendButton.titleLabel.font = [UIFont customTitleLight:18];
+    } else if (!hidden && askButton.superview == nil) {
+        [sendButton setFrame:CGRectMake(PPScreenWidth() / 2, 0, PPScreenWidth() / 2, ACTION_BAR_HEIGHT)];
+        sendButton.titleLabel.font = [UIFont customTitleLight:14];
+        
+        [actionView addSubview:askButton];
+        [actionView addSubview:paymentButtonsSeparator];
+    }
 }
 
 - (void)hidePayButton:(BOOL)hidden {
-    //    if (hidden && sendButton.superview != nil){
-    //        [sendButton removeFromSuperview];
-    //
-    //        [askButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, (widthBar / 2) - (marginH * 2), paymentButtonHeight)];
-    //        askButton.titleLabel.font = [UIFont customTitleLight:16];
-    //    } else if (!hidden && askButton.superview == nil) {
-    //        [askButton setFrame:CGRectMake((widthBar / 2) + marginH, marginV, paymentButtonWidth, paymentButtonHeight)];
-    //        askButton.titleLabel.font = [UIFont customTitleLight:14];
-    //
-    //        [tabBarView addSubview:sendButton];
-    //    }
+    if (hidden && sendButton.superview != nil){
+        [sendButton removeFromSuperview];
+        [paymentButtonsSeparator removeFromSuperview];
+        
+        [askButton setFrame:CGRectMake(0, 0, PPScreenWidth(), ACTION_BAR_HEIGHT)];
+        askButton.titleLabel.font = [UIFont customTitleLight:18];
+    } else if (!hidden && askButton.superview == nil) {
+        [askButton setFrame:CGRectMake(0, 0, PPScreenWidth() / 2, ACTION_BAR_HEIGHT)];
+        askButton.titleLabel.font = [UIFont customTitleLight:14];
+        
+        [actionView addSubview:sendButton];
+        
+        [actionView addSubview:paymentButtonsSeparator];
+    }
 }
 
 - (void)createLocationView {

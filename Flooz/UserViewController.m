@@ -850,7 +850,7 @@
                 
                 return cell;
             } else {
-                return [self generateEmptyTimelineCell];
+                return [self generateEmptyCollectCell];
             }
         } else {
             return [LoadingCell new];
@@ -1054,6 +1054,27 @@
         [emptyCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
         UILabel *text = [[UILabel alloc] initWithText:NSLocalizedString(@"EMPTY_TIMELINE", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:17] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+        
+        [text setWidthToFit];
+        
+        CGRectSetY(text.frame, emptyCellHeight / 4 - CGRectGetHeight(text.frame));
+        CGRectSetX(text.frame, PPScreenWidth() / 2 - CGRectGetWidth(text.frame) / 2);
+        
+        [emptyCell addSubview:text];
+    }
+    
+    return emptyCell;
+}
+
+- (UITableViewCell *) generateEmptyCollectCell {
+    static UITableViewCell *emptyCell;
+    
+    if (!emptyCell) {
+        emptyCell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), emptyCellHeight)];
+        [emptyCell setBackgroundColor:[UIColor clearColor]];
+        [emptyCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
+        UILabel *text = [[UILabel alloc] initWithText:NSLocalizedString(@"EMPTY_COLLECT", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:17] textAlignment:NSTextAlignmentCenter numberOfLines:1];
         
         [text setWidthToFit];
         

@@ -60,7 +60,7 @@
     else
         self.title = NSLocalizedString(@"TRANSACTION_SCOPE_TITLE", nil);
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, PPScreenWidth(), CGRectGetHeight(_mainBody.frame) - 10)];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     [_tableView setBounces:NO];

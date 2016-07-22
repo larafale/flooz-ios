@@ -147,6 +147,7 @@
         }
         
         [[Flooz sharedInstance] clearLocationData];
+        
     }
     return self;
 }
@@ -272,6 +273,8 @@
     CGRectSetY(transactionBar.frame,  CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame));
     [_mainBody addSubview:transactionBar];
     
+    [self updateTransactionBar];
+
     [self registerForKeyboardNotifications];
 }
 
@@ -334,7 +337,7 @@
 }
 
 - (void)changeUser {
-//    [self.navigationController pushViewController:[UserPickerViewController newWithDelegate:self] animated:YES];
+    [self.navigationController pushViewController:[UserPickerViewController newWithDelegate:self] animated:YES];
 }
 
 - (void)user:(FLUser *)user pickedFrom:(UIViewController *)viewController {
@@ -361,15 +364,9 @@
         [transaction removeObjectForKey:@"contact"];
     }
     
-    if (selectedUser)
-        amountHint.text = selectedUser.fullname;
-    else if (currentPreset) {
-        if (!currentPreset.isParticipation) {
-            amountHint.text = currentPreset.toFullName;
-        } else {
-            amountHint.text = currentPreset.collectName;
-        }
-    }
+    amountHint.text = selectedUser.fullname;
+    
+    [self updateTransactionBar];
     
     [viewController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -513,6 +510,61 @@
     [scopeItem setImage:[[FLHelper imageWithImage:[FLTransaction transactionScopeToImage:currentIndex] scaledToSize:CGSizeMake(25, 25)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     
     [transaction setValue:[FLTransaction transactionScopeToParams:currentIndex] forKey:@"scope"];
+}
+
+- (void)updateTransactionBar {
+    if (selectedUser) {
+        if (selectedUser.blockObject != nil) {
+            if ([selectedUser.blockObject objectForKey:@"charge"] != nil && [[selectedUser.blockObject objectForKey:@"charge"] boolValue]) {
+                [self hidePayButton:false];
+                [self hideChargeButton:true];
+            } else if ([selectedUser.blockObject objectForKey:@"pay"] != nil && [[selectedUser.blockObject objectForKey:@"pay"] boolValue]) {
+                [self hideChargeButton:false];
+                [self hidePayButton:true];
+            } else {
+                [self resetPaymentButtons];
+            }
+        } else {
+            [self resetPaymentButtons];
+        }
+    } else {
+        [self resetPaymentButtons];
+    }
+}
+
+- (void)hideChargeButton:(BOOL)hidden {
+    [transactionBar hideChargeButton:hidden];
+}
+
+- (void)hidePayButton:(BOOL)hidden {
+    [transactionBar hidePayButton:hidden];
+}
+
+- (void)resetPaymentButtons {
+    if (!currentPreset || !currentPreset.isParticipation) {
+        switch (currentTransactionType) {
+            case TransactionTypePayment: {
+                [self hideChargeButton:true];
+                [self hidePayButton:false];
+                break;
+            }
+            case TransactionTypeCharge: {
+                [self hideChargeButton:false];
+                [self hidePayButton:true];
+                break;
+            }
+            case TransactionTypeCollect: {
+                [self hideChargeButton:false];
+                [self hidePayButton:false];
+                break;
+            }
+            case TransactionTypeBase: {
+                [self hideChargeButton:false];
+                [self hidePayButton:false];
+                break;
+            }
+        }
+    }
 }
 
 -(void)amountChange {

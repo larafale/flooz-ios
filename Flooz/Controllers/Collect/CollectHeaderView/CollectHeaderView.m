@@ -83,7 +83,7 @@
     
     attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 80)];
     
-    addAttachmentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 100)];
+    addAttachmentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 120)];
     [addAttachmentView setBackgroundColor:[UIColor customBackground]];
     [addAttachmentView addTapGestureWithTarget:self action:@selector(didAddAttachmentClick)];
     addAttachmentView.layer.masksToBounds = YES;

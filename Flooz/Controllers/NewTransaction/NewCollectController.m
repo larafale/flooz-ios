@@ -157,7 +157,7 @@
     [contentView addTapGestureWithTarget:content action:@selector(becomeFirstResponder)];
     
     [name addForNextClickTarget:content action:@selector(becomeFirstResponder)];
-
+    
     [contentView addSubview:content];
     
     if (currentPreset && currentPreset.blockWhy)
@@ -266,7 +266,8 @@
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(transactionBar.frame));
     
-    [name becomeFirstResponder];
+    if (!transaction[@"name"] || [transaction[@"name"] isBlank])
+        [name becomeFirstResponder];
 }
 
 - (void)contentFocusChanged:(NSNumber *)focus {

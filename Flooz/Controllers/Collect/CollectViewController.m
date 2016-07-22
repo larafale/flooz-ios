@@ -264,10 +264,10 @@
     [toolbar addSubview:shareButton];
     
     closeCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 50 - 10)];
-    [closeCommentButton setImage:[[UIImage imageNamed:@"navbar-cross"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [closeCommentButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"navbar-cross"] scaledToSize:CGSizeMake(25, 25)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [closeCommentButton addTarget:self action:@selector(didCloseCommentButtonClick) forControlEvents:UIControlEventTouchUpInside];
     closeCommentButton.tintColor = [UIColor whiteColor];
-    closeCommentButton.contentMode = UIViewContentModeScaleAspectFit;
+    closeCommentButton.contentMode = UIViewContentModeCenter;
     [toolbar addSubview:closeCommentButton];
     
     closeLabel = [[UILabel alloc] initWithText:@"Cagnotte clôturée" textColor:[UIColor customBlue] font:[UIFont customContentLight:14] textAlignment:NSTextAlignmentCenter numberOfLines:1];
@@ -1087,13 +1087,17 @@
 }
 
 - (void)shareButtonClick {
-    if (_transaction.actions && _transaction.actions.count) {
-        if (shareViewVisible)
-            [self hideShareView];
-        else
-            [self showShareView];
+    if (_transaction.isShareable) {
+        if (_transaction.actions && _transaction.actions.count) {
+            if (shareViewVisible)
+                [self hideShareView];
+            else
+                [self showShareView];
+        } else {
+            [self didShareOutsideButtonClick];
+        }
     } else {
-        [self didShareOutsideButtonClick];
+        [appDelegate displayMessage:@"Partage indisponible" content:@"Veuillez publier la cagnotte avant de pouvoir la partager" style:FLAlertViewStyleInfo time:@3 delay:@0];
     }
 }
 

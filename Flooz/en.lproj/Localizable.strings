@@ -366,9 +366,9 @@
 "TRANSACTION_SCOPE_TITLE" = "Qui peut voir ce Flooz";
 "TRANSACTION_SCOPE_POT_TITLE" = "Qui peut voir cette cagnotte";
 
-"TRANSACTION_SCOPE_PUBLIC" = "Tout le monde";
-"TRANSACTION_SCOPE_FRIEND" = "Mes amis & moi";
-"TRANSACTION_SCOPE_PRIVATE" = "Moi uniquement";
+"TRANSACTION_SCOPE_PUBLIC" = "Public";
+"TRANSACTION_SCOPE_FRIEND" = "Amis";
+"TRANSACTION_SCOPE_PRIVATE" = "Privé";
 
 "TRANSACTION_SCOPE_SUB_PUBLIC" = "Visible par tout le monde";
 "TRANSACTION_SCOPE_SUB_FRIEND" = "Visible par vos amis sur Flooz";
@@ -410,6 +410,7 @@
 "EMPTY_FRIENDS" = "Aucun ami";
 "EMPTY_FOLLOWERS" = "Aucun abonné";
 "EMPTY_FOLLOWINGS" = "Aucun abonnement";
+"EMPTY_COLLECT" = "Aucune cagnotte";
 
 "FOLLOWED" = "Abonné";
 "FOLLOWING" = "Abonnement";
