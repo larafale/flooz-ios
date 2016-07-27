@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "FLAnimatedImageView.h"
 #import "FLAnimatedImageView+WebCache.h"
+#import "DotActivityIndicatorView.h"
+#import "DotActivityIndicatorParms.h"
 
 @interface FLImageView : FLAnimatedImageView {
 	NSURL *fullScreenImageURL;
-	UIProgressView *progressView;
+
+    DotActivityIndicatorView *imageProgressView;
 }
 
 @property (strong, nonatomic) UITapGestureRecognizer *imageGesture;

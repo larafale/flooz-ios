@@ -27,6 +27,8 @@
 #import "AddressBookController.h"
 #import "CashinViewController.h"
 #import "ActivitiesViewController.h"
+#import "SettingsNotificationsViewController.h"
+#import "SettingsPrivacyController.h"
 
 #import "AccountCell.h"
 
@@ -190,6 +192,9 @@
     
     if ([missingFields containsObject:@"address"])
         coordsNotifs++;
+
+    if ([missingFields containsObject:@"birthdate"])
+        coordsNotifs++;
     
     if ([missingFields containsObject:@"justificatory"])
         docNotifs++;
@@ -206,17 +211,22 @@
                      @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
                        @"items":@[
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
-                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                @{@"title":NSLocalizedString(@"FRIEND_REQUEST_TITLE", @""), @"action":@"friendsRequest", @"notif":@(friendsNotifs)},
                                ]
                        },
+                     @{@"title":NSLocalizedString(@"MENU_BANK", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
+                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                               ]
+                       },
                      @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
                        @"items":@[
-                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
-                               @{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"},
-                               @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_NOTIFICATION", nil), @"action":@"notifs"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_PRIVACY", @""), @"action":@"privacy"},
                                @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
                                ]
                        },
@@ -236,16 +246,21 @@
                      @{@"title":NSLocalizedString(@"MENU_ACCOUNT", @""),
                        @"items":@[
                                @{@"title":NSLocalizedString(@"EDIT_PROFILE", @""), @"action":@"edit"},
-                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
-                               @{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"},
                                @{@"title":NSLocalizedString(@"SETTINGS_COORDS", @""), @"action":@"coords", @"notif":@(coordsNotifs)},
                                @{@"title":NSLocalizedString(@"SETTINGS_DOCUMENTS", @""), @"action":@"documents", @"notif":@(docNotifs)},
                                ]
                        },
+                     @{@"title":NSLocalizedString(@"MENU_BANK", @""),
+                       @"items":@[
+                               @{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
+                               @{@"title":NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil), @"action":@"cashout"},
+                               ]
+                       },
                      @{@"title":NSLocalizedString(@"MENU_SETTINGS", @""),
                        @"items":@[
-                               @{@"title":NSLocalizedString(@"SETTINGS_BANK", @""), @"action":@"bank", @"notif":@(bankNotifs)},
-                               @{@"title":NSLocalizedString(@"SETTINGS_PREFERENCES", @""), @"action":@"preferences"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_NOTIFICATION", nil), @"action":@"notifs"},
+                               @{@"title":NSLocalizedString(@"SETTINGS_PRIVACY", @""), @"action":@"privacy"},
                                @{@"title":NSLocalizedString(@"SETTINGS_SECURITY", @""), @"action":@"security"}
                                ]
                        },
@@ -435,6 +450,10 @@
             [self.navigationController pushViewController:[EditProfileViewController new] animated:YES];
         } else if ([action isEqualToString:@"friendsRequest"]) {
             [[self navigationController] pushViewController:[FriendRequestViewController new] animated:YES];
+        } else if ([action isEqualToString:@"notifs"]) {
+            [[self navigationController] pushViewController:[SettingsNotificationsViewController new] animated:YES];
+        } else if ([action isEqualToString:@"privacy"]) {
+            [[self navigationController] pushViewController:[SettingsPrivacyController new] animated:YES];
         }
     }
 }

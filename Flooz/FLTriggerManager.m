@@ -169,27 +169,45 @@
                 if (trigger.data[@"lock"] && [trigger.data[@"lock"] boolValue])
                     [[Flooz sharedInstance] showLoadView];
                 
-                [[Flooz sharedInstance] requestPath:trigger.data[@"url"] method:[trigger.data[@"method"] uppercaseString] params:trigger.data[@"body"] success:^(id result) {
-                    [self executeTriggerList:trigger.triggers];
-                    if (trigger.data[@"success"]) {
-                        [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"success"]]];
-                    }
-                } failure:^(NSURLSessionTask *task, NSError *error) {
-                    [self executeTriggerList:trigger.triggers];
-                    if (trigger.data[@"failure"]) {
-                        [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"failure"]]];
-                    }
-                } constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
-                    if (trigger.data[@"multipart"]) {
-                        for (NSString *key in [trigger.data[@"multipart"] allKeys]) {
-                            NSDictionary *fileInfos = trigger.data[@"multipart"][key];
-                            
-                            if (fileInfos[@"data"] && fileInfos[@"type"] && fileInfos[@"name"]) {
-                                [formData appendPartWithFileData:fileInfos[@"data"] name:key fileName:fileInfos[@"name"] mimeType:fileInfos[@"type"]];
+                NSDictionary *body = @{};
+                if (trigger.data[@"body"])
+                    body = trigger.data[@"body"];
+                
+                if (trigger.data[@"multipart"]) {
+                    [[Flooz sharedInstance] requestPath:trigger.data[@"url"] method:[trigger.data[@"method"] uppercaseString] params:body success:^(id result) {
+                        [self executeTriggerList:trigger.triggers];
+                        if (trigger.data[@"success"]) {
+                            [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"success"]]];
+                        }
+                    } failure:^(NSURLSessionTask *task, NSError *error) {
+                        [self executeTriggerList:trigger.triggers];
+                        if (trigger.data[@"failure"]) {
+                            [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"failure"]]];
+                        }
+                    } constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
+                        if (trigger.data[@"multipart"]) {
+                            for (NSString *key in [trigger.data[@"multipart"] allKeys]) {
+                                NSDictionary *fileInfos = trigger.data[@"multipart"][key];
+                                
+                                if (fileInfos[@"data"] && fileInfos[@"type"] && fileInfos[@"name"]) {
+                                    [formData appendPartWithFileData:fileInfos[@"data"] name:key fileName:fileInfos[@"name"] mimeType:fileInfos[@"type"]];
+                                }
                             }
                         }
-                    }
-                }];
+                    }];
+                } else {
+                    [[Flooz sharedInstance] requestPath:trigger.data[@"url"] method:[trigger.data[@"method"] uppercaseString] params:body success:^(id result) {
+                        [self executeTriggerList:trigger.triggers];
+                        if (trigger.data[@"success"]) {
+                            [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"success"]]];
+                        }
+                    } failure:^(NSError *error) {
+                        [self executeTriggerList:trigger.triggers];
+                        if (trigger.data[@"failure"]) {
+                            [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"failure"]]];
+                        }
+                    }];
+                }
             }
         }
     }

@@ -44,7 +44,7 @@
     {
         CGFloat size = 50.0;
         userView = [[FLUserView alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 - size / 2, 10, size, size)];
-        [userView setUserInteractionEnabled:YES];
+        [userView setUserInteractionEnabled:NO];
         [self addSubview:userView];
     }
 

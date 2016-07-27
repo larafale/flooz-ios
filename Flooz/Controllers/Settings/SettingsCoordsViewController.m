@@ -22,6 +22,7 @@
 	FLUserView *userView;
     FLTextFieldSignup *_name;
     FLPhoneField *_phone;
+    FLTextFieldSignup *_birthdate;
 	FLTextFieldSignup *_email;
 	FLTextFieldSignup *_address;
 	FLTextFieldSignup *_postalCode;
@@ -140,8 +141,16 @@
 		[_contentView addSubview:_city];
 		[fieldsView addObject:_city];
 	}
+    
+    {
+        _birthdate = [[FLTextFieldSignup alloc] initWithPlaceholder:@"FIELD_BIRTHDATE" for:_userDic key:@"birthdate" position:CGPointMake(PADDING_SIDE, CGRectGetMaxY(_city.frame))];
+        [_birthdate addForNextClickTarget:self action:@selector(focusOnNextInfo)];
+        [_birthdate addForTextChangeTarget:self action:@selector(canValidate:)];
+        [_contentView addSubview:_birthdate];
+        [fieldsView addObject:_birthdate];
+    }
 
-	height = CGRectGetMaxY(_city.frame);
+	height = CGRectGetMaxY(_birthdate.frame);
 
 	{
 		[self createSaveButton];
@@ -184,6 +193,10 @@
 		[_userDic setObject:[currentUser email] forKey:@"email"];
 	}
 
+    if ([currentUser birthdate]) {
+        [_userDic setObject:[currentUser birthdate] forKey:@"birthdate"];
+    }
+    
 	_addressDic = [[currentUser address] mutableCopy];
 }
 

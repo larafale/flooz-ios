@@ -112,13 +112,9 @@
 }
 
 - (void)focusComment {
-    if (_transaction.actions.count) {
-        isCommenting = YES;
-        [self prepareViews];
-        [commentTextField becomeFirstResponder];
-    } else {
-        [commentTextField becomeFirstResponder];
-    }
+    isCommenting = YES;
+    [self prepareViews];
+    [commentTextField becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -248,7 +244,7 @@
     [toolbar addSubview:shareButton];
     
     closeCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 50 - 10)];
-    [closeCommentButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"navbar-cross"] scaledToSize:CGSizeMake(25, 25)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [closeCommentButton setImage:[[FLHelper imageWithImage:[UIImage imageNamed:@"navbar-cross"] scaledToSize:CGSizeMake(20, 20)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [closeCommentButton addTarget:self action:@selector(didCloseCommentButtonClick) forControlEvents:UIControlEventTouchUpInside];
     closeCommentButton.tintColor = [UIColor whiteColor];
     closeCommentButton.contentMode = UIViewContentModeCenter;
@@ -268,6 +264,7 @@
     
     commentTextField = [[FLTextViewComment alloc] initWithPlaceholder:NSLocalizedString(@"SEND_COMMENT", nil) for:commentData key:@"comment" frame:CGRectMake(60, 10, PPScreenWidth() - 120, 30)];
     [commentTextField setDelegate:self];
+    [commentTextField addTextFocusTarget:self action:@selector(focusOnComment)];
     [toolbar addSubview:commentTextField];
     
     commentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(toolbar.frame) - 55, 5, 50, 50 - 10)];
@@ -382,7 +379,30 @@
         sendCommentButton.hidden = NO;
         commentButton.hidden = YES;
         shareButton.hidden = YES;
+        
+        CGFloat height = CGRectGetHeight(commentTextField.frame);
+        
+        if (height >= 30) {
+            CGRectSetHeight(toolbar.frame, height + 20);
+            CGRectSetY(sendCommentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+            CGRectSetY(closeCommentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+            CGRectSetY(shareButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+            
+            CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
+            CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
+        }
     } else {
+        CGRectSetHeight(toolbar.frame, 50);
+        CGRectSetY(sendCommentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        CGRectSetY(closeCommentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        CGRectSetY(shareButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        CGRectSetY(acceptButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        CGRectSetY(declineButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        CGRectSetY(commentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        
+        CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
+        CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
+
         if (_transaction.isAcceptable && _transaction.isCancelable) {
             acceptButton.hidden = NO;
             declineButton.hidden = NO;

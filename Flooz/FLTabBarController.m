@@ -14,7 +14,6 @@
 #import "SDWebImageDownloader.h"
 #import "UserViewController.h"
 #import "DealViewController.h"
-#import "UITabBarItem+CustomBadge.h"
 #import "FXBlurView.h"
 #import "FLTabBarController.h"
 #import "NewCollectController.h"
@@ -147,9 +146,9 @@
     accountNotifs += [currentUser.metrics[@"accountMissing"] intValue];
     
     if (accountNotifs > 0)
-        [profileItem setCustomBadgeValue:[@(accountNotifs) stringValue] withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
+        [profileItem setBadgeValue:[@(accountNotifs) stringValue]];
     else
-        [profileItem setCustomBadgeValue:nil withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
+        [profileItem setBadgeValue:nil];
 }
 
 - (void)reloadText {
@@ -416,10 +415,10 @@
 - (void)reloadBadge {
     NSNumber *numberNotif = [[Flooz sharedInstance] notificationsCount];
     
-    [notifItem setCustomBadgeValue:[numberNotif stringValue] withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
-    
     if ([numberNotif intValue] == 0)
-        [notifItem setCustomBadgeValue:nil withFont:[UIFont customContentRegular:12] andFontColor:[UIColor whiteColor] andBackgroundColor:[UIColor customBlue]];
+        [notifItem setBadgeValue:nil];
+    else
+        [notifItem setBadgeValue:[numberNotif stringValue]];
 }
 
 // pass a param to describe the state change, an animated flag and a completion block matching UIView animations completion

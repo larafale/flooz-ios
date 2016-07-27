@@ -16,8 +16,9 @@
 #import "UserPickerViewController.h"
 #import "ScopePickerViewController.h"
 #import "ImagePickerViewController.h"
+#import "iShowcase.h"
 
-@interface NewFloozViewController : BaseViewController<GeolocDelegate, FLNewTransactionBarDelegate, JTSImageViewControllerInteractionsDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UserPickerViewControllerDelegate, ScopePickerViewControllerDelegate, ImagePickerViewControllerDelegate>
+@interface NewFloozViewController : BaseViewController<GeolocDelegate, FLNewTransactionBarDelegate, JTSImageViewControllerInteractionsDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UserPickerViewControllerDelegate, ScopePickerViewControllerDelegate, ImagePickerViewControllerDelegate, iShowcaseDelegate>
 
 @property (nonatomic, retain) NSMutableDictionary *transaction;
 

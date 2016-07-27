@@ -95,7 +95,7 @@
     
     [addAttachmentView addSubview:addBack];
     
-    UILabel *addLabel = [[UILabel alloc] initWithText:@"Ajouter une image" textColor:[UIColor customBlue] font:[UIFont customContentBold:17] textAlignment:NSTextAlignmentCenter numberOfLines:1];
+    UILabel *addLabel = [[UILabel alloc] initWithText:@"Ajouter une image" textColor:[UIColor customPlaceholder] font:[UIFont customContentBold:17] textAlignment:NSTextAlignmentCenter numberOfLines:1];
     
     CGRectSetWidthHeight(addLabel.frame, [addLabel widthToFit] + 40, [addLabel heightToFit] + 30);
     CGRectSetXY(addLabel.frame, CGRectGetWidth(addAttachmentView.frame) / 2 - CGRectGetWidth(addLabel.frame) / 2, CGRectGetHeight(addAttachmentView.frame) / 2 - CGRectGetHeight(addLabel.frame) / 2);
@@ -109,7 +109,7 @@
     [shapeLayer setPosition:CGPointMake( frameSize.width/2,frameSize.height/2)];
     
     [shapeLayer setFillColor:[[UIColor clearColor] CGColor]];
-    [shapeLayer setStrokeColor:[UIColor customBlue].CGColor];
+    [shapeLayer setStrokeColor:[UIColor customPlaceholder].CGColor];
     [shapeLayer setLineWidth:2.0f];
     [shapeLayer setLineJoin:kCALineJoinMiter];
     [shapeLayer setLineDashPattern:

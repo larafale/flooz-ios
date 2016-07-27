@@ -24,7 +24,7 @@
     
     NSAttributedString *attributedText = [[NSAttributedString alloc]
                       initWithString:subLabel
-                      attributes:@{ NSFontAttributeName: [UIFont customContentRegular:12]}];
+                      attributes:@{ NSFontAttributeName: [UIFont customContentRegular:14]}];
     CGRect rect = [attributedText boundingRectWithSize:(CGSize) {PPScreenWidth() - 100, CGFLOAT_MAX }
                                         options:NSLineBreakByClipping | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                         context:nil];
@@ -49,11 +49,11 @@
     [imageView setContentMode:UIViewContentModeCenter];
 
     title = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 5, PPScreenWidth() - 100, 20)];
-    [title setFont:[UIFont customContentRegular:15]];
+    [title setFont:[UIFont customContentBold:15]];
     [title setTextColor:[UIColor whiteColor]];
 
     subtitle = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 27, PPScreenWidth() - 100, 20)];
-    [subtitle setFont:[UIFont customContentRegular:12]];
+    [subtitle setFont:[UIFont customContentRegular:14]];
     [subtitle setTextColor:[UIColor customPlaceholder]];
     [subtitle setNumberOfLines:0];
     [subtitle setLineBreakMode:NSLineBreakByWordWrapping];

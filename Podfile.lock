@@ -53,6 +53,7 @@ PODS:
     - DACircularProgress
     - pop
     - SDWebImage
+  - iShowcase (1.4)
   - JPSVolumeButtonHandler (1.0.1)
   - JTHelper (0.3.0)
   - JTSImageViewController (1.5.1)
@@ -108,6 +109,7 @@ DEPENDENCIES:
   - HMSegmentedControl
   - iCarousel
   - IDMPhotoBrowser
+  - iShowcase
   - JPSVolumeButtonHandler
   - JTHelper
   - JTSImageViewController
@@ -156,6 +158,7 @@ SPEC CHECKSUMS:
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
   IDMPhotoBrowser: b574fe3229754e701f32df271afbc4ac7e4e1997
+  iShowcase: cb57d2737c40baf3e09571e243616b43a8a86bda
   JPSVolumeButtonHandler: 20f474cf94fc7c21be8db572ecdf9aaffb20a738
   JTHelper: b9b56980755bf6d9f7ed58a2490205109658087e
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
@@ -181,6 +184,6 @@ SPEC CHECKSUMS:
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
   VENCalculatorInputView: 988fa681ba6bb9b1f067842493bb622e80cc8da2
 
-PODFILE CHECKSUM: c0a1ad59d4dceae2690b7cbf7b2bbb33f70fa75f
+PODFILE CHECKSUM: de40e20d790e84c004a19ec6ee274f944ef36a3a
 
 COCOAPODS: 1.0.1

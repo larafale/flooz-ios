@@ -26,15 +26,30 @@
         self.clipsToBounds = YES;
         self.contentMode = UIViewContentModeScaleAspectFill;
         
-        progressView = [[UIProgressView alloc] initWithFrame:CGRectMakeWithSize(self.frame.size)];
-        progressView.hidden = YES;
-        [self addSubview:progressView];
+        imageProgressView = [[DotActivityIndicatorView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2 - CGRectGetHeight(self.frame) / 6, CGRectGetHeight(self.frame) / 3, CGRectGetHeight(self.frame) / 3, CGRectGetHeight(self.frame) / 3)];
+        [imageProgressView setBackgroundColor:[UIColor clearColor]];
+        [imageProgressView setHidden:YES];
+        
+        DotActivityIndicatorParms *dotParms = [DotActivityIndicatorParms new];
+        dotParms.activityViewWidth = imageProgressView.frame.size.width;
+        dotParms.activityViewHeight = imageProgressView.frame.size.height;
+        dotParms.numberOfCircles = 3;
+        dotParms.internalSpacing = 5;
+        dotParms.animationDelay = 0.2;
+        dotParms.animationDuration = 0.6;
+        dotParms.animationFromValue = 0.3;
+        dotParms.defaultColor = [UIColor customBlue];
+        dotParms.isDataValidationEnabled = YES;
+        
+        [imageProgressView setDotParms:dotParms];
+        
+        [self addSubview:imageProgressView];
     }
     return self;
 }
 
 - (void)setImage:(UIImage *)image {
-    [progressView setHidden:YES];
+    [imageProgressView setHidden:YES];
     [super setImage:image];
 }
 
@@ -42,43 +57,29 @@
     //    [super sd_setImageWithURL:url];
     
     if ([url.absoluteString isEqualToString:@"/img/fake.png"]) {
-        [progressView setHidden:YES];
+        [imageProgressView setHidden:YES];
         [self setImage:[UIImage imageNamed:@"fake"]];
     } else {
-        [self resetProgressBar];
+        imageProgressView.frame = CGRectMake(CGRectGetWidth(self.frame) / 2 - CGRectGetHeight(self.frame) / 6, CGRectGetHeight(self.frame) / 3, CGRectGetHeight(self.frame) / 3, CGRectGetHeight(self.frame) / 3);
         
-        SDWebImageDownloaderProgressBlock progressBlock = ^(NSInteger receivedSize, NSInteger expectedSize) {
-            CGFloat progress = ((CGFloat)receivedSize / (CGFloat)expectedSize);
-            [progressView setProgress:progress];
-        };
+        [imageProgressView setHidden:NO];
+        [imageProgressView startAnimating];
         
-        [self sd_setImageWithURL:url
-                placeholderImage:nil
-                         options:SDWebImageRetryFailed
-                        progress:progressBlock
-                       completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                           if (error) {
-                               [progressView setTintColor:[UIColor redColor]];
-                               [progressView setProgress:1];
-                           }
-                           else {
-                               [progressView setHidden:YES];
-                           }
-                       }];
+        [self sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRetryFailed progress:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            if (error) {
+                [imageProgressView stopAnimating];
+            }
+            else {
+                [imageProgressView stopAnimating];
+                [imageProgressView setHidden:YES];
+            }
+        }];
     }
     fullScreenImageURL = fullScreenURL;
 }
 
-- (void)resetProgressBar {
-    [progressView setProgress:0];
-    progressView.trackTintColor = self.backgroundColor;
-    progressView.tintColor = [UIColor customBlue];
-    CGRectSetY(progressView.frame, CGRectGetHeight(self.frame) - 1);
-    progressView.hidden = NO;
-}
-
 - (void)setFullScreenMode {
-    if (!fullScreenImageURL || !progressView.hidden) {
+    if (!fullScreenImageURL || !imageProgressView.hidden) {
         return;
     }
     

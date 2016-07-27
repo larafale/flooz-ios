@@ -814,12 +814,6 @@
     
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(transactionBar.frame));
     CGRectSetHeight(contentView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame) - keyboardHeight - CGRectGetMinY(contentView.frame));
-    
-    //    CGPoint bottomOffset = CGPointMake(0, contentView.contentSize.height - contentView.bounds.size.height);
-    //    if (bottomOffset.y < 0)
-    //        [contentView setContentOffset:CGPointZero animated:YES];
-    //    else
-    //        [contentView setContentOffset:bottomOffset animated:YES];
 }
 
 - (void)keyboardFrameChanged:(NSNotification *)notification {

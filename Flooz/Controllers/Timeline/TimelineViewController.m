@@ -212,6 +212,19 @@
     } app:^{
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?pageNumber=0&sortOrdering=1&type=Purple+Software&mt=8&id=940393916"]];
     }] show];
+    
+    NSString *path  = [[NSBundle mainBundle] pathForResource:@"coin" ofType:@"caf"];
+    NSURL *pathURL = [NSURL fileURLWithPath : path];
+    
+    SystemSoundID audioEffect;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+    AudioServicesAddSystemSoundCompletion(audioEffect, nil, nil, completionCallback, (__bridge_retained void *)self);
+    AudioServicesPlaySystemSound(audioEffect);
+}
+
+static void completionCallback (SystemSoundID  mySSID, void *myself) {
+    AudioServicesRemoveSystemSoundCompletion (mySSID);
+    AudioServicesDisposeSystemSoundID(mySSID);
 }
 
 - (void)displayContentController:(UIViewController *)content {

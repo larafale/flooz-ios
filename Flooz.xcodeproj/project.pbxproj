@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2BDC66811A32846F61DAB3CA /* libPods-FloozTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60F541CBA88D7074879DB00A /* libPods-FloozTests.a */; };
+		1D0CF9CF6208B6CE321F9D75 /* libPods-Flooz dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439AA252C1690C29117EF109 /* libPods-Flooz dev.a */; };
 		2F0F6AFB19DF0686004CA223 /* FLSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFA19DF0686004CA223 /* FLSwitch.m */; };
 		2F0F6AFC19DF0686004CA223 /* FLSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFA19DF0686004CA223 /* FLSwitch.m */; };
 		2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFE19DF3E35004CA223 /* SettingsBankViewController.m */; };
@@ -57,7 +57,8 @@
 		2FEAA9CB19DC50A200EE95C9 /* UISearchBar+Subviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */; };
 		2FEAA9CF19DC63B500EE95C9 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */; };
 		2FEAA9D019DC63B500EE95C9 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */; };
-		570C0D96973C4B3133230DFA /* libPods-Flooz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02911AA51962ECF34394E111 /* libPods-Flooz.a */; };
+		305AB8E001E8A0EEEA47BA0A /* libPods-FloozTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B0E20663ECBACBE30845CF1 /* libPods-FloozTests.a */; };
+		3B691AE7A76AA2A232F23D7E /* libPods-Flooz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F8AAF64F700D4ACA271AB1 /* libPods-Flooz.a */; };
 		AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0857FC1923AB13007C1927 /* SplashViewController.m */; };
 		AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
 		AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */; };
@@ -250,7 +251,7 @@
 		ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
 		ABF7094118A4D64300517389 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7094018A4D64300517389 /* TransactionCell.m */; };
 		ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
-		BCD2013951A4FE1C546F2C08 /* libPods-Flooz local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82754FBC2586A515A451EE78 /* libPods-Flooz local.a */; };
+		C483DF8EE69CC37EA064870A /* libPods-Flooz local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E9BE834021AB5C3A4123A /* libPods-Flooz local.a */; };
 		C9006C921CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
 		C9006C931CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
 		C9006C941CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
@@ -386,6 +387,9 @@
 		C95772771A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */; };
 		C95772781A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */; };
 		C95772791A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */; };
+		C959B4D21D479F2C00D24348 /* coin.caf in Resources */ = {isa = PBXBuildFile; fileRef = C959B4D11D479F2C00D24348 /* coin.caf */; };
+		C959B4D31D479F2C00D24348 /* coin.caf in Resources */ = {isa = PBXBuildFile; fileRef = C959B4D11D479F2C00D24348 /* coin.caf */; };
+		C959B4D41D479F2C00D24348 /* coin.caf in Resources */ = {isa = PBXBuildFile; fileRef = C959B4D11D479F2C00D24348 /* coin.caf */; };
 		C95AED971A49AF4A00000FB3 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
 		C95AED981A49B10700000FB3 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
 		C95AED9E1A49B5E500000FB3 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */; };
@@ -416,9 +420,6 @@
 		C9701E101D3D044300734092 /* ScopePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9701E0F1D3D044300734092 /* ScopePickerCell.m */; };
 		C9701E111D3D044300734092 /* ScopePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9701E0F1D3D044300734092 /* ScopePickerCell.m */; };
 		C9701E121D3D044300734092 /* ScopePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9701E0F1D3D044300734092 /* ScopePickerCell.m */; };
-		C9701E141D3D0D2400734092 /* piece.wav in Resources */ = {isa = PBXBuildFile; fileRef = C9701E131D3D0D2400734092 /* piece.wav */; };
-		C9701E151D3D0D2400734092 /* piece.wav in Resources */ = {isa = PBXBuildFile; fileRef = C9701E131D3D0D2400734092 /* piece.wav */; };
-		C9701E161D3D0D2400734092 /* piece.wav in Resources */ = {isa = PBXBuildFile; fileRef = C9701E131D3D0D2400734092 /* piece.wav */; };
 		C975BB021A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */; };
 		C975BB031A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */; };
 		C975BB041A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */; };
@@ -676,9 +677,6 @@
 		C9C660B21BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
 		C9C660B31BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
 		C9C660B41BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */; };
-		C9C776811C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */; };
-		C9C776821C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */; };
-		C9C776831C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */; };
 		C9C776881C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */; };
 		C9C776891C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */; };
 		C9C7768A1C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */; };
@@ -790,7 +788,6 @@
 		C9FC68C51D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */; };
 		C9FC68C61D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */; };
 		C9FC68C71D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */; };
-		E0C12483804A3E14AD239575 /* libPods-Flooz dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5EC1F4FE761C5A71CF0555 /* libPods-Flooz dev.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -818,13 +815,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00AD3CFA018F04E3F9C53E46 /* Pods-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
-		02911AA51962ECF34394E111 /* libPods-Flooz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0BAED754160AD846B4ACD91B /* Pods-Flooz dev.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.local.xcconfig"; sourceTree = "<group>"; };
-		2072247876E8672AA0624C32 /* Pods-Flooz local.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.local.xcconfig"; sourceTree = "<group>"; };
-		234734A4A54BDF23E56429D5 /* Pods-Flooz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.release.xcconfig"; sourceTree = "<group>"; };
-		2BDDC74A6FBE6C3E08A5D77F /* Pods-FloozTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.debug.xcconfig"; sourceTree = "<group>"; };
-		2D53C15A3B9A4582F2243BEE /* Pods-Flooz dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.release.xcconfig"; sourceTree = "<group>"; };
+		05A01555B910DE768C05B873 /* Pods-Flooz dev.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.local.xcconfig"; sourceTree = "<group>"; };
+		2A7ABA4A0C7A3772FEAEDFE8 /* Pods-Flooz local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.debug.xcconfig"; sourceTree = "<group>"; };
 		2F0F6AF919DF0686004CA223 /* FLSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSwitch.h; path = Views/FLSwitchView/FLSwitch.h; sourceTree = "<group>"; };
 		2F0F6AFA19DF0686004CA223 /* FLSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSwitch.m; path = Views/FLSwitchView/FLSwitch.m; sourceTree = "<group>"; };
 		2F0F6AFD19DF3E35004CA223 /* SettingsBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsBankViewController.h; sourceTree = "<group>"; };
@@ -875,12 +867,19 @@
 		2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UISearchBar+Subviews.m"; path = "Util/UISearchBar+Subviews.m"; sourceTree = "<group>"; };
 		2FEAA9CD19DC63B500EE95C9 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = Views/BaseViewController/BaseViewController.h; sourceTree = "<group>"; };
 		2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = Views/BaseViewController/BaseViewController.m; sourceTree = "<group>"; };
-		308523E4B4430C39CCB09CF5 /* Pods-Flooz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.debug.xcconfig"; sourceTree = "<group>"; };
-		320AD05059542762855189F2 /* Pods-FloozTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.local.xcconfig"; sourceTree = "<group>"; };
-		60F541CBA88D7074879DB00A /* libPods-FloozTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		82754FBC2586A515A451EE78 /* libPods-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8E5EC1F4FE761C5A71CF0555 /* libPods-Flooz dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A66E4A506820CADE07C528A3 /* Pods-Flooz dev.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.recette.xcconfig"; sourceTree = "<group>"; };
+		39C7AAEBE2F4C1E9600F787E /* Pods-Flooz local.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.local.xcconfig"; sourceTree = "<group>"; };
+		3CFAB56D3C5BD13A40DFE9A0 /* Pods-Flooz.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.recette.xcconfig"; sourceTree = "<group>"; };
+		439AA252C1690C29117EF109 /* libPods-Flooz dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B8208B2DC8CA49EFE7E25F7 /* Pods-FloozTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.debug.xcconfig"; sourceTree = "<group>"; };
+		634B150C9B811BA2C56EA3D9 /* Pods-Flooz local.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.recette.xcconfig"; sourceTree = "<group>"; };
+		68E495AD8EB30DA3A0EB9D2C /* Pods-Flooz local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.release.xcconfig"; sourceTree = "<group>"; };
+		7367A9DA060B71D681F61EEF /* Pods-Flooz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.debug.xcconfig"; sourceTree = "<group>"; };
+		746904E147650706ED491D26 /* Pods-Flooz.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.local.xcconfig"; sourceTree = "<group>"; };
+		778D0112BAEAE7ACD4A166B1 /* Pods-FloozTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.local.xcconfig"; sourceTree = "<group>"; };
+		7B0E20663ECBACBE30845CF1 /* libPods-FloozTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83308C488458E6FE87063EA2 /* Pods-Flooz dev.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.recette.xcconfig"; sourceTree = "<group>"; };
+		900A3063929FE1D7D134F959 /* Pods-Flooz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.release.xcconfig"; sourceTree = "<group>"; };
+		98E044B02E0198D142E47992 /* Pods-FloozTests.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.recette.xcconfig"; sourceTree = "<group>"; };
 		AB0857FB1923AB13007C1927 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SplashViewController.h; path = Controllers/Splash/SplashViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AB0857FC1923AB13007C1927 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashViewController.m; path = Controllers/Splash/SplashViewController.m; sourceTree = "<group>"; };
 		AB0857FD1923AB13007C1927 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashViewController.xib; path = Controllers/Splash/SplashViewController.xib; sourceTree = "<group>"; };
@@ -1057,9 +1056,8 @@
 		ABF7094018A4D64300517389 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionCell.m; path = TransactionCell/TransactionCell.m; sourceTree = "<group>"; };
 		ABF7095B18A4FD6B00517389 /* FLComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLComment.h; path = Models/FLComment.h; sourceTree = "<group>"; };
 		ABF7095C18A4FD6B00517389 /* FLComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLComment.m; path = Models/FLComment.m; sourceTree = "<group>"; };
-		AFBD1E695FEC2A0FFCFD7454 /* Pods-Flooz.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.local.xcconfig"; sourceTree = "<group>"; };
-		BCDF1E2F2F6DEF32A59F7AFE /* Pods-Flooz dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.debug.xcconfig"; sourceTree = "<group>"; };
-		C74687ADE05DBDFB186192C9 /* Pods-Flooz local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.debug.xcconfig"; sourceTree = "<group>"; };
+		B57E9BE834021AB5C3A4123A /* libPods-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6A7439F0941185A7B0A1270 /* Pods-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
 		C9006C901CC7863900A66E07 /* ActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityCell.h; path = ActivityCell/ActivityCell.h; sourceTree = "<group>"; };
 		C9006C911CC7863900A66E07 /* ActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityCell.m; path = ActivityCell/ActivityCell.m; sourceTree = "<group>"; };
 		C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTransactionDescriptionView.m; sourceTree = "<group>"; };
@@ -1154,6 +1152,7 @@
 		C95772701A9C7BB400CD6BC0 /* FLTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTexts.m; sourceTree = "<group>"; };
 		C95772751A9CBDB400CD6BC0 /* FriendPickerEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendPickerEmptyCell.h; sourceTree = "<group>"; };
 		C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendPickerEmptyCell.m; sourceTree = "<group>"; };
+		C959B4D11D479F2C00D24348 /* coin.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.caf; sourceTree = "<group>"; };
 		C95AED951A49AF4A00000FB3 /* ClipboardPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipboardPopoverViewController.h; sourceTree = "<group>"; };
 		C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClipboardPopoverViewController.m; sourceTree = "<group>"; };
 		C95AED9A1A49B5E500000FB3 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
@@ -1178,7 +1177,6 @@
 		C9701E071D3CE29600734092 /* DotActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotActivityIndicatorView.m; sourceTree = "<group>"; };
 		C9701E0E1D3D044300734092 /* ScopePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScopePickerCell.h; path = Controllers/ScopePicker/ScopePickerCell.h; sourceTree = "<group>"; };
 		C9701E0F1D3D044300734092 /* ScopePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScopePickerCell.m; path = Controllers/ScopePicker/ScopePickerCell.m; sourceTree = "<group>"; };
-		C9701E131D3D0D2400734092 /* piece.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = piece.wav; sourceTree = "<group>"; };
 		C975BAF81A92BB8E000E5AEA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BAFA1A92BB8E000E5AEA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BB001A92BB8E000E5AEA /* YLMoment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLMoment.h; sourceTree = "<group>"; };
@@ -1258,8 +1256,6 @@
 		C9C3AD851CA29631009907D9 /* ParticipantCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticipantCell.m; path = ParticipantCell/ParticipantCell.m; sourceTree = "<group>"; };
 		C9C660B01BCBB70E0029A79A /* ValidateSecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSecureCodeViewController.h; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.h; sourceTree = "<group>"; };
 		C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSecureCodeViewController.m; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.m; sourceTree = "<group>"; };
-		C9C7767F1C075E57006C22CB /* UITabBarItem+CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+CustomBadge.h"; sourceTree = "<group>"; };
-		C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+CustomBadge.m"; sourceTree = "<group>"; };
 		C9C776841C076078006C22CB /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		C9C776861C076078006C22CB /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
@@ -1340,10 +1336,9 @@
 		C9F517D01CABD1C600856D53 /* FLPlusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPlusButton.m; path = Views/FLPlusButton/FLPlusButton.m; sourceTree = "<group>"; };
 		C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+NVSBlurAppScreen.m"; sourceTree = "<group>"; };
 		C9FC68C41D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+NVSBlurAppScreen.h"; sourceTree = "<group>"; };
-		CEE2DC896095A52F605ECD67 /* Pods-Flooz.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.recette.xcconfig"; sourceTree = "<group>"; };
-		D51860FB9CC66017C4C97583 /* Pods-FloozTests.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.recette.xcconfig"; sourceTree = "<group>"; };
-		E677E257E15E54E0BB4B9B79 /* Pods-Flooz local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.release.xcconfig"; sourceTree = "<group>"; };
-		F6BE568C2D5EEE9C4AC9F8F8 /* Pods-Flooz local.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.recette.xcconfig"; sourceTree = "<group>"; };
+		DE693F566F1A43290909A5D9 /* Pods-Flooz dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.debug.xcconfig"; sourceTree = "<group>"; };
+		E0F8AAF64F700D4ACA271AB1 /* libPods-Flooz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E44E8E5CF4985E3B8027D411 /* Pods-Flooz dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1372,7 +1367,7 @@
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
 				AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */,
-				570C0D96973C4B3133230DFA /* libPods-Flooz.a in Frameworks */,
+				3B691AE7A76AA2A232F23D7E /* libPods-Flooz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1382,7 +1377,7 @@
 			files = (
 				AB3D08AD186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D08AC186CA11A00CF8380 /* Foundation.framework in Frameworks */,
-				2BDC66811A32846F61DAB3CA /* libPods-FloozTests.a in Frameworks */,
+				305AB8E001E8A0EEEA47BA0A /* libPods-FloozTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1411,7 +1406,7 @@
 				ABAA3FF7197E96BF009F29EF /* CoreGraphics.framework in Frameworks */,
 				ABAA3FF8197E96BF009F29EF /* UIKit.framework in Frameworks */,
 				ABAA3FF9197E96BF009F29EF /* Foundation.framework in Frameworks */,
-				E0C12483804A3E14AD239575 /* libPods-Flooz dev.a in Frameworks */,
+				1D0CF9CF6208B6CE321F9D75 /* libPods-Flooz dev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1440,7 +1435,7 @@
 				C98013171A76921000019682 /* CoreGraphics.framework in Frameworks */,
 				C98013181A76921000019682 /* UIKit.framework in Frameworks */,
 				C98013191A76921000019682 /* Foundation.framework in Frameworks */,
-				BCD2013951A4FE1C546F2C08 /* libPods-Flooz local.a in Frameworks */,
+				C483DF8EE69CC37EA064870A /* libPods-Flooz local.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1538,29 +1533,6 @@
 			name = BaseViewController;
 			sourceTree = "<group>";
 		};
-		36F77B2F9268FCCBB59C97DA /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				308523E4B4430C39CCB09CF5 /* Pods-Flooz.debug.xcconfig */,
-				AFBD1E695FEC2A0FFCFD7454 /* Pods-Flooz.local.xcconfig */,
-				234734A4A54BDF23E56429D5 /* Pods-Flooz.release.xcconfig */,
-				CEE2DC896095A52F605ECD67 /* Pods-Flooz.recette.xcconfig */,
-				BCDF1E2F2F6DEF32A59F7AFE /* Pods-Flooz dev.debug.xcconfig */,
-				0BAED754160AD846B4ACD91B /* Pods-Flooz dev.local.xcconfig */,
-				2D53C15A3B9A4582F2243BEE /* Pods-Flooz dev.release.xcconfig */,
-				A66E4A506820CADE07C528A3 /* Pods-Flooz dev.recette.xcconfig */,
-				C74687ADE05DBDFB186192C9 /* Pods-Flooz local.debug.xcconfig */,
-				2072247876E8672AA0624C32 /* Pods-Flooz local.local.xcconfig */,
-				E677E257E15E54E0BB4B9B79 /* Pods-Flooz local.release.xcconfig */,
-				F6BE568C2D5EEE9C4AC9F8F8 /* Pods-Flooz local.recette.xcconfig */,
-				2BDDC74A6FBE6C3E08A5D77F /* Pods-FloozTests.debug.xcconfig */,
-				320AD05059542762855189F2 /* Pods-FloozTests.local.xcconfig */,
-				00AD3CFA018F04E3F9C53E46 /* Pods-FloozTests.release.xcconfig */,
-				D51860FB9CC66017C4C97583 /* Pods-FloozTests.recette.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		AB0857FA1923AAF9007C1927 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -1640,7 +1612,7 @@
 				AB3D08B0186CA11A00CF8380 /* FloozTests */,
 				AB3D0890186CA11A00CF8380 /* Frameworks */,
 				AB3D088F186CA11A00CF8380 /* Products */,
-				36F77B2F9268FCCBB59C97DA /* Pods */,
+				D0E98BBE1AB43A00BAB0493E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1679,10 +1651,10 @@
 				AB3D0891186CA11A00CF8380 /* Foundation.framework */,
 				AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */,
 				AB3D0895186CA11A00CF8380 /* UIKit.framework */,
-				02911AA51962ECF34394E111 /* libPods-Flooz.a */,
-				8E5EC1F4FE761C5A71CF0555 /* libPods-Flooz dev.a */,
-				82754FBC2586A515A451EE78 /* libPods-Flooz local.a */,
-				60F541CBA88D7074879DB00A /* libPods-FloozTests.a */,
+				E0F8AAF64F700D4ACA271AB1 /* libPods-Flooz.a */,
+				439AA252C1690C29117EF109 /* libPods-Flooz dev.a */,
+				B57E9BE834021AB5C3A4123A /* libPods-Flooz local.a */,
+				7B0E20663ECBACBE30845CF1 /* libPods-FloozTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1934,8 +1906,6 @@
 				AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */,
 				2FEAA9C819DC50A200EE95C9 /* UISearchBar+Subviews.h */,
 				2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */,
-				C9C7767F1C075E57006C22CB /* UITabBarItem+CustomBadge.h */,
-				C9C776801C075E57006C22CB /* UITabBarItem+CustomBadge.m */,
 				ABEC02A618D3165600C03025 /* UIView+FindFirstResponder.h */,
 				ABEC02A718D3165600C03025 /* UIView+FindFirstResponder.m */,
 				C93F669F1BB5556F0032ED56 /* UIView+LayerShot.h */,
@@ -2324,7 +2294,7 @@
 		ABF46A201875BE9100E92A77 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C9701E131D3D0D2400734092 /* piece.wav */,
+				C959B4D11D479F2C00D24348 /* coin.caf */,
 				C9CD76601BF227DC00362962 /* CountryPicker.bundle */,
 				ABF46A211875BE9E00E92A77 /* Fonts */,
 			);
@@ -3125,6 +3095,29 @@
 			name = FLPlusButton;
 			sourceTree = "<group>";
 		};
+		D0E98BBE1AB43A00BAB0493E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7367A9DA060B71D681F61EEF /* Pods-Flooz.debug.xcconfig */,
+				746904E147650706ED491D26 /* Pods-Flooz.local.xcconfig */,
+				900A3063929FE1D7D134F959 /* Pods-Flooz.release.xcconfig */,
+				3CFAB56D3C5BD13A40DFE9A0 /* Pods-Flooz.recette.xcconfig */,
+				DE693F566F1A43290909A5D9 /* Pods-Flooz dev.debug.xcconfig */,
+				05A01555B910DE768C05B873 /* Pods-Flooz dev.local.xcconfig */,
+				E44E8E5CF4985E3B8027D411 /* Pods-Flooz dev.release.xcconfig */,
+				83308C488458E6FE87063EA2 /* Pods-Flooz dev.recette.xcconfig */,
+				2A7ABA4A0C7A3772FEAEDFE8 /* Pods-Flooz local.debug.xcconfig */,
+				39C7AAEBE2F4C1E9600F787E /* Pods-Flooz local.local.xcconfig */,
+				68E495AD8EB30DA3A0EB9D2C /* Pods-Flooz local.release.xcconfig */,
+				634B150C9B811BA2C56EA3D9 /* Pods-Flooz local.recette.xcconfig */,
+				4B8208B2DC8CA49EFE7E25F7 /* Pods-FloozTests.debug.xcconfig */,
+				778D0112BAEAE7ACD4A166B1 /* Pods-FloozTests.local.xcconfig */,
+				C6A7439F0941185A7B0A1270 /* Pods-FloozTests.release.xcconfig */,
+				98E044B02E0198D142E47992 /* Pods-FloozTests.recette.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3303,7 +3296,6 @@
 				ABF46A321875C1B400E92A77 /* ProximaNova-Semibold.otf in Resources */,
 				ABF46A331875C1B400E92A77 /* Rene Bieder - Gentona Book.otf in Resources */,
 				ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */,
-				C9701E141D3D0D2400734092 /* piece.wav in Resources */,
 				C97EE6D11C3FFCDA003DE35B /* ocra.otf in Resources */,
 				2FC2546119B6742500EB1EED /* ShareAppViewController.xib in Resources */,
 				ABF46A341875C1B400E92A77 /* Rene Bieder - Gentona ExtraLight.otf in Resources */,
@@ -3312,6 +3304,7 @@
 				ABF46A351875C1B400E92A77 /* Rene Bieder - Gentona Light.otf in Resources */,
 				ABF46A361875C1B400E92A77 /* Rene Bieder - Gentona Thin.otf in Resources */,
 				AB2FB55E18B2B4710079AA1D /* FriendsViewController.xib in Resources */,
+				C959B4D21D479F2C00D24348 /* coin.caf in Resources */,
 				ABF7091E18A03D4600517389 /* Error.strings in Resources */,
 				C9D4E7041B18BD380096725B /* Flooz dev-Info.plist in Resources */,
 				C975BB021A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings in Resources */,
@@ -3354,6 +3347,7 @@
 				C9D4E7081B18BD380096725B /* Flooz local-Info.plist in Resources */,
 				ABAA4011197E96BF009F29EF /* CashOutViewController.xib in Resources */,
 				ABAA4014197E96BF009F29EF /* Rene Bieder - Gentona Light.otf in Resources */,
+				C959B4D31D479F2C00D24348 /* coin.caf in Resources */,
 				ABAA4015197E96BF009F29EF /* Rene Bieder - Gentona Thin.otf in Resources */,
 				ABAA4016197E96BF009F29EF /* FriendsViewController.xib in Resources */,
 				C9CD76621BF227DC00362962 /* CountryPicker.bundle in Resources */,
@@ -3365,7 +3359,6 @@
 				ABAA4022197E96BF009F29EF /* Images.xcassets in Resources */,
 				ABAA4023197E96BF009F29EF /* Localizable.strings in Resources */,
 				ABAA4024197E96BF009F29EF /* HomeViewController.xib in Resources */,
-				C9701E151D3D0D2400734092 /* piece.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3389,6 +3382,7 @@
 				C980132D1A76921000019682 /* CashOutViewController.xib in Resources */,
 				C980132E1A76921000019682 /* Rene Bieder - Gentona Light.otf in Resources */,
 				C980132F1A76921000019682 /* Rene Bieder - Gentona Thin.otf in Resources */,
+				C959B4D41D479F2C00D24348 /* coin.caf in Resources */,
 				C98013301A76921000019682 /* FriendsViewController.xib in Resources */,
 				C9CD76631BF227DC00362962 /* CountryPicker.bundle in Resources */,
 				C98013321A76921000019682 /* Error.strings in Resources */,
@@ -3400,7 +3394,6 @@
 				C9D4E7061B18BD380096725B /* Flooz dev-Info.plist in Resources */,
 				C980133A1A76921000019682 /* Localizable.strings in Resources */,
 				C980133B1A76921000019682 /* HomeViewController.xib in Resources */,
-				C9701E161D3D0D2400734092 /* piece.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3780,7 +3773,6 @@
 				C908A3EB1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
 				ABE914691892940A003AC722 /* FLAccountUserView.m in Sources */,
-				C9C776811C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
 				C92195E91C57858900318FD3 /* FLTriggerManager.m in Sources */,
 				C9D597D91D3A78C70007FF62 /* ImagePickerCollectionViewCell.m in Sources */,
 				C9CB21FE1A95E9D30064389A /* THContactTextField.m in Sources */,
@@ -4005,7 +3997,6 @@
 				C9AE77901ACA917B00CFF0AF /* FLSlider.m in Sources */,
 				C908A3EC1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D571B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
-				C9C776821C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
 				C92195EA1C57858900318FD3 /* FLTriggerManager.m in Sources */,
 				C9D597DA1D3A78C70007FF62 /* ImagePickerCollectionViewCell.m in Sources */,
 				2F0F6B0819DF5432004CA223 /* SettingsCoordsViewController.m in Sources */,
@@ -4222,7 +4213,6 @@
 				C9AE77911ACA917B00CFF0AF /* FLSlider.m in Sources */,
 				C908A3ED1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */,
 				C9160D581B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */,
-				C9C776831C075E57006C22CB /* UITabBarItem+CustomBadge.m in Sources */,
 				C92195EB1C57858900318FD3 /* FLTriggerManager.m in Sources */,
 				C9D597DB1D3A78C70007FF62 /* ImagePickerCollectionViewCell.m in Sources */,
 				C98012D81A76921000019682 /* SettingsCoordsViewController.m in Sources */,
@@ -4393,7 +4383,7 @@
 		};
 		8B81C5A619993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CEE2DC896095A52F605ECD67 /* Pods-Flooz.recette.xcconfig */;
+			baseConfigurationReference = 3CFAB56D3C5BD13A40DFE9A0 /* Pods-Flooz.recette.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4401,7 +4391,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4436,7 +4426,7 @@
 		};
 		8B81C5A719993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D51860FB9CC66017C4C97583 /* Pods-FloozTests.recette.xcconfig */;
+			baseConfigurationReference = 98E044B02E0198D142E47992 /* Pods-FloozTests.recette.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4459,7 +4449,7 @@
 		};
 		8B81C5A819993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A66E4A506820CADE07C528A3 /* Pods-Flooz dev.recette.xcconfig */;
+			baseConfigurationReference = 83308C488458E6FE87063EA2 /* Pods-Flooz dev.recette.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4467,7 +4457,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4585,7 +4575,7 @@
 		};
 		AB3D08BB186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 308523E4B4430C39CCB09CF5 /* Pods-Flooz.debug.xcconfig */;
+			baseConfigurationReference = 7367A9DA060B71D681F61EEF /* Pods-Flooz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4593,7 +4583,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4629,7 +4619,7 @@
 		};
 		AB3D08BC186CA11A00CF8380 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 234734A4A54BDF23E56429D5 /* Pods-Flooz.release.xcconfig */;
+			baseConfigurationReference = 900A3063929FE1D7D134F959 /* Pods-Flooz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4637,7 +4627,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4671,7 +4661,7 @@
 		};
 		AB3D08BE186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2BDDC74A6FBE6C3E08A5D77F /* Pods-FloozTests.debug.xcconfig */;
+			baseConfigurationReference = 4B8208B2DC8CA49EFE7E25F7 /* Pods-FloozTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4698,7 +4688,7 @@
 		};
 		AB3D08BF186CA11A00CF8380 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 00AD3CFA018F04E3F9C53E46 /* Pods-FloozTests.release.xcconfig */;
+			baseConfigurationReference = C6A7439F0941185A7B0A1270 /* Pods-FloozTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4721,7 +4711,7 @@
 		};
 		ABAA4027197E96BF009F29EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BCDF1E2F2F6DEF32A59F7AFE /* Pods-Flooz dev.debug.xcconfig */;
+			baseConfigurationReference = DE693F566F1A43290909A5D9 /* Pods-Flooz dev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4729,7 +4719,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4768,7 +4758,7 @@
 		};
 		ABAA4028197E96BF009F29EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D53C15A3B9A4582F2243BEE /* Pods-Flooz dev.release.xcconfig */;
+			baseConfigurationReference = E44E8E5CF4985E3B8027D411 /* Pods-Flooz dev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4776,7 +4766,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4856,7 +4846,7 @@
 		};
 		C980126C1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AFBD1E695FEC2A0FFCFD7454 /* Pods-Flooz.local.xcconfig */;
+			baseConfigurationReference = 746904E147650706ED491D26 /* Pods-Flooz.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4864,7 +4854,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4900,7 +4890,7 @@
 		};
 		C980126D1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 320AD05059542762855189F2 /* Pods-FloozTests.local.xcconfig */;
+			baseConfigurationReference = 778D0112BAEAE7ACD4A166B1 /* Pods-FloozTests.local.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4927,7 +4917,7 @@
 		};
 		C980126E1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BAED754160AD846B4ACD91B /* Pods-Flooz dev.local.xcconfig */;
+			baseConfigurationReference = 05A01555B910DE768C05B873 /* Pods-Flooz dev.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
@@ -4935,7 +4925,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4975,14 +4965,14 @@
 		};
 		C980133F1A76921000019682 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C74687ADE05DBDFB186192C9 /* Pods-Flooz local.debug.xcconfig */;
+			baseConfigurationReference = 2A7ABA4A0C7A3772FEAEDFE8 /* Pods-Flooz local.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5021,14 +5011,14 @@
 		};
 		C98013401A76921000019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2072247876E8672AA0624C32 /* Pods-Flooz local.local.xcconfig */;
+			baseConfigurationReference = 39C7AAEBE2F4C1E9600F787E /* Pods-Flooz local.local.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5068,14 +5058,14 @@
 		};
 		C98013411A76921000019682 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E677E257E15E54E0BB4B9B79 /* Pods-Flooz local.release.xcconfig */;
+			baseConfigurationReference = 68E495AD8EB30DA3A0EB9D2C /* Pods-Flooz local.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5113,14 +5103,14 @@
 		};
 		C98013421A76921000019682 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F6BE568C2D5EEE9C4AC9F8F8 /* Pods-Flooz local.recette.xcconfig */;
+			baseConfigurationReference = 634B150C9B811BA2C56EA3D9 /* Pods-Flooz local.recette.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",

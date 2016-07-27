@@ -9,6 +9,7 @@
 #import "EditProfileViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "FLTextFieldSignup.h"
+#import "FLSwitch.h"
 
 @interface EditProfileViewController () {
     UITableView *tableView;
@@ -18,6 +19,8 @@
     FLTextFieldSignup *websiteView;
     UIImageView *coverPreview;
     UIImageView *avatarPreview;
+    FLSwitch *facebookSwitch;
+
     
     NSMutableDictionary *data;
     
@@ -77,6 +80,9 @@
     [websiteView addForTextChangeTarget:self action:@selector(textChange)];
     [websiteView setTextOfTextField:[Flooz sharedInstance].currentUser.website];
 
+    facebookSwitch = [FLSwitch new];
+    [facebookSwitch addTarget:self action:@selector(didSwitchChange) forControlEvents:UIControlEventValueChanged];
+
     tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     [tableView setDataSource:self];
     [tableView setDelegate:self];
@@ -85,12 +91,33 @@
     [tableView setBounces:NO];
     
     [_mainBody addSubview:tableView];
+    
+    [self refreshFBStatus];
+    
+    [self registerNotification:@selector(refreshFBStatus) name:kNotificationFbConnect object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [self registerForKeyboardNotifications];
+}
+
+- (void)refreshFBStatus {
+    if ([[Flooz sharedInstance] facebook_token]) {
+        facebookSwitch.on = YES;
+    }
+    else {
+        facebookSwitch.on = NO;
+    }
+}
+
+- (void)didSwitchChange {
+    if (!facebookSwitch.on)
+        [[Flooz sharedInstance] disconnectFacebook];
+    else {
+        [[Flooz sharedInstance] connectFacebook];
+    }
 }
 
 - (void)textChange {
@@ -118,7 +145,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return 6;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -130,7 +157,7 @@
         return 60;
     else if (indexPath.section == 2)
         return 110;
-    else if (indexPath.section > 2 && indexPath.section <= 4)
+    else if (indexPath.section > 2 && indexPath.section <= 5)
         return 50;
     return CGFLOAT_MIN;
 }
@@ -151,8 +178,10 @@
         return [self generateBioCell];
     else if (indexPath.section == 3)
         return [self generateLocationCell];
-    else
+    else if (indexPath.section == 4)
         return [self generateWebsiteCell];
+    else
+        return [self generateFbCell];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -276,6 +305,29 @@
     }
     
     return cell;
+}
+
+- (UITableViewCell *)generateFbCell {
+    static NSString *cellIdentifier = @"FBCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [cell setBackgroundColor:[UIColor clearColor]];
+        
+        UILabel *title = [UILabel newWithText:NSLocalizedString(@"SETTINGS_FACEBOOK", nil) textColor:[UIColor whiteColor] font:[UIFont customContentRegular:16] textAlignment:NSTextAlignmentLeft numberOfLines:1];
+        [title setWidthToFit];
+        
+        CGRectSetPosition(title.frame, 10, 25 - CGRectGetHeight(title.frame) / 2);
+        
+        [cell addSubview:title];
+        
+        [cell setAccessoryView:facebookSwitch];
+    }
+    
+    return cell;
+  
 }
 
 #pragma mark - avatar

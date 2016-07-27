@@ -7,9 +7,8 @@
  */
 
 
-#import "FLAnimatedImageView.h"
 #import "SDWebImageManager.h"
-
+#import "FLAnimatedImageView.h"
 
 /**
  *  A category for the FLAnimatedImage imageView class that hooks it to the SDWebImage system.

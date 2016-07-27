@@ -71,6 +71,7 @@
 "FIELD_CITY" = "Ville";
 "FIELD_SMS_CODE" = "Saisir le code reçu par SMS";
 "FIELD_SPONSOR" = "Code parrain (optionnel)";
+"FIELD_BIRTHDATE" = "Date de naissance";
 
 "FIELD_IBAN" = "Code IBAN";
 "FIELD_IBAN_PLACEHOLDER" = "FRXXXXXXXXXXXXXXXXXXXXXXXXX";
@@ -135,7 +136,7 @@
 /************************************/
 
 "PROFILE" = "Mon profil";
-"EDIT_PROFILE" = "Éditer mon profil";
+"EDIT_PROFILE" = "Mon profil public";
 "SETTINGS_PROFILE" = "Mon Compte";
 
 "EDIT_AVATAR" = "Photo";
@@ -149,8 +150,8 @@
 "SETTINGS_ADDRESS" = "Mes adresses";
 "SETTINGS_CARD" = "Carte bancaire";
 "SETTINGS_BANK" = "Compte bancaire";
-"SETTINGS_DOCUMENTS" = "Mes documents";
-"SETTINGS_COORDS" = "Mes informations";
+"SETTINGS_DOCUMENTS" = "Mes justificatifs";
+"SETTINGS_COORDS" = "Mes coordonées";
 "SETTINGS_SECURITY" = "Sécurité";
 "SETTINGS_PREFERENCES" = "Préférences";
 "SETTINGS_PRIVACY" = "Partage & vie privée";
@@ -218,9 +219,10 @@
 /*              MENU                */
 /************************************/
 
-"MENU_ACCOUNT" = "Compte";
+"MENU_ACCOUNT" = "Profil";
+"MENU_BANK" = "Banque";
 "MENU_SETTINGS" = "Réglages";
-"MENU_OTHER" = "Divers";
+"MENU_OTHER" = "Plus...";
 
 "MENU_NEW_TRANSACTION_PAYMENT" = "Payer";
 "MENU_NEW_TRANSACTION_COLLECT" = "Réclamer";
@@ -239,7 +241,6 @@
 "MENU_REMOVE_FRIENDS" = "Supprimer des amis";
 "MENU_AVATAR" = "Voir la photo";
 "MENU_REPORT" = "Signaler";
-"MENU_OTHER" = "Plus...";
 "MENU_REPORT_LINE" = "Signaler ce contenu";
 "MENU_REPORT_USER" = "Signaler";
 "MENU_BLOCK_USER" = "Bloquer";
@@ -370,13 +371,13 @@
 "TRANSACTION_SCOPE_FRIEND" = "Amis";
 "TRANSACTION_SCOPE_PRIVATE" = "Privé";
 
-"TRANSACTION_SCOPE_SUB_PUBLIC" = "Visible par tout le monde";
-"TRANSACTION_SCOPE_SUB_FRIEND" = "Visible par vos amis sur Flooz";
-"TRANSACTION_SCOPE_SUB_PRIVATE" = "Seul le destinataire pourra voir ce Flooz";
+"TRANSACTION_SCOPE_SUB_PUBLIC" = "Tout le monde sur Flooz";
+"TRANSACTION_SCOPE_SUB_FRIEND" = "Vos amis sur Flooz";
+"TRANSACTION_SCOPE_SUB_PRIVATE" = "Le destinataire et moi";
 
-"TRANSACTION_SCOPE_SUB_POT_PUBLIC" = "Visible par tout le monde";
-"TRANSACTION_SCOPE_SUB_POT_FRIEND" = "Visible par vos amis sur Flooz";
-"TRANSACTION_SCOPE_SUB_POT_PRIVATE" = "Seule les personnes invitées pourront accéder à la cagnotte";
+"TRANSACTION_SCOPE_SUB_POT_PUBLIC" = "Tout le monde sur Flooz";
+"TRANSACTION_SCOPE_SUB_POT_FRIEND" = "Vos amis sur FLooz";
+"TRANSACTION_SCOPE_SUB_POT_PRIVATE" = "Seuls les invités et les personnes ayant le lien pourront accéder à la cagnotte";
 
 "SEND_COMMENT" = "Ajouter un commentaire...";
 

@@ -40,6 +40,7 @@ def prod_pods
     pod 'CardIO'
     pod 'JTSImageViewController'
     pod 'VENCalculatorInputView', '~> 1.5'
+    pod "iShowcase"
 
 end
 
