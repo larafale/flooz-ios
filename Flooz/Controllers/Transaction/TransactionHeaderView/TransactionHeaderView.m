@@ -69,7 +69,9 @@
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(headerView.frame), PPScreenWidth(), 0)];
     contentView.backgroundColor = [UIColor customBackground];
     
-    attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 80)];
+    CGFloat heightAttach = 250 / (500 / PPScreenWidth());
+
+    attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), heightAttach)];
     
     floozerLabel = [UILabel newWithFrame:CGRectMake(10, CGRectGetMaxY(attachmentView.frame) + 10, PPScreenWidth() - 20, 0)];
     floozerLabel.textColor = [UIColor whiteColor];

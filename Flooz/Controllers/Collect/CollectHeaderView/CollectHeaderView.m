@@ -80,8 +80,10 @@
     
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(headerView.frame), PPScreenWidth(), 0)];
     contentView.backgroundColor = [UIColor customBackground];
-    
-    attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 80)];
+
+    CGFloat heightAttach = 250 / (500 / PPScreenWidth());
+
+    attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), heightAttach)];
     
     addAttachmentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0, PPScreenWidth(), 120)];
     [addAttachmentView setBackgroundColor:[UIColor customBackground]];
