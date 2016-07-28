@@ -53,6 +53,7 @@
 #import "NewFloozViewController.h"
 #import "ScopePickerViewController.h"
 #import "ImagePickerViewController.h"
+#import "FLAdvancedPopupTrigger.h"
 
 @interface FLTriggerManager ()
 
@@ -63,6 +64,9 @@
 @property (nonatomic, strong) FLTrigger *smsTrigger;
 @property (nonatomic, strong) FLTrigger *listTrigger;
 @property (nonatomic, strong) FLTrigger *imageTrigger;
+
+@property (nonatomic, strong) FLPopupTrigger *classicPopupTrigger;
+@property (nonatomic, strong) FLAdvancedPopupTrigger *advancePopupTrigger;
 
 @end
 
@@ -147,12 +151,12 @@
                 
                 if (trigger.data[@"lock"] && [trigger.data[@"lock"] boolValue])
                     [[Flooz sharedInstance] showLoadView];
-
+                
                 NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                     [self executeTriggerList:trigger.triggers];
                     
                     [[Flooz sharedInstance] hideLoadView];
-
+                    
                     if (!error) {
                         if (trigger.data[@"success"]) {
                             [self executeTriggerList:[FLTriggerManager convertDataInList:trigger.data[@"success"]]];
@@ -221,7 +225,17 @@
 }
 
 - (void)hideActionHandler:(FLTrigger *)trigger {
-    if ([self isTriggerKeyView:trigger]) {
+    if ([trigger.category isEqualToString:@"popup"]) {
+        if ([trigger.view isEqualToString:@"basic"] && self.classicPopupTrigger) {
+            [self.classicPopupTrigger dismiss:^{
+                [self executeTriggerList:trigger.triggers];
+            }];
+        } else if ([trigger.view isEqualToString:@"advance"] && self.advancePopupTrigger) {
+            [self.advancePopupTrigger dismiss:^{
+                [self executeTriggerList:trigger.triggers];
+            }];
+        }
+    } else if ([self isTriggerKeyView:trigger]) {
         Boolean animate = YES;
         
         if (trigger.data && trigger.data[@"noAnim"]) {
@@ -229,7 +243,7 @@
         }
         
         Class controllerClass = [self.binderKeyView objectForKey:trigger.viewCategory];
-        UIViewController *topController = [appDelegate myTopViewController];
+        UIViewController *topController = [self getTopViewController];
         
         if ([topController isKindOfClass:[FLTabBarController class]]) {
             UIViewController *tabController = [(FLTabBarController *)topController selectedViewController];
@@ -308,10 +322,10 @@
             cameraUI.delegate = self;
             cameraUI.allowsEditing = YES;
             
-            UIViewController *tmp = [appDelegate myTopViewController];
-
+            UIViewController *tmp = [self getTopViewController];
+            
             _imageTrigger = trigger;
-
+            
             [tmp presentViewController:cameraUI animated:YES completion: ^{
                 [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
             }];
@@ -323,8 +337,8 @@
                     cameraUI.delegate = self;
                     cameraUI.allowsEditing = YES;
                     
-                    UIViewController *tmp = [appDelegate myTopViewController];
-
+                    UIViewController *tmp = [self getTopViewController];
+                    
                     _imageTrigger = trigger;
                     
                     [tmp presentViewController:cameraUI animated:YES completion: ^{
@@ -346,11 +360,11 @@
         cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         cameraUI.delegate = self;
         cameraUI.allowsEditing = YES;
-
-        UIViewController *tmp = [appDelegate myTopViewController];
-
+        
+        UIViewController *tmp = [self getTopViewController];
+        
         _imageTrigger = trigger;
-
+        
         [tmp presentViewController:cameraUI animated:YES completion: ^{
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
         }];
@@ -358,15 +372,15 @@
         ImagePickerViewController *pickerViewController = [[ImagePickerViewController alloc] initWithTriggerData:trigger.data];
         pickerViewController.type = @"gif";
         
-        UIViewController *tmp = [appDelegate myTopViewController];
+        UIViewController *tmp = [self getTopViewController];
         
         [tmp presentViewController:[[FLNavigationController alloc] initWithRootViewController:pickerViewController] animated:YES completion:nil];
     } else if ([trigger.viewCategory isEqualToString:@"image:web"]) {
         ImagePickerViewController *pickerViewController = [[ImagePickerViewController alloc] initWithTriggerData:trigger.data];
         pickerViewController.type = @"web";
-
-        UIViewController *tmp = [appDelegate myTopViewController];
-
+        
+        UIViewController *tmp = [self getTopViewController];
+        
         [tmp presentViewController:[[FLNavigationController alloc] initWithRootViewController:pickerViewController] animated:YES completion:nil];
     }
 }
@@ -416,7 +430,7 @@
 - (void)sendActionHandler:(FLTrigger *)trigger {
     if ([trigger.viewCategory isEqualToString:@"image:flooz"]) {
         if (trigger.data && trigger.data[@"_id"]) {
-            UIViewController *topViewController = [appDelegate myTopViewController];
+            UIViewController *topViewController = [self getTopViewController];
             NewFloozViewController *transacViewController;
             
             if ([topViewController isKindOfClass:[NewFloozViewController class]]) {
@@ -443,7 +457,7 @@
         }
     } else if ([trigger.viewCategory isEqualToString:@"image:pot"]) {
         if (trigger.data && trigger.data[@"_id"]) {
-            UIViewController *topViewController = [appDelegate myTopViewController];
+            UIViewController *topViewController = [self getTopViewController];
             NewCollectController *transacViewController;
             
             if ([topViewController isKindOfClass:[NewCollectController class]]) {
@@ -525,11 +539,25 @@
     if ([trigger.viewCategory isEqualToString:@"app:signup"]) {
         [appDelegate showSignupWithUser:trigger.data];
         [self executeTriggerList:trigger.triggers];
-    } else if ([trigger.viewCategory isEqualToString:@"app:popup"]) {
+    } else if ([trigger.category isEqualToString:@"popup"]) {
         if (trigger.data) {
-            [[[FLPopupTrigger alloc] initWithData:trigger.data] show:^{
-                [self executeTriggerList:trigger.triggers];
-            }];
+            if ([trigger.view isEqualToString:@"basic"]) {
+                self.classicPopupTrigger = [[FLPopupTrigger alloc] initWithData:trigger.data dismiss:^{
+                    self.classicPopupTrigger = nil;
+                }] ;
+                
+                [self.classicPopupTrigger show:^{
+                    [self executeTriggerList:trigger.triggers];
+                }];
+            } else if ([trigger.view isEqualToString:@"advance"]) {
+                self.advancePopupTrigger = [[FLAdvancedPopupTrigger alloc] initWithData:trigger.data dismiss:^{
+                    self.advancePopupTrigger = nil;
+                }];
+                
+                [self.advancePopupTrigger show:^{
+                    [self executeTriggerList:trigger.triggers];
+                }];
+            }
         }
     } else if ([trigger.viewCategory isEqualToString:@"app:alert"]) {
         if (trigger.data) {
@@ -552,7 +580,7 @@
                     NSUInteger index = [actionSheet addButtonWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil)];
                     [actionSheet setCancelButtonIndex:index];
                 }
-
+                
                 self.listTrigger = trigger;
                 
                 [actionSheet showInView:[appDelegate window]];
@@ -572,7 +600,7 @@
                     [newAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GLOBAL_CANCEL", nil) style:UIAlertActionStyleCancel handler:NULL]];
                 }
                 
-                UIViewController *tmp = [appDelegate myTopViewController];
+                UIViewController *tmp = [self getTopViewController];
                 
                 [tmp presentViewController:newAlert animated:YES completion:^{
                     [self executeTriggerList:trigger.triggers];
@@ -590,7 +618,7 @@
                 [message setBody:trigger.data[@"body"]];
                 
                 message.modalPresentationStyle = UIModalPresentationPageSheet;
-                UIViewController *tmp = [appDelegate myTopViewController];
+                UIViewController *tmp = [self getTopViewController];
                 
                 self.smsTrigger = trigger;
                 
@@ -633,7 +661,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     SecureCodeViewController *controller = [SecureCodeViewController new];
                     controller.completeBlock = completeBlock;
-                    [[appDelegate myTopViewController] presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                    [[self getTopViewController] presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
                         [[Flooz sharedInstance] hideLoadView];
                         [self executeTriggerList:trigger.triggers];
                     }];
@@ -648,7 +676,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 SecureCodeViewController *controller = [SecureCodeViewController new];
                 controller.completeBlock = completeBlock;
-                [[appDelegate myTopViewController] presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                [[self getTopViewController] presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
                     [[Flooz sharedInstance] hideLoadView];
                     [self executeTriggerList:trigger.triggers];
                 }];
@@ -718,14 +746,14 @@
                 
                 FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:controller];
                 
-                UIViewController *tmp = [appDelegate myTopViewController];
+                UIViewController *tmp = [self getTopViewController];
                 
                 [tmp presentViewController:navController animated:YES completion:^{
                     [self executeTriggerList:trigger.triggers];
                 }];
             }
         } else if ([self isTriggerKeyViewPush:trigger]) {
-            UIViewController *tmp = [appDelegate myTopViewController];
+            UIViewController *tmp = [self getTopViewController];
             FLNavigationController *navController;
             
             if ([tmp isKindOfClass:[FLTabBarController class]]) {
@@ -746,13 +774,22 @@
             
             FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:controller];
             
-            UIViewController *tmp = [appDelegate myTopViewController];
+            UIViewController *tmp = [self getTopViewController];
             
             [tmp presentViewController:navController animated:YES completion:^{
                 [self executeTriggerList:trigger.triggers];
             }];
         }
     }
+}
+
+- (UIViewController *)getTopViewController {
+    if (self.classicPopupTrigger)
+        return self.classicPopupTrigger.formSheet.presentedFSViewController;
+    if (self.advancePopupTrigger)
+        return self.advancePopupTrigger.formSheet.presentedFSViewController;
+    
+    return [appDelegate myTopViewController];
 }
 
 - (void)loadBinderActionFunction {

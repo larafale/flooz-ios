@@ -405,6 +405,9 @@
 		C966473E19FFEA28000851AF /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C966473A19FFEA0D000851AF /* TransitionDelegate.m */; };
 		C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = C966474019FFEB4E000851AF /* AnimatedTransitioning.m */; };
 		C966474219FFEB80000851AF /* AnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = C966474019FFEB4E000851AF /* AnimatedTransitioning.m */; };
+		C96B4D9C1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C96B4D9B1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m */; };
+		C96B4D9D1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C96B4D9B1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m */; };
+		C96B4D9E1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C96B4D9B1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m */; };
 		C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C96E5A671BA95EEE00F201E9 /* UserViewController.m */; };
 		C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C96E5A671BA95EEE00F201E9 /* UserViewController.m */; };
 		C96E5A6A1BA95EEE00F201E9 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C96E5A671BA95EEE00F201E9 /* UserViewController.m */; };
@@ -1167,6 +1170,8 @@
 		C966473A19FFEA0D000851AF /* TransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionDelegate.m; sourceTree = "<group>"; };
 		C966473F19FFEB4E000851AF /* AnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedTransitioning.h; sourceTree = "<group>"; };
 		C966474019FFEB4E000851AF /* AnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedTransitioning.m; sourceTree = "<group>"; };
+		C96B4D9A1D49F89A00EA8163 /* FLAdvancedPopupTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAdvancedPopupTrigger.h; path = Views/FLPopup/FLAdvancedPopupTrigger.h; sourceTree = "<group>"; };
+		C96B4D9B1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAdvancedPopupTrigger.m; path = Views/FLPopup/FLAdvancedPopupTrigger.m; sourceTree = "<group>"; };
 		C96E5A661BA95EEE00F201E9 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewController.h; sourceTree = "<group>"; };
 		C96E5A671BA95EEE00F201E9 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
 		C9701DFE1D3CD3B400734092 /* MRCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCircularProgressView.h; sourceTree = "<group>"; };
@@ -2120,6 +2125,8 @@
 				C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */,
 				C989591D1C089C8500D8D37F /* FLSocialPopup.h */,
 				C989591E1C089C8500D8D37F /* FLSocialPopup.m */,
+				C96B4D9A1D49F89A00EA8163 /* FLAdvancedPopupTrigger.h */,
+				C96B4D9B1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m */,
 			);
 			name = FLPopup;
 			sourceTree = "<group>";
@@ -3767,6 +3774,7 @@
 				C917C80D1BE79D950018043C /* LocationSearchBar.m in Sources */,
 				2F0F6B0719DF5432004CA223 /* SettingsCoordsViewController.m in Sources */,
 				C95772771A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */,
+				C96B4D9C1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m in Sources */,
 				ABBB75E218BBADFA0070C2A8 /* FriendRequestCell.m in Sources */,
 				C91C5D441BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9AE778F1ACA917B00CFF0AF /* FLSlider.m in Sources */,
@@ -3990,6 +3998,7 @@
 				ABAA3FC1197E96BF009F29EF /* UIBarButtonItem+custom.m in Sources */,
 				C917C80E1BE79D950018043C /* LocationSearchBar.m in Sources */,
 				ABAA3FC2197E96BF009F29EF /* Flooz.m in Sources */,
+				C96B4D9D1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m in Sources */,
 				C95772781A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */,
 				ABAA3FC3197E96BF009F29EF /* NotificationsViewController.m in Sources */,
 				ABAA3FC4197E96BF009F29EF /* FLCreditCard.m in Sources */,
@@ -4205,6 +4214,7 @@
 				C98012CF1A76921000019682 /* CodePinView.m in Sources */,
 				C917C80F1BE79D950018043C /* LocationSearchBar.m in Sources */,
 				C98012D21A76921000019682 /* FLNotification.m in Sources */,
+				C96B4D9E1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m in Sources */,
 				C98012D31A76921000019682 /* UIBarButtonItem+custom.m in Sources */,
 				C98012D41A76921000019682 /* Flooz.m in Sources */,
 				C95772791A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m in Sources */,

@@ -104,6 +104,11 @@
         _isShareable = [[json objectForKey:@"isShareable"] boolValue];
     }
     
+    _isClosed = NO;
+    if ([json objectForKey:@"isClosed"]) {
+        _isClosed = [[json objectForKey:@"isClosed"] boolValue];
+    }
+    
     if (_location && [_location isBlank])
         _location = nil;
     

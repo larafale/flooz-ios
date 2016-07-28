@@ -264,7 +264,7 @@
     
     commentTextField = [[FLTextViewComment alloc] initWithPlaceholder:NSLocalizedString(@"SEND_COMMENT", nil) for:commentData key:@"comment" frame:CGRectMake(60, 10, PPScreenWidth() - 120, 30)];
     [commentTextField setDelegate:self];
-    [commentTextField addTextFocusTarget:self action:@selector(focusOnComment)];
+    [commentTextField addTextFocusTarget:self action:@selector(focusOnComment:)];
     [toolbar addSubview:commentTextField];
     
     commentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(toolbar.frame) - 55, 5, 50, 50 - 10)];
@@ -657,9 +657,11 @@
 
 #pragma mark - Actions
 
-- (void)focusOnComment {
-    focusOnCommentTextField = YES;
-    [self focusComment];
+- (void)focusOnComment:(NSNumber *)focus {
+    if ([focus boolValue]) {
+        focusOnCommentTextField = YES;
+        [self focusComment];
+    }
 }
 
 - (void)didLikeButtonTouch {

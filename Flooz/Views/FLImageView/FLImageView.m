@@ -26,7 +26,7 @@
         self.clipsToBounds = YES;
         self.contentMode = UIViewContentModeScaleAspectFill;
         
-        imageProgressView = [[DotActivityIndicatorView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2 - CGRectGetHeight(self.frame) / 6, CGRectGetHeight(self.frame) / 3, CGRectGetHeight(self.frame) / 3, CGRectGetHeight(self.frame) / 3)];
+        imageProgressView = [[DotActivityIndicatorView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) / 2 - CGRectGetHeight(self.frame) / 4, CGRectGetHeight(self.frame) / 3, CGRectGetHeight(self.frame) / 2, CGRectGetHeight(self.frame) / 3)];
         [imageProgressView setBackgroundColor:[UIColor clearColor]];
         [imageProgressView setHidden:YES];
         
@@ -49,21 +49,25 @@
 }
 
 - (void)setImage:(UIImage *)image {
-    [imageProgressView setHidden:YES];
+    if (imageProgressView && image)
+        [imageProgressView setHidden:YES];
+    
     [super setImage:image];
 }
 
 - (void)setImageWithURL:(NSURL *)url fullScreenURL:(NSURL *)fullScreenURL {
-    //    [super sd_setImageWithURL:url];
-    
     if ([url.absoluteString isEqualToString:@"/img/fake.png"]) {
-        [imageProgressView setHidden:YES];
+        if (imageProgressView)
+            [imageProgressView setHidden:NO];
+        
         [self setImage:[UIImage imageNamed:@"fake"]];
     } else {
-        imageProgressView.frame = CGRectMake(CGRectGetWidth(self.frame) / 2 - CGRectGetHeight(self.frame) / 6, CGRectGetHeight(self.frame) / 3, CGRectGetHeight(self.frame) / 3, CGRectGetHeight(self.frame) / 3);
-        
         [imageProgressView setHidden:NO];
+        [imageProgressView stopAnimating];
         [imageProgressView startAnimating];
+        
+        self.image = nil;
+        self.animatedImage = nil;
         
         [self sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRetryFailed progress:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             if (error) {
@@ -79,7 +83,7 @@
 }
 
 - (void)setFullScreenMode {
-    if (!fullScreenImageURL || !imageProgressView.hidden) {
+    if (!fullScreenImageURL || (imageProgressView && !imageProgressView.hidden)) {
         return;
     }
     

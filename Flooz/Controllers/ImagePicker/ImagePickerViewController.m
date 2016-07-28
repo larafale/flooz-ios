@@ -12,6 +12,8 @@
 
 @interface ImagePickerViewController() {
     
+    Boolean firstInit;
+    
     UIView *backgroundView;
     UIView *emptyView;
     UIView *loadingView;
@@ -24,6 +26,7 @@
     NSString *searchString;
     
     NSArray *items;
+    NSArray *featureItems;
     NSArray *keywords;
 }
 
@@ -46,6 +49,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[Flooz sharedInstance] imagesSearch:searchString type:self.type success:^(id result) {
+        featureItems = result;
+        
+        [collectionView reloadData];
+        
+        if (featureItems.count) {
+            collectionView.hidden = NO;
+            backgroundView.hidden = YES;
+            loadingView.hidden = YES;
+            emptyView.hidden = YES;
+        } else if (items && items.count) {
+            collectionView.hidden = NO;
+            backgroundView.hidden = YES;
+            loadingView.hidden = YES;
+            emptyView.hidden = YES;
+        } else {
+            collectionView.hidden = YES;
+            backgroundView.hidden = NO;
+            loadingView.hidden = YES;
+            emptyView.hidden = YES;
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
     
     if (!self.title || [self.title isBlank]) {
         if ([self.type isEqualToString:@"gif"])
@@ -141,13 +171,13 @@
     loadingView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBar.frame) + 5, PPScreenWidth(), 50)];
     
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-//    activityIndicatorView.color = [UIColor customBlue];
+    //    activityIndicatorView.color = [UIColor customBlue];
     [activityIndicatorView startAnimating];
     
     CGRectSetXY(activityIndicatorView.frame, PPScreenWidth() / 2 - CGRectGetWidth(activityIndicatorView.frame) / 2, 5);
-
+    
     [loadingView addSubview:activityIndicatorView];
-
+    
     emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_searchBar.frame) + 5, PPScreenWidth(), 50)];
     
     UILabel *emptyLabel = [[UILabel alloc] initWithText:NSLocalizedString(@"GLOBAL_EMPTY_RESULT", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:17] textAlignment:NSTextAlignmentCenter numberOfLines:1];
@@ -181,7 +211,7 @@
     items = @[];
     [collectionView reloadData];
     
-    if (searchString && searchString.length > 3) {
+    if (searchString && searchString.length) {
         collectionView.hidden = YES;
         backgroundView.hidden = YES;
         loadingView.hidden = NO;
@@ -191,21 +221,31 @@
             items = result;
             [collectionView reloadData];
             
-            if (items.count) {
+            if (featureItems.count) {
+                collectionView.hidden = NO;
+                backgroundView.hidden = YES;
+                loadingView.hidden = YES;
+                emptyView.hidden = YES;
+            } else if (items.count) {
                 collectionView.hidden = NO;
                 backgroundView.hidden = YES;
                 loadingView.hidden = YES;
                 emptyView.hidden = YES;
             } else {
                 collectionView.hidden = YES;
-                backgroundView.hidden = YES;
+                backgroundView.hidden = NO;
                 loadingView.hidden = YES;
-                emptyView.hidden = NO;
+                emptyView.hidden = YES;
             }
             
         } failure:^(NSError *error) {
             
         }];
+    } else if (featureItems.count) {
+        collectionView.hidden = NO;
+        backgroundView.hidden = YES;
+        loadingView.hidden = YES;
+        emptyView.hidden = YES;
     } else {
         collectionView.hidden = YES;
         backgroundView.hidden = NO;
@@ -236,20 +276,31 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return items.count;
+    if (searchString && ![searchString isBlank])
+        return items.count;
+    return featureItems.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)_collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ImagePickerCollectionViewCell *cell = [_collectionView dequeueReusableCellWithReuseIdentifier:@"imagePickerCell" forIndexPath:indexPath];
     
-    [cell setItem:items[indexPath.item]];
+    if (searchString && ![searchString isBlank])
+        [cell setItem:items[indexPath.item]];
+    else
+        [cell setItem:featureItems[indexPath.item]];
+    
     
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (items.count >= indexPath.item) {
-        NSDictionary *item = items[indexPath.item];
+    if (items.count >= indexPath.item || featureItems.count >= indexPath.item) {
+        NSDictionary *item;
+        
+        if (searchString && ![searchString isBlank])
+            item = items[indexPath.item];
+        else
+            item = featureItems[indexPath.item];
         
         if (self.triggerData) {
             NSArray<FLTrigger *> *successTriggers = [FLTriggerManager convertDataInList:self.triggerData[@"success"]];

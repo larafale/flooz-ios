@@ -1,14 +1,14 @@
 //
-//  FLPopupTrigger.h
+//  FLAdvancedPopupTrigger.h
 //  Flooz
 //
-//  Created by Epitech on 9/29/15.
-//  Copyright © 2015 Flooz. All rights reserved.
+//  Created by Olive on 28/07/16.
+//  Copyright © 2016 Flooz. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface FLPopupTrigger : UIViewController
+@interface FLAdvancedPopupTrigger : UIViewController
 
 @property (strong, nonatomic) MZFormSheetController *formSheet;
 

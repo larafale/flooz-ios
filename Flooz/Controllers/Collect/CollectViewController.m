@@ -296,7 +296,7 @@
     
     commentTextField = [[FLTextViewComment alloc] initWithPlaceholder:NSLocalizedString(@"SEND_COMMENT", nil) for:commentData key:@"comment" frame:CGRectMake(60, 10, PPScreenWidth() - 120, 30)];
     [commentTextField setDelegate:self];
-    [commentTextField addTextFocusTarget:self action:@selector(focusOnComment)];
+    [commentTextField addTextFocusTarget:self action:@selector(focusOnComment:)];
     [toolbar addSubview:commentTextField];
     
     commentButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(toolbar.frame) - 55, 5, 50, 50 - 10)];
@@ -516,12 +516,12 @@
     } else {
         CGRectSetHeight(toolbar.frame, 50);
         CGRectSetY(sendCommentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
-        CGRectSetY(closeCommentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
-        CGRectSetY(shareButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
-        CGRectSetY(publishButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
-        CGRectSetY(closeLabel.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
-        CGRectSetY(commentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
-        CGRectSetY(participateButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(sendCommentButton.frame) / 2);
+        CGRectSetY(closeCommentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(closeCommentButton.frame) / 2);
+        CGRectSetY(shareButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(shareButton.frame) / 2);
+        CGRectSetY(publishButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(publishButton.frame) / 2);
+        CGRectSetY(closeLabel.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(closeLabel.frame) / 2);
+        CGRectSetY(commentButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(commentButton.frame) / 2);
+        CGRectSetY(participateButton.frame, CGRectGetHeight(toolbar.frame) / 2 - CGRectGetHeight(participateButton.frame) / 2);
         
         CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
         CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
@@ -589,7 +589,7 @@
             shareButton.hidden = NO;
             closeLabel.hidden = YES;
         } else {
-            if (_transaction.status == TransactionStatusPending) {
+            if (_transaction.isClosed) {
                 closeLabel.hidden = NO;
                 commentTextField.hidden = YES;
                 participateButton.hidden = YES;
@@ -731,7 +731,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        if (_transaction.status == TransactionStatusPending)
+        if (_transaction.isClosed)
             return 1;
         return 2;
     }
@@ -846,7 +846,7 @@
                 cell.textLabel.text = @"0 Invité";
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 
-                if ([[Flooz sharedInstance].currentUser.userId isEqualToString:_transaction.creator.userId]) {
+                if ([[Flooz sharedInstance].currentUser.userId isEqualToString:_transaction.creator.userId] && _transaction.isShareable) {
                     UIButton *inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 0, 30)];
                     [inviteButton setTitle:@"Inviter des amis" forState:UIControlStateNormal];
                     [inviteButton setTitleColor:[UIColor customBlue] forState:UIControlStateNormal];
@@ -857,7 +857,7 @@
                     inviteButton.layer.borderColor = [UIColor customBlue].CGColor;
                     inviteButton.layer.borderWidth = 1.0f;
                     inviteButton.tag = 57;
-                    [inviteButton addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
+                    [inviteButton addTarget:self action:@selector(shareButtonClick) forControlEvents:UIControlEventTouchUpInside];
                     
                     CGRectSetWidth(inviteButton.frame, [inviteButton.titleLabel widthToFit] + 30);
                     CGRectSetX(inviteButton.frame, PPScreenWidth() - CGRectGetWidth(inviteButton.frame) - 10);
@@ -976,9 +976,11 @@
 
 #pragma mark - Actions
 
-- (void)focusOnComment {
-    focusOnCommentTextField = YES;
-    [self focusComment];
+- (void)focusOnComment:(NSNumber *)focus {
+    if ([focus boolValue]) {
+        focusOnCommentTextField = YES;
+        [self focusComment];
+    }
 }
 
 - (void)didLikeLabelClicked {
@@ -1109,16 +1111,16 @@
 
 - (void)shareButtonClick {
     if (_transaction.isShareable) {
-        if (_transaction.actions && _transaction.actions.count) {
+        if (_transaction.isClosed) {
+            [self didShareOutsideButtonClick];
+        } else {
             if (shareViewVisible)
                 [self hideShareView];
             else
                 [self showShareView];
-        } else {
-            [self didShareOutsideButtonClick];
         }
     } else {
-        [appDelegate displayMessage:@"Partage indisponible" content:@"Veuillez publier la cagnotte avant de pouvoir la partager" style:FLAlertViewStyleInfo time:@3 delay:@0];
+        [appDelegate displayMessage:@"Partage indisponible" content:@"Veuillez publier votre cagnotte avant de la partager" style:FLAlertViewStyleInfo time:@3 delay:@0];
     }
 }
 

@@ -66,6 +66,7 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 
 @property (nonatomic) BOOL isAvailable;
 @property (nonatomic) BOOL isClosable;
+@property (nonatomic) BOOL isClosed;
 @property (nonatomic) BOOL isPublishable;
 @property (nonatomic) BOOL isShareable;
 

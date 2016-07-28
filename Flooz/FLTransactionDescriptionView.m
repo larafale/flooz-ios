@@ -250,7 +250,11 @@
 }
 
 - (void)createAttachmentView {
-    attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(descriptionLabel.frame), CGRectGetWidth(rightView.frame), 80)];
+    CGFloat widthAttach = CGRectGetWidth(rightView.frame);
+    CGFloat heightAttach = 250 / (500 / widthAttach);
+
+    attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(descriptionLabel.frame), CGRectGetWidth(rightView.frame), heightAttach)];
+    [attachmentView setBackgroundColor:[UIColor customBackground]];
     [rightView addSubview:attachmentView];
 }
 
