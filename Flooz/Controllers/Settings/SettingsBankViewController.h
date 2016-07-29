@@ -10,4 +10,6 @@
 
 @interface SettingsBankViewController : BaseViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+@property (nonatomic) Boolean closedByUser;
+
 @end

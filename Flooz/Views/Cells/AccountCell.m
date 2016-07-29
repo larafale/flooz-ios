@@ -106,7 +106,7 @@
         width += 10;
         CGRectSetHeight(self.badgeIcon.frame, 20);
         CGRectSetWidth(self.badgeIcon.frame, MAX(width, 20));
-        CGRectSetXY(self.badgeIcon.frame, PPScreenWidth() - width - 50, [AccountCell getHeight] / 2 - CGRectGetHeight(self.badgeIcon.frame) / 2);
+        CGRectSetXY(self.badgeIcon.frame, PPScreenWidth() - MAX(width, 20) - 50, [AccountCell getHeight] / 2 - CGRectGetHeight(self.badgeIcon.frame) / 2);
     } else {
         [self.badgeIcon setHidden:YES];
     }

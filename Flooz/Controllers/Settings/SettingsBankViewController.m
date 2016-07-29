@@ -27,6 +27,8 @@
 @implementation SettingsBankViewController
 
 - (void)viewDidLoad {
+    self.closedByUser = NO;
+    
     if (!self.title || [self.title isBlank])
         self.title = NSLocalizedString(@"SETTINGS_BANK", @"");
     
@@ -52,6 +54,17 @@
     _contentView.contentSize = CGSizeMake(CGRectGetWidth(_mainBody.frame), CGRectGetMaxY(_saveButton.frame));
     
     [self addTapGestureForDismissKeyboard];
+}
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    [super dismissViewControllerAnimated:flag completion:^() {
+        if (completion)
+            completion();
+        
+        if (self.triggerData && self.triggerData[@"success"]) {
+            [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:self.triggerData[@"success"]]];
+        }
+    }];
 }
 
 - (void)initWithInfo {
@@ -86,9 +99,7 @@
     
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] updateUser:_userDic success: ^(id result) {
-        if (self.triggerData && self.triggerData[@"success"]) {
-            [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:self.triggerData[@"success"]]];
-        }
+        
     } failure:NULL];
 }
 

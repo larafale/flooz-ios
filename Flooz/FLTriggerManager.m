@@ -258,12 +258,16 @@
                     [currentController dismissViewControllerAnimated:animate completion:^{
                         [self executeTriggerList:trigger.triggers];
                     }];
-                }
+                } else
+                    [self executeTriggerList:trigger.triggers];
+
             } else if ([tabController isKindOfClass:controllerClass]) {
                 [tabController dismissViewControllerAnimated:animate completion:^{
                     [self executeTriggerList:trigger.triggers];
                 }];
-            }
+            } else
+                [self executeTriggerList:trigger.triggers];
+
         } else if ([topController isKindOfClass:[FLNavigationController class]]) {
             UIViewController *currentController = [(FLNavigationController *)topController topViewController];
             
@@ -271,7 +275,9 @@
                 [currentController dismissViewControllerAnimated:animate completion:^{
                     [self executeTriggerList:trigger.triggers];
                 }];
-            }
+            } else
+                [self executeTriggerList:trigger.triggers];
+
         } else if ([topController isKindOfClass:controllerClass]) {
             [topController dismissViewControllerAnimated:animate completion:^{
                 [self executeTriggerList:trigger.triggers];
