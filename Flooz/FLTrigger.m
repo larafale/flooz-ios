@@ -29,6 +29,9 @@
 }
 
 -(BOOL)setJson:(NSDictionary*)json {
+    
+    self.jsonData = json;
+    
     if (json[@"key"])
         self.key = json[@"key"];
     else

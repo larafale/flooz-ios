@@ -440,4 +440,8 @@
     return qrFilter.outputImage;
 }
 
++ (CGFloat)cardScaleHeightFromWidth:(CGFloat)width {
+    return (width * 53.98) / 85.6;
+}
+
 @end

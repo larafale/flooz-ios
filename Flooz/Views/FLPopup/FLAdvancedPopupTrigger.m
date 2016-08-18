@@ -214,6 +214,7 @@
     
     UIImageView *coverView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, offsetY)];
     [coverView setContentMode:UIViewContentModeScaleAspectFill];
+    
     if (coverUrl && ![coverUrl isBlank]) {
         [coverView sd_setImageWithURL:[NSURL URLWithString:coverUrl] placeholderImage:[UIImage imageNamed:@"default-cover"] options:SDWebImageRefreshCached];
     } else {
@@ -370,11 +371,12 @@
         [[appDelegate myTopViewController] mz_dismissFormSheetControllerAnimated:YES completionHandler: ^(MZFormSheetController *formSheetController) {
             _formSheet = nil;
             
-            if (completion)
-                completion();
-            
             if (dismissBlock)
                 dismissBlock();
+            
+            if (completion)
+                completion();
+
         }];
     });
 }

@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger, FLTriggerAction) {
 @property (nonatomic, strong) NSDictionary *data;
 @property (nonatomic, strong) NSNumber *delay;
 @property (nonatomic, strong) NSArray<FLTrigger *> *triggers;
+@property (nonatomic, strong) NSDictionary *jsonData;
 
 +(id)newWithJson:(NSDictionary *)json;
 

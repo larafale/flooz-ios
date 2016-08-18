@@ -518,9 +518,11 @@
             if ([selectedUser.blockObject objectForKey:@"charge"] != nil && [[selectedUser.blockObject objectForKey:@"charge"] boolValue]) {
                 [self hidePayButton:false];
                 [self hideChargeButton:true];
+                [transactionBar hideButtonSeparator:true];
             } else if ([selectedUser.blockObject objectForKey:@"pay"] != nil && [[selectedUser.blockObject objectForKey:@"pay"] boolValue]) {
                 [self hideChargeButton:false];
                 [self hidePayButton:true];
+                [transactionBar hideButtonSeparator:true];
             } else {
                 [self resetPaymentButtons];
             }
@@ -546,21 +548,25 @@
             case TransactionTypePayment: {
                 [self hideChargeButton:true];
                 [self hidePayButton:false];
+                [transactionBar hideButtonSeparator:true];
                 break;
             }
             case TransactionTypeCharge: {
                 [self hideChargeButton:false];
                 [self hidePayButton:true];
+                [transactionBar hideButtonSeparator:true];
                 break;
             }
             case TransactionTypeCollect: {
                 [self hideChargeButton:false];
                 [self hidePayButton:false];
+                [transactionBar hideButtonSeparator:false];
                 break;
             }
             case TransactionTypeBase: {
                 [self hideChargeButton:false];
                 [self hidePayButton:false];
+                [transactionBar hideButtonSeparator:false];
                 break;
             }
         }
@@ -625,11 +631,11 @@
 #pragma mark - Transaction Bar Delegate
 
 - (void)presentCamera {
+    [self.view endEditing:YES];
+
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     
     if (authStatus == AVAuthorizationStatusAuthorized) {
-        [self.view endEditing:YES];
-        
         UIImagePickerController *cameraUI = [UIImagePickerController new];
         cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
         cameraUI.delegate = self;
@@ -640,8 +646,6 @@
     } else if (authStatus == AVAuthorizationStatusNotDetermined){
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
             if (granted){
-                [self.view endEditing:YES];
-                
                 UIImagePickerController *cameraUI = [UIImagePickerController new];
                 cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
                 cameraUI.delegate = self;
@@ -830,6 +834,5 @@
     CGRectSetY(transactionBar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(transactionBar.frame));
     CGRectSetHeight(contentView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame) - keyboardHeight - CGRectGetMinY(contentView.frame));
 }
-
 
 @end

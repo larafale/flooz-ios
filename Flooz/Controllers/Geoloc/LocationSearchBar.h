@@ -15,10 +15,10 @@
 @end
 
 @interface LocationSearchBar : UIView <UISearchBarDelegate> {
-    UISearchBar *_searchBar;
     NSTimer *timer;
 }
 
+@property (strong, nonatomic) UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet id <LocationSearchBarDelegate> delegate;
 
 - (id)initWithStartX:(CGFloat)xStart;

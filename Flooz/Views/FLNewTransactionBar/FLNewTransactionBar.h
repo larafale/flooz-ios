@@ -55,5 +55,6 @@
 - (void)enablePaymentButtons:(BOOL)enable;
 - (void)hideChargeButton:(BOOL)hidden;
 - (void)hidePayButton:(BOOL)hidden;
+- (void)hideButtonSeparator:(BOOL)hidden;
 
 @end

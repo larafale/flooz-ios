@@ -108,7 +108,7 @@
     [contentView addSubview:currentBalance];
     [contentView addSubview:codeTextField];
     [contentView addSubview:useCodeButton];
-    [contentView addSubview:balanceHint];
+    [contentView addSubview:balanceHint];        
     
     contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(useCodeButton.frame) + 20);
     

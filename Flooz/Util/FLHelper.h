@@ -35,4 +35,6 @@
 + (CIImage *)createQRForString:(NSString *)qrString;
 + (NSString *)castNumber:(NSUInteger)number;
 
++ (CGFloat)cardScaleHeightFromWidth:(CGFloat)width;
+
 @end

@@ -272,11 +272,12 @@
         [[appDelegate myTopViewController] mz_dismissFormSheetControllerAnimated:YES completionHandler: ^(MZFormSheetController *formSheetController) {
             _formSheet = nil;
             
-            if (completion)
-                completion();
-            
             if (dismissBlock)
                 dismissBlock();
+            
+            if (completion)
+                completion();
+
         }];
     });
 }

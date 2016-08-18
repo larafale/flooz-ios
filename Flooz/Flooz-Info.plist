@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.1.0</string>
+	<string>4.1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -40,7 +40,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>110</string>
+	<string>112</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -60,28 +60,28 @@
 	<key>FacebookDisplayName</key>
 	<string>Flooz</string>
 	<key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>twitter</string>
-        <string>fb</string>
-        <string>instagram</string>
-        <string>youtube</string>
-        <string>googlechrome</string>
-        <string>googlechromes</string>
-        <string>googlechrome-x-callback</string>
-        <string>fbapi</string>
-        <string>fbapi20130214</string>
-        <string>fbapi20130410</string>
-        <string>fbapi20130702</string>
-        <string>fbapi20131010</string>
-        <string>fbapi20131219</string>
-        <string>fbapi20140410</string>
-        <string>fbapi20140116</string>
-        <string>fbapi20150313</string>
-        <string>fbapi20150629</string>
-        <string>fbauth</string>
-        <string>fbauth2</string>
-        <string>fb-messenger-api20140430</string>
-    </array>
+	<array>
+		<string>twitter</string>
+		<string>fb</string>
+		<string>instagram</string>
+		<string>youtube</string>
+		<string>googlechrome</string>
+		<string>googlechromes</string>
+		<string>googlechrome-x-callback</string>
+		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbauth</string>
+		<string>fbauth2</string>
+		<string>fb-messenger-api20140430</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

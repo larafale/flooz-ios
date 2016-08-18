@@ -157,6 +157,14 @@
     }
 }
 
+- (void)hideButtonSeparator:(BOOL)hidden {
+    if (hidden && paymentButtonsSeparator.superview != nil){
+        [paymentButtonsSeparator removeFromSuperview];
+    } else if (!hidden && paymentButtonsSeparator.superview == nil) {
+        [actionView addSubview:paymentButtonsSeparator];
+    }
+}
+
 - (void)hideChargeButton:(BOOL)hidden {
     if (hidden && askButton.superview != nil){
         [askButton removeFromSuperview];

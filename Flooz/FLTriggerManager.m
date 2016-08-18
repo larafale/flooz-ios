@@ -54,6 +54,9 @@
 #import "ScopePickerViewController.h"
 #import "ImagePickerViewController.h"
 #import "FLAdvancedPopupTrigger.h"
+#import "ShopListViewController.h"
+#import "ShopItemViewController.h"
+#import "ShopParamViewController.h"
 
 @interface FLTriggerManager ()
 
@@ -117,7 +120,8 @@
                 [self performSelector:NSSelectorFromString([self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) withObject:trigger];
             });
         }
-    }
+    } else
+        [self executeTriggerList:trigger.triggers];
 }
 
 - (void)askActionHandler:(FLTrigger *)trigger {
@@ -235,6 +239,12 @@
                 [self executeTriggerList:trigger.triggers];
             }];
         }
+    } else if ([trigger.viewCategory isEqualToString:@"app:popup"]) {
+        if (self.classicPopupTrigger) {
+            [self.classicPopupTrigger dismiss:^{
+                [self executeTriggerList:trigger.triggers];
+            }];
+        }
     } else if ([self isTriggerKeyView:trigger]) {
         Boolean animate = YES;
         
@@ -260,14 +270,14 @@
                     }];
                 } else
                     [self executeTriggerList:trigger.triggers];
-
+                
             } else if ([tabController isKindOfClass:controllerClass]) {
                 [tabController dismissViewControllerAnimated:animate completion:^{
                     [self executeTriggerList:trigger.triggers];
                 }];
             } else
                 [self executeTriggerList:trigger.triggers];
-
+            
         } else if ([topController isKindOfClass:[FLNavigationController class]]) {
             UIViewController *currentController = [(FLNavigationController *)topController topViewController];
             
@@ -277,7 +287,7 @@
                 }];
             } else
                 [self executeTriggerList:trigger.triggers];
-
+            
         } else if ([topController isKindOfClass:controllerClass]) {
             [topController dismissViewControllerAnimated:animate completion:^{
                 [self executeTriggerList:trigger.triggers];
@@ -545,6 +555,16 @@
     if ([trigger.viewCategory isEqualToString:@"app:signup"]) {
         [appDelegate showSignupWithUser:trigger.data];
         [self executeTriggerList:trigger.triggers];
+    } else if ([trigger.viewCategory isEqualToString:@"app:popup"]) {
+        if (trigger.data) {
+            self.classicPopupTrigger = [[FLPopupTrigger alloc] initWithData:trigger.data dismiss:^{
+                self.classicPopupTrigger = nil;
+            }] ;
+            
+            [self.classicPopupTrigger show:^{
+                [self executeTriggerList:trigger.triggers];
+            }];
+        }
     } else if ([trigger.category isEqualToString:@"popup"]) {
         if (trigger.data) {
             if ([trigger.view isEqualToString:@"basic"]) {
@@ -771,16 +791,35 @@
             }
             
             if (navController) {
-                [navController pushViewController:[[controllerClass alloc] initWithTriggerData:trigger.data] animated:YES completion:^{
+                if (trigger.data[@"unique"] && [trigger.data[@"unique"] boolValue] && [navController.topViewController isKindOfClass:controllerClass])
                     [self executeTriggerList:trigger.triggers];
-                }];
+                else
+                    [navController pushViewController:[[controllerClass alloc] initWithTriggerData:trigger.data] animated:YES completion:^{
+                        [self executeTriggerList:trigger.triggers];
+                    }];
             }
         } else if ([self isTriggerKeyViewModal:trigger]) {
             UIViewController *controller = [[controllerClass alloc] initWithTriggerData:trigger.data];
             
-            FLNavigationController *navController = [[FLNavigationController alloc] initWithRootViewController:controller];
-            
             UIViewController *tmp = [self getTopViewController];
+            FLNavigationController *navController;
+            
+            if ([tmp isKindOfClass:[FLTabBarController class]]) {
+                navController = [(FLTabBarController *)tmp selectedViewController];
+            } else if ([tmp isKindOfClass:[FLNavigationController class]]) {
+                navController = (FLNavigationController *)tmp;
+            } else if ([tmp navigationController]) {
+                navController = (FLNavigationController *)tmp.navigationController;
+            }
+            
+            if (navController) {
+                if (trigger.data[@"unique"] && [trigger.data[@"unique"] boolValue] && [navController.topViewController isKindOfClass:controllerClass]) {
+                    [self executeTriggerList:trigger.triggers];
+                    return;
+                }
+            }
+            
+            navController = [[FLNavigationController alloc] initWithRootViewController:controller];
             
             [tmp presentViewController:navController animated:YES completion:^{
                 [self executeTriggerList:trigger.triggers];
@@ -790,9 +829,9 @@
 }
 
 - (UIViewController *)getTopViewController {
-    if (self.classicPopupTrigger)
+    if (self.classicPopupTrigger && !self.classicPopupTrigger.formSheet.isBeingDismissed)
         return self.classicPopupTrigger.formSheet.presentedFSViewController;
-    if (self.advancePopupTrigger)
+    if (self.advancePopupTrigger && !self.advancePopupTrigger.formSheet.isBeingDismissed)
         return self.advancePopupTrigger.formSheet.presentedFSViewController;
     
     return [appDelegate myTopViewController];
@@ -913,6 +952,9 @@
                            @"pot:invitation": [ShareLinkViewController class],
                            @"pot:participant": [CollectParticipantViewController class],
                            @"pot:participation": [CollectParticipationViewController class],
+                           @"shop:list": [ShopListViewController class],
+                           @"shop:item": [ShopItemViewController class],
+                           @"shop:param": [ShopParamViewController class]
                            };
 }
 
@@ -953,6 +995,9 @@
                            @"pot:invitation": @"modal",
                            @"pot:participant": @"push",
                            @"pot:participation": @"push",
+                           @"shop:list": @"modal",
+                           @"shop:item": @"modal",
+                           @"shop:param": @"modal"
                            };
 }
 

@@ -17,7 +17,7 @@
 @interface TransactionViewController : BaseViewController <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, TransactionHeaderViewDelegate, FLViewDelegate>
 
 - (id)initWithTransaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath;
-- (void)focusOnComment;
+- (void)focusOnComment:(NSNumber *)focus;
 - (void)reloadTransaction;
 - (NSString *)currentId;
 - (void)refreshTransaction;

@@ -35,7 +35,7 @@
 }
 
 - (void)show {
-    [[appDelegate window] addSubview:self];
+    [[[UIApplication sharedApplication] keyWindow] addSubview:self];
 }
 
 - (void)hide {
@@ -53,6 +53,7 @@
 	        if (lockScreen) {
 	            [self hide];
 			}
+            
 	        if (completion) {
 	            completion(success);
 			}

@@ -669,7 +669,7 @@
 
 - (void)didWantToCommentTransactionData {
     if (_parentController) {
-        [_parentController focusOnComment];
+        [_parentController focusOnComment:@YES];
     }
     else {
         if (_indexPath) {

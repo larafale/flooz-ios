@@ -174,7 +174,7 @@
 }
 
 - (void)updateShortcutList {
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0") && [self.window.traitCollection forceTouchCapability] == UIForceTouchCapabilityAvailable) {
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") && [self.window.traitCollection forceTouchCapability] == UIForceTouchCapabilityAvailable) {
         if ([Flooz sharedInstance].currentUser) {
             NSMutableArray *items = [NSMutableArray new];
             
@@ -476,8 +476,6 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    
-#ifndef FLOOZ_DEV_LOCAL
     if ([[Flooz sharedInstance] currentUser]) {
         [[Flooz sharedInstance] startSocket];
         [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{}];
@@ -491,7 +489,7 @@
         }
         [self clearBranchParams];
     }
-#endif
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationEnterForeground object:nil];
 }
 
@@ -845,9 +843,8 @@
 
 - (void)showAvatarView:(UIImageView *)view withUrl:(NSURL *)urlImage {
     if (urlImage && ![urlImage.absoluteString isEqualToString:@"/img/fake.png"]) {
-        
         if ([[SDWebImageManager sharedManager] cachedImageExistsForURL:urlImage] || [[SDWebImageManager sharedManager] diskImageExistsForURL:urlImage]) {
-            [[SDWebImageManager sharedManager] loadImageWithURL:urlImage options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+            [[SDWebImageManager sharedManager] loadImageWithURL:urlImage options:SDWebImageRetryFailed progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
                 
                 if ([JTSAnimatedGIFUtility imageURLIsAGIF:urlImage.absoluteString]) {
                     image = [JTSAnimatedGIFUtility animatedImageWithAnimatedGIFData:data];
@@ -882,8 +879,10 @@
                                                    backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
             imageViewer.interactionsDelegate = self;
             [imageViewer showFromViewController:[self myTopViewController] transition:JTSImageViewControllerTransition_FromOriginalPosition];
-
-            [[SDWebImageManager sharedManager] loadImageWithURL:urlImage options:0 progress:nil completed:nil];
+            
+            [[SDWebImageManager sharedManager] loadImageWithURL:urlImage options:SDWebImageRetryFailed progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+                
+            }];
         }
     } else if (urlImage) {
         JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
@@ -1164,7 +1163,7 @@
     }
     
     if (focus) {
-        [controller focusOnComment];
+        [controller focusOnComment:@YES];
     }
     
     if ([vc isKindOfClass:FLNavigationController.class])
@@ -1217,7 +1216,7 @@
     }
     
     if (focus) {
-        [controller focusOnComment];
+        [controller focusOnComment:@YES];
     }
     
     if ([vc isKindOfClass:FLNavigationController.class])

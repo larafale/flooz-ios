@@ -18,6 +18,8 @@
     
     BOOL isSearching;
     NSString *searchString;
+    
+    NSTimer *timer;
 }
 
 @end

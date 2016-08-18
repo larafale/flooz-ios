@@ -168,6 +168,7 @@
 #pragma mark -
 
 - (void)countryViewTouched {
+    [_countryPicker setSelectedCountryCode:self.currentCountry.code];
     [_countryPickerViewTextField becomeFirstResponder];
 }
 

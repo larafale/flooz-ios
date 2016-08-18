@@ -20,6 +20,10 @@
 {
     [[Flooz sharedInstance] textObjectFromApi:^(id result) {
         self.countries = [Flooz sharedInstance].currentTexts.avalaibleCountries;
+        
+        if (self.selectedCountry)
+            [self setSelectedCountryCode:self.selectedCountry.code];
+        
     } failure:^(NSError *error) {
         if (!self.countries.count) {
             NSMutableArray *tmp = [NSMutableArray new];

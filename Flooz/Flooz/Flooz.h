@@ -108,6 +108,9 @@ static NSString *kLocationData = @"locationData";
 - (void)collectTimelineNextPage:(NSString *)nextPageUrl collectId:(NSString *)collectId withUser:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success;
 - (void)collectInvitations:(NSString *)collectId success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
+- (void)shopList:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success  failure:(void (^)(NSError *error))failure;
+- (void)shopListSearch:(NSString *)nextPageUrl search:(NSString *)searchString success:(void (^)(id result, NSString *nextPageUrl))success  failure:(void (^)(NSError *error))failure;
+
 - (void)loadCactusData:(NSString*)identifier success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updateCurrentUser;
 - (void)updateCurrentUserWithSuccess:(void (^)())success;
