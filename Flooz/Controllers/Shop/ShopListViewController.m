@@ -66,7 +66,7 @@
     [_mainBody addSubview:_searchBar];
     [_mainBody addSubview:tableView];
     
-    if (self.triggerData && self.triggerData[@"searchUrl"])
+    if (self.triggerData && self.triggerData[@"search"] && [self.triggerData[@"search"] boolValue])
         self.navigationItem.rightBarButtonItem = searchItem;
     
     [self didFilterChange:@""];
@@ -259,7 +259,7 @@
     searchItems = @[];
     [tableView reloadData];
     
-    [[Flooz sharedInstance] shopListSearch:self.triggerData[@"searchUrl"] search:searchString success:^(id result, NSString *nextPageUrl) {
+    [[Flooz sharedInstance] shopListSearch:self.triggerData[@"loadUrl"] search:searchString success:^(id result, NSString *nextPageUrl) {
         searchLoaded = YES;
         searchItems = result;
         [tableView reloadData];

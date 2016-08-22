@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#define SHOP_FIELD_HEIGHT 40
+#define SHOP_FIELD_HEIGHT 50
 
 @interface FLShopField : UIView
 
 @property (nonatomic, weak) NSDictionary *options;
-@property (nonatomic, weak) NSDictionary *dictionary;
+@property (nonatomic, weak) NSMutableDictionary *dictionary;
 
-- (id)initWithOptions:(NSDictionary *)options dic:(NSDictionary *)dic;
+- (id)initWithOptions:(NSDictionary *)options dic:(NSMutableDictionary *)dic;
 
 @end

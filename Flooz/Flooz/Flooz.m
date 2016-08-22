@@ -880,21 +880,6 @@
 }
 
 - (void)shopList:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
-    
-    //   NSDictionary *result = @{@"items":
-    //                                @[
-    //                                    @{@"type": @"card", @"name": @"Carte cadeau Amazon", @"pic": @"https://static.youpass.com/frontend/images/products/amazon.jpg", @"open": @[@{@"key":@"card:card:show"}], @"desc": @"Tous ces gens sur leur smartphones qui regardent des films, écoutent de la musique, jouent, lisent la presse, c'est super, mais où trouvent-ils tout cela? Dans le Google Play Store évidemment!!!\n\nGoogle Play Store: Un véritable magasin en ligne, c'est en réalité une application permettant l'achat ou le téléchargement gratuit de jeux, de films, de musiques, de livres, d'un kiosque et même d'applications."},
-    //                                    @{@"type": @"card", @"name": @"Carte Pokemon GO", @"pic": @"https://static.youpass.com/frontend/images/products/PokemonGo-Visuals-15.jpg", @"open": @[@{@"key":@"app:cashout:show"}], @"value": @"15€", @"tosUrl": @"http://www.youtube.com", @"shareUrl": @"http://www.youpass.com", @"desc": @"Tous ces gens sur leur smartphones qui regardent des films, écoutent de la musique, jouent, lisent la presse, c'est super, mais où trouvent-ils tout cela? Dans le Google Play Store évidemment!!!\n\nGoogle Play Store: Un véritable magasin en ligne, c'est en réalité une application permettant l'achat ou le téléchargement gratuit de jeux, de films, de musiques, de livres, d'un kiosque et même d'applications."},
-    //                                    @{@"type": @"category", @"name": @"Multimedia", @"pic": @"https://static.youpass.com/frontend/images/products/carte-googlePlay_15EUR.jpg", @"open": @[@{@"key":@"profile:edit:show"}]},
-    //                                    @{@"type": @"category", @"name": @"Autre...", @"pic": @"https://static.youpass.com/frontend/images/products/minecraftpc2.jpg", @"open": @[@{@"key":@"settings:privacy:show"}]}
-    //                                 ], @"next":@""};
-    
-    //    NSMutableArray *transactions = [self createShopArrayFromResult:result];
-    
-    //    if (success) {
-    //        success(transactions, result[@"next"]);
-    //    }
-    
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createShopArrayFromResult:result];
         
@@ -906,7 +891,7 @@
     [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:failure];
 }
 
-- (void)shopListSearch:(NSString *)nextPageUrl search:(NSString *)searchString success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+- (void)shopListSearch:(NSString *)url search:(NSString *)searchString success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createShopArrayFromResult:result];
         
@@ -915,7 +900,7 @@
         }
     };
     
-    [self requestPath:nextPageUrl method:@"GET" params:@{@"q": searchString} success:successBlock failure:failure];
+    [self requestPath:[NSString stringWithFormat:@"%@?q=%@", url, [searchString urlencode]] method:@"GET" params:nil success:successBlock failure:failure];
 }
 
 - (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {

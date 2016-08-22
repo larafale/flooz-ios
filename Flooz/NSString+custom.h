@@ -12,6 +12,8 @@
 
 - (Boolean)isBlank;
 
+- (NSString *)urlencode;
+
 - (CGFloat)widthOfString:(UIFont *)font;
 + (CGFloat)widthOfString:(NSString *)string withFont:(UIFont *)font;
 - (CGFloat)fontSizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size;

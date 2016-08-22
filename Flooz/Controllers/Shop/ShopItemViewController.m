@@ -62,7 +62,7 @@
     buyButton = [[FLActionButton alloc] initWithFrame:CGRectMake(30, CGRectGetHeight(_mainBody.frame) - FLActionButtonDefaultHeight - 15, PPScreenWidth() - 60, FLActionButtonDefaultHeight) title:@"Acheter"];
     [buyButton addTarget:self action:@selector(buyButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
-    contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame) - (CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(buyButton.frame)) - 10)];
+    contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame) - (CGRectGetHeight(_mainBody.frame) - CGRectGetMinY(buyButton.frame)) - 10)];
     contentView.bounces = NO;
     contentView.showsVerticalScrollIndicator = NO;
     
@@ -119,7 +119,7 @@
 }
 
 - (void)buyButtonClick {
-    
+    [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:self.currentItem.purchaseTriggers]];
 }
 
 - (void)didToSButtonClick {

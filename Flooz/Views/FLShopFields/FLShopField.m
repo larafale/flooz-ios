@@ -10,7 +10,7 @@
 
 @implementation FLShopField
 
-- (id)initWithOptions:(NSDictionary *)options dic:(NSDictionary *)dic {
+- (id)initWithOptions:(NSDictionary *)options dic:(NSMutableDictionary *)dic {
     self = [super initWithFrame:CGRectMake(0, 0, PPScreenWidth(), SHOP_FIELD_HEIGHT)];
     if (self) {
         self.dictionary = dic;
