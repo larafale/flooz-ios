@@ -37,4 +37,6 @@
 
 + (CGFloat)cardScaleHeightFromWidth:(CGFloat)width;
 
++ (UIImage *)imageWithView:(UIView *)view;
+
 @end

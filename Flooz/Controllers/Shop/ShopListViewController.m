@@ -26,9 +26,15 @@
     
     NSString *searchString;
     
-    NSArray *items;
-    NSArray *searchItems;
+    NSMutableArray *items;
+    NSMutableArray *searchItems;
     
+    NSString *_nextPageUrl;
+    BOOL nextPageIsLoading;
+
+    NSString *_nextSearchPageUrl;
+    BOOL nextSearchPageIsLoading;
+
     CGFloat emptyCellHeight;
 }
 
@@ -46,6 +52,10 @@
     isLoadingSearch = NO;
     searchLoaded = NO;
     itemsLoaded = NO;
+    nextPageIsLoading = NO;
+    nextSearchPageIsLoading = NO;
+
+    items = [NSMutableArray new];
     
     searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
     [searchItem setTintColor:[UIColor customBlue]];
@@ -111,29 +121,43 @@
 
 - (NSInteger)tableView:(FLTableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (isSearching) {
-        if (searchItems.count)
+        if (searchItems.count) {
+            if (_nextSearchPageUrl && ![_nextSearchPageUrl isBlank])
+                return [searchItems count] + 1;
+
             return searchItems.count;
+        }
         return 1;
     }
     
-    if (items.count)
+    if (items.count) {
+        if (_nextPageUrl && ![_nextPageUrl isBlank])
+            return [items count] + 1;
+
         return items.count;
+    }
     
     return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (isSearching) {
-        if (searchItems.count)
+        if (searchItems.count) {
+            if (indexPath.row >= [searchItems count])
+                return [LoadingCell getHeight];
+
             return [ShopCell getHeight];
-        else if (searchLoaded)
+        } else if (searchLoaded)
             return emptyCellHeight;
         return [LoadingCell getHeight];
     }
     
-    if (items.count)
+    if (items.count) {
+        if (indexPath.row >= [items count])
+            return [LoadingCell getHeight];
+        
         return [ShopCell getHeight];
-    else if (itemsLoaded)
+    } else if (itemsLoaded)
         return emptyCellHeight;
     
     return [LoadingCell getHeight];
@@ -172,16 +196,30 @@
 
 - (UITableViewCell *)tableView:(FLTableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (isSearching) {
-        if (searchItems.count)
+        if (searchItems.count) {
+            if (_nextSearchPageUrl && ![_nextSearchPageUrl isBlank] && !nextSearchPageIsLoading && indexPath.row == [searchItems count] - 1) {
+                [self loadNextSearchPage];
+            }
+
+            if (indexPath.row == [searchItems count])
+                return [LoadingCell new];
+
             return [self tableView:tv itemCellForRowAtIndexPath:indexPath];
-        else if (searchLoaded)
+        } else if (searchLoaded)
             return [self generateEmptyplaceCell];
         return [LoadingCell new];
     }
     
-    if (items.count)
+    if (items.count) {
+        if (_nextPageUrl && ![_nextPageUrl isBlank] && !nextPageIsLoading && indexPath.row == [items count] - 1) {
+            [self loadNextPage];
+        }
+    
+        if (indexPath.row == [items count])
+            return [LoadingCell new];
+
         return [self tableView:tv itemCellForRowAtIndexPath:indexPath];
-    else if (itemsLoaded)
+    } else if (itemsLoaded)
         return [self generateEmptyplaceCell];
     
     return [LoadingCell new];
@@ -212,13 +250,13 @@
     FLShopItem *selectedItem;
     
     if (isSearching) {
-        if (searchItems.count)
+        if (searchItems.count && indexPath.row < searchItems.count)
             selectedItem = searchItems[indexPath.row];
         else
             return;
     }
     
-    if (items.count)
+    if (items.count && indexPath.row < items.count)
         selectedItem = items[indexPath.row];
     else
         return;
@@ -245,6 +283,7 @@
             [[Flooz sharedInstance] shopList:self.triggerData[@"loadUrl"] success:^(id result, NSString *nextPageUrl) {
                 itemsLoaded = YES;
                 items = result;
+                _nextPageUrl = nextPageUrl;
                 [tableView reloadData];
             } failure:^(NSError *error) {
                 [tableView reloadData];
@@ -256,12 +295,47 @@
     isSearching = YES;
     searchLoaded = NO;
     
-    searchItems = @[];
+    searchItems = [NSMutableArray new];
     [tableView reloadData];
     
     [[Flooz sharedInstance] shopListSearch:self.triggerData[@"loadUrl"] search:searchString success:^(id result, NSString *nextPageUrl) {
         searchLoaded = YES;
         searchItems = result;
+        _nextSearchPageUrl = nextPageUrl;
+        [tableView reloadData];
+    } failure:^(NSError *error) {
+        [tableView reloadData];
+    }];
+}
+
+- (void)loadNextPage {
+    if (!_nextPageUrl || [_nextPageUrl isBlank]) {
+        return;
+    }
+    
+    nextPageIsLoading = YES;
+    
+    [[Flooz sharedInstance] shopList:_nextPageUrl success:^(id result, NSString *nextPageUrl) {
+        [items addObjectsFromArray:result];
+        _nextPageUrl = nextPageUrl;
+        nextPageIsLoading = NO;
+        [tableView reloadData];
+    } failure:^(NSError *error) {
+        [tableView reloadData];
+    }];
+}
+
+- (void)loadNextSearchPage {
+    if (!_nextSearchPageUrl || [_nextSearchPageUrl isBlank]) {
+        return;
+    }
+    
+    nextSearchPageIsLoading = YES;
+    
+    [[Flooz sharedInstance] shopList:_nextSearchPageUrl success:^(id result, NSString *nextPageUrl) {
+        [searchItems addObjectsFromArray:result];
+        _nextSearchPageUrl = nextPageUrl;
+        nextSearchPageIsLoading = NO;
         [tableView reloadData];
     } failure:^(NSError *error) {
         [tableView reloadData];

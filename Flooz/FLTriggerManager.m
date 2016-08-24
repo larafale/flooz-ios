@@ -57,6 +57,7 @@
 #import "ShopListViewController.h"
 #import "ShopItemViewController.h"
 #import "ShopParamViewController.h"
+#import "FXBlurView.h"
 
 @interface FLTriggerManager ()
 
@@ -69,7 +70,6 @@
 @property (nonatomic, strong) FLTrigger *imageTrigger;
 
 @property (nonatomic, strong) FLPopupTrigger *classicPopupTrigger;
-@property (nonatomic, strong) FLAdvancedPopupTrigger *advancePopupTrigger;
 
 @end
 
@@ -229,13 +229,9 @@
 }
 
 - (void)hideActionHandler:(FLTrigger *)trigger {
-    if ([trigger.category isEqualToString:@"popup"]) {
-        if ([trigger.view isEqualToString:@"basic"] && self.classicPopupTrigger) {
+    if ([trigger.viewCategory isEqualToString:@"popup:basic"]) {
+        if (self.classicPopupTrigger) {
             [self.classicPopupTrigger dismiss:^{
-                [self executeTriggerList:trigger.triggers];
-            }];
-        } else if ([trigger.view isEqualToString:@"advance"] && self.advancePopupTrigger) {
-            [self.advancePopupTrigger dismiss:^{
                 [self executeTriggerList:trigger.triggers];
             }];
         }
@@ -576,14 +572,29 @@
                     [self executeTriggerList:trigger.triggers];
                 }];
             } else if ([trigger.view isEqualToString:@"advance"]) {
-                self.advancePopupTrigger = [[FLAdvancedPopupTrigger alloc] initWithData:trigger.data dismiss:^{
-                    self.advancePopupTrigger = nil;
-                }];
-                
-                [self.advancePopupTrigger show:^{
-                    [self executeTriggerList:trigger.triggers];
-                }];
-            }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIView *snapshot = [[appDelegate window] snapshotViewAfterScreenUpdates:NO];
+                    
+                    UIView *blurView = nil;
+                    if ([UIVisualEffectView class]){
+                        UIVisualEffectView *aView = [[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+                        blurView        = aView;
+                        blurView.frame  = snapshot.bounds;
+                        [snapshot addSubview:aView];
+                    }
+                    else {
+                        UIToolbar *toolBar  = [[UIToolbar alloc] initWithFrame:snapshot.bounds];
+                        toolBar.barStyle    = UIBarStyleBlackTranslucent;
+                        [snapshot addSubview:toolBar];
+                    }
+                    
+                    FLAdvancedPopupTrigger *advancePopupTrigger = [[FLAdvancedPopupTrigger alloc] initWithData:trigger.data background:snapshot];
+                    
+                    [[self getTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:advancePopupTrigger] animated:NO completion:^{
+                        [self executeTriggerList:trigger.triggers];
+                    }];
+                });
+             }
         }
     } else if ([trigger.viewCategory isEqualToString:@"app:alert"]) {
         if (trigger.data) {
@@ -687,7 +698,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     SecureCodeViewController *controller = [SecureCodeViewController new];
                     controller.completeBlock = completeBlock;
-                    [[self getTopViewController] presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                    [[self getTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
                         [[Flooz sharedInstance] hideLoadView];
                         [self executeTriggerList:trigger.triggers];
                     }];
@@ -702,7 +713,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 SecureCodeViewController *controller = [SecureCodeViewController new];
                 controller.completeBlock = completeBlock;
-                [[self getTopViewController] presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                [[self getTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
                     [[Flooz sharedInstance] hideLoadView];
                     [self executeTriggerList:trigger.triggers];
                 }];
@@ -831,8 +842,6 @@
 - (UIViewController *)getTopViewController {
     if (self.classicPopupTrigger && !self.classicPopupTrigger.formSheet.isBeingDismissed)
         return self.classicPopupTrigger.formSheet.presentedFSViewController;
-    if (self.advancePopupTrigger && !self.advancePopupTrigger.formSheet.isBeingDismissed)
-        return self.advancePopupTrigger.formSheet.presentedFSViewController;
     
     return [appDelegate myTopViewController];
 }
@@ -954,7 +963,8 @@
                            @"pot:participation": [CollectParticipationViewController class],
                            @"shop:list": [ShopListViewController class],
                            @"shop:item": [ShopItemViewController class],
-                           @"shop:param": [ShopParamViewController class]
+                           @"shop:param": [ShopParamViewController class],
+                           @"popup:advance": [FLAdvancedPopupTrigger class]
                            };
 }
 
@@ -997,7 +1007,8 @@
                            @"pot:participation": @"push",
                            @"shop:list": @"modal",
                            @"shop:item": @"modal",
-                           @"shop:param": @"modal"
+                           @"shop:param": @"modal",
+                           @"popup:advance": @"modal"
                            };
 }
 

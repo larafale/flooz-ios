@@ -164,13 +164,13 @@
     [homeButtonOverlay setHidden:YES];
     [homeButtonOverlay setUserInteractionEnabled:false];
     [homeButtonOverlay addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didHomeButtonOverlayClick)]];
- 
+    
     homeOverlayTitle = [[UILabel alloc] initWithText:@"Choisissez une option" textColor:[UIColor customBlue] font:[UIFont customContentBold:25] textAlignment:NSTextAlignmentCenter numberOfLines:1];
     CGRectSetXY(homeOverlayTitle.frame, 20, 40);
     CGRectSetWidth(homeOverlayTitle.frame, PPScreenWidth() - 40);
     
     [homeButtonOverlay addSubview:homeOverlayTitle];
-
+    
     homeButton = [[FLPlusButton alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 10.0f, CGRectGetHeight(self.tabBar.frame) + 10.0f)];
     homeButton.center = self.tabBar.center;
     [homeButton addTarget:self action:@selector(didHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -205,7 +205,7 @@
         [self fillHomeSubButton:view data:buttonData];
         
         [homeSubview addSubview:view];
-
+        
         CGRectSetHeight(homeSubview.frame, CGRectGetMaxY(view.frame));
         offSetY = CGRectGetMaxY(view.frame) + 20;
     }
@@ -375,7 +375,7 @@
 - (void)closeHomeMenu {
     if (homeViewOpen) {
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-
+        
         [UIView animateWithDuration:0.3 animations:^{
             homeButton.layer.transform = CATransform3DIdentity;
             homeButtonOverlay.alpha = 0.0;
@@ -390,7 +390,7 @@
 
 - (void)didHomeMenuButtonClick:(UITapGestureRecognizer *)sender {
     [self closeHomeMenu];
-
+    
     NSInteger i = [homeSubview.subviews indexOfObject:sender.view];
     
     if (i != NSNotFound) {
@@ -413,12 +413,14 @@
 }
 
 - (void)reloadBadge {
-    NSNumber *numberNotif = [[Flooz sharedInstance] notificationsCount];
-    
-    if ([numberNotif intValue] == 0)
-        [notifItem setBadgeValue:nil];
-    else
-        [notifItem setBadgeValue:[numberNotif stringValue]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSNumber *numberNotif = [[Flooz sharedInstance] notificationsCount];
+        
+        if ([numberNotif intValue] == 0)
+            [notifItem setBadgeValue:nil];
+        else
+            [notifItem setBadgeValue:[numberNotif stringValue]];
+    });
 }
 
 // pass a param to describe the state change, an animated flag and a completion block matching UIView animations completion

@@ -15,6 +15,7 @@
 #import "TransactionViewController.h"
 #import "CollectViewController.h"
 #import "SettingsBankViewController.h"
+#import "FLAdvancedPopupTrigger.h"
 
 @interface FLNavigationController () {
     UIBarButtonItem *backItem;
@@ -164,9 +165,9 @@
     if (_navigationDelegate)
         [_navigationDelegate navigationController:navigationController willShowViewController:viewController animated:animated];
     
-    if ([viewController isKindOfClass:[UserViewController class]] && [self isNavigationBarHidden] == NO)
+    if (([viewController isKindOfClass:[UserViewController class]] || [viewController isKindOfClass:[FLAdvancedPopupTrigger class]]) && [self isNavigationBarHidden] == NO)
         [self  setNavigationBarHidden:YES animated:YES];
-    else if (![viewController isKindOfClass:[UserViewController class]] && [self isNavigationBarHidden] == YES)
+    else if (![viewController isKindOfClass:[UserViewController class]] && ![viewController isKindOfClass:[FLAdvancedPopupTrigger class]] && [self isNavigationBarHidden] == YES)
         [self setNavigationBarHidden:NO animated:YES];
     
     if ([viewController isKindOfClass:[GlobalViewController class]]) {

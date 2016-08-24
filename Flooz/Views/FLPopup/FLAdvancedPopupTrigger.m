@@ -40,21 +40,20 @@
     UIView *contentView;
     UIView *actionArea;
     
-    void (^dismissBlock)(void);
+    UIView *backgroundView;
 }
 
 @end
 
 @implementation FLAdvancedPopupTrigger
 
-- (id)initWithData:(NSDictionary*)data {
+- (id)initWithData:(NSDictionary*)data background:(UIView *)background {
     self = [super init];
     if (self) {
-        NSLog(@"TRIGGER DATA: %@", data);
-        
         buttonsString = [NSMutableArray new];
         buttonsAction = [NSMutableArray new];
         
+        backgroundView = background;
         title = data[@"title"];
         subtitle = data[@"subtitle"];
         amount = data[@"amount"];
@@ -88,16 +87,7 @@
     return self;
 }
 
-- (id)initWithData:(NSDictionary*)data dismiss:(void (^)())block {
-    self = [self initWithData:data];
-    if (self) {
-        dismissBlock = block;
-    }
-    return self;
-}
-
 - (void)commmonInit {
-    
     titleFont = [UIFont customContentBold:20];
     subtitleFont = [UIFont customContentRegular:18];
     contentFont = [UIFont customContentRegular:18];
@@ -144,14 +134,16 @@
     
     if ([buttonsString count] > 2)
         viewHeight +=  BUTTON_MARGE + BUTTON_HEIGHT;
-    
-    [self setPreferredContentSize:CGSizeMake(viewWidth, viewHeight)];
 }
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     CGFloat offsetY = PADDING_TOP_BOTTOM;
     
-    contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
+    [_mainBody addSubview:backgroundView];
+
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(PPScreenWidth() / 2 - viewWidth / 2, PPScreenHeight() / 2 - viewHeight / 2, viewWidth, viewHeight)];
     [contentView setBackgroundColor:[UIColor whiteColor]];
     
     [contentView.layer setMasksToBounds:YES];
@@ -202,7 +194,7 @@
     subtitleView.layer.shadowRadius = 0.0;
     subtitleView.layer.shadowColor = [UIColor blackColor].CGColor;
     subtitleView.layer.shadowOffset = CGSizeMake(0.0, -0.7);
-
+    
     subtitleView.text = subtitle;
     [subtitleView setHeightToFit];
     
@@ -222,7 +214,7 @@
     }
     
     coverView.layer.masksToBounds = YES;
-
+    
     [contentView addSubview:coverView];
     
     [contentView addSubview:closeButton];
@@ -325,64 +317,25 @@
     
     [contentView addSubview:actionArea];
     
-    [self.view addSubview:contentView];
+    [_mainBody addSubview:contentView];
 }
 
 - (void)buttonClick:(UIView *)sender {
     id data = buttonsAction[sender.tag - 1];
     
-//    [self dismiss:^{
-        if ([data isKindOfClass:[NSArray class]]) {
-            [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:data]];
-        } else if ([data isKindOfClass:[NSDictionary class]]) {
-            FLTrigger *tmp = [[FLTrigger alloc] initWithJson:data];
-            
-            if (tmp) {
-                [[FLTriggerManager sharedInstance] executeTrigger:tmp];
-            }
-        }
-//    }];
-}
-
-- (void)show {
-    [self show:nil];
-}
-
-- (void)show:(dispatch_block_t)completion {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _formSheet = [[MZFormSheetController alloc] initWithViewController:self];
-        _formSheet.presentedFormSheetSize = self.preferredContentSize;
-        _formSheet.transitionStyle = MZFormSheetTransitionStyleSlideFromTop;
-        _formSheet.shadowRadius = 2.0;
-        _formSheet.shadowOpacity = 0.3;
-        _formSheet.shouldDismissOnBackgroundViewTap = NO;
-        _formSheet.shouldCenterVertically = YES;
-        _formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
+    if ([data isKindOfClass:[NSArray class]]) {
+        [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:data]];
+    } else if ([data isKindOfClass:[NSDictionary class]]) {
+        FLTrigger *tmp = [[FLTrigger alloc] initWithJson:data];
         
-        [[appDelegate myTopViewController] mz_presentFormSheetController:_formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
-            if (completion)
-                completion();
-        }];
-    });
-}
-
-- (void)dismiss:(void (^)())completion {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[appDelegate myTopViewController] mz_dismissFormSheetControllerAnimated:YES completionHandler: ^(MZFormSheetController *formSheetController) {
-            _formSheet = nil;
-            
-            if (dismissBlock)
-                dismissBlock();
-            
-            if (completion)
-                completion();
-
-        }];
-    });
+        if (tmp) {
+            [[FLTriggerManager sharedInstance] executeTrigger:tmp];
+        }
+    }
 }
 
 - (void)dismiss {
-    [self dismiss:nil];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 @end

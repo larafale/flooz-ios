@@ -8,17 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FLAdvancedPopupTrigger : UIViewController
+@interface FLAdvancedPopupTrigger : BaseViewController
 
-@property (strong, nonatomic) MZFormSheetController *formSheet;
-
-- (id)initWithData:(NSDictionary*)data;
-- (id)initWithData:(NSDictionary*)data dismiss:(void (^)())block;
-
-- (void)show;
-- (void)show:(dispatch_block_t)completion;
-
-- (void)dismiss:(void (^)())completion;
-- (void)dismiss;
+- (id)initWithData:(NSDictionary*)data background:(UIView *)background;
 
 @end
