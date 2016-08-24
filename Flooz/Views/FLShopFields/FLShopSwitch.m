@@ -54,7 +54,7 @@
 }
 
 - (void)switchValueChanged {
-    [self.switchView setAlternativeStyle];
+    [self.switchView refreshColors];
     [self.dictionary setObject:@(self.switchView.on) forKey:self.options[@"name"]];
 }
 

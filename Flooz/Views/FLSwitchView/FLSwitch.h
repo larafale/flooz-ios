@@ -13,5 +13,6 @@
 }
 
 - (void)setAlternativeStyle;
+- (void)refreshColors;
 
 @end

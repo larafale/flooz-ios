@@ -33,7 +33,7 @@
     self.textfield = [[FLTextField alloc] initWithPlaceholder:self.options[@"placeholder"] for:self.dictionary key:self.options[@"name"] frame:CGRectMake(10, 5, CGRectGetWidth(self.frame) - 20, SHOP_FIELD_HEIGHT - 10)];
     [self.textfield setType:FLTextFieldTypeText];
     
-    NSString *type = [self.options[@"placeholder"] stringByReplacingOccurrencesOfString:@"textfield:" withString:@""];
+    NSString *type = [self.options[@"type"] stringByReplacingOccurrencesOfString:@"textfield:" withString:@""];
     
     if ([type isEqualToString:@"date"]) {
         [self.textfield setType:FLTextFieldTypeDate];

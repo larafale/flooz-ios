@@ -10,6 +10,11 @@
 
 @implementation FLSwitch
 
+- (void)setOn:(BOOL)on animated:(BOOL)animated {
+    [super setOn:on animated:animated];
+    [self refreshColors:on];
+}
+
 - (void)setOn:(BOOL)on {
     [super setOn:on];
     [self refreshColors:on];
@@ -17,6 +22,10 @@
 
 - (void)setAlternativeStyle {
     alternativeStyle = YES;
+    [self refreshColors:self.on];
+}
+
+- (void)refreshColors {
     [self refreshColors:self.on];
 }
 
