@@ -301,6 +301,9 @@
 		C91D4EF61C50FA4E00C65382 /* TimelineDealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C91D4EF51C50FA4E00C65382 /* TimelineDealCell.m */; };
 		C91D4EF71C50FA4E00C65382 /* TimelineDealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C91D4EF51C50FA4E00C65382 /* TimelineDealCell.m */; };
 		C91D4EF81C50FA4E00C65382 /* TimelineDealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C91D4EF51C50FA4E00C65382 /* TimelineDealCell.m */; };
+		C920818A1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */; };
+		C920818B1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */; };
+		C920818C1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */; };
 		C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175D1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175E1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
@@ -398,9 +401,15 @@
 		C95AEDA11A49B5E500000FB3 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */; };
 		C95AEDA51A49BB9100000FB3 /* FLClearActionTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */; };
 		C95AEDA61A49BB9100000FB3 /* FLClearActionTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */; };
+		C95CAC2D1D78668200B2D676 /* ShopHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95CAC2C1D78668200B2D676 /* ShopHistoryCell.m */; };
+		C95CAC2E1D78668200B2D676 /* ShopHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95CAC2C1D78668200B2D676 /* ShopHistoryCell.m */; };
+		C95CAC2F1D78668200B2D676 /* ShopHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95CAC2C1D78668200B2D676 /* ShopHistoryCell.m */; };
 		C960DC901BB14D020089B074 /* FLSocialHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C960DC8F1BB14D020089B074 /* FLSocialHelper.m */; };
 		C960DC911BB14D020089B074 /* FLSocialHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C960DC8F1BB14D020089B074 /* FLSocialHelper.m */; };
 		C960DC921BB14D020089B074 /* FLSocialHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C960DC8F1BB14D020089B074 /* FLSocialHelper.m */; };
+		C96134D71D7821A300165261 /* ShopHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C96134D61D7821A300165261 /* ShopHistoryViewController.m */; };
+		C96134D81D7821A300165261 /* ShopHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C96134D61D7821A300165261 /* ShopHistoryViewController.m */; };
+		C96134D91D7821A300165261 /* ShopHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C96134D61D7821A300165261 /* ShopHistoryViewController.m */; };
 		C966473C19FFEA0D000851AF /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C966473A19FFEA0D000851AF /* TransitionDelegate.m */; };
 		C966473E19FFEA28000851AF /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C966473A19FFEA0D000851AF /* TransitionDelegate.m */; };
 		C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = C966474019FFEB4E000851AF /* AnimatedTransitioning.m */; };
@@ -1130,6 +1139,8 @@
 		C91D4EF41C50FA4E00C65382 /* TimelineDealCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDealCell.h; path = TimelineDealCell/TimelineDealCell.h; sourceTree = "<group>"; };
 		C91D4EF51C50FA4E00C65382 /* TimelineDealCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineDealCell.m; path = TimelineDealCell/TimelineDealCell.m; sourceTree = "<group>"; };
 		C91D4EF91C50FBA700C65382 /* TimelineDealCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDealCellDelegate.h; path = TimelineDealCell/TimelineDealCellDelegate.h; sourceTree = "<group>"; };
+		C92081881D7977FA006BC697 /* CashOutHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashOutHistoryViewController.h; path = Controllers/CashOut/CashOutHistoryViewController.h; sourceTree = "<group>"; };
+		C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashOutHistoryViewController.m; path = Controllers/CashOut/CashOutHistoryViewController.m; sourceTree = "<group>"; };
 		C921175A1B66726900CF2D51 /* FLInvitationTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLInvitationTexts.h; sourceTree = "<group>"; };
 		C921175B1B66726900CF2D51 /* FLInvitationTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLInvitationTexts.m; sourceTree = "<group>"; };
 		C92195E71C57858900318FD3 /* FLTriggerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTriggerManager.m; sourceTree = "<group>"; };
@@ -1197,8 +1208,12 @@
 		C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
 		C95AEDA31A49BB9100000FB3 /* FLClearActionTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLClearActionTextView.h; sourceTree = "<group>"; };
 		C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLClearActionTextView.m; sourceTree = "<group>"; };
+		C95CAC2B1D78668200B2D676 /* ShopHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopHistoryCell.h; path = ShopCell/ShopHistoryCell.h; sourceTree = "<group>"; };
+		C95CAC2C1D78668200B2D676 /* ShopHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShopHistoryCell.m; path = ShopCell/ShopHistoryCell.m; sourceTree = "<group>"; };
 		C960DC8E1BB14D020089B074 /* FLSocialHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSocialHelper.h; sourceTree = "<group>"; };
 		C960DC8F1BB14D020089B074 /* FLSocialHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSocialHelper.m; sourceTree = "<group>"; };
+		C96134D51D7821A300165261 /* ShopHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopHistoryViewController.h; path = Controllers/Shop/ShopHistoryViewController.h; sourceTree = "<group>"; };
+		C96134D61D7821A300165261 /* ShopHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShopHistoryViewController.m; path = Controllers/Shop/ShopHistoryViewController.m; sourceTree = "<group>"; };
 		C966473919FFEA0D000851AF /* TransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionDelegate.h; sourceTree = "<group>"; };
 		C966473A19FFEA0D000851AF /* TransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionDelegate.m; sourceTree = "<group>"; };
 		C966473F19FFEB4E000851AF /* AnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedTransitioning.h; sourceTree = "<group>"; };
@@ -1609,6 +1624,8 @@
 				AB2FB53018AD40580079AA1D /* CashOutViewController.h */,
 				AB2FB53118AD40580079AA1D /* CashOutViewController.m */,
 				AB2FB53218AD40580079AA1D /* CashOutViewController.xib */,
+				C92081881D7977FA006BC697 /* CashOutHistoryViewController.h */,
+				C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */,
 			);
 			name = CashOut;
 			sourceTree = "<group>";
@@ -3104,6 +3121,8 @@
 				C9D519A81D6312DE0082B862 /* ShopItemViewController.m */,
 				C9E7ACD71D65ED240017BC38 /* ShopParamViewController.h */,
 				C9E7ACD81D65ED240017BC38 /* ShopParamViewController.m */,
+				C96134D51D7821A300165261 /* ShopHistoryViewController.h */,
+				C96134D61D7821A300165261 /* ShopHistoryViewController.m */,
 			);
 			name = Shop;
 			sourceTree = "<group>";
@@ -3117,6 +3136,8 @@
 				C9D519B31D6321630082B862 /* ShopCategoryCell.m */,
 				C9D519B71D6321830082B862 /* ShopCardCell.h */,
 				C9D519B81D6321830082B862 /* ShopCardCell.m */,
+				C95CAC2B1D78668200B2D676 /* ShopHistoryCell.h */,
+				C95CAC2C1D78668200B2D676 /* ShopHistoryCell.m */,
 			);
 			name = ShopCell;
 			sourceTree = "<group>";
@@ -3764,6 +3785,7 @@
 				C9C660B21BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
 				2FD2460319A29495008DCFB5 /* ContactCell.m in Sources */,
 				C99CAE431C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
+				C96134D71D7821A300165261 /* ShopHistoryViewController.m in Sources */,
 				C9CB22041A95E9D30064389A /* THContactViewStyle.m in Sources */,
 				C9EB21B51CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */,
 				C9CC31961D2E8FA30086F19A /* NewFloozViewController.m in Sources */,
@@ -3775,6 +3797,7 @@
 				C907297E1B59569900BA691C /* NSString+custom.m in Sources */,
 				C9B1866D1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
 				C9B4AA6A1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
+				C95CAC2D1D78668200B2D676 /* ShopHistoryCell.m in Sources */,
 				C93A2D701C4FE75400C30821 /* FLTimelineDeal.m in Sources */,
 				ABC1115B18ACE4C700C3C52D /* TransactionUsersView.m in Sources */,
 				ABE914A018968E52003AC722 /* FLPaymentField.m in Sources */,
@@ -3898,6 +3921,7 @@
 				C9C7DB2D1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				C9AF4BE619F7C2D7005C696B /* AvatarMenu.m in Sources */,
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
+				C920818A1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */,
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
 				AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */,
 				C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
@@ -3999,6 +4023,7 @@
 				C9C660B31BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
 				C9EB88591B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				C99CAE441C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
+				C96134D81D7821A300165261 /* ShopHistoryViewController.m in Sources */,
 				2FC8873819C87A1900A109D8 /* FLTextFieldSignup.m in Sources */,
 				C9EB21B61CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */,
 				C9CC31971D2E8FA30086F19A /* NewFloozViewController.m in Sources */,
@@ -4010,6 +4035,7 @@
 				C907297F1B59569900BA691C /* NSString+custom.m in Sources */,
 				ABAA3F84197E96BF009F29EF /* FriendPickerContactCell.m in Sources */,
 				C9CB22051A95E9D30064389A /* THContactViewStyle.m in Sources */,
+				C95CAC2E1D78668200B2D676 /* ShopHistoryCell.m in Sources */,
 				C93A2D711C4FE75400C30821 /* FLTimelineDeal.m in Sources */,
 				ABAA3F85197E96BF009F29EF /* FriendPickerSearchBar.m in Sources */,
 				C9B1866E1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
@@ -4133,6 +4159,7 @@
 				ABAA3FC6197E96BF009F29EF /* AccountViewController.m in Sources */,
 				C9CB21FF1A95E9D30064389A /* THContactTextField.m in Sources */,
 				ABAA3FC9197E96BF009F29EF /* FriendRequestCell.m in Sources */,
+				C920818B1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */,
 				C9C7DB2E1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
 				ABAA3FCD197E96BF009F29EF /* FLAccountUserView.m in Sources */,
 				C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
@@ -4226,6 +4253,7 @@
 				C9C660B41BCBB70E0029A79A /* ValidateSecureCodeViewController.m in Sources */,
 				C98012851A76921000019682 /* UIViewController+RegisterNotification.m in Sources */,
 				C99CAE451C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */,
+				C96134D91D7821A300165261 /* ShopHistoryViewController.m in Sources */,
 				C9EB885A1B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
 				C9EB21B71CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */,
 				C9CC31981D2E8FA30086F19A /* NewFloozViewController.m in Sources */,
@@ -4237,6 +4265,7 @@
 				C98012871A76921000019682 /* NumPadAppleStyle.m in Sources */,
 				C90729801B59569900BA691C /* NSString+custom.m in Sources */,
 				C98012891A76921000019682 /* FriendPickerContactCell.m in Sources */,
+				C95CAC2F1D78668200B2D676 /* ShopHistoryCell.m in Sources */,
 				C93A2D721C4FE75400C30821 /* FLTimelineDeal.m in Sources */,
 				C9CB22061A95E9D30064389A /* THContactViewStyle.m in Sources */,
 				C980128A1A76921000019682 /* FriendPickerSearchBar.m in Sources */,
@@ -4360,6 +4389,7 @@
 				C919AD9A1BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C98012D91A76921000019682 /* AccountViewController.m in Sources */,
 				C9CB22001A95E9D30064389A /* THContactTextField.m in Sources */,
+				C920818C1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */,
 				C98012DA1A76921000019682 /* FriendRequestCell.m in Sources */,
 				C98012DC1A76921000019682 /* SettingsPrivacyController.m in Sources */,
 				C98012DF1A76921000019682 /* FLAccountUserView.m in Sources */,

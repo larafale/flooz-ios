@@ -14,6 +14,8 @@
     
     FLPreset *currentPreset;
     
+    NSArray *scopes;
+    
     Boolean isPot;
 }
 
@@ -48,6 +50,9 @@
         
         if (self.triggerData && self.triggerData[@"scope"])
             _currentScope = [FLTransaction transactionIDToScope:self.triggerData[@"scope"]];
+        
+        if (self.triggerData && self.triggerData[@"scopes"])
+            scopes = self.triggerData[@"scopes"];
     }
     return self;
 }
@@ -75,6 +80,9 @@
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count)
         return currentPreset.scopes.count;
     
+    if (self.triggerData && scopes)
+        return scopes.count;
+    
     return 3;
 }
 
@@ -87,6 +95,8 @@
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
         scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+    } else if (self.triggerData && scopes) {
+        scope = [FLTransaction transactionIDToScope:scopes[indexPath.row]];
     } else {
         switch (indexPath.row) {
             case 0:
@@ -116,6 +126,8 @@
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
         scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+    } else if (self.triggerData && scopes) {
+        scope = [FLTransaction transactionIDToScope:scopes[indexPath.row]];
     } else {
         switch (indexPath.row) {
             case 0:
@@ -146,6 +158,8 @@
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
         scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+    } else if (self.triggerData && scopes) {
+        scope = [FLTransaction transactionIDToScope:scopes[indexPath.row]];
     } else {
         switch (indexPath.row) {
             case 0:

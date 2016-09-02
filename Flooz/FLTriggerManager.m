@@ -113,7 +113,9 @@
 - (void)executeTrigger:(FLTrigger *)trigger {
     if (trigger && [self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) {
         if ([trigger.delay isEqualToNumber:@0]) {
-            [self performSelector:NSSelectorFromString([self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) withObject:trigger];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self performSelector:NSSelectorFromString([self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) withObject:trigger];
+            });
         } else {
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [trigger.delay doubleValue] * NSEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -229,6 +231,20 @@
 }
 
 - (void)hideActionHandler:(FLTrigger *)trigger {
+    
+    if ([trigger.viewCategory isEqualToString:@"app:flooz"]) {
+        NSMutableDictionary *tmp = [trigger.jsonData mutableCopy];
+        tmp[@"key"] = @"popup:advanced:hide";
+        
+        NSMutableDictionary *tmpData = [tmp[@"data"] mutableCopy];
+        tmpData[@"noAnim"] = @YES;
+        
+        tmp[@"data"] = tmpData;
+        
+        FLTrigger *newTrigger = [[FLTrigger alloc] initWithJson:tmp];
+        [self executeTrigger:newTrigger];
+    }
+    
     if ([trigger.viewCategory isEqualToString:@"popup:basic"]) {
         if (self.classicPopupTrigger) {
             [self.classicPopupTrigger dismiss:^{
@@ -964,7 +980,7 @@
                            @"shop:list": [ShopListViewController class],
                            @"shop:item": [ShopItemViewController class],
                            @"shop:param": [ShopParamViewController class],
-                           @"popup:advance": [FLAdvancedPopupTrigger class]
+                           @"popup:advanced": [FLAdvancedPopupTrigger class]
                            };
 }
 
@@ -1008,7 +1024,7 @@
                            @"shop:list": @"modal",
                            @"shop:item": @"modal",
                            @"shop:param": @"modal",
-                           @"popup:advance": @"modal"
+                           @"popup:advanced": @"modal"
                            };
 }
 

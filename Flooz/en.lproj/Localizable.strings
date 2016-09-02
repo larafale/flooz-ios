@@ -147,6 +147,9 @@
 "HINT_LOCATION" = "ex: Paris, France";
 "HINT_WEBSITE" = "ex: www.flooz.me";
 
+"SETTINGS_SHOP_HISTORY" = "Mon historique d'achats";
+"TITLE_SHOP_HISTORY" = "Historique d'achats";
+
 "SETTINGS_ADDRESS" = "Mes adresses";
 "SETTINGS_CARD" = "Carte bancaire";
 "SETTINGS_BANK" = "Compte bancaire";

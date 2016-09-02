@@ -21,6 +21,7 @@
 
 - (void)setJSON:(NSDictionary *)json {
     self.json = json;
+    self.name = json[@"name"];
     self.title = json[@"title"];
     self.subtitle = json[@"subtitle"];
     self.defaultImg = json[@"defaultPic"];
@@ -63,6 +64,7 @@
     if (json[@"cardHolder"])
         self.cardHolder = [json[@"cardHolder"] boolValue] ? @"true" : @"false";
     
+    self.friendSearch = json[@"friendSearch"];
     self.notificationsText = json[@"notificationsText"];
     self.slider = [[FLSlider alloc] initWithJson:json[@"slider"]];
     self.couponButton = json[@"couponButton"];

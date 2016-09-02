@@ -81,9 +81,13 @@
     if (self.currentItem.value && ![self.currentItem.value isBlank]) {
         [self.amount setText:self.currentItem.value];
         [self.amount sizeToFit];
-        
+        [self.amount setHidden:NO];
+
         CGRectSetHeight(labelFrame, CGRectGetHeight(labelFrame) + CGRectGetHeight(self.name.frame) + 5);
         CGRectSetXY(self.amount.frame, CGRectGetWidth(labelFrame) - CGRectGetWidth(self.amount.frame) - 15, CGRectGetMaxY(self.name.frame) + 5);
+    } else {
+        [self.amount setText:@""];
+        [self.amount setHidden:YES];
     }
     
     UIBezierPath* labelBackPath = [UIBezierPath bezierPath];

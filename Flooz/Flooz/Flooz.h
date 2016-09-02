@@ -110,6 +110,8 @@ static NSString *kLocationData = @"locationData";
 
 - (void)shopList:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success  failure:(void (^)(NSError *error))failure;
 - (void)shopListSearch:(NSString *)nextPageUrl search:(NSString *)searchString success:(void (^)(id result, NSString *nextPageUrl))success  failure:(void (^)(NSError *error))failure;
+- (void)shopHistory:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)shopHistory:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 
 - (void)loadCactusData:(NSString*)identifier success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)updateCurrentUser;

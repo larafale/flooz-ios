@@ -32,7 +32,7 @@
 - (void)setJson:(NSDictionary *)json {
     if ([json[@"type"] isEqualToString:@"category"])
         self.type = ShopItemTypeCategory;
-    else if ([json[@"type"] isEqualToString:@"card"])
+    else
         self.type = ShopItemTypeCard;
     
     self.itemId = json[@"_id"];

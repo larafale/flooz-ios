@@ -12,6 +12,7 @@
 
 @interface FLHomeButton : NSObject
 
+@property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *defaultImg;
 @property (nonatomic, retain) NSString *imgUrl;
 @property (nonatomic, retain) NSString *title;
@@ -29,6 +30,7 @@
 @property (nonatomic, retain) NSString *balancePopupTitle;
 @property (nonatomic, retain) NSString *balancePopupText;
 
+@property (nonatomic, retain) NSString *friendSearch;
 @property (nonatomic, retain) NSString *cardHolder;
 @property (nonatomic, retain) NSString *audiotelNumber;
 @property (nonatomic, retain) NSString *audiotelImage;

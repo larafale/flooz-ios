@@ -11,8 +11,6 @@
 #import "NewFloozViewController.h"
 
 @interface UserPickerViewController() {
-    UIBarButtonItem *searchItem;
-    
     FriendAddSearchBar *_searchBar;
     FLUserPickerTableView *tableView;
     
@@ -44,22 +42,22 @@
     
     if (!self.title || [self.title isBlank])
         self.title = NSLocalizedString(@"NAV_USER_PICKER", @"");
-
-    searchItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"search"] scaledToSize:CGSizeMake(20, 20)] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
-    [searchItem setTintColor:[UIColor customBlue]];
     
-    _searchBar = [[FriendAddSearchBar alloc] initWithFrame:CGRectMake(10, -45, PPScreenWidth() - 20, 40)];
+    _searchBar = [[FriendAddSearchBar alloc] initWithFrame:CGRectMake(10, 5, PPScreenWidth() - 20, 40)];
+    _searchBar.searchBar.placeholder = NSLocalizedString(@"FRIEND_PCIKER_PLACEHOLDER", nil);
+    
+    if ([[[Flooz sharedInstance] currentTexts] friendSearch] && ![[[[Flooz sharedInstance] currentTexts] friendSearch] isBlank])
+        _searchBar.searchBar.placeholder = [[[Flooz sharedInstance] currentTexts] friendSearch];
+    
     [_searchBar setDelegate:self];
     [_searchBar setHidden:YES];
     [_searchBar sizeToFit];
     
-    tableView = [[FLUserPickerTableView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
+    tableView = [[FLUserPickerTableView alloc] initWithFrame:CGRectMake(0, 50, PPScreenWidth(), CGRectGetHeight(_mainBody.frame) - 50)];
     [tableView setPickerDelegate:self];
     
     [_mainBody addSubview:_searchBar];
     [_mainBody addSubview:tableView];
-    
-    self.navigationItem.rightBarButtonItem = searchItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -89,7 +87,6 @@
 }
 
 - (void)userSelected:(FLUser *)user {
-    
     if (_delegate) {
         [_delegate user:user pickedFrom:self];
     } else if (self.triggerData) {
@@ -140,29 +137,6 @@
         
         [self dismissViewControllerAnimated:YES completion:^{
             [[FLTriggerManager sharedInstance] executeTriggerList:successTriggers];
-        }];
-    }
-}
-
-- (void)showSearch {
-    if ([_searchBar isHidden]) {
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [_searchBar setHidden:NO];
-            CGRectSetY(_searchBar.frame, 5);
-            CGRectSetY(tableView.frame, CGRectGetMaxY(_searchBar.frame) + 5);
-            CGRectSetHeight(tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_searchBar.frame));
-        } completion:^(BOOL finished) {
-            [_searchBar becomeFirstResponder];
-        }];
-    } else {
-        [_searchBar close];
-        
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            CGRectSetY(_searchBar.frame, -45);
-            CGRectSetY(tableView.frame, CGRectGetMaxY(_searchBar.frame) + 5);
-            CGRectSetHeight(tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetMaxY(_searchBar.frame));
-        } completion:^(BOOL finished) {
-            [_searchBar setHidden:YES];
         }];
     }
 }

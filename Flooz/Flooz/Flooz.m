@@ -323,7 +323,7 @@
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
-        
+
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoFlooz];
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelineFriends];
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePublic];
@@ -902,6 +902,27 @@
     
     [self requestPath:[NSString stringWithFormat:@"%@?q=%@", url, [searchString urlencode]] method:@"GET" params:nil success:successBlock failure:failure];
 }
+
+- (void)shopHistory:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        if (success) {
+            success(result[@"items"], result[@"next"]);
+        }
+    };
+    
+    [self requestPath:@"/gcards" method:@"GET" params:nil success:successBlock failure:failure];
+}
+
+- (void)shopHistory:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        if (success) {
+            success(result[@"items"], result[@"next"]);
+        }
+    };
+    
+    [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:failure];
+}
+
 
 - (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     [self requestPath:@"/users/activity" method:@"GET" params:nil success:^(id result) {

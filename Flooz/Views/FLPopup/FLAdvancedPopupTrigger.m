@@ -115,6 +115,8 @@
         rect = [title boundingRectWithSize:CGSizeMake(titleMaxWidth, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
         
         viewHeight += rect.size.height + MARGE;
+    } else {
+        viewHeight += MARGE;
     }
     
     if (picUrl && ![picUrl isBlank])
@@ -200,6 +202,7 @@
     
     if (!subtitle || [subtitle isBlank]) {
         [subtitleView setHidden:YES];
+        offsetY += MARGE;
     } else {
         offsetY += CGRectGetHeight(subtitleView.frame) + MARGE;
     }

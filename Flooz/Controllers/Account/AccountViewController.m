@@ -29,6 +29,7 @@
 #import "ActivitiesViewController.h"
 #import "SettingsNotificationsViewController.h"
 #import "SettingsPrivacyController.h"
+#import "ShopHistoryViewController.h"
 
 #import "AccountCell.h"
 
@@ -281,12 +282,24 @@
     NSMutableDictionary *mutableAccountDic = [_menuDic[0] mutableCopy];
     NSMutableArray *mutableAccountArray = [mutableAccountDic[@"items"] mutableCopy];
     
-//    if (![Flooz sharedInstance].currentTexts.cashinButtons || ![Flooz sharedInstance].currentTexts.cashinButtons.count) {
-//        [mutableAccountArray replaceObjectAtIndex:2 withObject:@{@"title":NSLocalizedString(@"NAV_CREDIT_CARD", nil), @"action":@"card"}];
-//        mutableAccountDic[@"items"] = mutableAccountArray;
-//        [mutableMenuDic replaceObjectAtIndex:0 withObject:mutableAccountDic];
-//        _menuDic = mutableMenuDic;
-//    }
+    Boolean isShopActive = NO;
+    
+    for (FLHomeButton *homeButton in [[[Flooz sharedInstance] currentTexts] homeButtons]) {
+        if ([homeButton.name isEqualToString:@"shop"]) {
+            isShopActive = YES;
+            break;
+        }
+    }
+
+    if (isShopActive || ([[[Flooz sharedInstance] currentUser] metrics][@"gcard"] && [[[[Flooz sharedInstance] currentUser] metrics][@"gcard"][@"count"] integerValue])) {
+        [mutableAccountArray addObject:@{@"title": NSLocalizedString(@"SETTINGS_SHOP_HISTORY", nil), @"action":@"shopHistory"}];
+        
+        [mutableAccountDic setObject:mutableAccountArray forKey:@"items"];
+        
+        [mutableMenuDic replaceObjectAtIndex:0 withObject:mutableAccountDic];
+        
+        _menuDic = mutableMenuDic;
+    }
     
     if ([Flooz sharedInstance].currentTexts.menu[@"promo"]
         && [Flooz sharedInstance].currentTexts.menu[@"promo"][@"title"]
@@ -454,6 +467,8 @@
             [[self navigationController] pushViewController:[SettingsNotificationsViewController new] animated:YES];
         } else if ([action isEqualToString:@"privacy"]) {
             [[self navigationController] pushViewController:[SettingsPrivacyController new] animated:YES];
+        } else if ([action isEqualToString:@"shopHistory"]) {
+            [[self navigationController] pushViewController:[ShopHistoryViewController new] animated:YES];
         }
     }
 }
