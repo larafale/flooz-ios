@@ -1274,6 +1274,26 @@
     [self requestPath:@"/cashouts" method:@"POST" params:tempDic success:success failure:failure];
 }
 
+- (void)cashoutHistory:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        if (success) {
+            success(result[@"items"], result[@"next"]);
+        }
+    };
+    
+    [self requestPath:@"/cashouts" method:@"GET" params:nil success:successBlock failure:failure];
+}
+
+- (void)cashoutHistory:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
+    id successBlock = ^(id result) {
+        if (success) {
+            success(result[@"items"], result[@"next"]);
+        }
+    };
+    
+    [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:failure];
+}
+
 - (void)updateNotification:(NSDictionary *)notification success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     [self requestPath:@"/users/alerts" method:@"PUT" params:notification success:success failure:failure];
 }

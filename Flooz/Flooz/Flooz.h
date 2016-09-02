@@ -102,6 +102,8 @@ static NSString *kLocationData = @"locationData";
 - (void)checkPhoneForUser:(NSString*)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (NSString *)formatBirthDate:(NSString *)birthdate;
 - (void)cashoutValidate:(NSNumber *)amount success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)cashoutHistory:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
+- (void)cashoutHistory:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)sendDiscountCode:(NSDictionary *)code success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)collectInvite:(NSString *)collectId invitations:(NSArray *)invitations success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 - (void)collectTimeline:(NSString *)collectId withUser:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;

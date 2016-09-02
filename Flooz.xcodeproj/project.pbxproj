@@ -304,6 +304,9 @@
 		C920818A1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */; };
 		C920818B1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */; };
 		C920818C1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */; };
+		C92081901D79ADA9006BC697 /* CashoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C920818F1D79ADA9006BC697 /* CashoutCell.m */; };
+		C92081911D79ADA9006BC697 /* CashoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C920818F1D79ADA9006BC697 /* CashoutCell.m */; };
+		C92081921D79ADA9006BC697 /* CashoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C920818F1D79ADA9006BC697 /* CashoutCell.m */; };
 		C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175D1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
 		C921175E1B66726900CF2D51 /* FLInvitationTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = C921175B1B66726900CF2D51 /* FLInvitationTexts.m */; };
@@ -1141,6 +1144,8 @@
 		C91D4EF91C50FBA700C65382 /* TimelineDealCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDealCellDelegate.h; path = TimelineDealCell/TimelineDealCellDelegate.h; sourceTree = "<group>"; };
 		C92081881D7977FA006BC697 /* CashOutHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashOutHistoryViewController.h; path = Controllers/CashOut/CashOutHistoryViewController.h; sourceTree = "<group>"; };
 		C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashOutHistoryViewController.m; path = Controllers/CashOut/CashOutHistoryViewController.m; sourceTree = "<group>"; };
+		C920818E1D79ADA9006BC697 /* CashoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashoutCell.h; path = CashoutCell/CashoutCell.h; sourceTree = "<group>"; };
+		C920818F1D79ADA9006BC697 /* CashoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashoutCell.m; path = CashoutCell/CashoutCell.m; sourceTree = "<group>"; };
 		C921175A1B66726900CF2D51 /* FLInvitationTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLInvitationTexts.h; sourceTree = "<group>"; };
 		C921175B1B66726900CF2D51 /* FLInvitationTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLInvitationTexts.m; sourceTree = "<group>"; };
 		C92195E71C57858900318FD3 /* FLTriggerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTriggerManager.m; sourceTree = "<group>"; };
@@ -2077,6 +2082,7 @@
 			children = (
 				C95254D31B5E7B9200D88096 /* AccountCell */,
 				C9F47E0E1CC7852E00993412 /* ActivityCell */,
+				C920818D1D79AD7E006BC697 /* CashoutCell */,
 				C9DD721D1C989175000D1664 /* CommentCell */,
 				2FD2460019A24DC4008DCFB5 /* ContactCell */,
 				C928E8CB1C3D2A1A0032FAE4 /* DealCell */,
@@ -2539,6 +2545,15 @@
 				C91D4EF91C50FBA700C65382 /* TimelineDealCellDelegate.h */,
 			);
 			name = TimelineDealCell;
+			sourceTree = "<group>";
+		};
+		C920818D1D79AD7E006BC697 /* CashoutCell */ = {
+			isa = PBXGroup;
+			children = (
+				C920818E1D79ADA9006BC697 /* CashoutCell.h */,
+				C920818F1D79ADA9006BC697 /* CashoutCell.m */,
+			);
+			name = CashoutCell;
 			sourceTree = "<group>";
 		};
 		C92195E11C57848700318FD3 /* FLTriggerManager */ = {
@@ -3850,6 +3865,7 @@
 				AB7C9B2218D73AE9002775BA /* SecureCodeViewController.m in Sources */,
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
 				C9C7EE9119F685AC009FE292 /* FLTrigger.m in Sources */,
+				C92081901D79ADA9006BC697 /* CashoutCell.m in Sources */,
 				C9EABF301C523A7700BDDEA1 /* AddressBookController.m in Sources */,
 				2FC6F6B419A773CF0051CB61 /* FLNewTransactionAmountInput.m in Sources */,
 				AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */,
@@ -4088,6 +4104,7 @@
 				C9AE77951ACA918B00CFF0AF /* FLSlide.m in Sources */,
 				C9ED412A1A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */,
 				2FA3E56019DDE97700EC65C2 /* SettingsPreferencesViewController.m in Sources */,
+				C92081911D79ADA9006BC697 /* CashoutCell.m in Sources */,
 				ABAA3FA1197E96BF009F29EF /* TransactionCommentsView.m in Sources */,
 				C9EABF311C523A7700BDDEA1 /* AddressBookController.m in Sources */,
 				ABAA3FA2197E96BF009F29EF /* main.m in Sources */,
@@ -4318,6 +4335,7 @@
 				C9A265581ACC460700859B32 /* SignupInvitationViewController.m in Sources */,
 				C9AE77961ACA918B00CFF0AF /* FLSlide.m in Sources */,
 				C9ED412B1A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */,
+				C92081921D79ADA9006BC697 /* CashoutCell.m in Sources */,
 				C98012A71A76921000019682 /* SettingsPreferencesViewController.m in Sources */,
 				C9EABF321C523A7700BDDEA1 /* AddressBookController.m in Sources */,
 				C98012AA1A76921000019682 /* TransactionCommentsView.m in Sources */,

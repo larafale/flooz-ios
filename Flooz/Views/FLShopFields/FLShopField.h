@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define SHOP_FIELD_HEIGHT 50
+#define SHOP_FIELD_HEIGHT 55
 
 @interface FLShopField : UIView
 

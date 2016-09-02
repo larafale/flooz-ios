@@ -313,7 +313,10 @@
         
         return NO;
     } else if (type == FLTextFieldTypeNumber || type == FLTextFieldTypeFloatNumber) {
-        if ([string isEqualToString:@"\r"] && textField.text.length > 0) {
+        const char * _char = [string cStringUsingEncoding:NSUTF8StringEncoding];
+        BOOL isBackSpace = strcmp(_char, "\b") == -8;
+
+        if ((isBackSpace || [string isEqualToString:@"\r"]) && textField.text.length > 0) {
             return YES;
         }
         
@@ -322,7 +325,8 @@
         }
         
         NSRange symbolRange = [textField.text rangeOfString:@"."];
-        if (symbolRange.location == NSNotFound) {
+        NSRange symbolRange2 = [textField.text rangeOfString:@","];
+        if (symbolRange.location == NSNotFound && symbolRange2.location == NSNotFound) {
             if ([string isEqualToString:@"."]) {
                 if (textField.text.length > 0) {
                     return YES;
@@ -332,12 +336,27 @@
                     return YES;
                 }
             }
+            if ([string isEqualToString:@","]) {
+                if (textField.text.length > 0) {
+                    return YES;
+                }
+                else {
+                    textField.text = @"0";
+                    return YES;
+                }
+            }
+            
             if (textField.text.length == 4) {
                 return NO;
             }
         }
-        else {
+        else if (symbolRange.location != NSNotFound) {
             NSString *decimals = [textField.text substringFromIndex:symbolRange.location];
+            if (decimals.length > 2) {
+                return NO;
+            }
+        } else if (symbolRange2.location != NSNotFound) {
+            NSString *decimals = [textField.text substringFromIndex:symbolRange2.location];
             if (decimals.length > 2) {
                 return NO;
             }

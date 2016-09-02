@@ -8,6 +8,7 @@
 
 #import "CashOutViewController.h"
 #import "FLNewTransactionAmount.h"
+#import "CashOutHistoryViewController.h"
 
 #import "SecureCodeViewController.h"
 #import "FLNewTransactionAmountInput.h"
@@ -15,6 +16,8 @@
 #define PADDING_SIDE 20.0f
 
 @interface CashOutViewController () {
+    UIBarButtonItem *historyItem;
+
     NSMutableDictionary *dictionary;
     
     FLTextFieldSignup *_amountInput;
@@ -42,6 +45,12 @@
     if (!self.title || [self.title isBlank])
         self.title = NSLocalizedString(@"ACCOUNT_BUTTON_CASH_OUT", nil);
 
+    
+    historyItem = [[UIBarButtonItem alloc] initWithImage:[FLHelper imageWithImage:[UIImage imageNamed:@"history"] scaledToSize:CGSizeMake(25, 25)] style:UIBarButtonItemStylePlain target:self action:@selector(openHistory)];
+    [historyItem setTintColor:[UIColor customBlue]];
+
+    self.navigationItem.rightBarButtonItem = historyItem;
+    
     CGFloat height = 15;
     
     {
@@ -109,6 +118,10 @@
 
 - (void)keyNext {
     
+}
+
+- (void)openHistory {
+    [self.navigationController pushViewController:[CashOutHistoryViewController new] animated:YES];
 }
 
 - (void)amountChange {

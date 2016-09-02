@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface CashOutHistoryViewController : BaseViewController
+@interface CashOutHistoryViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource>
 
 @end
