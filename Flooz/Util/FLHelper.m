@@ -41,17 +41,22 @@
     static NSNumberFormatter *formatter = nil;
     static NSString *currency = nil;
     
-    if (!formatter) {
-        formatter = [NSNumberFormatter new];
-        [formatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
-        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-        [formatter setGroupingSeparator:@""];
-        [formatter setDecimalSeparator:@"."];
-        [formatter setMinimumFractionDigits:0];
-        [formatter setMaximumFractionDigits:2];
-        
-        currency = NSLocalizedString(@"GLOBAL_EURO", nil);
-    }
+    NSString* decimalSeparator = @".";
+    
+    NSString *amountTMP = [amount stringValue];
+    
+    if ([amountTMP rangeOfString:@","].location != NSNotFound)
+        decimalSeparator = @",";
+    
+    formatter = [NSNumberFormatter new];
+    [formatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [formatter setGroupingSeparator:@""];
+    [formatter setDecimalSeparator:decimalSeparator];
+    [formatter setMinimumFractionDigits:0];
+    [formatter setMaximumFractionDigits:2];
+    
+    currency = NSLocalizedString(@"GLOBAL_EURO", nil);
     
     if (!amount) {
         return nil;
@@ -192,18 +197,18 @@
 
 + (BOOL)phoneMatch:(NSString *)phone1 withPhone:(NSString *)phone2 {
     NSString *formatedPhone1 = [[[[[[phone1 stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                   stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                  stringByReplacingOccurrencesOfString:@"." withString:@""]
-                                 stringByReplacingOccurrencesOfString:@"-" withString:@""]
-                                stringByReplacingOccurrencesOfString:@")" withString:@""]
-                               stringByReplacingOccurrencesOfString:@"(" withString:@""];
-
+                                    stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                   stringByReplacingOccurrencesOfString:@"." withString:@""]
+                                  stringByReplacingOccurrencesOfString:@"-" withString:@""]
+                                 stringByReplacingOccurrencesOfString:@")" withString:@""]
+                                stringByReplacingOccurrencesOfString:@"(" withString:@""];
+    
     NSString *formatedPhone2 = [[[[[[phone2 stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                   stringByReplacingOccurrencesOfString:@" " withString:@""]
-                                  stringByReplacingOccurrencesOfString:@"." withString:@""]
-                                 stringByReplacingOccurrencesOfString:@"-" withString:@""]
-                                stringByReplacingOccurrencesOfString:@")" withString:@""]
-                               stringByReplacingOccurrencesOfString:@"(" withString:@""];
+                                    stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                   stringByReplacingOccurrencesOfString:@"." withString:@""]
+                                  stringByReplacingOccurrencesOfString:@"-" withString:@""]
+                                 stringByReplacingOccurrencesOfString:@")" withString:@""]
+                                stringByReplacingOccurrencesOfString:@"(" withString:@""];
     
     
     NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
@@ -213,14 +218,14 @@
     
     NSError *error2 = nil;
     NBPhoneNumber *number2 = [phoneUtil parse:formatedPhone2 defaultRegion:[Flooz sharedInstance].currentUser.country.code error:&error2];
-
+    
     if (!error1 && !error2) {
         formatedPhone1 = [phoneUtil format:number1 numberFormat:NBEPhoneNumberFormatE164 error:&error1];
         formatedPhone2 = [phoneUtil format:number2 numberFormat:NBEPhoneNumberFormatE164 error:&error2];
         
         if (!error1 && !error2) {
             if ([formatedPhone1 rangeOfString:formatedPhone2].location != NSNotFound)
-                 return YES;
+                return YES;
         }
     }
     

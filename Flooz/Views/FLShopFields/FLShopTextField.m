@@ -34,7 +34,7 @@
     [self.textfield setType:FLTextFieldTypeText];
     
     NSString *type = [self.options[@"type"] stringByReplacingOccurrencesOfString:@"textfield:" withString:@""];
-    
+
     if ([type isEqualToString:@"date"]) {
         [self.textfield setType:FLTextFieldTypeDate];
     } else if ([type isEqualToString:@"integer"]) {

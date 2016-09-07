@@ -8,7 +8,6 @@
 
 #import "SettingsCoordsViewController.h"
 
-#import "FLKeyboardView.h"
 #import "FLPhoneField.h"
 
 #define PADDING_SIDE 20.0f
@@ -32,7 +31,6 @@
 	UIButton *sendValidationEmail;
 
 	NSMutableArray *fieldsView;
-	FLKeyboardView *inputView;
 
 	FLActionButton *_saveButton;
     CGFloat height;

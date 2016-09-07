@@ -7,7 +7,6 @@
 //
 
 #import "SettingsBankViewController.h"
-#import "FLKeyboardView.h"
 
 #define PADDING_SIDE 20.0f
 

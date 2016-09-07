@@ -12,8 +12,7 @@
 
 @interface ValidateSMSViewController () {
     NSMutableDictionary *smsData;
-    FLTextFieldSignup *_codeField;
-    FLKeyboardView *_inputView;
+    FLTextField *_codeField;
     
     FLActionButton *_nextButton;
     
@@ -71,17 +70,12 @@
     if (!self.title || [self.title isBlank])
         self.title = NSLocalizedString(@"SIGNUP_PAGE_TITLE_SMS", @"");
 
-    _codeField = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_SMS_CODE", @"") for:smsData key:@"smscode" position:CGPointMake(SIGNUP_PADDING_SIDE, firstItemY + 20.0f)];
+    _codeField = [[FLTextField alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_SMS_CODE", @"") for:smsData key:@"smscode" position:CGPointMake(SIGNUP_PADDING_SIDE, firstItemY + 20.0f)];
     CGRectSetX(_codeField.frame, (SCREEN_WIDTH - _codeField.frame.size.width) / 2.);
-    _codeField.textfield.textAlignment = NSTextAlignmentCenter;
-    
+    _codeField.textAlignment = NSTextAlignmentCenter;
+    [_codeField setType:FLTextFieldTypeNumber];
     [_codeField addForTextChangeTarget:self action:@selector(codeChange)];
     [_mainBody addSubview:_codeField];
-    
-    _inputView = [FLKeyboardView new];
-    [_inputView noneCloseButton];
-    _inputView.textField = _codeField.textfield;
-    _codeField.textfield.inputView = _inputView;
     
     _countDown = FULL_COUNTDOWN;
     NSString *countDownValue = [NSString stringWithFormat:@"%lu", (unsigned long)_countDown];

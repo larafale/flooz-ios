@@ -24,7 +24,6 @@
     UILabel *cardExpire;
     
     NSMutableDictionary *dictionary;
-    FLKeyboardView *inputView;
     
     UILabel *inputHint;
     FLTextField *holderTextField;
@@ -175,11 +174,7 @@
     [amountTextField setType:FLTextFieldTypeFloatNumber];
     [amountTextField addForNextClickTarget:amountTextField action:@selector(resignFirstResponder)];
     amountTextField.hidden = YES;
-    
-    inputView = [FLKeyboardView new];
-    [inputView setKeyboardDecimal];
-    inputView.textField = amountTextField;
-    amountTextField.inputView = inputView;
+    [amountTextField setType:FLTextFieldTypeFloatNumber];
     
     sendButton = [[FLActionButton alloc] initWithFrame:CGRectMake(PADDING_SIDE * 2, CGRectGetMinY(amountCheckboxView.frame) + 5, PPScreenWidth() - PADDING_SIDE * 4, 35) title:NSLocalizedString(@"GLOBAL_VALIDATE", nil)];
     [sendButton addTarget:self action:@selector(sendButtonClick) forControlEvents:UIControlEventTouchUpInside];

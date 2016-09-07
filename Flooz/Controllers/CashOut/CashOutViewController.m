@@ -7,11 +7,9 @@
 //
 
 #import "CashOutViewController.h"
-#import "FLNewTransactionAmount.h"
 #import "CashOutHistoryViewController.h"
 
 #import "SecureCodeViewController.h"
-#import "FLNewTransactionAmountInput.h"
 
 #define PADDING_SIDE 20.0f
 
@@ -20,8 +18,7 @@
 
     NSMutableDictionary *dictionary;
     
-    FLTextFieldSignup *_amountInput;
-    FLKeyboardView *inputView;
+    FLTextField *_amountInput;
     
     FLActionButton *_confirmButton;
 }
@@ -86,15 +83,11 @@
     height += 30;
     
     {
-        _amountInput = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
+        _amountInput = [[FLTextField alloc] initWithPlaceholder:NSLocalizedString(@"CASHOUT_FIELD", nil) for:dictionary key:@"amount" position:CGPointMake(PADDING_SIDE, height)];
         [_amountInput addForNextClickTarget:self action:@selector(keyNext)];
         [_amountInput addForTextChangeTarget:self action:@selector(amountChange)];
-//        [_amountInput setType:FLTextFieldTypeFloatNumber];
+        [_amountInput setType:FLTextFieldTypeFloatNumber];
         
-        inputView = [FLKeyboardView new];
-        [inputView setKeyboardDecimal];
-        inputView.textField = _amountInput.textfield;
-        _amountInput.textfield.inputView = inputView;
         [_mainBody addSubview:_amountInput];
     }
     
@@ -128,7 +121,7 @@
     if (dictionary[@"amount"] && [dictionary[@"amount"] length]) {
         //        [_confirmButton setEnabled:YES];
         
-        NSNumber *numberAmount = [NSNumber numberWithFloat:[dictionary[@"amount"] floatValue]];
+        NSNumber *numberAmount = [NSNumber numberWithFloat:[[dictionary[@"amount"] stringByReplacingOccurrencesOfString:@"," withString:@"."] floatValue]];
         
         [_confirmButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"CASHOUT_BUTTON", nil), [[FLHelper formatedAmount:numberAmount withCurrency:NO withSymbol:NO] stringByAppendingString:@"€"]] forState:UIControlStateNormal];
     } else {

@@ -10,7 +10,6 @@
 
 #import "TransactionActionsViewDelegate.h"
 #import "TransactionCellDelegate.h"
-#import "FLNewTransactionAmountDelegate.h"
 #import "FLViewDelegate.h"
 #import "TransactionHeaderView.h"
 

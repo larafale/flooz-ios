@@ -140,10 +140,6 @@
     
     _textfield.attributedPlaceholder = [self placeHolderWithText:_placeholder];
     
-    FLKeyboardView  *inputView = [FLKeyboardView new];
-    inputView.textField = _textfield;
-    _textfield.inputView = inputView;
-    
     [self addSubview:_textfield];
 }
 

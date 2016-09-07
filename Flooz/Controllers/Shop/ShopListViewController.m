@@ -80,6 +80,8 @@
         self.navigationItem.rightBarButtonItem = searchItem;
     
     [self didFilterChange:@""];
+    
+    emptyCellHeight = 50;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

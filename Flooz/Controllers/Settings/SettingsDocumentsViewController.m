@@ -8,7 +8,6 @@
 
 #import "SettingsDocumentsViewController.h"
 
-#import "FLKeyboardView.h"
 
 #define PADDING_SIDE 20.0f
 
@@ -19,19 +18,13 @@
     NSMutableDictionary *_sepa;
     
     FLUserView *userView;
-    //
-    //	NSMutableArray *fieldsView;
-    //	FLKeyboardView *inputView;
-    
     
     NSArray *documents;
     NSMutableArray *buttons;
     NSMutableArray *documentsButton;
     
     NSString *currentDocumentKey;
-    
-    //	FLActionButton *_saveButton;
-    
+        
     CGFloat height;
 }
 

@@ -71,8 +71,7 @@
         }
     }
     
-    
-    [amountLabel setText:currentHistoryItem[@"amountText"]];
+    [amountLabel setText:[FLHelper formatedAmount:currentHistoryItem[@"amount"] withCurrency:YES withSymbol:NO]];
     
     static NSDateFormatter *dateFormatter;
     if (!dateFormatter) {
@@ -81,7 +80,7 @@
         [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'"];
     }
     
-    [dateLabel setText:[FLHelper formatedDateFromNow:[dateFormatter dateFromString:[currentHistoryItem objectForKey:@"cAt"]]]];
+    [dateLabel setText:[FLHelper momentWithDate:[dateFormatter dateFromString:[currentHistoryItem objectForKey:@"cAt"]]]];
 }
 
 - (void)setShopHistoryItem:(NSDictionary *)item {

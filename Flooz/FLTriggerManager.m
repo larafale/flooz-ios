@@ -587,7 +587,7 @@
                 [self.classicPopupTrigger show:^{
                     [self executeTriggerList:trigger.triggers];
                 }];
-            } else if ([trigger.view isEqualToString:@"advance"]) {
+            } else if ([trigger.view isEqualToString:@"advanced"]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     UIView *snapshot = [[appDelegate window] snapshotViewAfterScreenUpdates:NO];
                     
@@ -714,7 +714,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     SecureCodeViewController *controller = [SecureCodeViewController new];
                     controller.completeBlock = completeBlock;
-                    [[self getTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                    [[self getTopViewController] presentViewController:controller animated:YES completion:^{
                         [[Flooz sharedInstance] hideLoadView];
                         [self executeTriggerList:trigger.triggers];
                     }];
@@ -729,7 +729,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 SecureCodeViewController *controller = [SecureCodeViewController new];
                 controller.completeBlock = completeBlock;
-                [[self getTopViewController] presentViewController:[[FLNavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
+                [[self getTopViewController] presentViewController:controller animated:YES completion:^{
                     [[Flooz sharedInstance] hideLoadView];
                     [self executeTriggerList:trigger.triggers];
                 }];

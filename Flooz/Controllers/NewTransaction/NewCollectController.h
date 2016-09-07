@@ -7,8 +7,6 @@
 //
 
 #import "BaseViewController.h"
-#import "FLNewTransactionAmount.h"
-#import "FLNewTransactionAmountInput.h"
 #import "FLPreset.h"
 #import <ImageIO/ImageIO.h>
 #import "FLCameraKeyboard.h"

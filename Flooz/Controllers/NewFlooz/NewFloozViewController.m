@@ -276,12 +276,12 @@
     [self updateTransactionBar];
 
     [self registerForKeyboardNotifications];
+    
+    self.navigationItem.rightBarButtonItem = scopeItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    self.navigationItem.rightBarButtonItem = scopeItem;
     
     [self updateScope];
     [transactionBar reloadData];

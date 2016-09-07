@@ -50,7 +50,6 @@
         _searchBar.searchBar.placeholder = [[[Flooz sharedInstance] currentTexts] friendSearch];
     
     [_searchBar setDelegate:self];
-    [_searchBar setHidden:YES];
     [_searchBar sizeToFit];
     
     tableView = [[FLUserPickerTableView alloc] initWithFrame:CGRectMake(0, 50, PPScreenWidth(), CGRectGetHeight(_mainBody.frame) - 50)];
