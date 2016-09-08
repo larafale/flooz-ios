@@ -36,6 +36,14 @@
         if (self.triggerData && self.triggerData[@"flooz"]) {
             _floozData = self.triggerData[@"flooz"];
         }
+        
+        if (self.triggerData && self.triggerData[@"item"]) {
+            _itemData = self.triggerData[@"item"];
+        }
+        
+        if (self.triggerData && self.triggerData[@"cashin"]) {
+            _cashinData = self.triggerData[@"cashin"];
+        }
     }
     return self;
 }
@@ -108,7 +116,7 @@
     [contentView addSubview:currentBalance];
     [contentView addSubview:codeTextField];
     [contentView addSubview:useCodeButton];
-    [contentView addSubview:balanceHint];        
+    [contentView addSubview:balanceHint];
     
     contentView.contentSize = CGSizeMake(PPScreenWidth(), CGRectGetMaxY(useCodeButton.frame) + 20);
     
@@ -146,13 +154,24 @@
     
     [[Flooz sharedInstance] showLoadView];
     
-    NSDictionary *params;
+    NSMutableDictionary *params = [NSMutableDictionary new];
     
-    if (dictionary[@"audiotelCode"])
-        params = @{@"code":dictionary[@"audiotelCode"], @"flooz": _floozData};
-    else
-        params = @{@"flooz": _floozData};
+    if (self.floozData && self.floozData.allKeys.count) {
+        params[@"flooz"] = self.floozData;
+    }
+    
+    if (self.itemData && self.itemData.allKeys.count) {
+        params[@"item"] = self.itemData;
+    }
+    
+    if (self.cashinData && self.cashinData.allKeys.count) {
+        params[@"cashin"] = self.cashinData;
+    }
 
+    if (dictionary[@"audiotelCode"]) {
+        params[@"code"] = dictionary[@"audiotelCode"];
+    }
+    
     [[Flooz sharedInstance] cashinAudiotel:params success:^(id result) {
         dictionary[@"audiotelCode"] = @"";
         [codeTextField setText:@""];

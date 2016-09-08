@@ -15,5 +15,7 @@
 
 @property (nonatomic, retain) NSString *customLabel;
 @property (nonatomic, retain) NSDictionary *floozData;
+@property (nonatomic, retain) NSDictionary *itemData;
+@property (nonatomic, retain) NSDictionary *cashinData;
 
 @end

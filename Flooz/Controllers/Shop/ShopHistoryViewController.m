@@ -31,7 +31,7 @@
     
     self.backgroundEmptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_mainBody.frame), CGRectGetHeight(_mainBody.frame))];
     
-    UILabel *emptyLabel = [[UILabel alloc] initWithText:@"Aucun achat éffectué\n\nPour profiter de nos offres et produits, rendez-vous sur la boutique" textColor:[UIColor whiteColor] font:[UIFont customContentRegular:16] textAlignment:NSTextAlignmentCenter numberOfLines:0];
+    UILabel *emptyLabel = [[UILabel alloc] initWithText:@"Oops ! Vous n’avez pas d’achats actuellement.\n\nEn panne d’inspiration ?\nRendez-vous sur la boutique pour découvrir nos idées cadeaux !" textColor:[UIColor whiteColor] font:[UIFont customContentRegular:16] textAlignment:NSTextAlignmentCenter numberOfLines:0];
     
     CGRectSetWidth(emptyLabel.frame, PPScreenWidth() - 40);
     CGRectSetXY(emptyLabel.frame, 20, 30);

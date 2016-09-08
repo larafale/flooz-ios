@@ -71,6 +71,14 @@
         if (self.triggerData && self.triggerData[@"flooz"]) {
             _floozData = self.triggerData[@"flooz"];
         }
+
+        if (self.triggerData && self.triggerData[@"item"]) {
+            _itemData = self.triggerData[@"item"];
+        }
+    
+        if (self.triggerData && self.triggerData[@"cashin"]) {
+            _cashinData = self.triggerData[@"cashin"];
+        }
     }
     return self;
 }
@@ -401,10 +409,16 @@
 
     if (self.floozData && self.floozData.allKeys.count) {
         _card[@"flooz"] = self.floozData;
-    } else if (self.triggerData && self.triggerData[@"flooz"]) {
-        _card[@"flooz"] = self.triggerData[@"flooz"];
     }
-    
+
+    if (self.itemData && self.itemData.allKeys.count) {
+        _card[@"item"] = self.itemData;
+    }
+
+    if (self.cashinData && self.cashinData.allKeys.count) {
+        _card[@"cashin"] = self.cashinData;
+    }
+
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] createCreditCard:_card atSignup:NO success: ^(id result) {
         

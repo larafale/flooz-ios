@@ -256,9 +256,7 @@
             selectedItem = searchItems[indexPath.row];
         else
             return;
-    }
-    
-    if (items.count && indexPath.row < items.count)
+    } else if (items.count && indexPath.row < items.count)
         selectedItem = items[indexPath.row];
     else
         return;

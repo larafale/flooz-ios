@@ -11,5 +11,7 @@
 @interface PaymentAudiotelViewController : BaseViewController
 
 @property (nonatomic, retain) NSDictionary *floozData;
+@property (nonatomic, retain) NSDictionary *itemData;
+@property (nonatomic, retain) NSDictionary *cashinData;
 
 @end
