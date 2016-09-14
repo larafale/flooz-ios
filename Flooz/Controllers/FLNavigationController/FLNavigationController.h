@@ -10,16 +10,16 @@
 
 @interface FLNavigationController : UINavigationController <UINavigationControllerDelegate>
 
-@property (nonatomic) id<UINavigationControllerDelegate> navigationDelegate;
+@property (nonatomic, null_unspecified) id<UINavigationControllerDelegate> navigationDelegate;
 
 @property (nonatomic) BOOL blockBack;
 @property (nonatomic) BOOL blockAmount;
-@property (nonatomic) UIImage *shadowImage;
+@property (nonatomic, null_unspecified) UIImage *shadowImage;
 
 - (void)showShadow;
 - (void)hideShadow;
 
-- (void)pushViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completion;
-- (void)popViewControllerAnimated:(BOOL)animated completion:(dispatch_block_t)completion;
+- (void)pushViewController:(nonnull UIViewController *)viewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+- (void)popViewControllerAnimated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 
 @end

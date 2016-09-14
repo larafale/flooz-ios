@@ -213,7 +213,17 @@
     [self updateBottomLine];
     
     if (_focusId) {
-        [_focusId performSelector:_focusAction withObject:nil];
+        if ([_focusId respondsToSelector:_focusAction]) {
+            NSMethodSignature *ms = [_focusId methodSignatureForSelector:_focusAction];
+            
+            if (ms) {
+                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
+                invocation.selector = _focusAction;
+                invocation.target = _focusId;
+                
+                [invocation invoke];
+            }
+        }
     }
 }
 
@@ -237,11 +247,32 @@
     else
         [_dictionary setValue:textField.text forKey:_dictionaryKey];
     
-    [_targetTextChange performSelector:_actionTextChange withObject:self];
+    if ([_targetTextChange respondsToSelector:_actionTextChange]) {
+        NSMethodSignature *ms = [_targetTextChange methodSignatureForSelector:_actionTextChange];
+        
+        if (ms) {
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
+            invocation.selector = _actionTextChange;
+            invocation.target = _targetTextChange;
+            [invocation setArgument:(__bridge void * _Nonnull)(self) atIndex:0];
+            
+            [invocation invoke];
+        }
+    }
 }
 
 - (void)callAction {
-    [_target performSelector:_action];
+    if ([_target respondsToSelector:_action]) {
+        NSMethodSignature *ms = [_target methodSignatureForSelector:_action];
+        
+        if (ms) {
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
+            invocation.selector = _action;
+            invocation.target = _target;
+            
+            [invocation invoke];
+        }
+    }
 }
 
 - (void)checkBirthdateValue {

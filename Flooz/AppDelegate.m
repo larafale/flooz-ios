@@ -616,16 +616,13 @@
 }
 
 - (void)handlePushMessage:(NSDictionary *)userInfo withApplication:(UIApplication *)application {
-    NSDictionary *tmp = [userInfo copy];
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-#ifndef FLOOZ_DEV_LOCAL
-        if ([[Flooz sharedInstance] currentUser] && tmp && [self isViewAfterAuthentication]) {
-            [[Flooz sharedInstance] handleRequestTriggers:tmp];
-            [[Flooz sharedInstance] displayPopupMessage:tmp];
+        if ([[Flooz sharedInstance] currentUser] && userInfo && [self isViewAfterAuthentication]) {
+            [[Flooz sharedInstance] handleRequestTriggers:userInfo];
+            [[Flooz sharedInstance] displayPopupMessage:userInfo];
         }
-#endif
     });
 }
 

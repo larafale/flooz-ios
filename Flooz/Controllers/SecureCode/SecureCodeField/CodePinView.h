@@ -11,7 +11,7 @@
 
 @protocol CodePinDelegate;
 
-@interface CodePinView : UIView <FLKeyboardViewDelegate>
+@interface CodePinView : UIView <FLKeyboardViewDelegate, CAAnimationDelegate>
 
 @property (weak, nonatomic) UIViewController <CodePinDelegate> *delegate;
 @property (strong, nonatomic) NSString *digitON;

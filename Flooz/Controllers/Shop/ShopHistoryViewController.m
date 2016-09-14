@@ -152,7 +152,7 @@
             contentString = @"Vos codes:\n\n";
             
             for (NSString *code in item[@"code"]) {
-                contentString = [NSString stringWithFormat:@"%@\n\n\"%@\"", code];
+                contentString = [NSString stringWithFormat:@"%@\n\n\"%@\"", contentString, code];
             }
         } else {
             contentString = [NSString stringWithFormat:@"Votre code:\n\n\"%@\"", item[@"code"][0]];

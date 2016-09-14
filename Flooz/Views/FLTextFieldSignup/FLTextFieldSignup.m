@@ -85,7 +85,7 @@
         topMargin = 0;
         height = maxHeight;
     }
-
+    
     [_textfield setFrame:CGRectMake(MARGE_LEFT, topMargin, width, height)];
 }
 
@@ -282,7 +282,18 @@
         [_dictionary setValue:textField.text forKey:currentDictionaryKey];
     }
     
-    [_targetTextChange performSelector:_actionTextChange withObject:self];
+    if ([_targetTextChange respondsToSelector:_actionTextChange]) {
+        NSMethodSignature *ms = [_targetTextChange methodSignatureForSelector:_actionTextChange];
+        
+        if (ms) {
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
+            invocation.selector = _actionTextChange;
+            invocation.target = _targetTextChange;
+            [invocation setArgument:(__bridge void * _Nonnull)(self) atIndex:0];
+            
+            [invocation invoke];
+        }
+    }
 }
 
 #pragma mark -
@@ -532,7 +543,17 @@
 }
 
 - (void)callAction {
-    [_target performSelector:_action];
+    if ([_target respondsToSelector:_action]) {
+        NSMethodSignature *ms = [_target methodSignatureForSelector:_action];
+        
+        if (ms) {
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
+            invocation.selector = _action;
+            invocation.target = _target;
+            
+            [invocation invoke];
+        }
+    }
 }
 
 - (void)setFrame:(CGRect)frame {

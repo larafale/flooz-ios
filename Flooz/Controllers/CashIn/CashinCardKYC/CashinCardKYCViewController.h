@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface CashinCardKYCViewController : BaseViewController
+@interface CashinCardKYCViewController : BaseViewController<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end

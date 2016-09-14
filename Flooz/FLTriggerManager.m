@@ -25,7 +25,6 @@
 #import "EditProfileViewController.h"
 #import "ValidateSecureCodeViewController.h"
 #import "NotificationsViewController.h"
-#import "AddressBookController.h"
 #import "CashOutViewController.h"
 #import "FriendRequestViewController.h"
 #import "SettingsNotificationsViewController.h"
@@ -112,15 +111,28 @@
 
 - (void)executeTrigger:(FLTrigger *)trigger {
     if (trigger && [self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) {
+        SEL sel = NSSelectorFromString([self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]);
+        
+        CompleteBlock performBlock = ^{
+            if ([self respondsToSelector:sel]) {
+                NSMethodSignature *ms = [self methodSignatureForSelector:sel];
+                
+                if (ms) {
+                    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
+                    invocation.selector = sel;
+                    invocation.target = self;
+                    [invocation setArgument:(__bridge void * _Nonnull)(trigger) atIndex:0];
+                    
+                    [invocation invoke];
+                }
+            }
+        };
+        
         if ([trigger.delay isEqualToNumber:@0]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self performSelector:NSSelectorFromString([self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) withObject:trigger];
-            });
+            dispatch_async(dispatch_get_main_queue(), performBlock);
         } else {
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, [trigger.delay doubleValue] * NSEC_PER_SEC);
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [self performSelector:NSSelectorFromString([self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) withObject:trigger];
-            });
+            dispatch_after(popTime, dispatch_get_main_queue(), performBlock);
         }
     } else
         [self executeTriggerList:trigger.triggers];

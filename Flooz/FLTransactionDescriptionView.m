@@ -656,6 +656,14 @@
     }];
 }
 
+- (void)didShareButtonClick {
+    
+}
+
+- (void)didMoreButtonClick {
+    
+}
+
 - (void)didUpdateTransactionData {
     if (_parentController) {
         [_parentController reloadTransaction];

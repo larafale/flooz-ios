@@ -25,7 +25,6 @@
 - (void)setInputAccessoryView:(UIView *)accessoryView;
 - (void)setHeight:(CGFloat)height;
 - (void)setInputView:(UIView *)inputView;
-- (void)setMaxHeight:(CGFloat)height;
 - (void)setWidth:(CGFloat)width;
 - (void)reload;
 - (void)addTextFocusTarget:(id)instance action:(SEL)action;

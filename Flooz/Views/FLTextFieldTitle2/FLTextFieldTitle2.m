@@ -290,7 +290,18 @@
 
 - (void)callAction {
 	[_textfield resignFirstResponder];
-	[_target performSelector:_action];
+    
+    if ([_target respondsToSelector:_action]) {
+        NSMethodSignature *ms = [_target methodSignatureForSelector:_action];
+        
+        if (ms) {
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
+            invocation.selector = _action;
+            invocation.target = _target;
+            
+            [invocation invoke];
+        }
+    }
 }
 
 @end

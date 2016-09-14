@@ -370,8 +370,6 @@
 }
 
 - (void)keyboardWillAppear:(NSNotification *)notification {
-    NSDictionary *info = [notification userInfo];
-    CGFloat keyboardHeight = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     
 }
 

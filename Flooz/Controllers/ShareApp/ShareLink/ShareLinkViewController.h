@@ -10,7 +10,7 @@
 #import "FriendAddSearchBarDelegate.h"
 #import "THContactPickerView.h"
 
-@interface ShareLinkViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource, FriendAddSearchBarDelegate, THContactViewDelegate>
+@interface ShareLinkViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource, FriendAddSearchBarDelegate, THContactPickerDelegate>
 
 - (id)initWithCollectId:(NSString *)collectId;
 

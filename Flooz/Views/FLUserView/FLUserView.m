@@ -76,29 +76,6 @@
         [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder options:SDWebImageRefreshCached|SDWebImageContinueInBackground];
         
         return;
-        avatar.layer.opacity = 0;
-        
-        dispatch_queue_t queue = [[self  class] animationQueue];
-        
-        dispatch_async(queue, ^{
-            dispatch_suspend(queue);
-            
-            [avatar sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder options:SDWebImageRefreshCached|SDWebImageContinueInBackground completed: ^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                if (error) {
-                    dispatch_resume(queue);
-                    return;
-                }
-                
-                [UIView animateWithDuration:.3
-                                      delay:.1
-                                    options:0
-                                 animations: ^{
-                                     avatar.layer.opacity = 1;
-                                 } completion: ^(BOOL finished) {
-                                     dispatch_resume(queue);
-                                 }];
-            } ];
-        });
     }
 }
 

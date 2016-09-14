@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DotActivityIndicatorParms.h"
 
-@interface DotActivityIndicatorView : UIView
+@interface DotActivityIndicatorView : UIView<CAAnimationDelegate>
 
 @property (strong, nonatomic) DotActivityIndicatorParms *dotParms;
 

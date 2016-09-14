@@ -47,13 +47,17 @@
  At last, the UID is persisted if needed to.
  */
 - (NSString *)uid {
-    if (!_uid) _uid = [[self class] valueForKeychainKey:_uidKey service:_uidKey];
-    if (!_uid) _uid = [[self class] valueForUserDefaultsKey:_uidKey];
-    if (!_uid) _uid = [[self class] appleIFA];
-    if (!_uid) _uid = [[self class] appleIFV];
-    if (!_uid) _uid = [[self class] randomUUID];
+    if (![self uidIsValid:_uid]) _uid = [[self class] valueForKeychainKey:_uidKey service:_uidKey];
+    if (![self uidIsValid:_uid]) _uid = [[self class] valueForUserDefaultsKey:_uidKey];
+    if (![self uidIsValid:_uid]) _uid = [[self class] appleIFA];
+    if (![self uidIsValid:_uid]) _uid = [[self class] appleIFV];
+    if (![self uidIsValid:_uid]) _uid = [[self class] randomUUID];
     [self save];
     return _uid;
+}
+
+- (BOOL)uidIsValid:(nullable NSString *)uidString {
+    return (uidString && ![uidString isEqualToString:@"00000000-0000-0000-0000-000000000000"]);
 }
 
 /*! Persist UID to NSUserDefaults and Keychain, if not yet saved

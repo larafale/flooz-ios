@@ -20,6 +20,5 @@
 - (void)setImageWithURL:(NSString *)imageURL size:(CGSize)size;
 - (void)centerImage;
 - (void)centerImage:(CGFloat)margin;
-- (void)setCustomBadgeValue:(NSString *) value withFont:(UIFont *) font andFontColor:(UIColor *) color andBackgroundColor:(UIColor *) backColor;
 
 @end

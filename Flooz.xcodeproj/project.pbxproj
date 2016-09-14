@@ -803,15 +803,9 @@
 		C9E7ACEF1D65FB7E0017BC38 /* FLShopField.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E7ACEE1D65FB7E0017BC38 /* FLShopField.m */; };
 		C9E7ACF01D65FB7E0017BC38 /* FLShopField.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E7ACEE1D65FB7E0017BC38 /* FLShopField.m */; };
 		C9E7ACF11D65FB7E0017BC38 /* FLShopField.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E7ACEE1D65FB7E0017BC38 /* FLShopField.m */; };
-		C9EABF301C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
-		C9EABF311C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
-		C9EABF321C523A7700BDDEA1 /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */; };
 		C9EABF351C523CE900BDDEA1 /* FLAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF341C523CE900BDDEA1 /* FLAddress.m */; };
 		C9EABF361C523CE900BDDEA1 /* FLAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF341C523CE900BDDEA1 /* FLAddress.m */; };
 		C9EABF371C523CE900BDDEA1 /* FLAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF341C523CE900BDDEA1 /* FLAddress.m */; };
-		C9EABF3A1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */; };
-		C9EABF3B1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */; };
-		C9EABF3C1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */; };
 		C9EB21B51CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */; };
 		C9EB21B61CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */; };
 		C9EB21B71CE2207200B3E009 /* CashinCardKYCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */; };
@@ -1393,12 +1387,8 @@
 		C9E7ACE91D65F8EF0017BC38 /* FLShopSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLShopSwitch.m; path = Views/FLShopFields/FLShopSwitch.m; sourceTree = "<group>"; };
 		C9E7ACED1D65FB7E0017BC38 /* FLShopField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLShopField.h; path = Views/FLShopFields/FLShopField.h; sourceTree = "<group>"; };
 		C9E7ACEE1D65FB7E0017BC38 /* FLShopField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLShopField.m; path = Views/FLShopFields/FLShopField.m; sourceTree = "<group>"; };
-		C9EABF2E1C523A7700BDDEA1 /* AddressBookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookController.h; path = Controllers/AddressBookController/AddressBookController.h; sourceTree = "<group>"; };
-		C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBookController.m; path = Controllers/AddressBookController/AddressBookController.m; sourceTree = "<group>"; };
 		C9EABF331C523CE900BDDEA1 /* FLAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAddress.h; path = Models/FLAddress.h; sourceTree = "<group>"; };
 		C9EABF341C523CE900BDDEA1 /* FLAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAddress.m; path = Models/FLAddress.m; sourceTree = "<group>"; };
-		C9EABF381C5253E200BDDEA1 /* AddressBookFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressBookFormController.h; path = Controllers/AddressBookController/AddressBookFormController.h; sourceTree = "<group>"; };
-		C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressBookFormController.m; path = Controllers/AddressBookController/AddressBookFormController.m; sourceTree = "<group>"; };
 		C9EB21B31CE2207200B3E009 /* CashinCardKYCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashinCardKYCViewController.h; path = Controllers/CashIn/CashinCardKYC/CashinCardKYCViewController.h; sourceTree = "<group>"; };
 		C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashinCardKYCViewController.m; path = Controllers/CashIn/CashinCardKYC/CashinCardKYCViewController.m; sourceTree = "<group>"; };
 		C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendAddSearchBar.m; sourceTree = "<group>"; };
@@ -1797,7 +1787,6 @@
 				C90B947D1A00E94F00E2C53B /* 3DSecure */,
 				ABE9145E18929150003AC722 /* Account */,
 				C95184A41CC77F320035BAAD /* Activities */,
-				C9EABF2D1C5237C100BDDEA1 /* AddressBook */,
 				2FEAA9CC19DC638C00EE95C9 /* BaseViewController */,
 				C9B137BD1CBFCB54002289C9 /* CashIn */,
 				AB2FB52F18AD40120079AA1D /* CashOut */,
@@ -3192,17 +3181,6 @@
 			name = FLShopFields;
 			sourceTree = "<group>";
 		};
-		C9EABF2D1C5237C100BDDEA1 /* AddressBook */ = {
-			isa = PBXGroup;
-			children = (
-				C9EABF2E1C523A7700BDDEA1 /* AddressBookController.h */,
-				C9EABF2F1C523A7700BDDEA1 /* AddressBookController.m */,
-				C9EABF381C5253E200BDDEA1 /* AddressBookFormController.h */,
-				C9EABF391C5253E200BDDEA1 /* AddressBookFormController.m */,
-			);
-			name = AddressBook;
-			sourceTree = "<group>";
-		};
 		C9EB21B81CE2207A00B3E009 /* CashInCardKYC */ = {
 			isa = PBXGroup;
 			children = (
@@ -3359,7 +3337,7 @@
 			attributes = {
 				CLASSPREFIX = FL;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Flooz;
 				TargetAttributes = {
 					AB3D088D186CA11A00CF8380 = {
@@ -3824,7 +3802,6 @@
 				C9CB22011A95E9D30064389A /* THContactView.m in Sources */,
 				C966474119FFEB4E000851AF /* AnimatedTransitioning.m in Sources */,
 				AB3D08E71871C0CC00CF8380 /* UIFont+custom.m in Sources */,
-				C9EABF3A1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */,
 				C905A8DB1A56D5BE00473963 /* SIOSocket.m in Sources */,
 				AB5EB7071882157300D81AF6 /* FLTableView.m in Sources */,
 				C9EABF351C523CE900BDDEA1 /* FLAddress.m in Sources */,
@@ -3866,7 +3843,6 @@
 				ABF46A1F1875B54600E92A77 /* JTImageLabel.m in Sources */,
 				C9C7EE9119F685AC009FE292 /* FLTrigger.m in Sources */,
 				C92081901D79ADA9006BC697 /* CashoutCell.m in Sources */,
-				C9EABF301C523A7700BDDEA1 /* AddressBookController.m in Sources */,
 				AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */,
 				C91D4EF61C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
 				C95184A71CC77F860035BAAD /* ActivitiesViewController.m in Sources */,
@@ -4063,7 +4039,6 @@
 				ABAA3F87197E96BF009F29EF /* FLHelper.m in Sources */,
 				2F0F6B0419DF3EC5004CA223 /* SettingsDocumentsViewController.m in Sources */,
 				C9B4AA6B1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
-				C9EABF3B1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */,
 				C9CB22021A95E9D30064389A /* THContactView.m in Sources */,
 				ABAFEE28198001BA00D39C62 /* FLPopup.m in Sources */,
 				C9EABF361C523CE900BDDEA1 /* FLAddress.m in Sources */,
@@ -4106,7 +4081,6 @@
 				2FA3E56019DDE97700EC65C2 /* SettingsPreferencesViewController.m in Sources */,
 				C92081911D79ADA9006BC697 /* CashoutCell.m in Sources */,
 				ABAA3FA1197E96BF009F29EF /* TransactionCommentsView.m in Sources */,
-				C9EABF311C523A7700BDDEA1 /* AddressBookController.m in Sources */,
 				ABAA3FA2197E96BF009F29EF /* main.m in Sources */,
 				ABAA3FA3197E96BF009F29EF /* SplashViewController.m in Sources */,
 				C9BFB3F41D7EBA5F004F34C3 /* FLNewTransactionAmount.m in Sources */,
@@ -4294,7 +4268,6 @@
 				C9B1866F1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
 				C980128B1A76921000019682 /* FLHelper.m in Sources */,
 				C980128D1A76921000019682 /* SettingsDocumentsViewController.m in Sources */,
-				C9EABF3C1C5253E200BDDEA1 /* AddressBookFormController.m in Sources */,
 				C9B4AA6C1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
 				C9CB22031A95E9D30064389A /* THContactView.m in Sources */,
 				C9EABF371C523CE900BDDEA1 /* FLAddress.m in Sources */,
@@ -4337,7 +4310,6 @@
 				C9ED412B1A9B7ABA000C4D7A /* NSArray+JSONHelper.m in Sources */,
 				C92081921D79ADA9006BC697 /* CashoutCell.m in Sources */,
 				C98012A71A76921000019682 /* SettingsPreferencesViewController.m in Sources */,
-				C9EABF321C523A7700BDDEA1 /* AddressBookController.m in Sources */,
 				C98012AA1A76921000019682 /* TransactionCommentsView.m in Sources */,
 				C98012AB1A76921000019682 /* main.m in Sources */,
 				C9BFB3F51D7EBA5F004F34C3 /* FLNewTransactionAmount.m in Sources */,
@@ -4540,6 +4512,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4549,14 +4522,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -4577,13 +4555,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CFAB56D3C5BD13A40DFE9A0 /* Pods-Flooz.recette.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4594,7 +4572,7 @@
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4643,13 +4621,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 83308C488458E6FE87063EA2 /* Pods-Flooz dev.recette.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4663,7 +4641,7 @@
 					"FLOOZ_DEV_API=1",
 				);
 				INFOPLIST_FILE = "Flooz dev-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4688,6 +4666,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4697,15 +4676,20 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -4732,6 +4716,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4741,14 +4726,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -4769,13 +4759,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7367A9DA060B71D681F61EEF /* Pods-Flooz.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4786,7 +4776,7 @@
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4813,13 +4803,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 900A3063929FE1D7D134F959 /* Pods-Flooz.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4829,7 +4819,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4905,13 +4895,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE693F566F1A43290909A5D9 /* Pods-Flooz dev.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4925,7 +4915,7 @@
 					"FLOOZ_DEV_API=1",
 				);
 				INFOPLIST_FILE = "Flooz dev-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4952,13 +4942,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E44E8E5CF4985E3B8027D411 /* Pods-Flooz dev.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4972,7 +4962,7 @@
 					FLOOZ_DEV_API,
 				);
 				INFOPLIST_FILE = "Flooz dev-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4997,6 +4987,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -5006,14 +4997,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mouren Olivier (3MGYQHH44Y)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -5040,13 +5036,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 746904E147650706ED491D26 /* Pods-Flooz.local.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5057,7 +5053,7 @@
 				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5111,13 +5107,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 05A01555B910DE768C05B873 /* Pods-Flooz dev.local.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5132,7 +5128,7 @@
 					FLOOZ_DEV_API,
 				);
 				INFOPLIST_FILE = "Flooz dev-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5159,12 +5155,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2A7ABA4A0C7A3772FEAEDFE8 /* Pods-Flooz local.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5178,7 +5174,7 @@
 					"FLOOZ_DEV_API=1",
 				);
 				INFOPLIST_FILE = "Flooz local-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5205,12 +5201,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 39C7AAEBE2F4C1E9600F787E /* Pods-Flooz local.local.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5225,7 +5221,7 @@
 					"FLOOZ_DEV_API=1",
 				);
 				INFOPLIST_FILE = "Flooz local-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5252,12 +5248,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 68E495AD8EB30DA3A0EB9D2C /* Pods-Flooz local.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5271,7 +5267,7 @@
 					FLOOZ_DEV_API,
 				);
 				INFOPLIST_FILE = "Flooz local-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5297,12 +5293,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 634B150C9B811BA2C56EA3D9 /* Pods-Flooz local.recette.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -5316,7 +5312,7 @@
 					"FLOOZ_DEV_API=1",
 				);
 				INFOPLIST_FILE = "Flooz local-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",

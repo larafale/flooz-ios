@@ -29,21 +29,21 @@ typedef NS_ENUM(NSInteger, FLTextFieldType) {
 
 @property (nonatomic) NSInteger maxLenght;
 
-@property (nonatomic, strong) UIColor *lineSelectedColor;
-@property (nonatomic, strong) UIColor *lineNormalColor;
-@property (nonatomic, strong) UIColor *lineDisableColor;
-@property (nonatomic, strong) UIColor *lineErrorColor;
+@property (nonatomic, strong, null_unspecified) UIColor *lineSelectedColor;
+@property (nonatomic, strong, null_unspecified) UIColor *lineNormalColor;
+@property (nonatomic, strong, null_unspecified) UIColor *lineDisableColor;
+@property (nonatomic, strong, null_unspecified) UIColor *lineErrorColor;
 
-@property (nonatomic, weak) NSMutableDictionary *dictionary;
-@property (nonatomic, strong) NSString *dictionaryKey;
+@property (nonatomic, strong, nonnull) NSMutableDictionary *dictionary;
+@property (nonatomic, strong, nonnull) NSString *dictionaryKey;
 
 - (void)reloadTextField;
 - (void)setValid:(Boolean)isValid;
 - (void)setType:(FLTextFieldType)type;
 
-- (void)addForNextClickTarget:(id)target action:(SEL)action;
-- (void)addForTextChangeTarget:(id)target action:(SEL)action;
-- (void)addTextFocusTarget:(id)instance action:(SEL)action;
+- (void)addForNextClickTarget:(nonnull id)target action:(nonnull SEL)action;
+- (void)addForTextChangeTarget:(nonnull id)target action:(nonnull SEL)action;
+- (void)addTextFocusTarget:(nonnull id)instance action:(nonnull SEL)action;
 
 - (void)setDictionary:(nonnull NSMutableDictionary *)dic key:(nonnull NSString *)k;
 

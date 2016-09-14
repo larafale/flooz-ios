@@ -701,7 +701,7 @@ static BOOL canTouchID = YES;
         UILabel *label = (UILabel *)view;
         expectedSize = [label.text sizeWithAttributes:@{ NSFontAttributeName: label.font }];
     }
-    else if ([view isKindOfClass:[UIButton class]]) {
+    else {
         UIButton *button = (UIButton *)view;
         expectedSize = [button.titleLabel.text sizeWithAttributes:@{ NSFontAttributeName: button.titleLabel.font }];
     }

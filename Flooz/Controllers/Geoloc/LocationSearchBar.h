@@ -21,7 +21,6 @@
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet id <LocationSearchBarDelegate> delegate;
 
-- (id)initWithStartX:(CGFloat)xStart;
 - (id)initWithFrame:(CGRect)frame;
 - (void)close;
 

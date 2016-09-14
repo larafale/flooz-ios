@@ -24,7 +24,6 @@
 #import "DiscountCodeViewController.h"
 #import "FriendRequestViewController.h"
 #import "EditProfileViewController.h"
-#import "AddressBookController.h"
 #import "CashinViewController.h"
 #import "ActivitiesViewController.h"
 #import "SettingsNotificationsViewController.h"
@@ -434,8 +433,6 @@
             [[self navigationController] pushViewController:[SettingsBankViewController new] animated:YES];
         } else if ([action isEqualToString:@"documents"]) {
             [[self navigationController] pushViewController:[SettingsDocumentsViewController new] animated:YES];
-        } else if ([action isEqualToString:@"address"]) {
-            [[self navigationController] pushViewController:[AddressBookController new] animated:YES];
         } else if ([action isEqualToString:@"coords"]) {
             [[self navigationController] pushViewController:[SettingsCoordsViewController new] animated:YES];
         } else if ([action isEqualToString:@"security"]) {

@@ -118,8 +118,8 @@
     if ([self.topViewController isKindOfClass:[Secure3DViewController class]]) {
         [[Flooz sharedInstance] abort3DSecure];
     } else if ([self.topViewController isKindOfClass:[SettingsBankViewController class]]) {
-        SettingsBankViewController *controller = (SettingsBankViewController *)self.topViewController;
-        controller.closedByUser = YES;
+        SettingsBankViewController *bankController = (SettingsBankViewController *)self.topViewController;
+        bankController.closedByUser = YES;
 
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {

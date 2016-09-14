@@ -167,6 +167,8 @@
         case TransactionScopeFriend:
             dataKey = kFriendTimelineData;
             break;
+        default:
+            break;
     }
     
     NSString *timelineData = [UICKeyChainStore stringForKey:dataKey];
@@ -230,6 +232,8 @@
                 break;
             case TransactionScopeFriend:
                 dataKey = kFriendTimelineData;
+                break;
+            default:
                 break;
         }
         
@@ -323,7 +327,7 @@
 
 - (void)signup:(NSDictionary *)user success:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
-
+        
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoFlooz];
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelineFriends];
         [[Flooz sharedInstance] saveSettingsObject:@NO withKey:kKeyTutoTimelinePublic];
