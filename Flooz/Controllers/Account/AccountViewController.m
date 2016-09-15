@@ -17,7 +17,6 @@
 #import "SettingsBankViewController.h"
 #import "SettingsCoordsViewController.h"
 #import "SettingsDocumentsViewController.h"
-#import "SettingsPreferencesViewController.h"
 #import "SettingsSecurityViewController.h"
 #import "WebViewController.h"
 #import "FriendsViewController.h"
@@ -447,8 +446,6 @@
             [self goToWebView:rowDic];
         } else if ([action isEqualToString:@"critics"]) {
             [self presentIdeaCritics];
-        } else if ([action isEqualToString:@"preferences"]) {
-            [[self navigationController] pushViewController:[SettingsPreferencesViewController new] animated:YES];
         } else if ([action isEqualToString:@"logout"]) {
             FLPopup *popup = [[FLPopup alloc] initWithMessage:NSLocalizedString(@"LOGOUT_INFO", nil) accept: ^{
                 [[Flooz sharedInstance] logout];

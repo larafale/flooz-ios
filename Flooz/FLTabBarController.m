@@ -13,7 +13,6 @@
 #import "ShareAppViewController.h"
 #import "SDWebImageDownloader.h"
 #import "UserViewController.h"
-#import "DealViewController.h"
 #import "FXBlurView.h"
 #import "FLTabBarController.h"
 #import "NewCollectController.h"

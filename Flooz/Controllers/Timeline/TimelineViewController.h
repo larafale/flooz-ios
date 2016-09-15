@@ -12,7 +12,6 @@
 #import "TimelineDealCellDelegate.h"
 #import "TimelineDelegate.h"
 #import "WYPopoverController.h"
-#import "FLFilterPopoverViewController.h"
 
 @interface TimelineViewController : GlobalViewController <UIScrollViewDelegate, TimelineDelegate, WYPopoverControllerDelegate, UITableViewDelegate, UITableViewDataSource, TransactionCellDelegate> {
 

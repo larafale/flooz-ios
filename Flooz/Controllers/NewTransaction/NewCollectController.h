@@ -9,7 +9,6 @@
 #import "BaseViewController.h"
 #import "FLPreset.h"
 #import <ImageIO/ImageIO.h>
-#import "FLCameraKeyboard.h"
 #import "WYPopoverController.h"
 #import "FLNewTransactionBar.h"
 #import "JTSImageViewController.h"

@@ -15,10 +15,8 @@
 #import "NotificationsViewController.h"
 #import "AppDelegate.h"
 #import "FLBadgeView.h"
-#import "TransitionDelegate.h"
 #import "UICKeyChainStore.h"
 #import "FLPopupInformation.h"
-#import "FLFilterSegmentedControl.h"
 #import "SearchViewController.h"
 #import "UIButton+LongTapShare.h"
 #import "FLSocialPopup.h"
@@ -33,8 +31,6 @@
     
     NSTimer *_timer;
     NSTimer *_backTimer;
-    
-    FLFilterSegmentedControl *filterControl;
     
     TransactionScope currentScope;
     
@@ -243,20 +239,6 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
     
     self.navigationItem.rightBarButtonItem = searchItem;
     self.navigationItem.leftBarButtonItem = scopeItem;
-    
-    switch (currentScope) {
-        case TransactionScopeAll:
-            [filterControl setSelectedSegmentIndex:0];
-            break;
-        case TransactionScopeFriend:
-            [filterControl setSelectedSegmentIndex:1];
-            break;
-        case TransactionScopePrivate:
-            [filterControl setSelectedSegmentIndex:2];
-            break;
-        default:
-            break;
-    }
     
     [self cancelTimer];
 }

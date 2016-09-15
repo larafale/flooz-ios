@@ -8,7 +8,6 @@
 
 #import "CreditCardViewController.h"
 #import "FLTextFieldTitle2.h"
-#import "ScanPayViewController.h"
 #import "3DSecureViewController.h"
 #import "FLCreditCardScanner.h"
 

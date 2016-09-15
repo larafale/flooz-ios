@@ -7,7 +7,6 @@
 //
 
 #import "NewCollectController.h"
-#import "FLPaymentField.h"
 #import "FLNewTransactionBar.h"
 #import "FLPopupInformation.h"
 
