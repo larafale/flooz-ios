@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TransactionActionsViewDelegate.h"
 #import "FLTextViewComment.h"
 
 @interface TransactionCommentsView : UIView <FLViewDelegate> {
@@ -18,7 +17,6 @@
 }
 
 @property (weak, nonatomic) FLTransaction *transaction;
-@property (weak, nonatomic) id <TransactionActionsViewDelegate> delegate;
 @property (weak, nonatomic) UIViewController <FLViewDelegate> *delegateComment;
 
 - (void)focusOnTextField;

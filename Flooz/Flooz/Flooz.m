@@ -927,37 +927,6 @@
     [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:failure];
 }
 
-
-- (void)activitiesWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
-    [self requestPath:@"/users/activity" method:@"GET" params:nil success:^(id result) {
-        if (result[@"items"]) {
-            NSMutableArray *ret = [NSMutableArray new];
-            
-            for (NSDictionary *dic in result[@"items"]) {
-                [ret addObject:[[FLActivity alloc] initWithJSON:dic]];
-            }
-            
-            if (success)
-                success(ret, result[@"next"]);
-        }
-    } failure:failure];
-}
-
-- (void)activitiesNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success {
-    id successBlock = ^(id result) {
-        NSMutableArray *ret = [NSMutableArray new];
-        
-        for (NSDictionary *dic in result[@"items"]) {
-            [ret addObject:[[FLActivity alloc] initWithJSON:dic]];
-        }
-        
-        if (success) {
-            success(ret, result[@"next"]);
-        }
-    };
-    
-    [self requestPath:nextPageUrl method:@"GET" params:nil success:successBlock failure:NULL];
-}
 - (void)notificationsWithSuccess:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *activities = [self createActivityArrayFromResult:result];

@@ -178,7 +178,6 @@
         [_transaction setJSON:result[@"item"]];
 
 	    sendPressed = NO;
-	    [_delegate reloadTransaction];
     } failure:^(NSError *error) {
         sendPressed = NO;
     }];

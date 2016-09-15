@@ -8,7 +8,6 @@
 
 #import "BaseViewController.h"
 
-#import "TransactionActionsViewDelegate.h"
 #import "TransactionCellDelegate.h"
 #import "FLViewDelegate.h"
 #import "CollectHeaderView.h"

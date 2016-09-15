@@ -44,7 +44,6 @@
 #import "CashinViewController.h"
 #import "CashinAudiotelViewController.h"
 #import "CashinCreditCardViewController.h"
-#import "ActivitiesViewController.h"
 #import "CashinCardKYCViewController.h"
 #import "PaymentAudiotelViewController.h"
 #import "PaymentSourceViewController.h"
@@ -954,7 +953,6 @@
 
 - (void)loadBinderKeyView {
     self.binderKeyView = @{
-                           @"app:activities": [ActivitiesViewController new],
                            @"app:cashout": [CashOutViewController class],
                            @"app:flooz": [NewFloozViewController class],
                            @"app:pot": [NewCollectController class],

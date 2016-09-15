@@ -113,7 +113,6 @@
 		ABAA3F84197E96BF009F29EF /* FriendPickerContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114418ACE44800C3C52D /* FriendPickerContactCell.m */; };
 		ABAA3F85197E96BF009F29EF /* FriendPickerSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114718ACE45A00C3C52D /* FriendPickerSearchBar.m */; };
 		ABAA3F87197E96BF009F29EF /* FLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE914A31896D2D9003AC722 /* FLHelper.m */; };
-		ABAA3F8C197E96BF009F29EF /* TransactionActionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114B18ACE47F00C3C52D /* TransactionActionsView.m */; };
 		ABAA3F8D197E96BF009F29EF /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
 		ABAA3F93197E96BF009F29EF /* TransactionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */; };
 		ABAA3F98197E96BF009F29EF /* UIFont+custom.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D08E61871C0CC00CF8380 /* UIFont+custom.m */; };
@@ -205,7 +204,6 @@
 		ABBB75E218BBADFA0070C2A8 /* FriendRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75E118BBADFA0070C2A8 /* FriendRequestCell.m */; };
 		ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114418ACE44800C3C52D /* FriendPickerContactCell.m */; };
 		ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114718ACE45A00C3C52D /* FriendPickerSearchBar.m */; };
-		ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114B18ACE47F00C3C52D /* TransactionActionsView.m */; };
 		ABC1115218ACE4AA00C3C52D /* TransactionCommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115118ACE4AA00C3C52D /* TransactionCommentsView.m */; };
 		ABC1115B18ACE4C700C3C52D /* TransactionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */; };
 		ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115E18ACE4FE00C3C52D /* FriendPickerSelectionCell.m */; };
@@ -238,9 +236,6 @@
 		ABF7094118A4D64300517389 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7094018A4D64300517389 /* TransactionCell.m */; };
 		ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
 		C483DF8EE69CC37EA064870A /* libPods-Flooz local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E9BE834021AB5C3A4123A /* libPods-Flooz local.a */; };
-		C9006C921CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
-		C9006C931CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
-		C9006C941CC7863900A66E07 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9006C911CC7863900A66E07 /* ActivityCell.m */; };
 		C90252101B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
 		C90252111B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
 		C90252121B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
@@ -337,12 +332,6 @@
 		C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
 		C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */; };
-		C95184A71CC77F860035BAAD /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184A61CC77F860035BAAD /* ActivitiesViewController.m */; };
-		C95184A81CC77F860035BAAD /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184A61CC77F860035BAAD /* ActivitiesViewController.m */; };
-		C95184A91CC77F860035BAAD /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184A61CC77F860035BAAD /* ActivitiesViewController.m */; };
-		C95184AC1CC780550035BAAD /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184AB1CC780550035BAAD /* FLActivity.m */; };
-		C95184AD1CC780550035BAAD /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184AB1CC780550035BAAD /* FLActivity.m */; };
-		C95184AE1CC780550035BAAD /* FLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C95184AB1CC780550035BAAD /* FLActivity.m */; };
 		C95254D61B5E7BC300D88096 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95254D51B5E7BC300D88096 /* AccountCell.m */; };
 		C95254D71B5E7BC300D88096 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95254D51B5E7BC300D88096 /* AccountCell.m */; };
 		C95254D81B5E7BC300D88096 /* AccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C95254D51B5E7BC300D88096 /* AccountCell.m */; };
@@ -438,7 +427,6 @@
 		C980128F1A76921000019682 /* FLPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEE26197FFE5000D39C62 /* FLPopup.m */; };
 		C98012921A76921000019682 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */; };
 		C98012941A76921000019682 /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C905A8DA1A56D5BE00473963 /* SIOSocket.m */; };
-		C98012951A76921000019682 /* TransactionActionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1114B18ACE47F00C3C52D /* TransactionActionsView.m */; };
 		C98012961A76921000019682 /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
 		C98012981A76921000019682 /* SettingsBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFE19DF3E35004CA223 /* SettingsBankViewController.m */; };
 		C980129A1A76921000019682 /* TransactionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */; };
@@ -889,7 +877,6 @@
 		AB2FB54018AD9C7A0079AA1D /* PasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PasswordViewController.h; path = Controllers/Password/PasswordViewController.h; sourceTree = "<group>"; };
 		AB2FB54118AD9C7A0079AA1D /* PasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PasswordViewController.m; path = Controllers/Password/PasswordViewController.m; sourceTree = "<group>"; };
 		AB2FB54218AD9C7A0079AA1D /* PasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PasswordViewController.xib; path = Controllers/Password/PasswordViewController.xib; sourceTree = "<group>"; };
-		AB2FB54518AE6EE10079AA1D /* TransactionActionsViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TransactionActionsViewDelegate.h; path = Controllers/Transaction/TransactionActions/TransactionActionsViewDelegate.h; sourceTree = "<group>"; };
 		AB2FB54618AE798D0079AA1D /* FLNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNotification.h; path = Models/FLNotification.h; sourceTree = "<group>"; };
 		AB2FB54718AE798D0079AA1D /* FLNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNotification.m; path = Models/FLNotification.m; sourceTree = "<group>"; };
 		AB2FB54A18B231B90079AA1D /* NotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationCell.h; path = ActivityCell/NotificationCell.h; sourceTree = "<group>"; };
@@ -975,8 +962,6 @@
 		ABC1114618ACE45A00C3C52D /* FriendPickerSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendPickerSearchBar.h; path = Controllers/FriendPicker/FriendPickerSearchBar/FriendPickerSearchBar.h; sourceTree = "<group>"; };
 		ABC1114718ACE45A00C3C52D /* FriendPickerSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendPickerSearchBar.m; path = Controllers/FriendPicker/FriendPickerSearchBar/FriendPickerSearchBar.m; sourceTree = "<group>"; };
 		ABC1114818ACE45A00C3C52D /* FriendPickerSearchBarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendPickerSearchBarDelegate.h; path = Controllers/FriendPicker/FriendPickerSearchBar/FriendPickerSearchBarDelegate.h; sourceTree = "<group>"; };
-		ABC1114A18ACE47F00C3C52D /* TransactionActionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionActionsView.h; path = Controllers/Transaction/TransactionActions/TransactionActionsView.h; sourceTree = "<group>"; };
-		ABC1114B18ACE47F00C3C52D /* TransactionActionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionActionsView.m; path = Controllers/Transaction/TransactionActions/TransactionActionsView.m; sourceTree = "<group>"; };
 		ABC1115018ACE4AA00C3C52D /* TransactionCommentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionCommentsView.h; path = Controllers/Transaction/TransactionComments/TransactionCommentsView.h; sourceTree = "<group>"; };
 		ABC1115118ACE4AA00C3C52D /* TransactionCommentsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionCommentsView.m; path = Controllers/Transaction/TransactionComments/TransactionCommentsView.m; sourceTree = "<group>"; };
 		ABC1115918ACE4C700C3C52D /* TransactionUsersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionUsersView.h; path = Controllers/Transaction/TransactionUsers/TransactionUsersView.h; sourceTree = "<group>"; };
@@ -1038,8 +1023,6 @@
 		ABF7095C18A4FD6B00517389 /* FLComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLComment.m; path = Models/FLComment.m; sourceTree = "<group>"; };
 		B57E9BE834021AB5C3A4123A /* libPods-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6A7439F0941185A7B0A1270 /* Pods-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
-		C9006C901CC7863900A66E07 /* ActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityCell.h; path = ActivityCell/ActivityCell.h; sourceTree = "<group>"; };
-		C9006C911CC7863900A66E07 /* ActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityCell.m; path = ActivityCell/ActivityCell.m; sourceTree = "<group>"; };
 		C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTransactionDescriptionView.m; sourceTree = "<group>"; };
 		C9037F491BFE0481004256BF /* FLCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountry.m; sourceTree = "<group>"; };
 		C905A8D81A56D5BE00473963 /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
@@ -1108,10 +1091,6 @@
 		C94EF3B81CB2AB8E003EA4CF /* AmbassadorStepsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AmbassadorStepsViewController.m; path = Controllers/ShareApp/AmbassadorStepsList/AmbassadorStepsViewController.m; sourceTree = "<group>"; };
 		C950540C1B4E7E9A00B9FB2C /* FLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTabBarController.h; sourceTree = "<group>"; };
 		C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTabBarController.m; sourceTree = "<group>"; };
-		C95184A51CC77F860035BAAD /* ActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivitiesViewController.h; path = Controllers/ActivitiesViewController/ActivitiesViewController.h; sourceTree = "<group>"; };
-		C95184A61CC77F860035BAAD /* ActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivitiesViewController.m; path = Controllers/ActivitiesViewController/ActivitiesViewController.m; sourceTree = "<group>"; };
-		C95184AA1CC780550035BAAD /* FLActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLActivity.h; path = Models/FLActivity.h; sourceTree = "<group>"; };
-		C95184AB1CC780550035BAAD /* FLActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLActivity.m; path = Models/FLActivity.m; sourceTree = "<group>"; };
 		C95254D41B5E7BC300D88096 /* AccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountCell.h; sourceTree = "<group>"; };
 		C95254D51B5E7BC300D88096 /* AccountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountCell.m; sourceTree = "<group>"; };
 		C95502CD1C2AA8D8002E9046 /* ARChromeActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARChromeActivity.h; sourceTree = "<group>"; };
@@ -1701,7 +1680,6 @@
 			children = (
 				C90B947D1A00E94F00E2C53B /* 3DSecure */,
 				ABE9145E18929150003AC722 /* Account */,
-				C95184A41CC77F320035BAAD /* Activities */,
 				2FEAA9CC19DC638C00EE95C9 /* BaseViewController */,
 				C9B137BD1CBFCB54002289C9 /* CashIn */,
 				AB2FB52F18AD40120079AA1D /* CashOut */,
@@ -1810,8 +1788,6 @@
 		AB3D08DD1871A5D100CF8380 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C95184AA1CC780550035BAAD /* FLActivity.h */,
-				C95184AB1CC780550035BAAD /* FLActivity.m */,
 				C9EABF331C523CE900BDDEA1 /* FLAddress.h */,
 				C9EABF341C523CE900BDDEA1 /* FLAddress.m */,
 				C9C7EE9219F685B9009FE292 /* FLAlert.h */,
@@ -1974,7 +1950,6 @@
 			isa = PBXGroup;
 			children = (
 				C95254D31B5E7B9200D88096 /* AccountCell */,
-				C9F47E0E1CC7852E00993412 /* ActivityCell */,
 				C920818D1D79AD7E006BC697 /* CashoutCell */,
 				C9DD721D1C989175000D1664 /* CommentCell */,
 				2FD2460019A24DC4008DCFB5 /* ContactCell */,
@@ -2257,7 +2232,6 @@
 			isa = PBXGroup;
 			children = (
 				C92A31AA1CAD2787004BA50F /* TransactionHeaderView */,
-				ABF7095318A4EC3B00517389 /* TransactionActions */,
 				ABF7095718A4FC9600517389 /* TransactionComments */,
 				ABF7094F18A4E02700517389 /* TransactionUsers */,
 				ABF7092718A2CA3500517389 /* TransactionViewController.h */,
@@ -2296,16 +2270,6 @@
 				ABC1115A18ACE4C700C3C52D /* TransactionUsersView.m */,
 			);
 			name = TransactionUsers;
-			sourceTree = "<group>";
-		};
-		ABF7095318A4EC3B00517389 /* TransactionActions */ = {
-			isa = PBXGroup;
-			children = (
-				ABC1114A18ACE47F00C3C52D /* TransactionActionsView.h */,
-				ABC1114B18ACE47F00C3C52D /* TransactionActionsView.m */,
-				AB2FB54518AE6EE10079AA1D /* TransactionActionsViewDelegate.h */,
-			);
-			name = TransactionActions;
 			sourceTree = "<group>";
 		};
 		ABF7095718A4FC9600517389 /* TransactionComments */ = {
@@ -2479,15 +2443,6 @@
 				C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */,
 			);
 			name = FLTabBarController;
-			sourceTree = "<group>";
-		};
-		C95184A41CC77F320035BAAD /* Activities */ = {
-			isa = PBXGroup;
-			children = (
-				C95184A51CC77F860035BAAD /* ActivitiesViewController.h */,
-				C95184A61CC77F860035BAAD /* ActivitiesViewController.m */,
-			);
-			name = Activities;
 			sourceTree = "<group>";
 		};
 		C95254D31B5E7B9200D88096 /* AccountCell */ = {
@@ -3000,15 +2955,6 @@
 				C9EBBB9C1BAAC988009DAF88 /* FLBorderedActionButton.m */,
 			);
 			name = FLBorderedActionButton;
-			sourceTree = "<group>";
-		};
-		C9F47E0E1CC7852E00993412 /* ActivityCell */ = {
-			isa = PBXGroup;
-			children = (
-				C9006C901CC7863900A66E07 /* ActivityCell.h */,
-				C9006C911CC7863900A66E07 /* ActivityCell.m */,
-			);
-			name = ActivityCell;
 			sourceTree = "<group>";
 		};
 		C9F517CE1CABD19A00856D53 /* FLPlusButton */ = {
@@ -3554,7 +3500,6 @@
 				2FE983EA19CB82E700E05501 /* NumPadAppleStyle.m in Sources */,
 				ABC1114518ACE44800C3C52D /* FriendPickerContactCell.m in Sources */,
 				ABC1114918ACE45A00C3C52D /* FriendPickerSearchBar.m in Sources */,
-				C95184AC1CC780550035BAAD /* FLActivity.m in Sources */,
 				ABE914A41896D2D9003AC722 /* FLHelper.m in Sources */,
 				C95254D61B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C975BB051A92BB8E000E5AEA /* YLMoment.m in Sources */,
@@ -3564,7 +3509,6 @@
 				C9CB220E1A961F0D0064389A /* FLPrivacyCell.m in Sources */,
 				C955716F1CEC8926001A79AA /* PaymentSourceViewController.m in Sources */,
 				C9EB88581B1F21C20042E65B /* FriendAddSearchBar.m in Sources */,
-				ABC1114C18ACE47F00C3C52D /* TransactionActionsView.m in Sources */,
 				C98959111C08892C00D8D37F /* YLLongTapShareView.m in Sources */,
 				C9CC319B1D2E8FD20086F19A /* UserPickerViewController.m in Sources */,
 				C9C776881C076078006C22CB /* UIBarButtonItem+Badge.m in Sources */,
@@ -3632,7 +3576,6 @@
 				C92081901D79ADA9006BC697 /* CashoutCell.m in Sources */,
 				AB2FB55D18B2B4710079AA1D /* FriendsViewController.m in Sources */,
 				C91D4EF61C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
-				C95184A71CC77F860035BAAD /* ActivitiesViewController.m in Sources */,
 				C9BFB3F31D7EBA5F004F34C3 /* FLNewTransactionAmount.m in Sources */,
 				2FC8784419C08B0300F034E0 /* FLPopupInformation.m in Sources */,
 				C9AD95B61BBEB9480073BA32 /* SearchViewController.m in Sources */,
@@ -3736,7 +3679,6 @@
 				C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */,
 				C95502DA1C2AB440002E9046 /* FLCopyLinkActivity.m in Sources */,
-				C9006C921CC7863900A66E07 /* ActivityCell.m in Sources */,
 				AB5EB6EB188214F000D81AF6 /* HomeViewController.m in Sources */,
 				C9037F4A1BFE0481004256BF /* FLCountry.m in Sources */,
 				C919AD9D1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
@@ -3777,7 +3719,6 @@
 				C90B94811A00EA2400E2C53B /* 3DSecureViewController.m in Sources */,
 				C98959201C089C8500D8D37F /* FLSocialPopup.m in Sources */,
 				C9CA67791A518811003863D1 /* SignupSMSViewController.m in Sources */,
-				C95184AD1CC780550035BAAD /* FLActivity.m in Sources */,
 				C9AF4BE719F7C340005C696B /* AvatarMenu.m in Sources */,
 				C95254D71B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C9C7EE9519F695E8009FE292 /* FLTrigger.m in Sources */,
@@ -3825,7 +3766,6 @@
 				C9EABF361C523CE900BDDEA1 /* FLAddress.m in Sources */,
 				2FEAA9D019DC63B500EE95C9 /* BaseViewController.m in Sources */,
 				C905A8DC1A56D5BE00473963 /* SIOSocket.m in Sources */,
-				ABAA3F8C197E96BF009F29EF /* TransactionActionsView.m in Sources */,
 				ABAA3F8D197E96BF009F29EF /* FLComment.m in Sources */,
 				C9B761911C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */,
 				2F0F6B0019DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
@@ -3860,7 +3800,6 @@
 				ABAA3FA3197E96BF009F29EF /* SplashViewController.m in Sources */,
 				C9BFB3F41D7EBA5F004F34C3 /* FLNewTransactionAmount.m in Sources */,
 				C91D4EF71C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
-				C95184A81CC77F860035BAAD /* ActivitiesViewController.m in Sources */,
 				C9AD95B71BBEB9480073BA32 /* SearchViewController.m in Sources */,
 				ABAA3FA9197E96BF009F29EF /* SecureCodeViewController.m in Sources */,
 				C9CD76691BF227EF00362962 /* FLPhoneField.m in Sources */,
@@ -3961,7 +3900,6 @@
 				C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
 				C95502DB1C2AB440002E9046 /* FLCopyLinkActivity.m in Sources */,
-				C9006C931CC7863900A66E07 /* ActivityCell.m in Sources */,
 				ABAA3FE3197E96BF009F29EF /* HomeViewController.m in Sources */,
 				C9037F4B1BFE0481004256BF /* FLCountry.m in Sources */,
 				C919AD9E1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,
@@ -3995,7 +3933,6 @@
 				C98959211C089C8500D8D37F /* FLSocialPopup.m in Sources */,
 				C98012791A76921000019682 /* 3DSecureViewController.m in Sources */,
 				C980127A1A76921000019682 /* SignupSMSViewController.m in Sources */,
-				C95184AE1CC780550035BAAD /* FLActivity.m in Sources */,
 				C980127D1A76921000019682 /* AvatarMenu.m in Sources */,
 				C95254D81B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C980127E1A76921000019682 /* FLTrigger.m in Sources */,
@@ -4043,7 +3980,6 @@
 				C980128F1A76921000019682 /* FLPopup.m in Sources */,
 				C98012921A76921000019682 /* BaseViewController.m in Sources */,
 				C98012941A76921000019682 /* SIOSocket.m in Sources */,
-				C98012951A76921000019682 /* TransactionActionsView.m in Sources */,
 				C9B761921C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */,
 				C98012961A76921000019682 /* FLComment.m in Sources */,
 				C9D0562C1D194C2A00F14576 /* TransactionLikeViewController.m in Sources */,
@@ -4077,7 +4013,6 @@
 				C98012AB1A76921000019682 /* main.m in Sources */,
 				C9BFB3F51D7EBA5F004F34C3 /* FLNewTransactionAmount.m in Sources */,
 				C91D4EF81C50FA4E00C65382 /* TimelineDealCell.m in Sources */,
-				C95184A91CC77F860035BAAD /* ActivitiesViewController.m in Sources */,
 				C98012AC1A76921000019682 /* SplashViewController.m in Sources */,
 				C91C5D461BC68FF500B88D81 /* ShareCell.m in Sources */,
 				C9CD766A1BF227EF00362962 /* FLPhoneField.m in Sources */,
@@ -4178,7 +4113,6 @@
 				C96E5A6A1BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				C98012F81A76921000019682 /* FriendPickerSelectionCell.m in Sources */,
 				C95502DC1C2AB440002E9046 /* FLCopyLinkActivity.m in Sources */,
-				C9006C941CC7863900A66E07 /* ActivityCell.m in Sources */,
 				C98012F91A76921000019682 /* HomeViewController.m in Sources */,
 				C9037F4C1BFE0481004256BF /* FLCountry.m in Sources */,
 				C919AD9F1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */,

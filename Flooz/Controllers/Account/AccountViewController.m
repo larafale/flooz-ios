@@ -24,7 +24,6 @@
 #import "FriendRequestViewController.h"
 #import "EditProfileViewController.h"
 #import "CashinViewController.h"
-#import "ActivitiesViewController.h"
 #import "SettingsNotificationsViewController.h"
 #import "SettingsPrivacyController.h"
 #import "ShopHistoryViewController.h"
@@ -426,8 +425,6 @@
             [[self navigationController] pushViewController:[CashinViewController new] animated:YES];
         } else if ([action isEqualToString:@"friends"]) {
             [[self navigationController] pushViewController:[FriendsViewController new] animated:YES];
-        } else if ([action isEqualToString:@"activities"]) {
-            [[self navigationController] pushViewController:[ActivitiesViewController new] animated:YES];
         } else if ([action isEqualToString:@"bank"]) {
             [[self navigationController] pushViewController:[SettingsBankViewController new] animated:YES];
         } else if ([action isEqualToString:@"documents"]) {

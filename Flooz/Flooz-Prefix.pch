@@ -6,10 +6,6 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_3_0
-#warning "This project uses features only available in iOS SDK 3.0 and later."
-#endif
-
 #ifdef __OBJC__
 	#import <UIKit/UIKit.h>
 	#import <Foundation/Foundation.h>
@@ -39,7 +35,6 @@
 #import "FLReport.h"
 #import "FLHelper.h"
 #import "FLError.h"
-#import "FLActivity.h"
 #import "FLCountry.h"
 #import "FLAddress.h"
 #import "FLTimelineDeal.h"

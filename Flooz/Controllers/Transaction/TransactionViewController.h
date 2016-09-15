@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TransactionActionsViewDelegate.h"
 #import "TransactionCellDelegate.h"
 #import "FLViewDelegate.h"
 #import "TransactionHeaderView.h"
