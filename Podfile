@@ -1,9 +1,9 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
 
 def prod_pods
     
     pod 'AFNetworking'
-    pod 'IDMPhotoBrowser'
+    pod 'IDMPhotoBrowser', :path => './IDMPhotoBrowser'
     pod 'UICKeyChainStore' 
     pod 'SDWebImage/GIF', :path => './SDWebImage'
     pod "FBSDKCoreKit"
@@ -40,8 +40,7 @@ def prod_pods
     pod 'CardIO'
     pod 'JTSImageViewController'
     pod 'VENCalculatorInputView', '~> 1.5'
-    pod "iShowcase"
-
+    
 end
 
 target 'Flooz' do
