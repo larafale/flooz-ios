@@ -89,8 +89,6 @@ $ open Flooz.xcworkspace
 
 ### UI
 
-- `AFSecurityPolicy`
-- `AFNetworkReachabilityManager`
 
 ### Networking
 
