@@ -298,10 +298,6 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
     if ([item isKindOfClass:[FLTransaction class]]) {
         FLTransaction *transaction = item;
         return [TransactionCell getHeightForTransaction:transaction andWidth:CGRectGetWidth(tableView.frame)];
-    } else if ([item isKindOfClass:[FLTimelineDeal class]]) {
-        FLTimelineDeal *deal = item;
-        return [TimelineDealCell getHeightForDeal:deal];
-        
     }
     return 0;
 }

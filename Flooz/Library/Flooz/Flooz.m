@@ -2216,13 +2216,8 @@
     NSArray *transactions = result[@"items"];
     if (transactions) {
         for (NSDictionary *json in transactions) {
-            //            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
-            //                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
-            //                [arrayTransactions addObject:deal];
-            //            } else {
             FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
             [arrayTransactions addObject:transaction];
-            //            }
         }
     }
     return arrayTransactions;
@@ -2246,15 +2241,8 @@
     NSArray *transactions = result;
     if (transactions) {
         for (NSDictionary *json in transactions) {
-            //            if (json && json[@"deal"] && [json[@"deal"] boolValue]) {
-            //                continue;
-            //
-            //                FLTimelineDeal *deal = [[FLTimelineDeal alloc] initWithJSON:json];
-            //                [arrayTransactions addObject:deal];
-            //            } else {
             FLTransaction *transaction = [[FLTransaction alloc] initWithJSON:json];
             [arrayTransactions addObject:transaction];
-            //            }
         }
     }
     return arrayTransactions;
