@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 47;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D0CF9CF6208B6CE321F9D75 /* libPods-Flooz dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439AA252C1690C29117EF109 /* libPods-Flooz dev.a */; };
 		2F0F6AFB19DF0686004CA223 /* FLSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFA19DF0686004CA223 /* FLSwitch.m */; };
 		2F0F6AFC19DF0686004CA223 /* FLSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFA19DF0686004CA223 /* FLSwitch.m */; };
 		2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0F6AFE19DF3E35004CA223 /* SettingsBankViewController.m */; };
@@ -51,8 +50,8 @@
 		2FEAA9CB19DC50A200EE95C9 /* UISearchBar+Subviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */; };
 		2FEAA9CF19DC63B500EE95C9 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */; };
 		2FEAA9D019DC63B500EE95C9 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */; };
-		305AB8E001E8A0EEEA47BA0A /* libPods-FloozTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B0E20663ECBACBE30845CF1 /* libPods-FloozTests.a */; };
-		3B691AE7A76AA2A232F23D7E /* libPods-Flooz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F8AAF64F700D4ACA271AB1 /* libPods-Flooz.a */; };
+		7BA912E164D0850D9DD1699C /* libPods-Flooz dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8458256E76AB74F95289E16 /* libPods-Flooz dev.a */; };
+		88D568F1621E58D2E1BA46C0 /* libPods-Flooz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC735E2C85DEC29249F7AF17 /* libPods-Flooz.a */; };
 		AB0857FE1923AB13007C1927 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0857FC1923AB13007C1927 /* SplashViewController.m */; };
 		AB0857FF1923AB13007C1927 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0857FD1923AB13007C1927 /* SplashViewController.xib */; };
 		AB119B3D198A3FD200F05ECE /* UIViewController+RegisterNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = AB119B3C198A3FD200F05ECE /* UIViewController+RegisterNotification.m */; };
@@ -235,7 +234,8 @@
 		ABF7092B18A2CA3500517389 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABF7092918A2CA3500517389 /* TransactionViewController.xib */; };
 		ABF7094118A4D64300517389 /* TransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7094018A4D64300517389 /* TransactionCell.m */; };
 		ABF7095D18A4FD6B00517389 /* FLComment.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF7095C18A4FD6B00517389 /* FLComment.m */; };
-		C483DF8EE69CC37EA064870A /* libPods-Flooz local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E9BE834021AB5C3A4123A /* libPods-Flooz local.a */; };
+		B065FA78CA174852F94C0BE6 /* libPods-FloozTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 788E51C9CCAA4B6A54587956 /* libPods-FloozTests.a */; };
+		B6C70BE6645C6410B581679B /* libPods-Flooz local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67818ADB38E10D3D57C31A40 /* libPods-Flooz local.a */; };
 		C90252101B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
 		C90252111B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
 		C90252121B67C0F00041DE65 /* FLTransactionDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */; };
@@ -252,8 +252,6 @@
 		C908A3EB1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = C908A3EA1A9F211F00A07818 /* FLPopoverTutoTheme.m */; };
 		C908A3EC1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = C908A3EA1A9F211F00A07818 /* FLPopoverTutoTheme.m */; };
 		C908A3ED1A9F211F00A07818 /* FLPopoverTutoTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = C908A3EA1A9F211F00A07818 /* FLPopoverTutoTheme.m */; };
-		C90B94801A00E96900E2C53B /* 3DSecureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90B947F1A00E96900E2C53B /* 3DSecureViewController.m */; };
-		C90B94811A00EA2400E2C53B /* 3DSecureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90B947F1A00E96900E2C53B /* 3DSecureViewController.m */; };
 		C910E0EE1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */; };
 		C910E0EF1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */; };
 		C9160D561B6A6A5400A379DA /* DiscountCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */; };
@@ -274,8 +272,6 @@
 		C919AD9D1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */; };
 		C919AD9E1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */; };
 		C919AD9F1BBAD5AE00B87AAB /* FLPopupTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */; };
-		C91C5D3F1BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */; };
-		C91C5D401BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */; };
 		C91C5D441BC68FF500B88D81 /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D431BC68FF500B88D81 /* ShareCell.m */; };
 		C91C5D451BC68FF500B88D81 /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D431BC68FF500B88D81 /* ShareCell.m */; };
 		C91C5D461BC68FF500B88D81 /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D431BC68FF500B88D81 /* ShareCell.m */; };
@@ -311,9 +307,6 @@
 		C92A31AF1CAD27B9004BA50F /* TransactionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C92A31AC1CAD27B9004BA50F /* TransactionHeaderView.m */; };
 		C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
 		C93118491A1FBD72008C6EEC /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
-		C938EFCE1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
-		C938EFCF1AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
-		C938EFD01AE68C5900A3F740 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */; };
 		C93A2D701C4FE75400C30821 /* FLTimelineDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = C93A2D6F1C4FE75400C30821 /* FLTimelineDeal.m */; };
 		C93A2D711C4FE75400C30821 /* FLTimelineDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = C93A2D6F1C4FE75400C30821 /* FLTimelineDeal.m */; };
 		C93A2D721C4FE75400C30821 /* FLTimelineDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = C93A2D6F1C4FE75400C30821 /* FLTimelineDeal.m */; };
@@ -409,9 +402,7 @@
 		C98012721A76921000019682 /* ClipboardPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */; };
 		C98012731A76921000019682 /* FLPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A7BE5F1A27801200195AFC /* FLPreset.m */; };
 		C98012751A76921000019682 /* FLReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93118471A1F7E0B008C6EEC /* FLReport.m */; };
-		C98012791A76921000019682 /* 3DSecureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90B947F1A00E96900E2C53B /* 3DSecureViewController.m */; };
 		C980127A1A76921000019682 /* SignupSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CA67771A518811003863D1 /* SignupSMSViewController.m */; };
-		C980127D1A76921000019682 /* AvatarMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AF4BE519F7C2D7005C696B /* AvatarMenu.m */; };
 		C980127E1A76921000019682 /* FLTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7EE9019F685AC009FE292 /* FLTrigger.m */; };
 		C980127F1A76921000019682 /* FLAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C7EE9319F685B9009FE292 /* FLAlert.m */; };
 		C98012801A76921000019682 /* CreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBB75C918B63DB20070C2A8 /* CreditCardViewController.m */; };
@@ -567,16 +558,12 @@
 		C98A5F0F1C3BDB6800C3EFD1 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */; };
 		C98A5F101C3BDB6800C3EFD1 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */; };
 		C98A5F111C3BDB6800C3EFD1 /* FLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */; };
-		C994C23F1BC805FD00B528AA /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */; };
 		C99C19B01D366178008CF9DC /* ScopePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99C19AF1D366178008CF9DC /* ScopePickerViewController.m */; };
 		C99C19B11D366178008CF9DC /* ScopePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99C19AF1D366178008CF9DC /* ScopePickerViewController.m */; };
 		C99C19B21D366178008CF9DC /* ScopePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99C19AF1D366178008CF9DC /* ScopePickerViewController.m */; };
 		C99CAE431C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99CAE421C9DAD9300CDC967 /* CollectParticipantViewController.m */; };
 		C99CAE441C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99CAE421C9DAD9300CDC967 /* CollectParticipantViewController.m */; };
 		C99CAE451C9DAD9300CDC967 /* CollectParticipantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99CAE421C9DAD9300CDC967 /* CollectParticipantViewController.m */; };
-		C99D11B31C8868090091F48C /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99D11B21C8868090091F48C /* NewCollectController.m */; };
-		C99D11B41C8868090091F48C /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99D11B21C8868090091F48C /* NewCollectController.m */; };
-		C99D11B51C8868090091F48C /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99D11B21C8868090091F48C /* NewCollectController.m */; };
 		C99F540E1D1AA1BE0056A151 /* CollectInvitationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99F540D1D1AA1BE0056A151 /* CollectInvitationsViewController.m */; };
 		C99F540F1D1AA1BE0056A151 /* CollectInvitationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99F540D1D1AA1BE0056A151 /* CollectInvitationsViewController.m */; };
 		C99F54101D1AA1BE0056A151 /* CollectInvitationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99F540D1D1AA1BE0056A151 /* CollectInvitationsViewController.m */; };
@@ -594,8 +581,6 @@
 		C9AE77941ACA918B00CFF0AF /* FLSlide.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AE77931ACA918B00CFF0AF /* FLSlide.m */; };
 		C9AE77951ACA918B00CFF0AF /* FLSlide.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AE77931ACA918B00CFF0AF /* FLSlide.m */; };
 		C9AE77961ACA918B00CFF0AF /* FLSlide.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AE77931ACA918B00CFF0AF /* FLSlide.m */; };
-		C9AF4BE619F7C2D7005C696B /* AvatarMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AF4BE519F7C2D7005C696B /* AvatarMenu.m */; };
-		C9AF4BE719F7C340005C696B /* AvatarMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AF4BE519F7C2D7005C696B /* AvatarMenu.m */; };
 		C9B137C01CBFCB91002289C9 /* CashinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137BF1CBFCB91002289C9 /* CashinViewController.m */; };
 		C9B137C11CBFCB91002289C9 /* CashinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137BF1CBFCB91002289C9 /* CashinViewController.m */; };
 		C9B137C21CBFCB91002289C9 /* CashinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B137BF1CBFCB91002289C9 /* CashinViewController.m */; };
@@ -608,9 +593,6 @@
 		C9B1866D1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1866C1A9E01D400077C5F /* FLTutoPopoverViewController.m */; };
 		C9B1866E1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1866C1A9E01D400077C5F /* FLTutoPopoverViewController.m */; };
 		C9B1866F1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B1866C1A9E01D400077C5F /* FLTutoPopoverViewController.m */; };
-		C9B4AA6A1AE7C606002E0723 /* FLScannerOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */; };
-		C9B4AA6B1AE7C606002E0723 /* FLScannerOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */; };
-		C9B4AA6C1AE7C606002E0723 /* FLScannerOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */; };
 		C9B761901C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */; };
 		C9B761911C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */; };
 		C9B761921C9FF666000BBAF5 /* ShareLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */; };
@@ -734,6 +716,15 @@
 		C9DD72201C9891AD000D1664 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD721F1C9891AD000D1664 /* CommentCell.m */; };
 		C9DD72211C9891AD000D1664 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD721F1C9891AD000D1664 /* CommentCell.m */; };
 		C9DD72221C9891AD000D1664 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DD721F1C9891AD000D1664 /* CommentCell.m */; };
+		C9E1A7D31D8FEBFB00649BA0 /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A7D21D8FEBFB00649BA0 /* NewCollectController.m */; };
+		C9E1A7D61D8FECB000649BA0 /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A7D51D8FECB000649BA0 /* ShareSMSViewController.m */; };
+		C9E1A7D91D8FED7900649BA0 /* 3DSecureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A7D81D8FED7900649BA0 /* 3DSecureViewController.m */; };
+		C9E1A7DA1D8FED9300649BA0 /* 3DSecureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A7D81D8FED7900649BA0 /* 3DSecureViewController.m */; };
+		C9E1A7DB1D8FED9D00649BA0 /* 3DSecureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A7D81D8FED7900649BA0 /* 3DSecureViewController.m */; };
+		C9E1A7DC1D8FEDAE00649BA0 /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A7D51D8FECB000649BA0 /* ShareSMSViewController.m */; };
+		C9E1A7DD1D8FEDB600649BA0 /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A7D21D8FEBFB00649BA0 /* NewCollectController.m */; };
+		C9E1A7DE1D8FEDBF00649BA0 /* NewCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A7D21D8FEBFB00649BA0 /* NewCollectController.m */; };
+		C9E1A7DF1D8FEDC500649BA0 /* ShareSMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A7D51D8FECB000649BA0 /* ShareSMSViewController.m */; };
 		C9E7ACD91D65ED240017BC38 /* ShopParamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E7ACD81D65ED240017BC38 /* ShopParamViewController.m */; };
 		C9E7ACDA1D65ED240017BC38 /* ShopParamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E7ACD81D65ED240017BC38 /* ShopParamViewController.m */; };
 		C9E7ACDB1D65ED240017BC38 /* ShopParamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E7ACD81D65ED240017BC38 /* ShopParamViewController.m */; };
@@ -803,8 +794,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		05A01555B910DE768C05B873 /* Pods-Flooz dev.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.local.xcconfig"; sourceTree = "<group>"; };
-		2A7ABA4A0C7A3772FEAEDFE8 /* Pods-Flooz local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.debug.xcconfig"; sourceTree = "<group>"; };
+		0C3D0ACF9C502DCFC5FACBB1 /* Pods-Flooz local.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.local.xcconfig"; sourceTree = "<group>"; };
+		26A068AC9C9B48B6DC9CCCB2 /* Pods-Flooz dev.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.local.xcconfig"; sourceTree = "<group>"; };
+		26E390072B511AAD8F45A3CC /* Pods-Flooz local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.release.xcconfig"; sourceTree = "<group>"; };
+		2BAC9DAB1DA4145ADB756962 /* Pods-FloozTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2F0F6AF919DF0686004CA223 /* FLSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSwitch.h; path = Views/FLSwitchView/FLSwitch.h; sourceTree = "<group>"; };
 		2F0F6AFA19DF0686004CA223 /* FLSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSwitch.m; path = Views/FLSwitchView/FLSwitch.m; sourceTree = "<group>"; };
 		2F0F6AFD19DF3E35004CA223 /* SettingsBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsBankViewController.h; sourceTree = "<group>"; };
@@ -828,9 +821,9 @@
 		2F88A32319F19BCF001FC26F /* FLViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLViewDelegate.h; path = Views/FLTextField/FLViewDelegate.h; sourceTree = "<group>"; };
 		2FA3E55919DDE71900EC65C2 /* SettingsSecurityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSecurityViewController.h; sourceTree = "<group>"; };
 		2FA3E55A19DDE71900EC65C2 /* SettingsSecurityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSecurityViewController.m; sourceTree = "<group>"; };
-		2FC2545D19B6742500EB1EED /* ShareAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareAppViewController.h; path = Controllers/ShareApp/ShareAppViewController.h; sourceTree = "<group>"; };
-		2FC2545E19B6742500EB1EED /* ShareAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareAppViewController.m; path = Controllers/ShareApp/ShareAppViewController.m; sourceTree = "<group>"; };
-		2FC2545F19B6742500EB1EED /* ShareAppViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ShareAppViewController.xib; path = Controllers/ShareApp/ShareAppViewController.xib; sourceTree = "<group>"; };
+		2FC2545D19B6742500EB1EED /* ShareAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareAppViewController.h; path = Controllers/Share/ShareAppViewController.h; sourceTree = "<group>"; };
+		2FC2545E19B6742500EB1EED /* ShareAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareAppViewController.m; path = Controllers/Share/ShareAppViewController.m; sourceTree = "<group>"; };
+		2FC2545F19B6742500EB1EED /* ShareAppViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ShareAppViewController.xib; path = Controllers/Share/ShareAppViewController.xib; sourceTree = "<group>"; };
 		2FC8784219C08B0300F034E0 /* FLPopupInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPopupInformation.h; path = Views/FLPopup/FLPopupInformation.h; sourceTree = "<group>"; };
 		2FC8784319C08B0300F034E0 /* FLPopupInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPopupInformation.m; path = Views/FLPopup/FLPopupInformation.m; sourceTree = "<group>"; };
 		2FC8873519C87A1900A109D8 /* FLTextFieldSignup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextFieldSignup.h; path = Views/FLTextFieldSignup/FLTextFieldSignup.h; sourceTree = "<group>"; };
@@ -849,19 +842,16 @@
 		2FEAA9C919DC50A200EE95C9 /* UISearchBar+Subviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UISearchBar+Subviews.m"; path = "Util/UISearchBar+Subviews.m"; sourceTree = "<group>"; };
 		2FEAA9CD19DC63B500EE95C9 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = Views/BaseViewController/BaseViewController.h; sourceTree = "<group>"; };
 		2FEAA9CE19DC63B500EE95C9 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = Views/BaseViewController/BaseViewController.m; sourceTree = "<group>"; };
-		39C7AAEBE2F4C1E9600F787E /* Pods-Flooz local.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.local.xcconfig"; sourceTree = "<group>"; };
-		3CFAB56D3C5BD13A40DFE9A0 /* Pods-Flooz.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.recette.xcconfig"; sourceTree = "<group>"; };
-		439AA252C1690C29117EF109 /* libPods-Flooz dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B8208B2DC8CA49EFE7E25F7 /* Pods-FloozTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.debug.xcconfig"; sourceTree = "<group>"; };
-		634B150C9B811BA2C56EA3D9 /* Pods-Flooz local.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.recette.xcconfig"; sourceTree = "<group>"; };
-		68E495AD8EB30DA3A0EB9D2C /* Pods-Flooz local.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.release.xcconfig"; sourceTree = "<group>"; };
-		7367A9DA060B71D681F61EEF /* Pods-Flooz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.debug.xcconfig"; sourceTree = "<group>"; };
-		746904E147650706ED491D26 /* Pods-Flooz.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.local.xcconfig"; sourceTree = "<group>"; };
-		778D0112BAEAE7ACD4A166B1 /* Pods-FloozTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.local.xcconfig"; sourceTree = "<group>"; };
-		7B0E20663ECBACBE30845CF1 /* libPods-FloozTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		83308C488458E6FE87063EA2 /* Pods-Flooz dev.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.recette.xcconfig"; sourceTree = "<group>"; };
-		900A3063929FE1D7D134F959 /* Pods-Flooz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.release.xcconfig"; sourceTree = "<group>"; };
-		98E044B02E0198D142E47992 /* Pods-FloozTests.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.recette.xcconfig"; sourceTree = "<group>"; };
+		515645B883174D2468C00AB5 /* Pods-Flooz local.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.debug.xcconfig"; sourceTree = "<group>"; };
+		5EF8C8B75968CF11E7AF377E /* Pods-FloozTests.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.recette.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.recette.xcconfig"; sourceTree = "<group>"; };
+		5F619201D5B77F028FD00E1E /* Pods-Flooz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.debug.xcconfig"; sourceTree = "<group>"; };
+		5F79C86F4055C81E08981503 /* Pods-Flooz.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.local.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.local.xcconfig"; sourceTree = "<group>"; };
+		67818ADB38E10D3D57C31A40 /* libPods-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		67FB5547E03A1F49A9F3106F /* Pods-Flooz dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.release.xcconfig"; sourceTree = "<group>"; };
+		6E3E321A51EF9E4D66817346 /* Pods-Flooz local.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz local.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local.recette.xcconfig"; sourceTree = "<group>"; };
+		788E51C9CCAA4B6A54587956 /* libPods-FloozTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FloozTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FCF2899E5316F9310D53B68 /* Pods-Flooz.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.recette.xcconfig"; sourceTree = "<group>"; };
+		A4C763D06BF5A5D43AE733D3 /* Pods-Flooz dev.recette.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.recette.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.recette.xcconfig"; sourceTree = "<group>"; };
 		AB0857FB1923AB13007C1927 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SplashViewController.h; path = Controllers/Splash/SplashViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AB0857FC1923AB13007C1927 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashViewController.m; path = Controllers/Splash/SplashViewController.m; sourceTree = "<group>"; };
 		AB0857FD1923AB13007C1927 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashViewController.xib; path = Controllers/Splash/SplashViewController.xib; sourceTree = "<group>"; };
@@ -890,10 +880,10 @@
 		AB3D0891186CA11A00CF8380 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AB3D0895186CA11A00CF8380 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		AB3D0899186CA11A00CF8380 /* Flooz-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Flooz-Info.plist"; sourceTree = "<group>"; };
+		AB3D0899186CA11A00CF8380 /* Flooz-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Flooz-Info.plist"; path = "Supporting Files/Flooz-Info.plist"; sourceTree = "<group>"; };
 		AB3D089B186CA11A00CF8380 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AB3D089D186CA11A00CF8380 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AB3D089F186CA11A00CF8380 /* Flooz-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flooz-Prefix.pch"; sourceTree = "<group>"; };
+		AB3D089D186CA11A00CF8380 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Supporting Files/main.m"; sourceTree = "<group>"; };
+		AB3D089F186CA11A00CF8380 /* Flooz-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Flooz-Prefix.pch"; path = "Supporting Files/Flooz-Prefix.pch"; sourceTree = "<group>"; };
 		AB3D08A0186CA11A00CF8380 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Flooz/AppDelegate.h; sourceTree = "<group>"; };
 		AB3D08A1186CA11A00CF8380 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Flooz/AppDelegate.m; sourceTree = "<group>"; };
 		AB3D08A3186CA11A00CF8380 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -901,8 +891,8 @@
 		AB3D08B2186CA11A00CF8380 /* FloozTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FloozTests-Info.plist"; sourceTree = "<group>"; };
 		AB3D08B4186CA11A00CF8380 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AB3D08B6186CA11A00CF8380 /* FloozTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloozTests.m; sourceTree = "<group>"; };
-		AB3D08DE1871AAB400CF8380 /* Flooz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flooz.h; path = Flooz/Flooz.h; sourceTree = "<group>"; };
-		AB3D08DF1871AAB400CF8380 /* Flooz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Flooz.m; path = Flooz/Flooz.m; sourceTree = "<group>"; };
+		AB3D08DE1871AAB400CF8380 /* Flooz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flooz.h; path = Library/Flooz/Flooz.h; sourceTree = "<group>"; };
+		AB3D08DF1871AAB400CF8380 /* Flooz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Flooz.m; path = Library/Flooz/Flooz.m; sourceTree = "<group>"; };
 		AB3D08E21871BEEE00CF8380 /* UIColor+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+custom.h"; path = "Util/UIColor+custom.h"; sourceTree = "<group>"; };
 		AB3D08E31871BEEE00CF8380 /* UIColor+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+custom.m"; path = "Util/UIColor+custom.m"; sourceTree = "<group>"; };
 		AB3D08E51871C0CC00CF8380 /* UIFont+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIFont+custom.h"; path = "Util/UIFont+custom.h"; sourceTree = "<group>"; };
@@ -913,7 +903,7 @@
 		AB5EB6EA188214F000D81AF6 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TimelineViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		AB5EB6F51882151000D81AF6 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
 		AB5EB6F61882151000D81AF6 /* TimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineViewController.xib; sourceTree = "<group>"; };
-		AB5EB7011882157300D81AF6 /* FLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTableView.m; path = Views/FLTableView.m; sourceTree = "<group>"; };
+		AB5EB7011882157300D81AF6 /* FLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTableView.m; path = Views/FLTableView/FLTableView.m; sourceTree = "<group>"; };
 		AB6DA50818C4A5D80073B947 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = Controllers/Web/WebViewController.h; sourceTree = "<group>"; };
 		AB6DA50918C4A5D80073B947 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = Controllers/Web/WebViewController.m; sourceTree = "<group>"; };
 		AB6DA50A18C4A5D80073B947 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = Controllers/Web/WebViewController.xib; sourceTree = "<group>"; };
@@ -988,7 +978,7 @@
 		ABE9147718929AC8003AC722 /* NotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationsViewController.m; path = Controllers/Notifications/NotificationsViewController.m; sourceTree = "<group>"; };
 		ABE914891892C734003AC722 /* FLKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLKeyboardView.h; path = Views/FLKeyboardView/FLKeyboardView.h; sourceTree = "<group>"; };
 		ABE9148A1892C734003AC722 /* FLKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLKeyboardView.m; path = Views/FLKeyboardView/FLKeyboardView.m; sourceTree = "<group>"; };
-		ABE9149418933900003AC722 /* FLTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLTableView.h; path = Flooz/Views/FLTableView.h; sourceTree = SOURCE_ROOT; };
+		ABE9149418933900003AC722 /* FLTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLTableView.h; path = Flooz/Views/FLTableView/FLTableView.h; sourceTree = SOURCE_ROOT; };
 		ABE914A21896D2D9003AC722 /* FLHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLHelper.h; path = Util/FLHelper.h; sourceTree = "<group>"; };
 		ABE914A31896D2D9003AC722 /* FLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLHelper.m; path = Util/FLHelper.m; sourceTree = "<group>"; };
 		ABE914A51896D4C3003AC722 /* FLNewTransactionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNewTransactionBar.h; path = Views/FLNewTransactionBar/FLNewTransactionBar.h; sourceTree = "<group>"; };
@@ -1021,37 +1011,33 @@
 		ABF7094018A4D64300517389 /* TransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionCell.m; path = TransactionCell/TransactionCell.m; sourceTree = "<group>"; };
 		ABF7095B18A4FD6B00517389 /* FLComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLComment.h; path = Models/FLComment.h; sourceTree = "<group>"; };
 		ABF7095C18A4FD6B00517389 /* FLComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLComment.m; path = Models/FLComment.m; sourceTree = "<group>"; };
-		B57E9BE834021AB5C3A4123A /* libPods-Flooz local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6A7439F0941185A7B0A1270 /* Pods-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
-		C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTransactionDescriptionView.m; sourceTree = "<group>"; };
-		C9037F491BFE0481004256BF /* FLCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountry.m; sourceTree = "<group>"; };
-		C905A8D81A56D5BE00473963 /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
-		C905A8D91A56D5BE00473963 /* SIOSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOSocket.h; sourceTree = "<group>"; };
-		C905A8DA1A56D5BE00473963 /* SIOSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOSocket.m; sourceTree = "<group>"; };
-		C907297C1B59569900BA691C /* NSString+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+custom.h"; sourceTree = "<group>"; };
-		C907297D1B59569900BA691C /* NSString+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+custom.m"; sourceTree = "<group>"; };
-		C9088B6A1A51A22200026FE9 /* SignupBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupBaseViewController.h; sourceTree = "<group>"; };
-		C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupBaseViewController.m; sourceTree = "<group>"; };
-		C908A3E91A9F211F00A07818 /* FLPopoverTutoTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPopoverTutoTheme.h; sourceTree = "<group>"; };
-		C908A3EA1A9F211F00A07818 /* FLPopoverTutoTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPopoverTutoTheme.m; sourceTree = "<group>"; };
-		C90B947E1A00E96900E2C53B /* 3DSecureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 3DSecureViewController.h; sourceTree = "<group>"; };
-		C90B947F1A00E96900E2C53B /* 3DSecureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = 3DSecureViewController.m; sourceTree = "<group>"; };
-		C910E0EC1A5405A000EB77DE /* FLLikePopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLLikePopoverViewController.h; sourceTree = "<group>"; };
-		C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLLikePopoverViewController.m; sourceTree = "<group>"; };
-		C9160D541B6A6A5400A379DA /* DiscountCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountCodeViewController.h; sourceTree = "<group>"; };
-		C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscountCodeViewController.m; sourceTree = "<group>"; };
+		AC735E2C85DEC29249F7AF17 /* libPods-Flooz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B291AB299FE2084FFB29794D /* Pods-FloozTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.release.xcconfig"; sourceTree = "<group>"; };
+		C902520F1B67C0F00041DE65 /* FLTransactionDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTransactionDescriptionView.m; path = Views/FLTransactionDescriptionView/FLTransactionDescriptionView.m; sourceTree = "<group>"; };
+		C9037F491BFE0481004256BF /* FLCountry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLCountry.m; path = Models/FLCountry.m; sourceTree = "<group>"; };
+		C905A8D81A56D5BE00473963 /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = socket.io.js.h; path = Library/SIOSocket/socket.io.js.h; sourceTree = "<group>"; };
+		C905A8D91A56D5BE00473963 /* SIOSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SIOSocket.h; path = Library/SIOSocket/SIOSocket.h; sourceTree = "<group>"; };
+		C905A8DA1A56D5BE00473963 /* SIOSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SIOSocket.m; path = Library/SIOSocket/SIOSocket.m; sourceTree = "<group>"; };
+		C907297C1B59569900BA691C /* NSString+custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+custom.h"; path = "Util/NSString+custom.h"; sourceTree = "<group>"; };
+		C907297D1B59569900BA691C /* NSString+custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+custom.m"; path = "Util/NSString+custom.m"; sourceTree = "<group>"; };
+		C9088B6A1A51A22200026FE9 /* SignupBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupBaseViewController.h; path = Controllers/Signup/SignupBaseViewController.h; sourceTree = "<group>"; };
+		C9088B6B1A51A22200026FE9 /* SignupBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupBaseViewController.m; path = Controllers/Signup/SignupBaseViewController.m; sourceTree = "<group>"; };
+		C908A3E91A9F211F00A07818 /* FLPopoverTutoTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPopoverTutoTheme.h; path = Util/FLPopoverTutoTheme.h; sourceTree = "<group>"; };
+		C908A3EA1A9F211F00A07818 /* FLPopoverTutoTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPopoverTutoTheme.m; path = Util/FLPopoverTutoTheme.m; sourceTree = "<group>"; };
+		C910E0EC1A5405A000EB77DE /* FLLikePopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLLikePopoverViewController.h; path = Views/FLTransactionDescriptionView/FLLikePopoverViewController.h; sourceTree = "<group>"; };
+		C910E0ED1A5405A000EB77DE /* FLLikePopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLLikePopoverViewController.m; path = Views/FLTransactionDescriptionView/FLLikePopoverViewController.m; sourceTree = "<group>"; };
+		C9160D541B6A6A5400A379DA /* DiscountCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiscountCodeViewController.h; path = Controllers/DiscountCode/DiscountCodeViewController.h; sourceTree = "<group>"; };
+		C9160D551B6A6A5400A379DA /* DiscountCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DiscountCodeViewController.m; path = Controllers/DiscountCode/DiscountCodeViewController.m; sourceTree = "<group>"; };
 		C917C8061BE773B70018043C /* GeolocViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeolocViewController.h; path = Controllers/Geoloc/GeolocViewController.h; sourceTree = "<group>"; };
 		C917C8071BE773B70018043C /* GeolocViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeolocViewController.m; path = Controllers/Geoloc/GeolocViewController.m; sourceTree = "<group>"; };
 		C917C80B1BE79D950018043C /* LocationSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationSearchBar.h; path = Controllers/Geoloc/LocationSearchBar.h; sourceTree = "<group>"; };
 		C917C80C1BE79D950018043C /* LocationSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationSearchBar.m; path = Controllers/Geoloc/LocationSearchBar.m; sourceTree = "<group>"; };
 		C917C8111BE7A6CE0018043C /* PlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceCell.h; path = PlaceCell/PlaceCell.h; sourceTree = "<group>"; };
 		C917C8121BE7A6CE0018043C /* PlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceCell.m; path = PlaceCell/PlaceCell.m; sourceTree = "<group>"; };
-		C919AD961BBAC3CD00B87AAB /* FLReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReachability.h; sourceTree = "<group>"; };
-		C919AD971BBAC3CD00B87AAB /* FLReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReachability.m; sourceTree = "<group>"; };
-		C919AD9B1BBAD5AE00B87AAB /* FLPopupTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPopupTrigger.h; sourceTree = "<group>"; };
-		C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPopupTrigger.m; sourceTree = "<group>"; };
-		C91C5D3D1BC65E4F00B88D81 /* ShareSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareSMSViewController.h; path = Controllers/ShareApp/ShareSMSViewController.h; sourceTree = "<group>"; };
-		C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareSMSViewController.m; path = Controllers/ShareApp/ShareSMSViewController.m; sourceTree = "<group>"; };
+		C919AD961BBAC3CD00B87AAB /* FLReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLReachability.h; path = Util/FLReachability.h; sourceTree = "<group>"; };
+		C919AD971BBAC3CD00B87AAB /* FLReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLReachability.m; path = Util/FLReachability.m; sourceTree = "<group>"; };
+		C919AD9B1BBAD5AE00B87AAB /* FLPopupTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPopupTrigger.h; path = Views/FLPopup/FLPopupTrigger.h; sourceTree = "<group>"; };
+		C919AD9C1BBAD5AE00B87AAB /* FLPopupTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPopupTrigger.m; path = Views/FLPopup/FLPopupTrigger.m; sourceTree = "<group>"; };
 		C91C5D421BC68FF500B88D81 /* ShareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareCell.h; path = ShareCell/ShareCell.h; sourceTree = "<group>"; };
 		C91C5D431BC68FF500B88D81 /* ShareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareCell.m; path = ShareCell/ShareCell.m; sourceTree = "<group>"; };
 		C91D4EF41C50FA4E00C65382 /* TimelineDealCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineDealCell.h; path = TimelineDealCell/TimelineDealCell.h; sourceTree = "<group>"; };
@@ -1061,12 +1047,12 @@
 		C92081891D7977FA006BC697 /* CashOutHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashOutHistoryViewController.m; path = Controllers/CashOut/CashOutHistoryViewController.m; sourceTree = "<group>"; };
 		C920818E1D79ADA9006BC697 /* CashoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashoutCell.h; path = CashoutCell/CashoutCell.h; sourceTree = "<group>"; };
 		C920818F1D79ADA9006BC697 /* CashoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashoutCell.m; path = CashoutCell/CashoutCell.m; sourceTree = "<group>"; };
-		C921175A1B66726900CF2D51 /* FLInvitationTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLInvitationTexts.h; sourceTree = "<group>"; };
-		C921175B1B66726900CF2D51 /* FLInvitationTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLInvitationTexts.m; sourceTree = "<group>"; };
-		C92195E71C57858900318FD3 /* FLTriggerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTriggerManager.m; sourceTree = "<group>"; };
-		C92195E81C57858900318FD3 /* FLTriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTriggerManager.h; sourceTree = "<group>"; };
-		C927061C1B81D7EE00FB1A11 /* FLSharePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSharePopup.h; sourceTree = "<group>"; };
-		C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSharePopup.m; sourceTree = "<group>"; };
+		C921175A1B66726900CF2D51 /* FLInvitationTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLInvitationTexts.h; path = Models/FLInvitationTexts.h; sourceTree = "<group>"; };
+		C921175B1B66726900CF2D51 /* FLInvitationTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLInvitationTexts.m; path = Models/FLInvitationTexts.m; sourceTree = "<group>"; };
+		C92195E71C57858900318FD3 /* FLTriggerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTriggerManager.m; path = Library/FLTriggerManager/FLTriggerManager.m; sourceTree = "<group>"; };
+		C92195E81C57858900318FD3 /* FLTriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTriggerManager.h; path = Library/FLTriggerManager/FLTriggerManager.h; sourceTree = "<group>"; };
+		C927061C1B81D7EE00FB1A11 /* FLSharePopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSharePopup.h; path = Views/FLPopup/FLSharePopup.h; sourceTree = "<group>"; };
+		C927061D1B81D7EE00FB1A11 /* FLSharePopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSharePopup.m; path = Views/FLPopup/FLSharePopup.m; sourceTree = "<group>"; };
 		C928E8C01C3D16310032FAE4 /* FLDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLDeal.h; path = Models/FLDeal.h; sourceTree = "<group>"; };
 		C928E8C11C3D16310032FAE4 /* FLDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLDeal.m; path = Models/FLDeal.m; sourceTree = "<group>"; };
 		C92900D31C8F159E0008D61D /* CollectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectViewController.h; path = Controllers/Collect/CollectViewController.h; sourceTree = "<group>"; };
@@ -1075,59 +1061,57 @@
 		C92900DA1C8F1DE70008D61D /* CollectHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectHeaderView.m; path = Controllers/Collect/CollectHeaderView/CollectHeaderView.m; sourceTree = "<group>"; };
 		C92A31AB1CAD27B9004BA50F /* TransactionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionHeaderView.h; path = Controllers/Transaction/TransactionHeaderView/TransactionHeaderView.h; sourceTree = "<group>"; };
 		C92A31AC1CAD27B9004BA50F /* TransactionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionHeaderView.m; path = Controllers/Transaction/TransactionHeaderView/TransactionHeaderView.m; sourceTree = "<group>"; };
-		C93118461A1F7E0B008C6EEC /* FLReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLReport.h; sourceTree = "<group>"; };
-		C93118471A1F7E0B008C6EEC /* FLReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLReport.m; sourceTree = "<group>"; };
-		C938EFCC1AE68C5900A3F740 /* ScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerViewController.h; sourceTree = "<group>"; };
-		C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
+		C93118461A1F7E0B008C6EEC /* FLReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLReport.h; path = Models/FLReport.h; sourceTree = "<group>"; };
+		C93118471A1F7E0B008C6EEC /* FLReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLReport.m; path = Models/FLReport.m; sourceTree = "<group>"; };
 		C93A2D6E1C4FE75400C30821 /* FLTimelineDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTimelineDeal.h; path = Models/FLTimelineDeal.h; sourceTree = "<group>"; };
 		C93A2D6F1C4FE75400C30821 /* FLTimelineDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTimelineDeal.m; path = Models/FLTimelineDeal.m; sourceTree = "<group>"; };
-		C93F669F1BB5556F0032ED56 /* UIView+LayerShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LayerShot.h"; sourceTree = "<group>"; };
-		C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayerShot.m"; sourceTree = "<group>"; };
-		C93F66A41BB555AD0032ED56 /* FLMultiLineSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLMultiLineSegmentedControl.h; sourceTree = "<group>"; };
-		C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLMultiLineSegmentedControl.m; sourceTree = "<group>"; };
-		C9436EBB1BCBA34E000F382C /* ValidateSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSMSViewController.h; path = Controllers/ValidateSMS/ValidateSMSViewController.h; sourceTree = "<group>"; };
-		C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSMSViewController.m; path = Controllers/ValidateSMS/ValidateSMSViewController.m; sourceTree = "<group>"; };
-		C94EF3B71CB2AB8E003EA4CF /* AmbassadorStepsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AmbassadorStepsViewController.h; path = Controllers/ShareApp/AmbassadorStepsList/AmbassadorStepsViewController.h; sourceTree = "<group>"; };
-		C94EF3B81CB2AB8E003EA4CF /* AmbassadorStepsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AmbassadorStepsViewController.m; path = Controllers/ShareApp/AmbassadorStepsList/AmbassadorStepsViewController.m; sourceTree = "<group>"; };
-		C950540C1B4E7E9A00B9FB2C /* FLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTabBarController.h; sourceTree = "<group>"; };
-		C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTabBarController.m; sourceTree = "<group>"; };
+		C93F669F1BB5556F0032ED56 /* UIView+LayerShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+LayerShot.h"; path = "Util/UIView+LayerShot.h"; sourceTree = "<group>"; };
+		C93F66A01BB5556F0032ED56 /* UIView+LayerShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+LayerShot.m"; path = "Util/UIView+LayerShot.m"; sourceTree = "<group>"; };
+		C93F66A41BB555AD0032ED56 /* FLMultiLineSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLMultiLineSegmentedControl.h; path = Util/FLMultiLineSegmentedControl.h; sourceTree = "<group>"; };
+		C93F66A51BB555AD0032ED56 /* FLMultiLineSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLMultiLineSegmentedControl.m; path = Util/FLMultiLineSegmentedControl.m; sourceTree = "<group>"; };
+		C9436EBB1BCBA34E000F382C /* ValidateSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSMSViewController.h; path = Controllers/Validate/ValidateSMSViewController.h; sourceTree = "<group>"; };
+		C9436EBC1BCBA34E000F382C /* ValidateSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSMSViewController.m; path = Controllers/Validate/ValidateSMSViewController.m; sourceTree = "<group>"; };
+		C94EF3B71CB2AB8E003EA4CF /* AmbassadorStepsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorStepsViewController.h; sourceTree = "<group>"; };
+		C94EF3B81CB2AB8E003EA4CF /* AmbassadorStepsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorStepsViewController.m; sourceTree = "<group>"; };
+		C950540C1B4E7E9A00B9FB2C /* FLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTabBarController.h; path = Controllers/FLTabBarController/FLTabBarController.h; sourceTree = "<group>"; };
+		C950540D1B4E7E9A00B9FB2C /* FLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTabBarController.m; path = Controllers/FLTabBarController/FLTabBarController.m; sourceTree = "<group>"; };
 		C95254D41B5E7BC300D88096 /* AccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountCell.h; sourceTree = "<group>"; };
 		C95254D51B5E7BC300D88096 /* AccountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountCell.m; sourceTree = "<group>"; };
-		C95502CD1C2AA8D8002E9046 /* ARChromeActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARChromeActivity.h; sourceTree = "<group>"; };
-		C95502CE1C2AA8D8002E9046 /* ARChromeActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARChromeActivity.m; sourceTree = "<group>"; };
-		C95502CF1C2AA8D8002E9046 /* OpenInChromeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenInChromeController.h; sourceTree = "<group>"; };
-		C95502D01C2AA8D8002E9046 /* OpenInChromeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInChromeController.m; sourceTree = "<group>"; };
-		C95502D81C2AB43F002E9046 /* FLCopyLinkActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLCopyLinkActivity.h; path = FLCopyLinkActivity/FLCopyLinkActivity.h; sourceTree = "<group>"; };
-		C95502D91C2AB43F002E9046 /* FLCopyLinkActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLCopyLinkActivity.m; path = FLCopyLinkActivity/FLCopyLinkActivity.m; sourceTree = "<group>"; };
+		C95502CD1C2AA8D8002E9046 /* ARChromeActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARChromeActivity.h; path = ../Library/ARChromeActivity/ARChromeActivity.h; sourceTree = "<group>"; };
+		C95502CE1C2AA8D8002E9046 /* ARChromeActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ARChromeActivity.m; path = ../Library/ARChromeActivity/ARChromeActivity.m; sourceTree = "<group>"; };
+		C95502CF1C2AA8D8002E9046 /* OpenInChromeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenInChromeController.h; path = ../Library/ARChromeActivity/OpenInChromeController.h; sourceTree = "<group>"; };
+		C95502D01C2AA8D8002E9046 /* OpenInChromeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenInChromeController.m; path = ../Library/ARChromeActivity/OpenInChromeController.m; sourceTree = "<group>"; };
+		C95502D81C2AB43F002E9046 /* FLCopyLinkActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLCopyLinkActivity.h; path = Views/FLCopyLinkActivity/FLCopyLinkActivity.h; sourceTree = "<group>"; };
+		C95502D91C2AB43F002E9046 /* FLCopyLinkActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLCopyLinkActivity.m; path = Views/FLCopyLinkActivity/FLCopyLinkActivity.m; sourceTree = "<group>"; };
 		C95571681CEC7771001A79AA /* PaymentAudiotelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentAudiotelViewController.h; path = Controllers/Payments/PaymentAudiotelViewController.h; sourceTree = "<group>"; };
 		C95571691CEC7771001A79AA /* PaymentAudiotelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentAudiotelViewController.m; path = Controllers/Payments/PaymentAudiotelViewController.m; sourceTree = "<group>"; };
 		C955716D1CEC8926001A79AA /* PaymentSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentSourceViewController.h; path = Controllers/Payments/PaymentSourceViewController.h; sourceTree = "<group>"; };
 		C955716E1CEC8926001A79AA /* PaymentSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentSourceViewController.m; path = Controllers/Payments/PaymentSourceViewController.m; sourceTree = "<group>"; };
-		C957726F1A9C7BB400CD6BC0 /* FLTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTexts.h; sourceTree = "<group>"; };
-		C95772701A9C7BB400CD6BC0 /* FLTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTexts.m; sourceTree = "<group>"; };
-		C95772751A9CBDB400CD6BC0 /* FriendPickerEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendPickerEmptyCell.h; sourceTree = "<group>"; };
-		C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendPickerEmptyCell.m; sourceTree = "<group>"; };
-		C959B4D11D479F2C00D24348 /* coin.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.caf; sourceTree = "<group>"; };
-		C95AED951A49AF4A00000FB3 /* ClipboardPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipboardPopoverViewController.h; sourceTree = "<group>"; };
-		C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClipboardPopoverViewController.m; sourceTree = "<group>"; };
-		C95AED9A1A49B5E500000FB3 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
-		C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
-		C95AED9C1A49B5E500000FB3 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
-		C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
-		C95AEDA31A49BB9100000FB3 /* FLClearActionTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLClearActionTextView.h; sourceTree = "<group>"; };
-		C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLClearActionTextView.m; sourceTree = "<group>"; };
+		C957726F1A9C7BB400CD6BC0 /* FLTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTexts.h; path = Models/FLTexts.h; sourceTree = "<group>"; };
+		C95772701A9C7BB400CD6BC0 /* FLTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTexts.m; path = Models/FLTexts.m; sourceTree = "<group>"; };
+		C95772751A9CBDB400CD6BC0 /* FriendPickerEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendPickerEmptyCell.h; path = Controllers/FriendPicker/FriendPickerEmptyCell/FriendPickerEmptyCell.h; sourceTree = "<group>"; };
+		C95772761A9CBDB400CD6BC0 /* FriendPickerEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendPickerEmptyCell.m; path = Controllers/FriendPicker/FriendPickerEmptyCell/FriendPickerEmptyCell.m; sourceTree = "<group>"; };
+		C959B4D11D479F2C00D24348 /* coin.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = coin.caf; path = Resources/Sounds/coin.caf; sourceTree = "<group>"; };
+		C95AED951A49AF4A00000FB3 /* ClipboardPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClipboardPopoverViewController.h; path = Controllers/Share/ClipboardPopoverViewController.h; sourceTree = "<group>"; };
+		C95AED961A49AF4A00000FB3 /* ClipboardPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClipboardPopoverViewController.m; path = Controllers/Share/ClipboardPopoverViewController.m; sourceTree = "<group>"; };
+		C95AED9A1A49B5E500000FB3 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYPopoverController.h; path = ../Library/WYPopoverController/WYPopoverController.h; sourceTree = "<group>"; };
+		C95AED9B1A49B5E500000FB3 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYPopoverController.m; path = ../Library/WYPopoverController/WYPopoverController.m; sourceTree = "<group>"; };
+		C95AED9C1A49B5E500000FB3 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WYStoryboardPopoverSegue.h; path = ../Library/WYPopoverController/WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
+		C95AED9D1A49B5E500000FB3 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WYStoryboardPopoverSegue.m; path = ../Library/WYPopoverController/WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
+		C95AEDA31A49BB9100000FB3 /* FLClearActionTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLClearActionTextView.h; path = Views/FLClearActionTextView/FLClearActionTextView.h; sourceTree = "<group>"; };
+		C95AEDA41A49BB9100000FB3 /* FLClearActionTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLClearActionTextView.m; path = Views/FLClearActionTextView/FLClearActionTextView.m; sourceTree = "<group>"; };
 		C95CAC2B1D78668200B2D676 /* ShopHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopHistoryCell.h; path = ShopCell/ShopHistoryCell.h; sourceTree = "<group>"; };
 		C95CAC2C1D78668200B2D676 /* ShopHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShopHistoryCell.m; path = ShopCell/ShopHistoryCell.m; sourceTree = "<group>"; };
-		C960DC8E1BB14D020089B074 /* FLSocialHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSocialHelper.h; sourceTree = "<group>"; };
-		C960DC8F1BB14D020089B074 /* FLSocialHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSocialHelper.m; sourceTree = "<group>"; };
+		C960DC8E1BB14D020089B074 /* FLSocialHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSocialHelper.h; path = Util/FLSocialHelper.h; sourceTree = "<group>"; };
+		C960DC8F1BB14D020089B074 /* FLSocialHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSocialHelper.m; path = Util/FLSocialHelper.m; sourceTree = "<group>"; };
 		C96134D51D7821A300165261 /* ShopHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopHistoryViewController.h; path = Controllers/Shop/ShopHistoryViewController.h; sourceTree = "<group>"; };
 		C96134D61D7821A300165261 /* ShopHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShopHistoryViewController.m; path = Controllers/Shop/ShopHistoryViewController.m; sourceTree = "<group>"; };
 		C96B4D9A1D49F89A00EA8163 /* FLAdvancedPopupTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAdvancedPopupTrigger.h; path = Views/FLPopup/FLAdvancedPopupTrigger.h; sourceTree = "<group>"; };
 		C96B4D9B1D49F89A00EA8163 /* FLAdvancedPopupTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAdvancedPopupTrigger.m; path = Views/FLPopup/FLAdvancedPopupTrigger.m; sourceTree = "<group>"; };
-		C96E5A661BA95EEE00F201E9 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewController.h; sourceTree = "<group>"; };
-		C96E5A671BA95EEE00F201E9 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
-		C9701DFE1D3CD3B400734092 /* MRCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCircularProgressView.h; sourceTree = "<group>"; };
-		C9701DFF1D3CD3B400734092 /* MRCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCircularProgressView.m; sourceTree = "<group>"; };
+		C96E5A661BA95EEE00F201E9 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = Controllers/User/UserViewController.h; sourceTree = "<group>"; };
+		C96E5A671BA95EEE00F201E9 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserViewController.m; path = Controllers/User/UserViewController.m; sourceTree = "<group>"; };
+		C9701DFE1D3CD3B400734092 /* MRCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRCircularProgressView.h; path = ../Library/MRCircularProgressView/MRCircularProgressView.h; sourceTree = "<group>"; };
+		C9701DFF1D3CD3B400734092 /* MRCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRCircularProgressView.m; path = ../Library/MRCircularProgressView/MRCircularProgressView.m; sourceTree = "<group>"; };
 		C9701E041D3CE29600734092 /* DotActivityIndicatorParms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotActivityIndicatorParms.h; sourceTree = "<group>"; };
 		C9701E051D3CE29600734092 /* DotActivityIndicatorParms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotActivityIndicatorParms.m; sourceTree = "<group>"; };
 		C9701E061D3CE29600734092 /* DotActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotActivityIndicatorView.h; sourceTree = "<group>"; };
@@ -1136,129 +1120,123 @@
 		C9701E0F1D3D044300734092 /* ScopePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScopePickerCell.m; path = Controllers/ScopePicker/ScopePickerCell.m; sourceTree = "<group>"; };
 		C975BAF81A92BB8E000E5AEA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
 		C975BAFA1A92BB8E000E5AEA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/YLMomentRelativeTimeLocalizable.strings; sourceTree = "<group>"; };
-		C975BB001A92BB8E000E5AEA /* YLMoment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLMoment.h; sourceTree = "<group>"; };
-		C975BB011A92BB8E000E5AEA /* YLMoment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLMoment.m; sourceTree = "<group>"; };
-		C97CCFD31BBD59AD0084ABF5 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
-		C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
-		C97EE6D01C3FFCDA003DE35B /* ocra.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ocra.otf; sourceTree = "<group>"; };
+		C975BB001A92BB8E000E5AEA /* YLMoment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YLMoment.h; path = ../Library/YLMoment/YLMoment.h; sourceTree = "<group>"; };
+		C975BB011A92BB8E000E5AEA /* YLMoment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YLMoment.m; path = ../Library/YLMoment/YLMoment.m; sourceTree = "<group>"; };
+		C97CCFD31BBD59AD0084ABF5 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditProfileViewController.h; path = Controllers/User/EditProfileViewController.h; sourceTree = "<group>"; };
+		C97CCFD41BBD59AD0084ABF5 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditProfileViewController.m; path = Controllers/User/EditProfileViewController.m; sourceTree = "<group>"; };
+		C97EE6D01C3FFCDA003DE35B /* ocra.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ocra.otf; path = Resources/Fonts/ocra.otf; sourceTree = "<group>"; };
 		C98013431A76921000019682 /* Flooz local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flooz local.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C980E40B1C17139E00E52F86 /* DeviceUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceUID.h; path = Library/DeviceUID/DeviceUID.h; sourceTree = "<group>"; };
 		C980E40C1C17139E00E52F86 /* DeviceUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceUID.m; path = Library/DeviceUID/DeviceUID.m; sourceTree = "<group>"; };
 		C982546F1BC2B78B00678A53 /* FriendRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendRequestViewController.h; path = Controllers/FriendRequest/FriendRequestViewController.h; sourceTree = "<group>"; };
 		C98254701BC2B78B00678A53 /* FriendRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendRequestViewController.m; path = Controllers/FriendRequest/FriendRequestViewController.m; sourceTree = "<group>"; };
-		C98958F91C08892C00D8D37F /* CAAnimation+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+Blocks.h"; sourceTree = "<group>"; };
-		C98958FA1C08892C00D8D37F /* CAAnimation+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+Blocks.m"; sourceTree = "<group>"; };
-		C98958FB1C08892C00D8D37F /* Evaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Evaluate.h; sourceTree = "<group>"; };
-		C98958FC1C08892C00D8D37F /* Evaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Evaluate.m; sourceTree = "<group>"; };
-		C98958FD1C08892C00D8D37F /* OMVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMVector.h; sourceTree = "<group>"; };
-		C98958FE1C08892C00D8D37F /* UIButton+LongTapShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+LongTapShare.h"; sourceTree = "<group>"; };
-		C98958FF1C08892C00D8D37F /* UIButton+LongTapShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+LongTapShare.m"; sourceTree = "<group>"; };
-		C98959001C08892C00D8D37F /* YLLongTapShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLLongTapShareView.h; sourceTree = "<group>"; };
-		C98959011C08892C00D8D37F /* YLLongTapShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLLongTapShareView.m; sourceTree = "<group>"; };
-		C98959021C08892C00D8D37F /* YLShareAnimationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLShareAnimationHelper.h; sourceTree = "<group>"; };
-		C98959031C08892C00D8D37F /* YLShareAnimationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLShareAnimationHelper.m; sourceTree = "<group>"; };
-		C98959041C08892C00D8D37F /* YLShareButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLShareButtonView.h; sourceTree = "<group>"; };
-		C98959051C08892C00D8D37F /* YLShareButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLShareButtonView.m; sourceTree = "<group>"; };
-		C98959061C08892C00D8D37F /* YLShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLShareView.h; sourceTree = "<group>"; };
-		C98959071C08892C00D8D37F /* YLShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLShareView.m; sourceTree = "<group>"; };
+		C98958F91C08892C00D8D37F /* CAAnimation+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CAAnimation+Blocks.h"; path = "../Library/YLLongTapShareControl/CAAnimation+Blocks.h"; sourceTree = "<group>"; };
+		C98958FA1C08892C00D8D37F /* CAAnimation+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CAAnimation+Blocks.m"; path = "../Library/YLLongTapShareControl/CAAnimation+Blocks.m"; sourceTree = "<group>"; };
+		C98958FB1C08892C00D8D37F /* Evaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Evaluate.h; path = ../Library/YLLongTapShareControl/Evaluate.h; sourceTree = "<group>"; };
+		C98958FC1C08892C00D8D37F /* Evaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Evaluate.m; path = ../Library/YLLongTapShareControl/Evaluate.m; sourceTree = "<group>"; };
+		C98958FD1C08892C00D8D37F /* OMVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMVector.h; path = ../Library/YLLongTapShareControl/OMVector.h; sourceTree = "<group>"; };
+		C98958FE1C08892C00D8D37F /* UIButton+LongTapShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+LongTapShare.h"; path = "../Library/YLLongTapShareControl/UIButton+LongTapShare.h"; sourceTree = "<group>"; };
+		C98958FF1C08892C00D8D37F /* UIButton+LongTapShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+LongTapShare.m"; path = "../Library/YLLongTapShareControl/UIButton+LongTapShare.m"; sourceTree = "<group>"; };
+		C98959001C08892C00D8D37F /* YLLongTapShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YLLongTapShareView.h; path = ../Library/YLLongTapShareControl/YLLongTapShareView.h; sourceTree = "<group>"; };
+		C98959011C08892C00D8D37F /* YLLongTapShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YLLongTapShareView.m; path = ../Library/YLLongTapShareControl/YLLongTapShareView.m; sourceTree = "<group>"; };
+		C98959021C08892C00D8D37F /* YLShareAnimationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YLShareAnimationHelper.h; path = ../Library/YLLongTapShareControl/YLShareAnimationHelper.h; sourceTree = "<group>"; };
+		C98959031C08892C00D8D37F /* YLShareAnimationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YLShareAnimationHelper.m; path = ../Library/YLLongTapShareControl/YLShareAnimationHelper.m; sourceTree = "<group>"; };
+		C98959041C08892C00D8D37F /* YLShareButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YLShareButtonView.h; path = ../Library/YLLongTapShareControl/YLShareButtonView.h; sourceTree = "<group>"; };
+		C98959051C08892C00D8D37F /* YLShareButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YLShareButtonView.m; path = ../Library/YLLongTapShareControl/YLShareButtonView.m; sourceTree = "<group>"; };
+		C98959061C08892C00D8D37F /* YLShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YLShareView.h; path = ../Library/YLLongTapShareControl/YLShareView.h; sourceTree = "<group>"; };
+		C98959071C08892C00D8D37F /* YLShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YLShareView.m; path = ../Library/YLLongTapShareControl/YLShareView.m; sourceTree = "<group>"; };
 		C989591D1C089C8500D8D37F /* FLSocialPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSocialPopup.h; path = Views/FLPopup/FLSocialPopup.h; sourceTree = "<group>"; };
 		C989591E1C089C8500D8D37F /* FLSocialPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSocialPopup.m; path = Views/FLPopup/FLSocialPopup.m; sourceTree = "<group>"; };
-		C98A5F0D1C3BDB6800C3EFD1 /* FLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextField.h; path = FLTextField/FLTextField.h; sourceTree = "<group>"; };
-		C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextField.m; path = FLTextField/FLTextField.m; sourceTree = "<group>"; };
+		C98A5F0D1C3BDB6800C3EFD1 /* FLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTextField.h; path = Views/FLTextField/FLTextField.h; sourceTree = "<group>"; };
+		C98A5F0E1C3BDB6800C3EFD1 /* FLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTextField.m; path = Views/FLTextField/FLTextField.m; sourceTree = "<group>"; };
 		C99C19AE1D366178008CF9DC /* ScopePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScopePickerViewController.h; path = Controllers/ScopePicker/ScopePickerViewController.h; sourceTree = "<group>"; };
 		C99C19AF1D366178008CF9DC /* ScopePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScopePickerViewController.m; path = Controllers/ScopePicker/ScopePickerViewController.m; sourceTree = "<group>"; };
 		C99CAE411C9DAD9300CDC967 /* CollectParticipantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectParticipantViewController.h; path = Controllers/Collect/CollectParticipantViewController/CollectParticipantViewController.h; sourceTree = "<group>"; };
 		C99CAE421C9DAD9300CDC967 /* CollectParticipantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectParticipantViewController.m; path = Controllers/Collect/CollectParticipantViewController/CollectParticipantViewController.m; sourceTree = "<group>"; };
-		C99D11B11C8868090091F48C /* NewCollectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewCollectController.h; path = Controllers/NewTransaction/NewCollectController.h; sourceTree = "<group>"; };
-		C99D11B21C8868090091F48C /* NewCollectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewCollectController.m; path = Controllers/NewTransaction/NewCollectController.m; sourceTree = "<group>"; };
-		C99F540C1D1AA1BE0056A151 /* CollectInvitationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectInvitationsViewController.h; sourceTree = "<group>"; };
-		C99F540D1D1AA1BE0056A151 /* CollectInvitationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectInvitationsViewController.m; sourceTree = "<group>"; };
-		C9A265541ACC460700859B32 /* SignupInvitationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupInvitationViewController.h; sourceTree = "<group>"; };
-		C9A265551ACC460700859B32 /* SignupInvitationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupInvitationViewController.m; sourceTree = "<group>"; };
-		C9A7BE5E1A27801200195AFC /* FLPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPreset.h; sourceTree = "<group>"; };
-		C9A7BE5F1A27801200195AFC /* FLPreset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPreset.m; sourceTree = "<group>"; };
+		C99F540C1D1AA1BE0056A151 /* CollectInvitationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectInvitationsViewController.h; path = Controllers/Collect/CollectInvitation/CollectInvitationsViewController.h; sourceTree = "<group>"; };
+		C99F540D1D1AA1BE0056A151 /* CollectInvitationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectInvitationsViewController.m; path = Controllers/Collect/CollectInvitation/CollectInvitationsViewController.m; sourceTree = "<group>"; };
+		C9A265541ACC460700859B32 /* SignupInvitationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupInvitationViewController.h; path = Controllers/Signup/SignupInvitationViewController.h; sourceTree = "<group>"; };
+		C9A265551ACC460700859B32 /* SignupInvitationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupInvitationViewController.m; path = Controllers/Signup/SignupInvitationViewController.m; sourceTree = "<group>"; };
+		C9A7BE5E1A27801200195AFC /* FLPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPreset.h; path = Models/FLPreset.h; sourceTree = "<group>"; };
+		C9A7BE5F1A27801200195AFC /* FLPreset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPreset.m; path = Models/FLPreset.m; sourceTree = "<group>"; };
 		C9AD95B41BBEB9480073BA32 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = Controllers/Search/SearchViewController.h; sourceTree = "<group>"; };
 		C9AD95B51BBEB9480073BA32 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = Controllers/Search/SearchViewController.m; sourceTree = "<group>"; };
-		C9AE778D1ACA917B00CFF0AF /* FLSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSlider.h; sourceTree = "<group>"; };
-		C9AE778E1ACA917B00CFF0AF /* FLSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSlider.m; sourceTree = "<group>"; };
-		C9AE77921ACA918B00CFF0AF /* FLSlide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLSlide.h; sourceTree = "<group>"; };
-		C9AE77931ACA918B00CFF0AF /* FLSlide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLSlide.m; sourceTree = "<group>"; };
-		C9AF4BE419F7C2D7005C696B /* AvatarMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarMenu.h; sourceTree = "<group>"; };
-		C9AF4BE519F7C2D7005C696B /* AvatarMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarMenu.m; sourceTree = "<group>"; };
+		C9AE778D1ACA917B00CFF0AF /* FLSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSlider.h; path = Models/Sliders/FLSlider.h; sourceTree = "<group>"; };
+		C9AE778E1ACA917B00CFF0AF /* FLSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSlider.m; path = Models/Sliders/FLSlider.m; sourceTree = "<group>"; };
+		C9AE77921ACA918B00CFF0AF /* FLSlide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLSlide.h; path = Models/Sliders/FLSlide.h; sourceTree = "<group>"; };
+		C9AE77931ACA918B00CFF0AF /* FLSlide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLSlide.m; path = Models/Sliders/FLSlide.m; sourceTree = "<group>"; };
 		C9B137BE1CBFCB91002289C9 /* CashinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashinViewController.h; path = Controllers/CashIn/CashinViewController.h; sourceTree = "<group>"; };
 		C9B137BF1CBFCB91002289C9 /* CashinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashinViewController.m; path = Controllers/CashIn/CashinViewController.m; sourceTree = "<group>"; };
 		C9B137C51CBFE5B3002289C9 /* CashinCreditCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashinCreditCardViewController.h; path = Controllers/CashIn/CashInCreditCard/CashinCreditCardViewController.h; sourceTree = "<group>"; };
 		C9B137C61CBFE5B3002289C9 /* CashinCreditCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashinCreditCardViewController.m; path = Controllers/CashIn/CashInCreditCard/CashinCreditCardViewController.m; sourceTree = "<group>"; };
 		C9B137CA1CBFE5D8002289C9 /* CashinAudiotelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashinAudiotelViewController.h; path = Controllers/CashIn/CashInAudiotel/CashinAudiotelViewController.h; sourceTree = "<group>"; };
 		C9B137CB1CBFE5D8002289C9 /* CashinAudiotelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashinAudiotelViewController.m; path = Controllers/CashIn/CashInAudiotel/CashinAudiotelViewController.m; sourceTree = "<group>"; };
-		C9B1866B1A9E01D400077C5F /* FLTutoPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTutoPopoverViewController.h; sourceTree = "<group>"; };
-		C9B1866C1A9E01D400077C5F /* FLTutoPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTutoPopoverViewController.m; sourceTree = "<group>"; };
-		C9B4AA681AE7C606002E0723 /* FLScannerOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLScannerOverlay.h; sourceTree = "<group>"; };
-		C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLScannerOverlay.m; sourceTree = "<group>"; };
-		C9B7618E1C9FF666000BBAF5 /* ShareLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareLinkViewController.h; path = Controllers/ShareApp/ShareLink/ShareLinkViewController.h; sourceTree = "<group>"; };
-		C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareLinkViewController.m; path = Controllers/ShareApp/ShareLink/ShareLinkViewController.m; sourceTree = "<group>"; };
+		C9B1866B1A9E01D400077C5F /* FLTutoPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTutoPopoverViewController.h; path = Views/FLTutoPopover/FLTutoPopoverViewController.h; sourceTree = "<group>"; };
+		C9B1866C1A9E01D400077C5F /* FLTutoPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTutoPopoverViewController.m; path = Views/FLTutoPopover/FLTutoPopoverViewController.m; sourceTree = "<group>"; };
+		C9B7618E1C9FF666000BBAF5 /* ShareLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareLinkViewController.h; sourceTree = "<group>"; };
+		C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareLinkViewController.m; sourceTree = "<group>"; };
 		C9B7CF851CE613ED00C1D2E2 /* FLCreditCardScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLCreditCardScanner.h; path = Views/FLCreditCardScanner/FLCreditCardScanner.h; sourceTree = "<group>"; };
 		C9B7CF861CE613ED00C1D2E2 /* FLCreditCardScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLCreditCardScanner.m; path = Views/FLCreditCardScanner/FLCreditCardScanner.m; sourceTree = "<group>"; };
 		C9B975551C9EF4BA00163A05 /* CollectParticipationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectParticipationViewController.h; path = Controllers/Collect/CollectParticipationViewController/CollectParticipationViewController.h; sourceTree = "<group>"; };
 		C9B975561C9EF4BA00163A05 /* CollectParticipationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectParticipationViewController.m; path = Controllers/Collect/CollectParticipationViewController/CollectParticipationViewController.m; sourceTree = "<group>"; };
 		C9BAB50D1AF26C2A00215CDC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C9BD5BBA1D2D051C00F294E8 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		C9BFB3EE1D7EBA5F004F34C3 /* FLNewTransactionAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLNewTransactionAmount.h; sourceTree = "<group>"; };
-		C9BFB3EF1D7EBA5F004F34C3 /* FLNewTransactionAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLNewTransactionAmount.m; sourceTree = "<group>"; };
-		C9BFB3F01D7EBA5F004F34C3 /* FLNewTransactionAmountDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLNewTransactionAmountDelegate.h; sourceTree = "<group>"; };
-		C9BFB3F11D7EBA5F004F34C3 /* FLNewTransactionAmountInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLNewTransactionAmountInput.h; sourceTree = "<group>"; };
-		C9BFB3F21D7EBA5F004F34C3 /* FLNewTransactionAmountInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLNewTransactionAmountInput.m; sourceTree = "<group>"; };
+		C9BFB3EE1D7EBA5F004F34C3 /* FLNewTransactionAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNewTransactionAmount.h; path = Views/FLNewTransactionAmount/FLNewTransactionAmount.h; sourceTree = "<group>"; };
+		C9BFB3EF1D7EBA5F004F34C3 /* FLNewTransactionAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionAmount.m; path = Views/FLNewTransactionAmount/FLNewTransactionAmount.m; sourceTree = "<group>"; };
+		C9BFB3F01D7EBA5F004F34C3 /* FLNewTransactionAmountDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNewTransactionAmountDelegate.h; path = Views/FLNewTransactionAmount/FLNewTransactionAmountDelegate.h; sourceTree = "<group>"; };
+		C9BFB3F11D7EBA5F004F34C3 /* FLNewTransactionAmountInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLNewTransactionAmountInput.h; path = Views/FLNewTransactionAmount/FLNewTransactionAmountInput.h; sourceTree = "<group>"; };
+		C9BFB3F21D7EBA5F004F34C3 /* FLNewTransactionAmountInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLNewTransactionAmountInput.m; path = Views/FLNewTransactionAmount/FLNewTransactionAmountInput.m; sourceTree = "<group>"; };
 		C9C3AD841CA29631009907D9 /* ParticipantCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticipantCell.h; path = ParticipantCell/ParticipantCell.h; sourceTree = "<group>"; };
 		C9C3AD851CA29631009907D9 /* ParticipantCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticipantCell.m; path = ParticipantCell/ParticipantCell.m; sourceTree = "<group>"; };
-		C9C660B01BCBB70E0029A79A /* ValidateSecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSecureCodeViewController.h; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.h; sourceTree = "<group>"; };
-		C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSecureCodeViewController.m; path = Controllers/ValidateSMS/ValidateSecureCodeViewController.m; sourceTree = "<group>"; };
-		C9C776841C076078006C22CB /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
-		C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
-		C9C776861C076078006C22CB /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
-		C9C776871C076078006C22CB /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Badge.m"; sourceTree = "<group>"; };
+		C9C660B01BCBB70E0029A79A /* ValidateSecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidateSecureCodeViewController.h; path = Controllers/Validate/ValidateSecureCodeViewController.h; sourceTree = "<group>"; };
+		C9C660B11BCBB70E0029A79A /* ValidateSecureCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidateSecureCodeViewController.m; path = Controllers/Validate/ValidateSecureCodeViewController.m; sourceTree = "<group>"; };
+		C9C776841C076078006C22CB /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+Badge.h"; path = "Util/UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
+		C9C776851C076078006C22CB /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+Badge.m"; path = "Util/UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
+		C9C776861C076078006C22CB /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+Badge.h"; path = "Util/UIButton+Badge.h"; sourceTree = "<group>"; };
+		C9C776871C076078006C22CB /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+Badge.m"; path = "Util/UIButton+Badge.m"; sourceTree = "<group>"; };
 		C9C7DB2B1A2351E300AEDC67 /* SettingsPrivacyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPrivacyController.h; sourceTree = "<group>"; };
 		C9C7DB2C1A2351E300AEDC67 /* SettingsPrivacyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsPrivacyController.m; sourceTree = "<group>"; };
-		C9C7EE8F19F685AC009FE292 /* FLTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTrigger.h; sourceTree = "<group>"; };
-		C9C7EE9019F685AC009FE292 /* FLTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTrigger.m; sourceTree = "<group>"; };
-		C9C7EE9219F685B9009FE292 /* FLAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAlert.h; sourceTree = "<group>"; };
-		C9C7EE9319F685B9009FE292 /* FLAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAlert.m; sourceTree = "<group>"; };
-		C9CA676E1A518535003863D1 /* SignupNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupNavigationController.h; sourceTree = "<group>"; };
-		C9CA676F1A518535003863D1 /* SignupNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupNavigationController.m; sourceTree = "<group>"; };
-		C9CA67761A518811003863D1 /* SignupSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupSMSViewController.h; sourceTree = "<group>"; };
-		C9CA67771A518811003863D1 /* SignupSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupSMSViewController.m; sourceTree = "<group>"; };
-		C9CA678A1A518871003863D1 /* SignupSecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupSecureCodeViewController.h; sourceTree = "<group>"; };
-		C9CA678B1A518871003863D1 /* SignupSecureCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupSecureCodeViewController.m; sourceTree = "<group>"; };
-		C9CA678F1A5188D5003863D1 /* FLActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLActionButton.h; sourceTree = "<group>"; };
-		C9CA67901A5188D5003863D1 /* FLActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLActionButton.m; sourceTree = "<group>"; };
-		C9CB21EF1A95E9D30064389A /* THContactPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THContactPickerView.h; sourceTree = "<group>"; };
-		C9CB21F01A95E9D30064389A /* THContactPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THContactPickerView.m; sourceTree = "<group>"; };
-		C9CB21F11A95E9D30064389A /* THContactPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = THContactPickerViewController.xib; sourceTree = "<group>"; };
-		C9CB21F21A95E9D30064389A /* THContactTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THContactTextField.h; sourceTree = "<group>"; };
-		C9CB21F31A95E9D30064389A /* THContactTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THContactTextField.m; sourceTree = "<group>"; };
-		C9CB21F41A95E9D30064389A /* THContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THContactView.h; sourceTree = "<group>"; };
-		C9CB21F51A95E9D30064389A /* THContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THContactView.m; sourceTree = "<group>"; };
-		C9CB21F61A95E9D30064389A /* THContactViewStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THContactViewStyle.h; sourceTree = "<group>"; };
-		C9CB21F71A95E9D30064389A /* THContactViewStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THContactViewStyle.m; sourceTree = "<group>"; };
-		C9CB22071A9615C10064389A /* FLPrivacySelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPrivacySelectorViewController.h; sourceTree = "<group>"; };
-		C9CB22081A9615C10064389A /* FLPrivacySelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPrivacySelectorViewController.m; sourceTree = "<group>"; };
-		C9CB220C1A961F0D0064389A /* FLPrivacyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPrivacyCell.h; sourceTree = "<group>"; };
-		C9CB220D1A961F0D0064389A /* FLPrivacyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPrivacyCell.m; sourceTree = "<group>"; };
-		C9CB22121A963C840064389A /* FLUserPickerTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLUserPickerTableView.h; sourceTree = "<group>"; };
-		C9CB22131A963C840064389A /* FLUserPickerTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLUserPickerTableView.m; sourceTree = "<group>"; };
+		C9C7EE8F19F685AC009FE292 /* FLTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLTrigger.h; path = Models/FLTrigger.h; sourceTree = "<group>"; };
+		C9C7EE9019F685AC009FE292 /* FLTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLTrigger.m; path = Models/FLTrigger.m; sourceTree = "<group>"; };
+		C9C7EE9219F685B9009FE292 /* FLAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAlert.h; path = Models/FLAlert.h; sourceTree = "<group>"; };
+		C9C7EE9319F685B9009FE292 /* FLAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAlert.m; path = Models/FLAlert.m; sourceTree = "<group>"; };
+		C9CA676E1A518535003863D1 /* SignupNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupNavigationController.h; path = Controllers/Signup/SignupNavigationController.h; sourceTree = "<group>"; };
+		C9CA676F1A518535003863D1 /* SignupNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupNavigationController.m; path = Controllers/Signup/SignupNavigationController.m; sourceTree = "<group>"; };
+		C9CA67761A518811003863D1 /* SignupSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupSMSViewController.h; path = Controllers/Signup/SignupSMSViewController.h; sourceTree = "<group>"; };
+		C9CA67771A518811003863D1 /* SignupSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupSMSViewController.m; path = Controllers/Signup/SignupSMSViewController.m; sourceTree = "<group>"; };
+		C9CA678A1A518871003863D1 /* SignupSecureCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupSecureCodeViewController.h; path = Controllers/Signup/SignupSecureCodeViewController.h; sourceTree = "<group>"; };
+		C9CA678B1A518871003863D1 /* SignupSecureCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupSecureCodeViewController.m; path = Controllers/Signup/SignupSecureCodeViewController.m; sourceTree = "<group>"; };
+		C9CA678F1A5188D5003863D1 /* FLActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLActionButton.h; path = Views/FLActionButton/FLActionButton.h; sourceTree = "<group>"; };
+		C9CA67901A5188D5003863D1 /* FLActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLActionButton.m; path = Views/FLActionButton/FLActionButton.m; sourceTree = "<group>"; };
+		C9CB21EF1A95E9D30064389A /* THContactPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THContactPickerView.h; path = ../Library/THContactPicker/THContactPickerView.h; sourceTree = "<group>"; };
+		C9CB21F01A95E9D30064389A /* THContactPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THContactPickerView.m; path = ../Library/THContactPicker/THContactPickerView.m; sourceTree = "<group>"; };
+		C9CB21F11A95E9D30064389A /* THContactPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = THContactPickerViewController.xib; path = ../Library/THContactPicker/THContactPickerViewController.xib; sourceTree = "<group>"; };
+		C9CB21F21A95E9D30064389A /* THContactTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THContactTextField.h; path = ../Library/THContactPicker/THContactTextField.h; sourceTree = "<group>"; };
+		C9CB21F31A95E9D30064389A /* THContactTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THContactTextField.m; path = ../Library/THContactPicker/THContactTextField.m; sourceTree = "<group>"; };
+		C9CB21F41A95E9D30064389A /* THContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THContactView.h; path = ../Library/THContactPicker/THContactView.h; sourceTree = "<group>"; };
+		C9CB21F51A95E9D30064389A /* THContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THContactView.m; path = ../Library/THContactPicker/THContactView.m; sourceTree = "<group>"; };
+		C9CB21F61A95E9D30064389A /* THContactViewStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THContactViewStyle.h; path = ../Library/THContactPicker/THContactViewStyle.h; sourceTree = "<group>"; };
+		C9CB21F71A95E9D30064389A /* THContactViewStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THContactViewStyle.m; path = ../Library/THContactPicker/THContactViewStyle.m; sourceTree = "<group>"; };
+		C9CB22071A9615C10064389A /* FLPrivacySelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPrivacySelectorViewController.h; path = Views/FLNewTransactionBar/FLPrivacySelectorViewController.h; sourceTree = "<group>"; };
+		C9CB22081A9615C10064389A /* FLPrivacySelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPrivacySelectorViewController.m; path = Views/FLNewTransactionBar/FLPrivacySelectorViewController.m; sourceTree = "<group>"; };
+		C9CB220C1A961F0D0064389A /* FLPrivacyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPrivacyCell.h; path = Views/FLNewTransactionBar/FLPrivacyCell.h; sourceTree = "<group>"; };
+		C9CB220D1A961F0D0064389A /* FLPrivacyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPrivacyCell.m; path = Views/FLNewTransactionBar/FLPrivacyCell.m; sourceTree = "<group>"; };
+		C9CB22121A963C840064389A /* FLUserPickerTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLUserPickerTableView.h; path = Controllers/UserPicker/FLUserPickerTableView.h; sourceTree = "<group>"; };
+		C9CB22131A963C840064389A /* FLUserPickerTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLUserPickerTableView.m; path = Controllers/UserPicker/FLUserPickerTableView.m; sourceTree = "<group>"; };
 		C9CC31941D2E8FA30086F19A /* NewFloozViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewFloozViewController.h; path = Controllers/NewFlooz/NewFloozViewController.h; sourceTree = "<group>"; };
 		C9CC31951D2E8FA30086F19A /* NewFloozViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewFloozViewController.m; path = Controllers/NewFlooz/NewFloozViewController.m; sourceTree = "<group>"; };
 		C9CC31991D2E8FD20086F19A /* UserPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserPickerViewController.h; path = Controllers/UserPicker/UserPickerViewController.h; sourceTree = "<group>"; };
 		C9CC319A1D2E8FD20086F19A /* UserPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserPickerViewController.m; path = Controllers/UserPicker/UserPickerViewController.m; sourceTree = "<group>"; };
-		C9CD76601BF227DC00362962 /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CountryPicker.bundle; sourceTree = "<group>"; };
-		C9CD76641BF227EF00362962 /* FLPhoneField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPhoneField.h; sourceTree = "<group>"; };
-		C9CD76651BF227EF00362962 /* FLPhoneField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPhoneField.m; sourceTree = "<group>"; };
-		C9CD76661BF227EF00362962 /* FLCountryPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCountryPicker.h; sourceTree = "<group>"; };
-		C9CD76671BF227EF00362962 /* FLCountryPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLCountryPicker.m; sourceTree = "<group>"; };
-		C9CD766F1BF227FB00362962 /* FLCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLCountry.h; sourceTree = "<group>"; };
-		C9D056281D194C2A00F14576 /* TransactionLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionLikeViewController.h; path = Controllers/TransactionLikeViewController/TransactionLikeViewController.h; sourceTree = "<group>"; };
-		C9D056291D194C2A00F14576 /* TransactionLikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionLikeViewController.m; path = Controllers/TransactionLikeViewController/TransactionLikeViewController.m; sourceTree = "<group>"; };
-		C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz dev-Info.plist"; sourceTree = SOURCE_ROOT; };
-		C9D4E7031B18BD380096725B /* Flooz local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flooz local-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C9CD76601BF227DC00362962 /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CountryPicker.bundle; path = Resources/Bundles/CountryPicker.bundle; sourceTree = "<group>"; };
+		C9CD76641BF227EF00362962 /* FLPhoneField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPhoneField.h; path = Views/FLPhoneField/FLPhoneField.h; sourceTree = "<group>"; };
+		C9CD76651BF227EF00362962 /* FLPhoneField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPhoneField.m; path = Views/FLPhoneField/FLPhoneField.m; sourceTree = "<group>"; };
+		C9CD76661BF227EF00362962 /* FLCountryPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLCountryPicker.h; path = Views/FLPhoneField/FLCountryPicker.h; sourceTree = "<group>"; };
+		C9CD76671BF227EF00362962 /* FLCountryPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLCountryPicker.m; path = Views/FLPhoneField/FLCountryPicker.m; sourceTree = "<group>"; };
+		C9CD766F1BF227FB00362962 /* FLCountry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLCountry.h; path = Models/FLCountry.h; sourceTree = "<group>"; };
+		C9D056281D194C2A00F14576 /* TransactionLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionLikeViewController.h; path = Controllers/TransactionLike/TransactionLikeViewController.h; sourceTree = "<group>"; };
+		C9D056291D194C2A00F14576 /* TransactionLikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionLikeViewController.m; path = Controllers/TransactionLike/TransactionLikeViewController.m; sourceTree = "<group>"; };
+		C9D4E7021B18BD380096725B /* Flooz dev-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Flooz dev-Info.plist"; path = "Flooz/Supporting Files/Flooz dev-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C9D4E7031B18BD380096725B /* Flooz local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Flooz local-Info.plist"; path = "Flooz/Supporting Files/Flooz local-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C9D519A21D6312BE0082B862 /* ShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopListViewController.h; path = Controllers/Shop/ShopListViewController.h; sourceTree = "<group>"; };
 		C9D519A31D6312BE0082B862 /* ShopListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShopListViewController.m; path = Controllers/Shop/ShopListViewController.m; sourceTree = "<group>"; };
 		C9D519A71D6312DE0082B862 /* ShopItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopItemViewController.h; path = Controllers/Shop/ShopItemViewController.h; sourceTree = "<group>"; };
@@ -1277,10 +1255,16 @@
 		C9D597D81D3A78C70007FF62 /* ImagePickerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImagePickerCollectionViewCell.m; path = Controllers/ImagePicker/ImagePickerCollectionViewCell.m; sourceTree = "<group>"; };
 		C9D9778E1CE37E2300F94460 /* UIView+Border.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Border.h"; path = "Util/UIView+Border.h"; sourceTree = "<group>"; };
 		C9D9778F1CE37E2300F94460 /* UIView+Border.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Border.m"; path = "Util/UIView+Border.m"; sourceTree = "<group>"; };
-		C9DCC5EB1C282573008BB370 /* Flooz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Flooz.entitlements; sourceTree = "<group>"; };
-		C9DCC5EC1C28257F008BB370 /* Flooz dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Flooz dev.entitlements"; sourceTree = SOURCE_ROOT; };
+		C9DCC5EB1C282573008BB370 /* Flooz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flooz.entitlements; path = "Supporting Files/Flooz.entitlements"; sourceTree = "<group>"; };
+		C9DCC5EC1C28257F008BB370 /* Flooz dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Flooz dev.entitlements"; path = "Flooz/Supporting Files/Flooz dev.entitlements"; sourceTree = SOURCE_ROOT; };
 		C9DD721E1C9891AD000D1664 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCell.h; path = CommentCell/CommentCell.h; sourceTree = "<group>"; };
 		C9DD721F1C9891AD000D1664 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentCell.m; path = CommentCell/CommentCell.m; sourceTree = "<group>"; };
+		C9E1A7D11D8FEBFB00649BA0 /* NewCollectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewCollectController.h; path = Controllers/NewCollect/NewCollectController.h; sourceTree = "<group>"; };
+		C9E1A7D21D8FEBFB00649BA0 /* NewCollectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewCollectController.m; path = Controllers/NewCollect/NewCollectController.m; sourceTree = "<group>"; };
+		C9E1A7D41D8FECB000649BA0 /* ShareSMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareSMSViewController.h; path = Flooz/Controllers/Share/ShareSMSViewController.h; sourceTree = SOURCE_ROOT; };
+		C9E1A7D51D8FECB000649BA0 /* ShareSMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareSMSViewController.m; path = Flooz/Controllers/Share/ShareSMSViewController.m; sourceTree = SOURCE_ROOT; };
+		C9E1A7D71D8FED7900649BA0 /* 3DSecureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = 3DSecureViewController.h; path = Controllers/3DSecure/3DSecureViewController.h; sourceTree = "<group>"; };
+		C9E1A7D81D8FED7900649BA0 /* 3DSecureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = 3DSecureViewController.m; path = Controllers/3DSecure/3DSecureViewController.m; sourceTree = "<group>"; };
 		C9E7ACD71D65ED240017BC38 /* ShopParamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShopParamViewController.h; path = Controllers/Shop/ShopParamViewController.h; sourceTree = "<group>"; };
 		C9E7ACD81D65ED240017BC38 /* ShopParamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShopParamViewController.m; path = Controllers/Shop/ShopParamViewController.m; sourceTree = "<group>"; };
 		C9E7ACDE1D65F8AF0017BC38 /* FLShopTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLShopTextField.h; path = Views/FLShopFields/FLShopTextField.h; sourceTree = "<group>"; };
@@ -1295,24 +1279,25 @@
 		C9EABF341C523CE900BDDEA1 /* FLAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAddress.m; path = Models/FLAddress.m; sourceTree = "<group>"; };
 		C9EB21B31CE2207200B3E009 /* CashinCardKYCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CashinCardKYCViewController.h; path = Controllers/CashIn/CashinCardKYC/CashinCardKYCViewController.h; sourceTree = "<group>"; };
 		C9EB21B41CE2207200B3E009 /* CashinCardKYCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CashinCardKYCViewController.m; path = Controllers/CashIn/CashinCardKYC/CashinCardKYCViewController.m; sourceTree = "<group>"; };
-		C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendAddSearchBar.m; sourceTree = "<group>"; };
-		C9EB88561B1F21C20042E65B /* FriendAddSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendAddSearchBar.h; sourceTree = "<group>"; };
-		C9EB88571B1F21C20042E65B /* FriendAddSearchBarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendAddSearchBarDelegate.h; sourceTree = "<group>"; };
-		C9EB885B1B1F32A00042E65B /* SignupCreditCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupCreditCardViewController.h; sourceTree = "<group>"; };
-		C9EB885C1B1F32A00042E65B /* SignupCreditCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupCreditCardViewController.m; sourceTree = "<group>"; };
-		C9EBBB9B1BAAC988009DAF88 /* FLBorderedActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLBorderedActionButton.h; sourceTree = "<group>"; };
-		C9EBBB9C1BAAC988009DAF88 /* FLBorderedActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLBorderedActionButton.m; sourceTree = "<group>"; };
-		C9ED41221A9B7A2F000C4D7A /* NSDictionary+JSONHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+JSONHelper.h"; sourceTree = "<group>"; };
-		C9ED41231A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JSONHelper.m"; sourceTree = "<group>"; };
-		C9ED41271A9B7ABA000C4D7A /* NSArray+JSONHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+JSONHelper.h"; sourceTree = "<group>"; };
-		C9ED41281A9B7ABA000C4D7A /* NSArray+JSONHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+JSONHelper.m"; sourceTree = "<group>"; };
+		C9EB88551B1F21C20042E65B /* FriendAddSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendAddSearchBar.m; path = Controllers/Friends/FriendAddSearchBar.m; sourceTree = "<group>"; };
+		C9EB88561B1F21C20042E65B /* FriendAddSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAddSearchBar.h; path = Controllers/Friends/FriendAddSearchBar.h; sourceTree = "<group>"; };
+		C9EB88571B1F21C20042E65B /* FriendAddSearchBarDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendAddSearchBarDelegate.h; path = Controllers/Friends/FriendAddSearchBarDelegate.h; sourceTree = "<group>"; };
+		C9EB885B1B1F32A00042E65B /* SignupCreditCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupCreditCardViewController.h; path = Controllers/Signup/SignupCreditCardViewController.h; sourceTree = "<group>"; };
+		C9EB885C1B1F32A00042E65B /* SignupCreditCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupCreditCardViewController.m; path = Controllers/Signup/SignupCreditCardViewController.m; sourceTree = "<group>"; };
+		C9EBBB9B1BAAC988009DAF88 /* FLBorderedActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLBorderedActionButton.h; path = Views/FLBorderedActionButton/FLBorderedActionButton.h; sourceTree = "<group>"; };
+		C9EBBB9C1BAAC988009DAF88 /* FLBorderedActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLBorderedActionButton.m; path = Views/FLBorderedActionButton/FLBorderedActionButton.m; sourceTree = "<group>"; };
+		C9ED41221A9B7A2F000C4D7A /* NSDictionary+JSONHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+JSONHelper.h"; path = "Util/NSDictionary+JSONHelper.h"; sourceTree = "<group>"; };
+		C9ED41231A9B7A2F000C4D7A /* NSDictionary+JSONHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+JSONHelper.m"; path = "Util/NSDictionary+JSONHelper.m"; sourceTree = "<group>"; };
+		C9ED41271A9B7ABA000C4D7A /* NSArray+JSONHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+JSONHelper.h"; path = "Util/NSArray+JSONHelper.h"; sourceTree = "<group>"; };
+		C9ED41281A9B7ABA000C4D7A /* NSArray+JSONHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+JSONHelper.m"; path = "Util/NSArray+JSONHelper.m"; sourceTree = "<group>"; };
 		C9F517CF1CABD1C600856D53 /* FLPlusButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLPlusButton.h; path = Views/FLPlusButton/FLPlusButton.h; sourceTree = "<group>"; };
 		C9F517D01CABD1C600856D53 /* FLPlusButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLPlusButton.m; path = Views/FLPlusButton/FLPlusButton.m; sourceTree = "<group>"; };
-		C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+NVSBlurAppScreen.m"; sourceTree = "<group>"; };
-		C9FC68C41D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+NVSBlurAppScreen.h"; sourceTree = "<group>"; };
-		DE693F566F1A43290909A5D9 /* Pods-Flooz dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.debug.xcconfig"; sourceTree = "<group>"; };
-		E0F8AAF64F700D4ACA271AB1 /* libPods-Flooz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E44E8E5CF4985E3B8027D411 /* Pods-Flooz dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.release.xcconfig"; sourceTree = "<group>"; };
+		C9FC68C31D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+NVSBlurAppScreen.m"; path = "Util/AppDelegate+NVSBlurAppScreen.m"; sourceTree = "<group>"; };
+		C9FC68C41D2D367300710B79 /* AppDelegate+NVSBlurAppScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+NVSBlurAppScreen.h"; path = "Util/AppDelegate+NVSBlurAppScreen.h"; sourceTree = "<group>"; };
+		D30286D850F52B0AD5772C92 /* Pods-Flooz dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev.debug.xcconfig"; sourceTree = "<group>"; };
+		E75C29EB973DC2B4B4FBAF49 /* Pods-FloozTests.local.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FloozTests.local.xcconfig"; path = "Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests.local.xcconfig"; sourceTree = "<group>"; };
+		F8458256E76AB74F95289E16 /* libPods-Flooz dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flooz dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE6740647D541462EAEA3E75 /* Pods-Flooz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flooz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flooz/Pods-Flooz.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1341,7 +1326,7 @@
 				AB3D0894186CA11A00CF8380 /* CoreGraphics.framework in Frameworks */,
 				AB3D0896186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D0892186CA11A00CF8380 /* Foundation.framework in Frameworks */,
-				3B691AE7A76AA2A232F23D7E /* libPods-Flooz.a in Frameworks */,
+				88D568F1621E58D2E1BA46C0 /* libPods-Flooz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1351,7 +1336,7 @@
 			files = (
 				AB3D08AD186CA11A00CF8380 /* UIKit.framework in Frameworks */,
 				AB3D08AC186CA11A00CF8380 /* Foundation.framework in Frameworks */,
-				305AB8E001E8A0EEEA47BA0A /* libPods-FloozTests.a in Frameworks */,
+				B065FA78CA174852F94C0BE6 /* libPods-FloozTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1380,7 +1365,7 @@
 				ABAA3FF7197E96BF009F29EF /* CoreGraphics.framework in Frameworks */,
 				ABAA3FF8197E96BF009F29EF /* UIKit.framework in Frameworks */,
 				ABAA3FF9197E96BF009F29EF /* Foundation.framework in Frameworks */,
-				1D0CF9CF6208B6CE321F9D75 /* libPods-Flooz dev.a in Frameworks */,
+				7BA912E164D0850D9DD1699C /* libPods-Flooz dev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,7 +1394,7 @@
 				C98013171A76921000019682 /* CoreGraphics.framework in Frameworks */,
 				C98013181A76921000019682 /* UIKit.framework in Frameworks */,
 				C98013191A76921000019682 /* Foundation.framework in Frameworks */,
-				C483DF8EE69CC37EA064870A /* libPods-Flooz local.a in Frameworks */,
+				B6C70BE6645C6410B581679B /* libPods-Flooz local.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1578,7 +1563,7 @@
 				AB3D08B0186CA11A00CF8380 /* FloozTests */,
 				AB3D0890186CA11A00CF8380 /* Frameworks */,
 				AB3D088F186CA11A00CF8380 /* Products */,
-				D0E98BBE1AB43A00BAB0493E /* Pods */,
+				DE511C2832901A8FF0341005 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1617,10 +1602,10 @@
 				AB3D0891186CA11A00CF8380 /* Foundation.framework */,
 				AB3D0893186CA11A00CF8380 /* CoreGraphics.framework */,
 				AB3D0895186CA11A00CF8380 /* UIKit.framework */,
-				E0F8AAF64F700D4ACA271AB1 /* libPods-Flooz.a */,
-				439AA252C1690C29117EF109 /* libPods-Flooz dev.a */,
-				B57E9BE834021AB5C3A4123A /* libPods-Flooz local.a */,
-				7B0E20663ECBACBE30845CF1 /* libPods-FloozTests.a */,
+				AC735E2C85DEC29249F7AF17 /* libPods-Flooz.a */,
+				F8458256E76AB74F95289E16 /* libPods-Flooz dev.a */,
+				67818ADB38E10D3D57C31A40 /* libPods-Flooz local.a */,
+				788E51C9CCAA4B6A54587956 /* libPods-FloozTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1628,14 +1613,14 @@
 		AB3D0897186CA11A00CF8380 /* Flooz */ = {
 			isa = PBXGroup;
 			children = (
-				ABF46A201875BE9100E92A77 /* Resources */,
-				AB3D08E11871BEC300CF8380 /* Util */,
-				AB3D08DB1871A5BE00CF8380 /* Library */,
-				AB3D08DD1871A5D100CF8380 /* Models */,
-				AB3D08D5186CA6F800CF8380 /* Views */,
 				AB3D08C5186CA17F00CF8380 /* Controllers */,
 				AB3D08A3186CA11A00CF8380 /* Images.xcassets */,
+				AB3D08DB1871A5BE00CF8380 /* Library */,
+				AB3D08DD1871A5D100CF8380 /* Models */,
+				ABF46A201875BE9100E92A77 /* Resources */,
 				AB3D0898186CA11A00CF8380 /* Supporting Files */,
+				AB3D08E11871BEC300CF8380 /* Util */,
+				AB3D08D5186CA6F800CF8380 /* Views */,
 			);
 			path = Flooz;
 			sourceTree = "<group>";
@@ -1699,7 +1684,6 @@
 				ABE9147518929A61003AC722 /* Notifications */,
 				AB2FB53F18AD9C660079AA1D /* Password */,
 				C95571651CEC76B6001A79AA /* Payments */,
-				C938EFCB1AE68C1D00A3F740 /* Scanner */,
 				C99C19AD1D366149008CF9DC /* ScopePicker */,
 				C9AD95B31BBEB91C0073BA32 /* Search */,
 				AB7C9B1E18D73AD2002775BA /* SecureCode */,
@@ -1722,7 +1706,6 @@
 		AB3D08D5186CA6F800CF8380 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C9AF4BE319F7C2A9005C696B /* AvatarMenu */,
 				AB5EB6F91882157300D81AF6 /* Cells */,
 				ABE9144F189165BA003AC722 /* FLAccountUserView */,
 				C9CA678E1A5188BB003863D1 /* FLActionButton */,
@@ -1740,7 +1723,6 @@
 				C9CD765F1BF227C700362962 /* FLPhoneField */,
 				C9F517CE1CABD19A00856D53 /* FLPlusButton */,
 				ABAFEE24197FFE3200D39C62 /* FLPopup */,
-				C9B4AA671AE7C5E3002E0723 /* FLScannerOverlay */,
 				C9E7ACDC1D65F8690017BC38 /* FLShopFields */,
 				2F1307E619D9C1510062D194 /* FLSocialButton */,
 				ABD0164618EC694100940F2D /* FLSwitch */,
@@ -2304,8 +2286,8 @@
 		C90B947D1A00E94F00E2C53B /* 3DSecure */ = {
 			isa = PBXGroup;
 			children = (
-				C90B947E1A00E96900E2C53B /* 3DSecureViewController.h */,
-				C90B947F1A00E96900E2C53B /* 3DSecureViewController.m */,
+				C9E1A7D71D8FED7900649BA0 /* 3DSecureViewController.h */,
+				C9E1A7D81D8FED7900649BA0 /* 3DSecureViewController.m */,
 			);
 			name = 3DSecure;
 			sourceTree = "<group>";
@@ -2407,15 +2389,6 @@
 			name = TransactionHeaderView;
 			sourceTree = "<group>";
 		};
-		C938EFCB1AE68C1D00A3F740 /* Scanner */ = {
-			isa = PBXGroup;
-			children = (
-				C938EFCC1AE68C5900A3F740 /* ScannerViewController.h */,
-				C938EFCD1AE68C5900A3F740 /* ScannerViewController.m */,
-			);
-			name = Scanner;
-			sourceTree = "<group>";
-		};
 		C9436EBA1BCBA316000F382C /* Validate */ = {
 			isa = PBXGroup;
 			children = (
@@ -2434,6 +2407,7 @@
 				C94EF3B81CB2AB8E003EA4CF /* AmbassadorStepsViewController.m */,
 			);
 			name = AmbassadorStepsList;
+			path = Controllers/Share/AmbassadorStepsList;
 			sourceTree = "<group>";
 		};
 		C950540B1B4E7E6600B9FB2C /* FLTabBarController */ = {
@@ -2558,14 +2532,15 @@
 				C9701E061D3CE29600734092 /* DotActivityIndicatorView.h */,
 				C9701E071D3CE29600734092 /* DotActivityIndicatorView.m */,
 			);
-			path = DotsLoaderActivityIndicator;
+			name = DotsLoaderActivityIndicator;
+			path = Library/DotsLoaderActivityIndicator;
 			sourceTree = "<group>";
 		};
 		C9742E2F1D3E21C700964B09 /* NewCollect */ = {
 			isa = PBXGroup;
 			children = (
-				C99D11B11C8868090091F48C /* NewCollectController.h */,
-				C99D11B21C8868090091F48C /* NewCollectController.m */,
+				C9E1A7D11D8FEBFB00649BA0 /* NewCollectController.h */,
+				C9E1A7D21D8FEBFB00649BA0 /* NewCollectController.m */,
 			);
 			name = NewCollect;
 			sourceTree = "<group>";
@@ -2585,7 +2560,8 @@
 			children = (
 				C975BAF61A92BB8E000E5AEA /* YLMomentRelativeTimeLocalizable.strings */,
 			);
-			path = Localization;
+			name = Localization;
+			path = ../Library/YLMoment/Localization;
 			sourceTree = "<group>";
 		};
 		C980E40A1C17136F00E52F86 /* DeviceUID */ = {
@@ -2686,15 +2662,6 @@
 			name = Sliders;
 			sourceTree = "<group>";
 		};
-		C9AF4BE319F7C2A9005C696B /* AvatarMenu */ = {
-			isa = PBXGroup;
-			children = (
-				C9AF4BE419F7C2D7005C696B /* AvatarMenu.h */,
-				C9AF4BE519F7C2D7005C696B /* AvatarMenu.m */,
-			);
-			name = AvatarMenu;
-			sourceTree = "<group>";
-		};
 		C9B137BD1CBFCB54002289C9 /* CashIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -2734,22 +2701,14 @@
 			name = FLTutoPopover;
 			sourceTree = "<group>";
 		};
-		C9B4AA671AE7C5E3002E0723 /* FLScannerOverlay */ = {
-			isa = PBXGroup;
-			children = (
-				C9B4AA681AE7C606002E0723 /* FLScannerOverlay.h */,
-				C9B4AA691AE7C606002E0723 /* FLScannerOverlay.m */,
-			);
-			name = FLScannerOverlay;
-			sourceTree = "<group>";
-		};
 		C9B7618C1C9FF604000BBAF5 /* ShareAppSMS */ = {
 			isa = PBXGroup;
 			children = (
-				C91C5D3D1BC65E4F00B88D81 /* ShareSMSViewController.h */,
-				C91C5D3E1BC65E4F00B88D81 /* ShareSMSViewController.m */,
+				C9E1A7D41D8FECB000649BA0 /* ShareSMSViewController.h */,
+				C9E1A7D51D8FECB000649BA0 /* ShareSMSViewController.m */,
 			);
 			name = ShareAppSMS;
+			path = Controllers/Share/ShareAppSMS;
 			sourceTree = "<group>";
 		};
 		C9B7618D1C9FF616000BBAF5 /* ShareLink */ = {
@@ -2759,6 +2718,7 @@
 				C9B7618F1C9FF666000BBAF5 /* ShareLinkViewController.m */,
 			);
 			name = ShareLink;
+			path = Controllers/Share/ShareLink;
 			sourceTree = "<group>";
 		};
 		C9B7CF841CE613BB00C1D2E2 /* FLCreditCardScanner */ = {
@@ -2966,25 +2926,25 @@
 			name = FLPlusButton;
 			sourceTree = "<group>";
 		};
-		D0E98BBE1AB43A00BAB0493E /* Pods */ = {
+		DE511C2832901A8FF0341005 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7367A9DA060B71D681F61EEF /* Pods-Flooz.debug.xcconfig */,
-				746904E147650706ED491D26 /* Pods-Flooz.local.xcconfig */,
-				900A3063929FE1D7D134F959 /* Pods-Flooz.release.xcconfig */,
-				3CFAB56D3C5BD13A40DFE9A0 /* Pods-Flooz.recette.xcconfig */,
-				DE693F566F1A43290909A5D9 /* Pods-Flooz dev.debug.xcconfig */,
-				05A01555B910DE768C05B873 /* Pods-Flooz dev.local.xcconfig */,
-				E44E8E5CF4985E3B8027D411 /* Pods-Flooz dev.release.xcconfig */,
-				83308C488458E6FE87063EA2 /* Pods-Flooz dev.recette.xcconfig */,
-				2A7ABA4A0C7A3772FEAEDFE8 /* Pods-Flooz local.debug.xcconfig */,
-				39C7AAEBE2F4C1E9600F787E /* Pods-Flooz local.local.xcconfig */,
-				68E495AD8EB30DA3A0EB9D2C /* Pods-Flooz local.release.xcconfig */,
-				634B150C9B811BA2C56EA3D9 /* Pods-Flooz local.recette.xcconfig */,
-				4B8208B2DC8CA49EFE7E25F7 /* Pods-FloozTests.debug.xcconfig */,
-				778D0112BAEAE7ACD4A166B1 /* Pods-FloozTests.local.xcconfig */,
-				C6A7439F0941185A7B0A1270 /* Pods-FloozTests.release.xcconfig */,
-				98E044B02E0198D142E47992 /* Pods-FloozTests.recette.xcconfig */,
+				5F619201D5B77F028FD00E1E /* Pods-Flooz.debug.xcconfig */,
+				5F79C86F4055C81E08981503 /* Pods-Flooz.local.xcconfig */,
+				FE6740647D541462EAEA3E75 /* Pods-Flooz.release.xcconfig */,
+				8FCF2899E5316F9310D53B68 /* Pods-Flooz.recette.xcconfig */,
+				D30286D850F52B0AD5772C92 /* Pods-Flooz dev.debug.xcconfig */,
+				26A068AC9C9B48B6DC9CCCB2 /* Pods-Flooz dev.local.xcconfig */,
+				67FB5547E03A1F49A9F3106F /* Pods-Flooz dev.release.xcconfig */,
+				A4C763D06BF5A5D43AE733D3 /* Pods-Flooz dev.recette.xcconfig */,
+				515645B883174D2468C00AB5 /* Pods-Flooz local.debug.xcconfig */,
+				0C3D0ACF9C502DCFC5FACBB1 /* Pods-Flooz local.local.xcconfig */,
+				26E390072B511AAD8F45A3CC /* Pods-Flooz local.release.xcconfig */,
+				6E3E321A51EF9E4D66817346 /* Pods-Flooz local.recette.xcconfig */,
+				2BAC9DAB1DA4145ADB756962 /* Pods-FloozTests.debug.xcconfig */,
+				E75C29EB973DC2B4B4FBAF49 /* Pods-FloozTests.local.xcconfig */,
+				B291AB299FE2084FFB29794D /* Pods-FloozTests.release.xcconfig */,
+				5EF8C8B75968CF11E7AF377E /* Pods-FloozTests.recette.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2996,6 +2956,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB3D08BA186CA11A00CF8380 /* Build configuration list for PBXNativeTarget "Flooz" */;
 			buildPhases = (
+				B8E7D98F4677C580C1E1E88A /* 📦 Check Pods Manifest.lock */,
 				5C1C8029E49B8FE178D2DDC1 /* [CP] Check Pods Manifest.lock */,
 				AB3D088A186CA11A00CF8380 /* Sources */,
 				AB3D088B186CA11A00CF8380 /* Frameworks */,
@@ -3003,6 +2964,8 @@
 				C941A75C1CF2FCEE007E9B63 /* ShellScript */,
 				DD8C5A21925412481FF5A88A /* [CP] Embed Pods Frameworks */,
 				77B9445A8175283B4F52F8B8 /* [CP] Copy Pods Resources */,
+				3A6CB8ADE956F46ACA04C84F /* 📦 Embed Pods Frameworks */,
+				59EC899D0FA97A5573B7F570 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3017,12 +2980,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB3D08BD186CA11A00CF8380 /* Build configuration list for PBXNativeTarget "FloozTests" */;
 			buildPhases = (
+				227273CFAB2051EDE08EE3EC /* 📦 Check Pods Manifest.lock */,
 				BAC02721E63D59AD4721F039 /* [CP] Check Pods Manifest.lock */,
 				AB3D08A5186CA11A00CF8380 /* Sources */,
 				AB3D08A6186CA11A00CF8380 /* Frameworks */,
 				AB3D08A7186CA11A00CF8380 /* Resources */,
 				80907692CF4C87E4023242FC /* [CP] Embed Pods Frameworks */,
 				3BEEE6680241B05EE17E540B /* [CP] Copy Pods Resources */,
+				2129140E2555B9CF1CF80038 /* 📦 Embed Pods Frameworks */,
+				8FE4B845CF8F017D00376ED5 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3040,6 +3006,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABAA4026197E96BF009F29EF /* Build configuration list for PBXNativeTarget "Flooz dev" */;
 			buildPhases = (
+				9B772420DB35B9F58835B1FB /* 📦 Check Pods Manifest.lock */,
 				1DF9E60BA9A1AAEE9CF82AEC /* [CP] Check Pods Manifest.lock */,
 				ABAA3F7F197E96BF009F29EF /* Sources */,
 				ABAA3FE7197E96BF009F29EF /* Frameworks */,
@@ -3047,6 +3014,8 @@
 				2A58D924C7589FA8D915D591 /* [CP] Embed Pods Frameworks */,
 				2D7C2496CC5FAF175C616C24 /* [CP] Copy Pods Resources */,
 				C941A75B1CF2FCE3007E9B63 /* ShellScript */,
+				50D6E4DD25C5B5BD20E35FB9 /* 📦 Embed Pods Frameworks */,
+				21C33401B9B3544CA0A1D291 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3061,6 +3030,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C980133E1A76921000019682 /* Build configuration list for PBXNativeTarget "Flooz local" */;
 			buildPhases = (
+				D752FB93AE4D4A02C048C795 /* 📦 Check Pods Manifest.lock */,
 				8FB0ACAD3245518CBED406A5 /* [CP] Check Pods Manifest.lock */,
 				C98012711A76921000019682 /* Sources */,
 				C98013041A76921000019682 /* Frameworks */,
@@ -3068,6 +3038,8 @@
 				9D2ECB76CF366F61DF6EAF2F /* [CP] Embed Pods Frameworks */,
 				1643C49B513DD0C763B9FAAE /* [CP] Copy Pods Resources */,
 				C941A75D1CF2FCF7007E9B63 /* ShellScript */,
+				630E9E690AD676ED32E2AE7E /* 📦 Embed Pods Frameworks */,
+				3457D2F58DE9CF1E832F2065 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3132,7 +3104,7 @@
 				};
 			};
 			buildConfigurationList = AB3D0889186CA11A00CF8380 /* Build configuration list for PBXProject "Flooz" */;
-			compatibilityVersion = "Xcode 6.3";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -3295,6 +3267,51 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		2129140E2555B9CF1CF80038 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		21C33401B9B3544CA0A1D291 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		227273CFAB2051EDE08EE3EC /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		2A58D924C7589FA8D915D591 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3325,6 +3342,36 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		3457D2F58DE9CF1E832F2065 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A6CB8ADE956F46ACA04C84F /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz/Pods-Flooz-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3BEEE6680241B05EE17E540B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3340,6 +3387,36 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		50D6E4DD25C5B5BD20E35FB9 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz dev/Pods-Flooz dev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		59EC899D0FA97A5573B7F570 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz/Pods-Flooz-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5C1C8029E49B8FE178D2DDC1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3353,6 +3430,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		630E9E690AD676ED32E2AE7E /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		77B9445A8175283B4F52F8B8 /* [CP] Copy Pods Resources */ = {
@@ -3400,6 +3492,36 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		8FE4B845CF8F017D00376ED5 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FloozTests/Pods-FloozTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9B772420DB35B9F58835B1FB /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		9D2ECB76CF366F61DF6EAF2F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3413,6 +3535,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flooz local/Pods-Flooz local-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B8E7D98F4677C580C1E1E88A /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		BAC02721E63D59AD4721F039 /* [CP] Check Pods Manifest.lock */ = {
@@ -3468,6 +3605,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 4f18178e0b7894ec76bb6f01a60f34baf68acbf7 19a373e7b5eef0cba0255a5944512a158d0ecdb1dd79cfc28b40d4fcfdf0f06f";
+		};
+		D752FB93AE4D4A02C048C795 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 		DD8C5A21925412481FF5A88A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3526,9 +3678,9 @@
 				2F0F6AFF19DF3E35004CA223 /* SettingsBankViewController.m in Sources */,
 				C9701E081D3CE29600734092 /* DotActivityIndicatorParms.m in Sources */,
 				C94EF3B91CB2AB8E003EA4CF /* AmbassadorStepsViewController.m in Sources */,
+				C9E1A7D31D8FEBFB00649BA0 /* NewCollectController.m in Sources */,
 				C907297E1B59569900BA691C /* NSString+custom.m in Sources */,
 				C9B1866D1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
-				C9B4AA6A1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
 				C95CAC2D1D78668200B2D676 /* ShopHistoryCell.m in Sources */,
 				C93A2D701C4FE75400C30821 /* FLTimelineDeal.m in Sources */,
 				ABC1115B18ACE4C700C3C52D /* TransactionUsersView.m in Sources */,
@@ -3607,7 +3759,6 @@
 				ABE914451890A12C003AC722 /* FLTransaction.m in Sources */,
 				C95772711A9C7BB400CD6BC0 /* FLTexts.m in Sources */,
 				C9C3AD861CA29631009907D9 /* ParticipantCell.m in Sources */,
-				C938EFCE1AE68C5900A3F740 /* ScannerViewController.m in Sources */,
 				C955716A1CEC7771001A79AA /* PaymentAudiotelViewController.m in Sources */,
 				AB2FB54818AE798D0079AA1D /* FLNotification.m in Sources */,
 				C910E0EE1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */,
@@ -3621,6 +3772,7 @@
 				ABE9146218929168003AC722 /* AccountViewController.m in Sources */,
 				ABAFEE27197FFE5000D39C62 /* FLPopup.m in Sources */,
 				C9D519B91D6321830082B862 /* ShopCardCell.m in Sources */,
+				C9E1A7D91D8FED7900649BA0 /* 3DSecureViewController.m in Sources */,
 				C9E7ACD91D65ED240017BC38 /* ShopParamViewController.m in Sources */,
 				C917C80D1BE79D950018043C /* LocationSearchBar.m in Sources */,
 				2F0F6B0719DF5432004CA223 /* SettingsCoordsViewController.m in Sources */,
@@ -3639,20 +3791,19 @@
 				C919AD981BBAC3CD00B87AAB /* FLReachability.m in Sources */,
 				C93118481A1F7E0B008C6EEC /* FLReport.m in Sources */,
 				C9C7DB2D1A2351E300AEDC67 /* SettingsPrivacyController.m in Sources */,
-				C9AF4BE619F7C2D7005C696B /* AvatarMenu.m in Sources */,
 				AB5EB6F71882151000D81AF6 /* TimelineViewController.m in Sources */,
 				C920818A1D7977FA006BC697 /* CashOutHistoryViewController.m in Sources */,
 				ABE9145518927CE0003AC722 /* FLSocial.m in Sources */,
 				AB2FB56318B63B5F0079AA1D /* FriendCell.m in Sources */,
 				C950540E1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C92900D51C8F159E0008D61D /* CollectViewController.m in Sources */,
-				C99D11B31C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768B1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				C9B975571C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */,
 				2F50155319EDC46E00F61380 /* GlobalViewController.m in Sources */,
 				C92900DB1C8F1DE70008D61D /* CollectHeaderView.m in Sources */,
 				C98A5F0F1C3BDB6800C3EFD1 /* FLTextField.m in Sources */,
 				C921175C1B66726900CF2D51 /* FLInvitationTexts.m in Sources */,
+				C9E1A7D61D8FECB000649BA0 /* ShareSMSViewController.m in Sources */,
 				AB2FB53818AD8C7A0079AA1D /* FLTextFieldTitle2.m in Sources */,
 				C9701E101D3D044300734092 /* ScopePickerCell.m in Sources */,
 				C9D519BE1D6321B60082B862 /* FLShopItem.m in Sources */,
@@ -3668,13 +3819,11 @@
 				ABEC02A818D3165600C03025 /* UIView+FindFirstResponder.m in Sources */,
 				C9E7ACEF1D65FB7E0017BC38 /* FLShopField.m in Sources */,
 				C9D977901CE37E2300F94460 /* UIView+Border.m in Sources */,
-				C90B94801A00E96900E2C53B /* 3DSecureViewController.m in Sources */,
 				C9E7ACE01D65F8AF0017BC38 /* FLShopTextField.m in Sources */,
 				AB94FAC81906B720007F8373 /* LoadingCell.m in Sources */,
 				C9436EBD1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				AB8F9FAA18E1EF93006039D0 /* FLAlertView.m in Sources */,
 				AB3D08E41871BEEE00CF8380 /* UIColor+custom.m in Sources */,
-				C91C5D3F1BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */,
 				AB6DA50B18C4A5D80073B947 /* WebViewController.m in Sources */,
 				C96E5A681BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABC1115F18ACE4FE00C3C52D /* FriendPickerSelectionCell.m in Sources */,
@@ -3712,14 +3861,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9E1A7DD1D8FEDB600649BA0 /* NewCollectController.m in Sources */,
+				C9E1A7DC1D8FEDAE00649BA0 /* ShareSMSViewController.m in Sources */,
+				C9E1A7DA1D8FED9300649BA0 /* 3DSecureViewController.m in Sources */,
 				C9CB220A1A961AAC0064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C95AED981A49B10700000FB3 /* ClipboardPopoverViewController.m in Sources */,
 				C9A7BE611A2788D800195AFC /* FLPreset.m in Sources */,
 				C93118491A1FBD72008C6EEC /* FLReport.m in Sources */,
-				C90B94811A00EA2400E2C53B /* 3DSecureViewController.m in Sources */,
 				C98959201C089C8500D8D37F /* FLSocialPopup.m in Sources */,
 				C9CA67791A518811003863D1 /* SignupSMSViewController.m in Sources */,
-				C9AF4BE719F7C340005C696B /* AvatarMenu.m in Sources */,
 				C95254D71B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C9C7EE9519F695E8009FE292 /* FLTrigger.m in Sources */,
 				C975BB061A92BB8E000E5AEA /* YLMoment.m in Sources */,
@@ -3760,7 +3910,6 @@
 				C9701E011D3CD3B400734092 /* MRCircularProgressView.m in Sources */,
 				ABAA3F87197E96BF009F29EF /* FLHelper.m in Sources */,
 				2F0F6B0419DF3EC5004CA223 /* SettingsDocumentsViewController.m in Sources */,
-				C9B4AA6B1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
 				C9CB22021A95E9D30064389A /* THContactView.m in Sources */,
 				ABAFEE28198001BA00D39C62 /* FLPopup.m in Sources */,
 				C9EABF361C523CE900BDDEA1 /* FLAddress.m in Sources */,
@@ -3830,7 +3979,6 @@
 				C9C3AD871CA29631009907D9 /* ParticipantCell.m in Sources */,
 				C95772721A9C7BB400CD6BC0 /* FLTexts.m in Sources */,
 				C955716B1CEC7771001A79AA /* PaymentAudiotelViewController.m in Sources */,
-				C938EFCF1AE68C5900A3F740 /* ScannerViewController.m in Sources */,
 				2F0F6AFC19DF0686004CA223 /* FLSwitch.m in Sources */,
 				C910E0EF1A5405A000EB77DE /* FLLikePopoverViewController.m in Sources */,
 				2FD2460419A2983C008DCFB5 /* ContactCell.m in Sources */,
@@ -3867,7 +4015,6 @@
 				ABAA3FCD197E96BF009F29EF /* FLAccountUserView.m in Sources */,
 				C950540F1B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
 				C92900D61C8F159E0008D61D /* CollectViewController.m in Sources */,
-				C99D11B41C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768C1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				C9B975581C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */,
 				ABAA3FCE197E96BF009F29EF /* TimelineViewController.m in Sources */,
@@ -3895,7 +4042,6 @@
 				C9436EBE1BCBA34E000F382C /* ValidateSMSViewController.m in Sources */,
 				ABAA3FDE197E96BF009F29EF /* FLAlertView.m in Sources */,
 				ABAA3FDF197E96BF009F29EF /* UIColor+custom.m in Sources */,
-				C91C5D401BC65E4F00B88D81 /* ShareSMSViewController.m in Sources */,
 				ABAA3FE1197E96BF009F29EF /* WebViewController.m in Sources */,
 				C96E5A691BA95EEE00F201E9 /* UserViewController.m in Sources */,
 				ABAA3FE2197E96BF009F29EF /* FriendPickerSelectionCell.m in Sources */,
@@ -3925,15 +4071,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C994C23F1BC805FD00B528AA /* ShareSMSViewController.m in Sources */,
+				C9E1A7DF1D8FEDC500649BA0 /* ShareSMSViewController.m in Sources */,
+				C9E1A7DE1D8FEDBF00649BA0 /* NewCollectController.m in Sources */,
+				C9E1A7DB1D8FED9D00649BA0 /* 3DSecureViewController.m in Sources */,
 				C9CB220B1A961AD90064389A /* FLPrivacySelectorViewController.m in Sources */,
 				C98012721A76921000019682 /* ClipboardPopoverViewController.m in Sources */,
 				C98012731A76921000019682 /* FLPreset.m in Sources */,
 				C98012751A76921000019682 /* FLReport.m in Sources */,
 				C98959211C089C8500D8D37F /* FLSocialPopup.m in Sources */,
-				C98012791A76921000019682 /* 3DSecureViewController.m in Sources */,
 				C980127A1A76921000019682 /* SignupSMSViewController.m in Sources */,
-				C980127D1A76921000019682 /* AvatarMenu.m in Sources */,
 				C95254D81B5E7BC300D88096 /* AccountCell.m in Sources */,
 				C980127E1A76921000019682 /* FLTrigger.m in Sources */,
 				C975BB071A92BB8E000E5AEA /* YLMoment.m in Sources */,
@@ -3974,7 +4120,6 @@
 				C9B1866F1A9E01D400077C5F /* FLTutoPopoverViewController.m in Sources */,
 				C980128B1A76921000019682 /* FLHelper.m in Sources */,
 				C980128D1A76921000019682 /* SettingsDocumentsViewController.m in Sources */,
-				C9B4AA6C1AE7C606002E0723 /* FLScannerOverlay.m in Sources */,
 				C9CB22031A95E9D30064389A /* THContactView.m in Sources */,
 				C9EABF371C523CE900BDDEA1 /* FLAddress.m in Sources */,
 				C980128F1A76921000019682 /* FLPopup.m in Sources */,
@@ -4045,7 +4190,6 @@
 				C955716C1CEC7771001A79AA /* PaymentAudiotelViewController.m in Sources */,
 				C98012C51A76921000019682 /* FLNewTransactionBar.m in Sources */,
 				C95772731A9C7BB400CD6BC0 /* FLTexts.m in Sources */,
-				C938EFD01AE68C5900A3F740 /* ScannerViewController.m in Sources */,
 				C98012C71A76921000019682 /* FLSwitch.m in Sources */,
 				C98012C81A76921000019682 /* FLLikePopoverViewController.m in Sources */,
 				C98012C91A76921000019682 /* ContactCell.m in Sources */,
@@ -4080,7 +4224,6 @@
 				C98012DC1A76921000019682 /* SettingsPrivacyController.m in Sources */,
 				C98012DF1A76921000019682 /* FLAccountUserView.m in Sources */,
 				C92900D71C8F159E0008D61D /* CollectViewController.m in Sources */,
-				C99D11B51C8868090091F48C /* NewCollectController.m in Sources */,
 				C9C7768D1C076078006C22CB /* UIButton+Badge.m in Sources */,
 				C9B975591C9EF4BA00163A05 /* CollectParticipationViewController.m in Sources */,
 				C95054101B4E7E9A00B9FB2C /* FLTabBarController.m in Sources */,
@@ -4248,13 +4391,13 @@
 		};
 		8B81C5A619993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CFAB56D3C5BD13A40DFE9A0 /* Pods-Flooz.recette.xcconfig */;
+			baseConfigurationReference = 8FCF2899E5316F9310D53B68 /* Pods-Flooz.recette.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -4264,9 +4407,9 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4291,7 +4434,7 @@
 		};
 		8B81C5A719993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 98E044B02E0198D142E47992 /* Pods-FloozTests.recette.xcconfig */;
+			baseConfigurationReference = 5EF8C8B75968CF11E7AF377E /* Pods-FloozTests.recette.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4314,13 +4457,13 @@
 		};
 		8B81C5A819993C3200765C63 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 83308C488458E6FE87063EA2 /* Pods-Flooz dev.recette.xcconfig */;
+			baseConfigurationReference = A4C763D06BF5A5D43AE733D3 /* Pods-Flooz dev.recette.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -4330,12 +4473,12 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FLOOZ_DEV_API=1",
 				);
-				INFOPLIST_FILE = "Flooz dev-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4452,13 +4595,13 @@
 		};
 		AB3D08BB186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7367A9DA060B71D681F61EEF /* Pods-Flooz.debug.xcconfig */;
+			baseConfigurationReference = 5F619201D5B77F028FD00E1E /* Pods-Flooz.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -4468,9 +4611,9 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4496,13 +4639,13 @@
 		};
 		AB3D08BC186CA11A00CF8380 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 900A3063929FE1D7D134F959 /* Pods-Flooz.release.xcconfig */;
+			baseConfigurationReference = FE6740647D541462EAEA3E75 /* Pods-Flooz.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Flooz (QU87Q423GH)";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -4512,8 +4655,8 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
-				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4538,7 +4681,7 @@
 		};
 		AB3D08BE186CA11A00CF8380 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B8208B2DC8CA49EFE7E25F7 /* Pods-FloozTests.debug.xcconfig */;
+			baseConfigurationReference = 2BAC9DAB1DA4145ADB756962 /* Pods-FloozTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4565,7 +4708,7 @@
 		};
 		AB3D08BF186CA11A00CF8380 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C6A7439F0941185A7B0A1270 /* Pods-FloozTests.release.xcconfig */;
+			baseConfigurationReference = B291AB299FE2084FFB29794D /* Pods-FloozTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4588,13 +4731,13 @@
 		};
 		ABAA4027197E96BF009F29EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE693F566F1A43290909A5D9 /* Pods-Flooz dev.debug.xcconfig */;
+			baseConfigurationReference = D30286D850F52B0AD5772C92 /* Pods-Flooz dev.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -4604,12 +4747,12 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FLOOZ_DEV_API=1",
 				);
-				INFOPLIST_FILE = "Flooz dev-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4635,13 +4778,13 @@
 		};
 		ABAA4028197E96BF009F29EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E44E8E5CF4985E3B8027D411 /* Pods-Flooz dev.release.xcconfig */;
+			baseConfigurationReference = 67FB5547E03A1F49A9F3106F /* Pods-Flooz dev.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -4651,12 +4794,12 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					FLOOZ_DEV_API,
 				);
-				INFOPLIST_FILE = "Flooz dev-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4729,13 +4872,13 @@
 		};
 		C980126C1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 746904E147650706ED491D26 /* Pods-Flooz.local.xcconfig */;
+			baseConfigurationReference = 5F79C86F4055C81E08981503 /* Pods-Flooz.local.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Flooz/Flooz.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -4745,9 +4888,9 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				INFOPLIST_FILE = "Flooz/Flooz-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4773,7 +4916,7 @@
 		};
 		C980126D1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 778D0112BAEAE7ACD4A166B1 /* Pods-FloozTests.local.xcconfig */;
+			baseConfigurationReference = E75C29EB973DC2B4B4FBAF49 /* Pods-FloozTests.local.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4800,13 +4943,13 @@
 		};
 		C980126E1A76872400019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05A01555B910DE768C05B873 /* Pods-Flooz dev.local.xcconfig */;
+			baseConfigurationReference = 26A068AC9C9B48B6DC9CCCB2 /* Pods-Flooz dev.local.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = FloozLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Flooz dev.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -4816,13 +4959,13 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FLOOZ_DEV_LOCAL=1",
 					FLOOZ_DEV_API,
 				);
-				INFOPLIST_FILE = "Flooz dev-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4848,7 +4991,7 @@
 		};
 		C980133F1A76921000019682 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2A7ABA4A0C7A3772FEAEDFE8 /* Pods-Flooz local.debug.xcconfig */;
+			baseConfigurationReference = 515645B883174D2468C00AB5 /* Pods-Flooz local.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
@@ -4863,12 +5006,12 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FLOOZ_DEV_API=1",
 				);
-				INFOPLIST_FILE = "Flooz local-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz local-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4894,7 +5037,7 @@
 		};
 		C98013401A76921000019682 /* Local */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 39C7AAEBE2F4C1E9600F787E /* Pods-Flooz local.local.xcconfig */;
+			baseConfigurationReference = 0C3D0ACF9C502DCFC5FACBB1 /* Pods-Flooz local.local.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
@@ -4909,13 +5052,13 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FLOOZ_DEV_LOCAL=1",
 					"FLOOZ_DEV_API=1",
 				);
-				INFOPLIST_FILE = "Flooz local-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz local-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4941,7 +5084,7 @@
 		};
 		C98013411A76921000019682 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68E495AD8EB30DA3A0EB9D2C /* Pods-Flooz local.release.xcconfig */;
+			baseConfigurationReference = 26E390072B511AAD8F45A3CC /* Pods-Flooz local.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
@@ -4956,12 +5099,12 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					FLOOZ_DEV_API,
 				);
-				INFOPLIST_FILE = "Flooz local-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz local-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -4986,7 +5129,7 @@
 		};
 		C98013421A76921000019682 /* Recette */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 634B150C9B811BA2C56EA3D9 /* Pods-Flooz local.recette.xcconfig */;
+			baseConfigurationReference = 6E3E321A51EF9E4D66817346 /* Pods-Flooz local.recette.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = FloozAppIcon;
@@ -5001,12 +5144,12 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Flooz/Flooz-Prefix.pch";
+				GCC_PREFIX_HEADER = "Flooz/Supporting Files/Flooz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FLOOZ_DEV_API=1",
 				);
-				INFOPLIST_FILE = "Flooz local-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Flooz/Supporting Files/Flooz local-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

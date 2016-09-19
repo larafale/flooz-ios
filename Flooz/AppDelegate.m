@@ -120,17 +120,7 @@
 #else
     [self launchRootController];
 #endif
-    
-#ifdef PONY_D
-#ifdef TARGET_IPHONE_SIMULATOR
-    PDDebugger *debugger = [PDDebugger defaultInstance];
-    [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
-    [debugger enableNetworkTrafficDebugging];
-    [debugger forwardAllNetworkTraffic];
-    [debugger enableViewHierarchyDebugging];
-#endif
-#endif
-    
+        
 #ifdef FLOOZ_DEV_API
     [Mixpanel sharedInstanceWithToken:@"82c134b277474d6143decdc6ae73d5c9"];
 #else

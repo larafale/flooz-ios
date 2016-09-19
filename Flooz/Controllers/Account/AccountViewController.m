@@ -12,7 +12,6 @@
 #import "NotificationsViewController.h"
 #import "ShareAppViewController.h"
 #import "CashOutViewController.h"
-#import "ScannerViewController.h"
 #import "CreditCardViewController.h"
 #import "SettingsBankViewController.h"
 #import "SettingsCoordsViewController.h"
