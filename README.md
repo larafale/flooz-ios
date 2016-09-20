@@ -103,8 +103,10 @@ The UI part of Flooz is based entirely on code, no xibs or storyboards are used 
 
 #### [JSON REST](http://http://api.flooz.me/docs?secret=secret)
 
-Api documentation can be found [here](http://http://api.flooz.me/docs?secret=secret), it contain all routes and their parameters. [AFNetworking](http://cocoadocs.org/docsets/AFNetworking) is used for all network requests and all responses are formated in JSON.
+Api documentation can be found [here](http://api.flooz.me/docs?secret=secret), it contain all routes and their parameters.
+[AFNetworking](http://cocoadocs.org/docsets/AFNetworking) is used for all network requests and all responses are formated in JSON.
 User access token is added, with several other infos (device, version, os, ...), in every requests as an URL parameter.
+The [Flooz](https://github.com/larafale/flooz-ios/tree/master/Flooz/Library/Flooz) singleton cointains all requests, user data, texts sended from api and socket handler.
 
 Succeeding requests will return one of the following template:
 
@@ -151,4 +153,6 @@ Sockets are used in this project for live events or updating informations, socke
 
 
 ### Triggers
+
+
 
