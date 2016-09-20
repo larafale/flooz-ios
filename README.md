@@ -159,14 +159,14 @@ Most of the time Triggers will be in a array, each element of this array will be
 
 ### Structure
 
-  ```javascript
-		{
-			key: 'namespace:view:action',
-			delay: 0,
-			data: {},
-			triggers: [Trigger]
-		}
-	```
+```javascript
+	{
+		key: 'namespace:view:action',
+		delay: 0,
+		data: {},
+		triggers: [Trigger]
+	}
+```
 ##### key : string (required)
 	
 The key is a string formatted in three part with namespace first, then view and finnaly an action. Only the view part can be left empty. Between each component an `:` is required.
