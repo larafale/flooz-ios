@@ -8,11 +8,11 @@
 ![dependencies up to date](http://b.repl.ca/v1/dependencies-up_to%20date-brightgreen.png)
 [![twitter @floozme](http://b.repl.ca/v1/twitter-@floozme-blue.png)](http://twitter.com/floozme)
 
-## Installation
+# Installation
 
 Flooz uses [CocoaPods](http://cocoapods.org) as dependency manager, which automates and simplifies the process of using 3rd-party libraries.
 
-### Installation process
+## Installation process
 
 ```bash
 $ git clone https://github.com/larafale/flooz-ios.git
@@ -22,9 +22,9 @@ $ open Flooz.xcworkspace
 ```
 > CocoaPods 1.+ and Xcode 8 are required to build Flooz.
 
-## Architecture
+# Architecture
 
-### [Libraries](https://github.com/larafale/flooz-ios/blob/master/Podfile)
+## [Libraries](https://github.com/larafale/flooz-ios/blob/master/Podfile)
 
 | Name | Version  | Notes |
 |:-------------------------------:|:--------------------:|:------------------------------------------------------------------:|
@@ -67,9 +67,9 @@ $ open Flooz.xcworkspace
 | [VCTransitionsLibrary](https://github.com/ColinEberhardt/VCTransitionsLibrary) | _1.5.0_ | A collection of iOS7 animation controllers and interaction controllers, providing flip, fold and all kinds of other transitions |
 | [VENCalculatorInputView](https://github.com/venmo/VENCalculatorInputView) | _1.5.4_ | Calculator keyboard used in the Venmo iOS app |
 
-### [Models](https://github.com/larafale/flooz-ios/tree/master/Flooz/Models)
+## [Models](https://github.com/larafale/flooz-ios/tree/master/Flooz/Models)
 
-######The models are initialized from API calls, several kinds of models are available:
+#####The models are initialized from API calls, several kinds of models are available:
 
 - [`FLAlert`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLAlert.h) _In-App alert object (appear from top)_
 - [`FLComment`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLComment.h) _Transaction and pot comment object_
@@ -87,7 +87,7 @@ $ open Flooz.xcworkspace
 - [`FLTrigger`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLTrigger.h) _Trigger object with next triggers, data and kind_
 - [`FLUser`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLUser.h) _User object with all visible informations_
 
-### UI
+## UI
 
 The UI part of Flooz is based entirely on code, no xibs or storyboards are used in the project, almost every view is a specific class that can be found in the [Views](https://github.com/larafale/flooz-ios/tree/master/Flooz/Views) folder. Lot of widgets are available in this folder including but not only:
 
@@ -99,9 +99,9 @@ The UI part of Flooz is based entirely on code, no xibs or storyboards are used 
 
 [Controllers](https://github.com/larafale/flooz-ios/tree/master/Flooz/Controllers) used in the project are subclasses of [GlobalViewController](https://github.com/larafale/flooz-ios/blob/master/Flooz/Views/BaseViewController/GlobalViewController.m) or [BaseViewController](https://github.com/larafale/flooz-ios/blob/master/Flooz/Views/BaseViewController/BaseViewController.m), wich handle view template generation (backgroundColor, contentView, navigationBar, navigationItems).
 
-### Networking
+## Networking
 
-#### [JSON REST](http://http://api.flooz.me/docs?secret=secret)
+### [JSON REST](http://http://api.flooz.me/docs?secret=secret)
 
 Api documentation can be found [here](http://api.flooz.me/docs?secret=secret), it contain all routes and their parameters.
 [AFNetworking](http://cocoadocs.org/docsets/AFNetworking) is used for all network requests and all responses are formated in JSON.
@@ -116,7 +116,7 @@ Succeeding requests will return one of the following template:
 		{
 			code: 200,
 			item: Object,
-			triggers: [Triggers],
+			triggers: [Trigger],
 			popup: PopupData
 		}
 	```
@@ -127,7 +127,7 @@ Succeeding requests will return one of the following template:
 		{
 			code: 200,
 			items: [Object],
-			triggers: [Triggers],
+			triggers: [Trigger],
 			popup: PopupData
 		}
 	```
@@ -139,12 +139,12 @@ Succeeding requests will return one of the following template:
 			code: 200,
 			items: [Object],
 			next: NextURL
-			triggers: [Triggers],
+			triggers: [Trigger],
 			popup: PopupData
 		}
 	```
 
-#### [SocketIO](http://socket.io)
+### [SocketIO](http://socket.io)
 
 Sockets are used in this project for live events or updating informations, sockets are handle with [SocketIO](http://socket.io). Two sockets feed are listening:
 
@@ -152,7 +152,65 @@ Sockets are used in this project for live events or updating informations, socke
 - `feed` _update number of unread notifications, can also contain triggers_
 
 
-### Triggers
+## Triggers
 
+A [Trigger](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLTrigger.h) is a special object send by the API, it's used for multiple purpose and is define by a key.
+Most of the time Triggers will be in a array, each element of this array will be executed one after another by the [FLTriggerManager](https://github.com/larafale/flooz-ios/tree/master/Flooz/Library/FLTriggerManager).
 
+### Structure
+
+  ```javascript
+		{
+			key: 'namespace:view:action',
+			delay: 0,
+			data: {},
+			triggers: [Trigger]
+		}
+	```
+##### key : string (required)
+	
+The key is a string formatted in three part with namespace first, then view and finnaly an action. Only the view part can be left empty. Between each component an `:` is required.
+
+Key format: `namespace:view:action`
+
+* namespace: represent the context of the trigger _(ex: app, pay, card, shop, settings, ...)_ 
+* view: define the specific view in the namespace where the trigger will take effect
+* action: define the kind of effects the trigger will have, severals action are available:
+	* ask _(demande de permissions (notifs, facebook)_
+	* call _(http::call used to make http request on the API or a specific URL)_
+	* clear _(clear local data)_
+	* hide _(hide specific view defined by the namespace and the view)_
+	* login _(force user identification)_	
+	* logout _(logout current user from the app)_
+	* open _(open specific URI with native phone view)_
+	* picker _(pick specific content and send it throught is next triggers)_
+	* send _(send images from current transaction or pot)_
+	* show _(show specific view defined by the namespace and the view)_
+	* sync _(force updating specifi data)_
+	
+##### delay : float 
+
+Execution of a trigger can be delayed with this parameter. Value has to be set in seconds.
+
+##### data : jsonObject 
+
+Parameters specific to each trigger. Learn more using the push playground [here](http://dashboard-dev.flooz.me/push).
+	
+##### data : array\<Trigger>
+
+Array of Triggers executed one after another when the current Trigger is done.
+
+### Usage
+
+##### Buttons
+
+##### Payment Process
+
+##### Pickers
+
+##### URL Scheme
+
+##### Notifications
+
+##### Data Updates
 
