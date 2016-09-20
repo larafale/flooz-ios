@@ -71,33 +71,33 @@ $ open Flooz.xcworkspace
 
 ######The models are initialized from API calls, several kinds of models are available:
 
-- `FLAlert` _In-App alert object (appear from top)_
-- `FLComment` _Transaction and pot comment object_
-- `FLCountry` _Country object with flag, phone prefix..._
-- `FLCreditCard` _Credit card object with holder, card number, expires..._
-- `FLFriendRequest` _Pending friend request object_
-- `FLInvitationTexts` _Invitations texts used for app sharing (Fb, twitter, mail, sms)_
-- `FLNotification` _Notification object (text, cAt)_
-- `FLPreset` _Preset object used for initalizing new collect or new flooz view from Triggers_
-- `FLReport` _Report object used when sending user or transaction report to the API_
-- `FLShopItem` _Shop item can be a product or category_
-- `FLSocial` _Social data from collect and transactions (nbLikes, nbComments, ...)_
-- `FLTexts` _Texts sended from API, used to manage all kinds of content whitin the app_
-- `FLTransaction` _Transaction object (can be a pot)_
-- `FLTrigger` _Trigger object with next triggers, data and kind_
-- `FLUser` _User object with all visible informations_
+- [`FLAlert`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLAlert.h) _In-App alert object (appear from top)_
+- [`FLComment`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLComment.h) _Transaction and pot comment object_
+- [`FLCountry`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLCountry.h) _Country object with flag, phone prefix..._
+- [`FLCreditCard`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLCreditCard.h) _Credit card object with holder, card number, expires..._
+- [`FLFriendRequest`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLFriendRequest.h) _Pending friend request object_
+- [`FLInvitationTexts`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLInvitationTexts.h) _Invitations texts used for app sharing (Fb, twitter, mail, sms)_
+- [`FLNotification`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLNotification.h) _Notification object (text, cAt)_
+- [`FLPreset`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLPreset.h) _Preset object used for initalizing new collect or new flooz view from Triggers_
+- [`FLReport`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLReport.h) _Report object used when sending user or transaction report to the API_
+- [`FLShopItem`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLShopItem.h) _Shop item can be a product or category_
+- [`FLSocial`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLSocial.h) _Social data from collect and transactions (nbLikes, nbComments, ...)_
+- [`FLTexts`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLTexts.h) _Texts sended from API, used to manage all kinds of content whitin the app_
+- [`FLTransaction`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLTransaction.h) _Transaction object (can be a pot)_
+- [`FLTrigger`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLTrigger.h) _Trigger object with next triggers, data and kind_
+- [`FLUser`](https://github.com/larafale/flooz-ios/blob/master/Flooz/Models/FLUser.h) _User object with all visible informations_
 
 ### UI
 
 The UI part of Flooz is based entirely on code, no xibs or storyboards are used in the project, almost every view is a specific class that can be found in the [Views](https://github.com/larafale/flooz-ios/tree/master/Flooz/Views) folder. Lot of widgets are available in this folder including but not only:
 
-- `FLActionButton` & `FLBorderedActionButton` _Button widget with flooz colors_
-- `FLImageView` _ImageView subclass handling setting image from URL_
-- `FLPhoneField` _Phone number input with country picker_
-- `FLTableView` _TableView subclass with flooz colors_
-- `FLTextField` _TextField subclass handling many kinds of type (number, text, email, date, url, ...) with validator and floatLabel_
+- [`FLActionButton`](https://github.com/larafale/flooz-ios/tree/master/Flooz/Views/FLActionButton) & [`FLBorderedActionButton`](https://github.com/larafale/flooz-ios/tree/master/Flooz/Views/FLBorderedActionButton) _Button widget with flooz colors_
+- [`FLImageView`](https://github.com/larafale/flooz-ios/tree/master/Flooz/Views/FLImageView) _ImageView subclass handling setting image from URL_
+- [`FLPhoneField`](https://github.com/larafale/flooz-ios/tree/master/Flooz/Views/FLPhoneField) _Phone number input with country picker_
+- [`FLTableView`](https://github.com/larafale/flooz-ios/tree/master/Flooz/Views/FLTableView) _TableView subclass with flooz colors_
+- [`FLTextField`](https://github.com/larafale/flooz-ios/tree/master/Flooz/Views/FLTextField) _TextField subclass handling many kinds of type (number, text, email, date, url, ...) with validator and floatLabel_
 
-Controllers used in the project are subclasses of [GlobalViewController](https://github.com/larafale/flooz-ios/blob/master/Flooz/Views/BaseViewController/GlobalViewController.m) or [BaseViewController](https://github.com/larafale/flooz-ios/blob/master/Flooz/Views/BaseViewController/BaseViewController.m), wich handle view template generation (backgroundColor, contentView, navigationBar, navigationItems).
+[Controllers](https://github.com/larafale/flooz-ios/tree/master/Flooz/Controllers) used in the project are subclasses of [GlobalViewController](https://github.com/larafale/flooz-ios/blob/master/Flooz/Views/BaseViewController/GlobalViewController.m) or [BaseViewController](https://github.com/larafale/flooz-ios/blob/master/Flooz/Views/BaseViewController/BaseViewController.m), wich handle view template generation (backgroundColor, contentView, navigationBar, navigationItems).
 
 ### Networking
 
