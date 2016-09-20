@@ -103,6 +103,19 @@ The UI part of Flooz is based entirely on code, no xibs or storyboards are used 
 
 ##### JSON REST
 
+Api documentation can be found [here](http://http://api.flooz.me/docs?secret=secret), it contain all routes and their parameters. [AFNetworking](http://cocoadocs.org/docsets/AFNetworking) is used for all network requests and all responses are formated in JSON.
+
+Succeeding requests will return one of the following template:
+
+- Success with unique object
+	```json
+		{
+			code: 200,
+			item: [Object],
+			triggers: [Triggers],
+			poup: [Popup]
+		}
+	```
 
 
 ##### SocketIO
