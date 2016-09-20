@@ -108,7 +108,8 @@ Api documentation can be found [here](http://http://api.flooz.me/docs?secret=sec
 Succeeding requests will return one of the following template:
 
 - Success with unique object
-	```json
+
+	```javascript
 		{
 			code: 200,
 			item: [Object],
