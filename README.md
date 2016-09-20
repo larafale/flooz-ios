@@ -167,7 +167,7 @@ Most of the time Triggers will be in a array, each element of this array will be
 		triggers: [Trigger]
 	}
 ```
-##### key : string (required)
+#### key : string (required)
 	
 The key is a string formatted in three part with namespace first, then view and finnaly an action. Only the view part can be left empty. Between each component an `:` is required.
 
@@ -188,29 +188,29 @@ Key format: `namespace:view:action`
 	* show _(show specific view defined by the namespace and the view)_
 	* sync _(force updating specifi data)_
 	
-##### delay : float 
+#### delay : float 
 
 Execution of a trigger can be delayed with this parameter. Value has to be set in seconds.
 
-##### data : jsonObject 
+#### data : jsonObject 
 
 Parameters specific to each trigger. Learn more using the push playground [here](http://dashboard-dev.flooz.me/push).
 	
-##### data : array\<Trigger>
+#### data : array\<Trigger>
 
 Array of Triggers executed one after another when the current Trigger is done.
 
 ### Usage
 
-##### Buttons
+#### Buttons
 
-##### Payment Process
+#### Payment Process
 
-##### Pickers
+#### Pickers
 
-##### URL Scheme
+#### URL Scheme
 
-##### Notifications
+#### Notifications
 
-##### Data Updates
+#### Data Updates
 
