@@ -107,17 +107,39 @@ Api documentation can be found [here](http://http://api.flooz.me/docs?secret=sec
 
 Succeeding requests will return one of the following template:
 
-- Success with unique object
+- Unique object
 
 	```javascript
 		{
 			code: 200,
-			item: [Object],
+			item: Object,
 			triggers: [Triggers],
-			poup: [Popup]
+			popup: PopupData
 		}
 	```
 
+- List of objects
+
+	```javascript
+		{
+			code: 200,
+			items: [Object],
+			triggers: [Triggers],
+			popup: PopupData
+		}
+	```
+	
+- List of objects with pagination
+
+	```javascript
+		{
+			code: 200,
+			items: [Object],
+			next: NextURL
+			triggers: [Triggers],
+			popup: PopupData
+		}
+	```
 
 ##### SocketIO
 
