@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "TransactionCellDelegate.h"
-#import "TimelineDealCellDelegate.h"
 #import "TimelineDelegate.h"
 #import "WYPopoverController.h"
 

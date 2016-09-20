@@ -113,16 +113,7 @@
         
         CompleteBlock performBlock = ^{
             if ([self respondsToSelector:sel]) {
-                NSMethodSignature *ms = [self methodSignatureForSelector:sel];
-                
-                if (ms) {
-                    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
-                    invocation.selector = sel;
-                    invocation.target = self;
-                    [invocation setArgument:(__bridge void * _Nonnull)(trigger) atIndex:0];
-                    
-                    [invocation invoke];
-                }
+                [self performSelector:sel withObject:trigger];
             }
         };
         

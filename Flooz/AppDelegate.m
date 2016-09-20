@@ -41,7 +41,6 @@
 }
 
 @property (nonatomic, retain) NSString *appUpdateURI;
-@property (strong, nonatomic) OneSignal *oneSignal;
 
 @property (nonatomic, retain) UIWindow *tmpActionSheetWindow;
 @property (nonatomic, retain) FLReport *currentReport;
@@ -93,27 +92,6 @@
             [self saveBranchParams];
         }
     }];
-    
-    self.oneSignal = [[OneSignal alloc] initWithLaunchOptions:launchOptions appId:@"3a823aad-be96-42aa-8967-6d9875f898cb" handleNotification:^(NSString *message, NSDictionary *additionalData, BOOL isActive) {
-        if (!isActive) {
-            if ([additionalData count] > 0) {
-                if (additionalData[@"triggers"]) {
-                    NSData *objectData = [additionalData[@"triggers"] dataUsingEncoding:NSUTF8StringEncoding];
-                    NSArray *json = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
-                    
-                    if (json && [json count]) {
-                        NSMutableDictionary *tmp = [pendingData mutableCopy];
-                        if (tmp == nil)
-                            tmp = [NSMutableDictionary new];
-                        [tmp setObject:json forKey:@"triggers"];
-                        pendingData = tmp;
-                        [self handlePendingData];
-                    }
-                }
-            }
-        }
-    } autoRegister:NO];
-    [self.oneSignal enableInAppAlertNotification:false];
     
 #ifdef FLOOZ_DEV_LOCAL
     [self initLocalTesting];
@@ -466,6 +444,9 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    
+// Can't enable Flooz init if local, causing to skip the ip specification process
+#ifndef FLOOZ_DEV_LOCAL
     if ([[Flooz sharedInstance] currentUser]) {
         [[Flooz sharedInstance] startSocket];
         [[Flooz sharedInstance] updateCurrentUserWithSuccess:^{}];
@@ -481,6 +462,7 @@
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationEnterForeground object:nil];
+#endif
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

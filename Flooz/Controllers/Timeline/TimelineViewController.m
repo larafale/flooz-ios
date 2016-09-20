@@ -9,7 +9,6 @@
 #import "TimelineViewController.h"
 
 #import "TransactionCell.h"
-#import "TimelineDealCell.h"
 
 #import "TransactionViewController.h"
 #import "NotificationsViewController.h"

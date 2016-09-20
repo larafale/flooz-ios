@@ -78,16 +78,7 @@
     
     if (focusId) {
         if ([focusId respondsToSelector:focusAction]) {
-            NSMethodSignature *ms = [focusId methodSignatureForSelector:focusAction];
-            
-            if (ms) {
-                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
-                invocation.selector = focusAction;
-                invocation.target = focusId;
-                [invocation setArgument:(__bridge void * _Nonnull)(@YES) atIndex:0];
-                
-                [invocation invoke];
-            }
+            [focusId performSelector:focusAction withObject:@YES];
         }
     }
 }
@@ -103,16 +94,7 @@
     
     if (focusId) {
         if ([focusId respondsToSelector:focusAction]) {
-            NSMethodSignature *ms = [focusId methodSignatureForSelector:focusAction];
-            
-            if (ms) {
-                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
-                invocation.selector = focusAction;
-                invocation.target = focusId;
-                [invocation setArgument:(__bridge void * _Nonnull)(@NO) atIndex:0];
-                
-                [invocation invoke];
-            }
+            [focusId performSelector:focusAction withObject:@NO];
         }
     }
 }

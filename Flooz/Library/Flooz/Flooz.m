@@ -59,6 +59,7 @@
     if (self) {
         
 #ifdef FLOOZ_DEV_LOCAL
+        NSLog(@"http://%@", [appDelegate localIp]);
         manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", [appDelegate localIp]]]];
 #elif FLOOZ_DEV_API
         manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://dev.flooz.me"]];

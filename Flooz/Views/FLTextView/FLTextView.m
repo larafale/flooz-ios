@@ -104,16 +104,7 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     if (focusId) {
         if ([focusId respondsToSelector:focusAction]) {
-            NSMethodSignature *ms = [focusId methodSignatureForSelector:focusAction];
-            
-            if (ms) {
-                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
-                invocation.selector = focusAction;
-                invocation.target = focusId;
-                [invocation setArgument:(__bridge void * _Nonnull)(@YES) atIndex:0];
-                
-                [invocation invoke];
-            }
+            [focusId performSelector:focusAction withObject:@YES];
         }
     }
     
@@ -132,16 +123,7 @@
     
     if (focusId) {
         if ([focusId respondsToSelector:focusAction]) {
-            NSMethodSignature *ms = [focusId methodSignatureForSelector:focusAction];
-            
-            if (ms) {
-                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
-                invocation.selector = focusAction;
-                invocation.target = focusId;
-                [invocation setArgument:(__bridge void * _Nonnull)(@NO) atIndex:0];
-                
-                [invocation invoke];
-            }
+            [focusId performSelector:focusAction withObject:@NO];
         }
     }
 }
@@ -217,16 +199,8 @@
     
     if (targetId) {
         if ([targetId respondsToSelector:targetAction]) {
-            NSMethodSignature *ms = [targetId methodSignatureForSelector:targetAction];
-            
-            if (ms) {
-                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
-                invocation.selector = targetAction;
-                invocation.target = targetId;
-                
-                [invocation invoke];
-            }
-        }        
+            [targetId performSelector:targetAction];
+        }
     }
 }
 

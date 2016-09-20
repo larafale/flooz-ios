@@ -292,15 +292,7 @@
 	[_textfield resignFirstResponder];
     
     if ([_target respondsToSelector:_action]) {
-        NSMethodSignature *ms = [_target methodSignatureForSelector:_action];
-        
-        if (ms) {
-            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:ms];
-            invocation.selector = _action;
-            invocation.target = _target;
-            
-            [invocation invoke];
-        }
+        [_target performSelector:_action];
     }
 }
 
