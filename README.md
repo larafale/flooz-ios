@@ -204,13 +204,30 @@ Array of Triggers executed one after another when the current Trigger is done.
 
 #### Buttons
 
+Lots of buttons within the app use Triggers to do actions and are sets by the API. It's the case for all home menu buttons, popup buttons, accept/refuse/participate/close buttons, ...
+
 #### Payment Process
+
+The payment process in any part of the app is actually based on triggers sended by one http request. The API respond with a list of Triggers starting with a confirmation popup, then authenticate user using fingerprint or secure code and finally process the payment (if necessary a process where the user can register is credit card or cashin from audiotel can be add in the process).
 
 #### Pickers
 
+Pickers are specific kind of triggers used for picking an user, an image or a scope and send it in the data of is successTrigger.
+
 #### URL Scheme
+
+Flooz can be opened using a url scheme and in this url can be inserted Triggers that will be executed when the app his running and the user authenticated.
+
+ URL: `flooz://` 
 
 #### Notifications
 
-#### Data Updates
+In push notifications or internal notifications Triggers are used to handle what the app has to do when the user interact with these notifications.
 
+## Credits
+
+Flooz is owned and maintained by the [Flooz SAS](https://www.flooz.me).
+
+### Security Disclosure
+
+If you believe you have identified a security vulnerability with Flooz, you should report it as soon as possible via email to dev@flooz.me. Please do not post it to a public issue tracker.
