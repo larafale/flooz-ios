@@ -101,7 +101,7 @@ The UI part of Flooz is based entirely on code, no xibs or storyboards are used 
 
 ### Networking
 
-##### [JSON REST](http://http://api.flooz.me/docs?secret=secret)
+#### [JSON REST](http://http://api.flooz.me/docs?secret=secret)
 
 Api documentation can be found [here](http://http://api.flooz.me/docs?secret=secret), it contain all routes and their parameters. [AFNetworking](http://cocoadocs.org/docsets/AFNetworking) is used for all network requests and all responses are formated in JSON.
 User access token is added, with several other infos (device, version, os, ...), in every requests as an URL parameter.
@@ -110,7 +110,7 @@ Succeeding requests will return one of the following template:
 
 - Unique object
 
-	```javascript
+	```json
 		{
 			code: 200,
 			item: Object,
@@ -142,7 +142,7 @@ Succeeding requests will return one of the following template:
 		}
 	```
 
-##### [SocketIO](http://socket.io)
+#### [SocketIO](http://socket.io)
 
 Sockets are used in this project for live events or updating informations, sockets are handle with [SocketIO](http://socket.io). Two sockets feed are listening:
 
