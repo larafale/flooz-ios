@@ -89,10 +89,20 @@ $ open Flooz.xcworkspace
 
 ### UI
 
+The UI part of Flooz is based entirely on code, no xibs or storyboards are used in the project, almost every view is a specific class that can be found in the [Views](https://github.com/larafale/flooz-ios/tree/master/Flooz/Views) folder. Lot of widgets are available in this folder including but not only:
+
+- `FLActionButton` & `FLBorderedActionButton` _Button widget with flooz colors_
+- `FLImageView` _ImageView subclass handling setting image from URL_
+- `FLPhoneField` _Phone number input with country picker_
+- `FLTableView` _TableView subclass with flooz colors_
+- `FLTextField` _TextField subclass handling many kinds of type (number, text, email, date, url, ...) with validator and floatLabel_
+
+Controllers used in the project are subclasses of [GlobalViewController](https://github.com/larafale/flooz-ios/blob/master/Flooz/Views/BaseViewController/GlobalViewController.m) or [BaseViewController](https://github.com/larafale/flooz-ios/blob/master/Flooz/Views/BaseViewController/BaseViewController.m), wich handle view template generation (backgroundColor, contentView, navigationBar, navigationItems).
 
 ### Networking
 
 ##### JSON REST
+
 
 
 ##### SocketIO
