@@ -110,7 +110,7 @@ Succeeding requests will return one of the following template:
 
 - Unique object
 
-	```json
+	```javascript
 		{
 			code: 200,
 			item: Object,
