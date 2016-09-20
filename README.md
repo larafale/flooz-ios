@@ -148,6 +148,7 @@ Sockets are used in this project for live events or updating informations, socke
 
 - `event` _can contain popup or triggers_
 - `feed` _update number of unread notifications, can also contain triggers_
-- 
+
+
 ### Triggers
 
