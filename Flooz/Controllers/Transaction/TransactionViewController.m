@@ -157,7 +157,7 @@
 #pragma mark - Views
 
 - (void)createHeader {
-    UIImage *scopeImage = [FLTransaction transactionScopeToImage:_transaction.social.scope];
+    UIImage *scopeImage = _transaction.social.scope.image;
 
     if (scopeImage) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -778,19 +778,7 @@
 }
 
 - (void)showScopeHelper {
-    NSString *text;
-    
-    if (_transaction.social.scope == TransactionScopeFriend) {
-        text = @"Flooz visible par vos amis";
-    }
-    else if (_transaction.social.scope == TransactionScopePrivate) {
-        text = @"Flooz privé";
-    }
-    else if (_transaction.social.scope == TransactionScopePublic) {
-        text = @"Flooz public";
-    }
-    
-    scopeHelperLabel.text = text;
+    scopeHelperLabel.text = _transaction.social.scope.desc;
     [scopeHelperLabel sizeToFit];
     
     [UIView animateWithDuration:0.0 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{

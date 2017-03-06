@@ -33,7 +33,7 @@
         self.delegate = delegate;
         currentPreset = preset;
         isPot = pot;
-        _currentScope = TransactionScopeNone;
+        _currentScope = [FLScope defaultScope:FLScopeNone];
     }
     return self;
 }
@@ -41,7 +41,7 @@
 - (id)initWithTriggerData:(NSDictionary *)data {
     self = [super initWithTriggerData:data];
     if (self) {
-        _currentScope = TransactionScopeNone;
+        _currentScope = [FLScope defaultScope:FLScopeNone];
 
         isPot = NO;
         
@@ -49,7 +49,7 @@
             isPot = YES;
         
         if (self.triggerData && self.triggerData[@"scope"])
-            _currentScope = [FLTransaction transactionIDToScope:self.triggerData[@"scope"]];
+            _currentScope = [FLScope scopeFromObject:self.triggerData[@"scope"]];
         
         if (self.triggerData && self.triggerData[@"scopes"])
             scopes = self.triggerData[@"scopes"];
@@ -91,22 +91,22 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TransactionScope scope;
+    FLScope *scope;
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+        scope = [FLScope scopeFromObject:currentPreset.scopes[indexPath.row]];
     } else if (self.triggerData && scopes) {
-        scope = [FLTransaction transactionIDToScope:scopes[indexPath.row]];
+        scope = [FLScope scopeFromObject:scopes[indexPath.row]];
     } else {
         switch (indexPath.row) {
             case 0:
-                scope = TransactionScopePublic;
+                scope = [FLScope defaultScope:FLScopePublic];
                 break;
             case 1:
-                scope = TransactionScopeFriend;
+                scope = [FLScope defaultScope:FLScopeFriend];
                 break;
             case 2:
-                scope = TransactionScopePrivate;
+                scope = [FLScope defaultScope:FLScopePrivate];
                 break;
         }
     }
@@ -122,22 +122,22 @@
         cell = [[ScopePickerCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-    TransactionScope scope;
+    FLScope *scope;
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+        scope = [FLScope scopeFromObject:currentPreset.scopes[indexPath.row]];
     } else if (self.triggerData && scopes) {
-        scope = [FLTransaction transactionIDToScope:scopes[indexPath.row]];
+        scope = [FLScope scopeFromObject:scopes[indexPath.row]];
     } else {
         switch (indexPath.row) {
             case 0:
-                scope = TransactionScopePublic;
+                scope = [FLScope defaultScope:FLScopePublic];
                 break;
             case 1:
-                scope = TransactionScopeFriend;
+                scope = [FLScope defaultScope:FLScopeFriend];
                 break;
             case 2:
-                scope = TransactionScopePrivate;
+                scope = [FLScope defaultScope:FLScopePrivate];
                 break;
         }
     }
@@ -154,22 +154,22 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TransactionScope scope;
+    FLScope *scope;
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+        scope = [FLScope scopeFromObject:currentPreset.scopes[indexPath.row]];
     } else if (self.triggerData && scopes) {
-        scope = [FLTransaction transactionIDToScope:scopes[indexPath.row]];
+        scope = [FLScope scopeFromObject:scopes[indexPath.row]];
     } else {
         switch (indexPath.row) {
             case 0:
-                scope = TransactionScopePublic;
+                scope = [FLScope defaultScope:FLScopePublic];
                 break;
             case 1:
-                scope = TransactionScopeFriend;
+                scope = [FLScope defaultScope:FLScopeFriend];
                 break;
             case 2:
-                scope = TransactionScopePrivate;
+                scope = [FLScope defaultScope:FLScopePrivate];
                 break;
         }
     }
@@ -186,7 +186,7 @@
             
             NSMutableDictionary *data = [NSMutableDictionary new];
             
-            data[@"scope"] = [FLTransaction transactionScopeToParams:self.currentScope];
+            data[@"scope"] = self.currentScope.keyString;
             
             NSDictionary *baseDic;
             

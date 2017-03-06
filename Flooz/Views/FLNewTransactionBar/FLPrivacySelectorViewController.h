@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FLScope.h"
 
 @protocol FLPrivacySelectorDelegate
 
-- (void) scopeChange:(TransactionScope)scope;
+- (void) scopeChange:(FLScope *)scope;
 
 @end
 
@@ -19,6 +20,6 @@
 - (id)initWithPreset:(FLPreset *)preset;
 
 @property (weak) id <FLPrivacySelectorDelegate> delegate;
-@property (nonatomic) TransactionScope currentScope;
+@property (nonatomic, strong) FLScope *currentScope;
 
 @end

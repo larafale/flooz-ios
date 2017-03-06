@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FLScope.h"
 
 @interface ScopePickerCell : UITableViewCell
 
-+ (CGFloat) getHeight:(TransactionScope)scope pot:(Boolean)isPot;
++ (CGFloat) getHeight:(FLScope *)scope pot:(Boolean)isPot;
 
-- (void) setScope:(TransactionScope)scope pot:(Boolean)isPot;
+- (void) setScope:(FLScope *)scope pot:(Boolean)isPot;
 
 @end

@@ -54,6 +54,7 @@
 #import "ShopListViewController.h"
 #import "ShopItemViewController.h"
 #import "ShopParamViewController.h"
+#import "ShopHistoryViewController.h"
 #import "FXBlurView.h"
 
 @interface FLTriggerManager ()
@@ -980,6 +981,7 @@
                            @"shop:list": [ShopListViewController class],
                            @"shop:item": [ShopItemViewController class],
                            @"shop:param": [ShopParamViewController class],
+                           @"shop:history": [ShopHistoryViewController class],
                            @"popup:advanced": [FLAdvancedPopupTrigger class]
                            };
 }
@@ -1024,6 +1026,7 @@
                            @"shop:list": @"modal",
                            @"shop:item": @"modal",
                            @"shop:param": @"modal",
+                           @"shop:history": @"push",
                            @"popup:advanced": @"modal"
                            };
 }

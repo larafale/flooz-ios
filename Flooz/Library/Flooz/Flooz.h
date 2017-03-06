@@ -14,6 +14,7 @@
 
 #import "SIOSocket.h"
 
+#import "FLScope.h"
 #import "FLFriendRequest.h"
 #import "FLUser.h"
 #import "FLTransaction.h"
@@ -109,6 +110,7 @@ static NSString *kLocationData = @"locationData";
 - (void)collectTimeline:(NSString *)collectId withUser:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)collectTimelineNextPage:(NSString *)nextPageUrl collectId:(NSString *)collectId withUser:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success;
 - (void)collectInvitations:(NSString *)collectId success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl, FLScope *scope))success;
 
 - (void)shopList:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl))success  failure:(void (^)(NSError *error))failure;
 - (void)shopListSearch:(NSString *)nextPageUrl search:(NSString *)searchString success:(void (^)(id result, NSString *nextPageUrl))success  failure:(void (^)(NSError *error))failure;
@@ -129,10 +131,9 @@ static NSString *kLocationData = @"locationData";
 - (void)collectTimelineNextPage:(NSString *)nextPageUrl collectId:(NSString *)collectId success:(void (^)(id result, NSString *nextPageUrl))success;
 - (void)userTimeline:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
 - (void)userPots:(NSString *)userId success:(void (^)(id result, NSString *nextPageUrl))success failure:(void (^)(NSError *error))failure;
-- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
-- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
-- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure;
-- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success;
+- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl, FLScope *scope))success failure:(void (^)(NSError *error))failure;
+- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl, FLScope *scope))success failure:(void (^)(NSError *error))failure;
+- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl, FLScope *scope))sucess failure:(void (^)(NSError *error))failure;
 - (void)transactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 - (void)readTransactionWithId:(NSString *)transactionId success:(void (^)(id result))success;
 - (void)readTransactionsSuccess:(void (^)(id result))success;

@@ -1,3 +1,4 @@
 /* Localized versions of Info.plist keys */
 
 NSLocationWhenInUseUsageDescription = "La géolocalisation vous permet d'insérer un lieu dans vos Flooz.";
+NSContactsUsageDescription = "L'acces a vos contacts vous permet de faire des paiements a vos contacts pas encore sur Flooz";

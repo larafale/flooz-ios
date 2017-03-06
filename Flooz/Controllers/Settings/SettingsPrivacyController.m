@@ -40,19 +40,19 @@
     height += CGRectGetHeight(label.frame) + 20.0f;
     
     UISegmentedControl *control = [[UISegmentedControl alloc] initWithFrame:CGRectMake(PADDING_SIDE, height, CGRectGetWidth(self.view.frame) - 2 * PADDING_SIDE, 27)];
-    [control insertSegmentWithTitle:@"Tous" atIndex:TransactionScopePublic animated:NO];
-    [control insertSegmentWithTitle:@"Mes amis" atIndex:TransactionScopeFriend animated:NO];
-    [control insertSegmentWithTitle:@"Moi" atIndex:TransactionScopePrivate animated:NO];
+    [control insertSegmentWithTitle:@"Tous" atIndex:FLScopePublic animated:NO];
+    [control insertSegmentWithTitle:@"Mes amis" atIndex:FLScopeFriend animated:NO];
+    [control insertSegmentWithTitle:@"Moi" atIndex:FLScopePrivate animated:NO];
     [control setTintColor:[UIColor customBlue]];
     [control addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
     
-    [control setSelectedSegmentIndex:[FLTransaction transactionParamsToScope:[Flooz sharedInstance].currentUser.settings[@"def"][@"scope"]]];
+    [control setSelectedSegmentIndex:[FLScope scopeFromObject:[Flooz sharedInstance].currentUser.settings[@"def"][@"scope"]].key];
     
     [_mainBody addSubview:control];
 }
 
 - (void)segmentedControlValueChanged:(UISegmentedControl*)sender {
-    [[Flooz sharedInstance] updateUser:@{@"settings":@{@"def":@{@"scope":[FLTransaction transactionScopeToTextParams:sender.selectedSegmentIndex]}}} success:nil failure:nil];
+    [[Flooz sharedInstance] updateUser:@{@"settings":@{@"def":@{@"scope":[FLScope defaultScope:sender.selectedSegmentIndex].keyString}}} success:nil failure:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

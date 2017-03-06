@@ -22,6 +22,7 @@
 #import "TUSafariActivity.h"
 #import "ARChromeActivity.h"
 #import "FLCopyLinkActivity.h"
+#import "FLScope.h"
 
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
@@ -31,7 +32,7 @@
     NSTimer *_timer;
     NSTimer *_backTimer;
     
-    TransactionScope currentScope;
+    FLScope *currentScope;
     
     NSMutableArray *transactions;
     
@@ -64,10 +65,10 @@
         NSString *filterData = [UICKeyChainStore stringForKey:kFilterData];
         
         if (filterData && ![filterData isBlank])
-            currentScope = [FLTransaction transactionParamsToScope:filterData];
+            currentScope = [FLScope scopeFromObject:filterData];
         else {
-            currentScope = TransactionScopeAll;
-            [UICKeyChainStore setString:[FLTransaction transactionScopeToParams:currentScope] forKey:kFilterData];
+            currentScope = [FLScope defaultScope:FLScopeAll];
+            [UICKeyChainStore setString:currentScope.keyString forKey:kFilterData];
         }
     }
     return self;
@@ -138,11 +139,11 @@
 }
 
 - (void)updateScopeIndicator {
-    switch (currentScope) {
-        case TransactionScopeAll:
+    switch (currentScope.key) {
+        case FLScopeAll:
             [scopeItem setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"transaction-scope-public"] scaledToSize:CGSizeMake(25, 25)]];
             break;
-        case TransactionScopeFriend:
+        case FLScopeFriend:
             [scopeItem setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"transaction-scope-friend"] scaledToSize:CGSizeMake(25, 25)]];
             break;
         default:
@@ -431,8 +432,8 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
     
     nextPageIsLoading = YES;
     
-    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl, TransactionScope scope) {
-        if (scope == currentScope) {
+    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl, FLScope *scope) {
+        if (scope.key == currentScope.key) {
             [transactions addObjectsFromArray:result];
             _nextPageUrl = nextPageUrl;
             nextPageIsLoading = NO;
@@ -444,9 +445,9 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
 - (void)showEmptyBack {
     NSString *imageName;
     
-    if (currentScope == TransactionScopePrivate)
+    if (currentScope.key == FLScopePrivate)
         imageName = @"empty-timeline-private";
-    else if (currentScope == TransactionScopeFriend)
+    else if (currentScope.key == FLScopeFriend)
         imageName = @"empty-timeline-friend";
     
     if (imageName) {
@@ -467,8 +468,8 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
         [refreshControl beginRefreshing];
     }
     
-    [[Flooz sharedInstance] timeline:[FLTransaction transactionScopeToParams:currentScope] success: ^(id result, NSString *nextPageUrl, TransactionScope scope) {
-        if (scope == currentScope) {
+    [[Flooz sharedInstance] timeline:currentScope success: ^(id result, NSString *nextPageUrl, FLScope *scope) {
+        if (scope.key == currentScope.key) {
             transactions = [result mutableCopy];
             
             _nextPageUrl = nextPageUrl;
@@ -518,11 +519,11 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
     
     NSString *text;
     
-    switch (currentScope) {
-        case TransactionScopeAll:
+    switch (currentScope.key) {
+        case FLScopeAll:
             text = NSLocalizedString(@"TIMELINE_SCOPE_HELPER_ALL", nil);
             break;
-        case TransactionScopeFriend:
+        case FLScopeFriend:
             text = NSLocalizedString(@"TIMELINE_SCOPE_HELPER_FRIENDS", nil);
             break;
         default:
@@ -553,21 +554,21 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
 }
 
 - (void)changeScope {
-    switch (currentScope) {
-        case TransactionScopeAll:
-            currentScope = TransactionScopeFriend;
+    switch (currentScope.key) {
+        case FLScopeAll:
+            currentScope = [FLScope defaultScope:FLScopeFriend];
             [self showScopeHelper];
             break;
-        case TransactionScopeFriend:
-            currentScope = TransactionScopeAll;
+        case FLScopeFriend:
+            currentScope = [FLScope defaultScope:FLScopeAll];
             [self showScopeHelper];
         default:
-            currentScope = TransactionScopeAll;
+            currentScope = [FLScope defaultScope:FLScopeAll];
             break;
     }
     
     [self updateScopeIndicator];
-    [UICKeyChainStore setString:[FLTransaction transactionScopeToParams:currentScope] forKey:kFilterData];
+    [UICKeyChainStore setString:currentScope.keyString forKey:kFilterData];
     [self reloadTableView];
 }
 

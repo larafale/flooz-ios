@@ -7,17 +7,18 @@
 //
 
 #import "BaseViewController.h"
+#import "FLScope.h"
 
 @protocol ScopePickerViewControllerDelegate
 
-- (void)scope:(TransactionScope)scope pickedFrom:(UIViewController *)viewController;
+- (void)scope:(FLScope *)scope pickedFrom:(UIViewController *)viewController;
 
 @end
 
 @interface ScopePickerViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, weak) id<ScopePickerViewControllerDelegate> delegate;
-@property (nonatomic) TransactionScope currentScope;
+@property (nonatomic, strong) FLScope * currentScope;
 
 + (id)newWithDelegate:(id<ScopePickerViewControllerDelegate>)delegate preset:(FLPreset *)preset forPot:(Boolean)pot;
 - (id)initWithDelegate:(id<ScopePickerViewControllerDelegate>)delegate preset:(FLPreset *)preset forPot:(Boolean)pot;

@@ -166,7 +166,7 @@
 #pragma mark - Views
 
 - (void)createHeader {
-    UIImage *scopeImage = [FLTransaction transactionScopeToImage:_transaction.social.scope];
+    UIImage *scopeImage = _transaction.social.scope.image;
     
     if (scopeImage) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -475,7 +475,7 @@
 
 - (void)prepareViews {
     
-    UIImage *scopeImage = [FLTransaction transactionScopeToImage:_transaction.social.scope];
+    UIImage *scopeImage = _transaction.social.scope.image;
     
     if (scopeImage) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1145,13 +1145,13 @@
 - (void)showScopeHelper {
     NSString *text;
     
-    if (_transaction.social.scope == TransactionScopeFriend) {
+    if (_transaction.social.scope.key == FLScopeFriend) {
         text = @"Cagnotte ouverte aux amis";
     }
-    else if (_transaction.social.scope == TransactionScopePrivate) {
+    else if (_transaction.social.scope.key == FLScopePrivate) {
         text = @"Cagnotte privée";
     }
-    else if (_transaction.social.scope == TransactionScopePublic) {
+    else if (_transaction.social.scope.key == FLScopePublic) {
         text = @"Cagnotte publique";
     } else
         return;

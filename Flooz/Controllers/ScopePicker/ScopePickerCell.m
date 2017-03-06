@@ -18,9 +18,9 @@
 
 @implementation ScopePickerCell
 
-+ (CGFloat) getHeight:(TransactionScope)scope pot:(Boolean)isPot {
++ (CGFloat) getHeight:(FLScope *)scope pot:(Boolean)isPot {
     
-    NSString *subLabel = [FLTransaction transactionScopeToSubtitle:scope forPot:isPot];
+    NSString *subLabel = scope.desc;
     
     NSAttributedString *attributedText = [[NSAttributedString alloc]
                       initWithString:subLabel
@@ -63,10 +63,10 @@
     [self.contentView addSubview:subtitle];
 }
 
-- (void) setScope:(TransactionScope)scope pot:(Boolean)isPot {
-    [imageView setImage:[[FLHelper imageWithImage:[FLTransaction transactionScopeToImage:scope] scaledToSize:CGSizeMake(25, 25)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-    [title setText:[FLTransaction transactionScopeToText:scope]];
-    [subtitle setText:[FLTransaction transactionScopeToSubtitle:scope forPot:isPot]];
+- (void) setScope:(FLScope *)scope pot:(Boolean)isPot {
+    [imageView setImage:[[FLHelper imageWithImage:scope.image scaledToSize:CGSizeMake(25, 25)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [title setText:scope.name];
+    [subtitle setText:scope.desc];
 
     CGRectSetHeight(subtitle.frame, MAX([subtitle heightToFit], 15));
 }

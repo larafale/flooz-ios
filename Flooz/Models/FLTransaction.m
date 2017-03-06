@@ -255,50 +255,6 @@
     }
 }
 
-+ (NSString *)transactionScopeToText:(TransactionScope)scope {
-    NSString *key = nil;
-    
-    if (scope == TransactionScopePublic)
-        key = @"PUBLIC";
-    else if (scope == TransactionScopeFriend)
-        key = @"FRIEND";
-    else // if(status == TransactionScopePrivate){
-        key = @"PRIVATE";
-    
-    return NSLocalizedString([@"TRANSACTION_SCOPE_" stringByAppendingString: key], nil);
-}
-
-+ (NSString *)transactionScopeToSubtitle:(TransactionScope)scope forPot:(Boolean)isPot {
-    NSString *key = nil;
-    
-    if (scope == TransactionScopePublic)
-        key = @"PUBLIC";
-    else if (scope == TransactionScopeFriend)
-        key = @"FRIEND";
-    else // if(status == TransactionScopePrivate){
-        key = @"PRIVATE";
-    
-    if (isPot)
-        return NSLocalizedString([@"TRANSACTION_SCOPE_SUB_POT_" stringByAppendingString: key], nil);
-    
-    return NSLocalizedString([@"TRANSACTION_SCOPE_SUB_" stringByAppendingString: key], nil);
-}
-
-+ (UIImage *)transactionScopeToImage:(TransactionScope)scope {
-    NSString *key = nil;
-    
-    if (scope == TransactionScopePublic)
-        key = @"transaction-scope-public";
-    else if (scope == TransactionScopeFriend)
-        key = @"transaction-scope-friend";
-    else if (scope == TransactionScopePrivate)
-        key = @"transaction-scope-private";
-    else if (scope == TransactionScopeNone)
-        return nil;
-    
-    return [UIImage imageNamed:key];
-}
-
 + (NSString *)transactionStatusToParams:(TransactionStatus)status {
     if (status == TransactionStatusAccepted)
         return @"accept";
@@ -308,58 +264,6 @@
         return @"cancel";
     else
         return @"";
-}
-
-+ (TransactionScope)transactionParamsToScope:(NSString *)param {
-    if (param) {
-        if ([param isEqualToString:@"public"])
-            return TransactionScopePublic;
-        if ([param isEqualToString:@"friend"])
-            return TransactionScopeFriend;
-        if ([param isEqualToString:@"private"])
-            return TransactionScopePrivate;
-        if ([param isEqualToString:@"all"])
-            return TransactionScopeAll;
-    }
-    return TransactionScopeNone;
-}
-
-+ (TransactionScope)transactionIDToScope:(NSNumber *)param {
-    if (param) {
-        if ([param isEqualToNumber:@0])
-            return TransactionScopePublic;
-        if ([param isEqualToNumber:@01])
-            return TransactionScopeFriend;
-        if ([param isEqualToNumber:@2])
-            return TransactionScopePrivate;
-        if ([param isEqualToNumber:@3])
-            return TransactionScopeAll;
-    }
-    return TransactionScopeNone;
-}
-
-+ (NSString *)transactionScopeToParams:(TransactionScope)scope {
-    if (scope == TransactionScopePublic)
-        return @"public";
-    else if (scope == TransactionScopeFriend)
-        return @"friend";
-    else if (scope == TransactionScopePrivate)
-        return @"private";
-    else if (scope == TransactionScopeAll)
-        return @"all";
-    
-    return @"";
-}
-
-+ (NSString *)transactionScopeToTextParams:(TransactionScope)scope {
-    if (scope == TransactionScopePublic)
-        return @"public";
-    else if (scope == TransactionScopeFriend)
-        return @"friend";
-    else if (scope == TransactionScopePrivate)
-        return @"private";
-    
-    return @"";
 }
 
 + (NSString *)transactionTypeToParams:(TransactionType)type {

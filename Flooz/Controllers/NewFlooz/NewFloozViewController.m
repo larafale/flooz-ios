@@ -371,8 +371,8 @@
     [viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)scope:(TransactionScope)scope pickedFrom:(UIViewController *)viewController {
-    [transaction setValue:[FLTransaction transactionScopeToParams:scope] forKey:@"scope"];
+- (void)scope:(FLScope *)scope pickedFrom:(UIViewController *)viewController {
+    [transaction setValue:scope.keyString forKey:@"scope"];
     [self updateScope];
     
     [viewController dismissViewControllerAnimated:YES completion:nil];
@@ -489,27 +489,35 @@
 }
 
 - (void)updateScope {
-    NSInteger currentIndex = [FLTransaction transactionParamsToScope:[[Flooz sharedInstance].currentUser.settings objectForKey:@"def"][@"scope"]];
+    FLScope *currentScope = [FLScope scopeFromObject:[[Flooz sharedInstance].currentUser.settings objectForKey:@"def"][@"scope"]];
     
     if (currentPreset && currentPreset.scopeDefined)
-        currentIndex = currentPreset.scope;
+        currentScope = currentPreset.scope;
     
-    for (NSInteger scope = TransactionScopePublic; scope <= TransactionScopePrivate; ++scope) {
-        if ([[transaction objectForKey:@"scope"] isEqualToString:[FLTransaction transactionScopeToParams:scope]]) {
-            currentIndex = scope;
+    for (FLScope *scope in [FLScope defaultScopeList]) {
+        if ([[transaction objectForKey:@"scope"] isEqualToString:scope.keyString]) {
+            currentScope = scope;
             break;
         }
     }
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        NSNumber *currentScopeValue = [NSNumber numberWithInteger:currentIndex];
-        if (![currentPreset.scopes containsObject:currentScopeValue])
-            currentIndex = [FLTransaction transactionIDToScope:currentPreset.scopes[0]];
+        bool newScopeAvailable = NO;
+        for (FLScope *scope in currentPreset.scopes) {
+            if (scope.key == currentScope.key) {
+                newScopeAvailable = YES;
+                break;
+            }
+        }
+        
+        if (!newScopeAvailable) {
+            currentScope = currentPreset.scopes[0];
+        }
     }
     
-    [scopeItem setImage:[[FLHelper imageWithImage:[FLTransaction transactionScopeToImage:currentIndex] scaledToSize:CGSizeMake(25, 25)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [scopeItem setImage:[[FLHelper imageWithImage:currentScope.image scaledToSize:CGSizeMake(25, 25)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     
-    [transaction setValue:[FLTransaction transactionScopeToParams:currentIndex] forKey:@"scope"];
+    [transaction setValue:currentScope.keyString forKey:@"scope"];
 }
 
 - (void)updateTransactionBar {
@@ -612,7 +620,7 @@
     if (scopePickerViewController == nil)
         scopePickerViewController = [ScopePickerViewController newWithDelegate:self preset:currentPreset forPot:NO];
     
-    scopePickerViewController.currentScope = [FLTransaction transactionParamsToScope:transaction[@"scope"]];
+    scopePickerViewController.currentScope = [FLScope scopeFromObject:transaction[@"scope"]];
     
     [self.navigationController pushViewController:scopePickerViewController animated:YES];
 }

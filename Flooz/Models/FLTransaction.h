@@ -24,13 +24,6 @@ typedef NS_ENUM (NSInteger, TransactionStatus) {
     TransactionStatusNone
 };
 
-typedef NS_ENUM (NSInteger, TransactionScope) {
-    TransactionScopePublic,
-    TransactionScopeFriend,
-    TransactionScopePrivate,
-    TransactionScopeAll,
-    TransactionScopeNone
-};
 
 typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
     TransactionPaymentMethodWallet,
@@ -99,15 +92,8 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 
 - (NSString *)statusText;
 
-+ (NSString *)transactionScopeToText:(TransactionScope)scope;
-+ (UIImage *)transactionScopeToImage:(TransactionScope)scope;
 + (NSString *)transactionStatusToParams:(TransactionStatus)status;
-+ (NSString *)transactionScopeToParams:(TransactionScope)scope;
 + (NSString *)transactionTypeToParams:(TransactionType)type;
 + (NSString *)transactionPaymentMethodToParams:(TransactionPaymentMethod)paymentMethod;
-+ (TransactionScope)transactionParamsToScope:(NSString *)param;
-+ (TransactionScope)transactionIDToScope:(NSNumber *)param;
-+ (NSString *)transactionScopeToTextParams:(TransactionScope)scope;
-+ (NSString *)transactionScopeToSubtitle:(TransactionScope)scope forPot:(Boolean)isPot;
 
 @end

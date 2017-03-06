@@ -1016,7 +1016,7 @@
     
     nextPageIsLoadingPots = YES;
     
-    [[Flooz sharedInstance] timelineNextPage:_nextPageUrlPots success: ^(id result, NSString *nextPageUrl, TransactionScope scope) {
+    [[Flooz sharedInstance] timelineNextPage:_nextPageUrlPots success: ^(id result, NSString *nextPageUrl, FLScope *scope) {
         [pots addObjectsFromArray:result];
         _nextPageUrlPots = nextPageUrl;
         nextPageIsLoadingPots = NO;
@@ -1031,7 +1031,7 @@
     
     nextPageIsLoading = YES;
     
-    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl, TransactionScope scope) {
+    [[Flooz sharedInstance] timelineNextPage:_nextPageUrl success: ^(id result, NSString *nextPageUrl, FLScope *scope) {
         [transactions addObjectsFromArray:result];
         _nextPageUrl = nextPageUrl;
         nextPageIsLoading = NO;

@@ -102,20 +102,20 @@
         cell = [[FLPrivacyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    TransactionScope scope;
+    FLScope *scope;
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+        scope = currentPreset.scopes[indexPath.row];
     } else {
         switch (indexPath.row) {
             case 0:
-                scope = TransactionScopePublic;
+                scope = [FLScope defaultScope:FLScopePublic];
                 break;
             case 1:
-                scope = TransactionScopeFriend;
+                scope = [FLScope defaultScope:FLScopeFriend];
                 break;
             case 2:
-                scope = TransactionScopePrivate;
+                scope = [FLScope defaultScope:FLScopePrivate];
                 break;
         }
     }
@@ -123,10 +123,10 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell setBackgroundColor:[UIColor whiteColor]];
     
-    [cell.imageView setImage:[[FLTransaction transactionScopeToImage:scope] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [cell.imageView setImage:[scope.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     [cell.imageView setTintColor:[UIColor blackColor]];
     
-    [cell.textLabel setText:[FLTransaction transactionScopeToText:scope]];
+    [cell.textLabel setText:scope.name];
     [cell.textLabel setFont:[UIFont customContentRegular:LIKE_TEXT_HEIGHT]];
     [cell.textLabel setTextColor:[UIColor blackColor]];
     [cell.textLabel setTintColor:[UIColor blackColor]];
@@ -141,20 +141,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    TransactionScope scope;
+    FLScope *scope;
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = [FLTransaction transactionIDToScope:currentPreset.scopes[indexPath.row]];
+        scope = currentPreset.scopes[indexPath.row];
     } else {
         switch (indexPath.row) {
             case 0:
-                scope = TransactionScopePublic;
+                scope = [FLScope defaultScope:FLScopePublic];
                 break;
             case 1:
-                scope = TransactionScopeFriend;
+                scope = [FLScope defaultScope:FLScopeFriend];
                 break;
             case 2:
-                scope = TransactionScopePrivate;
+                scope = [FLScope defaultScope:FLScopePrivate];
                 break;
         }
     }

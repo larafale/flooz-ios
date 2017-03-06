@@ -117,6 +117,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>NSLocationWhenInUseUsageDescription</string>
+    <key>NSContactsUsageDescription</key>
+    <string>NSContactsUsageDescription</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>ocra.otf</string>

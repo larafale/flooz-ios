@@ -58,7 +58,7 @@
 		}
 	}
 
-    _scope = [FLTransaction transactionIDToScope:[json objectForKey:@"scope"]];
+    _scope = [FLScope scopeFromID:[json objectForKey:@"scope"]];
 }
 
 @end

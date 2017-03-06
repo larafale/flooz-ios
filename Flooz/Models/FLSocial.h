@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FLTransaction.h"
+#import "FLScope.h"
 
 @interface FLSocial : NSObject
 
@@ -19,7 +20,7 @@
 @property BOOL isLiked;
 @property (strong, nonatomic) NSString *likeText;
 @property (strong, nonatomic) NSString *commentText;
-@property (nonatomic) TransactionScope scope;
+@property (strong, nonatomic) FLScope *scope;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

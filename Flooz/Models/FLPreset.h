@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FLTransaction.h"
+#import "FLScope.h"
 
 @interface FLPreset : NSObject
 
@@ -24,12 +25,15 @@
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSDictionary *contact;
 @property (nonatomic) TransactionType type;
-@property (nonatomic) TransactionScope scope;
+@property (nonatomic) FLScope *scope;
 @property (nonatomic, retain) NSDictionary *payload;
 @property (nonatomic) BOOL isParticipation;
 @property (nonatomic) BOOL blockAmount;
 @property (nonatomic) BOOL blockTo;
 @property (nonatomic) BOOL blockBack;
+@property (nonatomic) BOOL blockPic;
+@property (nonatomic) BOOL blockGif;
+@property (nonatomic) BOOL blockGeo;
 @property (nonatomic) BOOL blockScope;
 @property (nonatomic) BOOL blockWhy;
 @property (nonatomic) BOOL blockBalance;

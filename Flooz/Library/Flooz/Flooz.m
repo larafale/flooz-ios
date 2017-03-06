@@ -154,17 +154,17 @@
     }
 }
 
-- (NSArray *) loadTimelineData:(TransactionScope)scope {
+- (NSArray *) loadTimelineData:(FLScope *)scope {
     NSString *dataKey;
     
-    switch (scope) {
-        case TransactionScopeAll:
+    switch (scope.key) {
+        case FLScopeAll:
             dataKey = kAllTimelineData;
             break;
-        case TransactionScopePrivate:
+        case FLScopePrivate:
             dataKey = kPrivateTimelineData;
             break;
-        case TransactionScopeFriend:
+        case FLScopeFriend:
             dataKey = kFriendTimelineData;
             break;
         default:
@@ -219,18 +219,18 @@
     [UICKeyChainStore setString:[notifs jsonStringWithPrettyPrint:NO] forKey:kNotificationsData];
 }
 
-- (void) saveTimeline:(NSArray*)timeline forScope:(TransactionScope)scope {
+- (void) saveTimeline:(NSArray*)timeline forScope:(FLScope *)scope {
     if (timeline) {
         NSString *dataKey;
         
-        switch (scope) {
-            case TransactionScopeAll:
+        switch (scope.key) {
+            case FLScopeAll:
                 dataKey = kAllTimelineData;
                 break;
-            case TransactionScopePrivate:
+            case FLScopePrivate:
                 dataKey = kPrivateTimelineData;
                 break;
-            case TransactionScopeFriend:
+            case FLScopeFriend:
                 dataKey = kFriendTimelineData;
                 break;
             default:
@@ -792,29 +792,29 @@
     [self requestPath:[NSString stringWithFormat:@"/pots/%@/invite", collectId] method:@"POST" params:@{@"invitations":invitations} success:success failure:failure];
 }
 
-- (void)timeline:(NSString *)scope success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
+- (void)timeline:(FLScope *)scope success:(void (^)(id result, NSString *nextPageUrl, FLScope *scope))success failure:(void (^)(NSError *error))failure {
     [self timeline:scope state:nil success:success failure:failure];
 }
 
-- (void)timeline:(NSString *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
+- (void)timeline:(FLScope *)scope state:(NSString *)state success:(void (^)(id result, NSString *nextPageUrl, FLScope *scope))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
         self.timelinePageSize = [transactions count];
         
-        [self saveTimeline:result[@"items"] forScope:[FLTransaction transactionParamsToScope:scope]];
+        [self saveTimeline:result[@"items"] forScope:scope];
         if (success) {
-            [self saveSettingsObject:[NSDate date] withKey:[NSString stringWithFormat:@"kLastUpdate%@", scope]];
-            success(transactions, result[@"next"], [FLTransaction transactionParamsToScope:result[@"scope"]]);
+            [self saveSettingsObject:[NSDate date] withKey:[NSString stringWithFormat:@"kLastUpdate%@", scope.keyString]];
+            success(transactions, result[@"next"], [FLScope scopeFromObject:result[@"scope"]]);
         }
     };
     
     id failureBlock = ^(NSError *error) {
         if (![self connectionStatusFromError:error]) {
-            NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
+            NSArray *transactions = [self loadTimelineData:scope];
             if (transactions && success) {
                 self.timelinePageSize = [transactions count];
-                success(transactions, nil, [FLTransaction transactionParamsToScope:scope]);
+                success(transactions, nil, scope);
             } else if (failure)
                 failure(error);
         } else if (failure) {
@@ -824,10 +824,10 @@
     
     NSDictionary *params = nil;
     if (state) {
-        params = @{ @"scope": scope, @"state": state };
+        params = @{ @"scope": scope.keyString, @"state": state };
     }
     else {
-        params = @{ @"scope": scope };
+        params = @{ @"scope": scope.keyString };
     }
     
     //    NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
@@ -839,11 +839,11 @@
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failureBlock];
 }
 
-- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success failure:(void (^)(NSError *error))failure {
+- (void)getPublicTimelineSuccess:(void (^)(id result, NSString *nextPageUrl, FLScope *scope))success failure:(void (^)(NSError *error))failure {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         if (success) {
-            success(transactions, result[@"next"], [FLTransaction transactionParamsToScope:result[@"scope"]]);
+            success(transactions, result[@"next"], [FLScope scopeFromObject:result[@"scope"]]);
         }
     };
     
@@ -851,12 +851,12 @@
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failure];
 }
 
-- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl, TransactionScope scope))success {
+- (void)timelineNextPage:(NSString *)nextPageUrl success:(void (^)(id result, NSString *nextPageUrl, FLScope *scope))success {
     id successBlock = ^(id result) {
         NSMutableArray *transactions = [self createTransactionArrayFromResult:result];
         
         if (success) {
-            success(transactions, result[@"next"], [FLTransaction transactionParamsToScope:result[@"scope"]]);
+            success(transactions, result[@"next"], [FLScope scopeFromObject:result[@"scope"]]);
         }
     };
     
