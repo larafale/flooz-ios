@@ -225,15 +225,46 @@
     
     if (!IS_IPHONE_4)
         offsetY = LOCATION_BAR_HEIGHT;
-    
+
     tabBarView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, PPScreenWidth(), BAR_HEIGHT)];
     tabBarView.backgroundColor = [UIColor customMiddleBlue];
+
+    NSMutableArray<UIButton *> *buttons = [NSMutableArray new];
     
     [self createTextButton];
-    [self createCameraButton];
-    [self createImageButton];
-    [self createGIFButton];
-    [self createLocationButton];
+    [buttons addObject:textButton];
+    
+    if (!currentPreset || !currentPreset.blockPic) {
+        [self createCameraButton];
+        [buttons addObject:cameraButton];
+        
+        [self createImageButton];
+        [buttons addObject:imageButton];
+    }
+    
+    if (!currentPreset || !currentPreset.blockGif) {
+        [self createGIFButton];
+        [buttons addObject:gifButton];
+    }
+    
+    if (!currentPreset || !currentPreset.blockGeo) {
+        [self createLocationButton];
+        [buttons addObject:locationButton];
+    }
+    
+    if (buttons.count == 1) {
+        tabBarView.backgroundColor = [UIColor clearColor];
+    } else {
+        actionButtonMargin = (widthBar - (buttons.count * actionButtonWidth)) / buttons.count + 1;
+        int i = 1;
+        
+        for (UIButton *button in buttons) {
+            CGRectSetX(button.frame, actionButtonMargin * i);
+            [tabBarView addSubview:button];
+            ++i;
+        }
+    }
+    
     
     [self addSubview:tabBarView];
 }
@@ -244,8 +275,6 @@
     [textButton setTintColor:[UIColor whiteColor]];
     
     [textButton addTarget:self action:@selector(didTextButtonTouch) forControlEvents:UIControlEventTouchUpInside];
-    
-    [tabBarView addSubview:textButton];
 }
 
 - (void)createCameraButton {
@@ -254,8 +283,6 @@
     [cameraButton setTintColor:[UIColor whiteColor]];
     
     [cameraButton addTarget:self action:@selector(didCameraButtonTouch) forControlEvents:UIControlEventTouchUpInside];
-    
-    [tabBarView addSubview:cameraButton];
 }
 
 - (void)createImageButton {
@@ -264,8 +291,6 @@
     [imageButton setTintColor:[UIColor whiteColor]];
     
     [imageButton addTarget:self action:@selector(didImageButtonTouch) forControlEvents:UIControlEventTouchUpInside];
-    
-    [tabBarView addSubview:imageButton];
 }
 
 - (void)createGIFButton {
@@ -274,8 +299,6 @@
     [gifButton setTintColor:[UIColor whiteColor]];
     
     [gifButton addTarget:self action:@selector(didGIFButtonTouch) forControlEvents:UIControlEventTouchUpInside];
-    
-    [tabBarView addSubview:gifButton];
 }
 
 - (void)createLocationButton {
@@ -284,8 +307,6 @@
     [locationButton setTintColor:[UIColor whiteColor]];
     
     [locationButton addTarget:self action:@selector(didLocationButtonTouch) forControlEvents:UIControlEventTouchUpInside];
-    
-    [tabBarView addSubview:locationButton];
 }
 
 - (void)createActionBarView {
