@@ -12,21 +12,21 @@
 
 @interface FLPreset : NSObject
 
-@property (nonatomic, retain) NSString *presetId;
-@property (nonatomic, retain) NSString *collectName;
-@property (nonatomic, retain) NSString *to;
-@property (nonatomic, retain) NSString *toFullName;
-@property (nonatomic, retain) NSNumber *amount;
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *namePlaceholder;
-@property (nonatomic, retain) NSString *why;
-@property (nonatomic, retain) NSString *whyPlaceholder;
-@property (nonatomic, retain) NSString *image;
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSDictionary *contact;
+@property (nonatomic, strong) NSString *presetId;
+@property (nonatomic, strong) NSString *collectName;
+@property (nonatomic, strong) NSString *to;
+@property (nonatomic, strong) NSString *toFullName;
+@property (nonatomic, strong) NSNumber *amount;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *namePlaceholder;
+@property (nonatomic, strong) NSString *why;
+@property (nonatomic, strong) NSString *whyPlaceholder;
+@property (nonatomic, strong) NSString *image;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSDictionary *contact;
 @property (nonatomic) TransactionType type;
-@property (nonatomic) FLScope *scope;
-@property (nonatomic, retain) NSDictionary *payload;
+@property (nonatomic, strong) FLScope *scope;
+@property (nonatomic, strong) NSDictionary *payload;
 @property (nonatomic) BOOL isParticipation;
 @property (nonatomic) BOOL blockAmount;
 @property (nonatomic) BOOL blockTo;
@@ -41,10 +41,10 @@
 @property (nonatomic) BOOL focusWhy;
 @property (nonatomic) BOOL isDemo;
 @property (nonatomic) BOOL scopeDefined;
-@property (nonatomic, retain) NSDictionary *popup;
-@property (nonatomic, retain) NSArray *triggers;
-@property (nonatomic, retain) NSArray *scopes;
-@property (nonatomic, retain) NSDictionary *geo;
+@property (nonatomic, strong) NSDictionary *popup;
+@property (nonatomic, strong) NSArray *triggers;
+@property (nonatomic, strong) NSArray *scopes;
+@property (nonatomic, strong) NSDictionary *geo;
 
 - (id)initWithJson:(NSDictionary *)json;
 

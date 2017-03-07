@@ -400,6 +400,17 @@
 }
 
 - (void)didHomeButtonClick {
+    if ([[[[Flooz sharedInstance] currentTexts] homeTriggers] count]) {
+        [[FLTriggerManager sharedInstance] executeTriggerList:[[[Flooz sharedInstance] currentTexts] homeTriggers]];
+        return;
+    }
+    
+    if ([[[[Flooz sharedInstance] currentTexts] homeButtons] count] == 1) {
+        FLHomeButton *button = [[[[Flooz sharedInstance] currentTexts] homeButtons] objectAtIndex:0];
+        [[FLTriggerManager sharedInstance] executeTriggerList:button.triggers];
+        return;
+    }
+    
     if (homeViewOpen) {
         [self closeHomeMenu];
     } else {

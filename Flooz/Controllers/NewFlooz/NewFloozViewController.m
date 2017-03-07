@@ -614,7 +614,7 @@
 }
 
 - (void)changeScope {
-    if (currentPreset && currentPreset.blockScope)
+    if (currentPreset && (currentPreset.blockScope || (currentPreset.scopes && currentPreset.scopes.count < 2)))
         return;
     
     if (scopePickerViewController == nil)

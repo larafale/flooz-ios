@@ -89,7 +89,9 @@
     }
     
     self.homeButtons = homeMutableButtons;
-    
+
+    self.homeTriggers = [FLTriggerManager convertDataInList:json[@"homeTriggers"]];
+
     NSMutableArray *cashinMutableButtons = [NSMutableArray new];
     
     if (json[@"cashins"]) {
@@ -111,6 +113,14 @@
     }
     
     self.paymentSources = sourcesMutableArray;
+
+    if ([json objectForKey:@"scopes"]) {
+        NSMutableArray *fixScopes = [NSMutableArray new];
+        for (id scopeData in [json objectForKey:@"scopes"]) {
+            [fixScopes addObject:[FLScope scopeFromObject:scopeData]];
+        }
+        self.homeScopes = fixScopes;
+    }
 
     for (NSDictionary *country in countries) {
         [self.avalaibleCountries addObject:[[FLCountry alloc] initWithJSON:country]];

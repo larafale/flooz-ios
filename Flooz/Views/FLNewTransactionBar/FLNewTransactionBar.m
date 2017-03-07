@@ -255,11 +255,11 @@
     if (buttons.count == 1) {
         tabBarView.backgroundColor = [UIColor clearColor];
     } else {
-        actionButtonMargin = (widthBar - (buttons.count * actionButtonWidth)) / buttons.count + 1;
+        actionButtonMargin = (widthBar - (buttons.count * actionButtonWidth)) / (buttons.count + 1);
         int i = 1;
         
         for (UIButton *button in buttons) {
-            CGRectSetX(button.frame, actionButtonMargin * i);
+            CGRectSetX(button.frame, (actionButtonMargin * i) + (actionButtonWidth * (i - 1)));
             [tabBarView addSubview:button];
             ++i;
         }
@@ -355,15 +355,15 @@
     } else if ([currentController isKindOfClass:[NewFloozViewController class]]) {
         [participateButton removeFromSuperview];
         [collectButton removeFromSuperview];
-        if ([_dictionary[@"preset"] boolValue]) {
-            if ([_dictionary[@"method"] isEqualToString:@"pay"]) {
+        if (currentPreset) {
+            if (currentPreset.type == TransactionTypePayment) {
                 [askButton removeFromSuperview];
                 [paymentButtonsSeparator removeFromSuperview];
                 
                 [sendButton setFrame:CGRectMake(0, 0, PPScreenWidth(), ACTION_BAR_HEIGHT)];
                 sendButton.titleLabel.font = [UIFont customTitleLight:18];
             }
-            else if ([_dictionary[@"method"] isEqualToString:@"charge"]) {
+            else if (currentPreset.type == TransactionTypeCharge) {
                 [sendButton removeFromSuperview];
                 [paymentButtonsSeparator removeFromSuperview];
                 

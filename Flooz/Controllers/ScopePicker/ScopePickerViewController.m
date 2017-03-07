@@ -34,6 +34,12 @@
         currentPreset = preset;
         isPot = pot;
         _currentScope = [FLScope defaultScope:FLScopeNone];
+        
+        if (currentPreset.scope)
+            _currentScope = currentPreset.scope;
+        
+        if (currentPreset.scopes)
+            scopes = currentPreset.scopes;
     }
     return self;
 }
@@ -42,7 +48,7 @@
     self = [super initWithTriggerData:data];
     if (self) {
         _currentScope = [FLScope defaultScope:FLScopeNone];
-
+        
         isPot = NO;
         
         if (self.triggerData && self.triggerData[@"isPot"] && [self.triggerData[@"isPot"] boolValue])
@@ -51,8 +57,13 @@
         if (self.triggerData && self.triggerData[@"scope"])
             _currentScope = [FLScope scopeFromObject:self.triggerData[@"scope"]];
         
-        if (self.triggerData && self.triggerData[@"scopes"])
-            scopes = self.triggerData[@"scopes"];
+        if (self.triggerData && self.triggerData[@"scopes"]) {
+            NSMutableArray *fixScopes = [NSMutableArray new];
+            for (id scopeData in self.triggerData[@"scopes"]) {
+                [fixScopes addObject:[FLScope scopeFromObject:scopeData]];
+            }
+            scopes = fixScopes;
+        }
     }
     return self;
 }
@@ -94,9 +105,9 @@
     FLScope *scope;
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = [FLScope scopeFromObject:currentPreset.scopes[indexPath.row]];
+        scope = currentPreset.scopes[indexPath.row];
     } else if (self.triggerData && scopes) {
-        scope = [FLScope scopeFromObject:scopes[indexPath.row]];
+        scope = scopes[indexPath.row];
     } else {
         switch (indexPath.row) {
             case 0:
@@ -125,9 +136,9 @@
     FLScope *scope;
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = [FLScope scopeFromObject:currentPreset.scopes[indexPath.row]];
+        scope = currentPreset.scopes[indexPath.row];
     } else if (self.triggerData && scopes) {
-        scope = [FLScope scopeFromObject:scopes[indexPath.row]];
+        scope = scopes[indexPath.row];
     } else {
         switch (indexPath.row) {
             case 0:
@@ -157,9 +168,9 @@
     FLScope *scope;
     
     if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = [FLScope scopeFromObject:currentPreset.scopes[indexPath.row]];
+        scope = currentPreset.scopes[indexPath.row];
     } else if (self.triggerData && scopes) {
-        scope = [FLScope scopeFromObject:scopes[indexPath.row]];
+        scope = scopes[indexPath.row];
     } else {
         switch (indexPath.row) {
             case 0:
@@ -206,7 +217,7 @@
                 
                 successTrigger.data = data;
             }
-
+            
             [[FLTriggerManager sharedInstance] executeTriggerList:successTriggers];
         }];
     }

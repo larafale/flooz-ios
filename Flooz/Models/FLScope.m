@@ -50,10 +50,10 @@
                 case FLScopeFriend:
                     imageName = @"transaction-scope-friend";
                     break;
-                case FLScopePrivate:
+                case FLScopePublic:
                     imageName = @"transaction-scope-public";
                     break;
-                case FLScopePublic:
+                case FLScopePrivate:
                     imageName = @"transaction-scope-private";
                     break;
                 default:

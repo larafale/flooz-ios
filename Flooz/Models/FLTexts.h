@@ -44,10 +44,12 @@
 @property (nonatomic, retain) NSString *signupSponsor;
 @property (nonatomic, retain) NSMutableArray *avalaibleCountries;
 @property (nonatomic, retain) NSArray *homeButtons;
+@property (nonatomic, retain) NSArray *homeTriggers;
 @property (nonatomic, retain) NSArray *cashinButtons;
 @property (nonatomic, retain) NSArray *paymentSources;
 @property (nonatomic, retain) NSArray *suggestGif;
 @property (nonatomic, retain) NSArray *suggestWeb;
+@property (nonatomic, retain) NSArray *homeScopes;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

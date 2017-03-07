@@ -31,6 +31,7 @@
     self.focusAmount = NO;
     self.focusWhy = NO;
     self.isParticipation = NO;
+    self.type = TransactionTypeBase;
     
     if (json[@"isParticipation"]) {
         self.isParticipation = [json[@"isParticipation"] boolValue];
@@ -79,8 +80,6 @@
         if ([[json objectForKey:@"block"] objectForKey:@"amount"])
             self.blockAmount = [[[json objectForKey:@"block"] objectForKey:@"amount"] boolValue];
         
-        self.scopes = [[json objectForKey:@"block"] objectForKey:@"scopes"];
-        
         if ([[json objectForKey:@"block"] objectForKey:@"balance"])
             self.blockBalance = [[[json objectForKey:@"block"] objectForKey:@"balance"] boolValue];
         
@@ -99,10 +98,10 @@
         if ([[json objectForKey:@"block"] objectForKey:@"scope"])
             self.blockScope = [[[json objectForKey:@"block"] objectForKey:@"scope"] boolValue];
         
-        if ([[json objectForKey:@"block"] objectForKey:@"pay"])
+        if ([[[json objectForKey:@"block"] objectForKey:@"pay"] boolValue])
             self.type = TransactionTypeCharge;
         
-        if ([[json objectForKey:@"block"] objectForKey:@"charge"])
+        if ([[[json objectForKey:@"block"] objectForKey:@"charge"] boolValue])
             self.type = TransactionTypePayment;
         
         if ([[json objectForKey:@"block"] objectForKey:@"why"])

@@ -156,7 +156,7 @@
 "SETTINGS_CARD" = "Carte bancaire";
 "SETTINGS_BANK" = "Compte bancaire";
 "SETTINGS_DOCUMENTS" = "Mes justificatifs";
-"SETTINGS_COORDS" = "Mes coordonées";
+"SETTINGS_COORDS" = "Mes coordonnées";
 "SETTINGS_SECURITY" = "Sécurité";
 "SETTINGS_PREFERENCES" = "Préférences";
 "SETTINGS_PRIVACY" = "Partage & vie privée";
@@ -475,7 +475,7 @@
 "IDEA_THX_CONTENT" = "Merci pour vos idées et votre contribution afin d'améliorer Flooz.";
 
 "FORGOT_RECIPIENTS" = "hello@flooz.me";
-"FORGOT_OBJECT" = "Mot de passe oublié !";
+"FORGOT_OBJECT" = "Mot de passe oublié";
 "FORGOT_MESSAGE" = "J'ai oublié mon mot de passe. Je souhaite être contacté au %@";
 
 /************************************/
