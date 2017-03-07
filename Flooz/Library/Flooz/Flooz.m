@@ -830,12 +830,6 @@
         params = @{ @"scope": scope.keyString };
     }
     
-    //    NSArray *transactions = [self loadTimelineData:[FLTransaction transactionParamsToScope:scope]];
-    //    if (transactions && success) {
-    //        self.timelinePageSize = [transactions count];
-    //        success(transactions, nil, [FLTransaction transactionParamsToScope:scope]);
-    //    }
-    
     [self requestPath:@"/flooz" method:@"GET" params:params success:successBlock failure:failureBlock];
 }
 

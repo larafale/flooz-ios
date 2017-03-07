@@ -32,6 +32,7 @@
     NSTimer *_timer;
     NSTimer *_backTimer;
     
+    NSArray<FLScope *> *availableScopes;
     FLScope *currentScope;
     
     NSMutableArray *transactions;
@@ -92,7 +93,7 @@
     
     scopeItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:self action:@selector(changeScope)];
     [scopeItem setTintColor:[UIColor customBlue]];
-    [self updateScopeIndicator];
+    [self checkScopeAvailability];
     
     CGFloat height = PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight();
     
@@ -134,22 +135,45 @@
     
     [self registerNotification:@selector(reloadCurrentTimeline) name:kNotificationReloadTimeline object:nil];
     [self registerNotification:@selector(reloadBalanceItem) name:kNotificationReloadCurrentUser object:nil];
+    [self registerNotification:@selector(checkScopeAvailability) name:kNotificationReloadTexts object:nil];
     [self registerNotification:@selector(didReceiveNotificationConnectionError) name:kNotificationConnectionError object:nil];
     [self registerNotification:@selector(statusBarHit) name:kNotificationTouchStatusBarClick object:nil];
 }
 
-- (void)updateScopeIndicator {
-    switch (currentScope.key) {
-        case FLScopeAll:
-            [scopeItem setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"transaction-scope-public"] scaledToSize:CGSizeMake(25, 25)]];
-            break;
-        case FLScopeFriend:
-            [scopeItem setImage:[FLHelper imageWithImage:[UIImage imageNamed:@"transaction-scope-friend"] scaledToSize:CGSizeMake(25, 25)]];
-            break;
-        default:
-            [self changeScope];
-            break;
+- (void)checkScopeAvailability {
+    FLTexts *currentTexts = [[Flooz sharedInstance] currentTexts];
+    
+    if (currentTexts.homeScopes && currentTexts.homeScopes.count) {
+        availableScopes = currentTexts.homeScopes;
+    } else {
+        availableScopes = [FLScope defaultScopeList];
     }
+    
+    Boolean currentScopeAvailable = NO;
+    
+    for (FLScope *scope in availableScopes) {
+        if (currentScope.key == scope.key) {
+            currentScopeAvailable = YES;
+            break;
+        }
+    }
+    
+    if (!currentScopeAvailable) {
+        currentScope = [availableScopes firstObject];
+        [self reloadTableView];
+    }
+    
+    if (availableScopes.count < 2)
+        self.navigationItem.leftBarButtonItem = nil;
+    else
+        self.navigationItem.leftBarButtonItem = scopeItem;
+    
+    [self updateScopeIndicator];
+    [UICKeyChainStore setString:currentScope.keyString forKey:kFilterData];
+}
+
+- (void)updateScopeIndicator {
+    [scopeItem setImage:[FLHelper imageWithImage:currentScope.image scaledToSize:CGSizeMake(25, 25)]];
 }
 
 - (void)showSearch {
@@ -517,18 +541,7 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
 
 - (void)showScopeHelper {
     
-    NSString *text;
-    
-    switch (currentScope.key) {
-        case FLScopeAll:
-            text = NSLocalizedString(@"TIMELINE_SCOPE_HELPER_ALL", nil);
-            break;
-        case FLScopeFriend:
-            text = NSLocalizedString(@"TIMELINE_SCOPE_HELPER_FRIENDS", nil);
-            break;
-        default:
-            break;
-    }
+    NSString *text = currentScope.desc;
     
     scopeChangeHelperLabel.text = text;
     [scopeChangeHelperLabel sizeToFit];
@@ -554,21 +567,23 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
 }
 
 - (void)changeScope {
-    switch (currentScope.key) {
-        case FLScopeAll:
-            currentScope = [FLScope defaultScope:FLScopeFriend];
-            [self showScopeHelper];
-            break;
-        case FLScopeFriend:
-            currentScope = [FLScope defaultScope:FLScopeAll];
-            [self showScopeHelper];
-        default:
-            currentScope = [FLScope defaultScope:FLScopeAll];
-            break;
-    }
     
-    [self updateScopeIndicator];
-    [UICKeyChainStore setString:currentScope.keyString forKey:kFilterData];
+    for (int i = 0; i < availableScopes.count; i++) {
+        FLScope *scope = [availableScopes objectAtIndex:i];
+        
+        if (currentScope.key == scope.key) {
+            int nextIndex = i + 1;
+            
+            if (nextIndex == availableScopes.count)
+                nextIndex = 0;
+            
+            currentScope = [availableScopes objectAtIndex:nextIndex];
+            break;
+        }
+    }
+
+    [self checkScopeAvailability];
+    [self showScopeHelper];
     [self reloadTableView];
 }
 
