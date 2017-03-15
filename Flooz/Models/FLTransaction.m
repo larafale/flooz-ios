@@ -19,12 +19,12 @@
 }
 
 + (id)default {
-//    if ([[Flooz sharedInstance] currentTexts] && [[[Flooz sharedInstance] currentTexts] floozOptions])
-//        return [[[Flooz sharedInstance] currentTexts] floozOptions];
+    if ([[Flooz sharedInstance] currentTexts] && [[[Flooz sharedInstance] currentTexts] floozOptions])
+        return [[[Flooz sharedInstance] currentTexts] floozOptions];
     
     FLTransactionOptions *ret = [FLTransactionOptions new];
     if (ret) {
-        [ret setJSON:@{@"like": @NO, @"comment": @NO, @"share": @YES}];
+        [ret setJSON:@{@"like": @YES, @"comment": @YES, @"share": @YES}];
     }
     return ret;
 }
@@ -32,7 +32,7 @@
 + (id)defaultWithJSON:(NSDictionary *)json {
     FLTransactionOptions *ret = [FLTransactionOptions default];
     if (ret) {
-//        [ret setJSON:json];
+        [ret setJSON:json];
     }
     return ret;
 }
