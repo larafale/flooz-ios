@@ -112,6 +112,8 @@
         }
     }
     
+    self.floozOptions = [FLTransactionOptions defaultWithJSON:[json objectForKey:@"floozOptions"]];
+    
     self.paymentSources = sourcesMutableArray;
 
     if ([json objectForKey:@"scopes"]) {

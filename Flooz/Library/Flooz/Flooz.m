@@ -1412,7 +1412,7 @@
 - (void)requestPath:(NSString *)path method:(NSString *)method params:(NSDictionary *)params success:(void (^)(id result))success failure:(void (^)(NSURLSessionTask *task, NSError *error))failure constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))constructingBodyWithBlock {
     
 #ifdef FLOOZ_DEV_API
-    NSLog(@"%@ request: %@ - %@", method, path, params);
+    //NSLog(@"%@ request: %@ - %@", method, path, params);
 #endif
     
     if (_access_token) {

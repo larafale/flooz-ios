@@ -8,6 +8,58 @@
 
 #import "FLTransaction.h"
 
+@implementation FLTransactionOptions
+
+- (id)initWithJSON:(NSDictionary *)json {
+    self = [super init];
+    if (self) {
+        [self setJSON:json];
+    }
+    return self;
+}
+
++ (id)default {
+//    if ([[Flooz sharedInstance] currentTexts] && [[[Flooz sharedInstance] currentTexts] floozOptions])
+//        return [[[Flooz sharedInstance] currentTexts] floozOptions];
+    
+    FLTransactionOptions *ret = [FLTransactionOptions new];
+    if (ret) {
+        [ret setJSON:@{@"like": @NO, @"comment": @NO, @"share": @YES}];
+    }
+    return ret;
+}
+
++ (id)defaultWithJSON:(NSDictionary *)json {
+    FLTransactionOptions *ret = [FLTransactionOptions default];
+    if (ret) {
+//        [ret setJSON:json];
+    }
+    return ret;
+}
+
++ (id)newWithJSON:(NSDictionary *)json {
+    FLTransactionOptions *ret = [FLTransactionOptions new];
+    if (ret) {
+        [ret setJSON:json];
+    }
+    return ret;
+}
+
+- (void)setJSON:(NSDictionary *)json {
+    if (json) {
+        if (json[@"like"])
+            self.likeEnabled = [json[@"like"] boolValue];
+        
+        if (json[@"comment"])
+            self.commentEnabled = [json[@"comment"] boolValue];
+        
+        if (json[@"share"])
+            self.shareEnabled = [json[@"share"] boolValue];
+    }
+}
+
+@end
+
 @implementation FLTransaction
 
 - (id)initWithJSON:(NSDictionary *)json {
@@ -142,7 +194,7 @@
         if ([[_actions allKeys] containsObject:@"close"]) {
             _isClosable = YES;
         }
-
+        
         if ([[_actions allKeys] containsObject:@"publish"]) {
             _isPublishable = YES;
         }}
@@ -159,6 +211,8 @@
     
     _from = [[FLUser alloc] initWithJSON:[json objectForKey:@"from"]];
     _to = [[FLUser alloc] initWithJSON:[json objectForKey:@"to"]];
+    
+    _options = [FLTransactionOptions defaultWithJSON:[json objectForKey:@"options"]];
     
     if ([json objectForKey:@"creator"] && [[json objectForKey:@"creator"] isKindOfClass:[NSDictionary class]])
         _creator = [[FLUser alloc] initWithJSON:[json objectForKey:@"creator"]];

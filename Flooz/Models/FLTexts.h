@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FLSlider.h"
 #import "FLInvitationTexts.h"
+#import "FLTransaction.h"
 
 @interface FLHomeButton : NSObject
 
@@ -50,6 +51,7 @@
 @property (nonatomic, retain) NSArray *suggestGif;
 @property (nonatomic, retain) NSArray *suggestWeb;
 @property (nonatomic, retain) NSArray *homeScopes;
+@property (nonatomic, strong) FLTransactionOptions *floozOptions;
 
 - (id)initWithJSON:(NSDictionary *)json;
 

@@ -33,6 +33,20 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 #import "FLSocial.h"
 #import "FLComment.h"
 
+@interface FLTransactionOptions: NSObject
+
+@property (nonatomic) BOOL likeEnabled;
+@property (nonatomic) BOOL commentEnabled;
+@property (nonatomic) BOOL shareEnabled;
+
+- (id)initWithJSON:(NSDictionary *)json;
+
++ (id)default;
++ (id)newWithJSON:(NSDictionary *)json;
++ (id)defaultWithJSON:(NSDictionary *)json;
+
+@end
+
 @interface FLTransaction : NSObject
 
 @property (nonatomic) TransactionType type;
@@ -81,6 +95,8 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (strong, nonatomic) NSArray *triggerOptions;
 @property (strong, nonatomic) NSArray *invitations;
 @property (strong, nonatomic) NSArray *triggerImage;
+
+@property (strong, nonatomic) FLTransactionOptions *options;
 
 @property (nonatomic) BOOL isCollect;
 @property (nonatomic) BOOL isParticipation;

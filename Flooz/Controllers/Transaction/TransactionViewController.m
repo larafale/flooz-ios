@@ -371,7 +371,7 @@
 - (void)prepareViews {
     [self createHeader];
     
-    if (isCommenting) {
+    if (isCommenting && _transaction.options.commentEnabled) {
         commentTextField.hidden = NO;
         acceptButton.hidden = YES;
         declineButton.hidden = YES;
@@ -402,14 +402,13 @@
         
         CGRectSetY(toolbar.frame, CGRectGetHeight(_mainBody.frame) - keyboardHeight - CGRectGetHeight(toolbar.frame));
         CGRectSetHeight(self.tableView.frame, CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(toolbar.frame) - keyboardHeight);
-
+        
         if (_transaction.isAcceptable && _transaction.isCancelable) {
             acceptButton.hidden = NO;
             declineButton.hidden = NO;
             commentTextField.hidden = YES;
             closeCommentButton.hidden = YES;
             sendCommentButton.hidden = YES;
-            commentButton.hidden = NO;
             
             CGRectSetWidth(acceptButton.frame, (PPScreenWidth() - 120) / 2 - 5);
             CGRectSetX(declineButton.frame, PPScreenWidth() / 2 + 5);
@@ -417,20 +416,22 @@
             
             acceptButton.titleLabel.font = [UIFont customTitleLight:16];
             declineButton.titleLabel.font = [UIFont customTitleLight:16];
-            shareButton.hidden = NO;
+        
+            shareButton.hidden = !_transaction.options.shareEnabled;
+            commentButton.hidden = !_transaction.options.commentEnabled;
         } else if (_transaction.isAcceptable) {
             acceptButton.hidden = NO;
             declineButton.hidden = YES;
             commentTextField.hidden = YES;
             closeCommentButton.hidden = YES;
             sendCommentButton.hidden = YES;
-            commentButton.hidden = NO;
             
             CGRectSetWidth(acceptButton.frame, PPScreenWidth() - 120);
             CGRectSetX(declineButton.frame, 60);
             CGRectSetWidth(declineButton.frame, PPScreenWidth() - 120);
             acceptButton.titleLabel.font = [UIFont customTitleLight:20];
-            shareButton.hidden = NO;
+            shareButton.hidden = !_transaction.options.shareEnabled;
+            commentButton.hidden = !_transaction.options.commentEnabled;
         } else if (_transaction.isCancelable) {
             acceptButton.hidden = YES;
             declineButton.hidden = NO;
@@ -441,8 +442,8 @@
             declineButton.titleLabel.font = [UIFont customTitleLight:20];
             closeCommentButton.hidden = YES;
             sendCommentButton.hidden = YES;
-            commentButton.hidden = NO;
-            shareButton.hidden = NO;
+            shareButton.hidden = !_transaction.options.shareEnabled;
+            commentButton.hidden = !_transaction.options.commentEnabled;
         } else {
             if (keyboardHeight) {
                 closeCommentButton.hidden = NO;
@@ -452,11 +453,21 @@
                 shareButton.hidden = NO;
             }
             
-            commentTextField.hidden = NO;
-            acceptButton.hidden = YES;
-            declineButton.hidden = YES;
-            sendCommentButton.hidden = NO;
-            commentButton.hidden = YES;
+            if (!_transaction.options.commentEnabled) {
+                toolbar.hidden = YES;
+            } else {
+                toolbar.hidden = NO;
+                commentTextField.hidden = NO;
+                acceptButton.hidden = YES;
+                declineButton.hidden = YES;
+                sendCommentButton.hidden = NO;
+                commentButton.hidden = YES;
+                
+                shareButton.hidden = !_transaction.options.shareEnabled;
+                
+                commentTextField.userInteractionEnabled = _transaction.options.commentEnabled;
+                sendCommentButton.enabled = _transaction.options.commentEnabled;
+            }
         }
     }
     
@@ -467,7 +478,7 @@
     NSString *commentString = @" COMMENTAIRE";
     NSString *commentsString = @" COMMENTAIRES";
     
-    if (social.likesCount > 0 && social.commentsCount > 0) {
+    if (social.likesCount > 0 && _transaction.options.likeEnabled && social.commentsCount > 0 && _transaction.options.commentEnabled) {
         likeLabel.hidden = NO;
         commentLabel.hidden = NO;
         socialSeparator.hidden = NO;
@@ -502,7 +513,7 @@
         
         CGRectSetHeight(socialToolbar.frame, CGRectGetMaxY(likeToolbarButton.frame) + 5.5);
         
-    } else if (social.likesCount > 0) {
+    } else if (social.likesCount > 0 && _transaction.options.likeEnabled) {
         likeLabel.hidden = NO;
         commentLabel.hidden = YES;
         socialSeparator.hidden = NO;
@@ -524,7 +535,7 @@
         
         CGRectSetHeight(socialToolbar.frame, CGRectGetMaxY(likeToolbarButton.frame) + 5.5);
         
-    } else if (social.commentsCount > 0) {
+    } else if (social.commentsCount > 0 && _transaction.options.commentEnabled) {
         likeLabel.hidden = YES;
         commentLabel.hidden = NO;
         socialSeparator.hidden = NO;
@@ -561,8 +572,62 @@
         CGRectSetHeight(socialToolbar.frame, CGRectGetMaxY(likeToolbarButton.frame) + 5.5);
     }
     
+    
     [likeToolbarButton setSelected:[social isLiked]];
     [commentToolbarButton setSelected:[social isCommented]];
+
+    if (_transaction.options.likeEnabled && _transaction.options.commentEnabled && _transaction.options.shareEnabled) {
+        likeToolbarButton.hidden = false;
+        commentToolbarButton.hidden = false;
+        shareToolbarButton.hidden = false;
+        
+        CGRectSetX(likeToolbarButton.frame, 10.0f);
+        CGRectSetX(commentToolbarButton.frame, ((CGRectGetWidth(socialToolbar.frame) - 20) / 3));
+        CGRectSetX(shareToolbarButton.frame, ((CGRectGetWidth(socialToolbar.frame) - 20) / 3) * 2);
+    } else if (_transaction.options.likeEnabled && _transaction.options.commentEnabled) {
+        likeToolbarButton.hidden = false;
+        commentToolbarButton.hidden = false;
+        shareToolbarButton.hidden = true;
+        
+        CGRectSetX(likeToolbarButton.frame, 10.0f);
+        CGRectSetX(commentToolbarButton.frame, ((CGRectGetWidth(socialToolbar.frame) - 20) / 2));
+    } else if (_transaction.options.likeEnabled && _transaction.options.shareEnabled) {
+        likeToolbarButton.hidden = false;
+        commentToolbarButton.hidden = true;
+        shareToolbarButton.hidden = false;
+        
+        CGRectSetX(likeToolbarButton.frame, 10.0f);
+        CGRectSetX(shareToolbarButton.frame, ((CGRectGetWidth(socialToolbar.frame) - 20) / 2));
+    } else if (_transaction.options.shareEnabled && _transaction.options.commentEnabled) {
+        likeToolbarButton.hidden = true;
+        commentToolbarButton.hidden = false;
+        shareToolbarButton.hidden = false;
+        
+        CGRectSetX(commentToolbarButton.frame, 10.0f);
+        CGRectSetX(shareToolbarButton.frame, ((CGRectGetWidth(socialToolbar.frame) - 20) / 2));
+    } else if (_transaction.options.likeEnabled) {
+        likeToolbarButton.hidden = false;
+        commentToolbarButton.hidden = true;
+        shareToolbarButton.hidden = true;
+        
+        CGRectSetX(likeToolbarButton.frame, 10.0f);
+    } else if (_transaction.options.commentEnabled) {
+        likeToolbarButton.hidden = true;
+        commentToolbarButton.hidden = false;
+        shareToolbarButton.hidden = true;
+        
+        CGRectSetX(commentToolbarButton.frame, 10.0f);
+    } else if (_transaction.options.shareEnabled) {
+        likeToolbarButton.hidden = true;
+        commentToolbarButton.hidden = true;
+        shareToolbarButton.hidden = false;
+        
+        CGRectSetX(shareToolbarButton.frame, 10.0f);
+    } else {
+        likeToolbarButton.hidden = true;
+        commentToolbarButton.hidden = true;
+        shareToolbarButton.hidden = true;
+    }
     
     [tableHeaderView setTransaction:_transaction];
     self.tableView.tableHeaderView = tableHeaderView;

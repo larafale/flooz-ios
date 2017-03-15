@@ -143,42 +143,33 @@
     
     NSDictionary *item = [self.items objectAtIndex:indexPath.row];
     
-    NSString *contentString;
-    
-    if ([item[@"code"] isKindOfClass:[NSString class]]) {
-        contentString = [NSString stringWithFormat:@"Votre code:\n\n\"%@\"", item[@"code"]];
-    } else if ([item[@"code"] isKindOfClass:[NSArray class]]) {
-        if ([item[@"code"] count] > 1) {
-            contentString = @"Vos codes:\n\n";
-            
-            for (NSString *code in item[@"code"]) {
-                contentString = [NSString stringWithFormat:@"%@\n\n\"%@\"", contentString, code];
-            }
-        } else {
-            contentString = [NSString stringWithFormat:@"Votre code:\n\n\"%@\"", item[@"code"][0]];
+    if ([item objectForKey:@"triggers"]) {
+        if ([[item objectForKey:@"triggers"] isKindOfClass:[NSArray class]]) {
+            [[FLTriggerManager sharedInstance] executeTriggerList:[FLTriggerManager convertDataInList:[item objectForKey:@"triggers"]]];
+        } else if ([[item objectForKey:@"triggers"] isKindOfClass:[NSDictionary class]]) {
+            [[FLTriggerManager sharedInstance] executeTrigger:[FLTrigger newWithJson:[item objectForKey:@"triggers"]]];
         }
+    } else {
+        NSString *contentString;
+        
+        if ([item[@"code"] isKindOfClass:[NSString class]]) {
+            contentString = [NSString stringWithFormat:@"Votre code:\n\n\"%@\"", item[@"code"]];
+        } else if ([item[@"code"] isKindOfClass:[NSArray class]]) {
+            if ([item[@"code"] count] > 1) {
+                contentString = @"Vos codes:\n\n";
+                
+                for (NSString *code in item[@"code"]) {
+                    contentString = [NSString stringWithFormat:@"%@\n\n\"%@\"", contentString, code];
+                }
+            } else {
+                contentString = [NSString stringWithFormat:@"Votre code:\n\n\"%@\"", item[@"code"][0]];
+            }
+        }
+        
+        NSDictionary *popupParams = @{@"title": item[@"type"][@"name"],@"subtitle": @" ", @"amount": item[@"amount"], @"content": contentString, @"close": @NO, @"buttons":@[@{@"title":@"Fermer", @"triggers":@[@{@"key":@"popup:advanced:hide", @"data":@{@"noAnim": @YES}}]}]};
+
+        [[FLTriggerManager sharedInstance] executeTrigger:[FLTrigger newWithJson:@{@"key":@"popup:advanced:show", @"data": popupParams}]];
     }
-    
-    NSDictionary *popupParams = @{@"title": item[@"type"][@"name"],@"subtitle": @" ", @"amount": item[@"amount"], @"content": contentString, @"close": @NO, @"buttons":@[@{@"title":@"Fermer", @"triggers":@[@{@"key":@"popup:advanced:hide", @"data":@{@"noAnim": @YES}}]}]};
-    
-    UIView *snapshot = [[appDelegate window] snapshotViewAfterScreenUpdates:NO];
-    
-    UIView *blurView = nil;
-    if ([UIVisualEffectView class]){
-        UIVisualEffectView *aView = [[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
-        blurView        = aView;
-        blurView.frame  = snapshot.bounds;
-        [snapshot addSubview:aView];
-    }
-    else {
-        UIToolbar *toolBar  = [[UIToolbar alloc] initWithFrame:snapshot.bounds];
-        toolBar.barStyle    = UIBarStyleBlackTranslucent;
-        [snapshot addSubview:toolBar];
-    }
-    
-    FLAdvancedPopupTrigger *popup = [[FLAdvancedPopupTrigger alloc] initWithData:popupParams background:snapshot];
-    
-    [self presentViewController:popup animated:NO completion:nil];
 }
 
 - (void)loadNextPage {
