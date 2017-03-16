@@ -35,11 +35,11 @@
         isPot = pot;
         _currentScope = [FLScope defaultScope:FLScopeNone];
         
-        if (currentPreset.scope)
-            _currentScope = currentPreset.scope;
+        if (currentPreset.options.scope)
+            _currentScope = currentPreset.options.scope;
         
-        if (currentPreset.scopes)
-            scopes = currentPreset.scopes;
+        if (currentPreset.options.scopes)
+            scopes = currentPreset.options.scopes;
     }
     return self;
 }
@@ -88,8 +88,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count)
-        return currentPreset.scopes.count;
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count)
+        return currentPreset.options.scopes.count;
     
     if (self.triggerData && scopes)
         return scopes.count;
@@ -104,8 +104,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     FLScope *scope;
     
-    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = currentPreset.scopes[indexPath.row];
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count) {
+        scope = currentPreset.options.scopes[indexPath.row];
     } else if (self.triggerData && scopes) {
         scope = scopes[indexPath.row];
     } else {
@@ -135,8 +135,8 @@
     
     FLScope *scope;
     
-    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = currentPreset.scopes[indexPath.row];
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count) {
+        scope = currentPreset.options.scopes[indexPath.row];
     } else if (self.triggerData && scopes) {
         scope = scopes[indexPath.row];
     } else {
@@ -167,8 +167,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     FLScope *scope;
     
-    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = currentPreset.scopes[indexPath.row];
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count) {
+        scope = currentPreset.options.scopes[indexPath.row];
     } else if (self.triggerData && scopes) {
         scope = scopes[indexPath.row];
     } else {

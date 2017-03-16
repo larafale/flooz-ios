@@ -53,8 +53,8 @@
     [_tableView setSeparatorColor:[UIColor clearColor]];
     [_tableView setBackgroundColor:[UIColor whiteColor]];
     
-    if (currentPreset && currentPreset.scopes && currentPreset.scopeDefined) {
-        currentScope = currentPreset.scope;
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopeDefined) {
+        currentScope = currentPreset.options.scope;
         [delegate scopeChange:currentScope];
     }
         
@@ -80,8 +80,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count)
-        return currentPreset.scopes.count;
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count)
+        return currentPreset.options.scopes.count;
     
     return 3;
 }
@@ -104,8 +104,8 @@
     
     FLScope *scope;
     
-    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = currentPreset.scopes[indexPath.row];
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count) {
+        scope = currentPreset.options.scopes[indexPath.row];
     } else {
         switch (indexPath.row) {
             case 0:
@@ -143,8 +143,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     FLScope *scope;
     
-    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
-        scope = currentPreset.scopes[indexPath.row];
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count) {
+        scope = currentPreset.options.scopes[indexPath.row];
     } else {
         switch (indexPath.row) {
             case 0:

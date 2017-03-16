@@ -58,8 +58,8 @@
         transaction[@"preset"] = @YES;
         transaction[@"random"] = [FLHelper generateRandomString];
         
-        currentTransactionType = currentPreset.type;
-        [transaction setValue:[FLTransaction transactionTypeToParams:currentPreset.type] forKey:@"method"];
+        currentTransactionType = currentPreset.options.type;
+        [transaction setValue:[FLTransaction transactionTypeToParams:currentPreset.options.type] forKey:@"method"];
         
         if (!currentPreset.isParticipation) {
             if (currentPreset.to) {
@@ -197,8 +197,8 @@
     amountHint.userInteractionEnabled = YES;
     [amountHint addTapGestureWithTarget:self action:@selector(changeUser)];
     
-    if (currentPreset && currentPreset.blockTo)
-        [amountHint setUserInteractionEnabled:NO];
+    if (currentPreset && currentPreset.options)
+        [amountHint setUserInteractionEnabled:currentPreset.options.allowTo];
     
     UIView *amountSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(amountInput.frame), PPScreenWidth(), .7f)];
     [amountSeparator setBackgroundColor:[UIColor customBackground]];
@@ -227,8 +227,8 @@
     
     [contentView addSubview:content];
     
-    if (currentPreset && currentPreset.blockWhy)
-        [content setUserInteractionEnabled:!currentPreset.blockWhy];
+    if (currentPreset && currentPreset.options)
+        [content setUserInteractionEnabled:currentPreset.options.allowWhy];
     
     imageTransaction = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(10, 0, PPScreenWidth() - 20, ((PPScreenWidth() - 20) * 3) / 4)];
     imageTransaction.hidden = YES;
@@ -491,8 +491,8 @@
 - (void)updateScope {
     FLScope *currentScope = [FLScope scopeFromObject:[[Flooz sharedInstance].currentUser.settings objectForKey:@"def"][@"scope"]];
     
-    if (currentPreset && currentPreset.scopeDefined)
-        currentScope = currentPreset.scope;
+    if (currentPreset && currentPreset.options.scopeDefined)
+        currentScope = currentPreset.options.scope;
     
     for (FLScope *scope in [FLScope defaultScopeList]) {
         if ([[transaction objectForKey:@"scope"] isEqualToString:scope.keyString]) {
@@ -501,9 +501,9 @@
         }
     }
     
-    if (currentPreset && currentPreset.scopes && currentPreset.scopes.count) {
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count) {
         bool newScopeAvailable = NO;
-        for (FLScope *scope in currentPreset.scopes) {
+        for (FLScope *scope in currentPreset.options.scopes) {
             if (scope.key == currentScope.key) {
                 newScopeAvailable = YES;
                 break;
@@ -511,7 +511,7 @@
         }
         
         if (!newScopeAvailable) {
-            currentScope = currentPreset.scopes[0];
+            currentScope = currentPreset.options.scopes[0];
         }
     }
     
@@ -614,7 +614,7 @@
 }
 
 - (void)changeScope {
-    if (currentPreset && (currentPreset.blockScope || (currentPreset.scopes && currentPreset.scopes.count < 2)))
+    if (currentPreset && (!currentPreset.options.allowScope || (currentPreset.options.scopes && currentPreset.options.scopes.count < 2)))
         return;
     
     if (scopePickerViewController == nil)

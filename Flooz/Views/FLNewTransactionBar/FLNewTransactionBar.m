@@ -234,7 +234,7 @@
     [self createTextButton];
     [buttons addObject:textButton];
     
-    if (!currentPreset || !currentPreset.blockPic) {
+    if (!currentPreset || currentPreset.options.allowPic) {
         [self createCameraButton];
         [buttons addObject:cameraButton];
         
@@ -242,12 +242,12 @@
         [buttons addObject:imageButton];
     }
     
-    if (!currentPreset || !currentPreset.blockGif) {
+    if (!currentPreset || currentPreset.options.allowGif) {
         [self createGIFButton];
         [buttons addObject:gifButton];
     }
     
-    if (!currentPreset || !currentPreset.blockGeo) {
+    if (!currentPreset || !currentPreset.options.allowGeo) {
         [self createLocationButton];
         [buttons addObject:locationButton];
     }
@@ -356,14 +356,14 @@
         [participateButton removeFromSuperview];
         [collectButton removeFromSuperview];
         if (currentPreset) {
-            if (currentPreset.type == TransactionTypePayment) {
+            if (currentPreset.options.type == TransactionTypePayment) {
                 [askButton removeFromSuperview];
                 [paymentButtonsSeparator removeFromSuperview];
                 
                 [sendButton setFrame:CGRectMake(0, 0, PPScreenWidth(), ACTION_BAR_HEIGHT)];
                 sendButton.titleLabel.font = [UIFont customTitleLight:18];
             }
-            else if (currentPreset.type == TransactionTypeCharge) {
+            else if (currentPreset.options.type == TransactionTypeCharge) {
                 [sendButton removeFromSuperview];
                 [paymentButtonsSeparator removeFromSuperview];
                 

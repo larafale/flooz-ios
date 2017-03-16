@@ -159,8 +159,8 @@
     
     [contentView addSubview:content];
     
-    if (currentPreset && currentPreset.blockWhy)
-        [content setUserInteractionEnabled:!currentPreset.blockWhy];
+    if (currentPreset && currentPreset.options)
+        [content setUserInteractionEnabled:currentPreset.options.allowWhy];
     
     imageTransaction = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(10, 0, PPScreenWidth() - 20, ((PPScreenWidth() - 20) * 3) / 4)];
     imageTransaction.hidden = YES;

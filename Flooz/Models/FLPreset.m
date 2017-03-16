@@ -8,6 +8,95 @@
 
 #import "FLPreset.h"
 
+@implementation FLNewFloozOptions
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.allowTo = true;
+        self.allowPic = true;
+        self.allowGif = true;
+        self.allowGeo = true;
+        self.allowWhy = true;
+        self.allowScope = true;
+        self.allowAmount = true;
+        self.allowBalance = true;
+        self.scopeDefined = false;
+        self.type = TransactionTypeBase;
+    }
+    return self;
+}
+
+- (id)initWithJson:(NSDictionary *)json {
+    self = [super init];
+    if (self) {
+        [self setJson:json];
+    }
+    return self;
+}
+
++ (id)defaultWithJson:(NSDictionary *)json {
+    FLNewFloozOptions *ret = [FLNewFloozOptions default];
+    if (ret && json) {
+        [ret setJson:json];
+    }
+    return ret;
+}
+
++ (id)default {
+    if ([[Flooz sharedInstance] currentTexts] && [[[Flooz sharedInstance] currentTexts] createFloozOptions])
+        return [[[Flooz sharedInstance] currentTexts] createFloozOptions];
+    else
+        return [FLNewFloozOptions new];
+}
+
+- (void)setJson:(NSDictionary *)json {
+    if ([json objectForKey:@"scope"]) {
+        self.scopeDefined = YES;
+        self.scope = [FLScope scopeFromID:[json objectForKey:@"scope"]];
+    }
+    
+    if ([json objectForKey:@"scopes"]) {
+        NSMutableArray *fixScopes = [NSMutableArray new];
+        for (id scopeData in [json objectForKey:@"scopes"]) {
+            [fixScopes addObject:[FLScope scopeFromObject:scopeData]];
+        }
+        self.scopes = fixScopes;
+    }
+    
+    if ([json objectForKey:@"amount"])
+        self.allowAmount = [[json objectForKey:@"amount"] boolValue];
+    
+    if ([json objectForKey:@"balance"])
+        self.allowBalance = [[json objectForKey:@"balance"] boolValue];
+    
+    if ([json objectForKey:@"to"])
+        self.allowTo = [[json objectForKey:@"to"] boolValue];
+    
+    if ([json objectForKey:@"pic"])
+        self.allowPic = [[json objectForKey:@"pic"] boolValue];
+    
+    if ([json objectForKey:@"gif"])
+        self.allowGif = [[json objectForKey:@"gif"] boolValue];
+    
+    if ([json objectForKey:@"geo"])
+        self.allowGeo = [[json objectForKey:@"geo"] boolValue];
+    
+    if ([json objectForKey:@"scope"])
+        self.allowScope = [[json objectForKey:@"scope"] boolValue];
+    
+    if ([[json objectForKey:@"pay"] boolValue])
+        self.type = TransactionTypeCharge;
+    
+    if ([[json objectForKey:@"charge"] boolValue])
+        self.type = TransactionTypePayment;
+    
+    if ([json objectForKey:@"why"])
+        self.allowWhy = [[json objectForKey:@"why"] boolValue];
+}
+
+@end
+
 @implementation FLPreset
 
 - (id)initWithJson:(NSDictionary *)json {
@@ -20,18 +109,9 @@
 
 - (void)setJson:(NSDictionary *)json {
     
-    self.blockAmount = NO;
-    self.blockTo = NO;
-    self.blockBack = NO;
-    self.blockWhy = NO;
-    self.blockGif = NO;
-    self.blockPic = NO;
-    self.blockGeo = NO;
-    self.blockScope = NO;
     self.focusAmount = NO;
     self.focusWhy = NO;
     self.isParticipation = NO;
-    self.type = TransactionTypeBase;
     
     if (json[@"isParticipation"]) {
         self.isParticipation = [json[@"isParticipation"] boolValue];
@@ -44,9 +124,7 @@
     } else {
         self.collectName = json[@"to"];
     }
-    
-    self.type = TransactionTypeBase;
-    
+        
     self.presetId = [json objectForKey:@"_id"];
     self.amount = [json objectForKey:@"amount"];
     self.why = [json objectForKey:@"why"];
@@ -59,54 +137,9 @@
     self.popup = [json objectForKey:@"popup"];
 //    self.steps = [json objectForKey:@"steps"];
     
-    if ([json objectForKey:@"scope"]) {
-        self.scopeDefined = YES;
-        self.scope = [FLScope scopeFromID:[json objectForKey:@"scope"]];
-    }
-    
     self.title = [json objectForKey:@"title"];
     
-    self.type = TransactionTypeBase;
-    
-    if ([json objectForKey:@"scopes"]) {
-        NSMutableArray *fixScopes = [NSMutableArray new];
-        for (id scopeData in [json objectForKey:@"scopes"]) {
-            [fixScopes addObject:[FLScope scopeFromObject:scopeData]];
-        }
-        self.scopes = fixScopes;
-    }
-    
-    if ([json objectForKey:@"block"]) {
-        if ([[json objectForKey:@"block"] objectForKey:@"amount"])
-            self.blockAmount = [[[json objectForKey:@"block"] objectForKey:@"amount"] boolValue];
-        
-        if ([[json objectForKey:@"block"] objectForKey:@"balance"])
-            self.blockBalance = [[[json objectForKey:@"block"] objectForKey:@"balance"] boolValue];
-        
-        if ([[json objectForKey:@"block"] objectForKey:@"to"])
-            self.blockTo = [[[json objectForKey:@"block"] objectForKey:@"to"] boolValue];
-
-        if ([[json objectForKey:@"block"] objectForKey:@"pic"])
-            self.blockPic = [[[json objectForKey:@"block"] objectForKey:@"pic"] boolValue];
-
-        if ([[json objectForKey:@"block"] objectForKey:@"gif"])
-            self.blockGif = [[[json objectForKey:@"block"] objectForKey:@"gif"] boolValue];
-
-        if ([[json objectForKey:@"block"] objectForKey:@"geo"])
-            self.blockGeo = [[[json objectForKey:@"block"] objectForKey:@"geo"] boolValue];
-
-        if ([[json objectForKey:@"block"] objectForKey:@"scope"])
-            self.blockScope = [[[json objectForKey:@"block"] objectForKey:@"scope"] boolValue];
-        
-        if ([[[json objectForKey:@"block"] objectForKey:@"pay"] boolValue])
-            self.type = TransactionTypeCharge;
-        
-        if ([[[json objectForKey:@"block"] objectForKey:@"charge"] boolValue])
-            self.type = TransactionTypePayment;
-        
-        if ([[json objectForKey:@"block"] objectForKey:@"why"])
-            self.blockWhy = [[[json objectForKey:@"block"] objectForKey:@"why"] boolValue];
-    }
+    self.options = [FLNewFloozOptions defaultWithJson:json];
     
     if ([json objectForKey:@"focus"]) {
         NSString *focus = [json objectForKey:@"focus"];
