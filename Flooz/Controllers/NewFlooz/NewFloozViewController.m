@@ -277,7 +277,8 @@
 
     [self registerForKeyboardNotifications];
     
-    self.navigationItem.rightBarButtonItem = scopeItem;
+    if ((currentPreset && currentPreset.options.scopes && currentPreset && currentPreset.options.scopes.count > 1) || ([Flooz sharedInstance].currentTexts.createFloozOptions && [Flooz sharedInstance].currentTexts.createFloozOptions.scopes && [Flooz sharedInstance].currentTexts.createFloozOptions.scopes.count > 1))
+        self.navigationItem.rightBarButtonItem = scopeItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -3038,6 +3038,7 @@
 					};
 					ABAA3F7D197E96BF009F29EF = {
 						DevelopmentTeam = QU87Q423GH;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -4236,9 +4237,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = QU87Q423GH;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4265,8 +4266,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "b7873898-c8c8-4311-b31a-0ca5edaa280c";
-				PROVISIONING_PROFILE_SPECIFIER = "Flooz Dev AdHoc";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
@@ -4517,8 +4518,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = QU87Q423GH;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4546,8 +4548,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "a84e20d5-f61a-4788-bb26-38a034a6ec61";
-				PROVISIONING_PROFILE_SPECIFIER = Flooz.dev;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4566,9 +4568,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = QU87Q423GH;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4595,8 +4597,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "b7873898-c8c8-4311-b31a-0ca5edaa280c";
-				PROVISIONING_PROFILE_SPECIFIER = "Flooz Dev AdHoc";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PRODS_ROOT)/Headers/Public/** $(inherited)";
@@ -4736,8 +4738,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = QU87Q423GH;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Flooz/Library/scanpay",
@@ -4766,8 +4769,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "ad835a93-c4a2-4c14-a86e-4e9f566ab581";
-				PROVISIONING_PROFILE_SPECIFIER = Flooz.dev;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
