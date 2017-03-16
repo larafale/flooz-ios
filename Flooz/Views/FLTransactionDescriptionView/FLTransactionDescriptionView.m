@@ -149,9 +149,23 @@
     if (!withAvatar && transaction.social.likesCount > 0)
         current_height += 18.0f;
     
-    current_height += 20.0f; // height of buttons and amount text
+    if ([FLTransactionDescriptionView isFooterViewVisisbleForTransaction:transaction])
+        current_height += 20.0f; // height of buttons and amount text
+    
     current_height += MARGE_TOP_BOTTOM; // add small marge at the bottom
     return current_height;
+}
+
++ (BOOL)isFooterViewVisisbleForTransaction:(FLTransaction *)transaction {
+    if (transaction.options.likeEnabled || transaction.options.commentEnabled) {
+        return true;
+    }
+ 
+    if (transaction.amountText && transaction.amountText.length) {
+        return true;
+    }
+    
+    return false;
 }
 
 #pragma mark - create views
@@ -324,7 +338,11 @@
     
     [self prepareSocial];
     
-    CGRectSetHeight(rightView.frame, CGRectGetMaxY(footerDescView.frame));
+    if ([FLTransactionDescriptionView isFooterViewVisisbleForTransaction:self.transaction])
+        CGRectSetHeight(rightView.frame, CGRectGetMaxY(footerDescView.frame));
+    else
+        CGRectSetHeight(rightView.frame, height);
+
     CGRectSetHeight(self.frame, CGRectGetMaxY(rightView.frame) + MARGE_TOP_BOTTOM);
 }
 
@@ -576,14 +594,42 @@
 }
 
 - (void)prepareSocial {
-    FLSocial *social = [_transaction social];
+    if ([FLTransactionDescriptionView isFooterViewVisisbleForTransaction:self.transaction]) {
+        footerDescView.hidden = NO;
+        FLSocial *social = [_transaction social];
     
-    CGRectSetY(footerDescView.frame, height + 10.0f);
-    [_likeButton setSelected:[[_transaction social] isLiked]];
-    [_likeButton setText:[self castNumber:social.likesCount]];
-    
-    [_commentButton setSelected:[[_transaction social] isCommented]];
-    [_commentButton setText:[self castNumber:social.commentsCount]];
+        CGRectSetY(footerDescView.frame, height + 10.0f);
+        
+        if (self.transaction.options.likeEnabled && self.transaction.options.commentEnabled) {
+            [_likeButton setHidden:NO];
+            [_likeButton setSelected:[[_transaction social] isLiked]];
+            [_likeButton setText:[self castNumber:social.likesCount]];
+
+            [_commentButton setHidden:NO];
+            [_commentButton setSelected:[[_transaction social] isCommented]];
+            [_commentButton setText:[self castNumber:social.commentsCount]];
+            CGRectSetX(_commentButton.frame, CGRectGetMinX(_likeButton.frame) + 65.0f);
+        } else if (self.transaction.options.likeEnabled) {
+            [_likeButton setHidden:NO];
+            [_likeButton setSelected:[[_transaction social] isLiked]];
+            [_likeButton setText:[self castNumber:social.likesCount]];
+            
+            [_commentButton setHidden:YES];
+        } else if (self.transaction.options.commentEnabled) {
+            [_likeButton setHidden:YES];
+            
+            [_commentButton setHidden:NO];
+            [_commentButton setSelected:[[_transaction social] isCommented]];
+            [_commentButton setText:[self castNumber:social.commentsCount]];
+
+            CGRectSetX(_commentButton.frame, CGRectGetMinX(_likeButton.frame));
+        } else {
+            [_likeButton setHidden:YES];
+            [_commentButton setHidden:YES];
+        }
+    } else {
+        footerDescView.hidden = YES;
+    }
 }
 
 - (void)prepareAmountLabel {

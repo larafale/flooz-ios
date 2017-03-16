@@ -508,7 +508,7 @@
 }
 
 - (void)createForgetView {
-    CGFloat titleTopMargin = 40;
+    CGFloat titleTopMargin = 15;
     CGFloat forgetHorizontalMargin = 30;
     CGFloat forgetFormVerticalMargin = 20;
     
@@ -531,7 +531,7 @@
     CGRectSetX(forgetTitle.frame, CGRectGetWidth(forgetView.frame) / 2 - CGRectGetWidth(forgetTitle.frame) / 2);
     CGRectSetY(forgetTitle.frame, titleTopMargin);
     
-    FLTextFieldSignup *forgetLoginTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_EMAIL", nil) for:forgetData key:@"email" position:CGPointMake(forgetHorizontalMargin, CGRectGetMaxY(forgetTitle.frame) + forgetFormVerticalMargin)];
+    FLTextFieldSignup *forgetLoginTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_EMAIL", nil) for:forgetData key:@"email" position:CGPointMake(forgetHorizontalMargin, CGRectGetMaxY(forgetTitle.frame) + 100)];
     
     CGRectSetX(forgetLoginTextfield.frame, (CGRectGetWidth(forgetView.frame) - CGRectGetWidth(forgetLoginTextfield.frame)) / 2);
     

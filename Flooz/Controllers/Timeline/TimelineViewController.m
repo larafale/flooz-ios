@@ -207,7 +207,7 @@
 
 - (void)reloadCurrentTimeline {
     [self cancelTimer];
-    [self reloadTableView];
+    [self reloadTableView];    
 }
 
 - (UIColor*)colorOfShareView {
@@ -563,10 +563,14 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
             }
         }];
     }];
-    
 }
 
 - (void)changeScope {
+    if (availableScopes.count == 1) {
+        [self checkScopeAvailability];
+        [self showScopeHelper];
+        return;
+    }
     
     for (int i = 0; i < availableScopes.count; i++) {
         FLScope *scope = [availableScopes objectAtIndex:i];
