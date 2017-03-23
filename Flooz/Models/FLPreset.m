@@ -85,10 +85,11 @@
     if ([json objectForKey:@"scope"])
         self.allowScope = [[json objectForKey:@"scope"] boolValue];
     
-    if ([[json objectForKey:@"pay"] boolValue])
+    if ([[json objectForKey:@"pay"] boolValue] && [[json objectForKey:@"charge"] boolValue])
+        self.type = TransactionTypeBase;
+    else if ([[json objectForKey:@"pay"] boolValue] || ![[json objectForKey:@"charge"] boolValue])
         self.type = TransactionTypePayment;
-    
-    if ([[json objectForKey:@"charge"] boolValue])
+    else if ([[json objectForKey:@"charge"] boolValue] || ![[json objectForKey:@"pay"] boolValue])
         self.type = TransactionTypeCharge;
     
     if ([json objectForKey:@"why"])
