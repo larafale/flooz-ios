@@ -231,8 +231,10 @@
 
     NSMutableArray<UIButton *> *buttons = [NSMutableArray new];
     
-    [self createTextButton];
-    [buttons addObject:textButton];
+    if (!currentPreset || currentPreset.options.allowWhy) {
+        [self createTextButton];
+        [buttons addObject:textButton];
+    }
     
     if (!currentPreset || currentPreset.options.allowPic) {
         [self createCameraButton];
@@ -247,12 +249,12 @@
         [buttons addObject:gifButton];
     }
     
-    if (!currentPreset || !currentPreset.options.allowGeo) {
+    if (currentPreset || currentPreset.options.allowGeo) {
         [self createLocationButton];
         [buttons addObject:locationButton];
     }
     
-    if (buttons.count == 1) {
+    if (buttons.count == 0 || (buttons.count == 1 && currentPreset && currentPreset.options.allowWhy)) {
         tabBarView.backgroundColor = [UIColor clearColor];
     } else {
         actionButtonMargin = (widthBar - (buttons.count * actionButtonWidth)) / (buttons.count + 1);

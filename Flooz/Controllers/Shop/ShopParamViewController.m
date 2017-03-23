@@ -82,6 +82,8 @@
         self.contentheight = CGRectGetMaxY(headerLabel.frame) + 10;
     }
     
+    FLShopTextField *focusTextfield = nil;
+    
     if (self.triggerData[@"fields"] && [self.triggerData[@"fields"] count]) {
         for (NSDictionary *field in self.triggerData[@"fields"]) {
             FLShopField *fieldView;
@@ -92,6 +94,9 @@
                 fieldView = [[FLShopSwitch alloc] initWithOptions:field dic:self.params];
             } else if ([field[@"type"] rangeOfString:@"textfield"].location != NSNotFound) {
                 fieldView = [[FLShopTextField alloc] initWithOptions:field dic:self.params];
+                
+                if (field[@"focus"] && [field[@"focus"] boolValue] && focusTextfield == nil)
+                    focusTextfield = (FLShopTextField *)fieldView;
             } else
                 continue;
             
@@ -101,6 +106,12 @@
             
             self.contentheight = CGRectGetMaxY(fieldView.frame);
         }
+    }
+    
+    if (focusTextfield) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [focusTextfield.textfield becomeFirstResponder];
+        });
     }
     
     self.contentheight += 10;

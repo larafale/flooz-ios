@@ -113,12 +113,14 @@
         currentPreset = nil;
         selectedUser = user;
         
+        currentPreset = [[FLPreset alloc] initWithJson:nil];
+
         self.title = NSLocalizedString(@"NEW_TRANSACTION", nil);
         
         transaction[@"random"] = [FLHelper generateRandomString];
         transaction[@"preset"] = @NO;
         
-        currentTransactionType = transactionType;
+        currentTransactionType = currentPreset.options.type;
         [transaction setValue:[FLTransaction transactionTypeToParams:transactionType] forKey:@"method"];
         
         firstView = YES;

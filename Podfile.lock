@@ -34,12 +34,12 @@ PODS:
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
   - Fabric (1.6.11)
-  - FBSDKCoreKit (4.20.1):
+  - FBSDKCoreKit (4.20.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.20.1):
+  - FBSDKLoginKit (4.20.0):
     - FBSDKCoreKit
   - FBSDKMessengerShareKit (1.3.2)
-  - FBSDKShareKit (4.20.1):
+  - FBSDKShareKit (4.20.0):
     - FBSDKCoreKit
   - FLAnimatedImage (1.0.12)
   - FXBlurView (1.6.4)
@@ -53,7 +53,7 @@ PODS:
     - DACircularProgress
     - pop
     - SDWebImage
-  - JPSVolumeButtonHandler (1.0.3)
+  - JPSVolumeButtonHandler (1.0.2)
   - JTHelper (0.3.0)
   - JTSImageViewController (1.5.1)
   - libPhoneNumber-iOS (0.9.4)
@@ -66,7 +66,7 @@ PODS:
   - MZFormSheetController/Core (3.1.3):
     - MZAppearance
   - NSDate+Calendar (0.0.9)
-  - OneSignal (2.4.2)
+  - OneSignal (2.3.7)
   - PonyDebugger (0.4.5):
     - SocketRocket
   - pop (1.0.9)
@@ -80,10 +80,10 @@ PODS:
     - SDWebImage/Core
   - SMPageControl (1.2)
   - SocketRocket (0.5.1)
-  - Stripe (10.0.0)
+  - Stripe (9.4.0)
   - TTTAttributedLabel (2.0.0)
   - TUSafariActivity (1.0.4)
-  - UICKeyChainStore (2.1.1)
+  - UICKeyChainStore (2.1.0)
   - UIFloatLabelTextField (1.2.7)
   - VCTransitionsLibrary (1.5.0)
   - VENCalculatorInputView (1.5.4)
@@ -130,9 +130,9 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   IDMPhotoBrowser:
-    :path: ./IDMPhotoBrowser
+    :path: "./IDMPhotoBrowser"
   SDWebImage:
-    :path: ./SDWebImage
+    :path: "./SDWebImage"
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
@@ -145,10 +145,10 @@ SPEC CHECKSUMS:
   EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  FBSDKCoreKit: 39a3569652983bf8666620dd334804c9057ae9b2
-  FBSDKLoginKit: 17092ff61a18c54ca423aebc18c5acc2e5a4a728
+  FBSDKCoreKit: 2d16979b28fe28c2b95af0d275ad5f9703c6c8de
+  FBSDKLoginKit: a9d9391506c687e2304a590bf9312837fce7f375
   FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
-  FBSDKShareKit: 4f37934d9ee9500d2d35752595816dc35f967478
+  FBSDKShareKit: 1b91af62a603d67f392bc7fde63bc4a0705dde31
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GBDeviceInfo: 0a6e2fc04989ce248572bb988f1a764102eb0e5d
@@ -156,7 +156,7 @@ SPEC CHECKSUMS:
   HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   IDMPhotoBrowser: b574fe3229754e701f32df271afbc4ac7e4e1997
-  JPSVolumeButtonHandler: 2fc1b1f98b4e5e741688c0fcffc4808bdf81a424
+  JPSVolumeButtonHandler: 8ce88f49665827419084800570a20716a97cec48
   JTHelper: b9b56980755bf6d9f7ed58a2490205109658087e
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
   libPhoneNumber-iOS: 63bab980d1fc9783d82d955800ac9d7c1d81fde3
@@ -165,7 +165,7 @@ SPEC CHECKSUMS:
   MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
   MZFormSheetController: da2df509805d757e04b052915057d8e1a338b050
   NSDate+Calendar: f377c72a2e66de8d603ae2dcca4dba9bbf13acbd
-  OneSignal: a94d1ca53d05c29de4f4b150bad8ff9c4cc34f67
+  OneSignal: 95c86eec080b8c5e69b85d8ad21c4d38eed1b5a8
   PonyDebugger: 1c60f7c876bdb6a8b6bf0f0269087f8a234fafa7
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
@@ -173,10 +173,10 @@ SPEC CHECKSUMS:
   SDWebImage: c36166b920a2d7cafcd48f6bef4a51c8a547bdba
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
-  Stripe: abf87fc01f74a2143bba1b1798dd2e4d71fd2cb3
+  Stripe: 0957cc85df5c3df153e6fb44d307ea4b778b6bd1
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
-  UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
+  UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
   UIFloatLabelTextField: ec6e82ae7cc06185bda955a9dce17e81cf34327c
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
   VENCalculatorInputView: 988fa681ba6bb9b1f067842493bb622e80cc8da2

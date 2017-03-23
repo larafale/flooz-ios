@@ -14,10 +14,10 @@
     self = [super init];
     if (self) {
         self.allowTo = true;
-        self.allowPic = true;
-        self.allowGif = true;
+        self.allowPic = false;
+        self.allowGif = false;
         self.allowGeo = true;
-        self.allowWhy = true;
+        self.allowWhy = false;
         self.allowScope = true;
         self.allowAmount = true;
         self.allowBalance = true;
@@ -86,10 +86,10 @@
         self.allowScope = [[json objectForKey:@"scope"] boolValue];
     
     if ([[json objectForKey:@"pay"] boolValue])
-        self.type = TransactionTypeCharge;
+        self.type = TransactionTypePayment;
     
     if ([[json objectForKey:@"charge"] boolValue])
-        self.type = TransactionTypePayment;
+        self.type = TransactionTypeCharge;
     
     if ([json objectForKey:@"why"])
         self.allowWhy = [[json objectForKey:@"why"] boolValue];
@@ -135,11 +135,10 @@
     self.name = [json objectForKey:@"name"];
     self.namePlaceholder = [json objectForKey:@"namePlaceholder"];
     self.popup = [json objectForKey:@"popup"];
-//    self.steps = [json objectForKey:@"steps"];
     
     self.title = [json objectForKey:@"title"];
     
-    self.options = [FLNewFloozOptions defaultWithJson:json];
+    self.options = [FLNewFloozOptions defaultWithJson:json[@"options"]];
     
     if ([json objectForKey:@"focus"]) {
         NSString *focus = [json objectForKey:@"focus"];

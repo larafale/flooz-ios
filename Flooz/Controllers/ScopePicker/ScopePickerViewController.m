@@ -87,6 +87,10 @@
     [_mainBody addSubview:_tableView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [_tableView reloadData];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count)
         return currentPreset.options.scopes.count;
@@ -155,7 +159,7 @@
     
     [cell setScope:scope pot:isPot];
     
-    if (scope == self.currentScope) {
+    if ([scope.keyString isEqualToString:self.currentScope.keyString]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;

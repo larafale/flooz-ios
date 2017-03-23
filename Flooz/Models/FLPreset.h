@@ -26,7 +26,7 @@
 @property (nonatomic, strong) NSArray *scopes;
 
 - (id)initWithJson:(NSDictionary *)json;
-- (id)default;
++ (id)default;
 + (id)defaultWithJson:(NSDictionary *)json;
 
 @end

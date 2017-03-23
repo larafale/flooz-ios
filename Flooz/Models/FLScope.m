@@ -65,7 +65,6 @@
     }
 }
 
-
 + (FLScope *)defaultScope:(FLScopeKey)scopeKey {
     switch (scopeKey) {
         case FLScopeFriend:

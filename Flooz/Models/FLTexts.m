@@ -116,13 +116,14 @@
     
     self.paymentSources = sourcesMutableArray;
 
-    if ([json objectForKey:@"scopes"]) {
+    if ([json objectForKey:@"homeScopes"]) {
         NSMutableArray *fixScopes = [NSMutableArray new];
-        for (id scopeData in [json objectForKey:@"scopes"]) {
+        for (id scopeData in [json objectForKey:@"homeScopes"]) {
             [fixScopes addObject:[FLScope scopeFromObject:scopeData]];
         }
         self.homeScopes = fixScopes;
-    }
+    } else
+        self.homeScopes = [FLScope defaultScopeList];
 
     for (NSDictionary *country in countries) {
         [self.avalaibleCountries addObject:[[FLCountry alloc] initWithJSON:country]];

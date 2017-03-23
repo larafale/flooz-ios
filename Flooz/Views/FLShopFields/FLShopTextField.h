@@ -11,4 +11,6 @@
 
 @interface FLShopTextField : FLShopField
 
+@property (nonatomic, strong) FLTextField *textfield;
+
 @end

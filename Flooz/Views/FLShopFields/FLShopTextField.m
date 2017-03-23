@@ -8,12 +8,6 @@
 
 #import "FLShopTextField.h"
 
-@interface FLShopField ()
-
-@property (nonatomic, strong) FLTextField *textfield;
-
-@end
-
 @implementation FLShopTextField
 
 @synthesize textfield;

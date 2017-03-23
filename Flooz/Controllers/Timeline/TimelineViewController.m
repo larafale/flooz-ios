@@ -262,7 +262,6 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
     [amountItem setTitle:[FLHelper formatedAmount:[[Flooz sharedInstance] currentUser].amount withSymbol:NO]];
     
     self.navigationItem.rightBarButtonItem = searchItem;
-    self.navigationItem.leftBarButtonItem = scopeItem;
     
     [self cancelTimer];
 }
