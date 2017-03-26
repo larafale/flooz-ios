@@ -420,7 +420,7 @@
             CGRectSetX(rightButton.frame, PPScreenWidth() - CGRectGetWidth(rightButton.frame) - rightMargin);
         }
         
-        if ([currentUser.actions indexOfObject:@"settings"] != NSNotFound) {
+        if ([currentUser.actions indexOfObject:@"settings"] != NSNotFound && ![currentUser.username isEqualToString:@"flooz"]) {
             [settingsButton setHidden:NO];
             if (rightButton)
                 CGRectSetX(settingsButton.frame, CGRectGetMinX(rightButton.frame) - CGRectGetWidth(settingsButton.frame) - 5);

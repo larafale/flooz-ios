@@ -18,15 +18,6 @@
     return self;
 }
 
-//@property (strong, nonatomic) FLScopeKey key;
-//@property (strong, nonatomic) NSString *keyString;
-//@property (strong, nonatomic) NSString *name;
-//@property (strong, nonatomic) NSString *desc;
-//@property (strong, nonatomic) NSString *imageURL;
-//@property (strong, nonatomic) NSString *image;
-//@property (strong, nonatomic) NSString *imageName;
-//@property (strong, nonatomic) NSNumber *numLength;
-
 - (void)setJSON:(NSDictionary*)jsonData {
     self.json = jsonData;
     if (jsonData) {
@@ -35,6 +26,7 @@
         self.key = [FLScope scopeKeyFromString:self.keyString];
         self.name = jsonData[@"name"];
         self.desc = jsonData[@"desc"];
+        self.shortDesc = jsonData[@"shortDesc"];
 
         if (jsonData[@"imageURL"] && ((NSString *)jsonData[@"imageURL"]).length > 0) {
             [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:jsonData[@"imageURL"]] options:SDWebImageDownloaderHighPriority progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
@@ -68,13 +60,13 @@
 + (FLScope *)defaultScope:(FLScopeKey)scopeKey {
     switch (scopeKey) {
         case FLScopeFriend:
-            return [FLScope scopeFromJSON:@{@"key": @"friend", @"name": [FLScope textFromKey:scopeKey], @"desc": [FLScope descFromKey:scopeKey forPot:NO]}];
+            return [FLScope scopeFromJSON:@{@"key": @"friend", @"name": [FLScope textFromKey:scopeKey], @"desc": [FLScope descFromKey:scopeKey forPot:NO], @"shortDesc": [FLScope shortDescFromKey:scopeKey]}];
         case FLScopePrivate:
-            return [FLScope scopeFromJSON:@{@"key": @"private", @"name": [FLScope textFromKey:scopeKey], @"desc": [FLScope descFromKey:scopeKey forPot:NO]}];
+            return [FLScope scopeFromJSON:@{@"key": @"private", @"name": [FLScope textFromKey:scopeKey], @"desc": [FLScope descFromKey:scopeKey forPot:NO], @"shortDesc": [FLScope shortDescFromKey:scopeKey]}];
         case FLScopePublic:
-            return [FLScope scopeFromJSON:@{@"key": @"public", @"name": [FLScope textFromKey:scopeKey], @"desc": [FLScope descFromKey:scopeKey forPot:NO]}];
+            return [FLScope scopeFromJSON:@{@"key": @"public", @"name": [FLScope textFromKey:scopeKey], @"desc": [FLScope descFromKey:scopeKey forPot:NO], @"shortDesc": [FLScope shortDescFromKey:scopeKey]}];
         case FLScopeAll:
-            return [FLScope scopeFromJSON:@{@"key": @"all", @"name": [FLScope textFromKey:scopeKey], @"desc": [FLScope descFromKey:scopeKey forPot:NO]}];
+            return [FLScope scopeFromJSON:@{@"key": @"all", @"name": [FLScope textFromKey:scopeKey], @"desc": [FLScope descFromKey:scopeKey forPot:NO], @"shortDesc": [FLScope shortDescFromKey:scopeKey]}];
         default:
             break;
     }
@@ -102,6 +94,13 @@
 }
 
 + (FLScope *)scopeFromKey:(NSString *)keyString {
+    if ([Flooz sharedInstance].currentTexts && [Flooz sharedInstance].currentTexts.homeScopes && [Flooz sharedInstance].currentTexts.homeScopes.count) {
+        for (FLScope *scope in [Flooz sharedInstance].currentTexts.homeScopes) {
+            if ([keyString isEqualToString:scope.keyString])
+                return scope;
+        }
+    }
+    
     return [FLScope defaultScope:[FLScope scopeKeyFromString:keyString]];
 }
 
@@ -155,6 +154,26 @@
     }
 
     return NSLocalizedString([@"TRANSACTION_SCOPE_" stringByAppendingString: key], nil);
+}
+
++ (NSString *)shortDescFromKey:(FLScopeKey)scopeKey {
+    NSString *key = nil;
+    
+    switch (scopeKey) {
+        case FLScopeFriend:
+            key = @"Mes amis";
+            break;
+        case FLScopePrivate:
+            key = @"Moi";
+            break;
+        case FLScopePublic:
+            key = @"Tous";
+            break;
+        default:
+            return @"";
+    }
+    
+    return key;
 }
 
 + (NSString *)descFromKey:(FLScopeKey)scopeKey forPot:(Boolean)isPot {

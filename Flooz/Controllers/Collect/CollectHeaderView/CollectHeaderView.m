@@ -186,7 +186,7 @@
         CGFloat heightAttach = 250 / (500 / widthAttach);
         CGRectSetHeight(attachmentView.frame, heightAttach);
         
-        [attachmentView setImageWithURL:[NSURL URLWithString:[_transaction attachmentURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
+        [attachmentView setMediaWithURL:[NSURL URLWithString:[_transaction attachmentURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]] mediaType:[_transaction attachmentType]];
         
         CGRectSetY(descriptionTitleLabel.frame, CGRectGetMaxY(attachmentView.frame) + 15);
     } else if ([_transaction.creator.userId isEqualToString:[Flooz sharedInstance].currentUser.userId] && _transaction.triggerImage) {

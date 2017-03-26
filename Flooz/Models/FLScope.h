@@ -24,6 +24,7 @@ typedef NS_ENUM (NSInteger, FLScopeKey) {
 @property (strong, nonatomic) NSString *keyString;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *desc;
+@property (strong, nonatomic) NSString *shortDesc;
 @property (strong, nonatomic) NSString *imageURL;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) NSString *imageName;
@@ -31,6 +32,7 @@ typedef NS_ENUM (NSInteger, FLScopeKey) {
 - (id)initWithJSON:(NSDictionary *)json;
 
 + (FLScope *)defaultScope:(FLScopeKey)scopeKey;
+
 + (NSArray<FLScope *> *)defaultScopeList;
 
 + (FLScope *)scopeFromKey:(NSString*)scopeKey;

@@ -17,7 +17,6 @@
 @property (nonatomic) BOOL allowGif;
 @property (nonatomic) BOOL allowGeo;
 @property (nonatomic) BOOL allowWhy;
-@property (nonatomic) BOOL allowScope;
 @property (nonatomic) BOOL allowAmount;
 @property (nonatomic) BOOL allowBalance;
 @property (nonatomic) BOOL scopeDefined;

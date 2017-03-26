@@ -63,7 +63,7 @@
         _avatarLargeURL = [json objectForKey:@"picFull"];
         _profileCompletion = [json objectForKey:@"profileCompletion"];
         _hasSecureCode = [json objectForKey:@"secureCode"];
-        _blockObject = [json objectForKey:@"block"];
+        _optionsObject = [json objectForKey:@"floozOptions"];
         _isCertified = [[json objectForKey:@"isCertified"] boolValue];
         _isCactus = [[json objectForKey:@"isCactus"] boolValue];
         _isFriend = [[json objectForKey:@"isFriend"] boolValue];

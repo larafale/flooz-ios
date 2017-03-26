@@ -62,15 +62,6 @@
         
         transactionsLoaded = [NSMutableArray new];
         cells = [NSMutableArray new];
-        
-        NSString *filterData = [UICKeyChainStore stringForKey:kFilterData];
-        
-        if (filterData && ![filterData isBlank])
-            currentScope = [FLScope scopeFromObject:filterData];
-        else {
-            currentScope = [FLScope defaultScope:FLScopeAll];
-            [UICKeyChainStore setString:currentScope.keyString forKey:kFilterData];
-        }
     }
     return self;
 }
@@ -93,7 +84,6 @@
     
     scopeItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:self action:@selector(changeScope)];
     [scopeItem setTintColor:[UIColor customBlue]];
-    [self checkScopeAvailability];
     
     CGFloat height = PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight();
     
@@ -133,6 +123,24 @@
     
     self.navigationItem.titleView = logo;
     
+    NSString *filterData = [UICKeyChainStore stringForKey:kFilterData];
+    
+    if ([Flooz sharedInstance].currentTexts && [Flooz sharedInstance].currentTexts.defaultScope) {
+        currentScope = [Flooz sharedInstance].currentTexts.defaultScope;
+        [UICKeyChainStore setString:currentScope.keyString forKey:kFilterData];
+    } else if (filterData && ![filterData isBlank]) {
+        currentScope = [FLScope scopeFromObject:filterData];
+    } else if ([Flooz sharedInstance].currentTexts && [Flooz sharedInstance].currentTexts.homeScopes && [Flooz sharedInstance].currentTexts.homeScopes.count) {
+        currentScope = [FLScope defaultScope:FLScopeAll];
+        currentScope = [[Flooz sharedInstance].currentTexts.homeScopes objectAtIndex:0];
+        [UICKeyChainStore setString:currentScope.keyString forKey:kFilterData];
+    } else {
+        currentScope = [[FLScope defaultScopeList] objectAtIndex:0];
+        [UICKeyChainStore setString:currentScope.keyString forKey:kFilterData];
+    }
+    
+    [self checkScopeAvailability];
+
     [self registerNotification:@selector(reloadCurrentTimeline) name:kNotificationReloadTimeline object:nil];
     [self registerNotification:@selector(reloadBalanceItem) name:kNotificationReloadCurrentUser object:nil];
     [self registerNotification:@selector(checkScopeAvailability) name:kNotificationReloadTexts object:nil];

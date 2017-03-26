@@ -128,7 +128,7 @@
         CGFloat heightAttach = 250 / (500 / widthAttach);
         CGRectSetHeight(attachmentView.frame, heightAttach);
         
-        [attachmentView setImageWithURL:[NSURL URLWithString:[_transaction attachmentURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]]];
+        [attachmentView setMediaWithURL:[NSURL URLWithString:[_transaction attachmentURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]] mediaType:[_transaction attachmentType]];
     }
     else {
         CGRectSetHeight(attachmentView.frame, 0);

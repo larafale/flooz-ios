@@ -114,7 +114,10 @@
         selectedUser = user;
         
         currentPreset = [[FLPreset alloc] initWithJson:nil];
-
+        
+        if (selectedUser.optionsObject)
+            currentPreset.options = [FLNewFloozOptions defaultWithJson:selectedUser.optionsObject];
+        
         self.title = NSLocalizedString(@"NEW_TRANSACTION", nil);
         
         transaction[@"random"] = [FLHelper generateRandomString];
@@ -275,8 +278,6 @@
     CGRectSetY(transactionBar.frame,  CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame));
     [_mainBody addSubview:transactionBar];
     
-    [self updateTransactionBar];
-
     [self registerForKeyboardNotifications];
     
     if ((currentPreset && currentPreset.options.scopes && currentPreset && currentPreset.options.scopes.count > 1) || ([Flooz sharedInstance].currentTexts.createFloozOptions && [Flooz sharedInstance].currentTexts.createFloozOptions.scopes && [Flooz sharedInstance].currentTexts.createFloozOptions.scopes.count > 1))
@@ -323,12 +324,16 @@
     }
     
     if (firstViewAmount) {
-        [amountInput becomeFirstResponder];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [amountInput becomeFirstResponder];
+        });
+        
         firstViewAmount = NO;
-    }
-    
-    if (firstViewWhy) {
-        [content becomeFirstResponder];
+    } else if (firstViewWhy) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [content becomeFirstResponder];
+        });
+        
         firstViewWhy = NO;
     }
 }
@@ -368,8 +373,6 @@
     }
     
     amountHint.text = selectedUser.fullname;
-    
-    [self updateTransactionBar];
     
     [viewController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -497,7 +500,14 @@
     if (currentPreset && currentPreset.options.scopeDefined)
         currentScope = currentPreset.options.scope;
     
-    for (FLScope *scope in [FLScope defaultScopeList]) {
+    NSArray *defaulScopeList;
+    
+    if (currentPreset && currentPreset.options.scopes && currentPreset.options.scopes.count)
+        defaulScopeList = currentPreset.options.scopes;
+    else
+        defaulScopeList = [FLScope defaultScopeList];
+    
+    for (FLScope *scope in defaulScopeList) {
         if ([[transaction objectForKey:@"scope"] isEqualToString:scope.keyString]) {
             currentScope = scope;
             break;
@@ -521,67 +531,6 @@
     [scopeItem setImage:[[FLHelper imageWithImage:currentScope.image scaledToSize:CGSizeMake(25, 25)] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     
     [transaction setValue:currentScope.keyString forKey:@"scope"];
-}
-
-- (void)updateTransactionBar {
-    if (selectedUser) {
-        if (selectedUser.blockObject != nil) {
-            if ([selectedUser.blockObject objectForKey:@"charge"] != nil && [[selectedUser.blockObject objectForKey:@"charge"] boolValue]) {
-                [self hidePayButton:false];
-                [self hideChargeButton:true];
-                [transactionBar hideButtonSeparator:true];
-            } else if ([selectedUser.blockObject objectForKey:@"pay"] != nil && [[selectedUser.blockObject objectForKey:@"pay"] boolValue]) {
-                [self hideChargeButton:false];
-                [self hidePayButton:true];
-                [transactionBar hideButtonSeparator:true];
-            } else {
-                [self resetPaymentButtons];
-            }
-        } else {
-            [self resetPaymentButtons];
-        }
-    } else {
-        [self resetPaymentButtons];
-    }
-}
-
-- (void)hideChargeButton:(BOOL)hidden {
-    [transactionBar hideChargeButton:hidden];
-}
-
-- (void)hidePayButton:(BOOL)hidden {
-    [transactionBar hidePayButton:hidden];
-}
-
-- (void)resetPaymentButtons {
-    if (!currentPreset || !currentPreset.isParticipation) {
-        switch (currentTransactionType) {
-            case TransactionTypePayment: {
-                [self hideChargeButton:true];
-                [self hidePayButton:false];
-                [transactionBar hideButtonSeparator:true];
-                break;
-            }
-            case TransactionTypeCharge: {
-                [self hideChargeButton:false];
-                [self hidePayButton:true];
-                [transactionBar hideButtonSeparator:true];
-                break;
-            }
-            case TransactionTypeCollect: {
-                [self hideChargeButton:false];
-                [self hidePayButton:false];
-                [transactionBar hideButtonSeparator:false];
-                break;
-            }
-            case TransactionTypeBase: {
-                [self hideChargeButton:false];
-                [self hidePayButton:false];
-                [transactionBar hideButtonSeparator:false];
-                break;
-            }
-        }
-    }
 }
 
 -(void)amountChange {
@@ -617,7 +566,7 @@
 }
 
 - (void)changeScope {
-    if (currentPreset && (!currentPreset.options.allowScope || (currentPreset.options.scopes && currentPreset.options.scopes.count < 2)))
+    if (currentPreset && (currentPreset.options.scopes && currentPreset.options.scopes.count < 2))
         return;
     
     if (scopePickerViewController == nil)

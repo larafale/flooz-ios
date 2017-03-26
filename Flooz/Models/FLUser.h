@@ -73,7 +73,7 @@ typedef enum e_FLUserKind {
 @property (strong, nonatomic) NSDictionary *checkDocuments;
 @property (strong, nonatomic) NSDictionary *linkDocuments;
 @property (strong, nonatomic) FLCreditCard *creditCard;
-@property (strong, nonatomic) NSMutableDictionary *blockObject;
+@property (strong, nonatomic) NSMutableDictionary *optionsObject;
 
 @property (strong, nonatomic) NSMutableArray *actions;
 

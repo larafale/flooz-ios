@@ -97,7 +97,7 @@
         if (user.userKind == FloozUser) {
             data[@"to"] = user.username;
             data[@"toFullName"] = user.fullname;
-            data[@"block"] = user.blockObject;
+            data[@"options"] = user.optionsObject;
         } else {
             data[@"to"] = user.phone;
             data[@"toFullName"] = user.fullname;
@@ -120,7 +120,14 @@
         if (self.triggerData[@"in"]) {
             baseDic = successTrigger.data[self.triggerData[@"in"]];
             
-            [data addEntriesFromDictionary:baseDic];
+            for (NSString *key in baseDic.allKeys) {
+                if ([[baseDic objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                    if ([data objectForKey:key] && [[data objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                        [[baseDic objectForKey:key] addEntriesFromDictionary:[data objectForKey:key]];
+                    }
+                }
+                [data setObject:[baseDic objectForKey:key] forKey:key];
+            }
             
             NSMutableDictionary *newData = [successTrigger.data mutableCopy];
             
@@ -129,8 +136,16 @@
             successTrigger.data = newData;
         } else {
             baseDic = successTrigger.data;
-            [data addEntriesFromDictionary:baseDic];
-            
+
+            for (NSString *key in baseDic.allKeys) {
+                if ([[baseDic objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                    if ([data objectForKey:key] && [[data objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+                        [[baseDic objectForKey:key] addEntriesFromDictionary:[data objectForKey:key]];
+                    }
+                }
+                [data setObject:[baseDic objectForKey:key] forKey:key];
+            }
+
             successTrigger.data = data;
         }
         

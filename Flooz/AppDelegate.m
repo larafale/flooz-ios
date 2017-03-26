@@ -33,6 +33,7 @@
 #import "CollectViewController.h"
 #import "JTSAnimatedGIFUtility.h"
 #import "NewFloozViewController.h"
+#import "ABMediaView.h"
 
 @interface AppDelegate() {
     NSDictionary *tmpUser;
@@ -65,6 +66,11 @@
     [Fabric with:@[CrashlyticsKit]];
     [Crashlytics startWithAPIKey:@"4f18178e0b7894ec76bb6f01a60f34baf68acbf7"];
     
+    [[ABMediaView sharedManager] setShouldCacheMedia:YES];
+    [ABMediaView setPlaysAudioWhenPlayingMediaOnSilent:YES];
+    [ABMediaView setPlaysAudioWhenStoppingMediaOnSilent:NO];
+    [[ABMediaView sharedManager] setShouldPreloadVideoAndAudio:YES];
+
     [self loadBranchParams];
     
     Branch *branch = [Branch getInstance];
@@ -207,6 +213,8 @@
 
 - (void)initTestingWithIP:(NSString *)ip {
     self.localIp = ip;
+    
+    [UICKeyChainStore setString:self.localIp forKey:kLocalURLData];
     
     if (![[Flooz sharedInstance] autologin]) {
         HomeViewController *home = [HomeViewController new];

@@ -7,6 +7,7 @@
 //
 
 #import "SplashViewController.h"
+#import "UICKeyChainStore.h"
 
 @interface SplashViewController () {
     UIImageView *logo;
@@ -71,6 +72,23 @@
     CGRectSetY(waitingLabel.frame, CGRectGetMaxY(title.frame) + 10.0f);
     
 #ifdef FLOOZ_DEV_LOCAL
+    NSString *cacheURL= [UICKeyChainStore stringForKey:kLocalURLData];
+    
+    NSString *defaultIP = @"192.168.0.11";
+    NSString *defaultPort = @"3002";
+    
+    if (cacheURL && ![cacheURL isBlank]) {
+        NSArray *splitStr = [cacheURL componentsSeparatedByString:@":"];
+        
+        if (splitStr.count) {
+            defaultIP = splitStr[0];
+            
+            if (splitStr.count == 2) {
+                defaultPort = splitStr[1];
+            }
+        }
+    }
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"IP Address"
                                                     message:@"Enter custom IP address"
                                                    delegate:self
@@ -78,10 +96,8 @@
                                           otherButtonTitles:@"Local", nil];
     alert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     [[alert textFieldAtIndex:1] setSecureTextEntry:NO];
-//    [[alert textFieldAtIndex:0] setText:@"192.168.1.44"];
-    [[alert textFieldAtIndex:0] setText:@"172.20.113.3"];
-//    [[alert textFieldAtIndex:0] setText:@"172.20.113."];
-    [[alert textFieldAtIndex:1] setText:@"3002"];
+    [[alert textFieldAtIndex:0] setText:defaultIP];
+    [[alert textFieldAtIndex:1] setText:defaultPort];
     [[alert textFieldAtIndex:0] setPlaceholder:@"IP"];
     [[alert textFieldAtIndex:1] setPlaceholder:@"Port"];
     [alert show];

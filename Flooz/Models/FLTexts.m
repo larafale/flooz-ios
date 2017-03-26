@@ -116,6 +116,11 @@
     
     self.paymentSources = sourcesMutableArray;
 
+    self.defaultScope = nil;
+    if ([json objectForKey:@"defaultScope"]) {
+        self.defaultScope = [FLScope scopeFromObject:[json objectForKey:@"defaultScope"]];
+    }
+    
     if ([json objectForKey:@"homeScopes"]) {
         NSMutableArray *fixScopes = [NSMutableArray new];
         for (id scopeData in [json objectForKey:@"homeScopes"]) {

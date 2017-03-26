@@ -249,7 +249,7 @@
         [buttons addObject:gifButton];
     }
     
-    if (currentPreset || currentPreset.options.allowGeo) {
+    if (!currentPreset || currentPreset.options.allowGeo) {
         [self createLocationButton];
         [buttons addObject:locationButton];
     }

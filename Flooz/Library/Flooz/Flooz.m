@@ -20,6 +20,7 @@
 
 #import "FLAlert.h"
 
+#import "ABMediaView.h"
 #import "CreditCardViewController.h"
 #import "SettingsDocumentsViewController.h"
 #import "SettingsCoordsViewController.h"
@@ -82,8 +83,6 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveUserData) name:kNotificationReloadCurrentUser object:nil];
         
         self.fbLoginManager = [[FBSDKLoginManager alloc] init];
-        
-        [self clearSaveData];
     }
     return self;
 }
@@ -254,6 +253,8 @@
     [UICKeyChainStore removeItemForKey:kNotificationsData];
     [UICKeyChainStore removeItemForKey:kFilterData];
     [UICKeyChainStore removeItemForKey:kLocationData];
+    
+    [ABMediaView clearABMediaDirectory:AllDirectoryItems];
 }
 
 - (void) clearLocationData {

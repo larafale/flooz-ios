@@ -58,7 +58,7 @@
 		}
 	}
 
-    _scope = [FLScope scopeFromID:[json objectForKey:@"scope"]];
+    _scope = [FLScope scopeFromObject:[json objectForKey:@"scope"]];
 }
 
 @end

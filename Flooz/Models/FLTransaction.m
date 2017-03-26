@@ -164,8 +164,21 @@
     if (_location && [_location isBlank])
         _location = nil;
     
-    _attachmentURL = [json objectForKey:@"pic"];
-    _attachmentThumbURL = [json objectForKey:@"picMini"];
+    self.attachmentType = TransactionAttachmentNone;
+    
+    if ([json objectForKey:@"pic"]) {
+        self.attachmentType = TransactionAttachmentImage;
+        _attachmentURL = [json objectForKey:@"pic"];
+        _attachmentThumbURL = [json objectForKey:@"picThumb"];
+    } else if ([json objectForKey:@"video"]) {
+        self.attachmentType = TransactionAttachmentVideo;
+        _attachmentURL = [json objectForKey:@"video"];
+        _attachmentThumbURL = [json objectForKey:@"videoThumb"];
+    } else if ([json objectForKey:@"audio"]) {
+        self.attachmentType = TransactionAttachmentAudio;
+        _attachmentURL = [json objectForKey:@"audio"];
+        _attachmentThumbURL = [json objectForKey:@"audioThumb"];
+    }
     
     if (!_attachmentURL.length)
         _attachmentURL = nil;

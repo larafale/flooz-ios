@@ -52,6 +52,7 @@
 @property (nonatomic, retain) NSArray *suggestGif;
 @property (nonatomic, retain) NSArray *suggestWeb;
 @property (nonatomic, retain) NSArray *homeScopes;
+@property (nonatomic, strong) FLScope *defaultScope;
 @property (nonatomic, strong) FLNewFloozOptions *createFloozOptions;
 @property (nonatomic, strong) FLTransactionOptions *floozOptions;
 

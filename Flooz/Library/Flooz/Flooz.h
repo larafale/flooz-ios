@@ -53,6 +53,7 @@ static NSString *kInvitationData = @"invitationData";
 static NSString *kNotificationsData = @"notifData";
 static NSString *kBranchData = @"branchData";
 static NSString *kLocationData = @"locationData";
+static NSString *kLocalURLData = @"localURLData";
 
 @interface Flooz : NSObject<UIAlertViewDelegate> {
 	AFHTTPSessionManager *manager;

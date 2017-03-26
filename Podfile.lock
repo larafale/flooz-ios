@@ -1,4 +1,5 @@
 PODS:
+  - ABMediaView (0.4.1)
   - ActionSheetPicker-3.0 (2.2.0)
   - AFNetworking (3.1.0):
     - AFNetworking/NSURLSession (= 3.1.0)
@@ -89,6 +90,7 @@ PODS:
   - VENCalculatorInputView (1.5.4)
 
 DEPENDENCIES:
+  - ABMediaView
   - ActionSheetPicker-3.0
   - AFNetworking
   - Branch
@@ -135,6 +137,7 @@ EXTERNAL SOURCES:
     :path: "./SDWebImage"
 
 SPEC CHECKSUMS:
+  ABMediaView: 9a3d226775c4fa3e27c988068d5822cfd453531b
   ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
@@ -181,6 +184,6 @@ SPEC CHECKSUMS:
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
   VENCalculatorInputView: 988fa681ba6bb9b1f067842493bb622e80cc8da2
 
-PODFILE CHECKSUM: b952d7348bd376a642d30401f3876e6d454a9468
+PODFILE CHECKSUM: 248739b7408ccd9eabcf87be581ed33931b5d032
 
 COCOAPODS: 1.2.0

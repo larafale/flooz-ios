@@ -30,6 +30,14 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
     TransactionPaymentMethodCreditCard
 };
 
+typedef NS_ENUM (NSInteger, TransactionAttachmentType) {
+    TransactionAttachmentVideo,
+    TransactionAttachmentImage,
+    TransactionAttachmentAudio,
+    TransactionAttachmentNone
+};
+
+
 #import "FLSocial.h"
 #import "FLComment.h"
 
@@ -63,6 +71,8 @@ typedef NS_ENUM (NSInteger, TransactionPaymentMethod) {
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *content;
+
+@property (nonatomic) TransactionAttachmentType attachmentType;
 @property (strong, nonatomic) NSString *attachmentURL;
 @property (strong, nonatomic) NSString *attachmentThumbURL;
 @property (strong, nonatomic) NSString *when;

@@ -14,11 +14,10 @@
     self = [super init];
     if (self) {
         self.allowTo = true;
-        self.allowPic = false;
-        self.allowGif = false;
+        self.allowPic = true;
+        self.allowGif = true;
         self.allowGeo = true;
-        self.allowWhy = false;
-        self.allowScope = true;
+        self.allowWhy = true;
         self.allowAmount = true;
         self.allowBalance = true;
         self.scopeDefined = false;
@@ -53,7 +52,7 @@
 - (void)setJson:(NSDictionary *)json {
     if ([json objectForKey:@"scope"]) {
         self.scopeDefined = YES;
-        self.scope = [FLScope scopeFromID:[json objectForKey:@"scope"]];
+        self.scope = [FLScope scopeFromObject:[json objectForKey:@"scope"]];
     }
     
     if ([json objectForKey:@"scopes"]) {
@@ -81,9 +80,6 @@
     
     if ([json objectForKey:@"geo"])
         self.allowGeo = [[json objectForKey:@"geo"] boolValue];
-    
-    if ([json objectForKey:@"scope"])
-        self.allowScope = [[json objectForKey:@"scope"] boolValue];
     
     if ([[json objectForKey:@"pay"] boolValue] && [[json objectForKey:@"charge"] boolValue])
         self.type = TransactionTypeBase;
