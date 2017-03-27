@@ -45,7 +45,7 @@
     CGFloat paddingSide;
     WYPopoverController *popoverController;
 }
-
+    
 - (id)initWithFrame:(CGRect)frame andAvatar:(BOOL)avatar {
     self = [super initWithFrame:frame];
     if (self) {
@@ -55,7 +55,7 @@
     }
     return self;
 }
-
+    
 - (id)initWithFrame:(CGRect)frame transaction:(FLTransaction *)transaction indexPath:(NSIndexPath *)indexPath andAvatar:(BOOL)avatar {
     self = [super initWithFrame:frame];
     if (self) {
@@ -70,25 +70,25 @@
     }
     return self;
 }
-
+    
 - (void)setTransaction:(FLTransaction *)transaction {
     [self setTransaction:transaction hideTitle:NO];
 }
-
+    
 - (void)setTransaction:(FLTransaction *)transaction hideTitle:(BOOL)hideTitle {
     self->_transaction = transaction;
     stripTitle = hideTitle;
     [self prepareViews];
 }
-
+    
 - (void)setIndexPath:(NSIndexPath *)indexPath {
     self->_indexPath = indexPath;
 }
-
+    
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction avatarDisplay:(BOOL)withAvatar andWidth:(CGFloat)width {
     return [FLTransactionDescriptionView getHeightForTransaction:transaction avatarDisplay:withAvatar andWidth:width hideTitle:NO];
 }
-
+    
 + (CGFloat)getHeightForTransaction:(FLTransaction *)transaction avatarDisplay:(BOOL)withAvatar andWidth:(CGFloat)width hideTitle:(BOOL)hideTitle {
     NSAttributedString *attributedText = nil;
     CGRect rect = CGRectZero;
@@ -144,32 +144,32 @@
     }
     
     if (transaction.location)
-        current_height += 25.0f;
+    current_height += 25.0f;
     
     if (!withAvatar && transaction.social.likesCount > 0)
-        current_height += 18.0f;
+    current_height += 18.0f;
     
     if ([FLTransactionDescriptionView isFooterViewVisisbleForTransaction:transaction])
-        current_height += 20.0f; // height of buttons and amount text
+    current_height += 20.0f; // height of buttons and amount text
     
     current_height += MARGE_TOP_BOTTOM; // add small marge at the bottom
     return current_height;
 }
-
+    
 + (BOOL)isFooterViewVisisbleForTransaction:(FLTransaction *)transaction {
     if (transaction.options.likeEnabled || transaction.options.commentEnabled) {
         return true;
     }
- 
+    
     if (transaction.amountText && transaction.amountText.length) {
         return true;
     }
     
     return false;
 }
-
+    
 #pragma mark - create views
-
+    
 - (void)createViews {
     height = 0;
     
@@ -178,7 +178,7 @@
     }
     [self createRightViews];
 }
-
+    
 - (void)createLeftViews {
     [self createAvatarView];
     
@@ -187,13 +187,13 @@
     
     [leftView addSubview:avatarView];
 }
-
+    
 - (void)createAvatarView {
     avatarView = [[FLUserView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 42, 42)];
     [avatarView setUserInteractionEnabled:YES];
     [avatarView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didAvatarClick)]];
 }
-
+    
 - (void)createRightViews {
     rightView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(leftView.frame) + paddingSide, MARGE_TOP_BOTTOM, CGRectGetWidth(self.frame) - CGRectGetMaxX(leftView.frame) - paddingSide * 2.0f, CGRectGetHeight(self.frame) - MARGE_TOP_BOTTOM)];
     [self addSubview:rightView];
@@ -217,7 +217,7 @@
     height = CGRectGetMaxY(footerDescView.frame);
     CGRectSetHeight(rightView.frame, height);
 }
-
+    
 - (void)createFloozerLabel {
     floozerLabel = [UILabel newWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(rightView.frame), 20.0f)];
     floozerLabel.textColor = [UIColor whiteColor];
@@ -233,7 +233,7 @@
     
     [rightView addSubview:whenLabel];
 }
-
+    
 - (void) createLocationView {
     locationLabel = [UILabel newWithFrame:CGRectMake(0.0f, CGRectGetMaxY(floozerLabel.frame), CGRectGetWidth(rightView.frame), 15.0f)];
     locationLabel.textColor = [UIColor customPlaceholder];
@@ -242,7 +242,7 @@
     
     [rightView addSubview:locationLabel];
 }
-
+    
 - (void) createLikesView {
     likesLabel = [UILabel newWithFrame:CGRectMake(0.0f, CGRectGetMaxY(floozerLabel.frame), CGRectGetWidth(rightView.frame), 15.0f)];
     likesLabel.textColor = [UIColor customPlaceholder];
@@ -253,7 +253,7 @@
     
     [rightView addSubview:likesLabel];
 }
-
+    
 - (void)createDescriptionLabel {
     descriptionLabel = [UILabel newWithFrame:CGRectMake(0.0f, CGRectGetMaxY(floozerLabel.frame), CGRectGetWidth(rightView.frame), 20.0f)];
     descriptionLabel.textColor = [UIColor whiteColor];
@@ -262,16 +262,16 @@
     
     [rightView addSubview:descriptionLabel];
 }
-
+    
 - (void)createAttachmentView {
     CGFloat widthAttach = CGRectGetWidth(rightView.frame);
     CGFloat heightAttach = 250 / (500 / widthAttach);
-
+    
     attachmentView = [[FLImageView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(descriptionLabel.frame), CGRectGetWidth(rightView.frame), heightAttach)];
     [attachmentView setBackgroundColor:[UIColor customBackground]];
     [rightView addSubview:attachmentView];
 }
-
+    
 - (void)createFooterView {
     height += 10.0f;
     footerDescView = [UIView newWithFrame:CGRectMake(0.0f, height, CGRectGetWidth(rightView.frame), 20.0f)];
@@ -283,35 +283,35 @@
     //    [self createMoreButton];
     [self createAmountLabel];
 }
-
+    
 - (void)createLikeButton {
     _likeButton = [[FLSocialButton alloc] initWithImageName:@"like-heart" color:[UIColor customSocialColor] selectedColor:[UIColor customPink] title:@"" height:CGRectGetHeight(footerDescView.frame)];
     [_likeButton addTarget:self action:@selector(didLikeButtonTouch) forControlEvents:UIControlEventTouchUpInside];
     [_likeButton addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLikeButtonLongTouch)]];
     [footerDescView addSubview:_likeButton];
 }
-
+    
 - (void)createCommentButton {
     _commentButton = [[FLSocialButton alloc] initWithImageName:@"comment_bubble" color:[UIColor customSocialColor] selectedColor:[UIColor customBlue] title:@"" height:CGRectGetHeight(footerDescView.frame)];
     [_commentButton addTarget:self action:@selector(didWantToCommentTransactionData) forControlEvents:UIControlEventTouchUpInside];
     [footerDescView addSubview:_commentButton];
     CGRectSetX(_commentButton.frame, CGRectGetMinX(_likeButton.frame) + 65.0f);
 }
-
+    
 - (void)createShareButton {
     _shareButton = [[FLSocialButton alloc] initWithImageName:@"share" color:[UIColor customSocialColor] selectedColor:[UIColor customSocialColor] title:@"" height:CGRectGetHeight(footerDescView.frame)];
     [_shareButton addTarget:self action:@selector(didShareButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [footerDescView addSubview:_shareButton];
     CGRectSetX(_shareButton.frame, CGRectGetMinX(_commentButton.frame) + 65.0f);
 }
-
+    
 - (void)createMoreButton {
     _moreButton = [[FLSocialButton alloc] initWithImageName:@"more" color:[UIColor customSocialColor] selectedColor:[UIColor customSocialColor] title:@"" height:CGRectGetHeight(footerDescView.frame)];
     [_moreButton addTarget:self action:@selector(didMoreButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [footerDescView addSubview:_moreButton];
     CGRectSetX(_moreButton.frame, CGRectGetMaxX(_shareButton.frame) + 12.0f);
 }
-
+    
 - (void)createAmountLabel {
     amountLabel = [UILabel newWithFrame:CGRectMake(CGRectGetWidth(footerDescView.frame) - 80.0f, 0.0f, 80.0f, CGRectGetHeight(footerDescView.frame))];
     amountLabel.textColor = [UIColor whiteColor];
@@ -320,9 +320,9 @@
     
     [footerDescView addSubview:amountLabel];
 }
-
+    
 #pragma mark - Prepare Views
-
+    
 - (void)prepareViews {
     height = 0;
     
@@ -334,24 +334,24 @@
     [self prepareLocationView];
     
     if (!hasAvatar)
-        [self prepareLike];
+    [self prepareLike];
     
     [self prepareSocial];
     
     if ([FLTransactionDescriptionView isFooterViewVisisbleForTransaction:self.transaction])
-        CGRectSetHeight(rightView.frame, CGRectGetMaxY(footerDescView.frame));
+    CGRectSetHeight(rightView.frame, CGRectGetMaxY(footerDescView.frame));
     else
-        CGRectSetHeight(rightView.frame, height);
-
+    CGRectSetHeight(rightView.frame, height);
+    
     CGRectSetHeight(self.frame, CGRectGetMaxY(rightView.frame) + MARGE_TOP_BOTTOM);
 }
-
+    
 - (void)prepareAvatarView {
     FLUserView *view = [[leftView subviews] objectAtIndex:0];
     
     [view setImageFromURL:_transaction.avatarURL];
 }
-
+    
 - (void)prepareDetailView {
     CGFloat titleWidth = CGRectGetWidth(rightView.frame);
     
@@ -399,7 +399,7 @@
         if (!stripTitle) {
             text = _transaction.text3d[2];
         }
-
+        
         NSAttributedString *attributedText = [[NSAttributedString alloc]
                                               initWithString:text
                                               attributes:@{
@@ -429,7 +429,7 @@
     CGRectSetHeight(descriptionLabel.frame, [descriptionLabel heightToFit] + offset);
     height = CGRectGetMaxY(descriptionLabel.frame);
 }
-
+    
 - (void)prepareAttachmentView {
     if ([_transaction attachmentURL]) {
         CGRectSetY(attachmentView.frame, height + 10.0f);
@@ -437,7 +437,11 @@
         CGFloat heightAttach = 250 / (500 / widthAttach);
         CGRectSetHeight(attachmentView.frame, heightAttach);
         
+        if ([_transaction attachmentType] == TransactionAttachmentImage)
         [attachmentView setMediaWithURL:[NSURL URLWithString:[_transaction attachmentURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]] mediaType:[_transaction attachmentType]];
+        else if (([_transaction attachmentType] != TransactionAttachmentNone))
+        [attachmentView setMediaWithURL:[NSURL URLWithString:[_transaction attachmentThumbURL]] fullScreenURL:[NSURL URLWithString:[_transaction attachmentURL]] mediaType:[_transaction attachmentType]];
+        
         height = CGRectGetMaxY(attachmentView.frame);
     }
     else {
@@ -445,7 +449,7 @@
         CGRectSetHeight(attachmentView.frame, 0);
     }
 }
-
+    
 - (void)prepareLocationView {
     if (_transaction.location) {
         [locationLabel setHidden:NO];
@@ -488,7 +492,7 @@
         CGRectSetHeight(locationLabel.frame, 0.0f);
     }
 }
-
+    
 - (void)prepareLike {
     if (_transaction.social.likesCount > 0) {
         [likesLabel setHidden:NO];
@@ -532,7 +536,7 @@
         CGRectSetHeight(likesLabel.frame, 0.0f);
     }
 }
-
+    
 - (NSString *)castNumber:(NSUInteger)number {
     if (!number) {
         return @"";
@@ -544,7 +548,7 @@
     
     return [self abbreviateNumber:(int)number];
 }
-
+    
 -(NSString *)abbreviateNumber:(int)num {
     
     NSString *abbrevNum;
@@ -575,7 +579,7 @@
     
     return abbrevNum;
 }
-
+    
 - (NSString *) floatToString:(float) val {
     NSString *ret = [NSString stringWithFormat:@"%.1f", val];
     unichar c = [ret characterAtIndex:[ret length] - 1];
@@ -592,19 +596,19 @@
     
     return ret;
 }
-
+    
 - (void)prepareSocial {
     if ([FLTransactionDescriptionView isFooterViewVisisbleForTransaction:self.transaction]) {
         footerDescView.hidden = NO;
         FLSocial *social = [_transaction social];
-    
+        
         CGRectSetY(footerDescView.frame, height + 10.0f);
         
         if (self.transaction.options.likeEnabled && self.transaction.options.commentEnabled) {
             [_likeButton setHidden:NO];
             [_likeButton setSelected:[[_transaction social] isLiked]];
             [_likeButton setText:[self castNumber:social.likesCount]];
-
+            
             [_commentButton setHidden:NO];
             [_commentButton setSelected:[[_transaction social] isCommented]];
             [_commentButton setText:[self castNumber:social.commentsCount]];
@@ -621,7 +625,7 @@
             [_commentButton setHidden:NO];
             [_commentButton setSelected:[[_transaction social] isCommented]];
             [_commentButton setText:[self castNumber:social.commentsCount]];
-
+            
             CGRectSetX(_commentButton.frame, CGRectGetMinX(_likeButton.frame));
         } else {
             [_likeButton setHidden:YES];
@@ -631,20 +635,20 @@
         footerDescView.hidden = YES;
     }
 }
-
+    
 - (void)prepareAmountLabel {
     amountLabel.text = [_transaction amountText]; // [FLHelper formatedAmount:[_transaction amount] withCurrency:YES];
     [amountLabel setWidthToFit];
     
     CGRectSetX(amountLabel.frame, CGRectGetWidth(footerDescView.frame) - CGRectGetWidth(amountLabel.frame));
 }
-
+    
 - (void)didLikeTextTouch {
     if (popoverController != nil && popoverController.isPopoverVisible)
-        return;
+    return;
     
     if (_transaction.social.likesCount == 0)
-        return;
+    return;
     
     FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithSocial:_transaction.social];
     [popoverViewController setDelegate:self];
@@ -656,13 +660,13 @@
         
     }];
 }
-
+    
 - (void)didLikeButtonLongTouch {
     if (popoverController != nil && popoverController.isPopoverVisible)
-        return;
+    return;
     
     if (_transaction.social.likesCount == 0)
-        return;
+    return;
     
     FLLikePopoverViewController *popoverViewController = [[FLLikePopoverViewController alloc] initWithSocial:_transaction.social];
     [popoverViewController setDelegate:self];
@@ -674,17 +678,17 @@
         
     }];
 }
-
+    
 - (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
-{
-    return YES;
-}
-
+    {
+        return YES;
+    }
+    
 - (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(float *)value
-{
-    *value = 0;
-}
-
+    {
+        *value = 0;
+    }
+    
 - (void)didLikeButtonTouch {
     if (![[Flooz sharedInstance] currentUser]) {
         return;
@@ -701,15 +705,15 @@
         [_likeButton setSelected:[[_transaction social] isLiked]];
     }];
 }
-
+    
 - (void)didShareButtonClick {
     
 }
-
+    
 - (void)didMoreButtonClick {
     
 }
-
+    
 - (void)didUpdateTransactionData {
     if (_parentController) {
         [_parentController reloadTransaction];
@@ -720,7 +724,7 @@
         }
     }
 }
-
+    
 - (void)didWantToCommentTransactionData {
     if (_parentController) {
         [_parentController focusOnComment:@YES];
@@ -731,18 +735,18 @@
         }
     }
 }
-
+    
 - (void)didAvatarClick {
     [appDelegate showUser:[_transaction starter] inController:nil];
 }
-
+    
 - (void)didUserClick:(FLUser *)user {
     if ([popoverController isPopoverVisible]) {
         [popoverController dismissPopoverAnimated:YES completion:^{
             [appDelegate showUser:user inController:nil];
         }];
     } else
-        [appDelegate showUser:user inController:nil];
+    [appDelegate showUser:user inController:nil];
 }
-
-@end
+    
+    @end

@@ -132,9 +132,9 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   IDMPhotoBrowser:
-    :path: "./IDMPhotoBrowser"
+    :path: ./IDMPhotoBrowser
   SDWebImage:
-    :path: "./SDWebImage"
+    :path: ./SDWebImage
 
 SPEC CHECKSUMS:
   ABMediaView: 9a3d226775c4fa3e27c988068d5822cfd453531b
