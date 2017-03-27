@@ -23,6 +23,7 @@
 #import "ARChromeActivity.h"
 #import "FLCopyLinkActivity.h"
 #import "FLScope.h"
+#import "ABMediaView.h"
 
 @implementation TimelineViewController {
     UIBarButtonItem *amountItem;
@@ -596,6 +597,28 @@ static void completionCallback (SystemSoundID  mySSID, void *myself) {
     [self checkScopeAvailability];
     [self showScopeHelper];
     [self reloadTableView];
+}
+
+#pragma mark - TransitionCoordinator
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    // Executes before and after rotation, that way any ABMediaViews can adjust their frames for the new size. Is especially helpful when users are watching landscape videos and rotate their devices between portrait and landscape.
+    
+    [coordinator animateAlongsideTransition:^(id  _Nonnull context) {
+        
+        // Notifies the ABMediaView that the device is about to rotate
+        [[NSNotificationCenter defaultCenter] postNotificationName:ABMediaViewWillRotateNotification object:nil];
+        
+    } completion:^(id  _Nonnull context) {
+        
+        // Change origin rect because the screen has rotated
+        //        self.mediaView.originRect = self.mediaView.frame;
+        
+        // Notifies the ABMediaView that the device just finished rotating
+        [[NSNotificationCenter defaultCenter] postNotificationName:ABMediaViewDidRotateNotification object:nil];
+    }];
 }
 
 @end

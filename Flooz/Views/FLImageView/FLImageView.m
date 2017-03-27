@@ -178,6 +178,8 @@
 
 - (void) mediaViewWillPresent:(ABMediaView *)mediaView {
     //    NSLog(@"MediaView will present");
+    
+    [appDelegate.myTopViewController.view endEditing:YES];
 }
 
 - (void) mediaViewDidPresent:(ABMediaView *)mediaView {
