@@ -184,14 +184,14 @@
     //    NSLog(@"MediaView will present");
     
     // Enable rotation when the ABMediaView is presented. For this application, we want the ABMediaView to rotate when in fullscreen, in order to watch landscape videos. However, our app's interface in portrait, so when the ABMediaView is shown, that is when rotation should be enabled
-//    [self restrictRotation:NO];
+    [self restrictRotation:NO];
 }
 
 - (void) mediaViewWillDismiss:(ABMediaView *)mediaView {
     //    NSLog(@"MediaView will dismiss");
     
     // Disable rotation when the ABMediaView is being dismissed. For this application, we want the ABMediaView to rotate when in fullscreen, in order to watch landscape videos. However, our app's interface in portrait, so when leaving the ABMediaView, we want rotation to be restricted
-//    [self restrictRotation:YES];
+    [self restrictRotation:YES];
     
     NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
     [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
@@ -212,7 +212,7 @@
 - (void) mediaViewWillEndMinimizing:(ABMediaView *)mediaView atMinimizedState:(BOOL)isMinimized {
     //    NSLog(@"MediaView will snap to minimized mode? %i", isMinimized);
     
-//    [self restrictRotation:isMinimized];
+    [self restrictRotation:isMinimized];
 }
 
 - (void) mediaViewDidEndMinimizing:(ABMediaView *)mediaView atMinimizedState:(BOOL)isMinimized {
@@ -233,6 +233,8 @@
 
 - (void) mediaViewWillEndDismissing:(ABMediaView *)mediaView withDismissal:(BOOL)didDismiss {
     //    NSLog(@"MediaView will end dismissing");
+    
+    [self restrictRotation:didDismiss];
 }
 
 - (void) mediaViewDidEndDismissing:(ABMediaView *)mediaView withDismissal:(BOOL)didDismiss {
@@ -252,11 +254,18 @@
 }
 
 - (void) handleTitleSelectionInMediaView:(ABMediaView *)mediaView {
-//    NSLog(@"Title label was selected");
+    //    NSLog(@"Title label was selected");
 }
 
 - (void) handleDetailsSelectionInMediaView:(ABMediaView *)mediaView {
-//    NSLog(@"Details label was selected");
+    //    NSLog(@"Details label was selected");
+}
+
+-(void) restrictRotation:(BOOL) restriction
+{
+    // An approach at determining whether the view should allow for rotation, when the ABMediaView is fullscreen, we want rotation to be enabled. However, if ABMediaView is not fullscreen, I don't want rotation to be allowed
+    
+    appDelegate.restrictRotation = restriction;
 }
 
 @end

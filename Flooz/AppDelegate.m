@@ -72,7 +72,9 @@
     [[ABMediaView sharedManager] setShouldPreloadVideoAndAudio:YES];
 
     [self loadBranchParams];
-    
+
+    self.restrictRotation = true;
+
     Branch *branch = [Branch getInstance];
     [branch initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
         if ([params count] > 0) {
@@ -1211,6 +1213,16 @@
         return self.window;
     else
         return [UIApplication sharedApplication].keyWindow;
+}
+
+
+-(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    //Determines whether landscape orientation is supported.
+    if(self.restrictRotation)
+        return UIInterfaceOrientationMaskPortrait;
+    
+    return UIInterfaceOrientationMaskAll;
 }
 
 @end
