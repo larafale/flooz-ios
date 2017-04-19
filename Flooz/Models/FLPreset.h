@@ -12,7 +12,7 @@
 
 @interface FLNewFloozOptions : NSObject
 
-@property (nonatomic, strong) NSDictionary *json;
+@property (nonatomic, strong) NSDictionary *jsonData;
 
 @property (nonatomic) BOOL allowTo;
 @property (nonatomic) BOOL allowPic;

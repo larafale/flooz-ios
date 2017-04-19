@@ -50,7 +50,7 @@
 }
 
 - (void)setJson:(NSDictionary *)json {
-    self.json = json;
+    self.jsonData = json;
     
     if ([json objectForKey:@"scope"]) {
         self.scopeDefined = YES;
@@ -95,7 +95,21 @@
 }
 
 - (id)copy {
-    return [[FLNewFloozOptions alloc] initWithJson:self.json];
+    FLNewFloozOptions *ret = [[FLNewFloozOptions alloc] init];
+    
+    ret.allowTo = self.allowTo;
+    ret.allowPic = self.allowPic;
+    ret.allowGif = self.allowGif;
+    ret.allowGeo = self.allowGeo;
+    ret.allowWhy = self.allowWhy;
+    ret.allowAmount = self.allowAmount;
+    ret.allowBalance = self.allowBalance;
+    ret.scopeDefined = self.scopeDefined;
+    ret.type = self.type;
+    ret.scope = self.scope;
+    ret.scopes = self.scopes;
+
+    return ret;
 }
 
 @end
