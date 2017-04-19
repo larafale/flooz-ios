@@ -44,12 +44,14 @@
 
 + (id)default {
     if ([[Flooz sharedInstance] currentTexts] && [[[Flooz sharedInstance] currentTexts] createFloozOptions])
-        return [[[Flooz sharedInstance] currentTexts] createFloozOptions];
+        return [[[[Flooz sharedInstance] currentTexts] createFloozOptions] copy];
     else
         return [FLNewFloozOptions new];
 }
 
 - (void)setJson:(NSDictionary *)json {
+    self.json = json;
+    
     if ([json objectForKey:@"scope"]) {
         self.scopeDefined = YES;
         self.scope = [FLScope scopeFromObject:[json objectForKey:@"scope"]];
@@ -90,6 +92,10 @@
     
     if ([json objectForKey:@"why"])
         self.allowWhy = [[json objectForKey:@"why"] boolValue];
+}
+
+- (id)copy {
+    return [[FLNewFloozOptions alloc] initWithJson:self.json];
 }
 
 @end
