@@ -21,6 +21,8 @@
 @property (nonatomic) BOOL allowWhy;
 @property (nonatomic) BOOL allowAmount;
 @property (nonatomic) BOOL allowBalance;
+@property (nonatomic) BOOL allowCharge;
+@property (nonatomic) BOOL allowPay;
 @property (nonatomic) BOOL scopeDefined;
 @property (nonatomic) TransactionType type;
 @property (nonatomic, strong) FLScope *scope;

@@ -21,6 +21,8 @@
         self.allowAmount = true;
         self.allowBalance = true;
         self.scopeDefined = false;
+        self.allowPay = true;
+        self.allowCharge = true;
         self.type = TransactionTypeBase;
     }
     return self;
@@ -83,11 +85,17 @@
     if ([json objectForKey:@"geo"])
         self.allowGeo = [[json objectForKey:@"geo"] boolValue];
     
-    if ([[json objectForKey:@"pay"] boolValue] && [[json objectForKey:@"charge"] boolValue])
+    if ([json objectForKey:@"pay"])
+        self.allowPay = [[json objectForKey:@"pay"] boolValue];
+    
+    if ([json objectForKey:@"charge"])
+        self.allowCharge = [[json objectForKey:@"charge"] boolValue];
+    
+    if (self.allowPay && self.allowCharge)
         self.type = TransactionTypeBase;
-    else if ([[json objectForKey:@"pay"] boolValue] || ![[json objectForKey:@"charge"] boolValue])
+    else if (self.allowPay || !self.allowCharge)
         self.type = TransactionTypePayment;
-    else if ([[json objectForKey:@"charge"] boolValue] || ![[json objectForKey:@"pay"] boolValue])
+    else if (self.allowCharge || !self.allowPay)
         self.type = TransactionTypeCharge;
     
     if ([json objectForKey:@"why"])
@@ -106,6 +114,8 @@
     ret.allowBalance = self.allowBalance;
     ret.scopeDefined = self.scopeDefined;
     ret.type = self.type;
+    ret.allowCharge = self.allowCharge;
+    ret.allowPay = self.allowPay;
     ret.scope = self.scope;
     ret.scopes = self.scopes;
 

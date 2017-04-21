@@ -12,14 +12,13 @@
 	__weak NSMutableDictionary *_dictionary;
 	NSString *_dictionaryKey;
 
-	UILabel *_placeholder;
-
 	UIView *separatorTop;
 
 	CGFloat maxHeight;
 }
 
 @property (nonatomic, retain) UITextView *textView;
+@property (nonatomic, strong) UILabel *placeholder;
 
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey position:(CGPoint)position;
 - (id)initWithPlaceholder:(NSString *)placeholder for:(NSMutableDictionary *)dictionary key:(NSString *)dictionaryKey frame:(CGRect)frame;

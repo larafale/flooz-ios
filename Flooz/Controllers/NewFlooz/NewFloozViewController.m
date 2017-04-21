@@ -232,8 +232,14 @@
     
     [contentView addSubview:content];
     
-    if (currentPreset && currentPreset.options)
-        [content setUserInteractionEnabled:currentPreset.options.allowWhy];
+    if (currentPreset && currentPreset.options) {
+        [content.textView setUserInteractionEnabled:currentPreset.options.allowWhy];
+        content.textView.editable = currentPreset.options.allowWhy;
+        
+        if (!currentPreset.options.allowWhy) {
+            content.placeholder.text = @"";
+        }
+    }
     
     imageTransaction = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(10, 0, PPScreenWidth() - 20, ((PPScreenWidth() - 20) * 3) / 4)];
     imageTransaction.hidden = YES;

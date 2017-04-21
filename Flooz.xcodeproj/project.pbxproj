@@ -4168,7 +4168,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Flooz/Supporting Files/Flooz.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = QU87Q423GH;
 				ENABLE_BITCODE = NO;
@@ -4194,8 +4194,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Flooz;
-				PROVISIONING_PROFILE = "90df00a3-7223-40a4-bb6d-fdbffa5d6dac";
-				PROVISIONING_PROFILE_SPECIFIER = "Flooz Prod";
+				PROVISIONING_PROFILE = "5601bafe-2d03-4088-b223-f098d77ff112";
+				PROVISIONING_PROFILE_SPECIFIER = "Flooz Dev";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
