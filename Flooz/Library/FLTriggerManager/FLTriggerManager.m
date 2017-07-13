@@ -8,6 +8,7 @@
 
 #import "FLTrigger.h"
 #import "FLTriggerManager.h"
+#import "RegisterCreditCardViewController.h"
 #import "GlobalViewController.h"
 #import "SecureCodeViewController.h"
 #import "CreditCardViewController.h"
@@ -111,7 +112,7 @@
 - (void)executeTrigger:(FLTrigger *)trigger {
     if (trigger && [self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]) {
         SEL sel = NSSelectorFromString([self.binderActionFunction objectForKey:[NSNumber numberWithInt:trigger.action]]);
-        
+
         CompleteBlock performBlock = ^{
             if ([self respondsToSelector:sel]) {
                 [self performSelector:sel withObject:trigger];
@@ -982,7 +983,8 @@
                            @"shop:item": [ShopItemViewController class],
                            @"shop:param": [ShopParamViewController class],
                            @"shop:history": [ShopHistoryViewController class],
-                           @"popup:advanced": [FLAdvancedPopupTrigger class]
+                           @"popup:advanced": [FLAdvancedPopupTrigger class],
+                           @"web:psp": [RegisterCreditCardViewController class]
                            };
 }
 
@@ -1027,7 +1029,8 @@
                            @"shop:item": @"modal",
                            @"shop:param": @"modal",
                            @"shop:history": @"push",
-                           @"popup:advanced": @"modal"
+                           @"popup:advanced": @"modal",
+                           @"web:psp": @"push"
                            };
 }
 

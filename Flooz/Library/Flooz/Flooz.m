@@ -276,6 +276,19 @@
     [UICKeyChainStore removeItemForKey:@"login-token"];
 }
 
+
+- (void)cards {
+  if (_currentUser == nil)
+    return;
+
+  [self requestPath:@"/cards/hash" method:@"GET" params:nil success:^(id result) {
+    NSLog(@"CARDS SUCCESS: %@", result);
+  } failure:^(NSError *error) {
+    NSLog(@"CARD FAIL: %@", error);
+  }];
+}
+
+
 - (void)logout {
     if (_currentUser) {
         if ([_currentUser deviceToken]) {

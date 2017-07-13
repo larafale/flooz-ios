@@ -161,6 +161,8 @@
 "SETTINGS_PREFERENCES" = "Préférences";
 "SETTINGS_PRIVACY" = "Partage & vie privée";
 
+"CARD" = "Carte bancaire";
+
 "SETTINGS_CODE" = "Changer mon code de sécurité";
 "SETTINGS_PASSWORD" = "Changer mon mot de passe";
 

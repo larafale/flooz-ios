@@ -288,7 +288,7 @@
         [cardBackground setHidden:NO];
         [deleteCardButtton setHidden:NO];
         
-        cardNumber.text = [NSString stringWithFormat:@"%@ **** **** %@", [creditCard.number substringToIndex:4], [creditCard.number substringFromIndex:creditCard.number.length - 4]];
+        cardNumber.text = [NSString stringWithFormat:@"**** **** **** %@", [creditCard.number substringFromIndex:creditCard.number.length - 4]];
         cardOwner.text = [creditCard.owner uppercaseString];
         [cardOwner setWidthToFit];
         

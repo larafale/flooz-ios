@@ -295,7 +295,7 @@
             label.adjustsFontSizeToFitWidth = YES;
             label.minimumScaleFactor = 15. / label.font.pointSize;
 
-            label.text = [NSString stringWithFormat:@"%@ **** **** %@", [creditCard.number substringToIndex:4], [creditCard.number substringFromIndex:creditCard.number.length - 4]];
+            label.text = [NSString stringWithFormat:@"**** **** **** %@", [creditCard.number substringFromIndex:creditCard.number.length - 4]];
             
             [view addSubview:label];
         }
@@ -426,10 +426,9 @@
 
 - (void)didRemoveCardTouch {
     NSString *creditCardId = [[[[Flooz sharedInstance] currentUser] creditCard] cardId];
-    
+  
     [[Flooz sharedInstance] showLoadView];
     [[Flooz sharedInstance] removeCreditCard:creditCardId success: ^(id result) {
-
     }];
 }
 

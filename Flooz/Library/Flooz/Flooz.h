@@ -234,4 +234,6 @@ static NSString *kLocalURLData = @"localURLData";
 
 - (void)saveSettingsObject:(id)object withKey:(NSString *)key;
 
+- (void)cards;
+
 @end
