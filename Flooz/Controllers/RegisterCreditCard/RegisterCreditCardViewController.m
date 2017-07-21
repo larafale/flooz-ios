@@ -58,7 +58,6 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
   [super webViewDidStartLoad:webView];
-  [[Flooz sharedInstance] showLoadView];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {

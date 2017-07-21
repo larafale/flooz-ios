@@ -281,6 +281,7 @@
   if (_currentUser == nil)
     return;
 
+  [[Flooz sharedInstance] showLoadView];
   [self requestPath:@"/cards/hash" method:@"GET" params:nil success:^(id result) {
     NSLog(@"CARDS SUCCESS: %@", result);
   } failure:^(NSError *error) {
