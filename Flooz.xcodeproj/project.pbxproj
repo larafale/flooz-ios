@@ -566,6 +566,7 @@
 		C99F540E1D1AA1BE0056A151 /* CollectInvitationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99F540D1D1AA1BE0056A151 /* CollectInvitationsViewController.m */; };
 		C99F540F1D1AA1BE0056A151 /* CollectInvitationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99F540D1D1AA1BE0056A151 /* CollectInvitationsViewController.m */; };
 		C99F54101D1AA1BE0056A151 /* CollectInvitationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C99F540D1D1AA1BE0056A151 /* CollectInvitationsViewController.m */; };
+		C9A1F27B1F17FDBA00502D66 /* RegisterCreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502BF1B1F0FE8B3006092C6 /* RegisterCreditCardViewController.m */; };
 		C9A265561ACC460700859B32 /* SignupInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A265551ACC460700859B32 /* SignupInvitationViewController.m */; };
 		C9A265571ACC460700859B32 /* SignupInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A265551ACC460700859B32 /* SignupInvitationViewController.m */; };
 		C9A265581ACC460700859B32 /* SignupInvitationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A265551ACC460700859B32 /* SignupInvitationViewController.m */; };
@@ -3888,6 +3889,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9A1F27B1F17FDBA00502D66 /* RegisterCreditCardViewController.m in Sources */,
 				C9E1A7DF1D8FEDC500649BA0 /* ShareSMSViewController.m in Sources */,
 				C9E1A7DE1D8FEDBF00649BA0 /* NewCollectController.m in Sources */,
 				C9E1A7DB1D8FED9D00649BA0 /* 3DSecureViewController.m in Sources */,
