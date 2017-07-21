@@ -57,6 +57,8 @@
 #import "ShopParamViewController.h"
 #import "ShopHistoryViewController.h"
 #import "FXBlurView.h"
+#import "NewFloozViewController.h"
+#import "UINavigationControllerDismissCategory.h"
 
 @interface FLTriggerManager ()
 
@@ -307,8 +309,9 @@
             [topController dismissViewControllerAnimated:animate completion:^{
                 [self executeTriggerList:trigger.triggers];
             }];
-        } else
-            [self executeTriggerList:trigger.triggers];
+        } else {
+          [self executeTriggerList:trigger.triggers];
+        }
     }
 }
 
@@ -570,6 +573,13 @@
     if ([trigger.viewCategory isEqualToString:@"app:signup"]) {
         [appDelegate showSignupWithUser:trigger.data];
         [self executeTriggerList:trigger.triggers];
+    } else if ([trigger.viewCategory isEqualToString:@"flooz:"]) {
+      
+      UIViewController *topController = [self getTopViewController];
+      if ([topController isKindOfClass:[UINavigationController class]])
+        [(UINavigationController *)topController
+         climbVCStacksAndPopToFirstControllerOfClass:[NewFloozViewController class] animated:YES];
+
     } else if ([trigger.viewCategory isEqualToString:@"app:popup"]) {
         if (trigger.data) {
             self.classicPopupTrigger = [[FLPopupTrigger alloc] initWithData:trigger.data dismiss:^{

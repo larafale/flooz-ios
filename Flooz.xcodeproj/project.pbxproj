@@ -237,6 +237,9 @@
 		C4F384258DCBBA9E92B3D02F /* libPods-Flooz dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CB0E4EF5FCCE24F868BC4A5 /* libPods-Flooz dev.a */; };
 		C502BF1D1F0FE8B3006092C6 /* RegisterCreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502BF1B1F0FE8B3006092C6 /* RegisterCreditCardViewController.m */; };
 		C502BF1E1F0FE8B3006092C6 /* RegisterCreditCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C502BF1C1F0FE8B3006092C6 /* RegisterCreditCardViewController.xib */; };
+		C51E5FD71F1F4269003DF503 /* UINavigationControllerDismissCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = C51E5FD61F1F4269003DF503 /* UINavigationControllerDismissCategory.m */; };
+		C51E5FD81F1F4269003DF503 /* UINavigationControllerDismissCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = C51E5FD61F1F4269003DF503 /* UINavigationControllerDismissCategory.m */; };
+		C51E5FD91F1F4269003DF503 /* UINavigationControllerDismissCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = C51E5FD61F1F4269003DF503 /* UINavigationControllerDismissCategory.m */; };
 		C5A905661F0FEF4000496E92 /* RegisterCreditCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502BF1B1F0FE8B3006092C6 /* RegisterCreditCardViewController.m */; };
 		C5A905741F1527F500496E92 /* WebViewRequestResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A905721F1527F500496E92 /* WebViewRequestResultController.m */; };
 		C5A905751F1527F500496E92 /* WebViewRequestResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A905721F1527F500496E92 /* WebViewRequestResultController.m */; };
@@ -1018,6 +1021,8 @@
 		C502BF1A1F0FE8B3006092C6 /* RegisterCreditCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterCreditCardViewController.h; path = Controllers/RegisterCreditCard/RegisterCreditCardViewController.h; sourceTree = "<group>"; };
 		C502BF1B1F0FE8B3006092C6 /* RegisterCreditCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterCreditCardViewController.m; path = Controllers/RegisterCreditCard/RegisterCreditCardViewController.m; sourceTree = "<group>"; };
 		C502BF1C1F0FE8B3006092C6 /* RegisterCreditCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegisterCreditCardViewController.xib; path = Controllers/RegisterCreditCard/RegisterCreditCardViewController.xib; sourceTree = "<group>"; };
+		C51E5FD51F1F4269003DF503 /* UINavigationControllerDismissCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UINavigationControllerDismissCategory.h; sourceTree = "<group>"; };
+		C51E5FD61F1F4269003DF503 /* UINavigationControllerDismissCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UINavigationControllerDismissCategory.m; sourceTree = "<group>"; };
 		C5A905711F1527F500496E92 /* WebViewRequestResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewRequestResultController.h; path = Controllers/WebViewRequestResultController/WebViewRequestResultController.h; sourceTree = "<group>"; };
 		C5A905721F1527F500496E92 /* WebViewRequestResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewRequestResultController.m; path = Controllers/WebViewRequestResultController/WebViewRequestResultController.m; sourceTree = "<group>"; };
 		C5A905731F1527F500496E92 /* WebViewRequestResultController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewRequestResultController.xib; path = Controllers/WebViewRequestResultController/WebViewRequestResultController.xib; sourceTree = "<group>"; };
@@ -1614,6 +1619,7 @@
 			children = (
 				AB3D08C5186CA17F00CF8380 /* Controllers */,
 				AB3D08A3186CA11A00CF8380 /* Images.xcassets */,
+				C51E5FD41F1F4220003DF503 /* Categories */,
 				AB3D08DB1871A5BE00CF8380 /* Library */,
 				AB3D08DD1871A5D100CF8380 /* Models */,
 				ABF46A201875BE9100E92A77 /* Resources */,
@@ -2277,6 +2283,15 @@
 				C502BF1C1F0FE8B3006092C6 /* RegisterCreditCardViewController.xib */,
 			);
 			name = RegisterCreditCard;
+			sourceTree = "<group>";
+		};
+		C51E5FD41F1F4220003DF503 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C51E5FD51F1F4269003DF503 /* UINavigationControllerDismissCategory.h */,
+				C51E5FD61F1F4269003DF503 /* UINavigationControllerDismissCategory.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		C5A905671F15276400496E92 /* WebViewRequestResultController */ = {
@@ -3462,6 +3477,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C51E5FD71F1F4269003DF503 /* UINavigationControllerDismissCategory.m in Sources */,
 				ABBB75CB18B63DB20070C2A8 /* CreditCardViewController.m in Sources */,
 				AB3D08A2186CA11A00CF8380 /* AppDelegate.m in Sources */,
 				AB7C9B1718D71884002775BA /* FriendPickerFriendCell.m in Sources */,
@@ -3679,6 +3695,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C51E5FD81F1F4269003DF503 /* UINavigationControllerDismissCategory.m in Sources */,
 				C5A905661F0FEF4000496E92 /* RegisterCreditCardViewController.m in Sources */,
 				C9E1A7DD1D8FEDB600649BA0 /* NewCollectController.m in Sources */,
 				C9E1A7DC1D8FEDAE00649BA0 /* ShareSMSViewController.m in Sources */,
@@ -4008,6 +4025,7 @@
 				C98012C71A76921000019682 /* FLSwitch.m in Sources */,
 				C98012C81A76921000019682 /* FLLikePopoverViewController.m in Sources */,
 				C98012C91A76921000019682 /* ContactCell.m in Sources */,
+				C51E5FD91F1F4269003DF503 /* UINavigationControllerDismissCategory.m in Sources */,
 				C98012CA1A76921000019682 /* FLTextView.m in Sources */,
 				C917C8151BE7A6CE0018043C /* PlaceCell.m in Sources */,
 				C9CB21FA1A95E9D30064389A /* THContactPickerView.m in Sources */,
@@ -4643,7 +4661,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "me.flooz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_MODULE_NAME = Flooz;
 				PRODUCT_NAME = "Flooz dev";
-				PROVISIONING_PROFILE = "b7873898-c8c8-4311-b31a-0ca5edaa280c";
+				PROVISIONING_PROFILE = "40be48be-f997-4a5e-9fc6-305aeca8aa18";
 				PROVISIONING_PROFILE_SPECIFIER = "Flooz Dev AdHoc";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
