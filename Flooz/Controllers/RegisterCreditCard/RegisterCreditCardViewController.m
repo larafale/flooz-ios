@@ -46,7 +46,7 @@
   [[Flooz sharedInstance] hideLoadView];
   
   [_webView setScalesPageToFit:YES];
-  [_webView setBackgroundColor:[UIColor clearColor]];
+  [_webView setBackgroundColor:[UIColor whiteColor]];
   [_webView setDelegate:self];
 }
 
