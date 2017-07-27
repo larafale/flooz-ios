@@ -75,6 +75,8 @@ static NSString *kLocalURLData = @"localURLData";
 @property (nonatomic) Boolean socketConnected;
 @property (nonatomic) NSUInteger timelinePageSize;
 
+@property (strong, nonatomic) NSDate *lastCardsRequestDate;
+
 + (Flooz *)sharedInstance;
 
 - (BOOL)isConnectionAvailable;

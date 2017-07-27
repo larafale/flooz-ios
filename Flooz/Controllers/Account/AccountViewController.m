@@ -419,7 +419,9 @@
         if ([action isEqualToString:@"cashout"]) {
             [[self navigationController] pushViewController:[CashOutViewController new] animated:YES];
         } else if ([action isEqualToString:@"card"]) {
-          [[Flooz sharedInstance] cards];
+          if ([[Flooz sharedInstance] lastCardsRequestDate] == nil ||
+              fabs([[[Flooz sharedInstance] lastCardsRequestDate] timeIntervalSinceNow]) > 1)
+            [[Flooz sharedInstance] cards];
         } else if ([action isEqualToString:@"cashin"]) {
             [[self navigationController] pushViewController:[CashinViewController new] animated:YES];
         } else if ([action isEqualToString:@"friends"]) {

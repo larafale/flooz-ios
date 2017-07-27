@@ -283,6 +283,7 @@
 
   [[Flooz sharedInstance] showLoadView];
   [self requestPath:@"/cards/hash" method:@"GET" params:nil success:^(id result) {
+    self.lastCardsRequestDate = [NSDate new];
     NSLog(@"CARDS SUCCESS: %@", result);
   } failure:^(NSError *error) {
     NSLog(@"CARD FAIL: %@", error);
