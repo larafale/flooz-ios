@@ -16,5 +16,8 @@
 @property (strong, nonatomic) NSString *url;
 @property (strong, nonatomic) NSString *method;
 @property (strong, nonatomic) NSDictionary *params;
+@property (strong, nonatomic) NSString *backgroundColorHex;
+
+-(void) updateWebviewBackgroundColor;
 
 @end

@@ -15,6 +15,7 @@
 
 @implementation RegisterCreditCardViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
   UILabel *cbInfos = [[UILabel alloc] initWithText:NSLocalizedString(@"CREDIT_CARD_INFOS", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
@@ -46,7 +47,7 @@
   [[Flooz sharedInstance] hideLoadView];
   
   [_webView setScalesPageToFit:YES];
-  [_webView setBackgroundColor:[UIColor whiteColor]];
+  [self updateWebviewBackgroundColor];
   [_webView setDelegate:self];
 }
 
