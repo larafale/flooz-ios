@@ -36,8 +36,27 @@
     if (data && data[@"params"]) {
       _params = data[@"params"];
     }
+    if (data && data[@"backgroundColor"]) {
+      _backgroundColorHex = data[@"backgroundColor"];
+    } else {
+      _backgroundColorHex = nil;
+    }
   }
   return self;
+}
+
+-(void) updateWebviewBackgroundColor {
+  unsigned result = 0;
+  if (_backgroundColorHex != nil) {
+    NSScanner *scanner = [NSScanner scannerWithString:_backgroundColorHex];
+    
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&result];
+    UIColor *webviewBackgroundColor = [UIColor colorWithHex:result];
+    [_webView setBackgroundColor:webviewBackgroundColor];
+  } else {
+    [_webView setBackgroundColor:[UIColor clearColor]];
+  }
 }
 
 - (void)viewDidLoad {
@@ -45,7 +64,8 @@
   
   _webView = [UIWebView newWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), CGRectGetHeight(_mainBody.frame))];
   [_webView setDelegate:self];
-  [_webView setBackgroundColor:[UIColor customBackgroundHeader]];
+  
+  [self updateWebviewBackgroundColor];
   
   [_mainBody addSubview:_webView];
   _webView.opaque = NO;
