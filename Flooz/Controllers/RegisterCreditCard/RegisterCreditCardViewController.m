@@ -20,7 +20,7 @@
     [super viewDidLoad];
   UILabel *cbInfos = [[UILabel alloc] initWithText:NSLocalizedString(@"CREDIT_CARD_INFOS", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
   [cbInfos setLineBreakMode:NSLineBreakByWordWrapping];
-  CGRectSetWidth(cbInfos.frame, CGRectGetWidth(self.view.frame) - 15 * 2);
+  CGRectSetWidth(cbInfos.frame, PPScreenWidth() - 15 * 2);
   [cbInfos sizeToFit];
   CGRectSetXY(cbInfos.frame, 15, PPScreenHeight() - 15 - cbInfos.frame.size.height - 125);
   [self.view addSubview:cbInfos];
