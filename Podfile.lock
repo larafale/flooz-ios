@@ -1,5 +1,5 @@
 PODS:
-  - ABMediaView (0.4.1)
+  - ABMediaView (0.4.2)
   - ActionSheetPicker-3.0 (2.2.0)
   - AFNetworking (3.1.0):
     - AFNetworking/NSURLSession (= 3.1.0)
@@ -22,11 +22,11 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - Branch (0.14.10):
-    - Branch/Core (= 0.14.10)
-    - Branch/without-IDFA (= 0.14.10)
-  - Branch/Core (0.14.10)
-  - Branch/without-IDFA (0.14.10)
+  - Branch (0.15.3):
+    - Branch/Core (= 0.15.3)
+    - Branch/without-IDFA (= 0.15.3)
+  - Branch/Core (0.15.3)
+  - Branch/without-IDFA (0.15.3)
   - CardIO (5.4.1)
   - Crashlytics (3.8.5):
     - Fabric (~> 1.6.3)
@@ -34,32 +34,32 @@ PODS:
   - EAIntroView (2.10.0):
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
-  - Fabric (1.6.11)
-  - FBSDKCoreKit (4.20.2):
+  - Fabric (1.6.12)
+  - FBSDKCoreKit (4.22.1):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.20.2):
+  - FBSDKLoginKit (4.22.1):
     - FBSDKCoreKit
   - FBSDKMessengerShareKit (1.3.2)
-  - FBSDKShareKit (4.20.2):
+  - FBSDKShareKit (4.22.1):
     - FBSDKCoreKit
   - FLAnimatedImage (1.0.12)
   - FXBlurView (1.6.4)
-  - GBDeviceInfo (4.2.2):
-    - GBDeviceInfo/Core (= 4.2.2)
-  - GBDeviceInfo/Core (4.2.2)
+  - GBDeviceInfo (4.3.0):
+    - GBDeviceInfo/Core (= 4.3.0)
+  - GBDeviceInfo/Core (4.3.0)
   - HHRouter (0.1.9)
-  - HMSegmentedControl (1.5.3)
+  - HMSegmentedControl (1.5.4)
   - iCarousel (1.8.3)
   - IDMPhotoBrowser (1.8.4):
     - DACircularProgress
     - pop
     - SDWebImage
-  - JPSVolumeButtonHandler (1.0.3)
+  - JPSVolumeButtonHandler (1.0.4)
   - JTHelper (0.3.0)
   - JTSImageViewController (1.5.1)
-  - libPhoneNumber-iOS (0.9.6)
+  - libPhoneNumber-iOS (0.9.10)
   - MGSwipeTableCell (1.5.6)
-  - Mixpanel (3.1.3)
+  - Mixpanel (3.1.8)
   - MZAppearance (1.1.6)
   - MZFormSheetController (3.1.3):
     - MZAppearance
@@ -67,10 +67,10 @@ PODS:
   - MZFormSheetController/Core (3.1.3):
     - MZAppearance
   - NSDate+Calendar (0.0.9)
-  - OneSignal (2.5.1)
+  - OneSignal (2.5.4)
   - PonyDebugger (0.4.5):
     - SocketRocket
-  - pop (1.0.9)
+  - pop (1.0.10)
   - PPHelpMe (1.0.2)
   - RDVTabBarController (1.1.9)
   - SDWebImage (3.8.1):
@@ -81,11 +81,11 @@ PODS:
     - SDWebImage/Core
   - SMPageControl (1.2)
   - SocketRocket (0.5.1)
-  - Stripe (10.0.1)
+  - Stripe (11.0.0)
   - TTTAttributedLabel (2.0.0)
   - TUSafariActivity (1.0.4)
   - UICKeyChainStore (2.1.1)
-  - UIFloatLabelTextField (1.2.7)
+  - UIFloatLabelTextField (1.2.9)
   - VCTransitionsLibrary (1.5.0)
   - VENCalculatorInputView (1.5.4)
 
@@ -98,10 +98,10 @@ DEPENDENCIES:
   - Crashlytics
   - EAIntroView
   - Fabric
-  - FBSDKCoreKit
-  - FBSDKLoginKit
+  - FBSDKCoreKit (~> 4.22.1)
+  - FBSDKLoginKit (~> 4.22.1)
   - FBSDKMessengerShareKit
-  - FBSDKShareKit
+  - FBSDKShareKit (~> 4.22.1)
   - FXBlurView
   - GBDeviceInfo
   - HHRouter
@@ -132,58 +132,58 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   IDMPhotoBrowser:
-    :path: "./IDMPhotoBrowser"
+    :path: ./IDMPhotoBrowser
   SDWebImage:
-    :path: "./SDWebImage"
+    :path: ./SDWebImage
 
 SPEC CHECKSUMS:
-  ABMediaView: 9a3d226775c4fa3e27c988068d5822cfd453531b
+  ABMediaView: 83fd413cd2b17038e6a449f9ce7b5ade80e7eccc
   ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  Branch: 9c12b5f8d8fbceb9755b69905d5f11d6bae148d0
+  Branch: d3620efcb86e8eeedfaf520e4f68a2ed4c6c9eb3
   CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
-  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  FBSDKCoreKit: 82eac696eb6157da5f4266c3a241f00e9bd72471
-  FBSDKLoginKit: 2211bede07c83391349eacc1fd86cf6d9289ce38
+  Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
+  FBSDKCoreKit: 9c2daf0162214d6d2e21cf8208a9c6c2a2e42b9c
+  FBSDKLoginKit: 00cf28916b9f0169763a3d61985d745b579fe304
   FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
-  FBSDKShareKit: ca9b22264ea49a896dafb2467c1a4f72aa41996f
+  FBSDKShareKit: 1cbd0fdc2bb3277dd3522512855dcf1f4088f734
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
-  GBDeviceInfo: 0a6e2fc04989ce248572bb988f1a764102eb0e5d
+  GBDeviceInfo: caae36532afcc209b51ac62bba547aadab9e88f2
   HHRouter: c096524e95a07a1970e6e23a19ee5a9592dc326d
-  HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
+  HMSegmentedControl: b25bc4ec44766e073d62c473188fb354ee244b76
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   IDMPhotoBrowser: b574fe3229754e701f32df271afbc4ac7e4e1997
-  JPSVolumeButtonHandler: 2fc1b1f98b4e5e741688c0fcffc4808bdf81a424
+  JPSVolumeButtonHandler: a120aa1580ba99d501155e29dcd04c3cef80bed2
   JTHelper: b9b56980755bf6d9f7ed58a2490205109658087e
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
-  libPhoneNumber-iOS: 36044ed9658b5c11ee3cb3011751e47251d34992
+  libPhoneNumber-iOS: f721ae4d5854bce60934f9fb9b0b28e8e68913cb
   MGSwipeTableCell: 616700eb0ffd1c611ba909066cb7fd739790a0a7
-  Mixpanel: 232acf98cecd94fbb58630ff8512a54ff8d99373
+  Mixpanel: 1e04a58533472e5675ea0a476af02ee8751aaa08
   MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
   MZFormSheetController: da2df509805d757e04b052915057d8e1a338b050
   NSDate+Calendar: f377c72a2e66de8d603ae2dcca4dba9bbf13acbd
-  OneSignal: b8e3d70a393e78b07da7849448345ae1055b0561
+  OneSignal: da994bcf6a2efbdceaf71e389e1d05245c562899
   PonyDebugger: 1c60f7c876bdb6a8b6bf0f0269087f8a234fafa7
-  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
   RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
   SDWebImage: c36166b920a2d7cafcd48f6bef4a51c8a547bdba
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
-  Stripe: dd6df0e2c6a8463e2f1ca9b15dc246e5ae1eee64
+  Stripe: 9861af8b1fc99421fdcc849f8c71dceaa9fd6ef9
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
   UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
-  UIFloatLabelTextField: ec6e82ae7cc06185bda955a9dce17e81cf34327c
+  UIFloatLabelTextField: c1df7d4e688a1bd52738513f961df16f94914367
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
   VENCalculatorInputView: 988fa681ba6bb9b1f067842493bb622e80cc8da2
 
-PODFILE CHECKSUM: 248739b7408ccd9eabcf87be581ed33931b5d032
+PODFILE CHECKSUM: 6dd0f6019a940de8c10314a49d348ec1213d655a
 
 COCOAPODS: 1.2.0

@@ -6,9 +6,9 @@ def prod_pods
     pod 'IDMPhotoBrowser', :path => './IDMPhotoBrowser'
     pod 'UICKeyChainStore' 
     pod 'SDWebImage/GIF', :path => './SDWebImage'
-    pod "FBSDKCoreKit"
-    pod "FBSDKLoginKit"
-    pod "FBSDKShareKit"
+    pod 'FBSDKCoreKit', '~> 4.22.1'
+    pod 'FBSDKLoginKit', '~> 4.22.1'
+    pod 'FBSDKShareKit', '~> 4.22.1'
     pod "FBSDKMessengerShareKit"
     pod 'Mixpanel'
     pod 'JTHelper'
