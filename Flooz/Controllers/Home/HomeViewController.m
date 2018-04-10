@@ -423,8 +423,13 @@
     [emailTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
     
     CGRectSetX(emailTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(emailTextfield.frame)) / 2);
+
+    FLTextFieldSignup *birthdateTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_BIRTHDATE", @"") for:signupData key:@"birthdate" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(emailTextfield.frame) + signupFormVerticalMargin)];
+    [birthdateTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
     
-    FLTextFieldSignup *passwordTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PASSWORD", @"") for:signupData key:@"password" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(emailTextfield.frame) + signupFormVerticalMargin)];
+    CGRectSetX(birthdateTextfield.frame, (CGRectGetWidth(signupScrollView.frame) - CGRectGetWidth(birthdateTextfield.frame)) / 2);
+    
+    FLTextFieldSignup *passwordTextfield = [[FLTextFieldSignup alloc] initWithPlaceholder:NSLocalizedString(@"FIELD_PASSWORD", @"") for:signupData key:@"password" position:CGPointMake(signupHorizontalMargin, CGRectGetMaxY(birthdateTextfield.frame) + signupFormVerticalMargin)];
     [passwordTextfield seTsecureTextEntry:YES];
     [passwordTextfield addForNextClickTarget:self action:@selector(signupTextFieldNext)];
     
@@ -483,6 +488,7 @@
     [signupFormFields addObject:fullnameTextfield];
     [signupFormFields addObject:usernameTextfield];
     [signupFormFields addObject:emailTextfield];
+    [signupFormFields addObject:birthdateTextfield];
     [signupFormFields addObject:passwordTextfield];
     [signupFormFields addObject:sponsorTextfield];
     
@@ -490,6 +496,7 @@
     [signupFormView addSubview:usernameTextfield];
     [signupFormView addSubview:signupPhoneField];
     [signupFormView addSubview:emailTextfield];
+    [signupFormView addSubview:birthdateTextfield];
     [signupFormView addSubview:passwordTextfield];
     [signupFormView addSubview:sponsorTextfield];
     [signupFormView addSubview:signupButton];
