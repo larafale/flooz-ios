@@ -7,7 +7,7 @@
 //
 
 #import "FLNewTransactionBar.h"
-
+#import "GBDeviceInfo.h"
 #import "AppDelegate.h"
 #import "NewCollectController.h"
 #import "NewFloozViewController.h"
@@ -226,6 +226,10 @@
     if (!IS_IPHONE_4)
         offsetY = LOCATION_BAR_HEIGHT;
 
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        offsetY = LOCATION_BAR_HEIGHT - 4;
+    }
+
     tabBarView = [[UIView alloc] initWithFrame:CGRectMake(0, offsetY, PPScreenWidth(), BAR_HEIGHT)];
     tabBarView.backgroundColor = [UIColor customMiddleBlue];
 
@@ -313,6 +317,10 @@
 
 - (void)createActionBarView {
     actionView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(tabBarView.frame), PPScreenWidth(), ACTION_BAR_HEIGHT)];
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        CGRectSetHeight(actionView.frame, ACTION_BAR_HEIGHT + 4);
+    }
+
     actionView.backgroundColor = [UIColor customBlue];
     
     [self createButtonSend];

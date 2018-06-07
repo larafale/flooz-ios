@@ -282,6 +282,7 @@
     [_mainBody addSubview:contentView];
     
     CGRectSetY(transactionBar.frame,  CGRectGetHeight(_mainBody.frame) - CGRectGetHeight(transactionBar.frame));
+    
     [_mainBody addSubview:transactionBar];
     
     [self registerForKeyboardNotifications];
