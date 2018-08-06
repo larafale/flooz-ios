@@ -14,6 +14,7 @@
 #import "FXBlurView.h"
 #import "WebViewController.h"
 #import "FLPhoneField.h"
+#import "GBDeviceInfo.h"
 
 @interface HomeViewController () {
     UIView *backgroundView;
@@ -229,6 +230,10 @@
     CGFloat loginHorizontalMargin = 30;
     CGFloat separatorVerticalMargin = 30;
     
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        titleTopMargin = 35;
+    }
+
     loginData = [NSMutableDictionary new];
     
     loginView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
@@ -238,7 +243,7 @@
     [loginView setTintColor:[UIColor clearColor]];
     [loginView setUnderlyingView:backgroundView];
     
-    UIButton *loginBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 40, 40)];
+    UIButton *loginBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, titleTopMargin - 5, 40, 40)];
     [loginBackButton setContentMode:UIViewContentModeScaleAspectFit];
     [loginBackButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
     [loginBackButton addTarget:self action:@selector(didLoginBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -324,6 +329,9 @@
     CGFloat separatorVerticalMargin = 20;
     CGFloat signupFormVerticalMargin = 10;
     
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        titleTopMargin = 35;
+    }
     signupData = [NSMutableDictionary new];
     signupFormFields = [NSMutableArray new];
     
@@ -343,7 +351,7 @@
 
     [signupScrollView setBounces:NO];
     
-    UIButton *signupBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 40, 40)];
+    UIButton *signupBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, titleTopMargin - 5, 40, 40)];
     [signupBackButton setContentMode:UIViewContentModeScaleAspectFit];
     [signupBackButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
     [signupBackButton addTarget:self action:@selector(didSignupBackButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -512,6 +520,10 @@
     CGFloat forgetHorizontalMargin = 30;
     CGFloat forgetFormVerticalMargin = 20;
     
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        titleTopMargin = 35;
+    }
+
     forgetData = [NSMutableDictionary new];
     
     forgetView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, PPScreenWidth(), PPScreenHeight())];
@@ -521,7 +533,7 @@
     [forgetView setUnderlyingView:backgroundView];
     [forgetView setHidden:YES];
     
-    UIButton *forgetBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 40, 40)];
+    UIButton *forgetBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, titleTopMargin - 5, 40, 40)];
     [forgetBackButton setContentMode:UIViewContentModeScaleAspectFit];
     [forgetBackButton setImage:[UIImage imageNamed:@"navbar-back"] forState:UIControlStateNormal];
     [forgetBackButton addTarget:self action:@selector(didForgetBackButtonClick) forControlEvents:UIControlEventTouchUpInside];

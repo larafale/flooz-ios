@@ -142,17 +142,20 @@
     NSMutableAttributedString *attributedContent = [NSMutableAttributedString new];
     
     {
-        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:_transaction.text3d[0] attributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont customContentBold:15] }];
+        NSString *text = _transaction.text3d[0] != nil ? _transaction.text3d[0] : @"";
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont customContentBold:15] }];
         [attributedContent appendAttributedString:attributedText];
     }
     
     {
-        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:_transaction.text3d[1] attributes:@{ NSForegroundColorAttributeName: [UIColor customPlaceholder],  NSFontAttributeName: [UIFont customContentLight:15] }];
+        NSString *text = _transaction.text3d[1] != nil ? _transaction.text3d[1] : @"";
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{ NSForegroundColorAttributeName: [UIColor customPlaceholder],  NSFontAttributeName: [UIFont customContentLight:15] }];
         [attributedContent appendAttributedString:attributedText];
     }
     
     {
-        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:_transaction.text3d[2] attributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont customContentBold:15] }];
+        NSString *text = _transaction.text3d[2] != nil ? _transaction.text3d[2] : @"";
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont customContentBold:15] }];
         [attributedContent appendAttributedString:attributedText];
     }
     

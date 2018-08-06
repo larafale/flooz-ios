@@ -367,7 +367,7 @@
     
     {
         NSAttributedString *attributedText = [[NSAttributedString alloc]
-                                              initWithString:_transaction.text3d[0]
+                                              initWithString:(_transaction.text3d[0] != nil ? _transaction.text3d[0] : @"")
                                               attributes:@{
                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
                                                            NSFontAttributeName: [UIFont customContentBold:15]
@@ -380,7 +380,7 @@
         NSString *text = @"";
         
         if (!stripTitle) {
-            text = _transaction.text3d[1];
+            text = (_transaction.text3d[1] != nil ? _transaction.text3d[1] : @"");
         }
         
         NSAttributedString *attributedText = [[NSAttributedString alloc]
@@ -397,7 +397,7 @@
         NSString *text = @"";
         
         if (!stripTitle) {
-            text = _transaction.text3d[2];
+            text = (_transaction.text3d[2] != nil ? _transaction.text3d[2] : @"");
         }
         
         NSAttributedString *attributedText = [[NSAttributedString alloc]
