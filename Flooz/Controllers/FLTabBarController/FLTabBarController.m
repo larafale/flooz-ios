@@ -18,6 +18,7 @@
 #import "NewCollectController.h"
 #import "FLPlusButton.h"
 #import "UserPickerViewController.h"
+#import "GBDeviceInfo.h"
 
 @interface UITabBarController (private)
 - (UITabBar *)tabBar;
@@ -171,7 +172,9 @@
     [homeButtonOverlay addSubview:homeOverlayTitle];
     
     homeButton = [[FLPlusButton alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetHeight(self.tabBar.frame) + 10.0f, CGRectGetHeight(self.tabBar.frame) + 10.0f)];
+
     homeButton.center = self.tabBar.center;
+
     [homeButton addTarget:self action:@selector(didHomeButtonClick) forControlEvents:UIControlEventTouchUpInside];
     homeButton.layer.shadowColor = [UIColor blackColor].CGColor;
     homeButton.layer.shadowRadius = 1.0;
@@ -179,7 +182,11 @@
     homeButton.layer.shadowOpacity = 1.0f;
     homeButton.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:homeButton.bounds cornerRadius:CGRectGetHeight(homeButton.frame) / 2].CGPath;
     
+        if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        CGRectSetY(homeButton.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(homeButton.frame) - 18.0f);
+        } else {
     CGRectSetY(homeButton.frame, CGRectGetHeight(self.view.frame) - CGRectGetHeight(homeButton.frame) - 3.0f);
+        }
     
     [self.view addSubview:homeButtonOverlay];
     

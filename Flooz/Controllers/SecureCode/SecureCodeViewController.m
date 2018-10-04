@@ -10,6 +10,7 @@
 
 #import "SecureCodeField.h"
 #import "FLKeyboardView.h"
+#import "GBDeviceInfo.h"
 
 #import "UICKeyChainStore.h"
 #import <LocalAuthentication/LocalAuthentication.h>
@@ -141,6 +142,9 @@ static BOOL canTouchID = YES;
     self.view.backgroundColor = [UIColor customBackgroundHeader];
     
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, STATUSBAR_HEIGHT, PPScreenWidth(), 60.0f)];
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        CGRectSetY(_headerView.frame, STATUSBAR_HEIGHT + 18);
+    }
     
     [self.view addSubview:_headerView];
     
@@ -248,6 +252,10 @@ static BOOL canTouchID = YES;
     {
         _touchIDButton = [UIButton newWithFrame:CGRectMake(PPScreenWidth() / 3.0f * 2.0f, CGRectGetHeight(_mainBody.frame) - 50.0f, PPScreenWidth() / 3.0f, 40.0f)];
         [_touchIDButton setTitle:NSLocalizedString(@"SECORE_CODE_TOUCHID", nil) forState:UIControlStateNormal];
+        if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+            [_touchIDButton setTitle:NSLocalizedString(@"SECORE_CODE_FACEID", nil) forState:UIControlStateNormal];
+        }
+        
         [_touchIDButton addTarget:self action:@selector(useTouchID) forControlEvents:UIControlEventTouchUpInside];
         [_touchIDButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_touchIDButton setTitleColor:[UIColor customPlaceholder] forState:UIControlStateDisabled];
@@ -316,16 +324,24 @@ static BOOL canTouchID = YES;
 
 - (void)useTouchID {
     LAContext *laContext = [[LAContext alloc] init];
+    LAPolicy policy = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
+    NSString *errorContent = NSLocalizedString(@"SECORE_CODE_TOUCHID_ERROR", nil);
+    NSString *reason = NSLocalizedString(@"SECORE_CODE_TOUCHID_MSG", nil);
     
     laContext.localizedFallbackTitle = NSLocalizedString(@"SECORE_CODE_TOUCHID_FALLBACK", nil);
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        policy = LAPolicyDeviceOwnerAuthentication;
+        errorContent = NSLocalizedString(@"SECORE_CODE_FACEID_ERROR", nil);
+        reason = NSLocalizedString(@"SECORE_CODE_FACEID_MSG", nil);
+    }
     
-    [laContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:NSLocalizedString(@"SECORE_CODE_TOUCHID_MSG", nil) reply:^(BOOL success, NSError *error) {
+    [laContext evaluatePolicy:policy localizedReason:reason reply:^(BOOL success, NSError *error) {
         if (success) {
             [self dismissWithSuccess:YES];
         }
         else {
             if (!error) {
-                [appDelegate displayMessage:NSLocalizedString(@"GLOBAL_ERROR", nil) content:NSLocalizedString(@"SECORE_CODE_TOUCHID_ERROR", nil) style:FLAlertViewStyleError time:@3 delay:@0];
+                [appDelegate displayMessage:NSLocalizedString(@"GLOBAL_ERROR", nil) content:errorContent style:FLAlertViewStyleError time:@3 delay:@0];
             }
             [_codePinView animationBadPin];
         }
@@ -336,11 +352,18 @@ static BOOL canTouchID = YES;
     if ([[[UIDevice currentDevice] systemVersion] intValue] < 8)
         return NO;
     
+    LAPolicy policy = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
+    
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        policy = LAPolicyDeviceOwnerAuthentication;
+    }
+    
+
     LAContext *laContext = [[LAContext alloc] init];
     
     NSError *error = nil;
     
-    if ([laContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+    if ([laContext canEvaluatePolicy:policy error:&error]) {
         if (!error)
             return YES;
         return NO;
@@ -352,8 +375,19 @@ static BOOL canTouchID = YES;
     LAContext *laContext = [[LAContext alloc] init];
     
     laContext.localizedFallbackTitle = NSLocalizedString(@"SECORE_CODE_TOUCHID_FALLBACK", nil);
+    LAPolicy policy = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
+    NSString *errorContent = NSLocalizedString(@"SECORE_CODE_TOUCHID_ERROR", nil);
+    NSString *reason = NSLocalizedString(@"SECORE_CODE_TOUCHID_MSG", nil);
     
-    [laContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:NSLocalizedString(@"SECORE_CODE_TOUCHID_MSG", nil) reply:^(BOOL success, NSError *error) {
+    laContext.localizedFallbackTitle = NSLocalizedString(@"SECORE_CODE_TOUCHID_FALLBACK", nil);
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        policy = LAPolicyDeviceOwnerAuthentication;
+        errorContent = NSLocalizedString(@"SECORE_CODE_FACEID_ERROR", nil);
+        reason = NSLocalizedString(@"SECORE_CODE_FACEID_MSG", nil);
+    }
+    
+
+    [laContext evaluatePolicy:policy localizedReason:reason reply:^(BOOL success, NSError *error) {
         if (success) {
             successBlock();
             canTouchID = YES;
@@ -367,7 +401,7 @@ static BOOL canTouchID = YES;
                 cancelBlock();
                 return ;
             } else if (!error) {
-                [appDelegate displayMessage:NSLocalizedString(@"GLOBAL_ERROR", nil) content:NSLocalizedString(@"SECORE_CODE_TOUCHID_ERROR", nil) style:FLAlertViewStyleError time:@3 delay:@0];
+                [appDelegate displayMessage:NSLocalizedString(@"GLOBAL_ERROR", nil) content:errorContent style:FLAlertViewStyleError time:@3 delay:@0];
                 passcodeBlock();
             }
             else

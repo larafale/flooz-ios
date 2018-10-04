@@ -179,10 +179,13 @@
 "SECORE_CODE_TEXT_NEW" = "Choisissez un code secret";
 "SECORE_CODE_TEXT_CONFIRM" = "Confirmez votre nouveau code";
 "SECORE_CODE_TEXT_CHANGE_PASS" = "Modifier votre mot de passe";
-"SECORE_CODE_TOUCHID_MSG" = "Valider avec votre empreinte";
+"SECORE_CODE_TOUCHID_MSG" = "Validez avec votre empreinte";
+"SECORE_CODE_FACEID_MSG" = "Validez avec votre visage";
 "SECORE_CODE_TOUCHID" = "Touch ID";
+"SECORE_CODE_FACEID" = "Face ID";
 "SECORE_CODE_TOUCHID_FALLBACK" = "Entrer mon code";
 "SECORE_CODE_TOUCHID_ERROR" = "Votre empreinte n'est pas enregistrée dans ce téléphone";
+"SECORE_CODE_FACEID_ERROR" = "Votre visage n'est pas enregistrée dans ce téléphone";
 
 "SECORE_CODE_TEXT_LOGIN" = "Identifiez vous pour réinitialiser votre code";
 "SECURE_CODE_FORGOT" = "Code oublié ?";

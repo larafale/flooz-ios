@@ -17,6 +17,7 @@
 #import "FLSharePopup.h"
 #import "ShareSMSViewController.h"
 #import "AmbassadorStepsViewController.h"
+#import "GBDeviceInfo.h"
 
 @interface ShareAppViewController () {
     UIView *_footerView;
@@ -161,50 +162,50 @@
         btn.frame = CGRectMake(0, 0, 20, 20);
         [btn setTintColor:[UIColor customBlue]];
         [btn addTarget:self action:@selector(showStepPopup) forControlEvents:UIControlEventTouchUpInside];
-        
+
         UIBarButtonItem *ambassadorItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
         self.navigationItem.rightBarButtonItem = ambassadorItem;
     } else
         self.navigationItem.rightBarButtonItem = nil;
-    
+
     [self.navigationItem setTitle:_viewTitle];
-    
+
     if (_footerView)
         [_footerView removeFromSuperview];
-    
+
     [self createFooterView];
-    
+
     [_codeLabel setText:[NSString stringWithFormat:@"“%@”", _code]];
     [_codeLabel sizeToFit];
     [_codeLabel setCenter:_backImage.center];
     CGRectSetY(_codeLabel.frame, CGRectGetMinY(_footerView.frame) - CGRectGetHeight(_codeLabel.frame) - 25);
-    
+
     [_subtitleLabel setText:_h2];
     [_subtitleLabel setHeightToFit];
     [_subtitleLabel setCenter:_backImage.center];
     CGRectSetY(_subtitleLabel.frame, CGRectGetMinY(_codeLabel.frame) - CGRectGetHeight(_subtitleLabel.frame) - 10);
-    
+
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_appText[0]];
     [text addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text.length)];
     [text addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text.length)];
-    
+
     NSMutableAttributedString *code = [[NSMutableAttributedString alloc] initWithString:_code];
     [code addAttribute:NSForegroundColorAttributeName value:[UIColor customBlue] range:NSMakeRange(0, code.length)];
     [code addAttribute:NSFontAttributeName value:[UIFont customContentBold:19] range:NSMakeRange(0, code.length)];
-    
+
     NSMutableAttributedString *text2 = [[NSMutableAttributedString alloc] initWithString:_appText[1]];
     [text2 addAttribute:NSForegroundColorAttributeName value:[UIColor customWhite] range:NSMakeRange(0, text2.length)];
     [text2 addAttribute:NSFontAttributeName value:[UIFont customContentRegular:18] range:NSMakeRange(0, text2.length)];
-    
+
     [text appendAttributedString:code];
     [text appendAttributedString:text2];
-    
+
     [_text setAttributedText:text];
     [_text setTextAlignment:NSTextAlignmentCenter];
     [_text sizeToFit];
     [_text setCenter:_backImage.center];
     CGRectSetY(_text.frame, CGRectGetMinY(_footerView.frame) - CGRectGetHeight(_text.frame) - 60);
-    
+
     [_titleLabel setText:_h1];
     [_titleLabel setHeightToFit];
     [_titleLabel setCenter:_backImage.center];
@@ -226,6 +227,9 @@
 
 - (void)createFooterView {
     _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame) - 90, CGRectGetWidth(_mainBody.frame), 80)];
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        CGRectSetY(_footerView.frame, CGRectGetHeight(_mainBody.frame) - 90 - STATUSBAR_HEIGHT - 10);
+    }
     
     float nbButtons = 0;
     

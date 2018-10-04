@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>fr_FR</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Nous avons besoin de l&apos;accès à Face ID pour valider le paiement.</string>
 	<key>CFBundleDisplayName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>

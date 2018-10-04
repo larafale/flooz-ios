@@ -9,6 +9,7 @@
 #import "FLAlertView.h"
 #import "FLTrigger.h"
 #import "AppDelegate.h"
+#import "GBDeviceInfo.h"
 
 #define MARGE_LEFT 78.
 #define MARGE_RIGHT 20.
@@ -21,7 +22,11 @@
 }
 
 - (id)initWithFrame:(CGRect)frame {
-	frame = CGRectMake(MARGE, STATUSBAR_HEIGHT, SCREEN_WIDTH - 2 * MARGE, 0);
+    frame = CGRectMake(MARGE, STATUSBAR_HEIGHT, SCREEN_WIDTH - 2 * MARGE, 0);
+    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        CGRectSetY(frame, 0);
+    }
+
 	self = [super initWithFrame:frame];
 	if (self) {
 		[self commonInit];
@@ -49,6 +54,10 @@
 
 	{
 		titleView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, MARGE_BOTTOM, SCREEN_WIDTH - MARGE_LEFT - MARGE_RIGHT, 17)];
+        if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+            CGRectSetY(titleView.frame, MARGE_BOTTOM + STATUSBAR_HEIGHT);
+        }
+
 		titleView.font = [UIFont customTitleExtraLight:17];
 		titleView.textColor = [UIColor whiteColor];
 
@@ -57,6 +66,7 @@
 
 	{
 		contentView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, CGRectGetMaxY(titleView.frame) + 5, SCREEN_WIDTH - MARGE_LEFT - MARGE_RIGHT, 0)];
+        
 		contentView.font = [UIFont customContentRegular:14];
 		contentView.textColor = [UIColor whiteColor];
 		contentView.numberOfLines = 0;
@@ -90,7 +100,9 @@
         
         [contentView setHeightToFit];
         iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM) / 2.);
-        
+        if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+            iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM + STATUSBAR_HEIGHT) / 2.);
+        }
         [self setType:_alert.type];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -130,6 +142,7 @@
 	    timer = [NSTimer scheduledTimerWithTimeInterval:[time floatValue] target:self selector:@selector(hide) userInfo:nil repeats:NO];
         
         CGRectSetHeight(self.frame, 0);
+        
         [[appDelegate topWindow] addSubview:self];
         
 	    titleView.text = title;
@@ -137,12 +150,15 @@
 
 	    [contentView setHeightToFit];
 	    iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM) / 2.);
+        if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+            iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM + STATUSBAR_HEIGHT) / 2.);
+        }
 
 	    [self setStyle:style];
 
 	    dispatch_async(dispatch_get_main_queue(), ^{
 	        [UIView animateWithDuration:.4 animations: ^{
-	            CGRectSetHeight(self.frame, CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM);
+                CGRectSetHeight(self.frame, CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM);
 			}];
 		});
 	});
