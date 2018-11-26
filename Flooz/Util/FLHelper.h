@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+BOOL isBorderlessDisplay(void);
+
 @interface FLHelper : NSObject
 
 + (NSString *)generateRandomString;

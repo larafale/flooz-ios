@@ -11,6 +11,7 @@
 #import "FLInvitationTexts.h"
 #import "FLPreset.h"
 #import "FLTransaction.h"
+#import "FLMangopayOptions.h"
 
 @interface FLHomeButton : NSObject
 
@@ -55,6 +56,8 @@
 @property (nonatomic, strong) FLScope *defaultScope;
 @property (nonatomic, strong) FLNewFloozOptions *createFloozOptions;
 @property (nonatomic, strong) FLTransactionOptions *floozOptions;
+@property (nonatomic, strong) FLMangopayOptions *mangopayOptions;
+
 
 - (id)initWithJSON:(NSDictionary *)json;
 

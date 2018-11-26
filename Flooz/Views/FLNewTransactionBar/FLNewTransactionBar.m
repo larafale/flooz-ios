@@ -226,7 +226,7 @@
     if (!IS_IPHONE_4)
         offsetY = LOCATION_BAR_HEIGHT;
 
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         offsetY = LOCATION_BAR_HEIGHT - 4;
     }
 
@@ -317,7 +317,7 @@
 
 - (void)createActionBarView {
     actionView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(tabBarView.frame), PPScreenWidth(), ACTION_BAR_HEIGHT)];
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         CGRectSetHeight(actionView.frame, ACTION_BAR_HEIGHT + 4);
     }
 

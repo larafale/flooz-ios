@@ -10,6 +10,7 @@
 #import "FLTextFieldTitle2.h"
 #import "3DSecureViewController.h"
 #import "FLCreditCardScanner.h"
+#import <mangopay/mangopay.h>
 
 #define PADDING_SIDE 20.0f
 
@@ -35,6 +36,8 @@
     Boolean saveCard;
     
     FLCreditCardScanner *scanner;
+    
+    MPAPIClient *mangopayClient;
 }
 
 @end
@@ -56,7 +59,7 @@
 - (id)initWithTriggerData:(NSDictionary *)data {
     self = [super initWithTriggerData:data];
     if (self) {
-        hideSaveCard = NO;
+        hideSaveCard = YES;
         saveCard = YES;
 
         if (self.triggerData && self.triggerData[@"hideSave"]) {
@@ -101,6 +104,8 @@
     [super viewDidLoad];
     
     dictionary = [NSMutableDictionary new];
+
+    [self loadCardRegistrationData];
 
     [self resetContentView];
     
@@ -155,7 +160,6 @@
 }
 
 - (void)prepareViewForCreate {
-    
     [self createNextButton];
     [_nextButton addTarget:self action:@selector(didValidTouch) forControlEvents:UIControlEventTouchUpInside];
     
@@ -187,10 +191,10 @@
     [scanCardButton setHidden:YES];
     [scanCardButton addBottomBorderWithColor:[UIColor customBackground] andWidth:0.7];
 
-    if ([CardIOUtilities canReadCardWithCamera]) {
-        CGRectSetWidth(paymentTextField.frame, PPScreenWidth() - (2 * PADDING_SIDE) - 30);
-        [scanCardButton setHidden:NO];
-    }
+//    if ([CardIOUtilities canReadCardWithCamera]) {
+//        CGRectSetWidth(paymentTextField.frame, PPScreenWidth() - (2 * PADDING_SIDE) - 30);
+//        [scanCardButton setHidden:NO];
+//    }
     
     if ([[[Flooz sharedInstance] currentTexts] cardHolder]) {
         holderTextField.hidden = NO;
@@ -341,6 +345,20 @@
     }
 }
 
+- (void)loadCardRegistrationData {
+    [[Flooz sharedInstance] getCardRegistrationData:^(id result) {
+        NSDictionary *cardData = @{@"cardRegistrationURL": result[@"item"][@"CardRegistrationURL"],
+                                   @"preregistrationData": result[@"item"][@"PreregistrationData"],
+                                   @"cardType": result[@"item"][@"CardType"],
+                                   @"clientId": [Flooz sharedInstance].currentTexts.mangopayOptions.clientId,
+                                   @"cardPreregistrationId": result[@"item"][@"Id"],
+                                   @"baseURL": [Flooz sharedInstance].currentTexts.mangopayOptions.baseURL,
+                                   @"accessKey": result[@"item"][@"AccessKey"]};
+        
+        self->mangopayClient = [[MPAPIClient alloc] initWithCard:cardData];
+    } failure:nil];
+}
+
 - (void)paymentCardTextFieldDidChange:(STPPaymentCardTextField *)textField {
     
 }
@@ -419,16 +437,22 @@
     }
 
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] createCreditCard:_card atSignup:NO success: ^(id result) {
-        
+    [mangopayClient appendCardInfo:paymentTextField.cardNumber cardExpirationDate:[NSString stringWithFormat:@"%lu%lu", (unsigned long)paymentTextField.expirationMonth, (unsigned long)paymentTextField.expirationYear] cardCvx:paymentTextField.cvc];
+    
+    [mangopayClient registerCard:^(NSDictionary *response, NSError *error) {
+        if (error)
+            NSLog(@"Error: %@", error);
+        else {
+            [[Flooz sharedInstance] updateUser:@{@"pspCardId": response[@"CardId"]} success:^(id result) {
+                [self reloadView];
+            } failure:nil];
+        }
     }];
 }
 
 - (void)didRemoveCardTouch {
-    NSString *creditCardId = [[[[Flooz sharedInstance] currentUser] creditCard] cardId];
-  
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] removeCreditCard:creditCardId success: ^(id result) {
+    [[Flooz sharedInstance] removeCreditCard:^(id result) {
     }];
 }
 

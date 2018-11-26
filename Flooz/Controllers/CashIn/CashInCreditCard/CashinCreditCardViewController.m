@@ -377,8 +377,7 @@
     NSString *creditCardId = [[[[Flooz sharedInstance] currentUser] creditCard] cardId];
     
     [[Flooz sharedInstance] showLoadView];
-    [[Flooz sharedInstance] removeCreditCard:creditCardId success: ^(id result) {
-        
+    [[Flooz sharedInstance] removeCreditCard: ^(id result) {
     }];
 }
 

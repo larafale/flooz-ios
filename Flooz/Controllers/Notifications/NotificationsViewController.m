@@ -43,7 +43,7 @@
     [super viewDidLoad];
 
     if (!self.title || [self.title isBlank])
-        self.title = NSLocalizedString(@"ACCOUNT_BUTTON_NOTIFICATION", @"");
+        self.navigationItem.title = NSLocalizedString(@"ACCOUNT_BUTTON_NOTIFICATION", @"");
 
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), PPScreenHeight() - PPTabBarHeight() - NAVBAR_HEIGHT - PPStatusBarHeight()) style:UITableViewStylePlain];
     [_tableView setDataSource:self];

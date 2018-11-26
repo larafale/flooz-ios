@@ -40,7 +40,7 @@
     }
     
     if (self.tabBarController && ![self isKindOfClass:TransactionViewController.class] && ![self isKindOfClass:CollectViewController.class])
-        mainBodyHeight -= PPTabBarHeight();
+        mainBodyHeight -= CGRectGetHeight(self.tabBarController.tabBar.frame);
     
     _mainBody = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, PPScreenWidth(), mainBodyHeight)];
     _mainBody.backgroundColor = [UIColor customBackgroundHeader];

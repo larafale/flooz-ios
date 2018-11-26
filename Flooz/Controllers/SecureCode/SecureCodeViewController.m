@@ -142,7 +142,7 @@ static BOOL canTouchID = YES;
     self.view.backgroundColor = [UIColor customBackgroundHeader];
     
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, STATUSBAR_HEIGHT, PPScreenWidth(), 60.0f)];
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         CGRectSetY(_headerView.frame, STATUSBAR_HEIGHT + 18);
     }
     
@@ -252,7 +252,7 @@ static BOOL canTouchID = YES;
     {
         _touchIDButton = [UIButton newWithFrame:CGRectMake(PPScreenWidth() / 3.0f * 2.0f, CGRectGetHeight(_mainBody.frame) - 50.0f, PPScreenWidth() / 3.0f, 40.0f)];
         [_touchIDButton setTitle:NSLocalizedString(@"SECORE_CODE_TOUCHID", nil) forState:UIControlStateNormal];
-        if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        if (isBorderlessDisplay()) {
             [_touchIDButton setTitle:NSLocalizedString(@"SECORE_CODE_FACEID", nil) forState:UIControlStateNormal];
         }
         
@@ -329,7 +329,7 @@ static BOOL canTouchID = YES;
     NSString *reason = NSLocalizedString(@"SECORE_CODE_TOUCHID_MSG", nil);
     
     laContext.localizedFallbackTitle = NSLocalizedString(@"SECORE_CODE_TOUCHID_FALLBACK", nil);
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         policy = LAPolicyDeviceOwnerAuthentication;
         errorContent = NSLocalizedString(@"SECORE_CODE_FACEID_ERROR", nil);
         reason = NSLocalizedString(@"SECORE_CODE_FACEID_MSG", nil);
@@ -354,7 +354,7 @@ static BOOL canTouchID = YES;
     
     LAPolicy policy = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
     
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         policy = LAPolicyDeviceOwnerAuthentication;
     }
     
@@ -380,7 +380,7 @@ static BOOL canTouchID = YES;
     NSString *reason = NSLocalizedString(@"SECORE_CODE_TOUCHID_MSG", nil);
     
     laContext.localizedFallbackTitle = NSLocalizedString(@"SECORE_CODE_TOUCHID_FALLBACK", nil);
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         policy = LAPolicyDeviceOwnerAuthentication;
         errorContent = NSLocalizedString(@"SECORE_CODE_FACEID_ERROR", nil);
         reason = NSLocalizedString(@"SECORE_CODE_FACEID_MSG", nil);

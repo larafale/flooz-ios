@@ -227,7 +227,7 @@
 
 - (void)createFooterView {
     _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_mainBody.frame) - 90, CGRectGetWidth(_mainBody.frame), 80)];
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         CGRectSetY(_footerView.frame, CGRectGetHeight(_mainBody.frame) - 90 - STATUSBAR_HEIGHT - 10);
     }
     

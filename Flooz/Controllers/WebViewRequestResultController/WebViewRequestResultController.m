@@ -55,7 +55,7 @@
     UIColor *webviewBackgroundColor = [UIColor colorWithHex:result];
     [_webView setBackgroundColor:webviewBackgroundColor];
   } else {
-    [_webView setBackgroundColor:[UIColor clearColor]];
+    [_webView setBackgroundColor:[UIColor whiteColor]];
   }
 }
 

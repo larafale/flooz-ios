@@ -9,7 +9,7 @@ def prod_pods
     pod 'FBSDKCoreKit', '~> 4.22.1'
     pod 'FBSDKLoginKit', '~> 4.22.1'
     pod 'FBSDKShareKit', '~> 4.22.1'
-    pod "FBSDKMessengerShareKit"
+    pod 'FBSDKMessengerShareKit'
     pod 'Mixpanel'
     pod 'JTHelper'
     pod 'PonyDebugger'
@@ -40,7 +40,8 @@ def prod_pods
     pod 'CardIO'
     pod 'JTSImageViewController'
     pod 'VENCalculatorInputView', '~> 1.5'
-    pod "ABMediaView"    
+    pod 'ABMediaView'
+    pod 'mangopay'
 end
 
 target 'Flooz' do

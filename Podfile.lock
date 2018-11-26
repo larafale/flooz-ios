@@ -22,17 +22,17 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
-  - Branch (0.25.0):
-    - Branch/Core (= 0.25.0)
-  - Branch/Core (0.25.0)
+  - Branch (0.25.8):
+    - Branch/Core (= 0.25.8)
+  - Branch/Core (0.25.8)
   - CardIO (5.4.1)
-  - Crashlytics (3.10.2):
-    - Fabric (~> 1.7.7)
+  - Crashlytics (3.11.1):
+    - Fabric (~> 1.8.1)
   - DACircularProgress (2.3.1)
   - EAIntroView (2.12.0):
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
-  - Fabric (1.7.7)
+  - Fabric (1.8.2)
   - FBSDKCoreKit (4.22.1):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.22.1):
@@ -42,9 +42,9 @@ PODS:
     - FBSDKCoreKit
   - FLAnimatedImage (1.0.12)
   - FXBlurView (1.6.4)
-  - GBDeviceInfo (5.2.0):
-    - GBDeviceInfo/Core (= 5.2.0)
-  - GBDeviceInfo/Core (5.2.0)
+  - GBDeviceInfo (6.0.0):
+    - GBDeviceInfo/Core (= 6.0.0)
+  - GBDeviceInfo/Core (6.0.0)
   - HHRouter (0.1.9)
   - HMSegmentedControl (1.5.5)
   - iCarousel (1.8.3)
@@ -56,8 +56,9 @@ PODS:
   - JTHelper (0.3.0)
   - JTSImageViewController (1.5.1)
   - libPhoneNumber-iOS (0.9.13)
+  - mangopay (1.0.2)
   - MGSwipeTableCell (1.6.7)
-  - Mixpanel (3.3.2)
+  - Mixpanel (3.3.7)
   - MZAppearance (1.1.6)
   - MZFormSheetController (3.1.3):
     - MZAppearance
@@ -65,12 +66,12 @@ PODS:
   - MZFormSheetController/Core (3.1.3):
     - MZAppearance
   - "NSDate+Calendar (0.0.9)"
-  - OneSignal (2.8.5)
+  - OneSignal (2.9.3)
   - PonyDebugger (0.4.5):
     - SocketRocket
-  - pop (1.0.10)
+  - pop (1.0.12)
   - PPHelpMe (1.0.2)
-  - RDVTabBarController (1.1.9)
+  - RDVTabBarController (1.2.0)
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
@@ -82,7 +83,7 @@ PODS:
   - Stripe (11.5.0)
   - TTTAttributedLabel (2.0.0)
   - TUSafariActivity (1.0.4)
-  - UICKeyChainStore (2.1.1)
+  - UICKeyChainStore (2.1.2)
   - UIFloatLabelTextField (1.2.9)
   - VCTransitionsLibrary (1.5.0)
   - VENCalculatorInputView (1.5.4)
@@ -110,6 +111,7 @@ DEPENDENCIES:
   - JTHelper
   - JTSImageViewController
   - libPhoneNumber-iOS
+  - mangopay
   - MGSwipeTableCell
   - Mixpanel
   - MZFormSheetController
@@ -155,6 +157,7 @@ SPEC REPOS:
     - JTHelper
     - JTSImageViewController
     - libPhoneNumber-iOS
+    - mangopay
     - MGSwipeTableCell
     - Mixpanel
     - MZAppearance
@@ -186,20 +189,20 @@ SPEC CHECKSUMS:
   ActionSheetPicker-3.0: eef157d75e151f255c5333d26656c7fbfe905a51
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
-  Branch: 127d29ab0a8866025eece1cf9e950ddb6f7d4070
+  Branch: bef2918a62f57ce284f4fa1917f5de1fb31295fe
   CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
-  Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
+  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   EAIntroView: 249559079ddfdbe80e5bcb755c04c3b964b2ac27
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
-  Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
+  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
   FBSDKCoreKit: 9c2daf0162214d6d2e21cf8208a9c6c2a2e42b9c
   FBSDKLoginKit: 00cf28916b9f0169763a3d61985d745b579fe304
-  FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
+  FBSDKMessengerShareKit: bdd14265f5845e6d1c95a128ab33705a68ca1c21
   FBSDKShareKit: 1cbd0fdc2bb3277dd3522512855dcf1f4088f734
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
-  GBDeviceInfo: 2c65ceb9404f9079264d4c238f5b81916fdfc5e2
+  GBDeviceInfo: b7576f403b3050c1d3f4b490ab1d7dbb951bb1d9
   HHRouter: c096524e95a07a1970e6e23a19ee5a9592dc326d
   HMSegmentedControl: f514c6dad47aa3065e0ed2e8046b73efc71221b9
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
@@ -208,27 +211,28 @@ SPEC CHECKSUMS:
   JTHelper: b9b56980755bf6d9f7ed58a2490205109658087e
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
   libPhoneNumber-iOS: e444379ac18bbfbdefad571da735b2cd7e096caa
+  mangopay: c8005077cfd2b6813b99d52a4cd78238eb1082e7
   MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
-  Mixpanel: be4de218d0ffaaae59b498078b2ecf2db1f8072c
+  Mixpanel: 1e94d1d29dfc3d3c66f734d10e29ad86420889fe
   MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
   MZFormSheetController: da2df509805d757e04b052915057d8e1a338b050
   "NSDate+Calendar": f377c72a2e66de8d603ae2dcca4dba9bbf13acbd
-  OneSignal: 42dae269c7eca517aee34963820e1eb922390031
+  OneSignal: a506e3bc61d2030f0757faf9bd783a9b211c6e3c
   PonyDebugger: 1c60f7c876bdb6a8b6bf0f0269087f8a234fafa7
-  pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
+  pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   PPHelpMe: 243c40d2fad33ebdcc6b158c0db54893e0cc2d14
-  RDVTabBarController: 67794f7a7a37f8e32f046f85ac67d06ab92d624a
+  RDVTabBarController: b6d63a7fc49b00568ba07255c6171edc737ad833
   SDWebImage: 952ff3f6dc5b7c591af3650406d2854a3c3f2f1a
   SMPageControl: 922892813001cfaf059e86e6801f46a967e9ee29
   SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
   Stripe: 10761682d20dc491c52287393c800db056c9748d
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
-  UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
+  UICKeyChainStore: 85db518bb1d294366d15ec9b92a416c4e670518f
   UIFloatLabelTextField: c1df7d4e688a1bd52738513f961df16f94914367
   VCTransitionsLibrary: d61fd9b7b6721942f0d583bcc0e7f8c31ec9271b
   VENCalculatorInputView: 988fa681ba6bb9b1f067842493bb622e80cc8da2
 
-PODFILE CHECKSUM: 6dd0f6019a940de8c10314a49d348ec1213d655a
+PODFILE CHECKSUM: 0039f0f307cbafdec07ca7f65d49663823be11d0
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3

@@ -23,7 +23,7 @@
 
 - (id)initWithFrame:(CGRect)frame {
     frame = CGRectMake(MARGE, STATUSBAR_HEIGHT, SCREEN_WIDTH - 2 * MARGE, 0);
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         CGRectSetY(frame, 0);
     }
 
@@ -54,7 +54,7 @@
 
 	{
 		titleView = [[UILabel alloc] initWithFrame:CGRectMake(MARGE_LEFT, MARGE_BOTTOM, SCREEN_WIDTH - MARGE_LEFT - MARGE_RIGHT, 17)];
-        if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        if (isBorderlessDisplay()) {
             CGRectSetY(titleView.frame, MARGE_BOTTOM + STATUSBAR_HEIGHT);
         }
 
@@ -100,7 +100,7 @@
         
         [contentView setHeightToFit];
         iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM) / 2.);
-        if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        if (isBorderlessDisplay()) {
             iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM + STATUSBAR_HEIGHT) / 2.);
         }
         [self setType:_alert.type];
@@ -150,7 +150,7 @@
 
 	    [contentView setHeightToFit];
 	    iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM) / 2.);
-        if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+        if (isBorderlessDisplay()) {
             iconView.center = CGPointMake(iconView.center.x, (CGRectGetMaxY(contentView.frame) + MARGE_BOTTOM + STATUSBAR_HEIGHT) / 2.);
         }
 

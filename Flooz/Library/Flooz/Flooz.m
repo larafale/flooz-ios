@@ -290,19 +290,23 @@
   }];
 }
 
+- (void)getCardRegistrationData:(void (^)(id result))success failure:(void (^)(NSError *error))failure {
+    [[Flooz sharedInstance] showLoadView];
+    [self requestPath:@"/cards" method:@"POST" params:nil success:success failure:failure];
+}
 
 - (void)logout {
     if (_currentUser) {
         if ([_currentUser deviceToken]) {
             [self requestPath:@"/users/logout" method:@"GET" params:@{ @"device":[_currentUser deviceToken] } success:^(id result) {
-                [manager.operationQueue cancelAllOperations];
+                [self->manager.operationQueue cancelAllOperations];
                 
                 [self closeSocket];
                 [self clearLogin];
                 [appDelegate didDisconnected];
                 
             } failure:^(NSError *error) {
-                [manager.operationQueue cancelAllOperations];
+                [self->manager.operationQueue cancelAllOperations];
                 
                 [self closeSocket];
                 [self clearLogin];
@@ -537,11 +541,11 @@
     } failure:nil];
 }
 
-- (void)updateCurrentUserWithSuccess:(void (^)())success failure:(void (^)(NSError *error))failure {
+- (void)updateCurrentUserWithSuccess:(void (^)(void))success failure:(void (^)(NSError *error))failure {
     if ([appDelegate shouldRefreshWithKey:kKeyLastUpdate]) {
         __block id successBlock = ^(id result) {
-            _currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];            _currentUser.isComplete = YES;
-            _currentUser.isComplete = YES;
+            self->_currentUser = [[FLUser alloc] initWithJSON:[result objectForKey:@"item"]];            _currentUser.isComplete = YES;
+            self->_currentUser.isComplete = YES;
             
             [self updateFbToken:result[@"item"][@"fb"][@"token"] andUser:result[@"item"][@"fb"][@"id"]];
             
@@ -571,8 +575,8 @@
     }
     
     [self requestPath:@"/users/profile" method:@"PUT" params:_userDic success: ^(id result) {
-        _currentUser = [[FLUser alloc] initWithJSON:result[@"item"]];
-        _currentUser.isComplete = YES;
+        self->_currentUser = [[FLUser alloc] initWithJSON:result[@"item"]];
+        self->_currentUser.isComplete = YES;
         
         [self checkDeviceToken];
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kNotificationReloadCurrentUser object:nil]];
@@ -1300,9 +1304,8 @@
     [self requestPath:path method:@"POST" params:creditCard success:successBlock failure:nil];
 }
 
-- (void)removeCreditCard:(NSString *)creditCardId success:(void (^)(id result))success {
-    NSString *path = [@"/cards/" stringByAppendingString : creditCardId];
-    [self requestPath:path method:@"DELETE" params:@{@"validate": @YES} success:success failure:nil];
+- (void)removeCreditCard:(void (^)(id result))success {
+    [self requestPath:@"/cards" method:@"DELETE" params:@{@"validate": @YES} success:success failure:nil];
 }
 
 - (void)abort3DSecure {
@@ -1873,14 +1876,16 @@
         }];
         
         [self.socketIO on:@"feed" callback:^(SIOParameterArray *args) {
-            NSNumber *count = [args firstObject][@"total"];
-            
-            [UIApplication sharedApplication].applicationIconBadgeNumber = [count intValue];
-            [self setNotificationsCount:count];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotifications" object:nil];
-            
-            [self handleRequestTriggers:[args firstObject]];
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                NSNumber *count = [args firstObject][@"total"];
+                
+                [UIApplication sharedApplication].applicationIconBadgeNumber = [count intValue];
+                [self setNotificationsCount:count];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"newNotifications" object:nil];
+                
+                [self handleRequestTriggers:[args firstObject]];
+            });
         }];
     }];
 }

@@ -18,22 +18,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  UILabel *cbInfos = [[UILabel alloc] initWithText:NSLocalizedString(@"CREDIT_CARD_INFOS", nil) textColor:[UIColor customPlaceholder] font:[UIFont customContentRegular:14] textAlignment:NSTextAlignmentCenter numberOfLines:0];
-  [cbInfos setLineBreakMode:NSLineBreakByWordWrapping];
-  CGRectSetWidth(cbInfos.frame, PPScreenWidth() - 15 * 2);
-  [cbInfos sizeToFit];
-  CGRectSetXY(cbInfos.frame, 15, PPScreenHeight() - 15 - cbInfos.frame.size.height - 125);
-  [self.view addSubview:cbInfos];
-
-  UIImageView *cards = [[UIImageView alloc] initWithFrame:CGRectMake(15, cbInfos.frame.origin.y - 80, PPScreenWidth() - (2 * 15), 80)];
-  [cards setImage:[UIImage imageNamed:@"cards"]];
-  [cards setContentMode:UIViewContentModeScaleAspectFit];
-  [self.view addSubview:cards];
 
   self.title = NSLocalizedString(@"CARD", nil);
   
   _webView.scrollView.scrollEnabled = YES;
-  CGRectSetHeight(_webView.frame, cards.frame.origin.y);
+  CGRectSetHeight(_webView.frame, _mainBody.frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning {

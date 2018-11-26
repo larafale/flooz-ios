@@ -230,7 +230,7 @@
     CGFloat loginHorizontalMargin = 30;
     CGFloat separatorVerticalMargin = 30;
     
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         titleTopMargin = 35;
     }
 
@@ -329,7 +329,7 @@
     CGFloat separatorVerticalMargin = 20;
     CGFloat signupFormVerticalMargin = 10;
     
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         titleTopMargin = 35;
     }
     signupData = [NSMutableDictionary new];
@@ -527,7 +527,7 @@
     CGFloat forgetHorizontalMargin = 30;
     CGFloat forgetFormVerticalMargin = 20;
     
-    if ([GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone) {
+    if (isBorderlessDisplay()) {
         titleTopMargin = 35;
     }
 

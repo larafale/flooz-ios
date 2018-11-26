@@ -19,7 +19,7 @@
 }
 
 - (void)setJSON:(NSDictionary *)json {
-	_cardId = [json objectForKey:@"_id"];
+	_cardId = [json objectForKey:@"pspId"];
 	_owner = [json objectForKey:@"holder"];
 	_number = [json objectForKey:@"number"];
     _expires = [json objectForKey:@"expires"];

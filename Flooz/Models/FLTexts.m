@@ -141,6 +141,8 @@
     
     self.suggestGif = json[@"suggest"][@"gifs"];
     self.suggestWeb = json[@"suggest"][@"webs"];
+    
+    self.mangopayOptions = [[FLMangopayOptions alloc] initWithJSON:[json objectForKey:@"mangopay"]];
 }
 
 @end

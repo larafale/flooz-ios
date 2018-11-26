@@ -32,7 +32,11 @@
             triggerData = data;
             
             if (triggerData[@"title"] && ![triggerData[@"title"] isBlank]) {
-                self.title = triggerData[@"title"];
+                if (self.tabBarController && self.navigationController && self.navigationItem) {
+                    self.navigationItem.title = triggerData[@"title"];
+                } else {
+                    self.title = triggerData[@"title"];
+                }
             }
         }
     }

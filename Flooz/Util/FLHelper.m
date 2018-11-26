@@ -10,6 +10,11 @@
 #import "YLMoment.h"
 #import "NBPhoneNumberUtil.h"
 
+BOOL isBorderlessDisplay()
+{
+    return [GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneX || [GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneXR || [GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneXS || [GBDeviceInfo deviceInfo].model == GBDeviceModeliPhoneXSMax || [GBDeviceInfo deviceInfo].model == GBDeviceModelSimulatoriPhone;
+}
+
 @implementation FLHelper
 
 + (NSString *)generateRandomString {

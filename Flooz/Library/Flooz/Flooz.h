@@ -173,7 +173,7 @@ static NSString *kLocalURLData = @"localURLData";
 
 - (void)updateNotification:(NSDictionary *)notification success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
-- (void)removeCreditCard:(NSString *)creditCardId success:(void (^)(id result))success;
+- (void)removeCreditCard:(void (^)(id result))success;
 - (void)createCreditCard:(NSDictionary *)creditCard atSignup:(BOOL)signup success:(void (^)(id result))success;
 - (void)abort3DSecure;
 - (void)getUserProfile:(NSString *)userId success:(void (^)(FLUser *result))success failure:(void (^)(NSError *error))failure;
@@ -237,5 +237,6 @@ static NSString *kLocalURLData = @"localURLData";
 - (void)saveSettingsObject:(id)object withKey:(NSString *)key;
 
 - (void)cards;
+- (void)getCardRegistrationData:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
 @end
