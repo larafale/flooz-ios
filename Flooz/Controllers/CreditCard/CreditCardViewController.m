@@ -437,7 +437,7 @@
     }
 
     [[Flooz sharedInstance] showLoadView];
-    [mangopayClient appendCardInfo:paymentTextField.cardNumber cardExpirationDate:[NSString stringWithFormat:@"%lu%lu", (unsigned long)paymentTextField.expirationMonth, (unsigned long)paymentTextField.expirationYear] cardCvx:paymentTextField.cvc];
+    [mangopayClient appendCardInfo:paymentTextField.cardNumber cardExpirationDate:[NSString stringWithFormat:@"%02lu%02lu", (unsigned long)paymentTextField.expirationMonth, (unsigned long)paymentTextField.expirationYear] cardCvx:paymentTextField.cvc];
     
     [mangopayClient registerCard:^(NSDictionary *response, NSError *error) {
         if (error)
